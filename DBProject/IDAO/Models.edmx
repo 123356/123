@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="yw_db_sdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“yw_db_sd.dbo.t_SM_HisData_00001”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="t_SM_HisData_00001">
+          <Key>
+            <PropertyRef Name="RecTime" />
+            <PropertyRef Name="TagID" />
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="RecTime" Type="datetime" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="PV" Type="float" />
+          <Property Name="AlarmStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="AlarmLimits" Type="float" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“yw_db_sd.dbo.配电房_00001_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="配电房_00001_历史数据表">
+          <Key>
+            <PropertyRef Name="记录时间" />
+            <PropertyRef Name="配电房编号" />
+            <PropertyRef Name="测点编号" />
+          </Key>
+          <Property Name="记录时间" Type="datetime" Nullable="false" />
+          <Property Name="配电房编号" Type="int" Nullable="false" />
+          <Property Name="测点编号" Type="int" Nullable="false" />
+          <Property Name="测点名称" Type="nvarchar" MaxLength="50" />
+          <Property Name="测量值" Type="float" />
+          <Property Name="安装地点" Type="nvarchar" MaxLength="50" />
+          <Property Name="单位" Type="varchar" MaxLength="50" />
+          <Property Name="数据类型" Type="nvarchar" MaxLength="50" />
+          <Property Name="测点位置" Type="nvarchar" MaxLength="50" />
+          <Property Name="监测位置" Type="nvarchar" MaxLength="50" />
+          <Property Name="设备名称" Type="nvarchar" MaxLength="50" />
+          <Property Name="设备编码" Type="nvarchar" MaxLength="50" />
+          <Property Name="单位名称" Type="nvarchar" MaxLength="50" />
+          <Property Name="报警状态" Type="nvarchar" MaxLength="50" />
+          <Property Name="报警限值" Type="float" />
+        </EntityType>
+        <EntityContainer Name="yw_db_sdModelStoreContainer">
+          <EntitySet Name="t_SM_HisData_00001" EntityType="Self.t_SM_HisData_00001" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [t_SM_HisData_00001].[RecTime] AS [RecTime], 
+    [t_SM_HisData_00001].[TagID] AS [TagID], 
+    [t_SM_HisData_00001].[PID] AS [PID], 
+    [t_SM_HisData_00001].[PV] AS [PV], 
+    [t_SM_HisData_00001].[AlarmStatus] AS [AlarmStatus], 
+    [t_SM_HisData_00001].[AlarmLimits] AS [AlarmLimits]
+    FROM [dbo].[t_SM_HisData_00001] AS [t_SM_HisData_00001]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="配电房_00001_历史数据表" EntityType="Self.配电房_00001_历史数据表" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [配电房_00001_历史数据表].[记录时间] AS [记录时间], 
+    [配电房_00001_历史数据表].[配电房编号] AS [配电房编号], 
+    [配电房_00001_历史数据表].[测点编号] AS [测点编号], 
+    [配电房_00001_历史数据表].[测点名称] AS [测点名称], 
+    [配电房_00001_历史数据表].[测量值] AS [测量值], 
+    [配电房_00001_历史数据表].[安装地点] AS [安装地点], 
+    [配电房_00001_历史数据表].[单位] AS [单位], 
+    [配电房_00001_历史数据表].[数据类型] AS [数据类型], 
+    [配电房_00001_历史数据表].[测点位置] AS [测点位置], 
+    [配电房_00001_历史数据表].[监测位置] AS [监测位置], 
+    [配电房_00001_历史数据表].[设备名称] AS [设备名称], 
+    [配电房_00001_历史数据表].[设备编码] AS [设备编码], 
+    [配电房_00001_历史数据表].[单位名称] AS [单位名称], 
+    [配电房_00001_历史数据表].[报警状态] AS [报警状态], 
+    [配电房_00001_历史数据表].[报警限值] AS [报警限值]
+    FROM [dbo].[配电房_00001_历史数据表] AS [配电房_00001_历史数据表]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="yw_db_sdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="t_SM_HisData_00001">
+          <Key>
+            <PropertyRef Name="RecTime" />
+            <PropertyRef Name="TagID" />
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="PV" Type="Double" />
+          <Property Name="AlarmStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlarmLimits" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="t_SM_HisData_00001" EntityType="Self.t_SM_HisData_00001" />
+          <EntitySet Name="配电房_00001_历史数据表" EntityType="yw_db_sdModel.配电房_00001_历史数据表" />
+        </EntityContainer>
+        <EntityType Name="配电房_00001_历史数据表">
+          <Key>
+            <PropertyRef Name="记录时间" />
+            <PropertyRef Name="配电房编号" />
+            <PropertyRef Name="测点编号" />
+          </Key>
+          <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="配电房编号" Type="Int32" Nullable="false" />
+          <Property Name="测点编号" Type="Int32" Nullable="false" />
+          <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测量值" Type="Double" />
+          <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="报警限值" Type="Double" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="yw_db_sdModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="t_SM_HisData_00001">
+            <EntityTypeMapping TypeName="yw_db_sdModel.t_SM_HisData_00001">
+              <MappingFragment StoreEntitySet="t_SM_HisData_00001">
+                <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="PV" ColumnName="PV" />
+                <ScalarProperty Name="AlarmStatus" ColumnName="AlarmStatus" />
+                <ScalarProperty Name="AlarmLimits" ColumnName="AlarmLimits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="配电房_00001_历史数据表">
+            <EntityTypeMapping TypeName="yw_db_sdModel.配电房_00001_历史数据表">
+              <MappingFragment StoreEntitySet="配电房_00001_历史数据表">
+                <ScalarProperty Name="报警限值" ColumnName="报警限值" />
+                <ScalarProperty Name="报警状态" ColumnName="报警状态" />
+                <ScalarProperty Name="单位名称" ColumnName="单位名称" />
+                <ScalarProperty Name="设备编码" ColumnName="设备编码" />
+                <ScalarProperty Name="设备名称" ColumnName="设备名称" />
+                <ScalarProperty Name="监测位置" ColumnName="监测位置" />
+                <ScalarProperty Name="测点位置" ColumnName="测点位置" />
+                <ScalarProperty Name="数据类型" ColumnName="数据类型" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="安装地点" ColumnName="安装地点" />
+                <ScalarProperty Name="测量值" ColumnName="测量值" />
+                <ScalarProperty Name="测点名称" ColumnName="测点名称" />
+                <ScalarProperty Name="测点编号" ColumnName="测点编号" />
+                <ScalarProperty Name="配电房编号" ColumnName="配电房编号" />
+                <ScalarProperty Name="记录时间" ColumnName="记录时间" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
