@@ -1,0 +1,7 @@
+## Include .dll files in packages folder
+
+# User-specific files
+!*.dll
+# Re-instate the build folder that is excluded in the default .gitignore
+# This folder is used by Microsoft.Bcl.Build.* package
+!YWWeb\DLL
