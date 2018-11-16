@@ -1,0 +1,124 @@
+ 
+
+<div class="config_content"  >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <div id="NVR_Upgrade">
+    <!--item 1-->
+        <div class="item" >
+               <div id="l_upgrade" class="logo_title">远程升级</div>
+               <div id="NVR_tail" style="display:none;">&nbsp;---- NVR</div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+                 <!--table 2-->
+                <div class="table" id="ipc_file_upgradeShow" style="display:none;">
+                    <div class="table_L" id="upgrade_file_IPC">IPC</div>
+                    <div class="table_R">
+                         <select id="upgrade_file_IPCSel" class="select"></select>
+        			</div>
+                </div>  
+                     <!--table 1-->
+                <div class="table top">
+                    <div class="table_L" id="upgrade_file_path">升级文件路径</div>
+                    <div class="table_R">
+                       <!--<input class="select" id ="filepath" type="file" onchange="txtFileName.value=this.value"/>-->
+                       <input type="text" class="select" readonly="readonly" id="txtFileName" style="margin-left:20px; width:300px"/>
+                       <input id="btnSj" type="button" value="   ...   " />
+        			</div>
+                </div>  
+                
+            <!--table 2-free-->
+        
+         		<div class="table" style="border:0px" id="UPDATESTATE1">   
+                   <div  id="UPDATESTATE" style="display:none">
+                    <div style="border:none; background-color:#525252; width:400px; height:15px; margin-top:7px;float:left; margin-left:98px;_margin-left:50px;">
+                        <div id="aa" style="background-color:#0F0; margin-top:2px; overflow:hidden; height:10px; width:0px;text-align:left; border:none;">
+                        </div>
+                    </div>
+                    <label id="updateMsg"></label>
+                    </div>
+                </div>
+                <div class="table" style="border:0px; display:none; margin-top:5px;" id="RebootTootip">    
+                   <div  id="RebootTootipText" style="text-align:center; color:#FF3; font-size:16px;">
+                   </div>
+                </div>   
+              <!--table 2-->
+               <div class="table none"></div>
+                <!--table 3-->
+              <div class="table top" style="border:0px; margin-left:200px; _margin-left:150px">
+				  <input  id="UPStart" class="ButtonToDiv" type="button" value="开始升级"/>
+                  <!--<div id="UPStart" class="ButtonToDiv">开始升级</div> -->
+                  
+				  <input id="UPStop" class="ButtonToDiv" type="button" value="停止升级"/>
+                  <!--<div id="UPStop" class="ButtonToDiv">停止升级</div> -->
+                  
+				</div>
+    </div>
+    <!--table end-->
+    </div>
+    
+    <!--IPC升级 liuyong 20150318-->
+    <div id="IPC_Upgrade" style="display:none; margin-top:20px;">
+    <!--item 1-->
+        <div class="item">
+               <div id="l_upgrade_ipc" class="logo_title">远程升级</div>
+               <div>&nbsp;---- IPC</div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+                 <!--table 2-->
+                <div class="table top">
+                    <div class="table_L" id="upgrade_file_path_ipc">升级文件路径</div>
+                    <div class="table_R">
+                       <!--<input class="select" id ="filepath_ipc" type="file" onchange="txtFileName_ipc.value=this.value"/>-->
+                       <input type="text" class="select" readonly="readonly" id="txtFileName_ipc" style="margin-left:20px; width:300px"/>
+                       <input id="btnSj_ipc" type="button" value="   ...   " />
+        			</div>
+                </div>
+                <div class="table">
+                    <div class="table_box syspm_use_backup_L">   
+                    <input type="checkbox" id="NVR_updateck_ipc"/>
+                    <font id="NVR_updateSeletedAll_ipc"> 全选</font>
+                    </div>
+               	</div>
+               	<div class = "table" id="NVR_update_TDNum_ipc_1_1">
+                    <div class="syspm_use_backup_R" id="NVR_update_TDNum_ipc_1">
+                    </div>
+               	</div>
+               	<!--table 13-->
+               	<div class = "table" id="NVR_update_TDNum_ipc_2_2">
+                    <div class="syspm_use_backup_R" id="NVR_update_TDNum_ipc_2">
+                    </div>
+               	</div>
+               	<div class = "table" id="NVR_update_TDNum_ipc_3_3">
+                    <div class="syspm_use_backup_R" id="NVR_update_TDNum_ipc_3">
+                    </div>
+               	</div>
+               	<div class = "table" id="NVR_update_TDNum_ipc_4_4">
+                    <div class="syspm_use_backup_R" id="NVR_update_TDNum_ipc_4">
+                    </div>
+               	</div>
+         
+              <!--table 2-->
+               <div class="table none"></div>
+                <!--table 3-->
+              <div class="table top" style="border:0px; margin-left:200px; _margin-left:150px">
+				  <input  id="UPStart_ipc" class="ButtonToDiv" type="button" value="开始升级" style="margin-left:50px;"/>
+                  <!--<div id="UPStart" class="ButtonToDiv">开始升级</div> -->
+                  
+				  <input id="UPStop_ipc" class="ButtonToDiv" type="button" value="停止升级" style="display:none;"/>
+                  <!--<div id="UPStop" class="ButtonToDiv">停止升级</div> -->
+                  
+				</div>
+    </div>
+    <!--table end-->
+    </div>
+    <!--IPC升级 end liuyong 20150318-->
+		
+</div>
+<div class="disp"></div>

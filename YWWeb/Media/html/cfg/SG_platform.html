@@ -1,0 +1,229 @@
+ 
+<div class="config_content" >
+    <!--logo start-->
+    <div class="login"></div>
+	<!--logo end-->
+	<!--item 1-->
+    <div class="item" >
+    	<div id="SG_plat" class="logo_title">SG Platform Setting</div>
+    	<div class="item_R">             
+        	<div id="SGRf" class="logo_link">Refresh</div>
+        	<div id="SGSV" class="logo_link">Save</div>
+        	<div id="SGEXIT" class="logo_link" style="display:none;">Exit</div>
+    	</div>
+    </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content" id="SG_main_div">
+    	<!--table 1-->
+        <div class="table">
+        	<div class="table_L" id="SG_platform_enbale">Platform Enable</div>
+            <div class="table_R">
+                <select id="SG_platform_switch" class="select">
+                    <option class="option" value="0">Disable</option>
+                    <option class="option" value="1">Enable</option>
+                </select>
+            </div>
+        </div>
+        <div id="SG_PLAT_DIV">
+            <div class="table">
+                <div class="table_L" id="SG_platform_id">ID</div>
+                <div class="table_R">
+                    <input id="SG_ID" class="select inputCss" maxlength="12" style="ime-mode:disabled"/>
+                </div>
+            </div> 
+            <div class="table">
+                <div class="table_L" id="SG_Hostname_Text">IP Address/Domain</div>
+                <div class="table_R">
+                    <input id="SG_hostname" class="select inputCss" maxlength="32" style="ime-mode:disabled"/>
+                </div>
+            </div> 
+            <div class="table">
+                <div class="table_L" id="SG_platform_port">Platform Port</div>
+                <div class="table_R">
+                    <input id="SG_port" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='5901'"/>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L" id="SG_before_trigger">Before Trigger</div>
+                <div class="table_R">
+                    <input id="SG_before" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,60)}" onblur="if(this.value < 10) this.value= 10"/>
+                    <label id="beforesec">s</label>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L" id="SG_after_trigger">After Trigger</div>
+                <div class="table_R">
+                    <input id="SG_after" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,60)}" onblur="if(this.value < 10) this.value= 10"/>
+                    <label id="aftersec">s</label>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L" id="SG_img_interval">Image Upload Interval</div>
+                <div class="table_R">
+                    <input id="SG_interval" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,3)}"/>
+                    <label id="intervalsec">s</label>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L" id="SG_chn_num">Channel</div>
+                <div class="table_R">
+                    <select id="SG_channel_switch" class="select">
+                    </select>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L">
+                    <input id="SG_time_switch1" type="checkbox" />
+                    <font id="SG_upload_time1">Upload Time1</font>
+                </div>
+                <div class="table_R">
+                    <div id="SG_timer1" style="margin-left:50px;"></div>
+                </div>
+            </div>
+            <div class="table">
+                <div class="table_L">
+                    <input id="SG_time_switch2" type="checkbox" />
+                    <font id="SG_upload_time2">Upload Time2</font>
+                </div>
+                <div class="table_R">
+                    <div id="SG_timer2" style="margin-left:50px;"></div>
+                </div>
+            </div>
+            <div class="table none"></div>
+            <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+                  <input class="ButtonToDiv" id="SG_repair" type="button" value="报修"/>
+                  <input class="ButtonToDiv" id="SG_maintain" type="button" value="维保"/>
+                  <input class="ButtonToDiv_big" id="SG_manualupload" type="button" value="手动图像上传"/>
+            </div>
+        </div>
+    </div>
+    <!--table end-->
+    
+    <!--报修-->
+    <div class="table_content" id="SG_repair_div" style="display:none;">
+    	<div class="table">
+        	<div class="table_L" id="SG_repair_type">报修类型</div>
+            <div class="table_R">
+                <select id="SG_repair_switch" class="select">
+                    <option class="option" value="0">视频监控</option>
+                    <option class="option" value="1">周界报警</option>
+                    <option class="option" value="2">入侵报警</option>
+                    <option class="option" value="3">楼宇对讲</option>
+                    <option class="option" value="4">门禁管理</option>
+                    <option class="option" value="5">出入口控制</option>
+                    <option class="option" value="6">电子巡更</option>
+                    <option class="option" value="7">其他报警</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+        	<div class="table_L" id="SG_error_type">故障类型</div>
+            <div class="table_R">
+                <select id="SG_error_switch" class="select">
+                    <option class="option" value="0">视频丢失</option>
+                    <option class="option" value="1">视频异常</option>
+                    <option class="option" value="2">传输故障</option>
+                    <option class="option" value="3">前端设备其他故障</option>
+                    <option class="option" value="4">视频矩阵监视故障</option>
+                    <option class="option" value="5">操作故障</option>
+                    <option class="option" value="6">通讯故障</option>
+                    <option class="option" value="7">控制系统其他故障</option>
+                    <option class="option" value="8">硬盘录像监视故障</option>
+                    <option class="option" value="9">录像故障</option>
+                    <option class="option" value="10">回放故障</option>
+                    <option class="option" value="11">硬盘录像其他故障</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+        	<div id="SG_explanation_repair" style="padding-left:20px;">说明（最多输入128个字节）</div>
+        </div>
+        <div class="table">
+        	<input type="text" maxlength="128" style="width:515px; margin-left:20px;" id="SG_explan_word" />
+        </div>
+        <div class="table none"></div>
+        <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+              <input class="ButtonToDiv" id="SG_repair_upload" type="button" value="上传"/>
+        </div>
+    </div>
+    
+    <!--维保-->
+    <div class="table_content" id="SG_maintain_div" style="display:none;">
+    	<div class="table">
+        	<div class="table_L" id="SG_maintain_type">设备维护</div>
+            <div class="table_R">
+                <select id="SG_maintain_switch" class="select">
+                    <option class="option" value="0">设备维护</option>
+                    <option class="option" value="1">设备维修</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+        	<div class="table_L" id="SG_repair_result">维修结果</div>
+            <div class="table_R">
+                <select id="SG_maintain_result" class="select">
+                    <option class="option" value="0">已修复</option>
+                    <option class="option" value="1">异常已修复</option>
+                    <option class="option" value="2">异常未修复</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+        	<div id="SG_explanation_maintain" style="padding-left:20px;">说明（最多输入128个字节）</div>
+        </div>
+        <div class="table">
+        	<input type="text" maxlength="128" style="width:515px; margin-left:20px;" id="SG_maintain_word" />
+        </div>
+        <div class="table none"></div>
+        <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+            <input class="ButtonToDiv" id="SG_maintain_upload" type="button" value="上传"/>
+        </div>
+    </div>
+    
+    <!--手动图片上传-->
+    <div class="table_content" id="SG_image_div" style="display:none;">
+    	<div class="table">
+        	<div class="table_L" id="SG_image_type">类型</div>
+            <div class="table_R">
+                <select id="SG_image_switch" class="select">
+                    <option class="option" value="0">测试</option>
+                    <option class="option" value="1">验收</option>
+                    <option class="option" value="2">维保</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+            <div class="table_box syspm_use_backup_L">   
+            <input type="checkbox" id="NVR_SGck"/>
+            <font id="NVR_SGSeletedAll"> 全选</font>
+            </div>
+       </div>
+       <!--table 12-->
+       <div class = "table" id="NVR_SG_TDNum_1_1">
+            <div class="syspm_use_backup_R" id="NVR_SG_TDNum_1">
+            </div>
+       </div>
+       <!--table 13-->
+       <div class = "table" id="NVR_SG_TDNum_2_2">
+            <div class="syspm_use_backup_R" id="NVR_SG_TDNum_2">
+            </div>
+       </div>
+       <div class = "table" id="NVR_SG_TDNum_3_3">
+            <div class="syspm_use_backup_R" id="NVR_SG_TDNum_3">
+            </div>
+       </div>
+       <div class = "table" id="NVR_SG_TDNum_4_4">
+            <div class="syspm_use_backup_R" id="NVR_SG_TDNum_4">
+            </div>
+       </div>
+       <div class="table none"></div>
+       <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+           <input class="ButtonToDiv" id="SG_image_upload" type="button" value="上传"/>
+       </div>
+    </div>
+		
+</div>
+
+<div class="disp"></div>
+<div id="isfix"></div>

@@ -1,0 +1,197 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/jquery.jqprint.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 750px;" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='TagID' checkbox="true">
+                </th>
+                <th field='PName' width="60px">
+                    变电站
+                </th>
+                <th field='DeviceName' width="60px">
+                    设备名称
+                </th>
+                <th field='DataTypeName' width="40px">
+                    测点类型
+                </th>
+                <th field='Position' width="60px">
+                    位置
+                </th>
+                <th field='AlarmVal' width="30px">
+                    报警值
+                </th>
+                <th field='WarningVal' width="30px">
+                    预警值
+                </th>
+                <th field='IntersetVal' width="30px">
+                    关注值
+                </th>
+                <th data-options="field:'Updater',width:60,formatter:FilterUpdater">
+                    上次修改人
+                </th>
+                <th data-options="field:'UpdateDate',width:60,formatter:FilterUpdate">
+                    修改日期
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            变&nbsp;&nbsp;电&nbsp;&nbsp;站:
+            <select id="SPID" class="easyui-combobox" itemindex="0" style="width: 200px; height: 26px;">
+            </select>
+            设备名称:
+            <select id="selDID" class="easyui-combobox" itemindex="0" style="width: 200px; height: 26px;">
+            </select>
+            测点类型:
+            <select id="cbType" class="easyui-combobox" itemindex="0" style="width: 200px; height: 26px;">
+            </select>
+            位置:
+            <input id="cposition" class="easyui-textbox" style="width: 140px; height: 26px;" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <div id="editwin" title="报警设置" class="easyui-window" closed="true" style="width: 700px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+    <script type="text/javascript">
+        function FilterUpdater(d) {
+            if (d == "" || d == "admin" || d == undefined)
+                return "系统管理员";
+            else
+                return d;
+        }
+        function FilterUpdate(d) {
+            if (d == "" || d == undefined)
+                return "2016-01-01";
+            else
+                return new Date(d).Format("yyyy-MM-dd");
+        }
+        function dosearch() {
+            var pid = $("#SPID").combobox('getValue');
+            var did = $("#selDID").combobox('getValue');
+            var datatypeid = $("#cbType").combobox('getValue');
+            var position = $("#cposition").val();
+            $('#list_data').datagrid('load', { "pid": pid, "did": did, "datatypeid": datatypeid, "position": position });
+            $('#list_data').datagrid('uncheckAll');
+        }
+        function loadDeviceList(pid) {
+            $("#selDID").combobox({
+                url: "/BaseInfo/BindDeviceInfo?showall=1&pid=" + pid,
+                valueField: 'DID',
+                textField: 'DeviceName',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#selDID').combobox('getData');
+                    if (data.length > 0) {
+                        $("#selDID").combobox('select', data[0].DID);
+                        loadDataTypeList(data[0].DID);
+                    }
+                },
+                onSelect: function () {
+                    var selid = $("#selDID").combobox("getValue");
+                    did = 0;
+                    loadDataTypeList(selid);
+                }
+            });
+        }
+        $("#SPID").combobox({
+            url: "/BaseInfo/BindPDRInfo?showall=1",
+            valueField: 'PID',
+            textField: 'Name',
+            editable: false,
+            onLoadSuccess: function () { //数据加载完毕事件
+                var data = $('#SPID').combobox('getData');
+                if (data.length > 0) {
+                    $("#SPID").combobox('select', data[0].PID);
+                    loadDeviceList(data[0].PID);
+                }
+            },
+            onSelect: function () {
+                var selid = $("#SPID").combobox("getValue");
+                did = 0;
+                loadDeviceList(selid);
+            }
+        });
+        function loadDataTypeList(did) {
+            $("#cbType").combobox({
+                url: "/BaseInfo/BindValueType?showall=1&did=" + did,
+                valueField: 'DataTypeID',
+                textField: 'Name',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#cbType').combobox('getData');
+                    if (data.length > 0) {
+                        $("#cbType").combobox('select', data[0].DataTypeID);
+                    }
+                }
+            });
+        }
+        $('#list_data').datagrid({
+            url: '/SysInfo/AlarmSetInfoData?rom=' + Math.random(),
+            onDblClickRow: function (rowIndex, rowData) {
+                //双击开启编辑行
+                $('#editwin').window({
+                    top: ($(window).height() - 300) * 0.5,
+                    left: ($(window).width() - 700) * 0.5,
+                    modal: true,
+                    href: '/SysInfo/AlarmSetEdit?tagid=' + rowData.TagID,
+                    onClose: function () {
+                        dosearch();
+                    }
+                });
+                $('#editwin').window('open');
+            }
+        });
+        function edit() {
+            var row = $('#list_data').treegrid('getSelected');
+            if (row) {
+                //双击开启编辑行
+                $('#editwin').window({
+                    top: ($(window).height() - 300) * 0.5,
+                    left: ($(window).width() - 700) * 0.5,
+                    modal: true,
+                    href: '/SysInfo/AlarmSetEdit?tagid=' + row.TagID,
+                    onClose: function () {
+                        dosearch();
+                    }
+                });
+                $('#editwin').window('open');
+            }
+            else {
+                $.messager.alert("提示", "请选择要测点！", "info");
+            }
+        }
+        //导出
+        function export1() {
+            var pid = $("#SPID").combobox('getValue');
+            var did = $("#selDID").combobox('getValue');
+            var datatypeid = $("#cbType").combobox('getValue');
+            var position = $("#cposition").val();
+            var ajaxbg = top.$("#loading_background,#loading");
+            ajaxbg.show();
+            $.post("/SysInfo/ExportAlarmSet", { "pid": pid, "did": did, "datatypeid": datatypeid, "position": position }, function (data) {
+                ajaxbg.hide();
+                window.open('http://' + window.location.host + data);
+            });
+        }
+        function printer() {
+            $(".my_show").jqprint();
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

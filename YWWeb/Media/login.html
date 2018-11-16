@@ -1,0 +1,515 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title></title>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<link href="ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="ligerUI/js/ligerui.min.js" type="text/javascript"></script>
+<script src="js/json.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script>
+var version_safari = "3.13.91"; //改版本号信息
+var version_ch_fox = "1.0.1.30"; //注意Firefox中webplugin.html中也要做同步修
+var version_msie = "2.0.0.253" 
+<!--codebase="RSVideoOcx.cab#version=2,0,0,253"--><!--IE填写版本号；不能删-->
+function GetPluginVersion(ext){
+	var plugins = navigator.plugins;
+	var plugin;
+	for (var pi = 0; pi  < plugins.length; pi++)
+	{
+		plugin = plugins[pi];
+		if (plugin[0].type == ext)
+		{
+			return plugin.description;
+		}
+	}
+	return "";
+}
+
+function compareVersion(oldversion,newversion){
+	var oldArr = oldversion.split(".");
+	var newArr = newversion.split(".");
+	for(var i = 0;i < oldArr.length; ++i){
+		if(oldArr[i]*1 < newArr[i]*1){
+			return true;
+		}else if(oldArr[i]*1 > newArr[i]*1){
+			return false;
+		}
+			
+	}
+	return false;
+}
+
+function  CheckVersion(){
+	if($.browser.safari)
+	{
+		//获取苹果浏览器上的插件版本，如果与当前版本不同，需要重新下载
+		if(compareVersion(GetPluginVersion("application/x-rs-sclient-nvr2"),version_safari))
+		{
+			window.location.href = "html/webplugin.html";
+		}
+	}
+	else if($.browser.firefox || $.browser.chrome)
+	{
+		//谷歌、火狐浏览器，如果没有安装这个插件，就弹出提示
+		if(compareVersion(GetPluginVersion("application/x-browser-nvr_plugin"),version_ch_fox))
+		{
+			window.location.href = "html/webplugin.html";			
+		}
+	}
+	else if($.browser.msie){
+		var control = null;
+		try {
+			var ocxVersion = document.getElementById("dvrocx").GetOcxVersion();//2,0,0,168
+			ocxVersion = ocxVersion.replace(' ','').split(',').join('.');//2.0.0.168
+			if(compareVersion(ocxVersion,version_msie)){
+				window.location.href = "html/webplugin.html";
+			}
+		} catch (e) {
+			window.location.href = "html/webplugin.html";
+		}
+	}
+}
+
+$(function(){
+	var userAgent = navigator.userAgent.toLowerCase();
+	if (!$.browser) {
+		$.browser = {};
+	}
+	$.browser.version = (userAgent.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1];
+	$.browser.safari = userAgent.indexOf("safari")>0 && userAgent.indexOf("chrome")<0;
+	$.browser.opera =  /opera/.test(userAgent);
+	$.browser.msie = ("ActiveXObject" in window);
+	$.browser.mozilla = !("ActiveXObject" in window) && /mozilla/.test(userAgent) && !/(compatible|webkit)/.test(userAgent);
+	$.browser.firefox = userAgent.indexOf("firefox")>0;
+	$.browser.chrome = userAgent.indexOf("chrome")>0;
+	
+	if($.browser.firefox){
+	   HTMLElement.prototype.__defineGetter__("innerText", 
+			function(){
+				var anyString = "";
+				var childS = this.childNodes;
+				for(var i=0; i<childS.length; i++) {
+					if(childS[i].nodeType==1)
+						anyString += childS[i].tagName=="BR" ? '\n' : childS[i].innerText;
+					else if(childS[i].nodeType==3)
+						anyString += childS[i].nodeValue;
+				}
+				return anyString;
+			} 
+		); 
+		HTMLElement.prototype.__defineSetter__("innerText", 
+			function(sText){ 
+				this.textContent=sText; 
+			} 
+		); 
+	}
+
+	if ($.browser.safari)  //$.browser.safari
+	{
+		window.status="Version:"+version_safari;
+		CheckVersion();
+	}
+	else if($.browser.firefox || $.browser.chrome)
+	{
+		window.status="Version:"+version_ch_fox;
+		CheckVersion();
+	}
+	else if($.browser.msie)
+	{
+		CheckVersion();
+	}
+})
+</script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/class.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
+<script src="js/jcookie.js" type="text/javascript"></script>
+<script src="js/language.js" type="text/javascript"></script>
+<script src="js/CProgress.js" type="text/javascript"></script>
+<style >html,body{margin:0px;height:100%;font-family:Arial, Helvetica, sans-serif; border:0px;min-height:740px;min-width:1200px;background:#262626;}
+@media screen and (-webkit-min-device-pixel-ratio:0){html,body{height:100%;} }
+html{overflow-y:scroll;}
+</style>
+<script>
+	$(document).ready(function(){
+		//控件写入
+		if ($.browser.safari){
+			$(".mcmcmain").html('<embed pluginspage="plugin.dmg" width="10px" ptz_defaultheight="10px" type = "application/x-rs-sclient-nvr2" id="dvrocx"></embed>');
+		}else if($.browser.msie){
+			//css样式bug修复
+			$(".mcontainer,.mclcontainer,.mcmcontainer").css({position:"absolute", top:0, bottom:0});/*IE7/IE6 Bug*/
+			if ($.browser.version.indexOf("7") != -1){
+				$(".mcright").css("right", "0px").css({position:"absolute", top:0, bottom:0});/*IE7 Bug*/
+			}
+		}
+		else if ($.browser.chrome)
+		{
+			$(".mcmcmain").html('<embed pluginspage="Surveillance_Brower_Plugin.crx" width="10px" height="10px" type = "application/x-browser-nvr_plugin" id="dvrocx"></embed>');
+			$(".mcontainer,.mclcontainer,.mclborder,.mcmcontainer").css({position:"absolute", top:0, bottom:0});
+		}
+		else if($.browser.firefox){
+		    $(".mcmcmain").html('<embed pluginspage="Surveillance_Brower_Plugin.xpi" width="10px" height="10px" type = "application/x-browser-nvr_plugin" id="dvrocx"></embed>');
+			$(".mcontainer,.mclcontainer,.mclborder,.mcmcontainer").css({position:"absolute", top:0, bottom:0});
+		}
+		InitWeb();
+		
+		$(document).keydown(function(e){ 
+			e = e || window.event;
+			if(!e.srcElement)
+				e.srcElement = e.target;
+		if(e.keyCode==8&&((e.srcElement.readOnly==null||e.srcElement.readOnly ==true)||(e.srcElement.type!='text'&&e.srcElement.type!='textarea'&&e.srcElement.type!='password'))){e.keyCode=0;e.returnValue=false;return false;}
+		})
+	
+	});
+</script>
+
+<script language="javascript" for="dvrocx" event="ActivexMsg(key, msID, strFisrt, strSecond, strThird)">
+	ActivexMsg(key, msID, strFisrt, strSecond, strThird);
+</script>
+
+<script language="javascript" for="dvrocx" event="UserLoginEvent(msgID, chNumber, userPageRt, userPreviewRt, userRecRt)">
+	UserLoginEvent(msgID, chNumber, userPageRt, userPreviewRt, userRecRt);
+</script>
+
+<script language="javascript" for="dvrocx" event="GetAndSetParamEvent(key, type, chid, strxml)">
+	GetAndSetParamEvent(key, type, chid, strxml);
+</script>
+
+<script language="javascript" for="dvrocx" event="PreviewEvent(msgID, chID)">
+	PreviewEvent(msgID, chID);
+</script>
+
+<script language="javascript" for="dvrocx" event="PlayBackEvent(cmd,strMsg)">
+	PlayBackEvent(cmd,strMsg);
+</script>
+
+<script language="javascript" for="dvrocx" event="FileUpdateEvent(pos,strMsg,type)">
+	FileUpdateEvent(pos,strMsg,type);
+</script>
+
+<script language="javascript" for="dvrocx" event="UserRightEvent(cmID,strMsg)">
+	UserRightEvent(cmID,strMsg);
+</script>
+
+<script language="javascript" for="dvrocx" event="ChangeCtrlPosEvent(type, width,height)">
+	ChangeCtrlPosEvent(type, width,height);
+</script>
+
+<script language="javascript" for="dvrocx" event="RemoteTestEvent(xml)">
+	RemoteTestEvent(xml);
+</script>
+
+<script language="javascript" for="dvrocx" event="ShowPreViewCap(str)">
+	ShowPreViewCap(str);
+</script>
+
+<script language="javascript" for="dvrocx" event="ReconnectPromptEvent(MsgID)">
+	ReconnectPromptEvent(MsgID);
+</script>
+
+<!--插件调用网页-->
+<script language="javascript" for="dvrocx" event="FtpIsUpdateEvent(bUpdate,OldVer,NewVer,DevType)">
+	FtpIsUpdateEvent(bUpdate,OldVer,NewVer,DevType);
+</script>
+
+<!--插件调用网页-->
+<script language="javascript" for="dvrocx" event="FtpUpdateEvent(pos,status)">
+	FtpUpdateEvent(pos,status);
+</script>
+
+<script language="javascript" for="dvrocx" event="SetDataToWebEvent(data)">
+	SetDataToWebEvent(data);
+</script>
+</head>
+<body onload="" onselectstart="return fbd();" onunload="closewnd()" onResize="ReSetMaskLayer">
+<div id="MsgPaop">
+	<div id="PaopBg" style="background-position:0px 0px; width:240px; height:36px; background:url(images/paopaotitie.png);  ">
+    	<div id="Paoptitle" ></div>
+        <div class="paopao_close"></div>
+    </div>
+	<!--word-break:break-all;  word-break:break-word;-->
+    <div id="PaopContant" style="height:145px; width:240px;white-space:normal;word-break:break-word; background:#676767; color:white; border-left:1px solid #010101; border-right:1px solid #010101; text-align:center; vertical-align:middle; "></div>
+</div>
+<div id="MaskLayout" style="opacity:0.6;"><div id="loading" style="display:none"></div></div>
+<div class="container">
+
+
+
+<div class="logo"></div>
+	<!-----登录页面------>
+	<div id="login" style =" display:none"></div>
+	<!-------头部----------->
+	<div class="header" style="-moz-user-select:none;">
+		<!------菜单栏部分----------->
+		<div class="headermune" >
+        	<div style="height:40px;color:#CCC; text-align:center; padding-left:0px; font-size:14px;">
+                <div id="LiveMenu" >
+					<div id="LiveMenu_1" class="Menu1">预览</div>
+				</div>
+				
+                <div id="PlayBackMenu" style="background-position:0 -30px;">
+					<div id="PlayBackMenu_1" class="Menu2">回放</div>
+				</div>
+				
+                <div id="ConfigMenu" style="background-position:0 -30px; display:none">
+					<div id="ConfigMenu_1" class="Menu3"  >参数设置</div>
+				</div>
+				
+                <div id="PathMenu" style="background-position:0 -30px;">
+					<div id="PathMenu_1" class="Menu4">录像路径</div>
+				</div>
+				
+                <div id="LogoutMenu" style="background-position:0 -30px; display:none">
+					<div id="LogoutMenu_1" class="Menu5">注销</div>
+				</div>
+            </div>
+        </div>
+		<!------上部分边框--------->
+		<div class="mheader" style="display:none">
+		</div>
+	</div>
+	<!-------主体----------->
+	<div class="main">
+		<!------主体内容----------->
+		<div class="mcontainer">
+        	
+			<!----左部分----->
+			<div class="mcleft">
+                <!----左部分内容-替换部分 ---->
+                <div class="mclcontainer">
+				</div>
+			</div>
+			<!----控件部分----->
+			<div class="mcmain">
+				<div class="mcmcontainer">
+                	<div id="configPage" class="style11">
+                        <div class="style30">
+                            <div class="cfgactive style29" id="sysinfbase"></div>
+                            <div id="sysinfhdd" class="style29"></div>
+                            <div id="netinf3G" class="style29"></div>
+                            <div id="ProManage" class="style29"></div>
+                            
+                            <div id="syspmio" class="style29"></div>
+                            <div id="syspmuser" class="style29"></div>
+                            <div id="syspmdst" class="style29"></div>
+                            <div id="netmobile" class="style29"></div>
+                            
+                            <div id="chnbm" class="style29"></div>
+                            <div id="chnsp" class="style29"></div>
+                            <div id="chnyt" class="style29"></div>
+                            <div id="chnosd" class="style29"></div>
+							<div id="streamsetadvanced" class="style29"></div>
+                            <div id="CaptureSet" class="style29"></div>
+                            <div id="CaptureJh" class="style29"></div>
+                            <div id="chnsubbm" class="style29"></div>
+                            <div id="netbase" class="style29"></div>
+                            <div id="routerlan" class="style29"></div>
+                            <div id="routerwan" class="style29"></div>
+                            <div id="IPCwifiset" class="style29"></div>
+                            <div id="netddns" class="style29"></div>
+                            <div id="netpppoe" class="style29"></div>
+                            <div id="netemail" class="style29"></div>
+                            <div id="emailjh" class="style29"></div>
+                            <div id="netntp" class="style29"></div>
+                            <div id="platset" class="style29"></div>
+                            <div id="autowh" class="style29"></div>
+                            
+                            <div id="alarmmv" class="style29"></div>
+                            <div id="alarmyc" class="style29"></div>
+                            <div id="alarmio" class="style29"></div>
+                            
+                            <div id="recordpz" class="style29"></div>
+                            <div id="recordjh" class="style29"></div>
+                            <div id="IPCanset" class="style29" oncontextmenu = "return false;"></div>
+							<div id="vehiclemgr" class="style29"></div>
+                            <div id="syswhsj" class="style29"></div>
+                            <div id="syswhmr" class="style29"></div>
+							<div id="HuaweiPlat" class="style29" oncontextmenu = "return false;"></div>
+							<div id="ImgCtrl" class="style29"></div>
+                            <div id="streamset" class="style29"></div>
+                            <div id="IPFilter" class="style29"></div>
+                            <div id="RTSPSet" class="style29"></div> 
+							<div id="CloudStorage" class="style29"></div>
+                            <div id="NewCloudStorage" class="style29"></div>
+                            <div id="Cloudemail" class="style29"></div>                            
+                            <div id="UploadVideo" class="style29"></div>
+                            <div id="UploadPhoto" class="style29"></div>
+							<div id="NormalCloSto" class="style29"></div>            
+                            <div id="NormalCloStoEm" class="style29"></div>
+                            <div id="NormalCloStoFtp" class="style29"></div>
+                            <div id="autoupgrade" class="style29"></div>
+                            <div id="CloudStorage" class="style29"></div>
+                            <div id="FTPSet" class="style29"></div>
+							<div id="PerimeterLine" class="style29"></div>
+                            <div id="VideoDiagnostics" class="style29"></div>
+                            <div id="GoodsLostLegacy" class="style29"></div>
+                            <div id="gotochnbm" class="style29"></div>            
+                            <div id="mainstreamset" class="style29"></div>
+                            <div id="substreamset" class="style29"></div>
+                            <div id="mobilestreamset" class="style29"></div>
+                            <div id="substreamset2" class="style29"></div>
+                            <div id="mobilestreamset2" class="style29"></div>
+                            <div id="SGplatform" class="style29"></div>
+                            <div id="AnalogCh" class="style29"></div>
+                            <div id="RecInfo" class="style29"></div>
+                            <div id="ChnInfo" class="style29"></div>
+                        </div>
+                    </div>
+                    <div id="pathConfigPage" class="style11 style26"></div>
+					<div class="mcmcmain" id="IndexObj">
+                    	<object id="dvrocx" name="dvrocx" classid="clsid:8AA6357A-00B9-474b-A529-908CFDE3A594"></object>
+                    </div>
+                    
+                    <div class="mcmbottom">
+                    	<div id="IEmcmbottom" style=" padding-top:13px;">
+                            <div class="liveBtnBt1"></div>
+                            <div class="liveBtnBt2"></div>
+                            <div class="liveBtnBt3"></div>
+                            <div class="liveBtnBt4"></div>
+                            <div class="liveBtnBt5"></div>
+                            <div class="liveBtnBt10"></div>
+                            <div class="style28">
+                                <div class="liveBtnBt6" tag="open"></div>
+                                <div class="liveSSBtn" style="margin-left:10px;">
+                                    <div class="liveBtnSbt1" flag="1_0"></div> 	
+                                    <div class="liveBtnSbt2" flag="4_0"></div> 	
+                                    <div class="liveBtnSbt3" flag="6_0"></div> 	
+                                    <div class="liveBtnSbt4" flag="8_0"></div> 	
+                                    <div class="liveBtnSbt5" flag="9_0"></div> 	
+                                    <div class="liveBtnSbt6" flag="10_0"></div> 	
+                                    <div class="liveBtnSbt7" flag="10_1"></div> 	
+                                    <div class="liveBtnSbt8" flag="12_0" style="display:none;"></div>
+                                    <div class="liveBtnSbt9" flag="13_0"></div> 	
+                                    <div class="liveBtnSbt10" flag="13_1"></div> 	
+                                    <div class="liveBtnSbt11" flag="14_0"></div> 	
+                                    <div class="liveBtnSbt12" flag="16_0"></div> 
+									<div class="liveBtnSbt12_13" flag="20_0" style="display:none;"></div>
+                                    <div class="liveBtnSbt13" flag="25_0"></div>
+                                    <div class="liveBtnSbt14" flag="36_0"></div>
+                            	</div>
+                                <div class="liveBtnBt8" style="display:none;"></div>
+                            </div>                        
+                            <div class="liveBtnBt9" name="active" style="display:none"></div>
+                            <div class="liveBtnBt11" style="display:block; margin-left:10px;"name=""></div>
+                            <div class="liveBtnBt10" style="display:none" name="active"></div>	
+                        </div> 
+                    </div>
+				</div>
+                <!----右部分----->
+                <div class="mcright">
+                    <div class="mcrcontainer">
+                        <div class="mcrcmain"></div>
+                    </div>
+                    <div >
+                        <div ></div>
+                        <div id="playback_right_border">
+                        </div>
+                        <div id="playback_right_border_1">
+                        </div>
+                    </div>
+                </div>
+			</div>
+             <!------IPC提示信息------>
+   			<div id="IPCTooltip"></div>
+			
+		</div>
+	</div>
+    
+</div>
+<div id="devchange_prompt" style="display:none;">
+	<div>
+		<li id="devchange_title"><em></em></li>
+	</div>
+	<div id="devchange_content">
+    	<div id="devchange_text"></div>
+        <div>
+    	<input type='button' id='btn_devchange_ok' value ='OK' onclick="devchangeclick();"/>
+        </div>
+    </div>
+		
+		<!--<input type="button" id="btn_devchange_cancle" value ='Cancle'/>-->
+	
+</div>
+
+<div id="reboot_prompt" style="display:none;">
+	<div>
+		<li id="reboot_title"><em></em></li>
+	</div>
+	<div id="reboot_content">
+		<li>
+			<input id ='reboot_input' type="password" maxlength="8"/>
+		</li>
+		<li style="line-height:50px;">
+			<input type="button" id="btn_reboot_ok" value ='OK'/>
+			<input type="button" id="btn_reboot_cancle" value ='Cancle'/>
+		</li>
+	</div>
+</div>
+
+<div id="user_prompt" style="display:none;">
+	<div>
+		<li id="user_title"><em></em></li>
+	</div>
+	<div id="user_content">
+	</div>
+</div>
+
+<div id="cloud_prompt" style="display:none;">
+	<div>
+		<li id="cloud_title" style="background:#ccc; height:50px; padding-top:30px;"><em></em></li>
+	</div>
+	
+	<div id="cloud_content" style="height:30px; position:relative;">
+		<li>
+			<input id ='cloud_input' type="password" maxlength="8" style="display:none;"/>
+		</li>
+		<li style="line-height:25px;">
+			<input type="button" style="position:absolute; margin-left:100px;" id="btn_cloud_ok" value ='OK'/>
+			<input type="button" style="position:absolute; margin-left:100px; display:none;" id="btn_cloud_ok2" value ='OK'/>
+			<input type="button" style="position:absolute; margin-left:200px;" id="btn_cloud_cancle" value ='Cancle'/>
+		</li>
+	</div>
+</div>
+<script type ="text/javascript">
+
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串 
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
+    window.onload = function () {
+        var Request = new Object();
+        Request = GetRequest();
+        var OpenPreView, user, passwd, mediaport, StreamType, IP;
+        OpenPreView = Request['OpenPreView'];
+        user = Request['user'];
+        passwd = Request['passwd'];
+        mediaport = Request['mediaport'];
+        StreamType = Request['StreamType'];
+        IP = Request['IP'];
+        //跳转频道
+        DrvNo = Request['Jump2Drv'];
+        //打开频道
+        DrvNo16b = DrvNo << 16;
+        DrvNo16b |= DrvNo;
+        Login(OpenPreView, user, passwd, mediaport, StreamType, IP); //打开预览0关/1开；用户名；密码；通道号；码流0/1/2；设备地址
+
+
+    };
+
+</script>
+</body>
+</html>

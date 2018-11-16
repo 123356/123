@@ -1,0 +1,232 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>谐波分析</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <h1 style="text-align:center;">谐波分析</h1>
+
+        <div id="tb" class="searchbar" style="margin-left:3%;">
+            <div class="searchrow">
+                站名称:
+                <input id="pdfselect" />
+            </div>
+        </div>
+    </div>
+
+    <div id="userCharts1" class="powerquality_curve   lineloss_curve" style="overflow: auto;width:90%; margin-left:3%;">
+
+    </div>
+
+    <div id="userCharts2" class="powerquality_curve   lineloss_curve" style="overflow: auto;width:90%;margin-top:60px; margin-left:3%;">
+
+    </div>
+
+    <script type="text/javascript" src="~/Content/js/ResizeList.js"></script>
+
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#currPosition", window.top.document).html("当前位置：电力交易 > 故障录波 ");
+        loadSelectPDF(0);
+    })
+    ////加载配电房下拉框
+    function loadSelectPDF(pid) {
+            $("#pdfselect").combobox({
+                url: "/ES/PDRComboData?isall=" + "false",
+                valueField: 'PID',
+                textField: 'Name',
+                editable: true,
+                width: 260,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#pdfselect').combobox('getData');
+                    if (data.length > 0) {
+                        $("#pdfselect").combobox('select', data[0].PID);
+                    }
+                },
+                onChange: function (n, o) {
+                    dosearch();
+                }
+            });
+
+    }
+    //加载方法
+    function dosearch() {
+
+        var pdf = $("#pdfselect").combobox("getValue");
+
+        if (pdf == "") {
+            pdf = "0";
+        }
+
+        $('#list_data').datagrid({
+            url: '/ES/GetStationTemp?Rnum=' + Math.random(),
+            queryParams: { "pdf": pdf }
+        });
+        $('#list_data').datagrid('uncheckAll');
+    }
+    function add() {
+        $("#editwin").dialog({
+            closed: false,
+            top: ($(window).height() - 300) * 0.5,
+            left: ($(window).width() - 600) * 0.5,
+            minimizable: false, //最小化，默认false
+            maximizable: false, //最大化，默认false
+            collapsible: false, //可折叠，默认false
+            draggable: false, //可拖动，默认false
+            resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+        });
+        //添加时默认选择客户
+        var pid = $("#pdfselect").combobox("getValue");
+        loadSelectPDF(pid)
+    }
+
+    $(function () {
+        Recording_Fault1();
+        Recording_Fault2();
+    })
+
+    function Recording_Fault1() {
+        var dom = document.getElementById("userCharts1");
+        var myChart = echarts.init(dom);
+        var option = {
+            backgroundColor: '#17689d',//背景色
+            title: {
+                text: '谐波分析',
+                textStyle: {
+                    color: ['#fff']     //标题颜色
+                },
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['7次谐波', '5次谐波', '基波'],
+                textStyle: {//图例文字的样式
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                name: 'ms',
+                type: 'category',
+                axisLine: {
+                    lineStyle: {
+                        color: ['#fff']
+                    }
+                },
+                data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            },
+            yAxis: {
+                name: 'A',
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: ['#fff']
+                    }
+                },
+            },
+            series: [{
+                name: '7次谐波',
+                smooth: true,
+                data: [600, 650, 600, 550, 600, 650, 600, 550, 600, 650, 600, 550],
+                type: 'line'
+            },
+            {
+                name: '5次谐波',
+                smooth: true,
+                data: [600, 700, 600, 500, 600, 700, 600, 500, 600, 700, 600, 500],
+                type: 'line'
+            },
+            {
+                name: '基波',
+                smooth: true,
+                data: [600, 1000, 600, 200, 600, 1000, 600, 200, 600, 1000, 600, 200],
+                type: 'line'
+            }, ],
+            color: ['yellow', '#90EE90', '#F08080']
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
+
+    function Recording_Fault2() {
+        var dom = document.getElementById("userCharts2");
+        var myChart = echarts.init(dom);
+        var option = {
+            backgroundColor: '#17689d',//背景色
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['7次谐波', '5次谐波', '基波', '畸变波形'],
+                textStyle: {//图例文字的样式
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                name: 'ms',
+                type: 'category',
+                axisLine: {
+                    lineStyle: {
+                        color: ['#fff']
+                    }
+                },
+                data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            },
+            yAxis: {
+                name: 'A',
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: ['#fff']
+                    }
+                },
+            },
+            series: [{
+                name: '7次谐波',
+                smooth: true,
+                data: [600, 650, 600, 550, 600, 650, 600, 550, 600, 650, 600, 550,600],
+                type: 'line'
+            },
+            {
+                name: '5次谐波',
+                smooth: true,
+                data: [600, 700, 600, 500, 600, 700, 600, 500, 600, 700, 600, 500,600],
+                type: 'line'
+            },
+            {
+                name: '基波',
+                smooth: true,
+                data: [600, 1000, 600, 200, 600, 1000, 600, 200, 600, 1000, 600, 200,600],
+                type: 'line'
+            },
+            {
+                name: '畸变波形',
+                smooth: true,
+                data: [600, 820, 800, 1050, 800, 820,600, 380, 400, 180, 400, 380, 600],
+                type: 'line'
+            }, ],
+            color: ['yellow', '#90EE90', '#F08080','green']
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
+
+</script>
+

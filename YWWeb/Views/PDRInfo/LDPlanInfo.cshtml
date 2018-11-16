@@ -1,0 +1,98 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>二维平面图</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body class="tabbg1">
+    <!--环境平面图-->
+      <div class="pmmain ld2_station" id="p1_2">
+      	<!--视频监控 左下-右下-->
+        <div class="ld_sp1"  onclick="ShowMeVideo(0);"></div>
+        <div class="ld_sp2"  onclick="ShowMeVideo(1);"></div>
+        <div class="ld_sp3"  onclick="ShowMeVideo(2);"></div>
+        <div class="ld_sp4"  onclick="ShowMeVideo(3);"></div>
+        <div class="ld_sp5"  onclick="ShowMeVideo(4);"></div>
+        <!--温湿度传感器  左下-右下-->
+        <div class="ld_wsd1 defaultcursor"></div>
+        <div class="ld_wsd2 defaultcursor"></div>
+        <div class="ld_wsd3 defaultcursor"></div>
+        <div class="ld_wsd4 defaultcursor"></div>
+        <!--水浸传感器 左-右-->
+        <div class="ld_sj1 defaultcursor"></div>
+        <div class="ld_sj2 defaultcursor"></div>
+        <!--烟感传感器-->
+        <div class="ld_yg defaultcursor"></div>
+        <!--门禁-->
+        <div class="ld_mj defaultcursor"  onclick="OpenDoor();"></div>
+        <!--SF6/O2气体监测传感器-->
+        <div class="ld_sf6 defaultcursor"></div>
+        <!--电磁辐射传感器 上-下-->
+        <div class="ld_dcfs1 defaultcursor"></div>
+        <div class="ld_dcfs2 defaultcursor"></div>
+        <!--声级计-->
+        <div class="ld_sjj defaultcursor"></div>
+      </div>
+    <div class="station_room_monitor" id="contentmain">
+    </div>
+    <div id="addTra"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var pid = $.cookie('cookiepid');
+    //左上角的最高温度监测点
+    $.post("/PDRInfo/GetMaxTempInfo", { "pid": pid }, function (data) {
+        $("#contentmain").html(data);
+    });
+    showAlarmInfo();
+    var timeTicket;
+    function showAlarmInfo() {
+        clearInterval(timeTicket);
+        timeTicket = setInterval(function () {
+            if (alarmid != "") {
+                var arrid = alarmid.split(',');
+                for (var i = 0; i < arrid.length; i++) {
+                    $("#d" + arrid[i]).css("background-image", "url(/Content/pingmiantu/p" + pid + "_2/" + arrid[i] + ".png)");
+                }
+            }
+            alarmState();
+        }, 1000);
+    }
+    function deviceinfo(did) {
+            parent.location.href = "/DeviceManage/Index?sid=0&did=" + did + "&pid=" + pid;
+    }
+    var alarmJson = "", alarmid = "", taglist = "";
+    function alarmState() {
+        $.ajaxSettings.async = false;  //同步才能获取数据
+        $.post("/SysInfo/getDAlarmState", { "pid": pid }, function (data) {
+            alarmid = "";
+            alarmJson = eval("(" + data + ")");
+            $.each(alarmJson, function (i) {
+                var jsonlist = alarmJson[i];
+                var adid, astate;
+                for (var jcount = 0; jcount < jsonlist.length; jcount++) {
+                    adid = jsonlist[jcount].DID;
+                    astate = jsonlist[jcount].AlarmState;
+                    if (jcount == 0)
+                        alarmid = alarmid + adid;
+                    else
+                        alarmid = alarmid + "," + adid;
+                    $("#d" + adid).css("background-image", "url(/Content/pingmiantu/p" + pid + "_2/" + adid + "_" + astate + ".png)");
+                }
+            });
+        });
+    }
+
+    function ShowMeVideo(val) {
+        var url = "/PDRInfo/ConnectVideo";
+        top.openDialog(url, 'RealTimeVideo', '实时视频监控', 1450, 750, 50, 50)
+    }
+    function OpenDoor() {
+        var url = "http://192.168.0.0/";
+        top.openDialog(url, 'DoorManage', '门禁系统', 1450, 750, 50, 50)
+    }
+</script>

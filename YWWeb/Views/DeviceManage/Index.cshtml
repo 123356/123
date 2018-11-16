@@ -1,0 +1,91 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>首页</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".tab_box").height($(document.body).outerHeight() - $(".tab_menu").outerHeight(true));
+        })
+    </script>
+</head>
+<body><div class="leftmenu" id="leftmenu">
+        <div id="leftmenuSpace">
+        </div>
+    </div>
+    <div class="tab_mainbox demo2">
+        <ul class="tab_menu" id="menuInfo">
+            <li id="m0" class="current" onclick="Go(0);">运行状态</li>
+            <li id="m1" onclick="Go(1);">设备台账</li>
+        </ul>
+        <div id="pointsinfo" class="pointsinfo" style="z-index: 2; overflow: hidden; display: none">
+        </div>
+        <div class="tab_box">
+            <!--设备状态-->
+            <div class="tabbg tabbg3">
+                <iframe frameborder="0" scrolling="yes" src="" width="100%" height="100%" name="leftmenu"
+                    id="sysContent"></iframe>
+            </div>
+            <!--<a class="backone" onclick="goback();" href="#">返回</a>-->
+        </div>
+    </div>
+    <script type="text/javascript">
+        //var Request = new Object();
+        //Request = GetRequest();
+        //var did = 74, pid = 6, sid = 0,mid=21;
+        //if (Request['did'] != null)
+        //    did = Request['did'];
+        //if (Request['pid'] != null)
+        //    pid = Request['pid'];
+        //if (Request['sid'] != null)
+        //    sid = Request['sid'];
+        var mid = 21;
+        xdid = Request['did'];
+
+        function setIframeUrl(url, id) {
+            $("#menuInfo li").removeClass('current');
+            $("#sysContent").attr('src', url);
+            $("#m" + id).addClass('current');
+        }
+        //选择项
+        function Go(page) {
+            var srcString = "/State/RunningState?pid=" + pid + "&did=" + did;
+            if (page == 0) {
+                $.post("/PDRInfo/DeviceDTID", { "did": did }, function (dtid) {  //获取设备DTID
+                    if (dtid == 1) {
+                        srcString = "/State/RunningState?pid=" + pid + "&did=" + did;
+                        setIframeUrl(srcString, page);
+                    }
+                    else {
+                        srcString = "/State/DeviceState?pid=" + pid + "&did=" + did;
+                        setIframeUrl(srcString, page);
+                    }
+                });
+            }
+            else if (page == 1) {
+                srcString = "/State/EquipmentLedger?pid=" + pid + "&did=" + xdid;
+                setIframeUrl(srcString, page);
+            }
+            else if (page == 2) {
+                srcString = "/State/MechanicsCharacteristic?pid=" + pid + "&did=" + did;
+                setIframeUrl(srcString, page);
+            }
+
+        }
+        //默认加载第一个选项卡
+        //$("#menuInfo li:first").click();
+        //返回上一层
+        function goback() {
+            var fullurl = "/PowerQuality/Index?mid=21";
+            @*$("#maincontent", parent.document.body).attr("src", fullurl);*@
+            $("#main_frame", parent.document.body).attr("src", fullurl);
+        }
+    </script>
+     <script src="~/Content/UserJS/menulast._jm.js" type="text/javascript"></script>
+   
+</body>
+</html>

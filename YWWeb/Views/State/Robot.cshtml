@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StationRoom</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/lbywlfmu._jm.js" type="text/javascript"></script>
+    <!--弹出窗-->
+    @*<script type="text/javascript">
+        function popwindow() {
+            var pop_contentwidth = $(".pop_window").width() / 2;
+            var pop_contentheight = $(".pop_window").height() / 2;
+            $('.pop_window h3').mousedown(
+        function (event) {
+            var isMove = true;
+            var abs_x = event.pageX - $('div.pop_window').offset().left - pop_contentwidth;
+            var abs_y = event.pageY - $('div.pop_window').offset().top - pop_contentheight;
+            $(document).mousemove(function (event) {
+                if (isMove) {
+                    var obj = $('div.pop_window');
+                    obj.css({ 'left': event.pageX - abs_x, 'top': event.pageY - abs_y });
+                }
+            }
+        ).mouseup(
+        function () {
+            isMove = false;
+        }
+        );
+        }
+        );
+            $(".pop_window").css({ "margin-left": -pop_contentwidth, "margin-top": -pop_contentheight });
+            $(".pop_window").fadeIn();
+            $(".pop_windowbg").fadeIn();
+        }
+        function popclose() {
+            $(".pop_window").fadeOut();
+            $(".pop_windowbg").fadeOut();
+        }
+    </script>*@
+</head>
+<body>
+    <div class="universal_interface">
+        <div class="ui_sidebar">
+            <div class="leftmenu_content" id="leftmenuSpace">
+            </div>
+        </div>
+        <div class="ui_content">            
+            <div class="ui_box" style ="background: rgba(85, 85, 85, 1);">
+            <iframe src="" id="MediaWin" marginwidth="0" scrolling="no" style="width: 100%; height: 92%"marginheight="0" frameborder="0" vspace="0" border="0" framespacing="0" noresize="noResize"></iframe>
+            </div>
+        </div>
+    </div>
+    @*<div class="pop_windowbg">
+    </div>
+    <div class="pop_window radius5">
+        <button class="popclose" onclick="popclose();">
+            <img src="../Content/images/popclosebtn.png" /></button>
+        <h3 id="aaa">
+            详情</h3>
+        <div class="pop_content el_popcontent">
+            <div class="popbtn">
+                <button class="page_table_but">
+                    缺陷确认</button></div>
+        </div>
+    </div>*@
+</body>
+</html>
+<script type="text/javascript">
+    $("#currPosition", window.top.document).html("当前位置：越秀局 > 机器人界面");
+    BuildLeftMenu();
+    $(document).ready(function () {
+        $(".ui_content").width($(document).width() - $(".ui_sidebar").width());
+    });
+    var PID, DRV;
+    PID = 136;
+    DRV =2;
+    $.post("/PDRInfo/GetMediaInfo", { "pid": PID }, function (data) {
+        if (data != "null") {
+            var row = eval("(" + data + ")");
+            var srcString;
+            if (row.Brand == "dh") {
+                srcString = "/Media/login.html?OpenPreView=" + row.OpenPreView + "&user=" + row.UserName + "&passwd=" + row.passwd + "&mediaport=" + row.mediaport + "&StreamType=" + row.nStreamType + "&IP=" + row.ip + "&Jump2Drv=" + DRV
+                document.getElementById("MediaWin").src = srcString;
+            }
+            else {
+                srcString = "../../HaiKang/cn/video.html?OpenPreView=" + row.OpenPreView + "&user=" + row.UserName + "&passwd=" + row.passwd + "&mediaport=" + row.mediaport + "&StreamType=" + row.nStreamType + "&IP=" + row.ip + "&Jump2Drv=" + DRV
+                document.getElementById("MediaWin").src = srcString;
+            }
+        }
+        else
+            alert("没有视频设备");
+    });    
+</script>

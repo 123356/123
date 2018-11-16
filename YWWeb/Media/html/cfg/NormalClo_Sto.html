@@ -1,0 +1,137 @@
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+	
+    <!--item 1-->
+        <div class="item" >
+               <div id="NormalCloSto_Title" class="logo_title">Cloud Storage</div>
+               <div class="item_R">
+                   <div id="NormalCloStoRf" class="logo_link">Refresh</div>
+                   <div id="NormalCloStoDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="NormalCloStoSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+	
+    <!--table -->
+    <div class="table_content">
+		<!--table 1-->
+		<div class="table">
+			<div class="table_L" id="NormalCloSto_Enable">Cloud Storage</div>
+			<div class="table_R">
+				<select id="NormalCloStoEnable" class="select" >
+					<option value="0">Disable</option>  <!--Disable时，下面NormalCloSto_divdisplay全部隐藏 -->
+					<option value="1">Enable</option>
+				</select>
+			</div>
+		</div>
+		
+		<!--隐藏区域 -->	
+		<div id="NormalCloSto_divdisplay" style="display:none; ">
+			<!--table 2-->
+			<div class="table">
+				<div class="table_L" id="NormalCloSto_CloudType">Cloud Type</div>
+				<div class="table_R">
+					<select id="NormalCloStoCloudType" class="select" >
+						<option value="0">Dropbox</option>        
+						<option value="1">Google Drive</option>  
+					</select>
+				</div>
+			</div>
+			
+           
+			<!--table 3-->
+			<!--<div class="table">
+				<div class="table_L" id="NormalCloSto_key">key</div>
+				<div class="table_R">
+					<input id="NormalCloStokey" type="text" maxlength="32" class="select" />
+				</div>
+			</div> -->
+			
+			<!--table 4-->
+			<!--<div class="table">
+				<div class="table_L" id="NormalCloSto_secret">secret</div>
+				<div class="table_R">
+					<input id="NormalCloStosecret" type="text" maxlength="32" class="select" />
+				</div>
+			</div> -->
+			
+			<!--table 5-->
+			<!--<div class="table">
+				<div class="table_L" id="NormalCloSto_FTPPATH">FTPPATH</div>
+				<div class="table_R">
+					<input id="NormalCloStoFTPPATH" type="text" maxlength="32" class="select" style="display:none; " />
+					<input type="button" value="FTP Setup" id="gotoNormalClo_StoFtp" style="margin-left:53px; " />
+				</div>
+			</div>  -->
+           
+			
+			<!--table 6-->
+			<div class="table" id="NormalCloSto_Box_div" style="padding:0px; height:90px; ">
+				<div id="NormalCloSto_Channel" style="float:left; margin-left:20px;">Channel</div>
+				<div id="NormalCloSto_IP" style="float:left; display:none;">IP</div>
+				<div id="NormalCloSto_Right" style="margin-left:10px; margin-top:2px; float:left;">
+					<div id="NormalCloStoChannelBox"></div>
+				</div>
+                <br />
+                <div id="NormalCloSto_Tips1" style="margin-left:20px; margin-top:10px; line-height:150%; font-style:italic; display:none;">
+                	<div id="NormalCloSto_Tips1_1"></div>
+                	<div id="NormalCloSto_Tips1_2"></div>
+                </div>
+			</div>
+			
+			<!--table 7-->
+			<div class="table" id="NormalCloStoTrigger_div">
+				<div class="table_L" id="NormalCloSto_TimeTrigger">Time Trigger</div>
+				<div class="table_R">
+					<select id="NormalCloStoTimeTrigger" class="select">							
+						<option value="0">1Min</option>  <!--1分钟时，只可以选4个通道；多选会弹出提示框 -->
+						<option value="1">3Min</option>
+						<option value="2">5Min</option>
+						<option value="3">10Min</option>
+						<option value="4">20Min</option>
+						<option value="5">30Min</option>
+						<option value="6">60Min</option>
+					</select>
+				</div>
+			</div>
+			
+			<!--table 8-->
+			<div class="table">
+				<div class="table_L" id="NormalCloSto_MotionEnable">Motion Detection</div>
+				<div class="table_R">                    
+					<select id="NormalCloStoMotionEnable" class="select" style="width:200px;  float:left; margin-right:20px; ">
+						<option value="0">Disable</option>
+						<option value="1">Enable</option>
+					</select>						
+				</div>
+			</div>									
+			
+			<!--table 9-->
+			<div class="table">
+				<div class="table_L" id="NormalCloSto_DriveName">Drive Name</div>
+				<div class="table_R">
+					<input id="NormalCloStoDriveName" type="text" maxlength="31" class="select" value="CloudDVR"/>
+				</div>
+			</div>	
+			
+            <div id="NormalCloSto_Tips2" align="left" style="width:550px; margin-top:20px; margin-left:20px; line-height:150%; font-style:italic; display:none;"></div>
+			<!--table 10-空行-->		
+			<div class="table none"></div>
+			
+			<!--两个按钮 -->
+			<div class="table" style="border:none; ">  
+				<input type="button" value="Activate Cloud" id="NormalCloSto_Test_Email"/>
+				<input type="button" value="Advanced E-mail Setup" id="gotoNormalClo_StoEm" style="margin-left:20px;"/>   
+			</div>
+			
+			<!--1个按钮 -->
+			<div class="table" id="NormalCloSto_Upgrade_div" style="border:none; display:none;">
+				<input type="button" value="Upgrade Cloud Storage" id="NormalCloSto_Upgrade"/>
+			</div>
+		</div>
+
+    </div>
+</div>

@@ -1,0 +1,303 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChartStatistic（图表统计分析）</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+        });
+    });
+    </script>
+
+</head>
+<body>
+
+    <div class="container-fluid" style="padding-top:2%">
+        <div class="clearfix">
+
+            <div style="width:100%;height:560px;">
+            @*左侧固定格式*@
+            <div style="width:19%;float:left;height:660px;border-right:1px solid #000000;">
+                @*树形菜单*@
+                <div class="tree" style="overflow-y:scroll;height:560px;">
+                    <ul>
+                        <li>
+                            <span style="cursor:pointer">住户列表</span>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K1楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K2楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K3楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    @*<ul>
+                    <li>
+                        <span style="cursor:pointer">数据查询</span>
+                        <ul>
+                            <li>
+                                <span style="cursor:pointer"><i class="glyphicon glyphicon-plus-sign"></i>数据分类</span>
+                                <ul>
+                                    <li>
+                                        <span><a href="#" style="text-decoration: none;">近期数据</a></span>
+                                    </li>
+                                    <li>
+                                        <span><i class="icon-time"></i><a href="#" style="text-decoration: none;">历史数据</a></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>*@
+                </div>
+                <div style="width:270px;padding-left:20px;">
+                    <table class="table">
+                        <tr>
+                            <td style="width:100px;">开始时间：</td>
+                            <td><input type="text" class="form-control" placeholder="请输入开始时间"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:100px;">结束时间：</td>
+                            <td><input type="text" class="form-control" placeholder="请输入结束时间"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="2" style="vertical-align: middle;text-align:left;"><button type="button" class="btn btn-default">导出</button><button type="button" class="btn btn-default" style="margin-left:9px;">查询</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+                <div style="float:left;padding-left:100px;">
+
+                    <div id="userCharts1" style="width:900px; height:550px;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Content/js/echarts.min3.js"></script>
+    <script type="text/javascript">
+        var dom = document.getElementById("userCharts1");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+
+        option = {
+            title: {
+                text: '住户信息统计',
+                textStyle: {
+                    fontWeight: 'normal',              //标题颜色
+                    color: '#fff'
+                },
+            },
+            color: ['#fff'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['一月', '二月', '三月', '四月', '五月','六月','七月','八月','九月','十月','十一月','十二月'],
+                    axisTick: {
+                        alignWithLabel: true
+
+                    },
+                    axisLabel:{
+                          color: "#fff"  //刻度线标签颜色
+                      }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        color: "#fff"  //刻度线标签颜色
+                    }
+                }
+
+            ],
+            series: [
+                {
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: [200, 390, 334, 62, 20, 200, 380, 334, 52, 10, 600, 390],
+                    itemStyle: {
+                        //通常情况下：
+                        normal: {
+                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                            color: function (params) {
+                                var colorList = ['#87CEFA', '#FFD700', '#7FFFAA', '#ed5a5a', '#95e38a', '#00BFFF', '#00FFFF', '#FFD700', '#9932CC', '#FFC0CB', '#D2691E', '#C0C0C0'];
+                                return colorList[params.dataIndex];
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+
+</body>
+</html>

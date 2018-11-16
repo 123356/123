@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LeftPointsMenu</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script type="text/javascript">
+        var pid = $.cookie('cookiepid');
+        $(function () {
+            $.post("/Home/StationPointsType", { "pid": pid }, function (data) {
+                $("#menuinfo").html(data);
+                $(".one > li > a").click(function () {
+                    $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                    //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                    $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                    $(this).parents().siblings().find(".two").hide(300);
+                    $(this).siblings(".two").toggle(300);
+                    $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                });
+                $(".two > li > a").click(function () {
+                    $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                });
+                var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                var accordionheight = ($(".one").children("ul li").length * 39);
+                $('.two').height(pageHeight - accordionheight);
+            });
+            var gpid = $.cookie('cookiepid');
+            
+        });
+    </script>
+</head>
+<body>
+    <div class="leftmenu_content">
+        <div class="leftmenu_search leftmenu_search_padding">
+            <input class="easyui-combotree" data-options="lines:true" style="width: 200px; height: 30px;" id="StationID" />
+        </div>
+        <div>
+            <ul class="one" id="menuinfo">
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#StationID').combotree({
+            url: '/Home/ComboTreeMenu',
+            multiple: true,
+            editable: true,
+            onSelect: function (node) {
+                //返回树对象  
+                var tree = $(this).tree;
+                //选中的节点是否为叶子节点,如果不是叶子节点,清除选中  
+                var isLeaf = tree('isLeaf', node.target);
+                if (!isLeaf) {
+                    $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                    $('#StationID').combotree('tree').tree("select", node.target); //选中
+                }
+                if (node.id != 0) {
+                    pid = node.id;
+                    $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                    //$("#maincontent", window.parent.document).attr('src', '/PDRInfo/StationRoom?pid=' + pid);
+                    $("#main_frame", window.parent.document).attr('src', '/PDRInfo/StationRoom?pid=' + pid);
+                    $.post("/Home/StationPointsType", { "pid": pid }, function (data) {
+                        $("#menuinfo").html(data);
+                        $(".one > li > a").click(function () {
+                            $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                            //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                            $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                            $(this).parents().siblings().find(".two").hide(300);
+                            $(this).siblings(".two").toggle(300);
+                            $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                        });
+                        $(".two > li > a").click(function () {
+                            $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                        });
+                        var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                        var accordionheight = ($(".one").children("ul li").length * 39);
+                        $('.two').height(pageHeight - accordionheight);
+                    });
+                }
+            },
+            onLoadSuccess: function (data) {
+                if (gpid != undefined) {
+                    $("#StationID").combotree("setValue", gpid);
+                }
+            }
+        });  
+    </script>
+</body>
+</html>

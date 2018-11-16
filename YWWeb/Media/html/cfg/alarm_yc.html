@@ -1,0 +1,85 @@
+ 
+<div class="config_content" >
+       
+            <div class="item" >
+         		   <div id="ab_report" class="logo_title">&nbsp;&nbsp;&nbsp;异常告警</div>
+                   <div class="item_R">
+                       <div id="ABRf" class="logo_link" >Refresh</div>
+                       <div id="ABDf" class="logo_link" style="display:none;">Default</div>
+                       <div id="ABSave" class="logo_link" >Save</div>
+                   </div>
+            </div>
+        <!--item 1_end-->
+        <!--table -->
+            <div class="table_content">
+                <!--table 1-->
+                    <div class="table">
+                        <div class="table_L" id="ab_type">异常类型</div>
+                        <div class="table_R">
+                            <select id="AbnormalType"class="select">
+                                <option value="0" >视频丢失</option>	
+                                <option value="1">没有硬盘</option>
+                                <option value="2">硬盘空间不足</option>
+                            </select>
+                        </div>
+                    </div>
+               
+                    <div class="table">
+                        <div class="table_box"><input id="ABEnable" type="checkbox"/>
+                        <font id="ay_start_ab_warn">启用异常报警</font>
+                        </div>
+                    </div>
+                <!--table 3-->
+               	<div id="ABDivBoxEnable">
+                    <div class="table" id="yc_buzzerTime">
+                        <div class="table_L" id="ay_buzzer_moo_time">蜂鸣器鸣叫时间</div>
+                        <div class="table_R">
+                        	<select id="ABBuzzerMooTime" class="select">
+                                <option value="0" >关闭</option>	
+                                <option value="1">10秒</option>
+                                <option value="2">20秒</option>
+                                <option value="3">40秒</option>
+                                <option value="4">60秒</option>
+                            </select>
+                        </div>
+                    </div>
+                <!--table 4-->
+                    <div class="table">
+                    	<div class="table_box">
+                     		<input id="ABShowMessage" type="checkbox"/>
+                            <font id="ay_show_message">显示消息</font>
+                        </div>
+                        <div class="table_box">
+                            <div><input id="ABSendEmail" type="checkbox"/>
+                            <font id="ay_start_sendEmail">启用邮件发送</font>
+                        	</div>
+                        </div>
+                    </div> 
+                 <!--table 5-FREE-->
+                  
+                </div>     
+                <!--table 5-->
+                    <div class="table" id="ycalarm_out_0">
+                        <div class="table_box"><input id="ABAlarmOut" type="checkbox" />
+                        <font id="ay_start_warn_export">启用报警输出</font>
+                        </div>                        
+                        <div class="syspm_use_backup_R" id="ABAlarmChannelDiv" style="padding:0px 30px;margin-top:2px">
+            		    </div>
+                    </div> 
+                <!--table 6-->
+                <div id="ABDivBoxAlarmOut">
+                    <div class="table" id="ycalarm_time_0">
+                        <div class="table_L" id="ay_warn_time_out">报警输出时间</div>
+                        <div class="table_R">
+                            <select id="ABAlarmOutTime"  class="select">
+                                <option value="0">10秒</option>
+                                <option value="1">20秒</option>
+                                <option value="2">40秒</option>
+                                <option value="3">60秒</option>
+                            </select>
+                        </div>
+                    </div>                                        
+       		</div>
+        <!--table end-->
+</div>
+<div id="isfix"></div>

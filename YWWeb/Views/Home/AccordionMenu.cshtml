@@ -1,0 +1,152 @@
+﻿@using S5001Web.Controllers;
+
+@{
+    ViewBag.Title = "AccordionMenu";
+}
+<script type="text/ecmascript">
+// 侧边菜单
+$('.sidebar-nav-sub-title').on('click', function() {
+    $(this).siblings('.sidebar-nav-sub').slideToggle(80)
+        .end()
+        .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
+})
+
+</script>
+
+@foreach (HomeController.MenuFormatInfo1 item in ViewData["List"] as List<HomeController.MenuFormatInfo1>)
+{    
+
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            @*<i class="am-icon-table sidebar-nav-link-logo"></i>数据列表*@
+            @item.Areaname
+            <span class="am-icon-angle-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            @foreach (HomeController.MenuFormatInfo2 item2 in item.MenuInfo2)
+            {  
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <span class="am-icon-angle-down am-fl am-margin-right-sm sidebar-nav-sub-ico"></span>
+                        @*<i class="am-icon-table sidebar-nav-link-logo"></i>数据列表*@
+                    @item2.Typename
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        @foreach (HomeController.MenuFormatInfo3 item3 in item2.MenuInfo3)
+                        {
+                            string s = "<a href=\"javascript:;\" onclick=\"menuClick(" + item3.Coordination_X + "," + item3.Coordination_Y + ")\" ondblclick=\"menuDBClick(" + item3.PID + ")\" target=\"maincontent\">" + item3.Name + "</a>";
+                            <li class="sidebar-nav-link">
+                                @*<a href="javascript:;" onclick="aa("+@item3.+")" ondblclick="bb()" target="maincontent">;
+                                   
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span>
+
+                                    @item3.Name
+                            </a>*@
+                                @Html.Raw(@s)
+                            </li>
+
+                            @*<li class="sidebar-nav-link">
+                                <a href="javascript:;">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span>图文列表
+                            </a>
+                            </li>*@
+                        }
+                    </ul>
+                </li>
+}
+        </ul>
+    </li>
+    
+}
+<script type="text/ecmascript">
+ var isdb;
+        function menuClick(x, y) {
+            isdb = false;
+            window.setTimeout(cc, 500)
+            function cc() {
+                if (isdb != false) return;
+                //$("#maincontent", window.parent.document).attr('src', '/Home/MapPage?x=' + x + '&y=' + y);
+                var frames = window.parent.window.document.getElementById("maincontent");
+                //frames.contentWindow.setPosition(x, y);
+                setLocation(x, y, 0);
+            }
+        }
+        function menuDBClick(pid) {
+            isdb = true;
+            $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+            window.location.href = "/PowerQuality/Index?mid=21";
+
+            
+            //获取二级菜单列表
+            $.post("/Home/GetChildMenuInfo", { "url": '/State/Overview' }, function (data) {
+                $("#left_sidebar", window.parent.document).html(data);
+                //$("#SecondMenu li:first").click();
+            });
+        }
+    </script>
+
+ @*<li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
+                <li class="sidebar-nav-link">
+                    <a href="index.html" class="active">
+                        <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="tables.html">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 表格
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="calendar.html">
+                        <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日历
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="form.html">
+                        <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 表单
+
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="chart.html">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-heading">Page<span class="sidebar-nav-heading-info"> 常用页面</span></li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 数据列表
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="table-list.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 文字列表
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="table-list-img.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 图文列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="sign-up.html">
+                        <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
+                        <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="login.html">
+                        <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="404.html">
+                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+                    </a>
+                </li>*@

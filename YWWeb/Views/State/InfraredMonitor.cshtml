@@ -1,0 +1,305 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Infrared Monitor</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <div class="infrared_content">
+        <div id="Histb" class="searchbar searchbar2">
+            <div class="searchrow">
+                通道选择：
+                <input id="cbchannel" class="easyui-combobox" style="width: 150px; height: 26px;" />
+                @*<select id="cbchannel" style="width: 150px; height: 26px;" class="easyui-combobox">
+                    <option id="1" value="1">电流</option>
+                    <option id="2" value="2">电压</option>
+                </select>*@
+            </div>
+            <div class="searchrow">
+                预置位：
+                <input id="cbposition" class="easyui-combobox" style="width: 150px; height: 26px;" />
+                @* <select id="cbposition" style="width: 150px; height: 26px;">
+                </select>*@
+            </div>
+            <div class="searchrow">
+                日期：
+                <input id="cbDate" class="easyui-combobox" style="width: 150px; height: 26px;" />
+                @* <select id="cbposition" style="width: 150px; height: 26px;">
+            </select>*@
+            </div>
+            
+            <div class="searchbutton">
+                <button title="查询" onclick="dosearch();" class="page_table_but">
+                    <img src="/Content/images/Icon16/disk.png">查 看</button>
+            </div>
+            <a class="backone" onclick="javascript:history.go(-1);" href="#">返回</a>
+        </div>
+        <div class="infrared_page">
+            <div class="ban">            
+                <button class="prev1" id="prev1" onclick="imgChange(1);">
+                    <img src="/Content/images/InfraredMonitor/index_tab_l.png" width="28" height="51"
+                        alt="" /></button>
+                <button class="next1" id="next1" onclick="imgChange(-1);">
+                    <img src="/Content/images/InfraredMonitor/index_tab_r.png" width="28" height="51"
+                        alt="" /></button>				  
+				 <div class="ban2">   
+                    <ul>
+                        <li>
+                            <p id="ptitle" >
+                                @*智能电力监测 通道2 预置位03 2016-8-6 13:33:25*@</p>
+                            <div style="position: relative;">
+                                <div style="position: absolute; left: 199px; top: 100px; background: #333; color: #fff;
+                                    font-size: 20px; padding: 0px 5px;" id="tempvalue">
+                                </div>
+                            </div>
+                            <canvas id="canvas"  width="950px" height="320px">对不起，你的浏览器不支持这个功能（canvas）.</canvas>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/gettemp.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：状态 > 实时 > 双视监测 ");
+        var Request = new Object();
+        Request = GetRequest();
+        var cid = 1, pid = 1, pname = '';
+        if (Request['cid'] != null)
+            cid = Request['cid'];
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        if (GetQueryString('pname') != null)
+            pname = GetQueryString('pname');
+
+        function GetQueryString(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var result = window.location.search.substr(1).match(reg);
+            return result ? decodeURIComponent(result[2]) : null;
+        }
+
+        formatterDate = function (date) {
+            var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+            var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
+            return date.getFullYear() + '-' + month + '-' + day;
+        };
+
+
+        //        window.onload = function () {
+        //            $('#cmitdate').datebox('setValue', formatterDate(new Date()));
+        //        }
+
+        //绑定通道      
+        function loadChannel() {
+            //$('#cmitdate').datebox('setValue', formatterDate(new Date()));
+            $("#cbchannel").combobox({
+                url: "/BaseInfo/BindInfraredChannel?pid=" + pid,
+                valueField: 'id',
+                textField: 'name',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    //if (cid == undefined) {
+                        if (data.length > 0) {
+                            cid = data[0].id;
+                        }
+                    //}
+                    $("#cbchannel").combobox('select', cid);
+                    loadPosition(pid, cid);
+                },
+                onSelect: function (data) {
+                    cid = data.id;
+                    loadPosition(pid, cid);
+                }
+            });
+        }
+        //加载预置位信息
+        function loadPosition(pid, cid) {
+            $("#cbposition").combobox({
+                url: "/BaseInfo/BindInfraredPosition?pid=" + pid + "&channelid=" + cid,
+                valueField: 'name',
+                textField: 'name',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    if (data.length > 0) {
+                        $("#cbposition").combobox('select', data[0].name);
+						loadDate(pid, cid);
+                    }
+                    //dosearch();
+                }
+            });
+        }
+        //加载时间信息
+        function loadDate(pid, cid) {
+            $("#cbDate").combobox({
+                url: "/BaseInfo/BindInfraredDate?pid=" + pid + "&channelid=" + cid,
+                valueField: 'name',
+                textField: 'name',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    if (data.length > 0) {
+                        $("#cbDate").combobox('select', data[0].name);
+                    }
+                    dosearch();
+                }
+            });
+        }
+
+        var arrimg = [], arrtitle = [], arrmaxtemp = [], arrmintemp = [], arrNewnCCDW = [], arrNewnIRW = [], arrNewnIRH = [];
+        var g_dbMaxT = 0.0, g_dbMinT = 0.0;
+        var g_iNewnCCDW = 0, g_iNewnIRW = 0, g_iNewnIRH = 0;
+		var doindex = 0;
+
+        function dosearch() {
+            var positionname = $("#cbposition").combobox("getValue");
+            var ctime = $("#cbDate").combobox("getValue");
+            //var ctime = $("#cmitdate").datebox("getValue");
+            $.ajaxSettings.async = true;  //同步才能获取数据
+            $.post("/InfraredPic/LoadInfraredPic", { "pid": pid, "ChannelID": cid, "PositionName": positionname, "CDate": ctime }, function (data) {
+                var picinfo = eval("(" + data + ")");
+                $.each(picinfo, function (i) {
+                    var jsonlist = picinfo[i];
+                    var icon = "";
+                    arrimg = [], arrtitle = [], arrmaxtemp = [], arrmintemp = [], arrNewnCCDW = [], arrNewnIRW = [], arrNewnIRH = [];
+                    if (jsonlist.length > 0) {
+                        for (var jcount = 0; jcount < jsonlist.length; jcount++) {
+                            arrimg.push(jsonlist[jcount].ImgPath.replace("~", "../.."));
+                            arrtitle.push(pname + " " + jsonlist[jcount].ChannelName + " " + jsonlist[jcount].PositionName + " " + jsonlist[jcount].CommitTime);
+                            arrmaxtemp.push(jsonlist[jcount].MaxTemp);
+                            arrmintemp.push(jsonlist[jcount].MinTemp);
+                            arrNewnCCDW.push(jsonlist[jcount].NewnCCDW);
+                            arrNewnIRW.push(jsonlist[jcount].NewnIRW);
+                            arrNewnIRH.push(jsonlist[jcount].NewnIRH);
+                        }
+						doindex = 0;
+                        imgChange(0);
+                        $(".infrared_page").show();
+                    }
+                    else {
+                        //$(".infrared_page").hide();
+						var img = new Image();
+						img.src = "../../Content/images/InfraredMonitor/02.jpg";				   
+						g_dbMaxT = 0;
+						g_dbMinT = 0;
+						g_iNewnCCDW = 525;
+						g_iNewnIRW = 394;
+						g_iNewnIRH = 320;								
+						draw(img);					
+                    }
+                });
+            });
+        }
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var InfraredImg = new Image();
+        function imgChange(type) {
+            var len = arrimg.length;
+            doindex = doindex + type;
+            if (doindex < 0) {
+                //变灰
+                alert("已是最新图片！");
+                doindex = 0;
+            }
+            if (doindex >= len) {
+                alert("已是最早图片！");
+                doindex = len - 1;
+			}
+            //img.src = arrimg[doindex];
+            InfraredImg.src = arrimg[doindex];
+            //InfraredImg.src = "../../Content/images/InfraredMonitor/02.jpg";
+
+            $("#ptitle").html(arrtitle[doindex])
+            $(InfraredImg).load(function () {
+                g_dbMaxT = parseFloat(arrmaxtemp[doindex]); //var maxT = arrmaxtemp[doindex];
+                g_dbMinT = parseFloat(arrmintemp[doindex]);
+                g_iNewnCCDW = parseInt(arrNewnCCDW[doindex]);
+                g_iNewnIRW = parseInt(arrNewnIRW[doindex]);
+                g_iNewnIRH = parseInt(arrNewnIRH[doindex]);
+				
+				//test
+                //NewnCCDW	NewnIRW	NewnIRH 788	591	480
+                //NewnCCDW	NewnIRW	NewnIRH                525	394	320
+                //g_iNewnCCDW = 525;
+                //g_iNewnIRW = 394;
+                //g_iNewnIRH = 320;
+
+                draw(InfraredImg);
+            });
+        }
+        function draw(img) {
+            
+            context.drawImage(img, 0, 0,950, 320);
+            canvas = $("#canvas");
+            canvas.mousemove(function (e) {
+                var dd = document.getElementById("canvas");
+                //alert(e.pageX + "," + e.pageY);
+                
+                if (inside(e.pageX, e.pageY, getRect(dd))) {
+
+                    var canvasOffset = canvas.offset();
+                    var canvasX = Math.floor(e.pageX - canvasOffset.left);
+                    var canvasY = Math.floor(e.pageY - canvasOffset.top);
+                    var colorData = document.getElementById("canvas").getPixelColor(canvasX, canvasY);
+
+                    var red = colorData.r;
+                    var green = colorData.g;
+                    var blue = colorData.b;
+                    pix_color = red * 0.299 + green * 0.587 + blue * 0.114;
+
+                    var clickT = pix_color * (g_dbMaxT - g_dbMinT) / 255 + g_dbMinT;
+                    var a = +clickT.toFixed(1);
+
+                    //getRect(obj)
+                    //var tst = getRect(dd);
+                    //rect.x1 && x < rect.x2 && y > rect.y1+5 && y< rect.y2-5)
+                    //$("#tempvalue").html(a + ",--" + e.pageX + ":y=" + e.pageY + ";" + tst.x1 + ";--,y1=" + tst.y1 + ",y2=" + tst.y2);
+                    $("#tempvalue").html(a);
+                    $("#tempvalue").css({ "left": canvasX + 20, "top": canvasY + 20 });
+                    var cursorX = (e.pageX - 5) + "px";
+                    var cursorY = (e.pageY - 5) + "px";
+                }
+                else                
+                    $("#tempvalue").html("");
+               
+
+            });
+        }
+        function getRect(obj) {
+            var x1 = obj.offsetLeft + g_iNewnCCDW;
+            var y1 = obj.offsetTop+76;//zzz add
+            var x2 = x1 + g_iNewnIRW;
+            var y2 = y1 + obj.offsetHeight-4;//
+            return {
+                x1: x1,
+                y1: y1,
+                x2: x2,
+                y2: y2
+            };
+        }
+        function inside(x, y, rect) {
+            if (x > rect.x1 && x < rect.x2 && y > rect.y1 && y< rect.y2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).ready(function () {
+            loadChannel();
+            var img = new Image();
+            img.src = "../../Content/images/InfraredMonitor/02.jpg";
+            $(img).load(function () {
+                g_dbMaxT = 0;
+                g_dbMinT = 0;
+                g_iNewnCCDW = 525;
+                g_iNewnIRW = 394;
+                g_iNewnIRH = 320;						
+                //draw(img);
+            });
+        });
+    </script>
+</body>
+</html>

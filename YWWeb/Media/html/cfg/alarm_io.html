@@ -1,0 +1,340 @@
+ 
+<div class="config_content" >
+        <!--logo start-->
+            <div class="login">
+            </div>
+        <!--logo end-->
+        <!--item 1-->
+            <div class="item" >
+         		   <div id="IO_warn" class="logo_title">IO报警</div>
+                   <div class="item_R">
+                  		<div id="IOCP" class="logo_link" >Copy</div>
+                       <div id="IORf" class="logo_link" >Refresh</div>
+                       <div id="IODf" class="logo_link" style="display:none;">Default</div>
+                       <div id="IOSave" class="logo_link" >Save</div>
+                   </div>
+            </div>
+        <!--item 1_end-->
+        <!--table -->
+            <div class="table_content">
+            <!--table 0-->
+                    <div class="table" id="TABLE_IOALARMTYPE" style="display:none">
+                    	<div class="table_L">
+                             <font id="IOAlarmType">报警IO</font>
+                        </div>
+                        <div class="table_R">
+                        	<select id="IOAlarm_Type" class="select">
+                                <option value="0">IP Camera</option>
+                                <option value="1" selected="selected">板载IO</option>
+                            </select>
+                        </div>
+                    </div>   
+                <!--table 1-->
+                    <div class="table" id="IO_CHN_TABLE">
+                    	<div class="table_L">
+                  			<font id="Changle_num">通道号</font>　
+                        </div>
+                        <div class="table_R">
+                        	<select id="IOChid" class="select"></select>
+                        </div>
+                    </div>
+                <!--table 2-free-->
+                    <div class="table">
+                   		 <div class="table_L" id="IO_warn_state">IO报警状态</div>
+                         <div class="table_R">
+                         <div><select  id="IoAlarmSet" class="select" >
+                            <option value="0">常闭</option>
+                            <option value="1">常开</option>
+                            <option value="2">关闭</option>
+                        </select></div>
+                         </div>
+                    </div>
+                <!--table 2-->
+                    <div class="table" id="io_buzzerTime">
+                        <div class="table_L" id="buzzer_time">蜂鸣器鸣叫时间</div>
+                        <div class="table_R">
+                            <select  id="IoBuzzerMooTime" class="select">
+                            <option value="0"> 关闭</option>
+                            <option value="1"> 10秒</option>
+                            <option value="2"> 20秒</option>
+                            <option value="3"> 40秒</option>
+                            <option value="4"> 60秒</option>
+                            </select>
+                        </div> 
+                       
+                    </div>
+                    <div class="table">
+                        <div class="table_L" id="IOAlarmLatchTime">Latch Time</div>
+                        <div class="table_R">
+                            <select id="IOAlarmOutTime" class="select">
+                            <option value="0">10秒</option>
+                            <option value="1">20秒</option>
+                            <option value="2">40秒</option>
+                            <option value="3">60秒</option>
+                            </select>
+                        </div>                   
+                  </div>
+                  <div class="table" id="urmet_IOFS" style="display:none">
+                    	 <div class="table_L" id="urmet_IOFullScreen_1">全屏输出</div>
+                   		 <div class="table_R">
+                            <select id="urmet_IoFullScreen" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">1秒</option>
+                            <option value="2">2秒</option>
+                            <option value="3">3秒</option>
+                            <option value="4">5秒</option>
+                            <option value="5">7秒</option>
+                            <option value="6">10秒</option>
+                            <option value="7">20秒</option>
+                            <option value="8">30秒</option>
+                            </select>
+                   		</div>
+                 </div>     
+                   
+                <!--table 3-->
+                    <div class="table">
+                        <div class="table_box">
+                      		 <input id="IoShowMessage" type="checkbox"/>
+                             <font id="ai_show_message">显示消息</font>
+                       </div>
+                       <div class="table_box">
+               				 <input id="IoSendEmail" type="checkbox"/>
+                             <font id="ai_send_email">启用邮件发送</font>
+                       </div>
+                        <div class="table_box" id="default_IOFullScreen" style="display:none">
+               				 <input id="IoFullScreen" type="checkbox"/>
+                             <font id="IOFullScreen">Full Screen</font>
+                       </div>
+                    </div>
+                    <div class="table">
+                       <div class="table_box">
+               				 <input id="IoAlarmOut" type="checkbox"/>
+                             <font id="IOAlarmOut">Alarm Out</font>
+                       </div>
+                       
+           			   <div class="syspm_use_backup_R" id="IOAlarmChannelDiv" style="padding:0px 30px;margin-top:2px">
+            		   </div>
+                    </div>
+                <!--table 4-->
+                    <div class="table">
+                    	<div class="table_box">
+                     		 <input id="IoRec_Record" type="checkbox"/>
+                             <font id="start_touch_record">启用触发录像</font>
+                        </div>
+                    </div>   
+                 <!--table 5-FREE-->
+               <div id="IoDivBoxRecord">
+                    <div class="table">
+                    	
+               				<div class="table_L" id="record_delay_time">录像延迟时间</div>
+                            <select  id="IoRecordDelayTime" class="select">
+                            <option value="0"> 30秒</option>
+                            <option value="1"> 1分</option>
+                            <option value="2"> 2分</option>
+                            <option value="3"> 5分</option>
+                            </select>
+                    </div>      
+                <!--table 5-->
+                    <div class="table">
+                       <div class="table_L" id="record_channel">联动录像通道</div>
+              		    <div class="table_R">
+                            <div class="table_box">
+                                <input type="checkbox" id="all_checked"/>
+                                <font id="all_full">全选</font>
+                            </div>
+                        </div>
+                    </div> 
+                <!--table 6-->
+                    <div class="table" id="IO_rec_table1">
+                        <div class="tableChn1">
+							<div id="IOAlDiv1" style="float:left;"><input class="IORecordCh1" type="checkbox"><font id="IORecord_1">通道1</font></div>
+							<div id="IOAlDiv2" style="float:left;"><input class="IORecordCh2" type="checkbox"><font id="IORecord_2">通道2</font></div>
+							<div id="IOAlDiv3" style="float:left;"><input class="IORecordCh3" type="checkbox"><font id="IORecord_3">通道3</font></div>
+							<div id="IOAlDiv4" style="float:left;"><input class="IORecordCh4" type="checkbox"><font id="IORecord_4">通道4</font></div>
+							<div id="IOAlDiv5" style="float:left;"><input class="IORecordCh5" type="checkbox"><font id="IORecord_5">通道5</font></div>
+							<div id="IOAlDiv6" style="float:left;"><input class="IORecordCh6" type="checkbox"><font id="IORecord_6">通道6</font></div>
+							<div id="IOAlDiv7" style="float:left;"><input class="IORecordCh7" type="checkbox"><font id="IORecord_7">通道7</font></div>
+							<div id="IOAlDiv8" style="float:left;"><input class="IORecordCh8" type="checkbox"><font id="IORecord_8">通道8</font></div>
+						</div>
+                    </div>  
+                <!--table 7-->
+                    <div class="table" id="IO_rec_table2">
+                     	<div class="tableChn1">
+							<div id="IOAlDiv9" style="float:left;"><input class="IORecordCh9" type="checkbox"><font id="IORecord_9">通道9</font></div>
+							<div id="IOAlDiv10" style="float:left;"><input class="IORecordCh10" type="checkbox"><font id="IORecord_10">通道10</font></div>
+							<div id="IOAlDiv11" style="float:left;"><input class="IORecordCh11" type="checkbox"><font id="IORecord_11">通道11</font></div>
+							<div id="IOAlDiv12" style="float:left;"><input class="IORecordCh12" type="checkbox"><font id="IORecord_12">通道12</font></div>
+							<div id="IOAlDiv13" style="float:left;"><input class="IORecordCh13" type="checkbox"><font id="IORecord_13">通道13</font></div>
+							<div id="IOAlDiv14" style="float:left;"><input class="IORecordCh14" type="checkbox"><font id="IORecord_14">通道14</font></div>
+							<div id="IOAlDiv15" style="float:left;"><input class="IORecordCh15" type="checkbox"><font id="IORecord_15">通道15</font></div>
+							<div id="IOAlDiv16" style="float:left;"><input class="IORecordCh16" type="checkbox"><font id="IORecord_16">通道16</font></div>
+						</div>
+                    </div> 
+                    
+                     <div class="table" id="IO_rec_table3">
+                     	<div class="tableChn1">
+							<div id="IOAlDiv17" style="float:left;"><input class="IORecordCh17" type="checkbox"><font id="IORecord_17">通道17</font></div>
+							<div id="IOAlDiv18" style="float:left;"><input class="IORecordCh18" type="checkbox"><font id="IORecord_18">通道18</font></div>
+							<div id="IOAlDiv19" style="float:left;"><input class="IORecordCh19" type="checkbox"><font id="IORecord_19">通道19</font></div>
+							<div id="IOAlDiv20" style="float:left;"><input class="IORecordCh20" type="checkbox"><font id="IORecord_20">通道20</font></div>
+							<div id="IOAlDiv21" style="float:left;"><input class="IORecordCh21" type="checkbox"><font id="IORecord_21">通道21</font></div>
+							<div id="IOAlDiv22" style="float:left;"><input class="IORecordCh22" type="checkbox"><font id="IORecord_22">通道22</font></div>
+							<div id="IOAlDiv23" style="float:left;"><input class="IORecordCh23" type="checkbox"><font id="IORecord_23">通道23</font></div>
+							<div id="IOAlDiv24" style="float:left;"><input class="IORecordCh24" type="checkbox"><font id="IORecord_24">通道24</font></div>
+						</div>
+                    </div> 
+                    
+                     <div class="table" id="IO_rec_table4">
+                     	<div class="tableChn1">
+							<div id="IOAlDiv25" style="float:left;"><input class="IORecordCh25" type="checkbox"><font id="IORecord_25">通道25</font></div>
+							<div id="IOAlDiv26" style="float:left;"><input class="IORecordCh26" type="checkbox"><font id="IORecord_26">通道26</font></div>
+							<div id="IOAlDiv27" style="float:left;"><input class="IORecordCh27" type="checkbox"><font id="IORecord_27">通道27</font></div>
+							<div id="IOAlDiv28" style="float:left;"><input class="IORecordCh28" type="checkbox"><font id="IORecord_28">通道28</font></div>
+							<div id="IOAlDiv29" style="float:left;"><input class="IORecordCh29" type="checkbox"><font id="IORecord_29">通道29</font></div>
+							<div id="IOAlDiv30" style="float:left;"><input class="IORecordCh30" type="checkbox"><font id="IORecord_30">通道30</font></div>
+							<div id="IOAlDiv31" style="float:left;"><input class="IORecordCh31" type="checkbox"><font id="IORecord_31">通道31</font></div>
+							<div id="IOAlDiv32" style="float:left;"><input class="IORecordCh32" type="checkbox"><font id="IORecord_32">通道32</font></div>
+						</div>
+                    </div> 
+                    
+                    <!--混合DVR 10路、12路-->
+                    <div class="table" id="IOrec_H12_1" style="display:none;">
+                        <div class="tableChn1">
+                        	<div style="float:left; width:150px;"><input class="IOCh_MN_CkAll" type="checkbox" /><font id="IOCh_MNCkAll">模拟通道</font></div>
+							<div style="float:left; width:35px;"><font>1</font><input class="IORecordCh1" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>2</font><input class="IORecordCh2" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>3</font><input class="IORecordCh3" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>4</font><input class="IORecordCh4" type="checkbox"></div>
+						</div>
+                    </div> 
+                    <div class="table" id="IOrec_H12_2" style="display:none;">
+                     	<div class="tableChn1">
+                        	<div style="float:left; width:150px;"><input class="IOCh_IP_CkAll" type="checkbox" /><font id="IOCh_IPCkAll">IP通道</font></div>
+                        	<div style="float:left; width:35px;"><font>1</font><input class="IORecordCh5" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>2</font><input class="IORecordCh6" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>3</font><input class="IORecordCh7" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>4</font><input class="IORecordCh8" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>5</font><input class="IORecordCh9" type="checkbox"></div>
+							<div style="float:left; width:35px;"><font>6</font><input class="IORecordCh10" type="checkbox"></div>
+							<div style="float:left; width:35px;" id="idIO_div7"><font>7</font><input class="IORecordCh11" type="checkbox"></div>
+							<div style="float:left; width:35px;" id="idIO_div8"><font>8</font><input class="IORecordCh12" type="checkbox"></div>
+						</div>
+                    </div>
+
+					<!--混合DVR 24路 8+16 -->
+                    <div class="table" id="IOrec_H24_1" style="display:none;">
+                        <div class="tableChn1">
+                        	<div style="float:left; width:130px;"><input class="IOCh_MN_CkAll" type="checkbox" /><font id="IOCh_MNCkAll2">模拟通道</font></div>
+							
+							<div style="float:left; width:28px;" id="alio_1"><font>1</font><input class="IORecordCh1" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_2"><font>2</font><input class="IORecordCh2" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_3"><font>3</font><input class="IORecordCh3" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_4"><font>4</font><input class="IORecordCh4" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_5"><font>5</font><input class="IORecordCh5" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_6"><font>6</font><input class="IORecordCh6" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_7"><font>7</font><input class="IORecordCh7" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_8"><font>8</font><input class="IORecordCh8" type="checkbox"></div>
+						</div>
+                    </div> 
+                    <div class="table" id="IOrec_H24_2" style="display:none;">
+                     	<div class="tableChn1">
+                        	<div style="float:left; width:130px;"><input class="IOCh_IP_CkAll" type="checkbox" /><font id="IOCh_IPCkAll2">IP通道</font></div>
+                        	
+							<div style="float:left; width:28px;" id="alio_9"><font>1</font><input class="IORecordCh9" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_10"><font>2</font><input class="IORecordCh10" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_11"><font>3</font><input class="IORecordCh11" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_12"><font>4</font><input class="IORecordCh12" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_13"><font>5</font><input class="IORecordCh13" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_14"><font>6</font><input class="IORecordCh14" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_15"><font>7</font><input class="IORecordCh15" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_16"><font>8</font><input class="IORecordCh16" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_17"><font>9</font><input class="IORecordCh17" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_18"><font>10</font><input class="IORecordCh18" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_19"><font>11</font><input class="IORecordCh19" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_20"><font>12</font><input class="IORecordCh20" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_21"><font>13</font><input class="IORecordCh21" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_22"><font>14</font><input class="IORecordCh22" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_23"><font>15</font><input class="IORecordCh23" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio_24"><font>16</font><input class="IORecordCh24" type="checkbox"></div>
+						</div>
+                    </div>	
+					
+					<!--混合DVR 24路 16+8 -->
+                    <div class="table" id="IOrec_H168_1" style="display:none;">
+                        <div class="tableChn1">
+                        	<div style="float:left; width:130px;"><input class="IOCh_MN_CkAll" type="checkbox" /><font id="IOCh_MNCkAll3">模拟通道</font></div>
+							<div style="float:left; width:28px;" id="alio168_1"><font>1</font><input class="IORecordCh1" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_2"><font>2</font><input class="IORecordCh2" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_3"><font>3</font><input class="IORecordCh3" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_4"><font>4</font><input class="IORecordCh4" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_5"><font>5</font><input class="IORecordCh5" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_6"><font>6</font><input class="IORecordCh6" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_7"><font>7</font><input class="IORecordCh7" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_8"><font>8</font><input class="IORecordCh8" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_9"><font>9</font><input class="IORecordCh9" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_10"><font>10</font><input class="IORecordCh10" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_11"><font>11</font><input class="IORecordCh11" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_12"><font>12</font><input class="IORecordCh12" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_13"><font>13</font><input class="IORecordCh13" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_14"><font>14</font><input class="IORecordCh14" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_15"><font>15</font><input class="IORecordCh15" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_16"><font>16</font><input class="IORecordCh16" type="checkbox"></div>
+						</div>
+                    </div> 
+                    <div class="table" id="IOrec_H168_2" style="display:none;">
+                     	<div class="tableChn1">
+                        	<div style="float:left; width:130px;"><input class="IOCh_IP_CkAll" type="checkbox" /><font id="IOCh_IPCkAll3">IP通道</font></div>
+							<div style="float:left; width:28px;" id="alio168_17"><font>1</font><input class="IORecordCh17" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_18"><font>2</font><input class="IORecordCh18" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_19"><font>3</font><input class="IORecordCh19" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_20"><font>4</font><input class="IORecordCh20" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_21"><font>5</font><input class="IORecordCh21" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_22"><font>6</font><input class="IORecordCh22" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_23"><font>7</font><input class="IORecordCh23" type="checkbox"></div>
+							<div style="float:left; width:28px;" id="alio168_24"><font>8</font><input class="IORecordCh24" type="checkbox"></div>
+						</div>
+                    </div>
+                <!--table 8
+                    <div class="table">
+                        <div class="table_L">
+                        </div>
+                        <div class="table_R"></div>
+                    </div>                  -->                
+             </div>                                        
+       		</div>
+        <!--table end-->
+      		<div id = "ioCopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "ioSelectCopy">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">      
+                        <input type="checkbox" id="iock"/>                     
+                        <font id="ioSelectAll"> 全选</font>
+                        <input type="button" value="确定" id="ioOk"/>
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="io_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="io_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="io_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="io_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="io_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="io_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="io_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="io_TDNum_4">
+                        </div>
+                   </div>
+            </div>
+      
+</div>
+
+<div id="isfix"></div>

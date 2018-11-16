@@ -1,0 +1,361 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DistanceMeterReading(远程抄电表)</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+        });
+    });
+    </script>
+
+    <style>
+        td {
+            vertical-align: middle;
+            text-align: center;
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid" style="padding-top:2%">
+        <div class="clearfix">
+
+            @*左侧固定格式*@
+            <div style="width:17%;float:left;height:660px;border-right:1px solid #000000;">
+                @*树形菜单*@
+                <div class="tree" style="overflow-y:scroll;height:560px;">
+                    <ul>
+                        <li>
+                            <span style="cursor:pointer">住户列表</span>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K1楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K2楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K3楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    @*<ul>
+                    <li>
+                        <span style="cursor:pointer">数据查询</span>
+                        <ul>
+                            <li>
+                                <span style="cursor:pointer"><i class="glyphicon glyphicon-plus-sign"></i>数据分类</span>
+                                <ul>
+                                    <li>
+                                        <span><a href="#" style="text-decoration: none;">近期数据</a></span>
+                                    </li>
+                                    <li>
+                                        <span><i class="icon-time"></i><a href="#" style="text-decoration: none;">历史数据</a></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>*@
+                </div>
+                <div style="width:250px;padding-left:20px;">
+                    <table class="table">
+                        <tr>
+                            <td style="width:100px;">搜索住户：</td>
+                            <td><input type="text" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="vertical-align: middle;text-align:right;"><button type="button" class="btn btn-default">查询</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div style="float:left;padding-left:15px;height:610px;width:800px;">
+
+                    <div style="float:left;width:400px;border-right:1px solid #000000;height:100%;">
+
+                        <div style="float:left;padding-left:15px;height:560px;">
+                            <table class="table">
+                                <tr>
+                                    <td style="text-align:left;">电表总数：（10台）</td>
+                                    <td>
+                                        <label class="checkbox-inline" style="padding-bottom:20px;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>全选
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <label class="checkbox-inline" style="padding-bottom:20px;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>通讯失败记录
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td></td>
+                                    <td style="vertical-align: middle;text-align:center;">表地址</td>
+                                    <td style="vertical-align: middle;text-align:center;">安装位置</td>
+                                    <td style="vertical-align: middle;text-align:center;">状态</td>
+                                    <td style="vertical-align: middle;text-align:center;">出厂编号</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">1</td>
+                                    <td style="vertical-align: middle;text-align:center;">1楼</td>
+                                    <td style="vertical-align: middle;text-align:center;">正常</td>
+                                    <td style="vertical-align: middle;text-align:center;">001</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">2</td>
+                                    <td style="vertical-align: middle;text-align:center;">1楼</td>
+                                    <td style="vertical-align: middle;text-align:center;">正常</td>
+                                    <td style="vertical-align: middle;text-align:center;">002</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">3</td>
+                                    <td style="vertical-align: middle;text-align:center;">2楼</td>
+                                    <td style="vertical-align: middle;text-align:center;">正常</td>
+                                    <td style="vertical-align: middle;text-align:center;">003</td>
+                                </tr>
+                            </table>
+                            </div>
+                            <div style="width:100%;">
+                                <table class="table">
+                                    <tr>
+                                        <td style="vertical-align: middle;text-align:right;"><button type="button" class="btn btn-default">抄整表</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    <div style="float:left;padding-left:20px;">
+
+                        <div style="float:left;height:560px;">
+                            <table class="table">
+                                <tr>
+                                    <td style="text-align:left;">住户总数：（100户）</td>
+                                    <td>
+                                        <label class="checkbox-inline" style="padding-bottom:20px;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>全选
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td></td>
+                                    <td style="vertical-align: middle;text-align:center;">住户</td>
+                                    <td style="vertical-align: middle;text-align:center;">姓名</td>
+                                    <td style="vertical-align: middle;text-align:center;">抄表数据</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">1楼.101</td>
+                                    <td style="vertical-align: middle;text-align:center;">张三</td>
+                                    <td style="vertical-align: middle;text-align:center;">666</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">1楼.102</td>
+                                    <td style="vertical-align: middle;text-align:center;">李四</td>
+                                    <td style="vertical-align: middle;text-align:center;">666</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        <label class="checkbox-inline" style="padding-bottom:70%;">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1">
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">2楼.201</td>
+                                    <td style="vertical-align: middle;text-align:center;">王五</td>
+                                    <td style="vertical-align: middle;text-align:center;">666</td>
+                                </tr>
+                            </table>
+                            </div>
+                            <div style="width:100%;">
+                                <table class="table">
+                                    <tr>
+
+                                        <td style="vertical-align: middle;text-align:right;padding-right:60px;"><button type="button" class="btn btn-default">抄单户</button><button type="button" class="btn btn-default" style="margin-left:30px;">保存数据</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+           </div>
+       </div>
+    </div>
+
+
+</body>
+</html>

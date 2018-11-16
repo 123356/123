@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SparePartEdits</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                备件编码：
+            </td>
+            <td class="d_l_d" >
+                <input id="SparePartCode" name="SparePartCode" missingmessage="备件编码必填项！" class="easyui-validatebox"
+                    style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="SparePartID" type="hidden" />
+            </td>
+             <td class="d_l_t">
+                备件名称：
+            </td>
+            <td class="d_l_d">
+                <input id="SparePartName" name="SparePartName" missingmessage="备件名称必填项！" class="easyui-validatebox"
+                    style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                库存数量：
+            </td>
+            <td class="d_l_d">
+               <input id="StockCount" name="StockCount" class="easyui-validatebox" style="width: 250px;" />
+            </td>
+            <td class="d_l_t">
+                系统编码：
+            </td>
+            <td class="d_l_d">
+                <input id="EadoCode" name="EadoCode" class="easyui-validatebox" style="width: 250px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                供应商名称：
+            </td>
+            <td class="d_l_d">
+                <select id="SupplierID" style="width: 260px;" >
+                </select>
+            </td>
+            @*<td class="d_l_t">
+                使用状态：
+            </td>
+            <td class="d_l_d">
+                <select id="UseState" class="easyui-combobox" style="width: 260px;">
+                    <option value="0">正常使用</option>
+                    <option value="1">暂停使用</option>
+                </select>
+            </td>*@
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                备注：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="Remarks" class="easyui-validatebox" style="height: 50px; width: 632px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+            data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                data-options="iconCls:'icon-cancel'" onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    
+    <script type="text/javascript">
+        var sparepartid=@Html.Raw(Request.QueryString["sparepartid"]);
+    </script>
+    <script src="~/Content/UserJS/SparePartEdits._jm.js"></script>
+</body>
+</html>

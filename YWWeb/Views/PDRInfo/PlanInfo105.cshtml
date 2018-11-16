@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PlanInfo105</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/planpub.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu105.css" />
+</head>
+<body class="tabbg6">
+    <div class="pmmain plancontent" id="p105">
+        <!--变压器 1#-->
+        <div class="tb_b1" id="d475" onclick="deviceinfo(475);">
+        </div>
+        <!--低压柜 1AA1~1AA	左~右-->
+        <div class="tb_1aa1 defaultcursor">
+        </div>
+        <div class="tb_1aa2 defaultcursor">
+        </div>
+        <div class="tb_1aa3 defaultcursor">
+        </div>
+        <div class="tb_1aa4 defaultcursor">
+        </div>
+        <div class="tb_1aa5 defaultcursor">
+        </div>
+        <div class="tb_1aa6 defaultcursor">
+        </div>
+        <div class="tb_1aa7 defaultcursor">
+        </div>
+        <div class="tb_1aa8 defaultcursor">
+        </div>
+        <!--低压柜 1BB8~1BB1 左~右-->
+        <div class="tb_1bb8 defaultcursor">
+        </div>
+        <div class="tb_1bb7 defaultcursor">
+        </div>
+        <div class="tb_1bb6 defaultcursor">
+        </div>
+        <div class="tb_1bb5 defaultcursor">
+        </div>
+        <div class="tb_1bb4" id="d471" onclick="deviceinfo(471);">
+        </div>
+        <div class="tb_1bb3 defaultcursor">
+        </div>
+        <div class="tb_1bb2 defaultcursor">
+        </div>
+        <div class="tb_1bb1" id="d470" onclick="deviceinfo(470);">
+        </div>
+        <!--变压器 2#-->
+        <div class="tb_b2" id="d472" onclick="deviceinfo(472);">
+        </div>
+        <!--监控屏~直流屏 4面 左~右-->
+        <div class="tb_p_dc defaultcursor">
+        </div>
+        <div class="tb_p_zl" id="d480" onclick="deviceinfo(480);">
+        </div>
+        <div class="tb_p_jk defaultcursor">
+        </div>
+        <!--H1~H9-->
+        <div class="tb_p_h1 defaultcursor">
+        </div>
+        <div class="tb_p_h2 defaultcursor">
+        </div>
+        <div class="tb_p_h3 defaultcursor">
+        </div>
+        <div class="tb_p_h4 defaultcursor">
+        </div>
+        <div class="tb_p_h5 defaultcursor">
+        </div>
+        <div class="tb_p_h6" id="d473" onclick="deviceinfo(473);">
+        </div>
+        <div class="tb_p_h7" id="d469" onclick="deviceinfo(469);">
+        </div>
+        <div class="tb_p_h8 defaultcursor">
+        </div>
+        <div class="tb_p_h9 defaultcursor">
+        </div>
+        
+        <!--环境温湿度-->
+        <div class="tb_wsd" id="d474" onclick="deviceinfo(474);">
+        </div>
+        <!--烟感-->
+        <div class="tb_yg defaultcursor" id="d476">
+        </div>
+        <!--水浸-->
+        <div class="tb_sj defaultcursor" id="d477">
+        </div>
+        <!--母线桥-->
+        <div class="tb_mxq defaultcursor">
+        </div>
+        <!--变压器排风机-->
+        @*<div class="tb_pfj0 defaultcursor" id="d478">
+        </div>*@
+        <!--变压器柜顶排风机-->
+        <span class="tb_pfj1 tb_pfj defaultcursor"></span><span class="tb_pfj2 tb_pfj defaultcursor">
+        </span>
+        <!--墙面-->
+        <div class="tb_qm defaultcursor">
+        </div>
+    </div>
+    <div class="station_room_monitor" id="contentmain">
+    </div>
+    <script type="text/javascript">
+        var pid = $.cookie('cookiepid');
+    </script>
+    <script src="~/Content/UserJS/lbywpln._jm.js" type="text/javascript"></script>
+</body>
+</html>

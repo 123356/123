@@ -1,0 +1,246 @@
+/* CSS Document */
+.searchBtn,.searchBtn1{
+	float:left; 
+	width:127px; 
+	margin-top:30px; 
+	background-image:url(../images/bigbtn_bg.png); 
+	cursor:pointer; 
+	font-size:12px; 
+	height:40px; 
+	text-align:center; 
+	line-height:33px; 
+	color:#FFF;
+}
+
+.configDiv{
+	padding-top:20px; 
+	color:#fff; 
+	font-size:13px; 
+	padding-left:45px; 
+	font-family:Arial, Helvetica, sans-serif
+}
+
+.notselected{
+	background-image:url(../images/settings_menu_bg2.png); 
+	width:250px; 
+	height:43px; 
+	font-size:11px;
+	line-height:43px; 
+	color:#fff; 
+	font-family:Arial, Helvetica, sans-serif
+}
+
+.notselected{
+	text-align:left;
+	text-indent: 70px; 
+}
+
+.selecteda{
+	background-image:url(../images/settings_menu_bg3.png); 
+	width:250px; 
+	height:43px; 
+	font-size:13px; 
+	line-height:43px; 
+}
+
+.selectedb{
+	background-image:url(../images/settings_menu_bg3.png); 
+	width:250px; 
+	height:43px; 
+	font-size:14px; 
+	line-height:43px; 
+}
+
+.leftCenter{
+	width:100%; 
+	position:absolute; 
+	top:0px; bottom:52px;
+	_height:100%; 
+	height:100%;
+	background-color: rgb(85,85,85);
+	/*height:620px;*/
+}
+
+.calendarDiv{
+	height:175px; 
+	width:199px;
+	position:relative; 
+	overflow:hidden; 
+	margin-left: 25px;
+}
+
+.configHead{
+	width:250px; 
+	height:55px;
+	text-align:left;
+	text-indent: 30px; 
+	color:#999999
+}
+
+.pathConfigLeft{
+	width:40px; 
+	height:40px; 
+	cursor:pointer;
+}
+
+.pathConfigRight{
+	width:53px; 
+	height:55px; 
+	float:left;
+}
+
+.browerBtn{
+	background:url(../images/more_btn.png); 
+	width:20px; 
+	height:19px; 
+	float:left; 
+	margin-left:0px; 
+	border:1px solid #069; 
+	background-color: white;
+}
+
+.kinescope{
+	width:64px; 
+	height:83px; 
+	float:left; 
+	clear:left;
+}
+
+.pathconfig{
+	height:35px;
+}
+
+#configPath123{
+	margin-top:10px;
+	height:25px; 
+	font-size:14px; 
+	padding-top:10px;
+	width: 542px;
+    background-color: #333333;
+}
+
+.pathcontent{
+	margin-left:0px; 
+	border:1px solid #CCC; 
+	width:540px;
+	height:200px; 
+	border:none; 
+	background-color: #4c4c4c;
+    width: 542px;
+}
+
+#recordfile,#longfiledown,#getimg,#filetype,#OriginalVideo{
+	font-size:12px;  
+	margin-left:30px; 
+	float:left; 
+	width:100px; 
+	height:20px;
+	margin-right:10px;
+}
+
+#recordtime{
+	font-size:12px;  
+	margin-left:30px; 
+	height:20px;
+}
+
+#Path_2,#Path_3,#Path_1{
+	width:260px;
+	height:17px; 
+	float:left;
+    background: linear-gradient(#b0b0b0,#fff);
+    border: 1px solid #000;
+    color: black;
+}
+
+#minute{
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size:12px; 
+	margin-left:-8px;
+}
+
+#minuteTime{
+	width:70px;
+	height:17px; 
+    background: linear-gradient(#b0b0b0,#fff);
+    border: 1px solid #000;
+    color: black;
+}
+
+.pathSave{
+	background:url(../images/bigbtn_bg.png) no-repeat; 
+	background-position:0px -40px; 
+	width:128px; 
+	height:42px; 
+	margin:5px 0px 0px 340px; 
+	cursor:pointer;
+	font-size:14px;
+	color:#FFF; 
+	text-align:center; 
+	padding-top:6px;
+}
+
+#Path_fileType{ 
+	width:90px; 
+	float:left;
+	height:20px;
+    background: linear-gradient(#b0b0b0,#fff);
+    border: 1px solid #000;
+    color: black;
+}
+
+#Path_fileType option{
+	background:black; 
+}
+
+#recordtime{
+	margin-left:0px;
+	width:80px;
+	margin-top:3px;
+}
+
+/*select option{ background:url(../images/fillShading.jpg)}*/
+#pbRcType option{
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding:2px;
+	/*background:url(../../images/content_bg.png);*/
+	background:black;
+	color:#FFF;
+}
+
+#selectMonth option{
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding:2px;
+	/*background:url(../../images/content_bg.png);*/
+	background:rgb(38,38,38);
+	color:#FFF;
+}
+
+#yearselect option{
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding:2px;
+	/*background:url(../../images/content_bg.png);*/
+	background:rgb(38,38,38);
+	color:#FFF;
+}
+
+.Live_select{
+	 width:160px;
+	 background:#D8D8D8;
+	 color:#000;
+	 height:20px;
+	 background:#3F444e;
+	 border:1px solid #FFF;
+	 margin-top:3px;
+	 color:#FFF;
+}
+

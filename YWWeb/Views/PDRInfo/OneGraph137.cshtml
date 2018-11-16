@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OneGraph137</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/onepub.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu137.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+</head>
+<body class="tabbg2">
+    <div class="ycmain page_content">
+        <!--福州二医院运维项目 1号楼配电房 一次图-->
+        <ul class="alertmenu" id="p137">
+            <!--TM1_2000kVA变-->
+              <li class="w897 alarmico_l">
+                <dt id="d897" onclick="deviceinfo(107,897);"></dt>
+                <dd id="t897"> </dd>
+              </li>
+              <!--TM2_2000kVA变-->
+              <li class="w898 alarmico_l">
+                <dt id="d898" onclick="deviceinfo(107,898);"></dt>
+                <dd id="t898"> </dd>
+              </li>
+              <!--1AA_TM1进线柜-->
+              <li class="w1016 alarmico_r">
+                <dt id="d1016" onclick="deviceinfo(107,1016);"></dt>
+                <dd id="t1016"></dd>
+              </li>
+              <!--21AA_TM2进线柜-->
+              <li class="w1017 alarmico_r">
+                <dt id="d1017" onclick="deviceinfo(107,1017);"></dt>
+                <dd id="t1017"></dd>
+              </li>
+              <!--1AH_工作电源进线柜-->
+              <li class="w1018 alarmico_l">
+                <dt id="d1018" onclick="deviceinfo(107,1018);"></dt>
+                <dd id="t1018"></dd>
+              </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var pid = 137;
+        var OGdid = "-1";
+        loadPointsInfo(OGdid);
+    </script>
+     <script src="~/Content/UserJS/lfywufl._jm.js" type="text/javascript"></script>
+</body>
+</html>

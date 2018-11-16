@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllotPurview</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="div-body">
+        <table class="example" id="dnd-example">
+            <thead>
+                <tr>
+                    <td style="width: 203px; padding-left: 20px;">
+                        URL菜单权限
+                    </td>
+                    <td style="width: 60px; text-align: center;">
+                        图标
+                    </td>
+                    <td style="width: 20px; text-align: center;">
+                        <label id="checkAllOff" onclick="CheckAllLine()" title="全选">
+                            &nbsp;</label>
+                    </td>
+                    <td>
+                        操作按钮权限
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="purview">
+            </tbody>
+        </table>
+        <a href="javascript:;" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            保存</a>
+    </div>
+    <script type="text/javascript">
+        var roleid = 4;
+        $(function () {
+            loadPurview();
+            $("#dnd-example").treeTable({
+                initialState: "expanded" //collapsed 收缩 expanded展开的                
+            });
+        });
+        function save() {
+            var item = CheckboxValue();
+            alert(item);
+        }
+        function loadPurview() {
+            $.post("/UserInfo/LoadAllPurview", { "roleid": roleid }, function (data) {
+                var obj = eval("(" + data + ")");
+                $("#purview").html(obj);
+                $("#dnd-example").treeTable({
+                    initialState: "expanded" //collapsed 收缩 expanded展开的
+                });
+            });
+        }
+    </script>
+</body>
+</html>

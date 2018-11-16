@@ -1,0 +1,150 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="cyt_cloud_config" class="logo_title">云台配置</div>
+               <div class="item_R">
+               	   <div id="ChnPTZCP" class="logo_link">Copy</div>
+                   <div id="ChnPTZRF" class="logo_link">Refresh</div>
+                   <div id="ChnPTZDF" class="logo_link" style="display:none;">Default</div>
+                   <div id="ChnPTZSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table" id="YT_CHN_TABLE">
+                    <div class="table_L" id="cyt_channel_num">通道号</div>
+                    <div class="table_R">
+                    <select id="YTchid" class="select"></select>
+                    </div>
+                </div>
+                <div id="YTSignal_div" class="table">
+                    <div class="table_L" id="cyt_signal_type">信号类型</div>
+                    <div class="table_R">
+                    <select id="YTSignal" class="select">
+                    	<option value="0">模拟</option>
+                        <option value="1">数字</option>
+                    </select>
+                    </div>
+                </div>
+            <!--table 2-free-->
+            <div id = "SIGNAL_CHANGE">
+         		<div class="table">
+                    <div class="table_L" id="cyt_agreement_type">协议类型</div>
+                    <div class="table_R">
+                    <select id="YTProtocol" class="select">
+                        <option value="0">Pelco-D</option>
+                        <option value="1">Pelco-P</option>
+                        <!--<option value="2">三星</option>-->
+                        <!--<option value="3">COAX</option>-->
+                    </select>
+                    </div>
+                </div>  
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="baud_ratio_1">波特率</div>
+                    <div class="table_R">
+                    <select id="YTBaudrate" class="select">
+                        <option value="0">1200</option>
+                        <option value="1">2400</option>
+                        <option value="2">4800</option>
+                        <option value="3">9600</option>
+                    </select>
+                    </div>
+                </div>
+            <!--table 3-->
+            	<div class="table">
+                    <div class="table_L" id="chn_data_bit">数据位</div>
+                    <div class="table_R">
+                        <select  id="YTDataBit" class="select">
+                            <option value="0">8位</option>
+                            <option value="1">7位</option>
+                            <option value="2">6位</option>
+                            <option value="3">5位</option>
+                         </select>
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table">
+                    <div class="table_L" id="cyt_stop_bit">停止位</div>
+                    <div class="table_R">
+                    	<select id="YTStopBit" class="select">
+                            <option value="0">1位</option>
+                            <option value="1">2位</option>
+                        </select>
+                    </div>
+                </div>
+             <!--table 5-->
+         		<div class="table">
+                    <div class="table_L" id="cyt_check_1">校验</div>
+                    <div class="table_R">
+                    	<select id="YTCheck" class="select">
+                            <option value="0">无校验</option>
+                            <option value="1">奇校验</option>
+                            <option value="2">偶校验</option>
+                            <option value="3">Mark校验</option>
+                            <option value="4">Space校验</option>
+                        </select>	
+                    </div>
+                </div>
+                <div class="table" id="YTCruise_div" style="display:none">
+                    <div class="table_L" id="Cruise">Cruise</div>
+                    <div class="table_R">
+                    	<select  id="YTCruise" class="select">
+                        	<option value="0">Disable</option>
+                            <option value="1">Enable</option>
+                        </select>
+                    </div>
+                </div>
+             <!--table 6-->
+         		<div class="table">
+                    <div class="table_L" id="address">地址</div>
+                    <div class="table_R">
+                    	<select  id="YTNumber" class="select"></select>
+                    </div>
+                </div>
+             <!--table 7-->
+             </div>
+       
+            <div id = "ytCopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "ytselectCopy">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">    
+                        <input type="checkbox" id="ytck" style="margin-left:3px;"/>                   
+                        <font id="ytselectedAll"> 全选</font>
+                        <input type="button" value="确定" id="ytOk" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="yt_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="yt_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="yt_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="yt_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="yt_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="yt_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="yt_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="yt_TDNum_4">
+                        </div>
+                   </div>
+            </div>
+    </div>
+    <!--table end-->
+		
+</div>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <edmx:Designer>
+    <edmx:Diagrams>
+ 
+      <edmx:Diagram Name="S5001Model" ZoomLevel="72">
+ 
+        <edmx:EntityTypeShape EntityType="YWModel.t_AlarmTable_en" PointX="0.75" PointY="0.75" Width="1.5" Height="3.9529630533854156" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_AlarmTable_ErrorData" Width="1.5" PointX="2.75" PointY="0.75" Height="4.0712491861979156" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Button" Width="1.5" PointX="4.75" PointY="0.75" Height="2.2898160807291674" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_CameraInfo" Width="1.5" PointX="4.75" PointY="4.75" Height="2.734111328125" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_DeviceStructureType" Width="1.5" PointX="6.75" PointY="0.75" Height="1.7354337565104174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_DeviceType" Width="1.5" PointX="0.75" PointY="6.75" Height="1.7354337565104174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Log" Width="1.5" PointX="6.75" PointY="3.75" Height="2.16105224609375" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_MajorLevel" Width="1.5" PointX="6.75" PointY="6.75" Height="1.7354337565104174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Module" Width="1.5" PointX="8.75" PointY="0.75" Height="2.4746101888020817" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_RoleInfo" Width="1.5" PointX="2.75" PointY="8.75" Height="1.7354337565104174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_RoleRight" Width="1.5" PointX="8.75" PointY="4.75" Height="1.5506396484375031" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_UserRoles" Width="1.5" PointX="8.75" PointY="7.75" Height="1.5506396484375031" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_ValueType" Width="1.5" PointX="4.75" PointY="9.75" Height="2.2898160807291674" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_DiagnoseCondition" Width="1.5" PointX="10.75" PointY="0.75" Height="1.9202278645833388" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_FaultType" Width="1.5" PointX="10.75" PointY="3.75" Height="1.9202278645833388" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_MonitorType" Width="1.5" PointX="10.75" PointY="6.75" Height="1.7354337565104174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_Report" Width="1.5" PointX="6.75" PointY="10.75" Height="4.8769335937500067" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_SwitchGear" Width="1.5" PointX="8.75" PointY="10.75" Height="2.2898160807291674" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_SwitchGearNew" Width="1.5" PointX="10.75" PointY="9.75" Height="3.0289925130208246" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DE_TongxDB" Width="1.5" PointX="0.75" PointY="11.75" Height="2.8441984049479174" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_DevicesFiles" Width="1.5" PointX="12.75" PointY="1.125" Height="2.6594042968750102" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order_Photo" Width="1.5" PointX="12.75" PointY="4.75" Height="2.2898160807291674" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_EnvironmentData" Width="1.5" PointX="12.75" PointY="8.75" Height="3.5833748372395746" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_AlarmSetting" Width="1.5" PointX="2.75" PointY="13.75" Height="3.7681689453125102" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_PointsInfo" Width="1.5" PointX="12.75" PointY="13.75" Height="3.5833748372395746" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_RealTimeData_All" Width="1.5" PointX="14.75" PointY="0.75" Height="2.1050219726562602" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00001_历史数据表" Width="1.5" PointX="14.75" PointY="3.75" Height="3.5833748372395746" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Area" Width="1.5" PointX="14.75" PointY="8.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_AlarmSet" Width="1.5" PointX="14.75" PointY="11.75" Height="2.4746101888020853" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_PDRType" Width="1.5" PointX="14.75" PointY="15.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_UserLogin" Width="1.5" PointX="4.75" PointY="16.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_DeviceDetail" Width="1.5" PointX="16.75" PointY="6.75" Height="13.007874348958325" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_HisData_00001" Width="1.5" PointX="6.75" PointY="16.75" Height="2.1050219726562318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_RealTimeData_00001" Width="1.5" PointX="18.75" PointY="0.75" Height="2.1050219726562318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Locate" Width="1.5" PointX="0.75" PointY="18.75" Height="2.4746101888020746" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_AlternateSet" Width="1.5" PointX="18.75" PointY="3.75" Height="4.1377571614583246" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_WarmSet" Width="1.5" PointX="8.75" PointY="18.75" Height="2.4746101888020746" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_WarmSetting" Width="1.5" PointX="18.75" PointY="9.75" Height="3.7681689453124818" />
+        <edmx:EntityTypeShape EntityType="YWModel.DDLValue" Width="1.5" PointX="10.75" PointY="18.75" Height="1.3658455403645746" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_Points_Contrast" Width="1.5" PointX="12.75" PointY="18.75" Height="9.4967862955729174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_AlarmSysTable_en" Width="1.5" PointX="18.75" PointY="14.75" Height="3.5833748372395746" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_StationStatusRealTime" Width="1.5" PointX="2.75" PointY="19.75" Height="1.9202278645833246" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_PointClassify" Width="1.5" PointX="4.75" PointY="19.75" Height="2.1050219726562318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_cm_pointmapdts" Width="1.5" PointX="18.75" PointY="19.75" Height="3.6892097981770746" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_RealTimeData_dts" Width="1.5" PointX="20.75" PointY="0.75" Height="4.3225512695312318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_Sys_Promary" Width="1.5" PointX="20.75" PointY="9.75" Height="1.5506396484374818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_ElectricMeterInfo" Width="1.5" PointX="6.75" PointY="22.75" Height="2.3520719401041674" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SupplierInfo" Width="1.5" PointX="8.75" PointY="22.75" Height="2.7341113281249818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SparePartInfo" Width="1.5" PointX="22.75" PointY="21.75" Height="2.3520719401041674" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_EmergencyPlan" Width="1.5" PointX="0.75" PointY="23.75" Height="1.7790128580729174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SOEInfo" Width="1.5" PointX="14.75" PointY="23.75" Height="2.4746101888020746" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_PDRInfo" Width="1.5" PointX="24.75" PointY="7.75" Height="5.2465218098958246" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_BugInfo" Width="1.5" PointX="16.75" PointY="24.75" Height="3.8802294921874818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_OffPeakPlan" Width="1.5" PointX="24.75" PointY="22.75" Height="2.3520719401041674" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_OffPeakConfig" Width="1.5" PointX="2.75" PointY="25.75" Height="2.1610522460937318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_JGPF" Width="1.5" PointX="20.75" PointY="25.75" Height="2.7341113281249818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_InfraredPic" Width="1.5" PointX="4.75" PointY="26.75" Height="3.7681689453124818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_MechanicalProperties" Width="1.5" PointX="6.75" PointY="26.75" Height="3.4981901041666674" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SubSysPDRInfo" Width="1.5" PointX="8.75" PointY="26.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_IODiffSet" Width="1.5" PointX="26.75" PointY="13.75" Height="4.3225512695312318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_ReportInfo" Width="1.5" PointX="26.75" PointY="19.75" Height="2.6594042968749818" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_ABCPhase" Width="1.5" PointX="22.75" PointY="26.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_MonitorPosition" Width="1.5" PointX="26.75" PointY="23.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_PointIO" Width="1.5" PointX="24.75" PointY="26.75" Height="1.7354337565104174" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_PointsInfo" Width="1.5" PointX="26.75" PointY="26.75" Height="8.7576098632812318" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_UserInfo" Width="1.5" PointX="28.75" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_PointsAllInfo" Width="1.5" PointX="0.75" PointY="28.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_Alarm_PDRInfo" Width="1.5" PointX="29.375" PointY="5.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_DataTransfer" Width="1.5" PointX="11.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_Sys_EquipmentCode" Width="1.5" PointX="9.375" PointY="14.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order_DressCode" Width="1.5" PointX="15.375" PointY="20.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_DeviceInfo" Width="1.5" PointX="15.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_Order_PdrInfo" Width="1.5" PointX="17.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_cm_files" Width="1.5" PointX="25.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Cotrt_Msg" Width="1.5" PointX="19.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order_Template" Width="1.5" PointX="21.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_ConstractInfo" Width="1.5" PointX="23.375" PointY="17.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order_InfoRecord" Width="1.5" PointX="23.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order_Info" Width="1.5" PointX="29.375" PointY="21.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_Order" Width="1.5" PointX="29.375" PointY="12.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_AlarmMsg_BadOutBox" Width="1.5" PointX="29.375" PointY="24.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_AlarmMsg_OutBox" Width="1.5" PointX="29.375" PointY="29.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_AlarmMsg_SendedOutBox" Width="1.5" PointX="31.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_Alarm_SMS" Width="1.5" PointX="3.375" PointY="31.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Door" Width="1.5" PointX="31.375" PointY="5.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Door_His" Width="1.5" PointX="5.375" PointY="31.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitType" Width="1.5" PointX="31.375" PointY="8.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitAnalysis" Width="1.5" PointX="31.375" PointY="17.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitGradeType" Width="1.5" PointX="31.375" PointY="20.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_DeviceInfoState_PDR1" Width="1.5" PointX="31.375" PointY="11.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_InstallRecord" Width="1.5" PointX="23.375" PointY="32.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_InstallType" Width="1.5" PointX="33.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_Industry" Width="1.5" PointX="26.875" PointY="7.625" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_Category" Width="1.5" PointX="5.4285594902134306" PointY="24.55609599899319" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_Purchase" Width="1.5" PointX="0.9465414420452628" PointY="19.230371722593144" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00002_历史数据表" Width="1.5" PointX="33.375" PointY="6.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00003_历史数据表" Width="1.5" PointX="33.375" PointY="11.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00004_历史数据表" Width="1.5" PointX="33.375" PointY="16.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00005_历史数据表" Width="1.5" PointX="19.375" PointY="33.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00006_历史数据表" Width="1.5" PointX="33.375" PointY="21.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00007_历史数据表" Width="1.5" PointX="33.375" PointY="26.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00008_历史数据表" Width="1.5" PointX="33.375" PointY="31.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00009_历史数据表" Width="1.5" PointX="3.375" PointY="34.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00010_历史数据表" Width="1.5" PointX="35.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.配电房_00011_历史数据表" Width="1.5" PointX="35.375" PointY="5.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_TradePrice" Width="1.5" PointX="5.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecBigIndustryType" Width="1.5" PointX="7.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecFlatDryRich" Width="1.5" PointX="9.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecIndustry" Width="1.5" PointX="35.375" PointY="10.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecPeakValleyFlat" Width="1.5" PointX="11.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecPrice" Width="1.5" PointX="35.375" PointY="13.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecVoltage" Width="1.5" PointX="35.375" PointY="18.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerReportConfig" Width="1.5" PointX="29.375" PointY="34.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_PowerUseCategory" Width="1.5" PointX="7.375" PointY="31.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Constract" Width="1.5" PointX="21.375" PointY="12.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="23.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ContractTemplet" Width="1.5" PointX="25.375" PointY="36.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerConfigInfo" Width="1.5" PointX="31.375" PointY="36.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Unit" Width="1.5" PointX="0.56112813416920981" PointY="24.2524372005148" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UsePlanChange" Width="1.5" PointX="37.375" PointY="4.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UsePlan" Width="1.5" PointX="37.375" PointY="30.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerQualityDaily" Width="1.5" PointX="35.375" PointY="21.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerQualityMonthly" Width="1.5" PointX="35.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerQualityRealTime" Width="1.5" PointX="37.375" PointY="9.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerQualityYearly" Width="1.5" PointX="37.375" PointY="17.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UserUsePowerDaily" Width="1.5" PointX="27.375" PointY="37.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UserUsePowerMonthly" Width="1.5" PointX="37.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UserUsePowerYearly" Width="1.5" PointX="7.375" PointY="38.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Constract_File" Width="1.5" PointX="37.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_DefaultTemplet" Width="1.5" PointX="37.375" PointY="26.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_Sys_City" Width="1.5" PointX="21.375" PointY="6.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ContractPurchase" Width="1.5" PointX="9.375" PointY="38.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ContractUsePlan" Width="1.5" PointX="11.375" PointY="38.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_UsePlanLog" Width="1.5" PointX="17.375" PointY="38.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_ES_ElecVoltages" Width="1.5" PointX="19.375" PointY="38.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_PDRPointStatu" Width="1.5" PointX="39.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_UnitProjectType" Width="1.5" PointX="0.75" PointY="39.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_OneGraph" Width="1.5" PointX="39.375" PointY="3.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_BigScoringType" Width="1.5" PointX="3.375" PointY="39.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_Score" Width="1.5" PointX="39.375" PointY="6.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_UnitScore" Width="1.5" PointX="39.375" PointY="9.75" />
+      </edmx:Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

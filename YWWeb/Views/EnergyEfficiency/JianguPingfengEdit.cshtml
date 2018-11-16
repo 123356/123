@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                方案名称：
+            </td>
+            <td class="d_l_d">
+                <input id="JName" name="JName" missingmessage="名称必填项！" class="easyui-validatebox"
+                    style="width: 300px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                区间范围：
+            </td>
+            <td class="d_l_d">
+                <input id="StDate" class="easyui-datebox" />—
+                <input id="EnDate" class="easyui-datebox" /><b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                峰谷分时：
+            </td>
+            <td class="d_l_d" colspan="3">
+        <table id="dg"  style="width:800px;height:300px"
+            data-options="
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                toolbar: '#tb',
+                method: 'get',
+                onClickRow: onClickRow
+            ">
+        <thead>
+            <tr>
+                <th data-options="field:'ID',width:40" hidden = "hidden">ID</th>
+                <th data-options="field:'StageType',width:150,
+                        formatter:function(value,row){
+                            return row.StageType;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'Type',
+                                textField:'TypeName',
+                                method:'get',
+                                editable:false,
+                                data:[{
+                                        'Type':'尖峰'  ,
+                                        'TypeName':'尖峰'
+                                     },{
+                                        'Type':'峰段' ,
+                                        'TypeName':'峰段'
+                                     },{
+                                        'Type':'平段',
+                                        'TypeName':'平段'
+                                     },{
+                                        'Type':'低谷',
+                                        'TypeName':'低谷'
+                                     }]
+                            }
+                        }">类型</th>
+                <th data-options="field:'TimeStart',width:150,editor:{type:'timespinner',options:{showSeconds:true}}">起始</th>
+                <th data-options="field:'TimeEnd',width:150,editor:{type:'timespinner',options:{showSeconds:true}}">结束</th>
+                <th data-options="field:'ElePrice',width:100,editor:'textbox'">电价</th>
+                <th data-options="field:'State',width:30,formatter: Butten"></th>
+            </tr>
+        </thead>
+    </table>
+            </td>
+        </tr>
+    </table>
+    <div id="tb" style="height:auto">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+    </div>
+    <div style="text-align: center; padding-top: 5px;">
+        <a href="#" id="btnSave" onclick="savePlan()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                onclick="Close();">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var msg = @Html.Raw(Request.QueryString["JID"]);
+    </script>
+    <script src="~/Content/UserJS/JianguPingfengEdit._jm.js"></script>
+</body>
+</html>

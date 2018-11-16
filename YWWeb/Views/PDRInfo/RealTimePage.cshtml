@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RealTimePage</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body class="tabbg3">
+    <div class="web_table" id="realtempinfo">
+    </div>
+
+    <div id="graphwin" minimizable="false" maximizable="false" collapsible="false"  closed = "false" title = "false">
+    </div>
+    <script type="text/javascript">
+        var ajaxbg = top.$("#loading_background,#loading");
+        var pid = $.cookie('cookiepid');
+        showAlarmInfo();
+        function showAlarmInfo() {
+            ajaxbg.show();
+            $.post("/PDRInfo/getRealTimeSwitchDate", { "pid": pid, "sDeviceTypeID": 0 }, function (data) {
+                var pointslist = eval("(" + data + ")");
+                ajaxbg.hide();
+                $("#realtempinfo").html(pointslist);
+            });
+        }
+        var timeTicket;
+        clearInterval(timeTicket);
+        timeTicket = setInterval(function () {
+            showAlarmInfo();
+        }, 20000);
+        //
+        function showhisgraph(tagid) {
+            $('#graphwin').window({
+                width: document.body.clientWidth * 0.3,
+                height: document.body.clientHeight * 0.5,
+                title:"测点曲线",
+                href: '/DataReport/GraphWindow?TagID=' + tagid,
+                onClose: function () {
+                }
+            });
+        }
+        function hidegraph() {
+            $('#graphwin').window('close');
+        }
+        function mousePosition(ev) {
+            if (ev.pageX || ev.pageY) {//firefox、chrome等浏览器
+                return { x: ev.pageX, y: ev.pageY };
+            }
+            return {// IE浏览器
+                x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+                y: ev.clientY + document.body.scrollTop - document.body.clientTop
+            };
+        }
+        function mouseMove(ev) {
+            ev = ev || window.event;
+            var mousePos = mousePosition(ev);
+            var width = parseInt(document.getElementById("graphwin").style.width);
+//            document.getElementById('x').innerHTML = mousePos.x;
+            //            document.getElementById('y').innerHTML = mousePos.y;
+            $('#graphwin').window('move', {
+                left: mousePos.x - width -20,
+                top: mousePos.y
+            });
+        }
+        function Hg(did, tagid) {
+            var srcString = "/DataReport/GraphWindowDetail?did=" + did + "&tagid=" + tagid;
+            $("#sysContent", parent.document.body).attr("src", srcString);
+        }
+        document.onmousemove = mouseMove;
+    </script>
+</body>
+</html>

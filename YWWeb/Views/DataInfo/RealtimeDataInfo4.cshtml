@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>设备</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css">
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background: #EFEDF2;height:80%">
+    <div class="container">
+        <div class="row clearfix" id="realtempinfo1">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var ajaxbg = top.$("#loading_background,#loading");
+        //var pid = $.cookie('cookiepid');
+
+        var Request = new Object();
+        Request = GetRequest();
+        var pid = 1, sid = 0;
+
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        else
+            pid = $.cookie('cookiepid');
+
+        showAlarmInfo();
+        function showAlarmInfo() {
+
+            $.post("/PDRInfo/RealTimeSignalScreen", { "pid": pid, "sDeviceTypeID": 18 }, function (data) {
+                var pointslist = eval("(" + data + ")");
+                ajaxbg.hide();
+                $("#realtempinfo1").html(pointslist);
+            });
+        }
+        var timeTicket;
+        clearInterval(timeTicket);
+        timeTicket = setInterval(function () {
+            //showAlarmInfo();
+        }, 20000);
+        //
+    </script>
+</body>
+</html>

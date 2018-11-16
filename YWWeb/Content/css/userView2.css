@@ -1,0 +1,682 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding: 15px;
+	overflow-x:hidden ;
+	background: #efefef;
+}
+.swiper-container {
+      width: 100%;
+      height: 100%;
+}
+.swiper-slide{
+	margin-right: 0;
+}
+.swiper-pagination-bullet-active{
+	background: #42a68e !important;
+}
+.comName{
+    padding:0;
+    margin:0;
+    margin-bottom:10px
+}
+.comName i{
+    margin-right:10px
+}
+.con{
+	width: 100%;
+	overflow-x: hidden;
+	/*height: 580px;*/
+}
+.con .conFlex{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-driection: row;
+	flex-wrap:nowrap;
+	height: 100%;
+}
+.conFlex .left{
+	width: 70%;
+	height: 100%;
+	margin-right: 15px;
+	overflow-x:hidden ;
+}
+.conFlex .right{
+	width: 30%;
+	height: 100%;
+	overflow: hidden;
+}
+.conFlex .left .left-top{
+	width: 100%;
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+	flex-driection: row;
+	flex-wrap:nowrap;
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+.conFlex .left .left-top .item{
+	height: 100%;
+	background: #fff;
+	margin-right: 15px;
+	
+}
+.itemComStyle{
+	border-top: 3px solid #e6eaed;
+	border-radius: 3px;
+	padding: 15px;
+}
+.itemComStyle .title{
+	color: #808080;
+	font-size: 0.84em;
+}
+
+.itemComStyle .title i{
+	font-size: 1em;
+	letter-spacing: 1px;
+}
+.itemComStyle .title .titleName{
+	font-weight: 600;
+}
+.itemComStyle .title .other{
+	float: right;
+   
+}
+.conFlex .left .left-top .item1{
+	overflow: hidden;
+	width: 30%;
+}
+.conFlex .left .left-top .item2{
+	width: 70%;
+	margin-right: 0px;
+	padding:15px;
+}
+.conFlex .left .left-top .item2 .row{
+    height:100%;
+    overflow:hidden
+}
+.conFlex .left .left-top .item2 .col{
+	
+	border-right: 1px solid #efefef;
+}
+.electricityUsage .col{
+    border-right: 1px solid #efefef;
+}
+.electricityUsage .col:nth-last-of-type(1){
+	border-right: 0;
+}
+.conFlex .left .left-top .item2 .col:nth-last-of-type(1){
+	border-right: 0;
+}
+.conFlex .left .left-top .item3{
+	width: 45%;
+	margin-right: 0px;
+}
+.conFlex .left .left-bottom{
+	width: 100%;
+	/*height: 415px;*/
+	background: #fff;
+	overflow: hidden;
+}
+.conFlex .right .right-top{
+	height: 150px;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 15px;
+}
+.conFlex .right .right-middle{
+	height: 200px;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 15px;
+}
+.conFlex .right .right-bottom{
+	/*height: 250px;*/
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+	
+}
+.itemComStyle .itemCon{
+	width: 100%;
+	height: 100%;
+}
+.itemCon .slide1 .normal{
+	font-size: 1.5em;
+	color: #42a68e;
+	text-align: center;
+	padding: 0.5em 0em 0em 0em;
+	margin: 0;
+	letter-spacing: 1px;
+	
+}
+.itemCon .slide1 .warningStat{
+    font-size: 1.4em;
+	text-align: center;
+	padding: 0.8em 0em 0em 0em;
+	margin: 0;
+	letter-spacing: 1px;
+   
+}
+.itemCon .slide1 .warningStat a {
+     color:#f3773d
+}
+.itemCon .littltInfo{
+	font-size: 0.7em;
+	display: block;
+	text-align: center;
+	
+    color: #707070;
+	
+}
+.dayElectricity p,.monthElectricity .col-lg-8 p{
+	font-size: 1.5em;
+	padding: 0;
+	padding-top: 0.8em;
+	color: #58585a;
+	font-weight: 600;
+	margin: 0;
+    text-align:center
+}
+.dayElectricity span,.monthElectricity .col-lg-8 span{
+	font-size: 0.7em;
+	display: block;
+	margin-top: 0.5rem;
+    color:#707070;
+    text-align:center
+}
+.dayElectricity span .num,.monthElectricity .col-lg-8 span .num{
+	color: #d58a60;
+	display: inline;
+	font-weight: 600;
+    font-size:0.9em
+}
+.dayElectricity span img{
+    margin-left: 6px;
+    height:11px;
+    margin-top:-2px
+}
+.monthElectricity .col-lg-8 span .num i{
+	margin-left: 5px;
+   
+}
+.monthElectricity{
+	display: flex;
+}
+#monElChart{
+	width: 110px;
+	height: 110px;
+}
+
+.electricityUsage .text p{
+	font-size: 1.5em;
+	padding: 0;
+	padding-top: 0.8em;
+	color: #58585a;
+	margin: 0;
+	font-weight: 600;
+	color: #43a78f;
+}
+.electricityUsage .text span{
+	font-size: 0.7em;
+	display: block;
+	margin-top: 4px;
+    color:#707070;
+}
+.electricityUsage .row{
+	text-align: center;
+}
+#elecUsageChart{
+	width: 110px;
+	height: 110px;
+    display:block;
+    margin:0 auto;
+
+}
+.itemComStyle .msgList ul{
+	padding: 5px 20px;
+}
+.itemComStyle .msgList ul li{
+	font-size: 0.8em;
+	letter-spacing: 1px;
+	padding: 3px 0px;
+	color: #9a9a9a;
+    cursor:pointer
+	
+}
+.itemComStyle .msgList ul li time{
+	margin-right: 10px;
+}
+.itemComStyle .msgList ul li p{
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    margin: 0;
+    padding: 0;
+}
+.itemComStyle .msgList ul .newMsg{
+	color: #d27e52;
+}
+.itemComStyle .projectInfo{
+	padding: 5px 0px;
+}
+.itemComStyle .projectInfo p{
+	margin: 0;
+	padding: 0;
+	color: #666664;
+	font-size: 0.8em;
+	padding:  0.6rem ;
+}
+.itemComStyle .projectInfo p i{
+	margin-right: 15px;
+	font-size: 1em;
+}
+.itemComStyle .edRoomInfo{
+	padding:0px 0px 0px 15px;
+	overflow: hidden;
+}
+
+.itemComStyle .edRoomInfo .roomBtn{
+	padding-top: 15px;
+	/*height: 40px;*/
+	width: 100%;
+	overflow-y: hidden;
+}
+
+.itemComStyle .edRoomInfo .btnList{
+    width:100%;
+    height:40px;
+    
+    margin-left:-15px;
+    margin-top:10px;
+    overflow:hidden;
+    padding:0
+}
+.itemComStyle .edRoomInfo .btnList .list{
+    width:100%;
+    height:53px;
+    overflow-x: auto;
+	white-space:nowrap;
+    padding:0;
+    overflow-y:hidden;
+   
+}
+.itemComStyle .edRoomInfo .btnList .list .list-item{
+    display: inline-block;
+	width: 98px;
+	height: 35px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    text-align:center;
+    line-height:35px;
+    font-size:12px;
+    border:1px solid #dedede;
+    border-right: 0px;
+    margin-left:-5px;
+    padding:0px 2px;
+    cursor:pointer
+}
+.itemComStyle .edRoomInfo .btnList .list .list-item:first-of-type{
+    margin-left:0px
+}
+.itemComStyle .edRoomInfo .btnList .list .list-item:nth-last-of-type(1){
+    border-right: 1px solid #dedede;
+}
+ /* 暂时修改
+.itemComStyle .edRoomInfo .roomBtn .col{
+	font-size: 0.65em;
+	padding: 0;
+	text-align: center;
+	border: 1px solid #dedede;
+	border-right: 0px;
+	padding: 4px 10px;
+	cursor: pointer;
+	color: #666666;
+	overflow: hidden;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    padding:5px 2px;
+}
+    
+.itemComStyle .edRoomInfo .roomBtn .col:nth-last-of-type(1){
+	border-right: 1px solid #dedede;
+}
+    */
+.itemComStyle .edRoomInfo .edRoomInfoDetail {
+	border: 1px solid #f7f7f7;
+	/*height: 250px;*/
+	margin-top: 25px;
+	padding: 0;
+}
+.itemComStyle .edRoomInfo .edRoomInfoDetail .tranList{
+	width: 5%;
+	float: left;
+	height: 100%;
+	background: #f5f5f5;
+	color: #616161;
+}
+.itemComStyle .edRoomInfo .edRoomInfoDetail .burthen{
+	width: 95%;
+	float: right;
+	height: 100%;
+}
+.tranList .listTitle{
+	font-size: 12px;
+    letter-spacing:1px;
+	text-align: center;
+	display: block;
+	margin: 70px 0px 5px 0px;
+}
+.tranList ul{
+	list-style: none;
+}
+.tranList ul li{
+	text-align: center;
+	cursor: pointer;
+	font-size:12px;
+	width: 100%;
+	padding: 0.5rem 0rem;
+	border-right:1px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.tranListActive{
+	color: #3ab094;
+	border-right-color:#3ab094 !important;
+}
+.roomBtnActive{
+	border-color: #3ab094 !important;
+	color: #3ab094 !important;
+	border-bottom-color: #fff !important;
+}
+.roomBtnNextActive{
+	border-left-color: #3ab094 !important;
+}
+.burthen .burthenInfo{
+	width: 100%;
+	/*height: 40px;*/
+	padding:0.7rem 0rem;
+	overflow: hidden;
+	color: #616161;
+}
+.burthen .burthenInfo .row{
+	padding: 0;
+	margin: 0;
+}
+.burthen .burthenInfo .row .col{
+	border: none;
+}
+.burthen .burthenInfo .row .col span{
+    font-size:16px;
+    color:#707070
+}
+.burthen .burthenInfo .row .col .num{
+	
+	color: #3ab094;
+    font-size:1em
+}
+.burthen .burthenInfo .row .col .iconImg{
+    margin-top:-5px
+}
+.burthen .burthenInfo .row .col .dw{
+	font-size: 1em;
+    margin-right:1rem
+}
+.itemComStyle .edRoomInfo .roomBtn .burthenInfo .col:nth-last-of-type(1){
+	border:none;
+}
+.burthen .burthenInfo .row .col i{
+	margin-left: 8px;
+}
+.burthen .burthenInfo{
+    border-bottom:1px solid #f1f1f1
+}
+.burthen .burthenInfo .row .col .detailBtn{
+ 	border: 0px;
+ 	font-size: 12px;
+ 	color: #fff;
+ 	background: #3ab094;
+ 	padding: 4px 5px;
+ 	border-radius: 1px;
+ 	margin: 3px 0px 0px 10px;
+    letter-spacing:1px;
+    cursor:pointer;
+
+ }
+.burthen .burthenInfo .row .col .detailBtn i{
+	font-size: 1em;
+	margin-left: 5px;
+
+}
+.iconImg{
+    width:26px
+}
+.burthen .burthenInfo .row .col:not(:nth-of-type(1)){
+	text-align: left;
+}
+.burthen .chart{
+	width: 100%;
+	height: 100%;
+	margin-top: 15px;
+}
+.burthenSearch{
+	padding: 0;
+	margin: 0;
+	position:absolute;
+	z-index: 1500;
+	top: 1rem;
+	left: 6rem;
+}
+.burthenSearch .select{
+	width: 100px;
+	padding: 0;
+	border-color: #efefef;
+	color: #a3a3a3;
+	outline: none !important;
+
+    height: 28px !important;
+	font-size: 14px;
+}
+.burthenSearch .select:focus{
+	outline: thin dotted #333333 !important;
+}
+.burthenSearch .control-label{
+	font-size: 14px;
+	margin: 0px 10px 0px 20px;
+	padding-top: 4px;
+	color: #a3a3a3;
+}
+.burthenSearch .checkbox{
+	margin-top: 7px;
+	width: 14px;
+	height: 14px;
+	margin-left: 20px;
+	border-color: #efefef;
+}
+.burthenSearch .checkLabel{
+	font-size: 14px;
+	padding-top: 3px;
+	margin-left: 5px;
+	color: #a3a3a3;
+}
+/*兼容火狐下拉框样式*/
+@-moz-document url-prefix() {
+            select.form-control {
+                -moz-appearance: none;
+                appearance: none;
+                background-image: url("http://221.228.109.114:8083/manage/more/firefox_select_icon.png");
+                background-repeat: no-repeat;
+                background-position: calc(100% - 7px) 50%;
+                background-size: 2% auto;
+                border-radius:3px;
+                padding:0;
+            }
+}
+#burthenChart div{
+    width:100%
+}
+#burthenChart div canvas{
+    width:100%
+}
+
+.pageBtn{
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    display:none;
+}
+.pageBtn img{
+    width:8px
+}
+.upbtn{
+    position:absolute;
+    left:2px;
+    z-index:1900;
+    top:50px
+}
+.nextbtn{
+    position:absolute;
+    right:2px;
+    z-index:1500;
+    top:50px
+}
+.noElecUsageChart{
+
+    font-size: 1.5em;
+	padding: 0;
+	padding-top: 0.8em;
+	color: #58585a;
+	margin: 0;
+	font-weight: 600;
+	color: #43a78f;
+    text-align:center;
+    display:none;
+}
+
+@media screen and (max-width: 1500px) {
+    .burthenSearch{
+	    top: 0px;
+    }
+    .burthen .burthenInfo{	
+	    height: 40px;
+        padding: 0;
+    }
+    .tranList ul li{    
+	    font-size:1em;    
+	    padding: 0.2rem 0rem;	   
+    }
+    .itemComStyle .projectInfo p{
+	    padding:  0.1rem ;
+        font-size:12px
+    }
+    .burthen .burthenInfo .row .col .dw{
+        margin-right:0;
+        font-size:14px
+    }
+    .burthen .burthenInfo .row .col .num{
+	    font-size: 14px;
+    }
+    .burthen .burthenInfo .row .col span{
+        font-size:12px;
+    }
+    .burthen .burthenInfo .row .col .iconImg{
+        margin-top:-2px
+    }
+    .row .col .detailBtn{
+        margin: 3px 0px 0px 0px;
+        cursor:pointer
+    }
+
+    .itemComStyle .littleTitle{
+        font-size: 0.7em !important;
+    }
+    .itemComStyle .projectInfo p{
+	    font-size: 0.6em;
+    }
+    .tranList ul li{ 
+	    font-size:12px;
+    }
+    .tranList .listTitle{
+	    font-size: 14px;
+	    margin: 30px 0px 5px 0px;
+    }
+    .burthenSearch .select{
+	    
+	    height: 25px;
+	    font-size: 0.7em;
+	    
+    }
+    .burthenSearch .control-label{
+	    font-size: 0.7em;
+        margin:2px 8px 0px 20px;
+	    
+    }
+    .burthenSearch .checkLabel{
+	    font-size: 0.7em;
+	    padding-top: 5px;
+	    margin-left: 5px;
+	    color: #a3a3a3;
+    }
+    .burthen .burthenInfo .row .col .detailBtn{
+ 	    
+ 	    margin: 0px;
+        font-size:10px;
+        float:right;
+        margin-top:7px;
+        cursor:pointer
+        
+     }
+    .itemComStyle .msgList ul li{
+        font-size:0.7em
+    }
+    .electricityUsage .text p{
+        font-size:1.1em;
+        margin-top:15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .burthen .burthenInfo .row .col .byq{
+        margin-top:7px;
+        display:block
+    }
+    .noElecUsageChart{
+        
+        font-size:1.1em;
+       
+    }
+}
+
+.comName i{
+    float:left;
+    margin-top:5px;
+    font-size:18px;
+    display:none;
+}
+    
+.comName select{
+    width:250px;
+    float:left;
+    height:25px;
+    margin-bottom:5px;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	background:url("../images/down.png") no-repeat scroll 98% center #fff;
+    color:#808080;
+    font-size:14px;
+    padding-left:5px
+
+}
+/*去除选择框的outline*/
+.select:focus{
+    outline:none !important;
+    box-shadow:none;
+}

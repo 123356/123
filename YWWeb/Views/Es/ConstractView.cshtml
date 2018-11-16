@@ -1,0 +1,293 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>合同浏览</title>
+    <style type="text/css">
+        .divicons {
+            float: left;
+            border: solid 1px #ccc;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+            .divicons:hover {
+                color: #FFF;
+                border: solid 1px #3399dd;
+                background: #2288cc;
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
+                background: linear-gradient(top, #33bbee, #2288cc);
+                background: -moz-linear-gradient(top, #33bbee, #2288cc);
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+                text-shadow: -1px -1px 1px #1c6a9e;
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 80px;text-align:left;padding-left:20px;">
+                合同名称：
+            </td>
+            <td class="d_l_d">
+                <input disabled="disabled" id="CtrName" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" />
+                <input disabled="disabled" id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                类型：
+            </td>
+            <td class="d_l_d">
+                <select id="CtrPType" runat="server" name="CtrName" maxlength="20" disabled="disabled"
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            @*<td class="d_l_t" style="text-align:left;padding-left:20px;">
+                客户名称：
+            </td>
+            <td class="d_l_d">
+                <select disabled="disabled" id="CtrPName" runat="server" name="CtrName" maxlength="20"
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" />
+            </td>*@
+            <td class="d_l_t" style="text-align:left;padding-left:20px;" id="mingcheng">
+                客户名称：
+            </td>
+            <td class="d_l_d" id="inputName">
+                <select id="CtrPName" disabled="disabled" runat="server" name="CtrName" maxlength="20"
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" />
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;" id="mingcheng1" hidden>
+                发电厂调度名称：
+            </td>
+            <td class="d_l_d" id="inputName1" hidden>
+                <input id="CtrAdmin" runat="server" disabled="disabled" name="CtrName" maxlength="20"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" />
+                @*<input id="id" type="hidden" />*@
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                负责人员：
+            </td>
+            <td class="d_l_d">
+                <select disabled="disabled" id="person" runat="server" name="CtrName" maxlength="20"
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                联系人：
+            </td>
+            <td class="d_l_d">
+                <input id="LinkMan" runat="server" name="CtrName" maxlength="20" disabled="disabled"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" />
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                联系电话：
+            </td>
+            <td class="d_l_d">
+                <input id="Tel" runat="server" name="CtrName" maxlength="20" disabled="disabled"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                开始日期：
+            </td>
+            <td class="d_l_d">
+                <input disabled="disabled" id="start_time" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-datebox" style="width: 210px; height: 24px;" data-options="required:true" />
+                <input disabled="disabled" id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                结束日期：
+            </td>
+            <td class="d_l_d">
+                <input disabled="disabled" id="end_time" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-datebox" style="width: 210px; height: 24px;" data-options="required:true" />
+                <input disabled="disabled" id="id" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                合同内容
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:center;padding-left:20px;background-color:#E4E4E4" id="content">
+                @*<table cellpadding="" cellspacing="" border="1" class="d_list">
+                    <caption id="titleName">666</caption>
+                    <thead>
+                        <tr>
+                            <th>月份</th>
+                            <th>交易电量</th>
+                            <th>交易电价</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1月份</td>
+                            <td>100</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>*@
+                @*1月份:1000KW/h<br/>
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />
+                    1月份:1000KW/h<br />*@
+            </td>
+        </tr>
+        @*<tr>
+                <td class="d_l_t" id="listrc" style="padding-left:20px;background-color:#EFEDF2"></td>
+                <td class="d_l_t" id="listtimerc" style="padding-left:20px;background-color:#EFEDF2"></td>
+                <td class="d_l_t" id="listOrdersDays" style="padding-left:20px;background-color:#EFEDF2"></td>
+            </tr>
+
+
+            <tr>
+                <td class="d_l_t" rowspan="2" style="text-align:center">
+                    检修试验
+                </td>
+
+                <td class="d_l_d" style="background-color: #E4E4E4">
+                    运维项：
+                    <input hidden="hidden" disabled="disabled" id="templateIds2" runat="server" maxlength="50"
+                           class="easyui-validatebox" style="width: 260px; height: 54px;" />
+                    <input hidden="hidden" disabled="disabled" id="id" type="hidden" />
+                </td>
+                <td class="d_l_t" style="text-align:center">
+                    时间安排
+                </td>
+                <td class="d_l_t" style="text-align:center;background-color: #E4E4E4">关联工单</td>
+            </tr>
+            <tr>
+                <td class="d_l_t" id="listrc2" style="padding-left:20px;background-color:#EFEDF2"></td>
+                <td class="d_l_t" id="listtimerc2" style="padding-left:20px;background-color:#EFEDF2"></td>
+                <td class="d_l_t" id="listOrdersTests" style="padding-left:20px;background-color:#EFEDF2"></td>
+            </tr>*@
+        <tr>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">事项：</td>
+            <td colspan="3">
+                <table cellpadding="" cellspacing="" border="0" class="d_list">
+                    @*<tr  style="text-align: center; padding-top: 20px;">
+                            <td class="d_l_d">
+                                <a id="btnAddTemplate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">确认完成</a>
+                            </td>
+
+                    </tr>*@
+                    <tr>
+                        <td colspan="4">
+                            <table id="dgTemplateNameList" class="easyui-datagrid" style="height: 222px; width: 100%;" @*data-options="
+                                   method:'get',
+                                   showGroup:true,
+                                   scrollbarSize:0,
+                                   fitColumns:true,
+                                   striped:true,
+                                   rownumbers:false
+                                   "*@>
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'ID',checkbox:true">项编号</th>
+                                        <th data-options="field:'Name',width:100">项名称</th>
+                                        <th data-options="field:'StartTime',width:100" formatter="formatDate">开始时间</th>
+                                        <th data-options="field:'UserName',width:100">人员</th>
+                                        <th data-options="field:'IsOk',width:100">是否完成</th>
+                                        <th data-options="field:'Remark',width:100">反馈信息</th>
+                                        <th data-options="field:'PersonID',hidden:true">人员id</th>
+                                        <th data-options="field:'BeforDay',width:100">提前天数</th>
+                                        <th data-options="field:'CompleTime',width:100" formatter="formatDate">完成时间</th>
+                                </thead>
+                             
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align:center;">
+                        <a id="btnAddTemplate" href="#" class="easyui-linkbutton" onclick="UpdateIsOk();" data-options="iconCls:'icon-save'">确认完成</a>
+                            </td>
+                    </tr>
+                </table>
+            </td>
+            @*<td></td>
+            <td></td>*@
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                合同备注
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align: left;padding-left:20px;background-color:#EFEDF2">
+                <textarea id="CtrInfo" disabled="disabled" class="easyui-validatebox validatebox-text" style="height:60px;  width: 97%;"></textarea>
+            </td>
+        </tr>
+
+        @*<tr>
+                <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                    合同外工单
+                </td>
+            </tr>*@
+
+        <tr>
+            <td class="d_l_t" colspan="4" id="listOthers" style="padding-left:20px;background-color:#EFEDF2"></td>
+        </tr>
+
+        @*<tr>
+                <td class="d_l_t">
+                    日常检修：
+                </td>
+                <td class="d_l_d">
+                    <input disabled="disabled" id="dayCount" runat="server" name="CtrName" maxlength="20" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b style="color:black;">次/年</b>
+                    <input disabled="disabled" id="id" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    检修试验：
+                </td>
+                <td class="d_l_d">
+                    <input disabled="disabled" id="testCount" runat="server" name="CtrName" maxlength="20"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b style="color:black;">次/年</b>
+                    <input disabled="disabled" id="id" type="hidden" />
+                </td>
+            </tr>*@
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+           onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <div id="editWin" class="easyui-dialog" style="width: 800px; height: auto; padding: 10px 20px;
+        left: 850px; top: 60px; max-height: 550px;" data-options="closed:true,buttons:'#dlg-buttons'"
+         title="用户Logo列表">
+        <div class="div-body" id="icon_data">
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var id=@Html.Raw(Request.QueryString["id"]);
+
+    </script>
+    <script src="~/Content/UserJS/ConstractView._jm.js"></script>
+    <div id="editwin2" title="编辑工单信息" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+
+    <div id="detailwin" title="查看工单详情" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

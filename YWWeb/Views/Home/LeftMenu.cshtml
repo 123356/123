@@ -1,0 +1,95 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LeftMenu</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script type="text/javascript">
+        var pid = $.cookie('cookiepid');
+        $(function () {
+            $.post("/Home/StationDevice", { "pid": pid }, function (data) {
+                $("#menuinfo").html(data);
+                $(".one > li > a").click(function () {
+                    $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                    ////$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                    $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                    $(this).parents().siblings().find(".two").hide(300);
+                    $(this).siblings(".two").toggle(300);
+                    $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                });
+                $(".two > li > a").click(function () {
+                    $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                });
+                var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                var accordionheight = ($(".one").children("ul li").length * 39);
+                $('.two').height(pageHeight - accordionheight);
+            });
+            var gpid = $.cookie('cookiepid');
+            if (gpid != undefined) {
+                $("#StationID").combotree("setValue", gpid);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="leftmenu_content">
+        <div class="leftmenu_search leftmenu_search_padding">
+            <input data-options="lines:true" style="width: 200px; height: 30px;" id="StationID" />
+        </div>
+        <div>
+            <ul class="one" id="menuinfo">
+              
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#StationID').combotree({
+            url: '/Home/ComboTreeMenu',
+            multiple: false,
+            editable: true,
+            panelMinHeight: 400,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#StationID').combo('showPanel');
+                }
+                else {
+                    //返回树对象                
+                    if (node.id != 0) {
+                        pid = node.id;
+                        $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                        //$("#maincontent", window.parent.document).attr('src', '/PDRInfo/StationRoom?pid=' + pid);
+                        $("#main_frame", window.parent.document).attr('src', '/PDRInfo/StationRoom?pid=' + pid);
+                        $.post("/Home/StationDevice", { "pid": pid }, function (data) {
+                            $("#menuinfo").html(data);
+                            $(".one > li > a").click(function () {
+                                $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                                //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                                $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                                $(this).parents().siblings().find(".two").hide(300);
+                                $(this).siblings(".two").toggle(300);
+                                $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                            });
+                            $(".two > li > a").click(function () {
+                                $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                            });
+                            var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                            var accordionheight = ($(".one").children("ul li").length * 39);
+                            $('.two').height(pageHeight - accordionheight);
+                          
+                        });
+                    }
+                }
+            }
+        });  
+    </script>
+</body>
+</html>

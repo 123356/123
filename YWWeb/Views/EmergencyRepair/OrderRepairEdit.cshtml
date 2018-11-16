@@ -1,0 +1,236 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>编辑应急抢修工单</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                工单编号：
+            </td>
+            <td class="d_l_d">
+                <input id="OrderNo" disabled />
+                <input id="OrderID" type="hidden" />
+            </td>
+            <td class="d_l_t">
+                站室：
+            </td>
+            <td class="d_l_d">
+                <select id="PName" style="width: 150px;">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                工单名称：
+            </td>
+            <td class="d_l_d">
+                <input id="OrderName" name="DeviceName" missingmessage="工单名称必填项！" class="easyui-validatebox"
+                    style="width: 85%;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                工单类型：
+            </td>
+            <td class="d_l_d">
+                <select id="ordertype" class="easyui-combobox" style="width: 150px;">
+                    <option value="日常巡检" >日常巡检</option>
+                    <option value="应急抢修" selected>应急抢修</option>
+                    <option value="检修试验" selected>检修试验</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                关联隐患：
+            </td>
+            <td class="d_l_d">
+                <select id="BugInfo" class="easyui-combobox" style="width: 97%;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                检查人：
+            </td>
+            <td class="d_l_d">
+                <select id="UserID" class="easyui-combobox" style="width: 150px;">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                执行日期：
+            </td>
+            <td class="d_l_d">
+                <input id="PlanDate" name="PlanDate" class="easyui-datebox" /><b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                优先级：
+            </td>
+            <td class="d_l_d">
+                <select id="Priority" class="easyui-combobox" style="width: 150px;">
+                    <option value="1">一般</option>
+                    <option value="2">高</option>
+                    <option value="3">很高</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                工单内容：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="OrderContent" class="easyui-validatebox" style="height: 40%; width: 97%;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                备注：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="Remarks" class="easyui-validatebox" style="height: 40%; width: 97%;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 5px;">
+        <a href="#" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var id = @Html.Raw(Request.QueryString["orderid"]);
+        loadPID(0);
+        var docount = 0;
+        function loadPID(pid) {
+            $("#PName").combobox({
+                url: "/BaseInfo/BindPDRInfo?showall=7",
+                valueField: 'PID',
+                textField: 'Name',
+                 onLoadSuccess: function () { 
+                  var data = $('#PName').combobox('getData');
+                    if (data.length > 0) {
+                    $("#PName").combobox('select',data[0].PID);
+                    loadUser(data[0].PID, 0);
+                    loadBugInfo(data[0].PID, 0);
+                 }
+                 },
+                onSelect: function () {
+                    if (docount > 0) {
+                        var selid = $("#PName").combobox("getValue");
+                        loadUser(selid, 0);
+                        loadBugInfo(selid, 0);
+                    }
+                    docount++;
+                }
+            });
+        }
+        function loadUser(pid, userid) {
+            $('#UserID').combobox({
+                url: '/BaseInfo/BindUserByPID?pid=' + pid,
+                valueField: 'id',
+                textField: 'name',
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#UserID').combobox('getData');
+                    if (data.length > 0) {
+                        if (userid != 0)
+                            $("#UserID").combobox('select', userid);
+                        else
+                            $("#UserID").combobox('select',data[0].id);
+                    }
+                }
+            });
+        }
+
+        function loadBugInfo(pid, bugid) {
+            $("#BugInfo").combobox({
+                url: "/BaseInfo/BindBugInfo?showall=6&pid=" + pid,
+                valueField: 'id',
+                textField: 'name',
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#BugInfo').combobox('getData');
+                    if (data.length > 0) {
+                        if (bugid != 0)
+                            $("#BugInfo").combobox('select', bugid);
+                        else
+                            $("#BugInfo").combobox('select', data[0].id);
+
+                    }
+                }
+            });
+        }
+        loadOrderInfo();
+        function loadOrderInfo() {
+            if (id > 0) {
+                $.post("/OrderInfo/LoadOrder", { "OrderID": id }, function (data) {
+                    var row = eval("(" + data + ")");
+                    $("#OrderID").val(row.OrderID);
+                    $("#OrderNo").val(row.OrderNO);
+                    $('#PName').combobox('setValue', row.PID);
+                    loadUser(row.PID, row.UserID);
+                    loadBugInfo(row.PID, row.BugID);
+                    $('#Priority').combobox('setValue', row.Priority);
+                    $("#ordertype").combobox("setValue", row.OrderType);
+                    $("#OrderContent").val(row.OrderContent.replace(/<br\s*\>/g, "\n"));
+                    $("#Remarks").val(row.Remarks.replace(/<br\s*\>/g, "\n"));
+                    getMDate(row.PlanDate, 'PlanDate');
+                    $("#OrderID").val(id);
+                    $("#OrderName").val(row.OrderName);
+                });
+            }
+            else {
+                var ticks =@DateTime.Now.Ticks;
+                $("#OrderNo").val(ticks);
+            }
+        }
+        function save() {
+            if ($('#OrderName').val() == "") {
+                $.messager.alert("提示", "请录入工单名称！", "info");
+                return false;
+            }
+            if ($('#PName').combobox('getValue') == "") {
+                $.messager.alert("提示", "请选择站室！", "info");
+                return false;
+            }
+            if ($('#UserID').combobox('getValue') == "") {
+                $.messager.alert("提示", "请选择检查人！", "info");
+                return false;
+            }
+            if ($('#PlanDate').datebox('getValue') == "") {
+                $.messager.alert("提示", "请选择执行日期！", "info");
+                return false;
+            }
+            if ($("#OrderContent").val() == "") {
+                $.messager.alert("提示", "请填写工单内容！", "info");
+                return false;
+            }
+            var postData = {
+                OrderID: $("#OrderID").val(),
+                OrderNo: $("#OrderNo").val(),
+                PID: $('#PName').combobox('getValue'),
+                PName: $('#PName').combobox('getText'),
+                OrderContent: $("#OrderContent").val(),
+                UserID: $('#UserID').combobox('getValue'),
+                UserName: $('#UserID').combobox('getText'),
+                Priority: $('#Priority').combobox('getValue'),
+                OrderType: $("#ordertype").combobox("getValue"),
+                PlanDate: $('#PlanDate').datebox('getValue'),
+                Remarks: $("#Remarks").val(),
+                BugInfo: $("#BugInfo").combobox("getText"),
+                BugID: $("#BugInfo").combobox("getValue"),
+                OrderName: $('#OrderName').val()
+            };
+            $.post("/OrderInfo/SaveOrder", postData, function (data) {
+                if (data == "OK") {
+                    window.location.reload();
+                    $('#editwin').window('close');
+                }
+                else
+                    alert(data);
+            });
+        }
+    </script>
+</body>
+</html>

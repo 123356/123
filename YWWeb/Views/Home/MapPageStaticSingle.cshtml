@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>	
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master2.css" />
+
+    <style>
+        body {
+            position: absolute;
+            background-color: #000;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #container {
+            height: 100%;
+            position: absolute;
+        }
+
+        #leftDiv {
+            height: 100%;
+            width: 300px;
+            position: absolute;
+            background: #FFFFFF;
+        }
+    </style>
+
+</head>
+<body >
+    <div style="width:100%; height:100%;">
+    	
+        <div class="ycmain yx_map">
+            <div class=" yx_1_content">
+                <div>
+                    <span class="yx_map-text">1#总配电房</span>
+                    <br />
+                    <div class="yx_1" id="p1" onclick="ShowInfoPage(1);"></div>
+                </div>
+            </div>
+            <div class=" yx_2_content">
+                <div>
+                    <span class="yx_map-text">2#总配电房</span> <br />
+                    <div class="yx_2" id="p2" onclick="ShowInfoPage(2);"></div>
+                </div>
+            </div>
+            <div class=" yx_3_content">
+                <div>
+                    <span class="yx_map-text">1#分配电房</span> <br />
+                    <div class="yx_3" id="p3" onclick="ShowInfoPage(3);"></div>
+                </div>
+            </div>
+            <div class=" yx_4_content">
+                <div>
+                    <span class="yx_map-text">2#分配电房</span> <br />
+                    <div class="yx_4" id="p4" onclick="ShowInfoPage(4);"></div>
+                </div>
+            </div>
+            <div class=" yx_5_content">
+                <div>
+                    <span class="yx_map-text">3#分配电房</span> <br />
+                    <div class="yx_5" id="p5" onclick="ShowInfoPage(5);"></div>
+                </div>
+            </div>
+            <div class=" yx_6_content">
+                <div>
+                    <span class="yx_map-text">4#分配电房</span> <br />
+                    <div class="yx_6" id="p6" onclick="ShowInfoPage(6);"></div>
+                </div>
+            </div>
+            <div class=" yx_7_content">
+                <div>
+                    <span class="yx_map-text">5#分配电房</span> <br />
+                    <div class="yx_7" id="p7" onclick="ShowInfoPage(7);"></div>
+                </div>
+            </div>
+            <div class=" yx_8_content">
+                <div>
+                    <span class="yx_map-text">1n分配电室</span> <br />
+                    <div class="yx_8" id="p8" onclick="ShowInfoPage(8);"></div>
+                </div>
+            </div>
+            <div class=" yx_9_content">
+                <div>
+                    <span class="yx_map-text">2n分配电室</span> <br />
+                    <div class="yx_9" id="p9" onclick="ShowInfoPage(9);"></div>
+                </div>
+            </div>
+            <div class=" yx_10_content">
+                <div>
+                    <span class="yx_map-text">2n总配电室</span> <br />
+                    <div class="yx_10" id="p10" onclick="ShowInfoPage(10);"></div>
+                </div>
+            </div>
+            <div class=" yx_11_content">
+                <div>
+                    <span class="yx_map-text">4n总配电室</span> <br />
+                    <div class="yx_11" id="p11" onclick="ShowInfoPage(11);"></div>
+                </div>
+            </div>
+        </div>
+		
+</div>
+
+    <script type="text/javascript">
+  
+        alarmState();
+        var alarmJson = "";
+        var timeTicket;
+        clearInterval(timeTicket);
+        timeTicket = setInterval(function () {
+            alarmState();
+        }, 2000);
+
+        function alarmState() {
+            var typeid = 1;
+            $.post("/SysInfo/getStationAlarm", "", function (data) {
+                alarmJson = eval("(" + data + ")");
+                $.each(alarmJson, function (i) {
+                    var jsonlist = alarmJson[i];
+                    InitAlarmAtate();
+                    for (var jcount = 0; jcount < jsonlist.length; jcount++) {
+                        typeid = jsonlist[jcount].typeid;
+                       
+                        SetAlarmState1(jsonlist[jcount].pid, jsonlist[jcount].state);
+                    }                                     
+                });
+            });
+        }
+        function InitAlarmAtate()
+        {
+            var str1 = [
+                { "pid": "1" },
+                { "pid": "2" },
+                { "pid": "3" },
+                { "pid": "4" }
+            ];
+            for (var i = 0; i < str1.length; i++) {
+                SetAlarmState1(str1[i].pid, 0);
+            }
+           
+        }
+
+        function SetAlarmState1(pid,dstate) {	
+			    if (dstate ==  0) {
+			        $(".yx_" + pid).css('background-image', "url(../Content/images/location_icon/1.png)");
+			    } else {
+			        $(".yx_" + pid).css('background-image', "url(../Content/images/location_icon/1_" + dstate + ".png)");
+			    }
+		}
+
+</script>
+
+<script>
+    function ShowInfoPage(a) {
+        console.log("ShowInfoPage")
+        $.cookie('cookiepid', a, { expires: 7, path: '/' });       
+        $("#main_frame", parent.document.body).attr("src", "/PowerQuality/Index?mid=21");        
+    }
+</script>
+</body>
+</html>

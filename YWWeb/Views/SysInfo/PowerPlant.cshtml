@@ -1,0 +1,254 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>单位管理</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript" charset="gb2312" language="javascript"></script>
+    <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 780px; width: 100%"
+           idfield="UnitID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='UnitID' checkbox="true">
+                </th>
+                <th field='UnitName' width="200px">
+                    电站调度名称
+                </th>
+                @*<th field='UnitLogo' width="120px" data-options="formatter: LogoFormat">
+                        单位Logo
+                    </th>*@
+                <th field='LinkMan' width="100px">
+                    联系人 
+                </th>
+                <th field='LinkMobile' width="100px">
+                    联系电话
+                </th>
+                <th field='LinkAddress' width="200px">
+                    联系地址
+                </th>
+                @*<th data-options="field:'IndustryID',width:100,formatter:loadIndustryName">
+                    从事行业
+                </th>
+                <th field='EleCalWay' width="150px">
+                    基本电费容需计价方式
+                </th>
+                <th field='GovEleLevel' width="150px">
+                    对应政府目录电价水平
+                </th>
+                <th field='DeviationMode' width="150px">
+                    偏差承担方式
+                </th>*@
+                <th field='InstalledCapacity' width="150px">
+                    装机容量
+                </th>
+                <th field='companyName' width="150px">
+                    所属公司名称
+                </th>
+                <th field='Nature' width="150px">
+                    电厂性质
+                </th>
+                @*<th field='Loss' width="150px">
+                    损耗系数（K1）
+                </th>
+                <th field='LossAdd' width="150px">
+                    扣减系数（K2）
+                </th>
+                <th field='SpareBase' width="150px">
+                    富余基数
+                </th>*@
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            电站调度名称:
+            <input id="unitname" />
+            联系人:
+            <input id="linkman" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <div id="editwin" title="编辑单位信息" class="easyui-dialog" closed="true" style="width: 750px;
+        height: auto; padding: 10px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    电站调度名称：
+                </td>
+                <td class="d_l_d">
+                    <input id="UnitName" runat="server" name="UnitName" missingmessage="必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="UnitID" type="hidden" />
+                </td>
+                <td class="d_l_t">
+                    装机容量(kVA)：
+                </td>
+                <td class="d_l_d">
+                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" missingmessage="必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    联系人：
+                </td>
+                <td class="d_l_d" style="width:250px;">
+                    <input id="LinkMan" runat="server" name="LinkMan" missingmessage="必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    联系电话：
+                </td>
+                <td class="d_l_d" style="width:250px;">
+                    <input id="LinkMobile" runat="server" name="LinkMobile" missingmessage="必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true"
+                           onkeyup='this.value=this.value.replace(/\D/gi,"")' />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            @*<tr>
+                <td class="d_l_t">
+                    所属省份：
+                </td>
+                <td class="d_l_d">
+                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitProvince" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    所属地区：
+                </td>
+                <td class="d_l_d">
+                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitCity" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>*@
+           
+            <tr>
+                @*<td class="d_l_t">
+                    行业：
+                </td>
+                <td class="d_l_d">
+                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="IndustryID" />
+                    <b class="RStar">&nbsp*</b>
+                </td>*@
+                <td class="d_l_t">
+                    所属公司名称：
+                </td>
+                <td class="d_l_d" style="width:250px;">
+                    <input id="companyName" runat="server" name="LinkPhone" missingmessage="必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    电厂性质：
+                </td>
+                <td class="d_l_d">
+                    <input id="Nature" runat="server" name="LinkAddress" missingmessage="必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+
+                <td class="d_l_t">
+                    联系地址：
+                </td>
+                <td class="d_l_d" colspan="3" style="width:550px;">
+                    <input id="LinkAddress" runat="server" name="Email" missingmessage="必填项！" class="easyui-validatebox"
+                           style="width: 500px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            @*<tr>
+                <td class="d_l_t">
+                    基本电费容需计价方式(元/kVA/月或元/kW/月)：
+                </td>
+                <td class="d_l_d">
+                    <input id="EleCalWay" runat="server" name="EleCalWay" missingmessage="基本电费容需计价方式必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    对应政府目录电价水平(元/千瓦时)：
+                </td>
+                <td class="d_l_d">
+                    <input id="GovEleLevel" runat="server" name="GovEleLevel" missingmessage="对应政府目录电价水平（丰枯峰谷）必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+
+                </td>
+            </tr>*@
+            @*<tr>
+                <td class="d_l_t">
+                    偏差承担方式：
+                </td>
+                <td class="d_l_d">
+                    <input id="DeviationMode" runat="server" name="DeviationMode" missingmessage="偏差承担方式必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>*@
+            @*<tr>
+                <td class="d_l_t">
+                    损耗系数（K1）：
+                </td>
+                <td class="d_l_d">
+                    <input id="Loss" runat="server" name="DeviationMode"
+                           style="width: 200px;" data-options="required:true" />
+                </td>
+                <td class="d_l_t">
+                    扣减系数（K2）：
+                </td>
+                <td class="d_l_d">
+                    <input id="LossAdd" runat="server" name="LossAdd"
+                           style="width: 200px;" data-options="required:true" />
+                </td>
+            </tr>*@
+            @*<tr>
+                <td class="d_l_t">
+                    富余基数：
+                </td>
+                <td class="d_l_d">
+                    <input id="SpareBase" runat="server" name="SpareBase"
+                           style="width: 200px;" data-options="required:true" />
+                </td>
+            </tr>*@
+            <tr>
+                <td class="d_l_t">
+
+                    地图坐标：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <input id="Coordination" runat="server" name="Coordination" missingmessage="地图坐标必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                    <a href="~/Content/GetMap/getMapPointXY.html" target="_blank" class="table_btn1 btn_style radius5">
+                        &nbsp;取坐标&nbsp;
+                    </a> <b class="RStar">&nbsp*</b>（如：113.191932|22.232813）
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    站室分配：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <input style="width: 210px;" id="pdflist" />
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+               data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                                                          data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+    <script src="~/Content/UserJS/PowerPlant._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

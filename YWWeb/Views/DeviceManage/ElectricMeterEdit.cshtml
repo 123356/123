@@ -1,0 +1,151 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModuleEdit</title>
+    <style type="text/css">
+        .divicons
+        {
+            float: left;
+            border: solid 1px #ccc;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .divicons:hover
+        {
+            color: #FFF;
+            border: solid 1px #3399dd;
+            background: #2288cc;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
+            background: linear-gradient(top, #33bbee, #2288cc);
+            background: -moz-linear-gradient(top, #33bbee, #2288cc);
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+            text-shadow: -1px -1px 1px #1c6a9e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" align="right" width="40%">
+                电表名称：
+            </td>
+            <td class="d_l_d">
+                <input id="EName" style = " width:280px" runat="server" name="EName" data-options="required:true" class="radius5" /><b class = "RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                关联测点：
+            </td>
+            <td class="d_l_d">
+                <input id="Points" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                电表类型：
+            </td>
+            <td class="d_l_d">
+                <select id="MLID" class="easyui-combobox" style="width: 300px;" data-options="editable:false">
+                <option value="0">电力</option>
+                <option value="1">电度</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                输入/输出：
+            </td>
+            <td class="d_l_d">
+                <input type="radio" name ="IO" checked id="io0"  value = "0"/>输入 &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name ="IO" id="io1" value = "1"/>输出
+            </td>
+        </tr>
+    </table>
+    <div style="text-align:center;">
+        <a href="javascript:" id="btnSave" onclick="save()" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">保存</a>
+         <a href="javascript:" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'" onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var eid=@Html.Raw(Request.QueryString["eid"]);
+        var cid=@Html.Raw(Request.QueryString["cid"]);
+        var did=@Html.Raw(Request.QueryString["did"]);
+        var pid=@Html.Raw(Request.QueryString["pid"]);
+
+        $("#Points").combotree({
+            url: "/BaseInfo/PositionParams?DID=" + did + "&DataType=" + "1,2,3,6,52" ,
+            valueField: 'id',
+            textField: 'text',
+            editable: false,
+            multiple:'true',
+            width:300,
+            multiple: true,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#Points').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#Points').combo('showPanel');
+                }
+            }
+        });
+
+        loadInfo();
+        function loadInfo() {
+            if(eid > 0 ){
+                $.post("/DeviceManage/ElectricMeterDetail", { "eid": eid }, function (data) {
+                var obj = eval("(" + data + ")");
+                $("#EName").val(obj.EName);
+                $("#Points").combotree("setValues", obj.TagIDs);
+                $("#MLID").combobox("setText", obj.Etype);
+                 $("#io" + obj.IO).attr("checked", true);
+                });
+            }
+        }
+        function save() {
+            if ($("#EName").val() == "") {
+                $.messager.alert("提示", "请输入回路名称！", "info");
+                return false;
+            }
+            var Histagid = "",tagid = 0;
+            var Hisrolelist = $("#Points").combotree("getValues") + '';
+            var arrtagid = Hisrolelist.split(','); //获取TagID list
+            var len = arrtagid.length;
+            for (var j = 0; j < len; j++) {
+                if (arrtagid[j].indexOf('_') < 0) {
+                    Histagid += arrtagid[j] + ',';                    //曲线TagID,数组
+                }
+            }
+            var postData = {
+                EName: $("#EName").val(),
+                EID: eid,
+                CID: cid,
+                DID: did,
+                Etype:$("#MLID").combobox("getText"),
+                IO:$("input[name='IO']:checked").val(),
+                TagIDs:Histagid
+            };
+            //发送异步请求，添加用户
+            $.post("/DeviceManage/SaveElectricMeterInfo", postData, function (data) {
+                if (data == "ok") {
+                    $.messager.alert("提示", "电表编辑成功！", "info");
+                    $('#editwin').window('close');
+                }
+                else {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

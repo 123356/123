@@ -1,0 +1,97 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OneGraph105</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/onepub.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu105.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/css/base.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="tabbg2">
+    <div class="ycmain page_content">
+        <ul class="alertmenu" id="p105">
+            <!--高压柜 H6 电缆头ABC——3点-->
+            <li class="w473 alarmico_r">
+                <dt id="d473" class="d473" onclick="deviceinfo(107,473);"></dt>
+                <dd id="t473" class="t473">
+                </dd>
+            </li>
+            <!--高压柜 H7 上下触头ABC+电缆头ABC——9点+环境温湿度2点-->
+            <li class="w469 alarmico_r">
+                <dt id="d469" class="d469" onclick="deviceinfo(107,469);"></dt>
+                <dd id="t469" class="t469">
+                </dd>
+            </li>
+            <!--1#变压器 低压侧ABC——3点-->
+            <li class="w475 alarmico_lup">
+                <dt id="d475" class="d475" onclick="deviceinfo(107,475);"></dt>
+                <dd id="t475" class="t475">
+                </dd>
+            </li>
+            <!--低压柜进线 1BB1 上、下母排ABC三相——6点-->
+            <li class="w470 alarmico_l">
+                <dt id="d470" class="d470" onclick="deviceinfo(107,470);"></dt>
+                <dd id="t470" class="t470">
+                </dd>
+            </li>
+            <!--低压柜馈线 1BB4 电缆头ABC三相——3点-->
+            <li class="w471 alarmico_l">
+                <dt id="d471" class="d471" onclick="deviceinfo(107,471);"></dt>
+                <dd id="t471" class="t471">
+                </dd>
+            </li>
+            <!--2#变压器 低压侧ABC——3点-->
+            <li class="w472 alarmico_lup">
+                <dt id="d472" class="d472" onclick="deviceinfo(107,472);"></dt>
+                <dd id="t472" class="t472">
+                </dd>
+            </li>
+            <!--10kV母线三相电压-->
+            <li class="gymx">
+                <p id="">
+                    未监测</p>
+                <p id="">
+                    未监测</p>
+                <p id="">
+                    未监测</p>
+            </li>
+            <!--0.4kV母线I段三相电压-->
+            <li class="dymx1">
+                <p id="">
+                    未监测</p>
+                <p id="">
+                    未监测</p>
+                <p id="">
+                    未监测</p>
+            </li>
+            <!--0.4kV母线II段三相电压-->
+            <li class="dymx2" id="max470">
+                <p id="d470_1">
+                    222.6</p>
+                <p id="d470_2">
+                    222.4</p>
+                <p id="d470_3">
+                    222.7</p>
+            </li>
+            <!--翻页
+            <li class="tb_pageI"><a href="/PDRInfo/OneGraph/105_1" class="page_size_pm">10kV母线系统图</a></li>
+            <li class="tb_pageII"><a href="/PDRInfo/OneGraph/105_2" class="page_size_pm">0.4kV母线I段图</a></li>
+            <li class="tb_pageIII"><a href="/PDRInfo/OneGraph/105_3" class="page_size_pm">0.4kV母线II段图</a></li>
+                -->
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var pid = 105;
+        var OGdid = "473,469,475,470,471,472";
+        loadPointsInfo(OGdid);
+    </script>
+    <script src="~/Content/UserJS/lfywufl._jm.js" type="text/javascript"></script>
+    
+</body>
+</html>

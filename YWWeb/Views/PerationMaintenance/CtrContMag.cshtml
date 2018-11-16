@@ -1,0 +1,154 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>运维内容</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <style type="text/css">
+    .closepic{float: right;width: 105px;right: 20px;top: 120px;}
+    </style>
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 780px;" idfield="id"
+        pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='id' width="20px">
+                    序号
+                </th>
+                <th field='constractName' width="100px">
+                    合同名称
+                </th>
+                <th field='orderType' width="40px">
+                    运维类型
+                </th> 
+                <th field='constractInfo' width="400px">
+                    运维内容
+                </th>                
+                <th field='TemplateIds' width="50px" >
+                    内容ID
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            合同名称:
+            <select id="ConName" style="width: 150px;"></select>
+        </div>
+            <div id="userbuttonThis" class="searchbutton">
+                <button title="查 询" onclick="dosearch();" class="page_table_but"><img src="/Content/images/Icon16/zoom.png">查 询</button>
+            </div>
+        <div id="userbuttonThis" class="searchbutton">
+            <button title="新 增" onclick="add();" class="page_table_but">
+                <img src="/Content/images/Icon16/add.png">新 增
+            </button>
+        </div>
+        <div id="userbuttonThis" class="searchbutton">
+            <button title="删 除" onclick="delect();" class="page_table_but">
+                <img src="/Content/images/Icon16/delete.png">删 除
+            </button>          
+        </div>
+        <div id="userbuttonThis" class="searchbutton">
+            <button title="编 辑" onclick="edit();" class="page_table_but">
+                <img src="/Content/images/Icon16/edit.png">编 辑
+            </button>       
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：运维 > 运维内容 ");
+        function OpenFrame(id, name) {
+            $('#editwin').window({
+                modal: true,
+                top: ($(window).height() - 600) * 0.5,
+                left: ($(window).width() - 800) * 0.5,
+                href: '/UserInfo/CtrContEdit?id=' + id + "&name=" + name,
+                onClose: function () { dosearch(); }
+            });
+            $('#editwin').window('open');
+        }
+        loadCName();
+        function loadCName() {
+            $("#ConName").combobox({
+                url: "/BaseInfo/BindCtrContName?showall=1",
+                valueField: 'id',
+                textField: 'CtrName',
+                onLoadSuccess: function () {
+                    var data = $('#ConName').combobox('getData');
+                    if (data.length > 0) {
+                        $("#ConName").combobox('select', data[0].id);
+                        
+                        //$('#list_data').datagrid('load', { "CtrName": data[0].CtrName });
+                    }
+                }
+            });
+        }
+              
+        function dosearch() {
+            var ctrContID = $('#ConName').combobox('getValue');
+            
+            $('#list_data').datagrid({
+                url: '/UserInfo/LoadConstractInfoDatas?rom=' + Math.random(),
+                queryParams: { "ctrContID": ctrContID },
+                pagination: true
+            });
+            $('#list_data').datagrid('uncheckAll');
+        }
+        dosearch();
+
+        function add() {
+            $('#editwin').window({
+                modal: true,
+                top: ($(window).height() - 600) * 0.5,
+                left: ($(window).width() - 800) * 0.5,
+                href: '/UserInfo/CtrContAdd',
+                onClose: function () { dosearch(); }
+            });
+            $('#editwin').window('open');
+        }
+        function edit() {
+            var rows = $('#list_data').datagrid('getSelections');
+            if (rows.length == 1) {
+                OpenFrame(rows[0].id, rows[0].constractName);
+            } 
+            else {
+                $.messager.alert("提示", "请选择一行！", "info");
+            }
+        }
+        function delect() {
+            var rows = $('#list_data').datagrid('getSelections');
+            if (rows.length == 1) {
+                $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+                    if (r) {
+                        var ids = [];
+                        for (var i = 0; i < rows.length; i++) {
+                            ids.push(rows[i].id);
+                        }
+                        $.post("/UserInfo/DeleteConstractInfo?Rnum=" + Math.random(), { "id": rows[0].id }, function (data) {
+                            if (data == "OK") {
+                                dosearch();
+                            }
+                            else {
+                                $.messager.alert("提示", data, "info");
+                            }
+                        });
+                    }
+                })
+            }
+            else {
+                $.messager.alert("提示", "请选择要一行删除！", "info");
+            }
+        }
+       
+        
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="编辑运维内容" class="easyui-window" closed="true" style="width: 360px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

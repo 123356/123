@@ -1,0 +1,691 @@
+﻿@charset "utf-8";
+/* CSS Document */
+/* 
+   Author:Kevin
+   Date:2016-04-11
+*/
+/*tab*/
+.tab_mainbox{background:#EFEDF2; height:100%;}
+.tab_menu{overflow:hidden; height:32px; margin:5px 0px;}
+.tab_menu li{width:100px;float:left;height:30px;line-height:30px;background:url(../images/menubg.png) 0px -86px repeat-x;text-align:center;cursor:pointer; border:1px solid #999; border-left:none;}
+.tab_menu li.current{color:#fff;background:#17689D; }
+.tab_menu li a{color:#666;text-decoration:none;}
+.tab_menu li.current a{color:#333;}
+.tab_box {height:100%;}
+.tab_box .hide{display:none;}
+
+.tab_menu2 { z-index:2;-moz-border-radius: 5px; -webkit-border-radius: 5px;  border-radius:5px; margin:0px;;}
+.tab_menu2 li { width:auto; padding:0px 10px; background:#4c4c4c; color:#fff; border:none; }
+.tab_menu2 li.current { background:#dadbd3; color:#568932; }
+
+.tab_menu3 { margin:0px;}
+.tab_menu3 li { width:160px; height:28px; line-height:28px; background: url(../images/tabmenubg.png) -160px 0px no-repeat; color:#000; border:none; }
+.tab_menu3 li.current { background: url(../images/tabmenubg.png) 0px 0px no-repeat; color:#17689D; }
+
+.tabbg {
+	height: 100%;
+	overflow: hidden;
+	position: relative; 
+	width: 100%;
+}
+.tabbg1 { background:#b2b2b2;}
+.tabbg2 { background:#1d1d1d;}
+.tabbg3 { background:#4c4c4c;}
+.tabbg4 { background:#EFEDF2;}
+
+.table_btn, .table_btn1 { display: inline-block; width: 65px; height: 30px; line-height:30px; text-align:center; font-size:; color: #fff; font-weight: bold; border: 1px solid #4a4a32; margin:5px 0px; background: url(../images/Login/loginbtn.png) no-repeat -5px -5px;}
+.table_btn1 { background: url(../images/button.png) no-repeat  -165px -5px; color:#444; border:1px solid #666;}
+
+/*返回按钮*/
+.backone {
+    width: 37px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 30px;
+    background: url(../images/gbk.png) 5px no-repeat;
+    color: #000;
+    font-size: 16px;
+    position: absolute;
+    left: 550px;
+    top: 0px;
+	}
+.backone:hover { color:#ccc;}
+
+/*图表右上角选项*/
+.chart_option { display:block; color:#fff; position:absolute; right:200px; top:15px; z-index:2;}
+
+
+
+/*能耗管理*/
+.energy_management { width:100%; height:100%;}
+.energy_management_btn { padding:20px;}
+.energy_management_btn1, .energy_management_btn2, .energy_management_btn3, .energy_management_btn4 { display:inline-block; width:128px; height:41px; text-align:center; line-height:41px; color:#fff; margin-right:20px; background:url(../images/button.png) no-repeat;}
+.energy_management_btn1 { background-position:0px -106px;}
+.energy_management_btn2 { background-position:0px -55px;}
+.energy_management_btn3 { background-position:-135px -55px;}
+.energy_management_btn4 { background-position:-135px -106px;}
+.energy_management_list { padding:0px 20px 20px 20px; width:100%; height:100%; overflow:hidden;}
+.energy_management_list .energy_management_box { float:left; width:45%; height:30%; margin:0px 15px 15px 0px; background:#333;}
+
+/*设备状态*/
+.equipment_stanus { padding:20px 0px;}
+.equipment_stanus table { width:80%;}
+
+/*实时曲线*/
+.curve { width:90%; margin:0 auto; padding:20px 0px;}
+.curve_table { width:100%; color:#000; padding-bottom:10px; border-bottom:1px solid #737373; position:relative;}
+/*调整曲线测点表头样式 7.14日加*/
+.curve_table tr{ line-height:26px;}
+.curve_table button { margin-left:5px !important;}
+
+.curve_table table { display:block;}
+.curve_table td { padding:2px;}
+.curve_content { margin:20px 0px; background:#333; color:#fff;}
+.curve_toggle { display:block; width:30px; height:15px;cursor:pointer; background:#737373 url(../images/zkico.png) center center no-repeat; position:absolute; right:0px; bottom:0px;}
+.curve_toggles {background:#737373 url(../images/gbico.png) center center no-repeat;}
+
+/*历史曲线*/
+.curve_time_select { position:relative;}
+.curve_time_select label { display:inline-block; padding-right:5px;}
+
+/*设备台账页面*/
+.equipment_account {width:60%; margin:50px auto; padding:15px 15px 30px 15px; background-color:#fff; overflow:hidden;}
+.equipment_account h3 { color:#666; font-weight:bold; padding-bottom:10px; border-bottom:1px solid #ccc; margin-bottom:30px;}
+.equipment_account table { float:left; margin:0 1%;}
+.equipment_account table th,.equipment_account table td { border-bottom:1px solid #ccc; padding:10px 5px; color:#666; background-color:#efefef;}
+.equipment_account table th { border-right:1px solid #ccc; text-align:right; width:30%}
+.account_tr th,.account_tr td { background-color:#dedede !important;}
+
+
+/*报警管理页面*/
+.page_table { height:100%; overflow:auto; padding:10px;}
+/*报警查询部分*/
+.page_table_header td {color:#FFF; }
+/*.page_table_but_search, .page_table_but_export, .page_table_confirm { width:80px; height:35px; color:#fff; margin-left:5px; background:url(../images/button.png) no-repeat;}*/
+/*页面表格*/
+.page_table_list { text-align:center; margin-top:5px;}
+.page_table_list thead, .page_table_list tbody tr { display:table; width:100%; table-layout:fixed;}
+/*.alarm_management_list thead { width: calc( 100% - 1.2em );}*/
+.page_table_list tbody { display:block;  overflow:hidden; }
+.page_table_list thead th, .page_table_list thead td table th /*, .annual_popcontent th*/  { overflow:hidden; background:#4d4d4d;background:-moz-linear-gradient(#636363,#4d4d4d);background:-webkit-gradient(linear,center top,center bottom,from(#636363),to(#4d4d4d));background:-webkit-linear-gradient(#636363,#4d4d4d);background:-o-linear-gradient(#636363,#4d4d4d);background:-ms-linear-gradient(#636363,#4d4d4d);background:linear-gradient(#17689d,#17689d); color:#FFF; }
+.page_table_list td { height:35px; background:#e5e5e5;background:-moz-linear-gradient(#f5f5f5,#e5e5e5);background:-webkit-gradient(linear,center top,center bottom,from(#f5f5f5),to(#e5e5e5));background:-webkit-linear-gradient(#f5f5f5,#e5e5e5);background:-o-linear-gradient(#f5f5f5,#e5e5e5);background:-ms-linear-gradient(#f5f5f5,#e5e5e5);background:linear-gradient(#f5f5f5,#e5e5e5);}
+.page_table_list th, .page_table_list td { border:1px solid #444; border-top:none;}
+.page_table_list tbody th {background:#cdcdcd;background:-moz-linear-gradient(#e3e3e3,#cdcdcd);background:-webkit-gradient(linear,center top,center bottom,from(#e3e3e3),to(#cdcdcd));background:-webkit-linear-gradient(#e3e3e3,#cdcdcd);background:-o-linear-gradient(#e3e3e3,#cdcdcd);background:-ms-linear-gradient(#e3e3e3,#cdcdcd);background:linear-gradient(#e3e3e3,#cdcdcd); }
+
+.page_table_list2 { border-collapse:separate;}
+.page_table_list2 td table td { height:35px; line-height:35px; background:#e5e5e5; padding:0px 10px; border:1px solid #a7a7a7; }
+.page_table_list2_tr td { background:#ccc !important;}
+.bordernone td { border:none !important;}
+
+/*.state_ledgertable2 {margin-top:50px;}*/
+
+/*报警翻页选项部分*/
+.page_table_footer { margin-top:5px;}
+.page_table_footer td {}
+.page_table_but4, .page_table_but5, .page_table_but6, .page_table_but7, .page_table_but8 { width:15px; height:16px; background:url(../images/pagination_icons.png) no-repeat; margin:10px 0px;}
+.page_table_but4 { background-position:0px 0px;}
+.page_table_but5 { background-position:-16px 0px;}
+.page_table_but6 { background-position:-32px 0px;}
+.page_table_but7 { background-position:-48px 0px;}
+.page_table_but8 { background-position:-65px 0px;}
+
+.paging span { display:block; float:right; padding:5px;}
+.paging ul { float:left;}
+.paging ul li { float:left; margin-right:1px; }
+.paging ul li a { display:block; padding:4px 10px; background:#666; color:#fff;}
+.paging ul li a:hover, .paging_active a { background:#999 !important; color:#333 !important;}
+/*报警管理页面*/
+
+/*历史数据*/
+.history_search{ padding-left:10px; line-height:26px;}
+.history_search select{ margin-right:5px;}
+/*曲线报表*/
+.curve_report { margin-top:20px;}
+.curve_report_title { overflow:hidden;}
+.curve_report_title ul li { float:left; margin-right:5px;}
+.curve_report_title ul li a { display:block; padding:5px 10px; color:#0E2D5F; background:#E0ECFF;}
+.curve_report_title ul li a:hover, .curve_reportavtive { background:#fff !important; font-weight:bold;}
+.curve_report_content {background:#333; padding:10px;}
+.curve_report_time { margin-bottom:10px;}
+.curve_report_time button { margin-left:5px;}
+.curve_reportimg iframe { width:100%; height:400px;}
+.curve_reportimg_content { color:#fff;}
+
+
+/*系统设置页面*/
+/*系统模块管理弹出窗*/
+.system_setinfobottom { width:80%; margin:0 auto; padding:5px 0px; text-align:center;}
+/*报警设置说明*/
+.illustration {
+    position: absolute;
+    right: 30px;
+    top: 10px;	
+}
+.illustration a {
+    height: 16px;
+    line-height: 16px;
+    padding-left: 20px;
+    background: url(../images/tipicon.png) 0 3px no-repeat;
+    color: #fefefe;
+    font-size: 14px;}
+.illustration a:hover { filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8;}
+.illustration a div { display:none; position:absolute; right:0px; top:20px; width:450px; height:250px; background:#fefefe; color:#333; padding:10px; line-height:24px;}
+.illustration a:hover div { display:block;}
+.illustration span { padding:5px !important;}
+/*系统设置页面*/
+
+/*运行管理*/
+/*缺陷管理*/
+.defect_manage { width:98%; height:98%; padding:0.5%;}
+.defect_manage_left { width:20%; height:100%;  float:left;}
+.defect_manage_right { width:78%; height:100%; float:right;}
+.defect_chart1, .defect_chart2 { background:#000; width:100%; height:49%; overflow:hidden;}
+.defect_chart2  { margin-top:2%;}
+.defect_charttitle { margin:15px 0px; text-align:center; color:#fff; font-weight:bold;}
+.defect_charttitle i { display:inline-block; width:33px; height:27px; background:url(../images/defect_manageicon.png) 0px -107px no-repeat; vertical-align:middle; margin-right:10px;}
+.defect_charttitle2 { background:#1d1d1d; margin:0px; padding:10px 0px;}
+.defect_edit_btn, .defect_details_btn, .defect_delete_btn, .defect_add_btn, .archives_download_btn{ width:24px; height:25px; margin:0px 5px; background:url(../images/defect_manageicon.png) no-repeat; text-indent:-9999px;}
+.defect_edit_btn { background-position:0px -55px;}
+.defect_details_btn { background-position:0px -29px;}
+.defect_delete_btn { background-position:0px -81px;}
+.defect_add_btn { width:28px; height:28px; background-position:0px 0px;}
+.defect_add { text-align:right; padding:5px 0px;}
+.defect_edit, .defect_details { display:none; width:740px;  position:absolute; left:50%; margin-left:-370px; top:50%; margin-top:-230px; border:1px solid #666; padding:0px 15px 15px 15px; z-index:2;background:#ccc;background:-moz-linear-gradient(#dcdcdc,#ccc);background:-webkit-gradient(linear,center top,center bottom,from(#dcdcdc),to(#ccc));background:-webkit-linear-gradient(#dcdcdc,#ccc);background:-o-linear-gradient(#dcdcdc,#ccc);background:-ms-linear-gradient(#dcdcdc,#ccc);background:linear-gradient(#dcdcdc,#ccc);}
+.defect_edit h3, .defect_details h3 { display:block; padding:10px 0px; font-size:18px;}
+.defect_close { width:61px; height:25px; position:absolute; right:15px; top:0px;  text-indent:-9999px; background:url(../images/defect_manageicon.png) 0px -135px no-repeat;}
+.defect_edit_content, .defect_details_content {  background:#e5e5e5; border:1px solid #666; padding:10px;}
+.defect_edit_content td, .defect_details_content td { padding:5px;}
+.defect_details_content { padding:5px;}
+/*缺陷管理*/
+/*运行管理*/
+
+/*能耗管理*/
+.energy_manage { width:98%; height:98%; padding:0.5%; min-height:720px;}
+.energy_top {width:100%; height:60%; overflow:none;}
+.energy_top_left { width:70%; height:96%; padding:0.5%; float:left; background:#000;}
+.energy_table { margin:0px 0px 0px 1%; width:99%;}
+.energy_table td, .energy_table th { height:28px;}
+.energy_top_leftimg {  background:#333; width:10%; text-align:center;}
+.energy_table_title { background:#333 !important;  font-size:18px;}
+.energy_table_bottom { margin-top:10px;}
+.energy_table_bottom td { background:#333; color:#d2e78e; text-align:right; padding:10px; font-size:16px;}
+
+.energy_top_right { width:28%; height:100%; margin-left:1%; background:#000; float:left; overflow:none;}
+.energy_top_righttb { width:48%; height:48%; z-index: 10; padding: 1%; background-color: #000 !important; float:left;}
+
+.energy_bottom {width:100%; height:40%; margin-top:1%; float:left; overflow:none;}
+.energy_bottom_tab { float:left; width:49.5%;}
+.floatright { float:right;}
+.bordernone { border:none;}
+.backgroundnone { background:none;}
+
+.energy_tabmenu li { width:20%;}
+/*用电负荷曲线\功率因数曲线趋势说明*/
+.load_trend_inf,.power_trend_inf {padding-left:2%; text-align:left; float:left; display:inline-block; }
+.load_trend_inf p, .power_trend_inf p {  display:block; padding:0px; margin:0px; font-size:14px; color:#eee; line-height:20px; vertical-align:middle;}
+.load_trend_inf p i, .power_trend_inf p i {  display:inline-block; width:19px; height:18px; vertical-align:middle; margin-right:10px;}
+.upTrend_icon {  background:url(../images/defect_manageicon.png) 0px -210px no-repeat; }
+.downTrend_icon {  background:url(../images/defect_manageicon.png) 0px -190px no-repeat; }
+/*功率因数曲线趋势说明*/
+
+/*能耗管理*/
+
+/*首页开始------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*.index_center { width:71%; height:100%; float:left;}*/
+/*.baidumap { width:100%; height:500px;vertical-align: middle; text-align: center;}*/
+/*左侧边栏*/
+.left_sidebar { height:100%; width:70px; border-right:2px solid #333; z-index:2; position:relative;
+    background:#656565;
+    background: -moz-linear-gradient(top, #656565 0%, #333333 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#656565), color-stop(100%,#333333));
+    background: -webkit-linear-gradient(top, #656565 0%,#333333 100%);
+    background: -o-linear-gradient(top, #656565 0%,#333333 100%);
+    background: -ms-linear-gradient(top, #656565 0%,#333333 100%);
+    background: linear-gradient(to bottom, #656565 0%,#333333 100%);}
+.left_sidebar li { border-bottom:2px solid #777;}
+.left_sidebar li a { display:block; text-align:center; padding:10px 0px 8px 0px; color:#fff; font-size:1em; font-weight:bold;}
+.left_sidebar li a:hover, .left_sidebaractive { background-color:#333;}
+.left_sidebar li label { display:block; text-align:center; cursor:pointer;}
+.left_sidebar li label img { width:50%;}
+/*左边菜单*/
+.leftmenu { width:210px; height:100%; float:left;position:relative; z-index:2;}
+.leftmenu iframe { width:100%; height:100%;}
+.leftmenutitle { display:inline-block; width:11px; height:41px; position:absolute; top:50%; margin-top:-20px; right:3px; z-index:2; text-align:center;}
+.leftmenutitle a { display:block; width:11px; height:41px; background:url(../images/showleftmenuicon.png) no-repeat; position:absolute; right:0px; top:0px;}
+.leftmenutitleh { background:url(../images/hiddenleftmenuico.png) no-repeat !important;}
+.leftmenutitlec { background:url(../images/showleftmenuicon.png) no-repeat !important;}
+.leftmenu_content {  height:100%; padding-right:3px;}
+.leftmenu_search {  height:35px; padding:6px 6px; background:url(../images/menubg.png) 0px -208px repeat-x; overflow:hidden;}
+.leftmenu_search span { display:block;  float:left;}
+.leftmenu_search .leftmenu_search_txt input { width:130px; height:26px; color:#666; padding:0px 5px; border:none; margin:4px 0px;}
+.leftmenu_search .leftmenu_search_btn input { width:50px; height:30px; background:url(../images/button.png) 0px 0px no-repeat; margin:3px 0px 3px 5px;}
+.leftmenu2_search_txt select { width:198px; height:28px; color:#666; padding-left:5px; border:none; margin:4px 0px;}
+.leftmenu_search_padding { padding:1px 3px 2px 3px;}
+
+.index_center {height:100%; float:left;}
+.baidumap { width:100%;vertical-align: middle; text-align: center;}
+/*#dituContent { width:100% !important; height:500px !important;}*/
+/*下边栏*/
+.index_bottom { width:100%; height:32%; border-top:5px solid #4c4c4c;  /*border-bottom:5px solid #4c4c4c;*/ background:#191919; position:absolute; bottom:0px;}
+.index_bottomtitle { display:inline-block; width:44px; height:11px; position:absolute; left:50%; top:0px; margin-left:-20px; z-index:2;}
+.index_bottomtitle a { display:block; width:44px; height:11px; background:url(../images/bshowleftmenuicon.png) no-repeat; position:absolute; left:0px; top:0px;}
+.index_bottomtitleh { background:url(../images/bhiddenleftmenuico.png) no-repeat !important;}
+.index_bottomtitlec { background:url(../images/bshowleftmenuicon.png) no-repeat !important;}
+/*切换*/
+.content-slider li div { text-align: center; color: #FFF; border:1px solid #626262; float:left; width:23%; margin:3% 10px;}
+.content-slider li h2 { display:block; padding:10px 0px;}
+.content-slider li a { display:block; width:103px; height:103px; margin:18px auto; position:relative; }
+.content-slider li a img { width:100%;}
+.content-slider li a i { display:block; width:30px; height:30px; color:#fff; text-align:center; line-height:30px; font-style:normal;background-color:#fe0406; position:absolute; right:-14px; top:-14px;}
+#slider {width: 100%;height:100%;}
+.pagination { margin-left:-30px;}
+.pagination li {background-color: #666;}
+.pagination li.active {	background-color: #999;}
+.responsive {width: 100%;height: auto;}
+.clearfix:after {content: "";display: table;clear: both;}
+/*右边栏*/
+/*默认展开CSS
+.index_right { width:28%; height:100%; border-left:5px solid #4c4c4c; border-bottom:5px solid #4c4c4c background:#191919; z-index:2; float:right; position:relative;}
+.index_rightscroll { width:100%; height:100%; overflow:auto;}
+.index_righttitle { display:inline-block; width:11px; height:41px; position:absolute; top:50%; margin-top:-20px; left:0px; z-index:2;}
+.index_righttitle a { display:block; width:11px; height:41px; background:url(../images/hiddenleftmenuico.png) no-repeat; position:absolute; left:0px; top:0px;}
+.index_righttitleh { background:url(../images/showleftmenuicon.png) no-repeat !important;}
+.index_righttitlec { background:url(../images/hiddenleftmenuico.png) no-repeat !important;}
+.index_rightchart { width:100%; height:263px; border-bottom:5px solid #4c4c4c; }
+.bordernone { border:none;}*/
+.index_right { width:25%; height:100%; border-left:5px solid #4c4c4c; border-bottom:5px solid #4c4c4c background:#191919; background:#000; z-index:2; position:absolute;right:0;}
+.index_rightscroll { height:100%; overflow:none; overflow-y:auto;}
+.index_righttitle { display:inline-block; width:11px; height:41px; position:absolute; top:50%; margin-top:-20px; left:0px; z-index:2;}
+.index_righttitle a { display:block; width:11px; height:41px; background:url(../images/hiddenleftmenuico.png) no-repeat; position:absolute; left:0px; top:0px;}
+.index_righttitleh { background:url(../images/showleftmenuicon.png) no-repeat !important;}
+.index_righttitlec { background:url(../images/hiddenleftmenuico.png) no-repeat !important;}
+.index_rightchart { width:100%; height:32.5%; border-bottom:5px solid #4c4c4c; }
+.bordernone { border:none;}
+/*首页结束------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/*状态开始------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*总览开始*/
+.statushome { width:100%; height:100%; overflow:auto; overflow-x:hidden; background:#4c4c4c;}
+.statushomeleft { float:left; width:72%;}
+.statushomeleft_top { width:99.5%;  padding:0px 0.5% 0.5% 0px;}
+.statushome_charts1info { width:98%; padding:0px 1%; height:50px; color:#ffffcb; font-size:20px; line-height:50px; background:#17689d; text-align:right;}
+.statushomeleft_bottom { width:100%; background:#4c4c4c; overflow:hidden;}
+.statushomeright{ float:left; width:28%;}
+.statushome_charts1 { width:100%; height:500px; background:#000;}
+.statushome_charts2 { width:49.5%; height:260px; background:#000; margin-right:0.5%; float:left;}
+.statushome_charts3 { width:49.5%; height:260px; background:#000; margin-right:0.5%; float:left;}
+.statushome_charts4 { width:100%; height:270px; background:#000; margin-bottom:5px; position:relative;}
+.statushome_charts5 { width:100%; height:270px; background:#000; margin-bottom:5px; position:relative;}
+.statushome_charts6 { width:100%; height:270px; background:#000; position:relative;}
+.statushome_charts4 span, .statushome_charts5 span, .statushome_charts6 span { display:block; width:50%; height:100%; float:left; color:#fff; position:relative;}
+.statushome_charts4 h3, .statushome_charts5 h3, .statushome_charts6 h3 { font-size:20px; position:absolute; left:15px; top:15px; color:#fff;}
+.statushome_charts4 span p, .statushome_charts5 span p, .statushome_charts6 span p { display:block; line-height:30px; position:absolute; left:15px; top:50%; margin-top:-45px;}
+/*总览结束*/
+
+/*实时开始*/
+/*运行状态*/
+.runningstatetitle { height:30px;line-height:30px; background:#333; padding:5px 10px;}
+.runningstatetitle h3 {  float:left;line-height:30px;}
+.runningstatetitle_wd { float:right; color:#ededbe; margin-right:50px;}
+.r_urrentloop { color:#ccc; float:right; }
+.runningstate { width:100%; background:#4c4c4c; height:100%; }
+.runningstatetop{ height:450px; overflow:hidden; position:relative;}
+.runningstatetop .tab_box { background:#000;}
+.runningstatetop .demo2 { width:59.4%; background:#000; margin:0 0.3% 0 0; height:100%; position:relative; float:left;}
+.runningstatetop .demo2 .tab_menu2 { position:absolute; left:10px; top:10px;}
+.runningstate .tab_box { border:none;}
+.r_topleft{ width:20%; height:100%; float:left; background:#000; margin:0 0.3% 0 0; position:relative;}
+.r_topleft div { text-align:center; margin:10px 0px 20px 0px; clear:both; padding-top: 21%;}
+.column_h3, .column_h3_2 { float:left; display:block;line-height: 50px;padding-left: 15px;font-size: 18px; color:#000; }
+.column_h3_2 { position:absolute; left:0px; top:0px; z-index:2;}
+.r_toprightcontent { margin-right:0; width:100%; height:100%; position:relative; overflow:hidden;}
+.r_toprightcontentlarm { display:block; color:#fff; position:absolute; right:10px; top:10px; z-index:2;}
+.r_toprightcontentlarmK { display:block; color:#fff; position:absolute; right:10px; top:10px; z-index:2;}
+.r_topright{ width:20%; height:100%; float:left; background:#000; position:relative;}
+.r_topright_wd { margin:9px 0px; height:28%; border-bottom:1px solid #1f1f1f;}
+.r_topright_wd:last-child { border:none;}
+.r_topright_wd h3 { font-size:16px; color:#fff; padding:5px 10px;}
+.r_topright_wdcontent {margin:0px 10px; overflow:hidden;}
+.r_topright_wdcontent:last-child { border:none;}
+.r_topright_wdcontent div { float:left; width:33%; height:86px; position:relative;}
+.r_topright_wdcontent div span { display:block; width:19px; height:86px; background: url(../images/r_wd0.png) center bottom no-repeat; overflow:hidden; position:absolute; left:15px; bottom:0px;}
+.r_topright_wdcontent div span i { display:block; width:19px; height:86px; position:absolute; left:0px; bottom:0px;}
+.r_topright_wdcontent div label { display:block; color:#fff; position:absolute; left:40px; bottom:30px;}
+.r_wd0 { background: url(../images/r_wd0.png) center bottom no-repeat;}
+.r_wd1 { background: url(../images/r_wd1.png) center bottom no-repeat;}
+.r_wd2 { background: url(../images/r_wd2.png) center bottom no-repeat;}
+
+.runningstate_charts1 { width:100%; height:100%;}
+/*.runningstatecontent { width:100%; height:400px; background:#000; position:relative; overflow:hidden;}*/
+.r_toptemperature { position:absolute;left:200px; top:12px; color:#fff; z-index:2;}
+.r_toptemperature label {  display:inline-block; margin-right:15px;}
+.runningstatebottom { width:100%; height:40%; position:relative; margin-top:0.3%; overflow:hidden;}
+.r_bottomleft { float:left; width:49.7%; height:100%; background:#000; margin:0 0.3% 0 0; position:relative;}
+.r_bottomright { float:left; width:50%; height:100%; background:#000; position:relative;}
+.r_bottomselect { position:absolute; right:15px; top:15px; z-index:2;}
+.r_bottomselect select { background:none; border:none; color:#999;appearance:none;  -moz-appearance:none;  -webkit-appearance:none; background: url("../images/arrow.png") no-repeat scroll right center transparent;   padding-right: 14px;}
+.r_bottomselect select::-ms-expand { display: none; }/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+.r_bottomleftechart { float:left; width:33%; height:100%; padding: 1.5% 0px; border-right:1px solid #1f1f1f;}
+.r_bottomleftechart:last-child { border:none;}
+/*切换*/
+#content-slider2 li{ float:left; height:300px;text-align: center; color: #FFF; overflow:none;}
+.runningsecharts { width:33%;  height:300px; float:left;}
+/*设备台账*/
+.state_ledgercontent { background:#EFEDF2; margin-top:10px; padding-bottom:5px;}
+.state_ledger .demo4 .tab_menu { position:absolute; right:10px; top:20px;}
+/*双视监测开始*/
+.infrared_content{background:#4c4c4c; height:100%; padding:3px 5px 5px 5px;}
+/*自动刷新*/
+.l_refreshAuto { float:left; font-size:14px; margin:auto 10px;}
+/*双视查看页面*/
+.infrared_page { background:#191919; height:100%; margin-top:10px;}
+.infrared_page img{ border:0;}
+/*图片查看样式*/
+.ban{ width:100%; height:100%; position:relative; }
+.ban2{ width:950px;  margin:0 auto; padding:20px 0px;}
+.ban2 ul li img { width:100%; height:100%;}
+.ban2 ul li p {font-size:16px; text-align:center; line-height:30px; color: #FFF;}
+.prev{ float:left; cursor:pointer;}
+/*图片左右切换按钮*/
+.prev1, .next1 { background:none; position:absolute;width:28px; height:51px;z-index:9;cursor:pointer;}
+.prev1{ top:220px; left:4%;}
+.next1{ top:220px; right:5%;}
+.mhc{ background:#000; width:100%;opacity:0.5;-moz-opacity:0.5;filter:alpha(Opacity=50); position:absolute; left:0; top:0; display:none;}
+.pop_up{ width:100%; height:500px; padding:10px; background:#fff; position:fixed; -position:absolute; left:50%; top:50%; margin-left:-255px; margin-top:-255px; display:none; z-index:99;}
+.pop_up_xx{ width:40px; height:40px; position:absolute; top:-40px; right:0; cursor:pointer;}
+/*双视报警报告弹窗*/
+.infrared_popcontent { background:#efefef; border:1px solid #a7a7a7; margin:5px;}
+.infrared_popcontent h2 { color:#2c3299; padding:10px;}
+.infrared_text{ margin:0px 5px 5px 5px;}
+.infrared_text img { width:100%;border: 1px solid #a7a7a7;}
+.infrared_text table{}
+.infrared_text table td{ line-height: 35px;padding: 0px 10px;border: 1px solid #a7a7a7;}
+/*双视监测结束*/
+/*实时结束*/
+
+/*用电质量开始*/
+/*电流电压*/
+.powerquality { height:100%; background:#EFEDF2; overflow:auto;}
+.powerquality_box{ width:100%; height:80%; margin-top:15px; position:relative;}
+.powerquality_curve { width:100%; height:100%;}
+.curve_switch { position:absolute; top:35px; right:20px; color:#fff; z-index:2;}
+.curve_switch label, .curve_switch span, .curve_switch a { display:inline-block; color:#fff; }
+.curve_switch span { background:#4c4c4c;}
+.curve_switch a { padding:5px 10px;}
+.curve_switchactive {  background:#dadbd3; color:#568932 !important; font-weight:bold;}
+/*功率因数*/
+.powerfactor_curve {width:100%; height:100%; background:#4c4c4c; overflow:auto; position:relative;}
+.powerfactor_curve #userCharts { height:100%;}
+.powerfactor_curvebottom { width:100%; height:50px; line-height:50px; text-align:right;}
+.powerfactor_curvebottom span { display:inline-block; font-size:18px; font-weight:bold; color:#f5f4d6; margin:0px 10px;}
+/*三项不平衡*/
+.threeunbalance_curve { /*height:45%;*/ height:350px; background:#4c4c4c; overflow:auto;}
+.threeunbalance_qp, .threeunbalance_zz { float:left; width:49.5%; /*height:53%;*/ height:300px; margin:0.5% 0.5% 0 0;}
+/*谐波分析*/
+.harmanaly_curve { /*height:45%;*/ height:350px; background:#4c4c4c; margin-top:0.5%; overflow:auto;}
+.harmanaly_max { height:auto; background:#000; margin-top:0.5%;  padding-top:50px; padding-bottom:20px; overflow:hidden; position:relative;}
+/*用电质量结束*/
+
+/*报警处理开始*/
+.table_page { width:100%; height:100%; overflow:auto; overflow-x:hidden; background:#000;}
+.table_pagetop { width:100%; background:#4c4c4c; padding:3px 0px 5px 0px;}
+/*报警处理结束*/
+
+/*机械特性*/
+.state_mechcontent { background:#000; margin-top:10px; padding-bottom:5px;}
+.mechtablocation .demo4 .tab_menu { position:absolute; right:10px; top:90px;}
+.mechfhselect { float:left; margin:15px;}
+.mechfhselect select { float:left;  background: none;border:none;color: #999;appearance: none;-moz-appearance: none;-webkit-appearance: none;background: url("../images/arrow.png") no-repeat scroll right center transparent;padding-right: 14px;}
+.mechcharts { width:100%;}
+.mechtop { width:100%; margin-top:10px;}
+.mechbottom { overflow:hidden;}
+.mech_charts1 {width:100%; height:450px; background:#000;}
+.mech_charts2, .mech_charts3{ width:49.5%; height:300px; float:left; background:#000; margin:0.5% 0.5% 0 0; position:relative;}
+
+.realtime_newtime { text-align:center; font-size:18px; color:#fff; font-weight:bold;}
+.realtime_lenend { width:120px; height:290px; position:fixed; top:30%; right:20px; z-index:9999; border:1px solid #666; background: url(../images/realtime_lenend.png) 19px 50px no-repeat;}
+.realtime_lenend span { display:block; background:#666; color:#fff;}
+.realtime_lenend span h3 { display:inline-block; font-size:14px; padding:10px 0px; width:50%; text-align:center;}
+
+/*状态结束------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/*电能开始------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*总览*/
+.energyhome { width:100%; height:100%; overflow:auto; overflow-x:hidden; background:#EFEDF2;}
+.energyhome_statistics { width:100%; height:230px; background:#000; overflow:hidden;}
+.b_situation { width:31%;  background:#1e1e1e; padding:10px; margin:40px 0.5%; float:left;}
+.b_situation h3 { background:#444; height:45px; line-height:45px; color:#fff; font-size:20px; font-weight:bold; text-align:center;}
+.b_situation_content { background:#333; overflow:hidden;}
+.b_situation_content span { display:block; width:33%; text-align:center; margin:20px 0px;text-align:center; border-right:1px solid #444; float:left;}
+.b_situation_content span:last-child { border:none;}
+.b_situation_content span label { color:#999;}
+.b_situation_content span p { margin:0px; font-size:26px; color:#f90;}
+.energyhome_charts1 { width:100%; height:400px; background:#000; margin:0.3% 0 0 0;}
+.energyhome_charts2{ width:100%; height:400px; float:left; background:#000; margin:0.3% 0 0 0; position:relative;}
+.up_ico, .down_ico {display: inline-block;width: 19px;height: 18px;vertical-align: middle;margin-right: 5px;background: url(../images/defect_manageicon.png) 0px -210px no-repeat;}
+.up_ico {background: url(../images/defect_manageicon.png) 0px -210px no-repeat;}
+.down_ico {background: url(../images/defect_manageicon.png) 0px -190px no-repeat;}
+
+/*尖谷平峰*/
+.jangupf { width:auto; overflow:auto; overflow-x:hidden; background:#EFEDF2;}
+.jangupftop { width:100%; margin-top:15px; position:relative;}
+.jangupfbottom { overflow:hidden;}
+.jangupf_charts1 { width:100%; height:450px; background:#000;}
+.jangupf_charts2, .jangupf_charts3{ width:49.5%; height:300px; float:left; background:#000; margin:0.5% 0.5% 0 0; position:relative;}
+.jangupf_charts4 { margin-right:0;}
+.jangupf_charts2 h3 { display:block; font-size:18px; font-weight:bold; color:#fff; position:absolute; left:15px; top:15px;}
+.jangupf_charts2info { width:30%; height:80%; position:absolute;left:10%; top:50%; margin-top:-38px;}
+.jangupf_charts2info span { display: block; color: #95c3bc; margin:2px 0px;background: #333;padding: 10px 0px;text-align: center;}
+.jangupf_charts2info span label { color:#bed88b; font-weight:bold; margin-left:30px;}
+.jangupf_charts2box { width:40%; height:70%; text-align:center; position:absolute; right:10%; top:15%;}
+.jangupf_charts2box img { height:100%;}
+.jangupf_charts2box label { display:block; color:#f5f4d6; font-size:18px; font-weight:bold; text-align:center; position:absolute; left:50%; margin-left:-25px; bottom:20%;}
+.jangupf_charts2content, .jangupf_charts3content { width:100%; height:100%;}
+.jangupf_tab { height:auto; background:#000; margin-top:0.5%;  padding-top:10px; padding-bottom:20px; overflow:hidden; position:relative;}
+
+/*尖谷平峰设置*/
+.jangupfset { width:100%; height:auto; background:#EFEDF2; overflow:hidden;}
+.jangupfsettop { margin:10px 0px; padding:10px 20px; border-top:1px solid #666; text-align:right; border-bottom:1px solid #666; color:#fff; font-size:14px; overflow:hidden; }
+.jangupfset_content li { float:left; margin:30px 15px 30px 30px;}
+.jangupfset_content li div { overflow:hidden;}
+.jangupfset_content li div.jangupfset_btn { text-align:center; padding-top:15px;}
+.jangupfset_content li div button { border:1px solid #666;}
+.jangupfset_content li div img { float:left;}
+.jangupfset_content li div span { display:block; margin-left:10px; color:#fff; float:left; width:200px;}
+.jangupfset_content li div span h3 { font-size:18px; font-weight:bold;}
+.jangupfset_content li div span p { display:block; margin:5px 0px; line-height:24px;}
+.jangupfset_add { width:71px; height:71px; font-size:30px; border:1px solid #666; background:none; color:#666;}
+.jangupfset_add:hover { border:1px solid #999; color:#999;}
+
+/*尖谷平峰设置-新增*/
+.jiangupfset_popcontent { background:#EFEDF2; border:1px solid #a7a7a7; padding:50px;}
+.jiangupfset_text { margin-bottom:25px;}
+.jiangupfset_text label { display:block;}
+.jiangupfset_text p { display:block; margin:10px 0px 0px 0px;}
+.jiangupfset_text p input { width:250px; height:35px; line-height:35px; border:1px solid #ccc;}
+.jiangupfset_text .textbox  {  height:35px !important;  border:1px solid #ccc;}
+.jiangupfset_text .textbox .combo-arrow { background-color:#ccc; height:35px !important;}
+.jiangupfset_text .textbox .combo-arrow:hover { background-color:#ddd;}
+.jiangupfset_text .textbox .textbox-text {  height:35px !important; line-height:35px !important;}
+.jiangupfset_table { background:#efefef; margin-top:10px; border:1px solid #c9c9c9;}
+.jiangupfset_table td { padding-bottom:10px;}
+.jiangupfset_table td input, .jiangupfset_table td select { border:1px solid #ccc; height:35px; line-height:35px;}
+.jiangupfset_table td button { background:none;}
+
+/*负载分析*/
+.loadanalysis_curve { height:350px; background:#EFEDF2; overflow:auto;}
+.loadanalysis_qp, .loadanalysis_qpright { float:left; width:79%; height:300px; margin:0.5% 0.5% 0 0;}
+.loadanalysis_qpright { float:left; width:20%; background:#000; position:relative;}
+.loadanalysis_qprightcontent { width:80%; height:80%; position:absolute;left:10%; top:10%;}
+.loadanalysis_qprightcontent span { display: block; color: #95c3bc; margin:2px 0px;background: #333;padding: 10px 0px;text-align: center;}
+.loadanalysis_qprightcontent span label { color:#bed88b; font-weight:bold; margin-left:30px;}
+
+/*线损统计*/
+.lineloss_curve { height:350px; background:#EFEDF2; overflow:auto;}
+.lineloss_hxbox, .lineloss_zz { float:left; width:49.5%; height:300px; margin:0.5% 0.5% 0 0; position:relative;}
+.lineloss_hx { width:100%; height:100%;}
+.lineloss_info { position:absolute; left:20%; top:50%; margin-top:-63px; z-index:999;}
+.lineloss_info span { display:block; color:#fff; margin:10px;}
+.lineloss_tab { clear:both; height:auto; background:#000; margin:0.5% 0.5% 0.5% 0;  padding:5px 10px 20px 10px; overflow:hidden; position:relative;}
+
+/*用电分析*/
+.elc_anlysis { height:100%; background:#EFEDF2; overflow:auto;}
+.elc_anlysis_box{ width:100%; margin-top:15px; position:relative;}
+.elc_anlysis_curve { width:100%; height:350px;background:#17689D;}
+.elc_anlysis_tab { height:auto; background:#000; margin-top:0.5%;  padding-top:10px; padding-bottom:20px; overflow:hidden; position:relative;}
+.current_selection { display:block; width:100%; background:#17689d; padding-top:10px; text-align:center;color: #f5f4d6;font-size: 20px;font-weight: bold; z-index:2;}
+/*电能结束------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/*运维开始------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*运维-台账-设备台账*/
+.equipment_ledger { width:100%; height:100%; background:#EFEDF2; overflow:hidden;}
+.el_sidebar {  height:100%; float:left;}
+.el_sidebartop { padding:5px 10px; color:#fff; background:#000; text-align:center;}
+.el_sidebartop .textbox { width:70% !important;}
+.el_sidebarcontent { height:93%; overflow:auto; background:#000; padding:5px 0px 5px 0px;margin-top:2px;  clear:both;}
+.el_sidebarcontent table td, .el_sidebarcontent table th { padding:0px 10px; height:35px; border:1px solid #999;}
+.el_sidebarcontent table td { background:#e5e5e5;}
+.el_sidebarcontent table th { background:#cccccc;}
+.el_sidebarcontent table tr:hover td, .el_sidebarcontent table tr:hover th { background:#fef5cc !important;}
+.el_content { width:87%; height:100%; overflow:auto;}
+.el_content select { min-height:inherit;}
+.el_detail { background:#17689D; }
+.el_detailtitle { overflow:hidden;}
+.el_detailtitle h3 { float:left;}
+.el_detailcontent { padding:5px 0px;}
+.el_tab { margin-top:5px; height:500px;}
+.el_tab .tab_box { background:#17689D; padding:5px 0px;}
+.el_tabcontent { padding-bottom:15px;overflow:hidden;}
+.el_popcontent th { font-size:18px; font-weight:normal; color:#3a368d; padding:0px 5px;}
+.page_tabtop { padding:0px 5px; overflow:hidden; color:#fff;}
+.page_table_butbox { float:right; padding:5px 0px;}
+.page_table_select { float:left; margin:15px 0px 0px 10px;}
+/*弹出窗口*/
+.pop_windowbg { display:none; width:100%; height:100%; background:#000; opacity: 0.7; filter:alpha(opacity=70); position:absolute; left:0px; top:0px;}
+.pop_window { display:none; width:50%; height:auto; background:#ccc; padding:10px; border:1px solid #666; position:absolute; left:50%; top:50%;}
+.popclose { width:61px; height:25px; background:none; position:absolute; top:0px; right:15px;}
+.pop_window h3 { font-weight:bold; cursor:move;}
+.pop_content { background:#e5e5e5; border:1px solid #666; padding:3px; margin-top:10px;max-height: 500px;overflow: auto;}
+.volumebtn { background:none; width:32px; height:32px; margin:5px 5px 5px 0px;}
+.popbtn { text-align:center; padding:15px;}
+.pop_window500 { width:500px;}
+/*弹出窗口*/
+/*现场图片滚动*/
+.box-img { padding:10px 0px; position:relative;}
+.three_list {width:600px;height:60px; margin:0px 50px;}
+.three_list dl {float:left;	width:80px; margin:0px 5px;}
+.three_list dl dt a {width:80px;display: block;text-align:center;}
+.three_list dl dt a img {display:block;	margin:0 auto;width:80px;height:60px;}
+.prevPage, .nextPage { width:12px; height:23px; position:absolute; margin-top:-11px;}
+.prevPage { left:10px; top:50%;}
+.nextPage { right:120px; top:50%;}
+#toolbox {	position:absolute;padding:2px;display:none;z-index:1111;}
+/*现场图片滚动*/
+
+/*运维-台账-站室文件*/
+.stand_file { width:100%; height:auto; background:#EFEDF2; overflow:hidden; }
+.stand_filetop { margin:10px 0px; padding:10px 20px; border-top:1px solid #666; text-align:right; border-bottom:1px solid #666; color:#fff; font-size:14px; overflow:hidden;}
+.standfile_content li { float:left; margin:30px 15px 30px 20px;}
+.standfile_content li div { overflow:hidden;}
+.standfile_content li div.standfile_btn { text-align:center; padding-top:15px;}
+.standfile_content li div button { border:1px solid #666;}
+.standfile_content li div img { float:left;}
+.standfile_content li div span { display:block; margin-left:10px; color:#fff; float:left; width:250px;}
+.standfile_content li div span h3 { font-size:18px; font-weight:bold;}
+.standfile_content li div span p { display:block; margin:0px; line-height:24px;}
+/*.stand_file_add { width:71px; height:71px; font-size:30px; border:1px solid #666; background:none; color:#666;}
+.stand_file_add:hover { border:1px solid #999; color:#999;}*/
+
+/*运维-工单-年度任务
+.annual_popcontent th { text-align:center;}*/
+
+/*人员管理*/
+/*发送短信弹出框*/
+.permag_popcontent { background:#EFEDF2; padding:10px;}
+.permag_popcontent_text p { display:block; margin:10px 0px 0px 0px;}
+.permag_popcontent_text p textarea { width:98%; height:100px; padding:1%; color:#666; outline:none; resize:none; border:1px solid #ccc;}
+/*运维结束------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+/*设备管理*/
+/*档案管理*/
+.archives_manage { width:100%; height:100%;}
+.archives_download_btn { background-position:0px -161px;}
+.archives_btn { text-indent:inherit; width: auto; padding-left: 28px; font-size:14px; color: #333;}
+/*档案管理*/
+/*设备管理*/
+
+
+
+/*树形菜单重定义样式*/
+.tree-folder-open, .tree-folder, .tree-file { display:none;}
+.tree-collapsed, .tree-collapsed-hover { background:url(../images/j1.png) 1px 1px no-repeat;}
+.tree-expanded, .tree-expanded-hover { background:url(../images/j2.png) 1px 1px no-repeat;}
+
+/*头部测试图样（动态）——软件部首版加印，正式版去掉  7.15*/
+.img_beta { width:322px !important; height:77px;}
+
+.footer_menu li, .header_navcontent li { float:left; margin:0px 10px; }
+.footer_menu li a, .header_navcontent li a { color:#fff;}
+
+/*图表页面无数据时的提示*/
+#Error{color: White; margin-top:10%; text-align: center;font-size: 40px; display:none}
+
+
+/*通用第三方接口页面*/
+.universal_interface { width:100%; height:100%; overflow:hidden;}
+.ui_sidebar {  height:100%; float:left;}
+.ui_content { height:100%; width:100%; float:left;}
+.ui_box { height:100%;  background:#8c8c8c; }
+
+.ycmain{
+    position: relative;
+    width: 1440px;
+    height: 750px; 
+	margin:0 auto;
+}
+
+.yx_map { background:url(../images/yx_map.png) no-repeat ;width:100%; height:100%;}
+.yx_1_content { left: 1290px; top: 670px;position:absolute;}
+.yx_1 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;  cursor: pointer; }
+
+.yx_2_content { left: 810px; top: 1px;  position:absolute;}
+.yx_2 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;  cursor: pointer; }
+
+.yx_3_content {left: 650px; top: 380px;   position:absolute;}
+.yx_3 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;  cursor: pointer; }
+
+.yx_4_content {left: 680px; top: 680px;  position:absolute;}
+.yx_4 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_5_content {left: 820px; top: 880px; position:absolute;}
+.yx_5 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_6_content {left: 1100px; top: 520px;  position:absolute;}
+.yx_6 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_7_content {left: 1310px; top: 720px;position:absolute;}
+.yx_7 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_8_content {left: 550px; top: 430px; position:absolute;}
+.yx_8 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_9_content {left: 930px; top: 850px;  position:absolute;}
+.yx_9 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_10_content {left: 700px; top: 55px;  position:absolute;}
+.yx_10 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_11_content {left: 1200px; top: 720px;position:absolute;}
+.yx_11 { background: url(../images/location_icon/1.png) no-repeat; width: 27px; height: 40px;   cursor: pointer;}
+
+.yx_map-text {
+background-color:white;
+margin-left:13px;
+}

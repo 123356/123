@@ -1,0 +1,17 @@
+﻿
+    <div id="userbutton">
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            loadUrl();
+        });
+        function loadUrl() {
+            $.post("/SysInfo/UserButtonList", "", function (data) {
+                if (data !== null || data !== undefined || data !== '') {
+                    var obj = eval("(" + data + ")");
+                    $("#userbutton").html(obj);
+                }
+            });
+        }
+    </script>

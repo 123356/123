@@ -1,0 +1,172 @@
+
+<meta charset="utf-8" />
+<div class="config_content"  >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="NVR_config_mobilestream" class="logo_title">MobileStream</div>
+               <div class="item_R">
+               	   <div id="NVR_CHNMOBILEBMCP" class="logo_link_cy" style="display:none;">Copy</div>
+                   <div id="NVR_CHNMOBILEBMRf" class="logo_link">Refresh</div>
+                   <div id="NVR_CHNMOBILEBMDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="NVR_CHNMOBILEBMSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+            <!--table 0--->
+            <div class="table" id="NVR_mob_CHN_TABLE">
+            	<div class="table_L">
+                	<font id="NVR_csumob_channel_num">通道号</font>
+                </div>
+                <div class="table_R">
+                	<select id="NVR_CHNmobchn" class="select"></select>
+                </div>
+            </div>
+            
+            <div class="table" id="NVR_mob_table_sense">
+            <div class="table_box">
+                <input id="MobileChnSwitch" type="checkbox"/>
+                <font id="start_mob_sense">启用移动侦测</font>
+            </div>
+        </div>
+             
+        <div  id="MobileDivBoxAll" style="border:none;">
+                <div class="table">
+                    <div class="table_L" id="NVR_f_b_l_mob" >Resolution</div>
+                    <div class="table_R">
+                    	<select id="NVR_mobResolutionSel" class="select">
+            				
+            			</select>
+                    </div>
+                </div>      
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="NVR_frame_radio_mob">FPS</div>
+                    <div class="table_R">
+                    <select id="NVR_mobFPS_Sel" class="select"></select>
+                    </div>
+                </div> 
+                <div class="table" id="NVR_codetype_div_mobile" style="display:none;">
+                    <div class="table_L" id="NVR_code_type_mobile">Video Code Type</div>
+                    <div class="table_R">
+                    <select id="NVR_CHNBMcodetype_mobile" class="select">
+                    	<option class="option" value="0">H.264</option>
+                		<option class="option" value="1">H.265</option>
+                    </select>
+                    </div>
+                </div>
+                
+                <div class="table"  id="NVR_bit_ctrl_mobile" style="display:none;">
+                    <div class="table_L" id="NVR_bitrate_ctrl_mobile">Bitrate Control</div>
+                    <div class="table_R">
+                    <select id="NVR_CHNBMbitctrl_mobile" class="select">
+                    	<option class="option" value="0">CBR</option>
+                		<option class="option" value="1">VBR</option>
+                    </select>
+                    </div>
+                </div>
+                
+                <div class="table" id="NVR_bit_quality_mobile" style="display:none;">
+                    <div class="table_L"></div>
+                    <div class="table_R">
+                    <select id="NVR_CHNBMbitquality_mobile" class="select">
+                    	<option class="option" value="0">Worst</option>
+                		<option class="option" value="1">Worse</option>
+                        <option class="option" value="2">Bad</option>
+                		<option class="option" value="3">Good</option>
+                        <option class="option" value="4">Better</option>
+                		<option class="option" value="5">Best</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="table" id="MobBitrateModeDiv">
+                    <div class="table_L" id="NVR_mob_stream_mode" >Bitrate Mode</div>
+                    <div class="table_R">
+                    	<select id="NVR_CHNMobStreamMode" class="select">
+            				<option class="option" value="0" >Preset</option>
+                			<option class="option" value="1">User Define</option>
+            			</select>
+                    </div>
+                </div>     
+            <!--Bitrate 主要使用这个，列表变化-->
+               	<div class="table" id="NVR_LorexD">
+                    <div class="table_L" id="NVR_mobstream_1">Bitrate</div>
+                    
+					<!--共用同一位置-->
+                    <div class="table_R" id="NVR_mob_PresetBitrate">
+                    	<select id="NVR_mobPresetBitrate" class="select" style="width:266px;"></select>
+                        <font style="width:30px;">Kbps</font>
+                    </div>
+                    <div class="table_R" style="display:none;" id="NVR_mob_UserDefineBitrate">
+                        <input id="NVR_mobUserDefineBitrate" class="select" maxlength="8" onblur="checkDefineDMaliuRange()" onkeyup="checkDefineDMaliuRule()"style="ime-mode:Disabled; height:15px; width:195px;"/>
+                        <font id="NVR_mob_UserDefine_BitrateRange" style="width:100px;"></font>
+                    </div>
+                </div>
+				<!--Bitrate 列表固定 不使用-->
+                <div class="table" id="NVR_mobLorexT" style="display:none;">
+                    <div class="table_L" id="NVR_mobBitrate2">Bitrate</div>
+                    <div class="table_R">
+                    	<select id="NVR_mobLorexTSelect" class="select">
+                        	<option value="19">Good</option>
+                            <option value="20">Better</option>
+                            <option value="21">Best</option>
+                        </select>
+                    </div>
+                </div>
+            <!--table 4-->
+               <div class="table" id="NVR_mobAudio" style="display:block;">
+                    <div class="table_L" id="NVR_record_mob_1">Audio</div>
+                    <div class="table_R">
+						<select id="NVR_mobAudioSel" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">打开</option>
+                        </select>                    
+        			</div>
+                </div> 
+            </div> 
+            <!--table 5-->
+ 
+                 <!--table 10-->
+               <div id="NVR_mobCopyTD" style="display:none;">
+                   <div class="table" style="border:1px solid #ccc;">
+                   		<div id = "NVR_mob_selectID">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">                 
+                        <input type="checkbox" id="NVR_mobck" style="margin-left:3px;"/>                   
+                        <font id="NVR_mob_SelectAll"> 全选</font>
+                        <input type="button" value="确定" id="NVR_mobOk" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="NVR_mob_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="NVR_mob_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_mob_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="NVR_mob_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_mob_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="NVR_mob_TDNum_3">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_mob_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="NVR_mob_TDNum_4">
+                        </div>
+                   </div>
+       		   </div> 
+     
+    </div>
+    <!--table end-->
+		
+</div>
+<div id="isfix"></div>

@@ -1,0 +1,67 @@
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="RTSP_Title" class="logo_title">RTSPSet</div>
+               <div class="item_R">
+                   <div id="RTSPRf" class="logo_link">Refresh</div>
+                   <div id="RTSPDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="RTSPSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+    		<!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="Rtsp_Enable">RtspEnable</div>
+                    <div class="table_R">
+                    <select id="RtspEnableSwitch" class="select" >
+                    	<option value="0">关闭</option>
+                        <option value="1">开启</option>
+                    </select>
+                    </div>
+                </div>
+             <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="Rtsp_Port">RtspPort</div>
+                    <div class="table_R"> 
+                        <input id="RtspPortSwitch" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>
+                    </div>
+                </div>
+            <!--table 2-free-->
+            	<div class="table">
+                    <div class="table_L" id="RTSPMode">enAuthMode</div>
+                    <div class="table_R">
+                    <select id="RTSPModeSwitch" class="select" >
+                    	<option value="0">关闭</option>
+                        <option value="1">打开</option>
+                        
+                    </select>
+                    </div>
+                </div>
+                <div class="table">
+                	<div class="table_L" id="RTSPUserName">用户名</div>
+                    <div class="table_R"><input id="RTSPUserNameInput" type="text" maxlength="32" class="select"/></div>
+                </div>
+                <div class="table">
+                	<div class="table_L" id="RTSPPassword">密码</div>
+                    <div class="table_R"><input type="password" maxlength="32" class="select RTSPPasswordInput"/></div>
+                </div>
+                <div class="table none"></div>
+                <div class="table none"></div>
+                <div class="table" style="border:none; font-size:16px; padding-left:100px;" id="RTSPInstruction">Instruction : rtsp://IP:Port/live/chA_B_C</div>
+                
+                <div class="table" style="border:none; font-size:12px; padding-left:163px; display:none;" id="RTSP_MN">Analog Channel:  rtsp://IP:Port/chA/B</div>
+                <div class="table" style="border:none; font-size:12px; padding-left:163px; display:none;" id="RTSP_IP">IP Channel:  rtsp://IP:Port/ipA/B</div>
+                
+                <div class="table" style="border:none; font-size:12px; padding-left:163px;" id="RTSPChannel">A : 00(ch1), 01(ch2)...</div>
+                <div class="table" style="border:none; font-size:12px; padding-left:163px;" id="RTSPmsstream">B : 00(main stream), 01(sub stream)</div>
+                <!--<div class="table" style="border:none; font-size:12px; padding-left:163px;" id="RTSPstream">C : 00(mix stream), 01(video), 02(audio)</div>-->
+      </div>          	
+       
+
+</div>

@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RoleList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" class="easyui-datagrid" idfield="RoleID" pagination="true"
+        data-options="iconCls:'icon-edit',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th data-options="field:'RoleID',checkbox:true">
+                </th>
+                <th field='RoleName' width="50px">
+                    角色名称
+                </th>
+                <th field='Remarks' width="150px">
+                    角色描述
+                </th>
+                <th field='UserState' width="30px">
+                    用户数
+                </th>
+                <th field='UserNames' width="150px">
+                    用户
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div id="userbutton">
+        </div>
+    </div>
+    <div id="allptpurview" title="分配权限" class="easyui-dialog" closed="true" style="width: 1000px;
+        height: 500px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <div style="padding: 3px 0px;">
+            <a href="javascript:;" onclick="saveallot()" class="table_btn btn_style radius5"
+                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                    data-options="iconCls:'icon-cancel'" onclick="$('#allptpurview').dialog('close');">
+                    关闭</a>
+        </div>
+        <div class="div-body">
+            <table class="example" id="dnd-example">
+                <thead>
+                    <tr>
+                        <td style="width: 203px; padding-left: 20px;">
+                            URL菜单权限
+                        </td>
+                        <td style="width: 30px; text-align: center;">
+                            图标
+                        </td>
+                        <td style="width: 20px; text-align: center;">
+                            <input id="checkAllOff" onclick="CheckAllLine()" title="全选" type="checkbox" />&nbsp;
+                        </td>
+                        <td style="width: 30px; text-align: center;">
+                            禁用
+                        </td>
+                        <td>
+                            操作按钮权限
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="purview">
+                </tbody>
+            </table>
+            <input type="hidden" id="allotid" />
+        </div>
+    </div>
+    <div id="editwin" title="编辑角色信息" class="easyui-dialog" closed="true" style="width: 600px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    角色名称：
+                </td>
+                <td class="d_l_d">
+                    <input id="RoleName" runat="server" name="RoleName" missingmessage="角色名必填项！" class="easyui-validatebox"
+                        style="width: 200px; height: 22px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="RoleID" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    角色描述：
+                </td>
+                <td class="d_l_d">
+                    <textarea id="Remarks" class="easyui-validatebox" style="height: 100px; width: 200px;"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center; padding-top: 20px;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                    data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+    <script src="~/Content/UserJS/RoleList_jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

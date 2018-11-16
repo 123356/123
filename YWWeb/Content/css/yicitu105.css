@@ -1,0 +1,24 @@
+﻿/*#region 10Kv变电站 */
+.page_content {background: url(../yicitu/p105.png) no-repeat;}
+
+
+.w473 {left:576px; top:7px;}
+.w469 {left:488px; top:7px;}
+.w475 {left:628px; top:266px;}
+.w470 {left:1223px; top:498px;}
+.w471 {left:982px; top:498px;}
+.w472 {left:541px; top:266px;}
+
+.t470 { margin-left:-415px !important;}
+
+/*翻页关联*/
+.tb_pageI{left:70px; top:60px;}
+.tb_pageII{left:70px; top:110px;}
+.tb_pageIII{left:70px; top:160px;}
+
+/*低压母排二段三相电压*/
+.dymx1, .dymx2, .gymx {width:55px; text-align:center;}
+.dymx1 p, .dymx2 p, .gymx p  { font-size:14px; line-height:13px; color:#333;}
+.gymx { left:1148px; top:92px;}
+.dymx1 { left:65px; top:376px;}
+.dymx2 { left:1327px; top:595px;}

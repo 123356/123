@@ -1,0 +1,110 @@
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+	
+    <!--item 1-->
+	<div class="item" >
+		   <div id="NormalCloStoEm_config" class="logo_title">Email</div>
+		   <div class="item_R">
+			   <div id="NormalCloStoEmRf" class="logo_link">Refresh</div>
+			   <div id="NormalCloStoEmSave" class="logo_link">Save</div>
+			   <div id="NormalCloStoEmExit" class="logo_link">Exit</div>
+		   </div>
+	</div>
+    <!--item 1_end-->
+	
+    <!--table -->
+    <div class="table_content" style="height:700px; overflow:hidden;">
+		<!--table 1-->
+		<div class="table">
+			<div class="table_L" id="NormalCloStoEmEmailSwitch">Email</div>
+			<div class="table_R">
+				<select id="NormalCloStoEm_EmailSwitch" class="select" >
+					<option value="0">Disable</option>  <!--Disable时，隐藏下面的按钮-->
+					<option value="1">Enable</option>
+				</select>
+			</div>
+		</div>
+			
+		<!--隐藏区域 -->
+        <div id="NormalCloStoEm_divdisplay">
+			<!--table 2-->
+			<div class="table">
+				<div class="table_L" id="NormalCloStoEmSSLSwitch">SSL</div>
+				<div class="table_R" >
+					<select id="NormalCloStoEm_SSLSwitch" class="select">
+						<option value="0">关闭</option>
+						<option value="1">打开</option>
+					</select>
+				</div>
+			</div>
+			
+			<!--table 3-->
+			<div class="table">
+				<div class="table_L" id="NormalCloStoEmPort">SMTP Port</div>
+				<div class="table_R" >					
+                    <input type="text" id="NormalCloStoEm_Port"  class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>				
+				</div>
+			</div>
+			
+			<!--table 4-->			
+			<div class="table">                
+				<div class="table_L" id="NormalCloStoEmSMTP">SMTP服务器</div>			
+				<div class="table_R">
+					 <input  id="NormalCloStoEm_SMTP" style="ime-mode:disabled" class="select inputCss" maxlength="32"/>	
+				</div>
+			</div>
+         		
+			<!--table 5-->
+			<div class="table">
+				<div class="table_L" id="NormalCloStoEmSendEmail">Sender Email</div>
+				<div class="table_R">
+					<input type="text" id="NormalCloStoEm_SendEmail" style="ime-mode:disabled" class="select inputCss"   maxlength="32" />
+				</div>
+			</div>
+			
+            <!--table 6-->
+			<div class="table">
+				<div class="table_L" id="NormalCloStoEmSendEmailPW">Sender PWD</div>
+				<div class="table_R">
+					<input type="password" class="select NormalCloStoEm_SendEmailPW" maxlength="32"/>
+				</div>
+			</div>
+			
+            <!--table 7-->
+			<div class="table">
+				<div class="table_L" id="NormalCloStoEmRecvEmail">Receiver Email</div>
+				<div class="table_R">
+					<input type="text" id="NormalCloStoEm_RecvEmail" style="ime-mode:disabled" class="select"  maxlength="32"/>
+				</div>
+			</div>
+            
+			<!--	
+			<div class="table">
+				<div class="table_L" id="sendEmail_alternate" style="border-bottom:1px solid #FFF">邮件发送间隔</div>
+				<div class="table_R">
+					<select id="Emintervaltime" class="select">
+						<option value="0">1分钟</option>
+						<option value="1">3分钟</option>
+						<option value="2">5分钟</option>
+						<option value="3">10分钟</option>
+					</select>
+				</div>
+			</div>
+			-->
+			
+			<!--table 8-->			
+			<div class="table none"></div>
+			
+			<!--table 9-->
+			<div class="table top" id="NormalCloStoEm_EmailTestDiv" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50; display:none">
+				<input  id="NormalCloStoEm_EmailTest" type="button" value="Email Test"/>
+			</div>
+        </div>
+    </div>
+    <!--table end-->
+		
+</div>
+<div class="disp"></div>

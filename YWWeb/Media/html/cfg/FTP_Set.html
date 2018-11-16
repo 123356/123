@@ -1,0 +1,91 @@
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="FTP_info" class="logo_title">FTP</div>
+               <div class="item_R">
+                   <div id="FTPRf" class="logo_link">Refresh</div>
+                   <div id="FTPDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="FTPSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content" style="height:700px; overflow:hidden;">
+             <!--table 1-->             
+             
+        
+                <div class="table">
+                    <div class="table_L" id="FTP_Startup">FTP Enable</div>
+                    <div class="table_R" >
+                    	<select id="FTP_Switch" class="select">
+                            <option value="0">Disable</option>
+                            <option value="1" selected="selected">Enable</option>
+                        </select>                        
+                    </div>
+                </div>
+
+		<div id="FtpDivBox">		
+                <div class="table">
+                    <div class="table_L" id="FtpIpAddr">Server IP</div>
+                    <div class="table_R" >
+                    	<input type="text" id="FtpIpAddrInput"  class="select" maxlength="16"/>                        
+                    </div>
+                </div>
+				
+                <div class="table">                
+                    <div class="table_L" id="FtpPort">Port</div>			
+                    <div class="table_R">
+                   		 <input  id="FtpPortInput"  class="select inputCss" value="80" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>                         
+                    </div>
+                </div>  
+            <!--table 2-free-->
+        
+         		
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="FtpLoginName">User Name</div>
+                    <div class="table_R">
+                    	<input type="text" id="FtpNameInput"  class="select"   maxlength="64" />
+                    </div>
+                </div>
+            <!--table 3-->
+            	<div class="table">
+                    <div class="table_L" id="FtpLoginPwd">Password</div>
+                    <div class="table_R">
+                        <input type="password" class="select FtpPwdInput" maxlength="64" />
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table" style="display:none;">
+                    <div class="table_L" id="FtpFileLength">Max File Length (M)</div>
+                    <div class="table_R">
+                    	<input type="text" id="FtpLengthInput" style="width:250px;" class="select" onkeyup="this.value=this.value.replace(/\D/g,''); if(this.value>10){this.value=10;} if(this.value<1){this.value=1;} if(keyboardFilter()) {value=NumberRangeLimt(this,1,10)}" onblur="if(this.value == '') this.value='1'" />&nbsp;&nbsp;&nbsp;M
+                    </div>
+                </div>
+             <!--table 5-->
+         		
+              <!--table 6-->
+         		
+               <!--table 7-->
+         		<div class="table">
+                    <div class="table_L" id="FtpDirName">DirName</div>
+                    <div class="table_R">
+                    	<input type="text" id="FtpDirNameInput"  class="select"  maxlength="96" />
+                    </div>
+                </div>
+                
+                <div class="table none"></div>
+                
+                <div class="table top" id="FtpTest_DISPLAY" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50;">
+             		<input  id="FtpTest" type="button" value="FTP Test"/>
+       			</div>
+        </div>
+    </div>
+    <!--table end-->
+		
+</div>
+<div class="disp"></div>

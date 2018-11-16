@@ -1,0 +1,1066 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<StringTable>
+<!--  right  -->
+  <string id ="IDS_PTZ_FOCUS">聚焦</string>
+  <string id ="IDS_PTZ_ZOOM">变焦</string>
+  <string id ="IDS_PTZ_APERTURE">光圈</string>
+  <string id ="IDS_TIP_PRESET">预置点</string>
+  <string id ="IDS_TIP_CRUISE">巡航路径</string>
+  <string id ="IDS_DEFAULT">默认值</string>
+<!--  right  end -->
+
+<!-- net_mobile -->
+  <string id ="IDS_NET_MOBILE">手机设置</string>
+  <string id ="IDS_SERVERINFO_PSW">密码</string>
+  <string id ="IDS_NET_PORT">手机端口</string>
+  <string id ="IDS_NET_PORT_MOB">手机端口</string>
+<!-- net_mobile end -->
+
+<!--  left  -->
+  <string id ="IDS_RECTYPE_01">普通录像</string>
+  <string id ="IDS_RECTYPE_ALARM">告警录像</string>
+  <string id ="IDS_RECTYPE_03">所有录像</string>
+  <string id ="IDS_PLAYBACK_SYS">同步回放</string>
+  <string id ="IDS_SEARCH_DAY">日搜索</string>
+  <string id ="IDS_SEARCH_MONTH">月搜索</string>
+  <string id ="IDS_DISPLAY_PARAM">显示配置</string>
+  <string id ="IDS_OSD_INFO">预览</string>
+  <string id ="IDS_SHELTER_PARAM">视频遮挡</string>
+  <string id ="IDS_CHINFO_RECORD">录像</string> 
+  <string id ="IDS_REC_PARAM">录像参数</string>
+  <string id ="IDS_REC_PLAN">录像计划</string>
+  <string id ="IDS_ENCODE_INFO">主码流</string>
+  <string id="IDS_TYPE">类型</string>
+  <string id ="IDS_NET_PARAM">网络参数</string>
+  <string id="IDS_SUBSTREAM">子码流</string>
+  <string id ="IDS_DDNS">DDNS配置</string>
+  <string id ="IDS_EMAIL_INFO">Email配置</string>
+  <string id ="IDS_ALARM_PARAM">报警参数</string>
+  <string id ="IDS_MOTION_ALARM">移动侦测</string>
+  <string id ="IDS_ALARM_IO">I/O报警</string>
+   <string id="IDS_DEVICE">设备</string>
+  <string id ="IDS_HDD_INFO">硬盘信息</string>
+  <string id ="IDS_PTZ_PARAM">云台配置</string>
+  <string id ="IDS_SYS_PARAM">系统参数</string>
+  <string id ="IDS_BASE_INFO">基本信息</string>
+  <string id ="IDS_USER_INFO">用户配置</string>
+  <string id="IDS_INFO">系统信息</string>
+  <string id="IDS_ADVANCE">高级</string>
+  <string id ="IDS_SYS_UPDATE">系统升级</string>
+  <string id ="IDS_DEFAULT_PARAM">默认参数</string>
+  <string id ="IDS_ABNORMITY_ALARM">异常告警</string>
+  <string id ="IDS_SYS_MAINTE">系统维护</string>
+<!--  left  end -->	
+
+<!--  login  -->
+   <string id ="IDS_RAYSEE">网页客户端</string>
+   <string id ="IDS_IE_VERSION">IE端V1.1版</string>
+    <string id="IDS_LOGIN_RESET">重置</string>
+  <string id ="IDS_USER_LOGIN">用户登录</string>
+ <string id="IDS_NORMAL_OPEN">常开</string>
+ <string id="IDS_NORMAL_CLOSE">常闭</string>
+  <string id ="IDS_LANGUAGE">语言</string>
+  <string id ="IDS_LOGIN_NAME">用户名</string>
+  <string id ="IDS_LOGIN_PSW">密  码</string>
+  <string id="IDS_NEW_MEDIAPORT">媒体端口</string>
+  <string id ="IDS_ENCODE_BITRATE">码流</string>
+  <string id ="IDS_CODE_STREAM_01">主码流</string>
+  <string id ="IDS_CODE_STREAM_02">子码流</string>
+   <string id ="IDS_REM_PASSWORD">记住密码</string>
+  <string id ="IDS_PREVIEWOPENSTREAM">打开预览</string>
+  <string id ="IDS_SERVER_LOGIN">登录</string>
+<!--  login  end -->
+	
+<!--  pathConfig  -->
+  <string id ="IDS_FILE_TYPE">文件类型</string>
+  <string id = "IDS_TYPE_H264">264</string>
+  <string id = "IDS_TYPE_AVI">avi</string>
+  <string id = "IDS_MINUTE_TIME">录像时长</string>
+  <string id ="IDS_MINUTE">分钟</string>
+
+  <string id ="IDS_REC_CONFIG">录像配置</string>
+
+<!--  pathConfig  end -->
+	
+<!--  alarm_io  -->
+ <string id="IDS_REFRESH">刷新</string>
+ <string id="IDS_Copy">复制</string>
+ <string id ="IDS_ALARM_INPUTNUM">报警输入号</string>
+  <string id ="IDS_IO_STATE">IO口报警状态</string>
+  <string id="IDS_OFF">关闭</string>
+  <string id ="IDS_IO_BUZZERTIME">蜂鸣器鸣叫时间</string>
+  <string id ="IDS_SECOND">秒</string>
+  <string id ="IDS_IO_MESSAGE">显示标志</string>
+  <string id ="IDS_IO_EMAIL">启用邮件发送</string>
+  <string id ="IDS_IO_RECDELAYTIME">录像延时时间</string>
+  <string id ="IDS_IO_LINK">联动录像通道</string>
+  <string id ="IDS_PATH_ALL">全选</string>
+
+  <string id ="IDS_IO_REC">启用触发录像</string>
+  <string id ="IDS_IO_OUTTIME">报警输出时间</string>
+   <string id="IDS_SEL_CHID">请选择需要复制的通道</string>
+  <string id ="IDS_IO_FULL">启用报警全屏</string>
+  <string id ="IDS_IO_ENABLEOUT">启用报警输出</string>
+  <string id ="IDS_IO_PARAM">IO报警设置</string>
+<!--  alarm_io  end -->
+	
+<!--  alarm_mv  -->
+  <string id ="IDS_MOTION_CH">通道号</string>
+  <string id ="IDS_MOTION_SENSITIVITY">灵敏度</string>
+  <string id ="IDS_IO_LEVER8">8</string>
+  <string id ="IDS_IO_LEVER7">7</string>
+  <string id ="IDS_IO_LEVER6">6</string>
+  <string id ="IDS_IO_LEVER5">5</string>
+  <string id ="IDS_IO_LEVER4">4</string>
+  <string id ="IDS_IO_LEVER3">3</string>
+  <string id ="IDS_IO_LEVER2">2</string>
+  <string id ="IDS_IO_LEVER1">1</string>
+  <string id ="IDS_MOTION_CLEAR">清除</string>
+  <string id ="IDS_MOTION_ENABLE">启用移动侦测</string>
+<!--  alarm_mv  end -->
+	
+<!--  alarm_yc  -->
+  <string id ="IDS_MOTION_TYPE">异常类型</string>
+  <string id="IDS_HDD_NOT_CONTENT">硬盘空间不足</string>
+  <string id ="IDS_ALARM_HDDINVALIDALARM">硬盘错误</string>
+  <string id ="IDS_ALARM_VIDEOLOSS">视频丢失</string>
+  <string id ="IDS_ABNORMITY_ENABLE">启用异常报警</string>
+ <string id="IDS_NEW_ALARM_OUT">报警输出</string>
+<!--  alarm_yc  end -->
+
+<!--  chn_bm  -->
+  <string id="IDS_QUALITY">比特率</string>
+  <string id ="IDS_ENCODE_RESOLUTION">分辨率</string>
+  <string id ="IDS_ENCODE_D1">D1</string>
+  <string id ="IDS_ENCODE_HD1">HD1</string>
+  <string id ="IDS_ENCODE_CIF">CIF</string>
+  <string id ="IDS_ENCODE_FPS">帧率</string>
+  <string id ="IDS_ENCODE_AUDIO">音频</string>
+  <string id ="IDS_CLOSE">关闭</string>
+  <string id ="IDS_OPEN">打开</string>
+<!--  chn_bm  end -->
+	
+<!--  chn_subbm  -->
+  <string id ="IDS_TAB_VIDEO">视频控制</string>
+<!--  chn_subbm  end -->
+	
+<!--  chn_osd  -->
+  <string id ="IDS_OSD_PRE">现场时间</string>
+   <string id ="IDS_OSD_DISABLE">关闭</string>
+ <string id ="IDS_OSD_ENABLE">打开</string>
+  <string id ="IDS_OSD_REC">录像时间</string>
+  <string id ="IDS_OSD_NAME">通道名称</string>
+  <string id ="IDS_OSD_CHPRE">通道隐藏</string>
+  <string id ="IDS_OSD_POS">位置</string>
+  <string id ="IDS_LEFTUP">左上</string>
+  <string id ="IDS_LEFTDOWN">左下</string>
+  <string id ="IDS_RIGHTUP">右上</string>
+  <string id ="IDS_RIGHTDOWN">右下</string>
+  <string id ="IDS_OVERWRITE_CLOSE">关闭</string>
+<!--  chn_osd  end -->
+
+<!--  chn_sp  -->
+  <string id ="IDS_SHELTER_ENABLE">启用视频遮挡</string>
+  <string id ="IDS_MOTION_DELETE">移除</string>
+<!--  chn_sp  end -->
+	
+<!--  chn_yt  -->
+  <string id ="IDS_PTZ_PROTOCOL">协议类型</string>
+  <string id ="IDS_PTZ_BAUDRATE">波特率</string>
+  <string id ="IDS_PTZ_DATABIT">数据位</string>
+  <string id ="IDS_SERIAL_BIT">位</string>
+  <string id ="IDS_PTZ_STOPBIT">停止位</string>
+  <string id ="IDS_PTZ_CHECK">校验</string>
+  <string id ="IDS_CHECKBIT_NONE">无校验</string>
+  <string id ="IDS_CHECKBIT_ODD">奇校验</string>
+  <string id ="IDS_CHECKBIT_EVEN">偶校验</string>
+  <string id ="IDS_CHECKBIT_MARK">Mark校验</string>
+  <string id ="IDS_CHECKBIT_SPACE">Space校验</string>
+  <string id="IDS_ADDRESS">地址</string>
+<!--  chn_yt  end -->
+	
+<!--  net_base  -->
+  <string id="IDS_ONLINE_MODE">联网方式</string>
+  <string id ="IDS_NET_MODE01">DHCP</string>
+  <string id ="IDS_NET_MODE02">PPPOE</string>
+  <string id ="IDS_NET_MODE03">手动配置 </string>
+  <string id ="IDS_NET_UPNP">UPNP</string>
+  <string id="IDS_DISABLE">关闭</string>
+   <string id = "IDS_ENABLE">开启</string>
+  <string id ="IDS_NET_IPADDR">IP地址</string>
+  <string id ="IDS_NET_MASK">子网掩码</string>
+  <string id ="IDS_NET_GATEWAY">默认网关</string>
+  <string id ="IDS_FIRST_DNS">首选DNS服务器</string>
+  <string id ="IDS_SECOND_DNS">备用DNS服务器</string>
+  <string id ="IDS_NET_WEBPORT">Web端口</string>
+<!--  net_base  end -->
+	
+<!--  net_ddns  -->
+  <string id ="IDS_DDNS_ENABLE">启用DDNS</string>
+  <string id ="IDS_DDNS_ADDRESS">服务器地址</string>
+  <string id ="IDS_DDNS_HOSTNAME">主机名称</string>
+<!--  net_ddns  end -->
+	
+<!--  net_email  -->
+  <string id ="IDS_EMAIL_ENABLE">启用Email</string>
+  <string id ="IDS_EMAIL_SERVER">SMTP服务器</string>
+  <string id ="IDS_EMAIL_SENDADDRESS">发件人地址</string>
+  <string id ="IDS_EMAIL_SENDPSW">发件人密码</string>
+  <string id ="IDS_EMAIL_RECEIVEADDRESS">收件人地址</string>
+  <string id ="IDS_EMAIL_PORT">SMTP 端口</string>
+  <string id ="IDS_EMAIL_SSL">SSL验证</string>
+  <string id ="IDS_EMAIL_TIME">间隔时间</string>
+<!--  net_email  end -->
+	
+<!--  record_jh  -->
+ <string id="IDS_RECORD_TYPE">录像类型</string>
+  <string id ="IDS_WEEKDAY_01">星期日</string>
+  <string id ="IDS_WEEKDAY_02">星期一</string>
+  <string id ="IDS_WEEKDAY_03">星期二</string>
+  <string id ="IDS_WEEKDAY_04">星期三</string>
+  <string id ="IDS_WEEKDAY_05">星期四</string>
+  <string id ="IDS_WEEKDAY_06">星期五</string>
+  <string id ="IDS_WEEKDAY_07">星期六</string>
+  <string id ="IDS_RECPLAN_TYPE03">告警录像</string>
+  <string id ="IDS_RECPLAN_TYPE02">正常录像</string>
+  <string id ="IDS_DEFAULT_MOTION">移动侦测设置</string>
+  <string id ="IDS_RECPLAN_TYPE01">不录像</string>
+  <string id="IDS_REC_COPYCH">通道拷贝</string>
+  <string id="IDS_RECPLAN_COPYDAY">星期拷贝</string>
+    <string id="IDS_COPY_TO">到</string>
+<!--  record_jh  end -->
+	
+<!--  record_pz  -->
+  <string id ="IDS_RECCONFIG_MODE">录像模式</string>
+  <string id ="IDS_RECCONFIG_MODE01">定时录像</string>
+  <string id ="IDS_RECCONFIG_MODE02">开机录像</string>
+  <string id ="IDS_RECCONFIG_MODE03">手动录像</string>
+  <string id ="IDS_RECCONFIG_PACKTIME">录像打包时间</string>
+  <string id="IDS_PRE_RECTIME">预录开关</string>
+<!--  record_pz  end -->
+	
+<!--  sysinf_base  -->
+  <string id ="IDS_SERVERINFO_DEVTYPE">设备类型</string>
+  <string id ="IDS_BASE_TYPE">设备类型</string>
+  <string id ="IDS_BASE_ID">设备编号</string>
+  <string id ="IDS_BASE_MAC">MAC地址</string>
+  <string id ="IDS_BASE_SOFTVER">软件版本</string>
+  <string id ="IDS_BASE_HARDVER">硬件版本</string>
+  <string id ="IDS_BASE_PANELVER">IE 版本</string>
+  <string id ="IDS_BASE_TVSYSTEM">摄像头制式</string>
+  <string id="IDS_CLIENTPORT">客户端端口</string>
+  <string id="IDS_HDDCAPACITY">硬盘容量</string>
+  <string id="IDS_DDNSNAME">DDNS名称</string>
+  <string id ="IDS_BASE_MAINTI">自动维护</string>
+  <string id ="IDS_BASE_MAINTITIME">自动维护时间</string> 
+  <string id ="IDS_EVERY_DAY">每 天</string>
+  <string id ="IDS_EVERY_WEEK">每 周</string>
+  <string id ="IDS_EVERY_MONTH">每 月</string>
+<!--  sysinf_base  end -->
+	
+<!--  sysinf_hdd  -->
+  <string id="IDS_HARD_M_LIST">硬盘信息列表</string>
+  <string id ="IDS_HDDS_INDEX">序号</string>
+  <string id="IDS_CONTENT_GB">可用/总容量(G)</string>
+  <string id="IDS_REMAIN_TIME">可用时间</string>
+ <string id="IDS_OVERWRIETE">硬盘覆写</string>
+  <string id ="IDS_OVERWRITE_AUTO">自动</string>
+  <string id ="IDS_OVERWRITE_1HOUR">1小时</string>
+  <string id ="IDS_OVERWRITE_3HOURS">3小时</string>
+  <string id ="IDS_OVERWRITE_1DAY">1天</string>
+  <string id ="IDS_OVERWRITE_7DAYS">7天</string>
+  <string id ="IDS_OVERWRITE_30DAYS">30天</string>
+  <string id ="IDS_OVERWRITE_90DAYS">90天</string>
+<!--  sysinf_hdd  end -->
+	
+<!--  syspm_dst  -->
+  <string id ="IDS_DST_TIME">系统时间</string>
+  <string id="IDS_IN_PHASE">同步</string>
+  <string id ="IDS_DST_TIMEMODE">时间格式</string>
+  <string id ="IDS_DST_TIMEMODE01">月/日/年</string>
+  <string id ="IDS_DST_TIMEMODE02">年-月-日</string>
+  <string id ="IDS_DST_TIMEMODE03">日/月/年</string>
+  <string id ="IDS_DST_DATEMODE">日期格式</string>
+  <string id ="IDS_DST_DATEMODE01">24小时</string>
+  <string id ="IDS_DST_DATEMODE02">12小时</string>
+  <string id ="IDS_DST_DST">夏令时</string>
+  <string id ="IDS_DST_DSTMODE">夏令时模式</string>
+  <string id ="IDS_DST_DSTMODE01">每周</string>
+  <string id ="IDS_DST_DSTMODE02">每天</string>
+  <string id ="IDS_DST_OFFSET">时间偏差</string>
+  <string id ="IDS_DST_OFFSET01">1小时</string>
+  <string id ="IDS_DST_OFFSET02">2小时</string>
+  <string id ="IDS_DST_STARTWEEKDAY">起始时间</string>
+  <string id ="IDS_DST_MONTH01">一月</string>
+  <string id ="IDS_DST_MONTH02">二月</string>
+  <string id ="IDS_DST_MONTH03">三月</string>
+  <string id ="IDS_DST_MONTH04">四月</string>
+  <string id ="IDS_DST_MONTH05">五月</string>
+  <string id ="IDS_DST_MONTH06">六月</string>
+  <string id ="IDS_DST_MONTH07">七月</string>
+  <string id ="IDS_DST_MONTH08">八月</string>
+  <string id ="IDS_DST_MONTH09">九月</string>
+  <string id ="IDS_DST_MONTH10">十月</string>
+  <string id ="IDS_DST_MONTH11">十一月</string>
+  <string id ="IDS_DST_MONTH12">十二月</string>
+  <string id ="IDS_DST_WEEK01">第一周</string>
+  <string id ="IDS_DST_WEEK02">第二周</string>
+  <string id ="IDS_DST_WEEK03">第三周</string>
+  <string id ="IDS_DST_WEEK04">第四周</string>
+  <string id ="IDS_DST_WEEK05">第五周</string>
+  <string id ="IDS_DST_ENDWEEKDAY">结束时间</string>
+  <string id ="IDS_DST_BEGINTIME">起始时间</string>
+  <string id ="IDS_DST_ENDTIME">结束时间</string>
+  <string id="IDS_VIDEOFORMAT">视频制式</string>
+  <string id="IDS_AUTOLOGOUT">菜单显示时间</string>
+  <string id ="IDS_NTP_ENABLE">启用NTP</string>
+  <string id ="IDS_NTP_ADDRESS">网络服务器地址</string>
+  <string id ="IDS_NTP_TIMEZONE">时区</string>
+<!--  syspm_dst  end -->
+	
+<!--  syspm_io  -->
+  <string id ="IDS_DEFAULT_KB">串口设置</string>
+<!--  syspm_io  end -->
+
+<!--  syspm_user  -->
+  <string id ="IDS_PRESET_INDEX">序号</string>
+  <string id ="IDS_USER_USEPSE">登录密码开关</string>
+  <string id ="IDS_USER_USE">用户是否使用</string>
+  <string id="IDS_CONFIRM">确认新密码</string>
+   <string id="IDS_LOOKUP_LOG">日志搜索</string>
+    <string id="IDS_USER_SET">参数</string>
+ <string id="IDS_CRUIS_CTRL">巡航控制</string>
+  <string id ="IDS_HDD_MANGUAGE">硬盘管理</string>
+ <string id="IDS_LOGIN">远程登录</string>
+ <string id="IDS_POLL_CTRL">轮询控制</string>
+     <string id="IDS_BACKUP">备份</string>
+  <string id ="IDS_LIVE_PAGE">预览</string>
+ <string id="IDS_REPLAY">回放</string>
+  <string id ="IDS_PTZ_CTRL">云台控制</string>
+<!--  syspm_user  end -->
+	
+<!--  syswh_mr  -->
+  <string id ="IDS_DEFAULT_DISPLAY">现场设置</string>
+  <string id ="IDS_DEFAULT_SUBSTREAM">子码流设置</string>
+  <string id ="IDS_DEFAULT_DDNS">DDNS设置</string>
+  <string id ="IDS_DEFAULT_SYSTEMMAINTAIN">系统维护设置</string>
+  <string id ="IDS_DEFAULT_COLOR">颜色设置</string>
+  <string id ="IDS_DEFAULT_RECORD">录像设置</string>
+  <string id ="IDS_DEFAULT_EMAIL">Email设置</string>
+  <string id ="IDS_DEFAULT_PTZ">云台设置</string>
+  <string id ="IDS_DEFAULT_ABNORMAL">异常设置</string>
+  <string id ="IDS_DEFAULT_VIDEO">输出设置</string>
+  <string id ="IDS_DEFAULT_PASSWORD">密码设置</string>
+  <string id ="IDS_DEFAULT_MOBILE">手机设置</string>
+  <string id ="IDS_DEFAULT_SCHEDULE">录像计划设置</string>
+  <string id ="IDS_DEFAULT_NTP">NTP设置</string>
+  <string id ="IDS_DEFAULT_DST">DST</string>
+  <string id ="IDS_DEFAULT_MAINSTREAM">主码流设置</string>
+  <string id ="IDS_DEFAULT_NETWORK">网络设置</string>
+<!--  syswh_mr  end -->
+	
+<!--  syswh_sj  -->
+  <string id ="IDS_UPDATE_PATH">升级文件路径</string>
+  <string id ="IDS_UPDATE_UPDATE">升级状态</string>
+  <string id ="IDS_UPDATE_START">开始升级</string>
+  <string id ="IDS_UPDATE_STOP">停止升级</string> 
+<!--  syswh_sj  end -->
+	
+<!--  auto_wh  -->
+  <string id ="IDS_BASE_AUTOREBOOT">自动重启</string>
+  <string id ="IDS_REBOOT">重启</string>
+<!--  auto_wh  end -->
+	
+<!-- others -->
+ <string id="IDS_WEEK_ARRAY">周一,周二,周三,周四,周五,周六,周日</string>
+  <string id ="IDS_DAY">日</string>
+  <string id ="IDS_ENCODE_FRAME">帧</string>
+   <string id="IDS_COPY_FAILED">通道数据拷贝失败剩余帧率:</string>
+   <string id ="IDS_COPY_SUC">通道数据拷贝成功</string>
+ <string id ="IDS_REFRESH_SUCCESS">刷新成功</string>
+ <string id="IDS_NOHDD">没有硬盘</string>
+ <string id="IDS_DDNSCLOSED">DDNS服务关闭</string>
+  <string id ="IDS_HDDS_NONE">无硬盘</string>
+  <string id ="IDS_HDDS_UNFORMAT">未格式化</string>
+  <string id ="IDS_HDDS_OK">正常</string>
+  <string id ="IDS_HDDS_BAD">损坏</string>
+  <string id ="IDS_HDDS_RONLR">只读</string>
+  <string id ="IDS_HDDS_BACKUP">冗余盘</string>
+  <string id ="IDS_USERNAME_USE">该用户名已被使用,请重新输入用户名!</string>
+  <string id="IDS_CHECKPW_LENGTH">密码长度必须是8位!</string>
+  <string id ="IDS_CHECKPW_LENGTH_SIX">密码长度必须大于6位!</string>
+  <string id ="IDS_BTN_PLAYBACK">回 放</string>
+   <string id ="IDS_CUR_PLAY">正在回放，请先关闭回放</string>
+ <string id ="IDS_REFRESH_NONODE">节点不存在!</string>
+  <string id ="IDS_NO_SEL_SEARCHCH">请先选择一个通道搜索！</string>
+  <string id ="IDS_PLAYBACK_PALYING">该窗口正在回放录像，请先停止回放！</string>
+ <string id ="IDS_SAVE_FAILED">保存失败</string>
+ <string id ="IDS_SAVE_SUCCESS">保存成功</string>
+   <string id="IDS_COPY_CHNNELFAILED">通道数据拷贝失败</string>
+   <string id="IDS_PLAYBACK_RIGHT1">没有权限操作此项功能</string>
+ <string id ="IDS_REFRESH_FAILED">刷新失败</string>
+  <string id ="IDS_SEARCH_NOFILE">未搜索到符合条件的录像文件！</string>
+  <string id ="IDS_SCREEN_PTZ_ENABLE">打开屏幕云台控制</string>
+  <string id ="IDS_SCREEN_PTZ_DISABLE">关闭屏幕云台控制</string>
+  <string id ="IDS_OPEN_ALL_CHANNEL">打开所有通道</string>
+  <string id ="IDS_CLOSE_ALL_CHANNEL">关闭所有通道</string>
+  <string id ="IDS_TIP_PRE">上一页</string>
+  <string id ="IDS_TIP_NEXT">下一页</string>
+  <string id ="IDS_TIP_SPLITER">画面分割</string>
+  <string id ="IDS_PTZ_ZOOMUP">缩放+</string>
+  <string id ="IDS_PTZ_ZOOMDOWN">缩放-</string>
+  <string id ="IDS_PTZ_FOCUSUP">聚焦+</string>
+  <string id ="IDS_PTZ_FOCUSDOWN">聚焦-</string>
+  <string id ="IDS_PTZ_IRIUP">光圈+</string>
+  <string id ="IDS_PTZ_IRIDOWN">光圈-</string>
+  <string id ="IDS_PTZ_AUTO">自动线扫</string>
+  <string id ="IDS_PTZ_LEFTUP">左上</string>
+  <string id ="IDS_PTZ_UP">上</string>
+  <string id ="IDS_PTZ_RIGHTUP">右上</string>
+  <string id ="IDS_PTZ_LEFT">左</string>
+  <string id ="IDS_PTZ_RIGHT">右</string>
+  <string id ="IDS_PTZ_LEFTDOWN">左下</string>
+  <string id ="IDS_PTZ_DOWN">下</string>
+  <string id ="IDS_PTZ_RIGHTDOWN">右下</string>
+  <string id ="IDS_SOUND">声音</string>
+  <string id ="IDS_DEl_PRESET">删除预置点</string>
+  <string id ="IDS_BTN_ADD_PRESET">添加预置点</string>
+  <string id ="IDS_CALL_PRESET">调用预置点</string>
+  <string id ="IDS_STOP_CURISE">停止巡航</string>
+  <string id ="IDS_CALL_CURISE">调用巡航路径</string>
+ <string id="IDS_WEBF_FALSE">网络连接失败</string>
+  <string id ="IDS_LOGINNOUSERNAME">用户名不存在</string>
+  <string id ="IDS_LOGINPASSWORDERROR">登录密码错误</string>
+   <string id="IDS_LOGO_RIGHT">没有权限登录!</string>
+    <string id="IDS_SYS_SET">参数设置</string>
+  <string id ="IDS_SERVER_LOGOUT">注销</string>
+   <string id ="IDS_HUE">色调</string>
+  <string id ="IDS_LIGHT">亮度</string>
+  <string id ="IDS_CONSTRAST">对比度</string>
+  <string id ="IDS_SATURATION">饱和度</string>
+	<!-- cox  -->
+  <string id ="IDS_STATIC_CONFIGDOWN">远程配置文件</string>
+  <string id ="IDS_STATIC_RECDOWN">远程文件下载</string>
+  <string id ="IDS_FAILED">失败!</string>
+  <string id="IDS_RECPLAY_ALL">打开所有窗口</string> 
+  <string id ="IDS_MENU_RENGE2">实时等级2</string>
+  <string id ="IDS_FILEDOWN_START">开始下载</string>
+  <string id ="IDS_MENU_RENGE3">实时等级3</string>
+  <string id ="IDS_REC_ZOOMIN">缩小</string>
+  <string id ="IDS_REMOTEUPGRADE_CLOSED">升级断开</string>
+  <string id ="IDS_REC_ONE">单画面</string>
+  <string id ="IDS_MENU_RENGE4">默认</string>
+  <string id ="IDS_REMOTEUPGRADE_VERERROR">升级文件跟设备不匹配或是版本太低</string>
+  <string id ="IDS_FILE_DOWN">文件下载</string>
+  <string id ="IDS_STATE">状态</string>
+  <string id ="IDS_MENU_RENGE5">平滑等级1</string>
+  <string id ="IDS_REC_FILETYPE01">264</string>
+  <string id ="IDS_REMOTEUPGRADE_INVALIDFILE">不合法的升级文件</string>
+  <string id ="IDS_PATH_TIME">录像切换时间</string>
+  <string id ="IDS_PATH_REC">录像配置</string>
+  <string id ="IDS_REC_CLOSESOUND">关闭声音</string>
+  <string id ="IDS_REC_ONEBYONE">单帧进</string>
+  <string id ="IDS_FILE_SIZE">文件大小</string>
+  <string id ="IDS_MENU_RENGE6">平滑等级2</string>
+  <string id ="IDS_REC_FILETYPE02">avi</string>
+  <string id ="IDS_STATIC_ALARM">录像文件</string>
+  <string id ="IDS_BEGIN_TIME">起始时间</string>
+  <string id ="IDS_MENU_RENGE7">平滑等级3</string>
+  <string id ="IDS_BTN_STOPPLAY">停止播放</string>
+  <string id ="IDS_REMOTEUPGRAD_PERCENT">升级进度：</string>
+  <string id ="IDS_REC_ZOOMOUT">放大</string>
+  <string id ="IDS_REMOTEUPGRAD_ING">设备正在升级</string>
+  <string id ="IDS_REMOTEUPGRADE_OK">升级完成</string>
+  <string id ="IDS_BTN_SOUND">声音</string>
+  <string id ="IDS_PREVIEW_MENUSIZE">原始比例显示</string>
+  <string id ="IDS_REMOTEUPGRADE_READFILEFAIL">读取升级文件失败</string>
+  <string id ="IDS_REC_OPENSOUND">打开声音</string>
+  <string id ="IDS_REC_DOWM">下载</string>
+  <string id ="IDS_STOPALL_WND">全停窗口</string>
+  <string id ="IDS_PATH_MINU">分钟</string>
+  <string id ="IDS_PLAYBACK_WND">回放窗口:</string>
+  <string id ="IDS_REC_CAPTURE">暂停</string>
+  <string id ="IDS_REC_STOP">停止</string>
+  <string id ="IDS_CLOSE_FULLSCREEN">退出全屏</string>
+  <string id ="IDS_CRUISE_SAVE">保存</string>
+  <string id ="IDS_STATIC_CAPTURE">图片抓拍文件</string>
+  <string id ="IDS_WND_MAX">窗口最大化</string>
+  <string id ="IDS_STOPALL_DOWN">全停下载</string>
+  <string id ="IDS_DOWN_STATE01">未下载</string>
+  <string id ="IDS_PREVIEW_CODESTREAM">显示码流</string>
+  <string id ="IDS_STATIC_PICDOWN">远程图片下载</string>
+  <string id ="IDS_STOPALL_PLAY">全停播放</string>
+  <string id ="IDS_STATIC_UPDATE">请选择升级文件</string>
+  <string id ="IDS_FILEDOWN_STOP">停止下载</string>
+  <string id ="IDS_DOWN_STATE02">正在下载</string>
+  <string id ="IDS_CH">通道</string>
+  <string id ="IDS_PATH_PATH">路径配置</string>
+  <string id ="IDS_REC_FOUR">四画面</string>
+  <string id ="IDS_DOWN_STATE03">等待中</string>
+  <string id ="IDS_BTN_REC">开始录像</string>
+  <string id ="IDS_WND">窗口</string>
+  <string id ="IDS_STOP_MEMU">全停菜单</string>
+  <string id ="IDS_BTN_PLAY">播放</string>
+  <string id ="IDS_DOWN_STATE04">已完成</string>
+  <string id ="IDS_PATH_BROWSE">...</string>
+  <string id ="IDS_REC_CUT">录像剪辑</string>
+  <string id ="IDS_TITLE_INDEX">索引</string>
+  <string id ="IDS_DOWN_STATE05">下载失败</string>
+  <string id ="IDS_BTN_CAP">抓拍</string>
+  <string id ="IDS_PATH_FILETYPE">文件类型</string>
+  <string id ="IDS_CPU_USE">CPU利用率：</string>
+  <string id ="IDS_FILEDOWN_WNDTEXT">文件下载</string>
+  <string id ="IDS_END_TIME">结束时间</string>
+  <string id ="IDS_MENU_RENGE1">实时等级1</string>
+  <string id="IDS_NOVIDEO">没有视频 </string>
+  <string id ="IDS_HUE">色调</string>
+  <string id ="IDS_LIGHT">亮度</string>
+  <string id ="IDS_CONSTRAST">对比度</string>
+  <string id ="IDS_SATURATION">饱和度</string>
+  <string id="IDS_VIDEO_SET">视频设置</string>
+  <string id="IDS_VIDEO_SIZE">尺寸设置</string>
+  <string id="IDS_VIDEO_COLOR">颜色设置</string>
+  <string id="IDS_PREVIEW_ORIGINAL">原始比例</string>
+  <string id="IDS_BESPREAD">铺满</string>
+  <string id="IDS_VIDEOSIZE">视频宽高比</string>
+  <string id ="IDS_DEFAULT">默认值</string>
+  <string id="IDS_REMOTEUPGRADE_LANGERROR">无法升级到多国语言</string>
+  <string id="IDS_MAINSTREAM">主码流</string>
+  <string id="IDS_SUBSTREAM">子码流</string>
+  <string id="IDS_ALLMAINSTREAM">全部主码流</string>
+  <string id="IDS_ALLSUBSTREAM">全部子码流</string>
+  <string id="IDS_NOTSUPPORTMAINSTREAM">不支持主码流</string>
+  <string id="IDS_NOTSUPPORTSUBSTREAM">不支持子码流</string>
+  <string id="IDS_ALLMOBSTREAM">全部手机码流</string>
+  <string id="IDS_MOBSTREAM">手机码流</string>
+  <string id ="IDS_ELEC_AMPLIFICATION">电子放大</string>
+  <string id ="IDS_INUSERINTERFACE">本地用户正在操作，不能进行升级!</string>
+<!-- others end -->	
+  <string id="IDS_FULLSCREEN">全屏</string>
+  <string id ="IDS_NO_USERNAME">用户名不能为空!</string>
+  <string id ="IDS_ADDINFO_PORT">端口范围为0到65535!</string>
+  <string id="IDS_SOUND_OPEN">打开声音</string>
+  <string id="IDS_SOUND_OFF">关闭声音</string>
+  <string id ="IDS_PSW_DIFFRENT">用户密码与确认密码不一致，请重新输入!</string>
+  <string id ="IDS_NO_PASSWORD">密码不能为空!</string>
+  <string id="IDS_IMAGE_SAVE_PATH">抓图保存路径</string>
+  <string id ="IDS_HOUR">小时</string> 
+  <string id="IDS_CRUISE_VALUE">不能设置相同的巡航地址值</string> 
+  <string id="IDS_BASE_DEVNAME">设备名称</string>
+  <string id ="IDS_CONNECTCLOSED">设备连接关闭</string> 
+  <string id="IDS_SUBB_COPY">子码流帧率超过了能够当前能复制的范围</string>
+  <string id="IDS_DIFF_PORT">客户端端口和网页端口必须为不同的值!</string>
+  <string id="IDS_SHURU_ERROR">输入的值只能在10分钟到60分钟之间!</string>
+  <string id="IDS_SEND_FAILED">发送命令失败!</string>
+  <string id="IDS_DVR_REBOOT">设备正在重启!</string>
+  <string id="IDS_PORT_EMPTY">端口不能为空!</string>
+  <string id="IDS_SMTP_EMPTY">SMTP服务不能为空!</string>
+  <string id="IDS_SENDER_EMPTY">发送邮件不能为空!</string>
+  <string id="IDS_SENDERPWD_EMPTY">发送邮件密码不能为空!</string>
+  <string id="IDS_RECEIVER_EMPTY">接收邮件不能为空!</string>
+  <string id="IDS_HOSTNAME_EMPTY">主机名不能为空!</string>
+  <string id="IDS_USERNAME_EMPTY">用户名不能为空!</string>
+  <string id="IDS_PASSWORD_EMPTY">用户密码不能为空!</string>
+  <string id="IDS_DDNSTEST">DDNS测试</string>
+  <string id="IDS_EMAILTEST">Email测试</string>
+  <string id="IDS_SUER_RESTART">你确定要重启设备?</string>
+  <string id="IDS_REBOOT_PWD">请输入密码</string>
+  <string id="IDS_REBOOT_ERR_PWD">密码错误，请重新输入密码</string>
+  <string id="IDS_OK">确定</string>
+  <string id="IDS_CANCLE">取消</string>
+  <string id="IDS_OVERWRITE_2DAYS">2天</string>
+  <string id="IDS_EXIT">退出</string>
+  <string id="IDS_NOSEND">不发送</string>
+  <string id="IDS_EMAIL_SCHEDULE">Email计划</string>
+  <string id="IDS_OVERWRITE_3DAYS">3天</string>
+  <string id="IDS_APN">APN</string>
+  <string id="IDS_DIALCODE">DialCode</string>
+  <string id="IDS_NET_MODE04">3G</string>
+  <string id="IDS_TITLE_PLATFORM">平台设置</string>
+  <string id="IDS_ENABLE_PLATFORM">平台使能</string>
+  <string id="IDS_PLATFORM_IP">平台 IP</string>
+  <string id="IDS_PLATFORM_PORT">平台端口</string>
+  <string id="IDS_PLATFORM_SEL">平台选择</string>
+  <string id="IDS_PLATFORM_TYPE_1">Platform</string>
+  <string id="IDS_PLATFORM_PROTOCOL">传输协议</string>
+  <string id="IDS_PLATFORM_UDP">UDP</string>
+  <string id="IDS_PLATFORM_TCP">TCP</string>
+  <string id="IDS_PLATFORM_PUID">PUID</string>
+  <string id="IDS_LOGIN_BITRATE">码流</string>
+  <string id="IDS_MOTION_SELECT">全选</string>
+  <string id="IDS_SAFARI_SET">设置</string>
+  <string id="IDS_NEXT">下一个</string>
+  <string id="IDS_OTHER_ON">打开</string>
+  <string id="IDS_OTHER_OFF">关闭</string>
+  <string id="IDS_SUB_ERRFPS">帧率设置过大!</string>
+  <string id="IDS_SUBFPS_TIP">剩余帧率/总帧率: </string>
+  <string id="IDS_CLEANALL">全部清除</string>
+  <string id="IDS_RECONNECT">重连</string>
+  <string id="IDS_USERNAMECHANGED">用户名或密码已被更改，请联系管理员!</string>
+  <string id="IDS_RIGHTCHANGED">权限已被更改，你没有权限登录，请联系管理员!</string>
+  <string id="IDS_ADMINCHANGED">用户名或密码已被更改,请重新登录!</string>
+  <string id="IDS_WEEKENDMODE">周末覆写</string>
+  <string id="IDS_UPDATETIP">确定要升级DVR吗?</string>
+  <string id="IDS_UPDATEFILEPATH">升级文件路径不能为空!</string>
+  <string id="IDS_REMOTEUPGRAD_SAME">设备软件是最新的!</string>
+  <string id="IDS_3GINFO">3G信息</string>
+  <string id="IDS_3GLEVEL">信号强度</string>
+  <string id="IDS_3GTYPE">信号类型</string>
+  <string id="IDS_3GIPADDRESS">IP地址</string>
+  <string id="IDS_ENCRYPTION">加密</string>
+  <string id="IDS_USERNAME">用户名</string>
+  <string id="IDS_SUBSTREAM_CIF">子码流</string>
+  <string id="IDS_MAINSTREAM_CIF">主码流</string>
+  <string id="IDS_BITRATE_CIF">码流</string>
+  <string id="IDS_LATCHTIME_CIF">报警输出时间</string>
+  <string id="IDS_IPCALARM">IP 摄像机</string>
+  <string id="IDS_BOARDALARM">板载IO</string>
+  <string id="IDS_ALARM_IOIPC">报警IO</string>
+  <string id="IDS_ROUTER_LAN">局域网</string>
+  <string id="IDS_OPTION">选项</string>
+  <string id="IDS_ROUTER_NVR">NVR</string>
+  <string id="IDS_ROUTER_ROUTER">路由器</string>
+  <string id="IDS_WIFI_TYPE">安全模式</string>
+  <string id="IDS_WIFI_SSID">SSID</string>
+  <string id="IDS_WIFI_PSD">通行口令</string>
+  <string id="IDS_WIFI_NET">WPA2-PSK</string>
+  <string id="IDS_ROUTER_WAN">广域网</string>
+  <string id="IDS_SSID_VALUE1">不能为空</string>
+  <string id="IDS_SSID_VALUE2">不能有空格</string>
+  <string id="IDS_SSID_STRLENG">不能少于8字符</string>
+  <string id="IDS_WIFI_WIFI">Wifi</string>
+  <string id="IDS_WIFI_OPEN">OPEN</string>
+  <string id="IDS_WIFI_SHARED">SHARED</string>
+  <string id="IDS_WIFI_PSK">WPA-PSK</string>
+  <string id="IDS_WIFI_WPA2NONE">WPA2NONE</string>
+  <string id="IDS_WIFI_16HEX">16进制</string>
+  <string id="IDS_WIFI_ASCII">ASCII码</string>
+  <string id="IDS_WIFI_TKIP">TKIP</string>
+  <string id="IDS_WIFI_AES">AES</string>
+  <string id="IDS_WIFI_SET">Wifi设置</string>
+  <string id="IDS_PTZ_SPEED">云台速度</string>
+  <string id="IDS_PLAY_ONOFF">预览开关</string>
+  <string id="IDS_RECORD_ONOFF">录像开关</string>
+  <string id="IDS_WIFI_WEBKEY">Web Key</string>
+  <string id="IDS_WIFI_KEYMODE">密钥格式</string>
+  <string id="IDS_WIFI_KEYFUN">加密算法</string>
+  <string id="IDS_IPADDRESS">IP 地址</string>
+  <string id="IDS_DEVID">ID </string>
+  <string id="IDS_HDDFORMAT_SUC">磁盘格式化成功 </string>
+  <string id="IDS_HDDFORMAT_FAL">磁盘格式化失败</string>
+  <string id="IDS_HDDFORMAT">磁盘格式化</string>
+    <string id="IDS_SERVICEID">服务ID</string>
+  <string id="IDS_RECORD_SETUP">编码配置</string>
+  <!-- ipcam  -->
+  <string id="IDS_IPC_ADD">搜索</string>
+  <string id="IDS_IPC_SETIP">设置</string>
+  <string id="IDS_IPC_SET">摄像头设置</string>
+  <string id="IDS_IPC_NUM">通道数 </string>
+  <string id="IDS_IPC_DEVCH">设备通道号</string>
+  <string id="IDS_IPC_SELECT">请选择一个设备</string>
+  <string id="IDS_IPC_ADDDEV">不能添加摄像头设备</string>
+  <string id="IDS_IPC_FINDDEV">找不到摄像头设备</string>
+  
+  <string id="IDS_IPC_RECMODE">录像模式</string>
+  <string id="IDS_IPC_RECSMART">敏捷</string>
+  <string id="IDS_IPC_RECRESLUTION">录像分辨率</string>
+  <string id ="IDS_IPC_SENDFILE">正在传送文件...</string>
+  <string id ="IDS_IPC_UPDATE">文件传送完毕，正在升级...</string>
+  <string id="IDS_LAN_CHNNEL">WiFi 频率(频道)</string>
+  <string id="IDS_IP_FORMAT">"IP 格式错误...!"</string>
+  <string id="IDS_IPC_FULL">摄像头列表满，请在添加之前先删除!</string>
+  <string id ="IDS_CAMERA_PARAM">图像控制</string>
+	<!--  Img_Ctrl  -->
+	<string id ="IDS_CUTMODE">Ircut模式</string>
+	<string id ="IDS_SENSITIVE">灵敏度</string>
+	<string id ="IDS_DELAY">延迟</string>
+	<string id ="IDS_MIRRORFLIP">垂直翻转</string>
+	<string id ="IDS_ANGLEFLIP">水平翻转</string>
+	<string id ="IDS_CAM_AUTO">GPIO自动</string>
+	<string id ="IDS_CAM_DAY">彩色模式</string>
+	<string id ="IDS_CAM_NIGHT">黑白模式</string>
+	<string id ="IDS_VID_MODE">视频模式</string>
+	<string id ="IDS_CAM_HIGHT">高</string>
+	<string id ="IDS_CAM_MIDD">中</string>
+	<string id ="IDS_CAM_LOW">低</string>
+  <string id ="IDS_BLIGHT_COM">背光补偿</string>
+  <string id ="IDS_LIGHT_LVL">背光补偿级别</string>
+  <string id ="IDS_3D_REDUCT">3D降噪</string>
+  <string id ="IDS_DIG_DYN">宽动态</string>
+  <string id ="IDS_GAIN_CON">自动增益</string>
+  <string id ="IDS_WIHTE_BLAN">白平衡</string>
+  <string id ="IDS_SHUTTER">快门</string>
+  <string id ="IDS_MANUAL">手动</string>
+  <string id ="IDS_INDOOR">室内</string>
+  <string id ="IDS_REDUCT_V">级别</string>
+  <string id ="IDS_RED_V">红增益</string>
+  <string id ="IDS_GREEN_V">绿增益</string>
+  <string id ="IDS_BLCAK_V">蓝增益</string>
+  <string id ="IDS_VALUE_ERROR">取值范围(0~255)</string>
+  <string id ="IDS_ENABLE_IO">启用IO输出</string>
+  <string id ="IDS_IO_OUT">IO输出</string>
+  <string id ="IDS_EXP_TIME">曝光时间</string>
+	<!--  Img_Ctrl  end -->
+  <string id="IDS_STREAM_SET">码流设置</string>
+  <string id="IDS_HIGH_DIF">主码流</string>
+  <string id="IDS_SD_SDI">子码流</string>
+  <string id="IDS_LOW_DIF">手机码流</string>
+  <string id="IDS_FORMAT_DISK">格式化硬盘</string>
+  <string id="IDS_NO_HDD">没有发现硬盘</string>
+  
+  <string id="IDS_WIFI_PROTOCOL">宽带模式</string>
+  <string id="IDS_WIFI_FREQ">频率</string>
+  
+  <string id="IDS_IPFILTER">IP过滤</string>
+  <string id="IDS_FILTER_SWITCH">过滤模式</string>
+  <string id="IDS_DEl_IP">删除</string>
+  <string id="IDS_IGNORE_IP">允许所有IP连接</string>
+  <string id="IDS_SET_IP">允许被设置的IP连接</string>
+  <string id="IDS_BAN_SETIP">禁止被设置的IP连接</string>
+  
+  <string id="IDS_RTSP_PORT">RTSP端口</string>
+  <string id="IDS_RTSP_SET">RTSP</string>
+  <string id="IDS_RTSP_MODE">验证</string>
+  <string id="IDS_RTSP_ENABLE">RTSP使能</string>
+  <string id="IDS_RTSP_INSTRUCTION">用法说明 : rtsp://IP:Port/chA/B</string>
+  <string id="IDS_RTSP_MSSTREAM">B : 0(主码流), 1(子码流)</string>
+  <string id="IDS_RTSP_STREAM">C : 00(音视频流), 01(视频流), 02(音频流)</string>
+  
+  <string id="IDS_IPBANNED">本地电脑IP已被禁用</string>
+  <string id="IDS_SUCWAITFORREBOOT">升级成功，等待重启</string>
+  <string id="IDS_IP_SAME">有重复的IP</string>
+  <string id="IDS_ADDALL">一键添加</string>
+  <string id="IDS_ADD_SUCCESS">添加成功,请点击刷新</string>
+  <string id="IDS_FTP_PORT">端口号</string>
+  <string id="IDS_FTP_REQPIC">传输图片</string>
+  <string id="IDS_FTP_REQSTREAM">传输流</string>
+  <string id ="IDS_HDD_IPCINFO">SD卡信息</string>
+  
+  <string id ="IDS_FLICKERCTRL">闪烁控制</string>
+  <string id ="IDS_FLICKERCTRL_50">50Hz</string>
+  <string id ="IDS_FLICKERCTRL_60">60Hz</string>
+  <string id="IDS_AUTO_LOGIN">自动登录</string>
+  
+  <string id ="IDS_SHOWTIME">显示时间</string>
+  <string id ="IDS_SHOWNAME">显示名称</string>
+  
+  <string id ="IDS_DST_POSITIONSET">位置</string>
+  <string id ="IDS_SETUP">设置</string>
+  
+  <string id ="IDS_DST_SHOWWIZARD">启用开始向导</string>
+  
+  <string id ="IDS_DST_STREAMMODE">码流格式</string>
+  
+  <string id ="IDS_STREAMMODE">码流模式</string>
+  <string id ="IDS_PRESET">预置</string>
+  <string id ="IDS_USER_DEFINE">自定义模式</string>
+  <string id ="IDS_SELECT_ONECHANNEL">请至少选择一个通道!</string>
+  <string id ="IDS_PROTOCOL_ONVIF">Onvif</string>
+  <string id ="IDS_PROTOCOL_PRIVATE">私有协议</string>
+  <string id="IDS_WARNING">警告</string>
+  <string id="IDS_DELETE_IPC">你确定要删除摄像头?</string>
+  <string id="IDS_YES">是</string>
+  <string id="IDS_NO">否</string>
+  <string id="IDS_MANUFACTURER">厂商</string>
+  <string id="IDS_EDIT">修改</string>
+  <string id="IDS_QUICKADD">快速添加</string>
+  <string id="IDS_ADD">添加</string>
+  
+  <string id="IDS_PERIMETER_LINE">周界伴线</string>
+  <string id="IDS_CHN_SWITCH">通道控制</string>
+  <string id="IDS_BUZZER">蜂鸣设置</string>
+  <string id="IDS_ALARM_OUTTIME">输出延时</string>
+  <string id="IDS_ALARM_OUT">Alarm Out</string>
+  
+  <string id="IDS_PAGE_FAILED">没有设备支持该功能</string>
+  <string id="IDS_CHN_FAILED">不支持此功能</string>
+  
+  <string id ="IDS_HDDS_FULL">已满</string>
+  <string id ="IDS_OVERWRITE_14DAYS">14天</string>
+  
+  <string id ="IDS_ADMIN">admin</string>
+  <string id ="IDS_USER">user</string>
+  
+  <string id ="IDS_EMAIL_PLAN">邮件计划</string>
+  
+  <string id="IDS_STRVIDEO_USERFULL">连接用户过多,请稍候再试</string>
+  
+  <string id="IDS_ERR_SENDEREMAILFORMAT">发送邮件地址格式错误</string>
+  <string id="IDS_ERR_RECEIVEREMAILFORMAT">接收邮件地址格式错误</string>
+  
+  <string id="IDS_EMAILTEST_OK">测试SMTP服务器成功!</string>
+  <string id="IDS_EMAILTEST_DNS">网络不通或者DNS服务器填写错误!</string>
+  <string id="IDS_EMAILTEST_CONNECT">连接服务器失败！</string>
+  <string id="IDS_EMAILTEST_CONNECT_TIMEOUT">连接到SMTP服务器超时!</string>
+  <string id="IDS_EMAILTEST_BADPORT">连接失败!请检查端口是否正确!</string>
+  <string id="IDS_EMAILTEST_SEND_TIMEOUT">发送测试请求超时!</string>
+  <string id="IDS_EMAILTEST_RECEIVE">对方服务器关掉连接！</string>
+  <string id="IDS_EMAILTEST_RECEIVE_TIMEOUT">远端SMTP服务器响应超时!</string>
+  <string id="IDS_EMAILTEST_AUTH">认证失败!用户名或密码错误!</string>
+  <string id="IDS_EMAILTEST_SSL_RAND">Unable to seed random number generator!</string>
+  <string id="IDS_EMAILTEST_SSL_METHOD">SSLv23客户端方式错误！</string>
+  <string id="IDS_EMAILTEST_SSL_CTXNEW">无法创建SSL_CTX对象！</string>
+  <string id="IDS_EMAILTEST_SSL_CTXSET">SSL_CTX_set_cipher_list error!</string>
+  <string id="IDS_EMAILTEST_SSL_NEW">不能为连接创建一个新的SSL结构！</string>
+  <string id="IDS_EMAILTEST_SSL_SETFD">SSL_set_fd error!</string>
+  <string id="IDS_EMAILTEST_SSL_CONNECT">TLS/ SSL握手错误！</string>
+  <string id="IDS_EMAILTEST_FOPEN">打开附件出错!</string>
+  <string id="IDS_EMAILTEST_UNKNOWN">未知错误!</string>
+  
+ 	<string id="IDS_DDNSTEST_OK">DDNS 测试成功！</string>
+	<string id="IDS_DDNSTEST_DNS">网络不通或者DNS服务器地址填写错误!</string>
+	<string id="IDS_DDNSTEST_CONNECT_TIMEOUT">连接服务器超时!</string>
+	<string id="IDS_DDNSTEST_CONNECT_IP_TIMEOUT">连接IP服务器超时!</string>
+	<string id="IDS_DDNSTEST_CONNECT_DDNS_TIMEOUT">连接DDNS服务器超时!</string>
+	<string id="IDS_DDNSTEST_SEND_TIMEOUT">发送超时!</string>
+	<string id="IDS_DDNSTEST_RECEIVE">接收失败!</string>
+	<string id="IDS_DDNSTEST_RECEIVE_TIMEOUT">远端服务器回应超时!</string>
+	<string id="IDS_DDNSTEST_HTTPGET">DDNS服务器响应信息无效!</string>
+	<string id="IDS_DDNSTEST_BADAUTH">用户名或密码出错!</string>
+	<string id="IDS_DDNSTEST_NOHOST">主机名不存在!</string>
+	<string id="IDS_DDNSTEST_NOHOSTUSER">主机名或用户名不存在!</string>
+	<string id="IDS_DDNSTEST_ABUSE">主机名阻塞!</string>
+	<string id="IDS_DDNSTEST_911">致命的DNS服务错误，请1个小时后再试！</string>
+	<string id="IDS_DDNSTEST_NOT_DONATOR">Not donator, stop update!</string>
+	<string id="IDS_DDNSTEST_NOT_FQDN">不完全限定性的域名！</string>
+	<string id="IDS_DDNSTEST_NOT_YOURS">主机存在，但在不同的账户！</string>
+	<string id="IDS_DDNSTEST_NUMHOST">过多或过少的主机被发现!</string>
+	<string id="IDS_DDNSTEST_DNSERR">DNS服务错误，请1个小时后再试！</string>
+	<string id="IDS_DDNSTEST_IP_RESPONSE">获取IP地址失败!</string>
+	<string id="IDS_DDNSTEST_UNKNOWN">未知错误!</string>
+	
+	<string id="IDS_CONNECT_FAILED">无法连接到摄像头，请检查网络连接！</string>
+	<string id="IDS_CONNECT_OK">连接成功</string>
+	<string id="IDS_UNAUTHER">用户名或密码错误！</string>
+	<string id="IDS_CONNECTING">正在连接，请稍候...</string>
+	
+	<string id="IDS_EMAILTESTING">测试中...</string>
+	
+	<string id="IDS_STREAMBEYONDLIMIT">因带宽限制被删除！</string>
+	
+	<string id="IDS_BANDWIDTH_LIMITED">没有足够的带宽供该摄像头使用！</string>
+	
+	<string id="IDS_IPADD_FORMATERR">IP-адрес формат ошибку!</string>
+	<string id="IDS_IPADD_ADDERR">IP-адрес ошибку!</string>
+	<string id="IDS_IP_ADDED">该摄像头已被添加！</string>
+	
+	<string id="IDS_LIMIT_ADD">POE 通道禁止添加摄像头！</string>
+	<string id="IDS_HYBRID_LIMIT_ADD">通道已满，部分摄像头未添加成功 !</string>
+	<string id="IDS_LIMIT_DELETE">POE 通道禁止删除！</string>
+	<string id="IDS_LIMIT_EDIT">POE 通道禁止修改！</string>
+	
+	<string id="IDS_STREAMSET_ADVANCED">码流配置</string>
+	<string id="IDS_REFRESH_RATE">刷新频率</string>
+	<string id="IDS_SINGLE_STREAM">单码流</string>
+	<string id="IDS_DUAL_STREAM">双码流</string>
+	<string id="IDS_STREAM_BITRATE">比特率</string>
+	
+	<string id="IDS_ACUTANCE">锐度</string>
+	
+	<string id ="IDS_PROTOCOL_RSSZ">私有协议2</string>
+	
+	<string id="IDS_PLAYBACK_MUTUAL">由其他用户回放过程中,请稍后再试。</string>
+	
+	<string id="IDS_PREVIEW_MUTUAL">由其他用户预览过程中,请稍后再试。</string>
+	
+	<string id ="IDS_PROTOCOL_SAMSUNG">三星</string>
+	<string id ="IDS_PROTOCOL_ZXNH">中西霓虹</string>
+	
+	<string id="IDS_PLAYBACK_FORMATHDD">硬盘正在格式化，停止回放或者下载。</string>
+	
+	<string id ="IDS_CHECKPW_TOOLONG">密码长度必须不大于8位!</string>
+	
+	<string id ="IDS_CLOUDSTORAGE">云存储</string>
+	<string id ="IDS_MOTION_DETECTION">移动侦测</string>
+	<string id ="IDS_TRIGGER">定时截取录像</string>
+	<string id="IDS_SERVER_TYPE">服务器类型</string>   
+	<string id="IDS_NewCloSto_DROPBOX">Dropbox</string>
+	<string id="IDS_GOOGLEDRIVE">Google Drive</string> 
+	<string id="IDS_UPLOAD_VIDEO">上传视频</string>  
+	<string id="IDS_UPLOAD_PHOTO">上传照片</string>
+	<string id ="IDS_TEST_CLOUDEMAIL">启动云台连线</string>
+	<string id ="IDS_EMAIL_SETUP">进阶邮件设定</string>
+	<string id="IDS_GMAIL_ACCOUNT">Gmail账户</string>
+	<string id="IDS_GEMAIL_PASSWORD">Gmail密码</string>
+	<string id="IDS_MOTION_SETUP">移动侦测</string>
+	<string id ="IDS_NUM_OUTRANGEKG">只能支持4台摄像机.</string>
+	
+	<string id ="IDS_STARTTIME_LATER_THAN_ENDTIME">起始时间不能大于结束时间!</string>
+	
+	<string id ="IDS_LINKSUCCESS">电子邮件设定成功。请在 3 分钟内收电子邮件并完成云端启动</string>
+	<string id ="IDS_LINKFAIL">获取认证链接失败</string>
+    <string id ="IDS_LINK_CONTENT_FAIL">电子邮件设定内容无效</string>
+    <string id ="IDS_LINK_CONTECT_FAIL">网络连接失败</string>
+    <string id ="IDS_LINK_SEND_FAIL">寄送电子邮件失败</string>
+    <string id ="IDS_LINK_RECV_FAIL">接收电子邮件失败</string>
+	<string id ="IDS_DROPBOX">Dropbox的云计算负载！</string>
+	
+	<string id ="IDS_BASE_FLICKER">闪烁频率</string>
+	
+	<string id ="IDS_DEFAULT_UPLOAD">上传录像</string>
+	<string id ="IDS_VIDEO_NOUPLOAD">未上传</string>
+	
+	<string id="IDS_CLOUD_TYPE">云类型</string>  
+	<string id ="IDS_CLOHAVE_ACTIVATED">云存储已激活！</string>
+	<string id ="IDS_ACTIVATE_TIMEOUT">激活云超时！</string>
+	<string id ="IDS_NORMA_TRIGGER">定时截取录像</string>
+	<string id ="IDS_NORMAL_FTPSETUP">FTP设置</string>
+	<string id ="IDS_ACTIVATING_CLOUDS">认证中...</string>
+	<string id ="IDS_OLDPSW">当前密码</string>
+    <string id ="IDS_OLDPSWERR">当前密码错误!</string>
+	<string id ="IDS_NEW_PSW">新密码</string>
+	<string id ="IDS_IPKB_PORT">IP键盘端口</string>
+	<string id ="IDS_DIFF_PORT1">客户端端口和IP键盘端口必须为不同的值!</string>
+	<string id ="IDS_DIFF_PORT2">网络端口和IP键盘端口必须为不同的值!</string>
+	<string id ="IDS_NO_OLDPSW">当前密码不能为空!</string>
+	<string id ="IDS_NO_CHN_FOR_ADDING">通道已满，部分摄像头未添加成功!</string>
+	<string id ="IDS_PROTOCOL_URMET">Urmet</string>
+	<string id ="IDS_PROTOCOL_AMTK">A-Serie</string>
+	<string id ="IDS_PROTOCOL_SHANY">SH-Serie</string>
+	<string id ="IDS_NUM_OUTRANGE">一分钟只能支援 4 台摄影机</string>
+	<string id ="IDS_PRO_MANAGE">协议管理</string>
+	<string id ="IDS_CUSTOM_PROTOCOL">自定义协议</string>
+	<string id ="IDS_PROTOCOL_NAME">协议名称</string>
+	<string id ="IDS_TRANS_PROTOCOL">传输协议</string>
+	<string id ="IDS_RESOURCE_PATH">资源路径</string>
+	<string id ="IDS_EXAMPLE">示例</string>
+	<string id ="IDS_STREAM_TYPE">码流类型</string>
+	<string id ="IDS_CONFIRM_SAVE_PRO">您想修改的协议已经被使用了，确定要保存这些修改吗？</string>
+	<string id ="IDS_MAINSOURCEPATH_EMPTY">主码流资源路径不能为空!</string>
+	<string id ="IDS_SUBSOURCEPATH_EMPTY">子码流资源路径不能为空!</string>
+	<string id="IDS_PSW_CONFIRM">密码验证</string>
+	<string id="IDS_REINPUT_PSW">您的当前密码错误。请单击确定重新输入您的密码。</string>
+	<string id="IDS_INPUT_PSW">请输入您的当前密码</string>
+	<string id="IDS_GREATER_THAN_1HOUR">结束日期必须比起始日期晚1小时，请重试！</string>
+	<string id="IDS_GREATER_THAN_2HOUR">结束日期必须比起始日期晚2小时，请重试！</string>
+	<string id="IDS_LESS_THAN_1YEAR">起始日期和结束日期之间的差距不能大于1年，请重试！</string>
+	<string id = "IDS_RECTYPE_IO">IO告警</string>
+	<string id="IDS_SGPLAT_ENABLE">启用平台</string>
+	<string id="IDS_SGPLAT_ID">ID</string>
+	<string id="IDS_SGPLAT_IP">IP地址/域名</string>
+	<string id="IDS_SGPLAT_PORT">平台端口</string>
+	<string id="IDS_SGPLAT">深广平台设置</string>
+	<string id="IDS_SGPLAT_ID_ERR">ID格式错误!</string>
+	<string id ="IDS_PROTOCOL_ZHUOWEI">ZHUOWEI</string>
+	<string id ="IDS_PROTOCOL_MINGJING">明景</string>
+	<string id ="IDS_PROTOCOL_FSAN">Fsan</string>
+	<string id ="IDS_SIGNAL_TYPE">信号类型</string>
+	<string id ="IDS_ANALOG">模拟</string>
+	<string id ="IDS_DIGITAL">数字</string>
+	<string id="IDS_SGPLAT_BEFORETRIGGER">报警触发前</string>
+	<string id="IDS_SGPLAT_AFTERTRIGGER">报警触发后</string>
+	<string id="IDS_IMG_INTERVAL">图片上传设置</string>
+	<string id="IDS_SGPLAT_CHANNEL">通道</string>
+	<string id="IDS_SGPLAT_UPLOADTIME1">时间1</string>
+	<string id="IDS_SGPLAT_UPLOADTIME2">时间2</string>
+	<string id="IDS_SGPLAT_REPAIRE">报修</string>
+	<string id="IDS_SGPLAT_MAINTAIN">维保</string>
+	<string id="IDS_SGPLAT_MANUALUPLOAD">手动图像上传</string>
+	<string id="IDS_SGPLAT_REPAIRTYPE">报修类型</string>
+	<string id="IDS_SGPLAT_REPAIR0">视频监控</string>
+	<string id="IDS_SGPLAT_REPAIR1">周界报警</string>
+	<string id="IDS_SGPLAT_REPAIR2">入侵报警</string>
+	<string id="IDS_SGPLAT_REPAIR3">楼宇对讲</string>
+	<string id="IDS_SGPLAT_REPAIR4">门禁管理</string>
+	<string id="IDS_SGPLAT_REPAIR5">出入口控制</string>
+	<string id="IDS_SGPLAT_REPAIR6">电子巡更</string>
+	<string id="IDS_SGPLAT_REPAIR7">其他报警</string>
+	<string id="IDS_SGPLAT_ERRORTYPE">故障类型</string>
+	<string id="IDS_SGPLAT_ERROR0">视频丢失</string>
+	<string id="IDS_SGPLAT_ERROR1">视频异常</string>
+	<string id="IDS_SGPLAT_ERROR2">传输故障</string>
+	<string id="IDS_SGPLAT_ERROR3">前端设备其他故障</string>
+	<string id="IDS_SGPLAT_ERROR4">视频矩阵监视故障</string>
+	<string id="IDS_SGPLAT_ERROR5">操作故障</string>
+	<string id="IDS_SGPLAT_ERROR6">通讯故障</string>
+	<string id="IDS_SGPLAT_ERROR7">控制系统其他故障</string>
+	<string id="IDS_SGPLAT_ERROR8">硬盘录像监视故障</string>
+	<string id="IDS_SGPLAT_ERROR9">录像故障</string>
+	<string id="IDS_SGPLAT_ERROR10">回放故障</string>
+	<string id="IDS_SGPLAT_ERROR11">硬盘录像其他故障</string>
+	<string id="IDS_SGPLAT_EXPLANATION">说明（最多输入128个字节）</string>
+	<string id="IDS_SGPLAT_UPLOAD">上传</string>
+	<string id="IDS_SGPLAT_MAINTAINTYPE">设备维护</string>
+	<string id="IDS_SGPLAT_MAINTAIN0">设备维护</string>
+	<string id="IDS_SGPLAT_MAINTAIN1">设备维修</string>
+	<string id="IDS_SGPLAT_REPAIRRESULT">维修结果</string>
+	<string id="IDS_SGPLAT_RESULT0">已修复</string>
+	<string id="IDS_SGPLAT_RESULT1">异常已修复</string>
+	<string id="IDS_SGPLAT_RESULT2">异常未修复</string>
+	<string id="IDS_SGPLAT_IMAGE0">测试</string>
+	<string id="IDS_SGPLAT_IMAGE1">验收</string>
+	<string id="IDS_SGPLAT_IMAGE2">维保</string>
+	<string id="IDS_RTSP_CHANNEL">A:00(通道1),01(通道2)...</string>
+	<string id="IDS_PROTOCOL_QIHAN">qihan</string>
+	<string id="IDS_CODE_TYPE">编码类型</string>
+	<string id="IDS_BITRATE_CTRL">码率控制</string>
+	<string id="IDS_DEFOG_MODE">去雾</string>
+<!--模拟通道-->
+	<string id="IDS_ANALOG_TITLE">模拟通道</string>
+	<string id="IDS_ANALOG_INDEX">通道号</string>
+	<string id="IDS_ANALOG_NAME">通道名</string>
+	<string id="IDS_ANALOG_STATUS">状态</string>	
+	<string id="IDS_ANALOG_STATUS_VALUE1">打开</string>
+	<string id="IDS_ANALOG_STATUS_VALUE2">关闭</string>
+	<string id="IDS_ANALOG_RECTIME">录像时间</string>
+<!--抓图设置、抓图计划-->
+	<string id="IDS_CAPTURE_CAP">抓图</string>
+	<string id="IDS_CAPTURE_JH">抓图计划</string>
+	<string id="IDS_CAPTURE_SET">抓图</string>
+	<string id="IDS_CAP_AUTO">自动抓图</string>
+	<string id="IDS_CAP_MANUAL">手动抓图</string>
+	<string id="IDS_CAP_BITMODE">码流模式</string>
+	<string id="IDS_CAP_N">常规间隔</string>
+	<string id="IDS_CAP_M">动检间隔</string>
+	
+	<string id="IDS_ANALOG_CHN">模拟通道</string>
+	<string id="IDS_IO_IPCKALL">IP通道</string>
+	<string id="IDS_FTP_ENABLE">FTP 开关</string>
+	<string id="IDS_FTP_DIRNAME">路径名</string>
+	<string id="IDS_FTPTEST">Ftp 测试</string>
+	<string id="IDS_RTSP_IP">IP 通道:  rtsp://IP:Port/ipA/B</string>
+	<string id="IDS_IP_EMPTY">IP 不能为空</string>
+<!--FTP测试-->
+	<string id ="IDS_FTP_WRITE_SUC">写文件成功！</string>
+	<string id ="IDS_FTP_CLOSE_FAILED">关闭FTP服务失败！</string>
+	<string id ="IDS_FTP_CREATEFILE_FAILED">创建文件失败！</string>
+	<string id ="IDS_FTP_WRITEFILE_FAILED">写文件失败！</string>
+	<string id ="IDS_FTP_USERLOGIN_FAILED">用户登陆失败！</string>
+	<string id ="IDS_FTP_CONNECT_FAILED">链接FTP服务器失败！</string>
+	<string id ="IDS_FTP_ILLEGAL_PARAM">非法参数！</string>
+	
+	<string id ="IDS_MANUAL_CAPTURE">手动抓图</string>
+	<string id ="IDS_PREVIEW_NO_BANDWIDTH">设备带宽不足</string>
+	<string id ="IDS_PRESET_2">预置</string>
+	<string id ="IDS_USER_DEFINE_2">自定义模式</string>
+	<string id ="IDS_REC_INFO">录像信息</string>
+	<string id ="IDS_REC_STATE">录像状态</string>
+	<string id ="IDS_COMPOUND_STREAM">复合流</string>
+	<string id ="IDS_VIDEO_STREAM">视频流</string>
+	<string id ="IDS_CHN_INFO">通道信息</string>
+	<string id ="IDS_INFO_ALIAS">别名</string>
+	<string id ="IDS_INFO_MAIN">主码流</string>
+	<string id ="IDS_INFO_SUB">子码流</string>
+	<string id ="IDS_INFO_MOBILE">手机码流</string>
+	<string id ="IDS_INFO_MOTIONDETE">动检抓图</string>
+	<string id ="IDS_INFO_PRIVACYZ">视频遮挡</string>
+	<string id ="IDS_INFO_ONLIEN">在线</string>
+	<string id ="IDS_INFO_OFFLIEN">离线</string>
+	<string id ="IDS_INFO_SUPPORT">支持</string>
+	<string id ="IDS_INFO_NO_SUPPORT">不支持</string>
+	<string id ="IDS_CLOUD_UPGRADE_CHECK">是否要检测云存储升级包?</string>
+	<string id ="IDS_CLOUD_UPGRADE_CHECKING">检测中，请等待...</string>
+	<string id ="IDS_CLOUD_UPGRADE_NONEW">没有可用的云存储升级包!</string>
+	<string id ="IDS_CLOUD_UPGRADE_NETERR">网络连接错误!</string>
+	<string id ="IDS_CLOUD_UPGRADE_TOUP">有新的云存储升级包可用，是否要升级?</string>
+	<string id ="IDS_CLOUD_UPGRADE_UPING">升级中...</string>
+	<string id ="IDS_CLOUD_UPGRADE_UPSUCC">升级成功!</string>
+	<string id ="IDS_CLOUD_UPGRADE_UPFAILED">升级失败!</string>
+	<string id ="IDS_CAM_HIGHT2">高</string>
+	<string id ="IDS_CAM_MIDD2">中</string>
+	<string id="IDS_PROTOCOL_GRANDMEDIA">Grandmedia</string>
+	<string id="IDS_PROTOCOL_YCX">GW</string>
+	<string id="IDS_ANGLE_ROTATION">角度旋转</string>
+	<string id="IDS_CLOUS_UPGRADE">升级云存储</string>
+</StringTable>

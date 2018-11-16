@@ -1,0 +1,335 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeviceInfo</title>
+</head>
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="d_list">
+        <tr>
+            <th colspan="8" style="background: #efedf2; padding: 5px 0px; text-align: center;">
+                <h3>
+                    设备信息</h3>
+            </th>
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t dtitle">
+                设备编码
+            </td>
+            <td class="d_l_d dvalue">
+                <div id="tDeviceCode">
+                </div>
+            </td>
+
+            <td align="right" class="d_l_t dtitle">
+                设备名称
+            </td>
+            <td class="d_l_d dvalue">
+                <div id="tDeviceName">
+                </div>
+            </td>
+
+            <td align="right" class="d_l_t">
+                所属配电房
+            </td>
+            <td class="d_l_d">
+                <div id="tPName">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                设备型号
+            </td>
+            <td class="d_l_d">
+                <div id="tDeviceModel">
+                </div>
+            </td>
+            
+
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t">
+                生产厂家
+            </td>
+            <td class="d_l_d">
+                <div id="tMFactory">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                安装地点
+            </td>
+            <td class="d_l_d">
+                <div id="tInstallAddr">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                购买日期
+            </td>
+            <td class="d_l_d">
+                <div id="tBuyTime">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                所属单位
+            </td>
+            <td class="d_l_d">
+                <div id="tCompany">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t">
+                设备结构类型
+            </td>
+            <td class="d_l_d">
+                <div id="tDSTID">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                设备类型
+            </td>
+            <td class="d_l_d">
+                <div id="tDTID">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                重要程度
+            </td>
+            <td class="d_l_d">
+                <div id="tMLID">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                出厂编号
+            </td>
+            <td class="d_l_d">
+                <div id="tFactoryNumber">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t">
+                投运日期
+            </td>
+            <td class="d_l_d">
+                <div id="tUseDate">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                使用状态
+            </td>
+            <td class="d_l_d">
+                <div id="tUseState">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                建档日期
+            </td>
+            <td class="d_l_d">
+                <div id="tBuildDate">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                最后维护日期
+            </td>
+            <td class="d_l_d">
+                <div id="tLastMtcDate">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t">
+                备注
+            </td>
+            <td class="d_l_d">
+                <div id="tRemarks">
+                </div>
+            </td>
+            <td class="d_l_d" colspan="2" align="right">
+                &nbsp;
+            </td>
+            <td align="right" class="d_l_t">
+                附件
+            </td>
+            <td colspan="3" class="d_l_d">
+                <div id="flies">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="d_list">
+        <tr>
+            <th colspan="8" style="background: #efedf2; padding: 5px 0px; text-align: center;">
+                <h3>
+                    技术参数</h3>
+            </th>
+        </tr>
+        <tr>
+            <td align="right" class="d_l_t dtitle">
+                电压等级
+            </td>
+            <td class="d_l_d dvalue">
+                <div id="dydj">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                额定电流
+            </td>
+            <td class="d_l_d">
+                <div id="eddl">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                额定功率
+            </td>
+            <td class="d_l_d">
+                <div id="edgl">
+                </div>
+            </td>
+            <td align="right" class="d_l_t">
+                容量
+            </td>
+            <td class="d_l_d">
+                <div id="DeviceCapTotal">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="padding-top: 10px;" id="attach">
+    </div>
+    @*<div class="tab_mainbox demo2 backgroundnone" style="height: auto;">
+        <ul class="tab_menu" style="color: #333;">
+            <li>设备资料</li>
+            <li class="current">巡视记录</li>
+            <li>隐患记录</li>
+            <li>检修记录</li>
+            <li>预防试验</li>
+            <li>备件记录</li>
+        </ul>
+        <div class="tab_box bordernone">
+            <!--设备资料-->
+            <div class="tabbg tabbg4 hide">
+                <div>
+                    设备资料</div>
+            </div>
+            <!--巡视记录-->
+            <div class="tabbg tabbg4" style="padding: 10px; width: auto;">
+                <div class="easyui-tabs">
+                    <div title="全部" id="">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="page_table_list"
+                            style="color: #333;">
+                            <tbody>
+                                <tr>
+                                    <th height="35" scope="col">
+                                        巡视时间
+                                    </th>
+                                    <th scope="col">
+                                        巡视结果
+                                    </th>
+                                    <th scope="col">
+                                        问题描述
+                                    </th>
+                                    <th scope="col">
+                                        详情
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div title="正常" id="">
+                    </div>
+                    <div title="异常" id="">
+                    </div>
+                </div>
+            </div>
+            <!--隐患记录-->
+            <div class="tabbg tabbg4 hide">
+                <div>
+                    隐患记录</div>
+            </div>
+            <!--检修记录-->
+            <div class="tabbg tabbg4 hide">
+                <div>
+                    检修记录</div>
+            </div>
+            <!--预防试验-->
+            <div class="tabbg tabbg4 hide">
+                <div>
+                    预防试验</div>
+            </div>
+            <!--备件记录-->
+            <div class="tabbg tabbg4 hide">
+                <div>
+                    备件记录</div>
+            </div>
+        </div>
+    </div>*@
+    <div style="text-align: center; padding-top: 0px;">
+        <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+            onclick="$('#detailwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var did=@Html.Raw(Request.QueryString["did"]);
+    </script>
+    <script src="~/Content/UserJS/DeviceInfo._jm.js"></script>
+    <div id="ShowImage" title="图片详情" class="easyui-dialog" closed="true" style="width: 1020px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <div style="width: 100%; height: 100%; text-align: center;">
+            <img alt="" id="bigImg" src="" style="height: 100%;" /></div>
+        <!--<button type="submit" class="page_table_but" id="11btnx" onclick="$('#ShowImage').dialog('close');">
+        <img src="../../Content/images/button/printer.png" />关&nbsp;&nbsp;闭</button>-->
+    </div>
+</body>
+</html>

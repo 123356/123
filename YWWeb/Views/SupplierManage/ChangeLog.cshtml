@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangeLog（找补电量记录查询）</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+        });
+    });
+    </script>
+
+    <style>
+        td {
+            vertical-align: middle;
+            text-align: center;
+            font-family: "微软雅黑";
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container-fluid" style="padding-top:2%">
+        <div class="clearfix">
+
+            <div style="width:100%;height:560px;">
+
+                <div style="width:60%;">
+                    <table class="table">
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">住户：</td>
+                            <td><input type="text" class="form-control" placeholder="请输入名称"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="vertical-align: middle;text-align:center;"><button type="button" class="btn btn-default">导出</button><button type="button" class="btn btn-default" style="margin-left:60px;">查询</button></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="float:left;width:60%">
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <td colspan="8">找补电量记录查询</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">住户</td>
+                            <td style="vertical-align: middle;text-align:center;">住户姓名</td>
+                            <td style="vertical-align: middle;text-align:center;">找补电量</td>
+                            <td style="vertical-align: middle;text-align:center;">时间</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">
+                                101
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                               张三
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                2018-08-31
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">
+                                102
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                李四
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                2018-08-31
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            </div>
+
+            
+
+        </div>
+    </div>
+
+</body>
+</html>

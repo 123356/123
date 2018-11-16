@@ -1,0 +1,418 @@
+以下key都以数据库字段为准，value以数据库的值为准代替；
+
+"resultCode": 0, 正常；1，未登录。2:其他错误；
+1.总览界面：https://yw.hengfeiec.com/wx/getRooms
+{
+    "resultCode": 0,
+    "results": [
+        {
+            "Name": "1#总配电室",
+            "PID": 1,
+            "latitude": "117.736998",
+            "longtitude": "39.026466",
+            "status": "0"
+        }
+    ]
+}
+2.配电房信息：https://yw.hengfeiec.com/wx/getPDRState?pid=1
+{
+    "resultCode": 0,
+    "results": {
+        "activePower": "activePower",
+        "hiPoint": {
+            "2017/12/10 0:00:00": 25.5,
+            "2017/12/11 0:00:00": 25.5,
+            "2017/12/12 0:00:00": 25.5,
+            "2017/12/6 0:00:00": 25.5,
+            "2017/12/7 0:00:00": 25.5,
+            "2017/12/8 0:00:00": 25.5,
+            "2017/12/9 0:00:00": 25.5
+        },
+        "lastFixTime": "lastFixTime",
+        "nextFixTime": "nextFixTime",
+        "pid": "1",
+        "reactivePower": "reactivePower",
+        "roomInfo": {
+            "alarm": {
+                "ALarmType": "正常",
+                "AlarmState": 0,
+                "AlarmValue": 0.0,
+                "DID": 0
+            },
+            "tempInfo": {
+                "humidity": "N/A",
+                "load": "N/A",
+                "temp": "N/A"
+            }
+        }
+    }
+}
+3.设备台账列表：https://yw.hengfeiec.com/wx/getTaizhangList?pid=1
+{
+    "resultCode": 0,
+    "results": [
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        },
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        },
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        },
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        },
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        },
+        {
+            "DID": "1",
+            "Dname": "开关柜1",
+            "Pname": "1#总配电室"
+        }
+    ]
+}
+4.设备台账信息：https://yw.hengfeiec.com/wx/getTaizhang?did=1
+{
+    "resultCode": 0,
+    "results": {
+        "repairList": [
+            {
+                "CheckDate": "2017/3/3",
+                "OrderContent": "内容3"
+            },
+            {
+                "CheckDate": "2017/3/6",
+                "OrderContent": "内容dsf"
+            },
+            {
+                "CheckDate": "2017/3/8",
+                "OrderContent": "内容d9"
+            }
+        ],
+        "t_DM_DeviceInfo": {
+            "交流接触器": "交流接触器",
+            "变频器型号": "变频器型号",
+            "开关柜位置": "开关柜位置",
+            "开关柜厂家": "开关柜厂家",
+            "开关柜编号": "开关柜编号",
+            "控制方式": "控制方式",
+            "断路器型号": "断路器型号",
+            "热源电器型号": "热源电器型号",
+            "电流互感器型号": "电流互感器型号",
+            "电视保护器型号": "电视保护器型号",
+            "软件型号": "软件型号"
+        }
+    }
+}
+5.工单列表：https://yw.hengfeiec.com/wx/getOrdersList
+{
+    "resultCode": 0,
+    "results": {
+        "fished_orders": [
+            {
+                "DID": 1,
+                "OrderID": 1,
+                "PID": 137,
+                "PName": "xx配电房89",
+                "deviceName": "xx柜",
+                "status": "look",
+                "time": "2017年12月7日14:25:45",
+                "type": "抢修"
+            }
+        ],
+        "unfished_orders": [
+            {
+                "DID": 1,
+                "OrderID": 1,
+                "PID": 137,
+                "PName": "xx配电房4",
+                "deviceName": "xx柜",
+                "status": "unhandle",
+                "time": "2017年12月7日14:25:45",
+                "type": "抢修"
+            },
+            {
+                "DID": 1,
+                "OrderID": 1,
+                "PID": 137,
+                "PName": "xxd配电房6",
+                "deviceName": "xxdf柜",
+                "status": "applying",
+                "time": "2017年12月7日14:25:45",
+                "type": "抢修"
+            }
+        ]
+    }
+}
+6.未完成工单详情；https://yw.hengfeiec.com/wx/getUnOrderDetail?OrderID=1
+{
+    "resultCode": 0,
+    "results":  {
+        "address": "北京市大兴区荣京东街大族广场",
+        "name": "大族广场",
+        "release_time": "2017/10/30  18:00:00",
+        "title": "大族广场维护",
+        "until_time": "2017/10/30  18:00:00",
+        "work_content": "1   负责产品的市场渠道开拓与销售工作, 执行品年度\n2   根据公司市场营销战略, 提升销售价值\n3   计划根据公司市场营销战略, 提升销售价值",
+        "work_man": "鲁大师",
+        "order_id": 32,
+        "status":"applying",
+        "tel":"1954000234"
+      }
+}
+7.已完成工单详情；https://yw.hengfeiec.com/wx/getOrderDetail?OrderID=1
+{
+    "resultCode": 0,
+    "results": {
+        "addr": "北京市大兴区亦庄荣京东街",
+        "all": "",
+        "check_content": "工单内容：",
+        "check_man": "admin",
+        "connect_man": "admin",
+        "count": "",
+        "finish_time": "2017/11/1 15:02:51",
+        "first_arrived": "",
+        "lv": "",
+        "name": "大族环球",
+        "order_id": "3",
+        "order_name": "cxxxxxxxxxxxxxx",
+        "print_time": "2017/12/19 14:54:51",
+        "received_time": "2017/12/1 15:21:32",
+        "send_time": "2017/12/1 13:31:20",
+        "tel": "345555",
+        "title": "日常巡检报告"
+    }
+}
+
+8.申请进场：https://yw.hengfeiec.com/wx/getApplying?OrderID=1
+{
+    "resultCode": 0,
+    "results": {
+        "着装要求": "着装要求"
+    }
+}
+
+9.申请进场提交：https://yw.hengfeiec.com/wx/postApplying
+参数：工单id，说明；
+申请进场提交返回：
+{
+    "resultCode": 0,
+    "results": {
+        "工单id": 32423
+    }
+}
+
+10.上传文件接口：https://yw.hengfeiec.com/wx/upload  一次一个文件；
+参数：工单id；filePath；
+
+返回：
+{
+    "data": "上传成功",
+    "statusCode": 200
+}
+
+11.已完成工单报告，下载文件：https://yw.hengfeiec.com/wx/download
+{
+    "tempFilePath": "/iumag/w.doc",
+    "statusCode": 200
+}
+
+12.完成工单列表：https://yw.hengfeiec.com/wx/getRepairList?pid=1
+{
+    "resultCode": 0,
+    "results": {
+        "listRepair": [
+            {
+                "$id": "1",
+                "AcceptedDate": "2017-12-01T15:02:51.687",
+                "CheckDate": "2017-12-01T15:02:51.687",
+                "CreateDate": "2017-12-01T10:26:47.277",
+                "Creater": "admin",
+                "IsQualified": -1,
+                "OrderContent": "工单内容：",
+                "OrderID": 2,
+                "OrderNO": "636477207793408500",
+                "OrderName": "已完成",
+                "OrderState": 2,
+                "OrderType": "日常巡检",
+                "PID": 1,
+                "PName": "1#总配电室",
+                "PlanDate": "2017-12-01T00:00:00",
+                "Priority": 1,
+                "Remarks": "备注",
+                "RepairDID": "1,2",
+                "UserID": 35,
+                "UserName": "admin"
+            }
+        ]
+    }
+}
+13:搜索配电房：http://localhost:48556/wx/searchRoom?pname=1
+{
+    "resultCode": 0,
+    "results": {
+        "list": [
+            {
+                "$id": "1",
+                "AlarmState": 0,
+                "AreaID": 1,
+                "CompanyName": "恒扉嘉泰",
+                "Coordination": "116.507805|39.811251",
+                "DataRate": 300,
+                "IsLast": 1,
+                "LinkMan": "赵主任",
+                "Mobile": "13000000000",
+                "Name": "力宝广场",
+                "PID": 137,
+                "Position": "北京市大兴区亦庄荣昌东街6号",
+                "Remarks": "北京",
+                "TypeID": 3,
+                "UseState": 0
+            }
+        ]
+    }
+}
+14.搜索台账信息：http://localhost:48556/wx/searchTaizhang?tname=AH4
+{
+    "resultCode": 0,
+    "results": {
+        "list": [
+            {
+                "$id": "1",
+                "Company": "大族环球科技股份有限公司",//所属单位
+                "DID": 14,//设备编号
+                "DSTID": 0,//设备结构类型
+                "DTID": 2,//设备类型
+                "DeviceCode": "225",//设备编码
+                "DeviceModel": "GGD",//设备型号
+                "DeviceName": "AH17",//设备名称
+                "EadoCode": "",//设备编号
+                "FactoryNumber": "1",//出厂编号
+                "UseDate":null//投运时间
+                "BuildDate":null,//建档日期
+                "BuyTime":null,//购买时间
+                "LastMtcDate":null,//最后维护时间
+                "InstallAddr": "1#总配电室",//安装地点
+                "MFactory": "",//生产厂家
+                "MLID": 2,//重要程度
+                "PID": 1,//配电房编号
+                "PName": "1#总配电室",//配电房名称
+                "Remarks": "",//备注
+                "UseState": 0,//使用状态
+                "B":"",//进线柜DID
+                "C":"",//出线柜DID
+                "E":"",//备件名称
+                "Z":""//变压器容量
+            }
+        ]
+    }
+}
+15.拒绝工单：http://localhost:48556/wx/rejectOrder?OrderId=34&rejectReason=请假
+{
+    "resultCode": 0,
+    "results": {}
+}
+
+16.未完成工单详情（运维项目内容列表）；https://yw.hengfeiec.com/wx/getUnOrderDetail2?OrderID=63
+{
+    "resultCode": 0,
+    "results": {
+        "FistDate": "2018/3/7 16:09:09",
+        "address": "北京市大兴区亦庄荣京东街",
+        "mInfos": [
+            {
+                "id": 1,
+                "infoType": 1,
+                "orderId": 63,
+                "tInfoId": 1,
+                "templateBlock": "概要",
+                "templateId": 1,
+                "templateInfo": "调度号",
+                "templateName": "变压器试验报告"
+            }
+        ],
+        "name": "大族环球",
+        "order_id": 63,
+        "rLatitude": "39.810009",
+        "rLongtitude": "116.508437",
+        "release_time": "2018/3/4 17:02:18",
+        "status": 3,
+        "tel": "4008960101",
+        "title": "2018年3月4日17:02:02",
+        "until_time": "2018/3/5 0:00:00",
+        "work_content": "2018年3月4日17:02:05",
+        "work_man": "admin"
+    }
+}
+17.获取运维项目列表：http://localhost:48556/wx/getUnOrderDetail3?OrderID=80&templateId=6
+{
+    "resultCode": 0,
+    "results": {
+        "mInfos": [
+            {
+                "element": [
+                    {
+                        "id": 395,
+                        "infoType": 1,
+                        "templateBlock": "概况",
+                        "templateBlock2": "",
+                        "templateId": 6,
+                        "templateInfo": "单位名称：",
+                        "templateName": "代维护配电室设备巡视检查记录"
+                    },
+                    {
+                        "id": 396,
+                        "infoType": 3,
+                        "templateBlock": "概况",
+                        "templateBlock2": "",
+                        "templateId": 6,
+                        "templateInfo": "巡视日期：",
+                        "templateName": "代维护配电室设备巡视检查记录"
+                    },
+                    {
+                        "id": 397,
+                        "infoType": 1,
+                        "templateBlock": "概况",
+                        "templateBlock2": "",
+                        "templateId": 6,
+                        "templateInfo": "天气：",
+                        "templateName": "代维护配电室设备巡视检查记录"
+                    }
+                ],
+                "title": "概况"
+            }
+        ]
+    }
+}
+
+
+
+客户端小程序接口：
+1.获取站信息：http://localhost:48556/wx/getRoomInfo?pid=138
+返回：
+{
+    "resultCode": 0,
+    "results": {
+        "MaxPointTemperature": "--",
+        "allPower": "1877.59",
+        "days": "4",
+        "hum": "--",
+        "monNeed": "--",
+        "monPower": "8822.3",
+        "powerRate": "--",
+        "temp": "--",
+        "yearPower": "--"
+    }
+}

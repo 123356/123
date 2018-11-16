@@ -1,0 +1,37 @@
+﻿/*平面图*/
+.tabbg1 { background:#b2b2b2;}
+
+.tabbg5 { background:#999999;}
+.tabbg6 { background:#8c8c8c;}
+
+.pmmain {width:1440px; margin:0 auto; height:700px;}
+.pmmain div{position:absolute; cursor:pointer;}
+.pmmain div:hover { filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8; z-index:2;}
+.defaultcursor {cursor:default !important;}
+
+/*监测数据*/
+.station_room_monitor {display:none; width:215px; height:242px; min-width:180px; background:url(../pingmiantu/titlebg.png) no-repeat; color:#fff; font-family:"微软雅黑"; position:absolute !important; left:20px; top:40px;}
+.station_room_monitor_top { padding:5px 20px; overflow:hidden;}
+.station_room_monitor_top h2 { margin:0px; display:inline-block; width:30%; float:left; }
+.station_room_monitor_top span { display:block; color:#b2b2b2;  width:70%; text-align:center; float:left; margin:6px 0px;}
+.station_room_monitor_hr{ width:100%; height:10px; background-color:#33cc33;}
+.station_room_monitor_content { padding:5px 0px 0px 10px;}
+.station_room_monitor_content strong { display:inline-block; padding-bottom:5px;}
+.station_room_monitor_content h1 { display:inline-block; margin:0px; font-size:26px; vertical-align:middle;}
+.station_room_monitor_content span { display:block; color:#b2b2b2; padding-bottom:3px; }
+
+.state_bg_1{background-color:#ffff00;}
+.state_bg_2{background-color:#ff6633;}
+.state_bg_3{background-color:#ff0000;}
+
+.state_fc_0{color:#33cc33;}
+.state_fc_1{color:#ffff00;}
+.state_fc_2{color:#ff6633;}
+.state_fc_3{color:#ff0000;}                                                                                                                                                                         
+
+/*平面图最高温度设备定位通用样式*/
+.tmax_location { position:absolute; display: block; left:50%; margin-left:-12px; background:url(../pingmiantu/tmax_location.gif) no-repeat; width:24px; height:36px; z-index:3;}
+
+/*针对配置工具*/
+/*平面图柜体信息批注 统一文字样式*/
+.pz_pmt { font-size:14px; height:30px; width:80px; display:inline-block;}

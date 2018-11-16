@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>品种管理</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+
+</head>
+<body>
+
+    <table id="list_data" style="width: auto; height: 780px; width: 100%"
+           idfield="IndustryID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='id' checkbox="true">
+                </th>
+                <th field='orderNumber' width="200px">
+                    序号
+                </th>
+                <th field='category_name' width="200px">
+                    品种名称
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+
+
+
+    <div id="tb" class="searchbar">
+        <div id="userbutton" class="searchbutton">
+
+        </div>
+    </div>
+
+    <div id="editwin" title="编辑品种信息" class="easyui-dialog" closed="true" style="width: 750px;
+        height: auto; padding: 10px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+
+            <tr>
+                <td class="d_l_t">
+                    品种名称：
+                </td>
+                <td class="d_l_d">
+                    <input id="category_name" runat="server" name="UnitName" missingmessage="品种名称必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="id" type="hidden" />
+                </td>
+                <td class="d_l_t">
+                    序号：
+                </td>
+                <td class="d_l_d">
+                    <input id="orderNumber" runat="server" name="UnitName" missingmessage="序号必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+               data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                                                          data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="~/Content/UserJS/CategoryView._jm.js"></script>

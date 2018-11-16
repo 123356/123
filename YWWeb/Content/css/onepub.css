@@ -1,0 +1,74 @@
+﻿/*一次图*/
+.tabbg2 { background:#1d1d1d;}
+.ycmain{
+    position: relative;
+    width: 1440px;
+    height: 750px; 
+	margin:0 auto;
+}
+.ycmain div
+{
+    position: absolute;
+    color: #ffff00;
+}
+.ycmain div i
+{    
+    width: 50px;
+    height: 57px;
+    font-style: normal;position: absolute;
+}
+.alertmenu{list-style-type: none;padding: 0;}
+.alertmenu li{cursor: pointer;float: left;padding: 0;margin: 0 1px 0 0;position:absolute;}
+.alertmenu li dt { z-index:1; }
+.alertmenu li dd {position:absolute;z-index:2;background-color:#EFEDF2; padding:0px; left:50%; margin-left:-280px;display:none; }
+.alertmenu li:hover dd{display:block;}
+.alertmenu dt{margin: 0;height:25px;width:40px;font-size:12px; text-align:center; }
+.alertmenu dt p {padding:0; margin:0; line-height:16px;color:#fff;}
+.alertmenu .p1 {padding-top:0px;}
+.alertmenu .p2 {padding-top:10px;}
+/*左上、右上信息窗特殊样式*/
+.alarmico_lup dt, .alarmico_rup dt {margin:18px 0 0 0 !important;}
+
+/*小信息窗图标*/
+.alarmico_r { background: url(/Content/yicitu/alarmico_r.png) repeat;}
+.alarmico_l { background: url(/Content/yicitu/alarmico.png) repeat;}
+.alarmico_lup { background: url(/Content/yicitu/alarmico_lup.png) repeat;}
+.alarmico_rup { background: url(/Content/yicitu/alarmico_rup.png) repeat;}
+
+.alarmico { background: url(/Content/yicitu/alarmico.png) repeat;}
+
+/*翻页关联*/
+.page_size{ font-family:"Microsoft YaHei UI"; font-size:16px; color:#fafcd4; text-decoration:underline; background:#4d4d4d; padding:7px 8px 8px 8px !important; position:absolute;}
+.page_size:hover { background:#444; text-decoration:none;}
+
+/*特殊翻页按钮*/
+.page_size_tb{ font-family:"Microsoft YaHei UI"; font-size:14px; color:#333;background: url(../yicitu/skip_but.png) no-repeat; width: 124px; height: 39px; text-align: center; line-height: 39px;}
+.page_size_tb:hover { filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8;}
+
+/*返回按钮*/
+.page_size_pm{ font-family:"Microsoft YaHei UI"; font-size:14px; color:#333;background: url(../yicitu/skip_but.png) no-repeat; width: 125px; height: 39px; text-align: center; line-height: 39px;text-decoration:none; position:absolute;}
+.page_size_pm:hover { filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8;}
+
+/*灰色返回按钮*/
+.page_size_pm_no{ font-family:"Microsoft YaHei UI"; font-size:14px; color:#333;background: url(../yicitu/skip_but_no.png) no-repeat; width: 125px; height: 39px; text-align: center; line-height: 39px;text-decoration:none; position:absolute;}
+
+/*翻页*/
+.tb_pageI{left:875px; top:20px;}
+.tb_pageII{left:1000px; top:20px;}
+.tb_pageIII{left:1125px; top:20px;}
+.tb_pageIIII{left:1250px; top:20px;}
+.tb_pageV{left:1375px; top:20px;}
+.tb_pageVI{left:1500px; top:20px;}
+
+/*默认开关*/
+.switch_size {  cursor:default !important; position:absolute;}
+/*竖*/
+.switch_s_off { background:url(../yicitu/switch_off_2.png) no-repeat;background-size:100%}
+.switch_s_on { background:url(../yicitu/switch_on_2.png) no-repeat;background-size:100%}
+/*横*/
+.switch_h_off { background:url(../yicitu/switch_off_1.png) no-repeat;background-size:100%}
+.switch_h_on { background:url(../yicitu/switch_on_1.png) no-repeat;background-size:100%}
+
+/*默认显示LABLE*/
+.yct_lable {width:55px; text-align:center;cursor:default !important;}
+.yct_lable p { font-size:14px; line-height:13px; color:#fafcd4;}

@@ -1,0 +1,131 @@
+﻿@{
+    Layout = null;
+    S5001Web.Controllers.LoginAttribute loginbll = new S5001Web.Controllers.LoginAttribute();
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>上传</title>
+   @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js" type="text/javascript"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
+    <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="alarm_body" style="overflow:hidden;">
+
+          <div title="设备资料" id="tab3" style="padding: 10px">
+            <table cellpadding="" cellspacing="" border="0" class="d_list">
+                <tr>
+                    <td class="d_l_t" style="width: 100px;">
+                        上传资料：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple" />
+                        <div id="fileQueue" class="fileQueue">
+                        </div>
+                        <div id="div_files">
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+<script type="text/javascript">
+
+   var uid = @loginbll.CurrentUser.UserID; 
+   var  pid = @Html.Raw(Request.QueryString["pid"]);
+   var  epid = @Html.Raw(Request.QueryString["epid"]);
+
+    //页面初始化执行函数
+    $(function () {      
+       var explorer = navigator.userAgent;
+       if (navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") != "MSIE6.0" && navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") != "MSIE7.0" && navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") != "MSIE8.0" && navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.split(";")[1].replace(/[ ]/g, "") != "MSIE9.0") {
+          uploadImg('file');   
+       }
+       else if ((explorer.toLowerCase().indexOf("trident") > -1 && explorer.indexOf("rv") > -1)) {
+          uploadImg('file');  
+       }
+       else if (explorer.indexOf("Firefox") >= 0) {
+          upload5('file')
+       }
+   
+    });
+    function uploadImg(cname) {
+        //添加界面的附件管理
+        var fileType = '';
+        if (cname == 'image') {
+            fileType = '*.gif; *.jpg; *.png; *.bmp;';
+        }
+        else if (cname == 'file') {
+            fileType = '*.tif;*.txt;*.doc;*.docx;*.xls;*.zip';
+        }
+        else if (cname == 'video') {
+            fileType = '*.mp4;*.flv;*.rmvb;*.ogg;';
+        }
+        $('#' + cname + "_upload").uploadify({
+            'swf': '/Content/uplaodfy/uploadify.swf',  //FLash文件路径
+            'buttonText': '浏  览',                    //按钮文本
+            'uploader': '/EmergencyRepair/Upload2',          //处理文件上传Action
+            'queueID': cname + 'Queue',                //队列的ID
+            'queueSizeLimit': 10,                      //队列最多可上传文件数量，默认为999
+            'auto': true,                              //选择文件后是否自动上传，默认为true
+            'multi': true,                             //是否为多选，默认为true
+            'removeCompleted': false,                  //是否完成后移除序列，默认为true
+            'fileSizeLimit': '50MB',                   //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
+            'fileTypeDesc': 'Files',             //文件描述
+            'fileTypeExts': fileType,  //上传的文件后缀过滤器   
+            'onUploadStart': function (file) {
+                $("#" + cname + "_upload").uploadify("settings", 'formData', { 'folder': 'Image', 'ctype': cname, "uid": uid, "pid": pid }); //动态传参数         
+            },
+            'onUploadSuccess': function (file, fname, response) {
+                var cancel = $('#' + cname + 'Queue .uploadify-queue-item[id="' + file.id + '"]').find(".cancel a");
+                if (cancel) {
+                    cancel.click(function () {
+                        DeleteFile2(fname, cname, pid);
+
+                    });
+                }
+            }
+        });
+    }
+    var ListObj = 0;
+    function upload5(cname) {
+        //添加界面的附件管理
+        var fileType = '';
+        if (cname == 'image') {
+            fileType = '*.gif; *.jpg; *.png; *.bmp;';
+        }
+        else if (cname == 'file') {
+            fileType = '*.tif;*.txt;*.doc;*.docx;*.xls;*.zip';
+        }
+        else if (cname == 'video') {
+            fileType = '*.mp4;*.flv;*.rmvb;*.ogg;';
+        }
+        $('#' + cname + "_upload").uploadifive({
+            'auto': false,
+            'buttonText': '浏  览',                    //按钮文本
+            'buttonClass': 'uploadifive-button',  
+            'uploadScript': '/EmergencyRepair/Upload2',          //处理文件上传Action
+            'queueID': cname + 'Queue',                //队列的ID
+            'queueSizeLimit': 1,                      //队列最多可上传文件数量，默认为999
+            'auto': true,                              //选择文件后是否自动上传，默认为true
+            'multi': true,                             //是否为多选，默认为true
+            'removeCompleted': false,                  //是否完成后移除序列，默认为true
+            'fileSizeLimit': '50MB',                   //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
+//            'fileType' : 'application/pdf',
+            'formData':{ 'folder': 'Image', 'ctype': cname, "uid": uid, "pid": pid },
+            onCancel:function(file) {
+                DeleteFile2(file.name, cname, pid);
+            }
+        });
+    }
+        function DeleteFile2(fname, cname, pid) {
+            $.post("/EmergencyRepair/DeleteFile2?Rnum=" + Math.random(), { "filename": fname, "ctype": cname ,"pid": pid}, function (data) {
+                //$.messager.alert("提示", data, "info");
+            });
+        }
+</script>
+</body>
+</html>
+

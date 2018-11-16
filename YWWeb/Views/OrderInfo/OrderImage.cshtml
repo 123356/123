@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderImage</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link href="~/Content/css/ImageShow.css" rel="stylesheet" type="text/css" />
+   
+</head>
+<body>
+     <section class="cntr">
+	<div class="m10">
+		<div class="cntr mt20">
+			<ul class="pgwSlideshow" id="imglisasdt">
+			</ul>
+		</div>
+	</div>    
+</section>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var imgurl, id, orderid;
+        var module;
+        imgurl = Request['imgurl'];
+        id = Request['id'];
+        orderid = Request['orderid'];
+        module = Request['module'];
+        if (imgurl != null && id != null && orderid != null) {
+            var imgcontent = "<li><img src='" + imgurl + "' alt=''/></li>";
+            $.ajaxSettings.async = false;  //同步才能获取数据
+            $.post("/OrderInfo/GetOrderInfoImage", { "id": id, "orderid": orderid, "module": module }, function (data) {
+                imgcontent = imgcontent + data;
+            });
+            $("#imglisasdt").html(imgcontent);
+        }
+    </script>
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+</body>
+</html>

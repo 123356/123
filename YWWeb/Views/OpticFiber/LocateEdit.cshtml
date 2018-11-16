@@ -1,0 +1,212 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LocateEadit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                定位点：
+            </td>
+            <td class="d_l_d">
+                <input id="LocateName" runat="server" maxlength="20" missingmessage="定位点名称必填项！"
+                    class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
+                        class="RStar">&nbsp*</b>
+                <input id="LocateID" type="hidden" />
+            </td>
+        </tr>
+@*        <tr>
+            <td class="d_l_t">
+                光纤名称：
+            </td>
+            <td class="d_l_d">
+                <select id="DID"  style="width: 210px; height: 24px;">
+                </select><b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>*@
+            <td class="d_l_t">
+                所属分区：
+            </td>
+            <td class="d_l_d">
+@*                <select id="zoneno"  style="width: 210px; height: 24px;">
+                </select><b class="RStar">&nbsp*</b>*@
+                <select id="SPID"  style="width: 210px; height: 24px;">
+                </select>
+            </td>
+        </tr>
+         <tr>
+            <td class="d_l_t" style="width: 80px;">
+                开始位置：
+            </td>
+            <td class="d_l_d">
+                <input id="LocateStart" runat="server" maxlength="20" missingmessage="开始位置不能为空且值大于1！"
+                    class="easyui-numberbox" style="width: 200px; height: 24px;" data-options="required:true" /><b
+                        class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+         <tr>
+            <td class="d_l_t" style="width: 80px;">
+                结束位置：
+            </td>
+            <td class="d_l_d">
+                <input id="LocateEnd" runat="server" maxlength="20" missingmessage="结束位置不能为空且值小于10000！"
+                    class="easyui-numberbox validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
+                        class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" onclick = "save()" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+<script type ="text/javascript">
+    var id=@Html.Raw(Request.QueryString["id"]);
+    var pid = 0,ddid = 0,tdid = 0,tid = 0,cid = 0,fir = 0,cname = "";
+    var zoo = "";
+    $(function () {
+      if(id != 0)
+      loadPointsInfo();
+      else
+      loadcd(0);
+    });
+    function loadcd(wa){
+      $("#SPID").combotree({
+            url: "/OpticFiber/DevChaZonParams",
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#SPID').combo('showPanel');
+                    $('#SPID').combotree('tree').tree("expand", node.target); //展开
+                    $('#SPID').combotree('setValue',"");
+                    zoo = "";
+                }
+                else {
+                    var splot = node.id.split('_');
+                    zoo = node;
+                }
+            },
+            onLoadSuccess: function (data) {
+                $('#SPID').combotree('tree').tree("collapseAll");
+                var roots = $('#SPID').combotree('tree').tree('getRoots');
+                var child = $('#SPID').combotree('tree').tree('getChildren', roots[0].target);          
+                if(wa != 0){
+                    var splot = wa.split('_');
+                    var dindex,cindex;
+                    for(i = 0;i <roots.length ; i++){
+                        if(splot[0] == roots[i].id)
+                        {
+                        dindex = i;
+                        var ol = splot[0] + "_" + splot[1];
+                        for(j = 0; j <  roots[i].children.length;j++){
+                            if(ol == roots[i].children[j].id)
+                            cindex = j;
+                            }
+                        }
+                    }
+                    $('#SPID').combotree('setValue', wa);
+                    $('#SPID').combotree('tree').tree("expand", roots[dindex].target); 
+                    $('#SPID').combotree('tree').tree("expand", roots[dindex].children[cindex].target); 
+                }
+                else{
+                    $('#SPID').combotree('setValue', child[0].children[0].id);
+                    $('#SPID').combotree('tree').tree("expand", roots[0].target); 
+                    $('#SPID').combotree('tree').tree("expand", roots[0].children[0].target); 
+                    zoo =  roots[0].children[0].children[0];
+                }
+            }
+        });
+      }
+      function save() {
+          if ($("#LocateName").val() == "") {
+              $.messager.alert("提示", "请填写定位点名称！", "info");
+              return false;
+          }
+          else if (zoo == "0" || zoo == "") {
+              $.messager.alert("提示", "请选择光纤分区！", "info");
+              return false;
+          }
+          else if ($("#LocateStart").numberbox('getValue') == "" ) {
+              $.messager.alert("提示", "请填写开始位置！", "info");
+              return false;
+          }
+          else if ($("#LocateStart").numberbox('getValue') < 1 ) {
+              $.messager.alert("提示", "开始位置不能小于1！", "info");
+              return false;
+          }
+          else if ($("#LocateEnd").numberbox('getValue') == "" ) {
+              $.messager.alert("提示", "请填写结束位置！", "info");
+              return false;
+          }
+          else if ($("#LocateEnd").numberbox('getValue') > 10000 ) {
+              $.messager.alert("提示", "结束位置不能大于10000！", "info");
+              return false;
+          }
+          else if ( parseInt($("#LocateStart").numberbox('getValue')) >  parseInt($("#LocateEnd").numberbox('getValue'))) {
+              $.messager.alert("提示", "结束位置不能小于开始位置！", "info");
+              return false;
+          }
+
+          var postData = {
+              tagid:id,
+              tagname: $('#LocateName').val(),
+              pid:zoo.pid,
+              did:zoo.did,
+              devicesinfoid:zoo.devicesinfoid,
+              dname:zoo.dname,
+              channelsinfoid:zoo.channelsinfoid,
+              cname:zoo.cname,
+              zoneno:zoo.zoneno,
+              zonename:zoo.zonename,
+              parentid:zoo.tagid,
+              startPt: $("#LocateStart").numberbox('getValue'),
+              endPt: $("#LocateEnd").numberbox('getValue')
+          };
+          //发送异步请求，添加用户
+          $.post("/OpticFiber/SaveLocate", postData, function (data) {
+              if (data == "OK") {
+                  $.messager.alert("提示", "光纤定位点编辑成功！", "info");
+                  $('#editwin').window('close');
+              }
+              else {
+                  alert(data);
+              }
+          });
+      }
+
+      function loadPointsInfo() {
+              $.post("/OpticFiber/GetLocateInfo", { "LocateID": id }, function (data) {
+                  var row = eval("(" + data + ")");
+                  $("#LocateName").val(row.tagname);
+                  var z = row.devicesinfoid + "_" + row.channelsinfoid + "_" + row.zoneno;
+                  loadcd(z);
+                  $("#LocateStart").numberbox('setValue',row.startPt);
+                  $("#LocateEnd").numberbox('setValue',row.endPt);
+                  zoo = {
+                    "id": z,
+                    "text": row.zonename,
+                    "pid": row.pid,
+                    "tagid":row.tagid,
+                    "tagname": row.tagname,
+                    "did":row.did,
+                    "devicesinfoid": row.devicesinfoid,
+                    "dname": row.dname,
+                    "channelsinfoid": row.channelsinfoid,
+                    "cname": row.cname,
+                    "zoneno": row.zoneno,
+                    "zonename": row.zonename,
+                    "parentid": row.parentid,
+                    "state": "open",
+                    "domId": "_easyui_tree_3",
+                    "target": {}
+                    }
+              });
+     }
+</script>
+</body>
+</html>

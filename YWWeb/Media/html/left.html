@@ -1,0 +1,159 @@
+<div id="left" style="width:400%; height:100%;">	
+    <div class="leftCenter">
+    	<div id="liveleft"></div>
+        
+        <div id="playbackleft" style="padding-left:0px; ">
+            <div id="CalDayID" name=""></div>
+			<!--存储月搜索数-->
+            <input type="text" id="calday" style="display:none;" maxlength="10" readonly="true"/>
+            <div id="calendar" class="calendarDiv">
+                <input type="text" id="next_touch_date" readonly="readonly" />
+            </div>
+            
+            <div style="width:100%; height:3px; background:url(images/sep.gif) repeat-x; margin-top:10px; margin-left:17px; "></div>
+            
+            <font id="recordtype" style="padding-top:12px; padding-left:45px; float:left; color:#FFF; font-size:12px; font-family:Arial, Helvetica, sans-serif">type:</font>
+            <div style="font-size:12px; padding-left:5px; color:#fff; padding-top:10px; float:left">
+                <select id="pbRcType" style="width:100px; background:transparent; border:1px solid #11447d; color:white; ">
+					<option value="0" selected id="all_record">普通录像</option><!--Normal-->
+					<option value="1" id="common_record">告警录像</option><!--Alrma-->
+					<option value="4" id="motion_record">Motion</option><!--Motion-->
+					<option value="3" id="io_record">IO</option><!--IO-->
+					<option selected="selected" value="2" id="warn_record">所有录像</option><!--All-->
+                </select>
+            </div>
+			
+            <div id="play_synch" style="font-size:12px; clear:left; float:left; color:#fff; padding-top:5px; padding-left:30px; width:100%;">
+                <div id="bPbTBCheck" style="color:white; width:24px; height:24px; background:url(images/cbox.png) no-repeat; "></div>
+                <label id="synchroBack" style="float:left; margin-left: 30px; margin-top: -20px; ">同步回放</label>
+			</div>
+            
+            <div style="height:10px; overflow:hidden;"></div>
+            <div id="playBackChannal" style="width:208px; padding-top:1px; font-size:12px; height:190px; overflow:hidden;" >
+            	<div id="playBack_td1" style="float:left; width:100px"></div>
+                <div id="playBack_td2" style="float:left; width:104px;"></div> 
+            </div>
+            <div style="text-align:center; width:190px; margin-left:10px;">
+                <div id="calTip" style="display:none;"></div><!-----存储月搜索提示数据--------->
+                <!--<div class="searchBtn" id="yss"><label style="margin-left:25px;" id="monthsearch">月搜索</label></div> -->
+                <div class="searchBtn" id="rss" style="float:left;margin-left:35px;">
+					<label style="margin-left:25px;" id="daysearch" >Search</label>
+				</div>
+            </div> 
+		</div>
+        <div id="configleft" style="width:226px; ">
+		
+			 <!--<div style="width:100%; height:3px; background:url(images/sep.gif) repeat-x; margin-top:10px; "></div> -->
+			
+        	<div id="configMl" style="width:244px; height:100%; padding-top:0px;">
+                <div style="background:url(images/settings_menu_bg1.png); background-position: 0px 0px; " class="configHead">
+					<div class="configDiv" id="cfgmune_1">display</div>
+				</div>	
+                <div id="cfgpanel_1" class="configpanel" >
+                	<div id="Analog_Ch" class="notselected"  style="display:none;">模拟通道</div>
+                    <div id="IPCan_set" class="notselected"  style="display:block;">IPCan_set</div>
+                    <div id="chn_osd" class="notselected">OSD配置</div>
+                    <div id="Img_Ctrl" class="notselected" style="display:none">图像控制</div>
+                    <div id="chn_sp" class="notselected">视频遮挡</div>
+                    <div id="gotochn_bm" class="notselected" style="display:none;">编码配置</div>
+                </div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -250px 0px;" class="configHead">
+					<div class="configDiv" id="cfgmune_2">Record</div>
+				</div>				
+                <div style="display:none;" id="cfgpanel_2">
+                    <div id="record_pz" class="notselected">录像参数</div>
+                    <div id="record_jh" class="notselected">录像计划</div>
+                    <div id="main_stream_set" class="notselected">主码流</div>
+                    <div id="sub_stream_set" class="notselected">子码流</div>
+                    <div id="mobile_stream_set" class="notselected">手机码流</div>
+                    <div id="chn_bm" style="display:none;" class="notselected">编码配置</div>
+					<div id="streamset_advanced" class="notselected" style="display:none;">码流设置</div>
+                </div>
+				
+				<div style="background:url(images/settings_menu_bg1.png); background-position: -2000px 0px; display:none;" class="configHead" id="leftMenu_Capture">
+					<div class="configDiv" id="cfgmune_8">Capture</div>
+				</div>
+				<div style="display:none;" id="cfgpanel_8">
+					<div id="Capture_Set" class="notselected">抓图设置</div>
+					<div id="Capture_Jh" class="notselected">抓图计划</div>
+				</div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -1500px 0px;" class="configHead">
+					<div class="configDiv" id="cfgmune_3">NetWork</div>
+				</div>	
+                <div style="display:none;" id="cfgpanel_3">
+                    <div id="net_base" class="notselected" >NetWork</div>
+                    <!--副本-->
+                    <div id="sub_stream_set2" class="notselected">子码流</div>
+                    <div id="mobile_stream_set2" class="notselected">手机码流</div>
+        
+                    <div id="router_lan" class="notselected" style="display:none;">Lan</div>
+                    <div id="router_wan" class="notselected" style="display:none;">Wan</div>
+                    <div id="IPC_wifiset" class="notselected" style="display:none;">WifiSet</div>
+                    <div id="chn_subbm" style="display:none;" class="notselected">SubStream</div>
+                    <div id="stream_set" class="notselected" style="display:none;">码流设置</div>
+                    <div id="net_email" class="notselected">Email配置</div>
+                    <div id="email_jh" style="display:none;" class="notselected" >邮件计划</div> 
+                    <div id="net_mobile" class="notselected" style="display:none;">Mobile</div>
+                    <div id="net_ddns" class="notselected">DDNS配置</div>
+                    <div id="plat_set" class="notselected" style="display:none">Platform</div>
+                    <div id="SG_platform" class="notselected" style="display:none">SG Platform</div>
+                    <div id="IP_Filter" class="notselected" style="display:none">IPFilter</div>
+                    <div id="Huawei_Plat" class="notselected">HuaweiPlat</div>
+					<div id="RTSP_Set" class="notselected" style="display:none">RTSPSet</div>
+                    <div id="FTP_Set" class="notselected" style="display:none">FTP</div> 
+                </div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -500px 0px;" class="configHead">
+					<div class="configDiv" id="cfgmune_4">Alarm</div>
+				</div>	
+                <div style="display:none;" id="cfgpanel_4">
+                    <div id="alarm_mv" class="notselected">移动侦测</div>
+                    <div id="alarm_io" class="notselected">I/O报警</div>
+                </div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -1750px 0px;" class="configHead">
+					<div class="configDiv" id="cfgmune_5">Device</div>
+				</div>	
+                <div style="display:none;" id="cfgpanel_5">
+                    <div id="sysinf_hdd" class="notselected">硬盘信息</div>
+                    <div id="chn_yt" class="notselected" style="display:none;">云台配置</div>
+                    <div id="vehicle_mgr" class="notselected" style="display:none">车载功能管理</div>
+                   	<div id="Cloud_Storage" class="notselected" style="display:none">CloudStorage</div>
+                    <div id="NewCloud_Storage" class="notselected" style="display:none">云台存储</div>
+					<div id="NormalClo_Sto" class="notselected" style="display:none">Cloud Storage</div>
+                    <div id="Upload_Photo" style="display:none;" class="notselected" >邮件计划</div> 
+                    <div id="Upload_Video" style="display:none;" class="notselected" >邮件计划</div> 
+                </div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -750px 0px;" class="configHead">
+					<div class="configDiv" id="cfgmune_6">System</div>
+				</div>	
+                <div style="display:none;" id="cfgpanel_6">
+                    <div id="syspm_dst" class="notselected">DST/Time配置</div>
+                    <div id="syspm_user" class="notselected">用户配置</div>
+                    <div id="sysinf_base" class="notselected">基本信息</div>
+                    <div id="Chn_Info" class="notselected" style="display:none;">通道信息</div>
+                    <div id="Rec_Info" class="notselected" style="display:none;">录像信息</div>
+                    <div id="netinf_3G" class="notselected" style="display:none;">3G信息</div>
+                </div>
+				
+                <div style="background:url(images/settings_menu_bg1.png); background-position: -1000px 0px;" class="configHead">
+					<div  class="configDiv" id="cfgmune_7">Advance</div>
+				</div>	
+                <div style="display:none;" id="cfgpanel_7">
+                    <div id="syswh_sj" class="notselected">系统升级</div>
+                    <div id="syswh_mr" class="notselected">默认参数</div>
+                    <div id="alarm_yc" class="notselected">异常告警</div>
+                    <div id="auto_wh"  class="notselected">自动维护</div>
+                    
+                    <div id="auto_upgrade" class="notselected" style="display:none;">Auto Upgrade</div>
+                    <div id="Perimeter_Line" style="display:none;" class="notselected">周界伴线</div>
+                    <div id="Video_Diagnostics" style="display:none;" class="notselected">视频诊断</div>
+                    <div id="GoodsLost_Legacy" style="display:none;" class="notselected">物品丢失遗留</div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

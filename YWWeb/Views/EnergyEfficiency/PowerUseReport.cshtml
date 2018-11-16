@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "用电量报告";
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>用电量报告</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css">
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+        <div style="margin:20px;">
+            站室:
+            <select id="PDRName" style="width: 150px;"></select>
+            <div style="width:100px;display:inline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+             日期:
+            <input id="StartDate" class="easyui-datebox" />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" id="bt_print" onclick="openOrPrint()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+                打印
+            </a>
+        </div>
+        <div style="text-align:center">
+            <div>
+                <div style="display:inline">
+                    室温:
+                </div>
+                <div style="margin-left:40px;display:inline">
+                    白天:
+                </div>
+
+                <div style="display:inline">
+                    __________
+                </div>
+                <div style="display:inline">
+                    ℃
+                </div>
+                <div style="margin-left:40px;display:inline">
+                    夜间:
+                </div>
+                <div style="display:inline">
+                    __________
+                </div>
+                <div style="display:inline">
+                    ℃
+                </div>
+                <div style="margin-left:40px;display:inline">
+                    湿度:
+                </div>
+                <div style="display:inline">
+                    __________
+                </div>
+                <div style="display:inline">
+                    %
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top:10px;" class="row clearfix" id="realtempinfo1">
+
+        </div>
+        <div style="text-align:center">
+            <div style="margin-left:40px;display:inline">
+                白班值班员:
+            </div>
+
+            <div style="display:inline">
+                __________
+            </div>
+            <div style="margin-left:40px;display:inline">
+                夜班值班员:
+            </div>
+
+            <div style="display:inline">
+                __________
+            </div>
+            <div style="margin-left:40px;display:inline">
+                领班:
+            </div>
+
+            <div style="display:inline">
+                __________
+            </div>
+
+            <div style="margin-left:40px;display:inline">
+                运行主管:
+            </div>
+
+            <div style="display:inline">
+                __________
+            </div>
+        </div>
+    <table id="reporttable" border="1">
+        
+    </table>
+        <script src="~/Content/UserJS/AutoRepotIndex._jm.js"></script>
+</body>
+</html>

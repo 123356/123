@@ -1,0 +1,82 @@
+@charset "utf-8";
+/* CSS Document */
+/* 
+   Author:Kevin
+   Date:2016-04-11
+*/
+
+
+/*一次图*/
+.ycmain{
+    position: relative;
+    width: 1440px;
+    height: 750px; 
+	margin:0 auto;
+}
+.ycmain div
+{
+    position: absolute;
+    color: #ffff00;
+}
+.ycmain div i
+{    
+    width: 50px;
+    height: 57px;
+    font-style: normal;position: absolute;
+}
+.alertmenu{list-style-type: none;padding: 0;}
+.alertmenu li{cursor: pointer;float: left;padding: 0;margin: 0 1px 0 0;position:absolute;}
+.alertmenu li dt { z-index:1; }
+.alertmenu li dd {position:absolute;z-index:2;background-color:#7f7f7f; padding:7px; left:50%; margin-left:-280px;display:none; }
+.alertmenu li:hover dd{display:block;}
+.alertmenu dt{margin: 0;height:50px;width:50px;font-size:12px; text-align:center; }
+.alertmenu dt p {padding:0; margin:0; line-height:16px;color:#fff;}
+.alertmenu .p1 {padding-top:0px;}
+.alertmenu .p2 {padding-top:10px;}
+/*小信息窗图标*/
+.alarmico_r { background: url(/Content/yicitu/alarmico_r.png) no-repeat;}
+.alarmico_l { background: url(/Content/yicitu/alarmico.png) no-repeat;}
+
+/*翻页关联*/
+.page_size{ font-family:"Microsoft YaHei UI"; font-size:16px; color:#fafcd4; text-decoration:underline; background:#4d4d4d; padding:7px 8px 8px 8px !important; position:absolute;}
+.page_size:hover { background:#444; text-decoration:none;}
+.normal_bg{ display:inline-block; vertical-align:middle; margin-right:5px;width:15px; height:15px;background:#33cc33;}
+.zhwem_page1{ left:137px; top:681px;}
+.zhwem_page2{ left:262px; top:681px;}
+.zhwem_page3{ left:387px; top:681px;}
+.zhwem_page4{ left:752px; top:681px;}
+.zhwem_page5{ left:881px; top:681px;}
+.zhwem_page6{ left:1010px; top:681px;}
+
+/*民大*/
+/*.md_ycbg {background: url(../yicitu/p6.png) no-repeat;}
+.w77 { left:186px; top:508px;}
+.w78 { left:433px; top:508px;}
+.w79 { left:584px; top:508px;}
+.w74 { left:1338px; top:305px;}
+.w80 { left:717px; top:508px;}
+.w81 { left:897px; top:508px;}
+.w82 { left:618px; top:305px;}
+.w83 { left:749px; top:305px;}
+.w84 { left:890px; top:305px;}
+.w85 { left:1063px; top:305px;}
+.w76 { left:1270px; top:305px;}
+.w97 { left:543px; top:305px;}
+.w96 { left:482px; top:305px;}
+.w73 { left:897px; top:44px;}
+.w72 { left:692px; top:44px;}
+.w70 { left:677px; top:192px;}
+.w71 { left:799px; top:192px;}
+.zhwem_p6{ left:813px; top:245px;}*/
+
+/**/
+.ld_ycbg {background: url(../yicitu/p1.png) no-repeat;}
+.w1 { left:264px; top:143px;}
+.w2 { left:800px; top:308px;}
+.w3 { left:308px; top:52px;}
+.w4 { left:1167px; top:92px;}
+.w5 { left:836px; top:546px;}
+.w6 { left:1255px; top:565px;}
+
+
+

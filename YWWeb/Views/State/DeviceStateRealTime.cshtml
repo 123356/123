@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/bootstrap.min.js"></script>   
+</head>
+<body>
+    <div class="container">        
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <div class="equipment_stanus" id="deviceinfostate"></div>
+                </div>
+            <div class="col-md-6 column">
+                <div  id="realtempinfo1">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div id="userCharts1" style="overflow: auto"></div>
+            </div>            
+        </div>
+    </div>
+
+    <div id="graphwin" minimizable="false" maximizable="false" collapsible="false"  closed = "false" title = "false">
+    </div>
+
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 0, pid = 1;
+        if (Request['did'] != null)
+            did = Request['did'];
+
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        else
+            pid = $.cookie('cookiepid');
+
+        $.post("/PDRInfo/GetDeviceInfo", { "did": did }, function (data) {  //获取测点列表
+            $("#deviceinfostate").html(eval("(" + data + ")"));
+        });
+  
+    var ajaxbg = top.$("#loading_background,#loading");
+    showAlarmInfo();
+    function showAlarmInfo() {
+        ajaxbg.show();
+        $.post("/PDRInfo/getRealTimeDateByDID", { "pid": pid, "DID": did, "CID": 0 }, function (data) {
+            var pointslist = eval("(" + data + ")");
+            ajaxbg.hide();
+            $("#realtempinfo1").html(pointslist);
+        });
+    }
+    var timeTicket;
+    clearInterval(timeTicket);
+    timeTicket = setInterval(function () {
+        //showAlarmInfo();
+    }, 20000);
+    //
+    </script>
+
+
+
+</body>
+</html>

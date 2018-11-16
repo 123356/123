@@ -1,0 +1,251 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>回路管理</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <table id="list_data" title="隐患管理" style="width: auto; height: 780px; width: 100%"
+           idfield="ID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='CName' checkbox="true">
+                </th>
+            </tr>
+        </thead>
+    </table>
+        @*<table id="list_data" idfield="id" pagination="true" data-options="iconCls:'icon-edit',rownumbers:true,toolbar:'#tb',method: 'get'"
+               fitcolumns="true" treefield="text">
+            <thead>
+                <tr>
+                    <th field="CName" width="180">
+                        回路/电表名称
+                    </th>
+                </tr>
+            </thead>
+        </table>*@
+        <div id="tb" class="searchbar">
+            <div class="searchrow">
+                站室名称:
+                <input data-options="lines:true" style="width: 200px;" id="StationName" />
+                <input id="SPID" type="hidden" />
+            </div>
+
+            <div class="searchrow">
+                设备名称:
+                <select id="SDID" style="width: 150px; height: 26px;"></select>
+            </div>
+            <div id="userbutton2"><button title="新 增" onclick="add();" class="page_table_but"><img src="/Content/images/Icon16/add.png">新增回路</button><button title="新 增" onclick="addE();" class="page_table_but"><img src="/Content/images/Icon16/add.png">新增电表</button><button title="编 辑" onclick="edit();" class="page_table_but"><img src="/Content/images/Icon16/edit.png">编 辑</button><button title="删 除" onclick="Delete();" class="page_table_but"><img src="/Content/images/Icon16/delete.png">删 除</button></div>
+        </div>
+        <script type="text/javascript">
+            $("#currPosition", window.top.document).html("当前位置：设置 > 高级配置 > 回路管理");
+            var pid, did, cid, eid;;
+
+            $(function () {
+                //查询站室名称
+                $('#StationName').combotree({
+                    url: '/Home/ComboTreeMenu',
+                    multiple: false,
+                    onBeforeSelect: function (node) {
+                        if (!$(this).tree('isLeaf', node.target)) {
+                            $('#StationName').combotree('tree').tree("expand", node.target); //展开
+                            return false;
+                        }
+                    },
+                    onClick: function (node) {
+                        var pid = $("#StationName").combotree("getValue");
+                        LoadCircuitDataGrid(pid);
+                        //if (!$(this).tree('isLeaf', node.target)) {
+                        //    $('#StationName').combo('showPanel');
+                        //}
+                        //else {
+                        //    //返回树对象
+                        //    if (node.id != 0) {
+                        //        $("#SPID").val(node.id);
+                        //        $.cookie('cookiepid', node.id, { expires: 7, path: '/' });
+                        //        LoadCircuitDataGrid(node.id);
+                        //    }
+                        //}
+                    },
+                    onLoadSuccess: function (data) {
+                        var pid = $("#StationName").combotree("getValue");
+                        LoadCircuitDataGrid(pid);
+                    }
+                });
+                var gpid = $.cookie('cookiepid');
+                if (gpid != undefined || gpid != 6) {
+                    $("#StationName").combotree("setValue", gpid);
+                }               
+            });
+
+           
+            function more(value, row, index) {
+                var IOtype;
+                if (value == 0)
+                    IOtype = "输入";
+                else if (value == 1)
+                    IOtype = "输出";
+                return IOtype;
+            }
+            function add() {
+                //var hi = $('#SDID').combotree('getValue');
+                //if (hi.split('_').length > 1)
+                //    OpenFrame(pid, did, 0, 0, 0);
+                //else
+                //    $.messager.alert("提示", "请选择要增加回路的设备！", "info");
+            }
+            function addE() {
+                var row = $('#list_data').treegrid('getSelected');
+                if (row) {
+                    cid = row.id.split('_')[0];
+                    eid = row.id.split('_')[1];
+                    if (eid > 0) {
+                        $.messager.alert("提示", "请选择要增加电表的回路！", "info");
+                    }
+                    else if (did == 0) {
+                        $.messager.alert("提示", "请选择要增加电表的设备！", "info");
+                    }
+                    else {
+                        OpenFrame(pid, did, cid, 0, 1);
+                    }
+                }
+                else {
+                    $.messager.alert("提示", "请选择要增加电表的回路！", "info");
+                }
+            }
+            function edit() {
+                var row = $('#list_data').treegrid('getSelected');
+                if (row) {
+                    eid = row.id.split('_')[1];
+                    cid = row.id.split('_')[0];
+                    did = row.did;
+                    if (eid > 0) {
+                        OpenFrame(pid, did, cid, eid, 1);
+                    }
+                    else {
+                        OpenFrame(pid, did, cid, eid, 0);
+                    }
+                }
+                else {
+                    $.messager.alert("提示", "请选择要编辑的模块！", "info");
+                }
+            }
+            function Delete() {
+                var row = $('#list_data').treegrid('getSelected');
+                if (row) {
+                    var cid, eid;
+                    eid = row.id.split('_')[1];
+                    cid = row.id.split('_')[0];
+                    if (eid > 0) {
+                        $.messager.confirm('提示', '你确定要删除选中的电表？', function (r) {
+                            if (r) {
+                                $.post("/DeviceManage/DeleteElectricMeterInfo?rumn=" + Math.random(), { "eid": eid }, function (data) {
+                                    if (data == "OK")
+                                        $('#list_data').treegrid('reload');
+                                    else
+                                        alert(data);
+                                })
+                            }
+                        });
+                    }
+                    else if (cid > 0) {
+                        $.messager.confirm('提示', '你确定要删除选中的回路？', function (r) {
+                            if (r) {
+                                $.post("/DeviceManage/DeleteCircuitInfo?rumn=" + Math.random(), { "cid": cid }, function (data) {
+                                    if (data == "OK")
+                                        $('#list_data').treegrid('reload');
+                                    else
+                                        alert(data);
+                                })
+                            }
+                        });
+                    }
+
+                }
+                else {
+                    $.messager.alert("提示", "请选择要删除的模块！", "info");
+                }
+            }
+            //function LoadDataGrid(pid, did) {
+            //    $('#list_data').treegrid({
+            //        url: '/DeviceManage/CircuitData?Rnum=' + Math.random() + "&pid=" + pid + "&did=" + did,
+            //        height: 900
+            //    });
+            //    $('#list_data').treegrid('unselectAll');
+            //}
+            function LoadCircuitDataGrid(pid) {
+                $('#list_data').datagrid({
+                    url: '/DeviceManage/CircuitInfoDetailByPID?rom=',
+                    queryParams: { "PID": pid },
+                    pagination: true,
+                    height: 900
+                });
+                //$('#list_data').datagrid('uncheckAll');
+            }
+            function OpenFrame(pid, did, cid, eid, mode) {
+                var herf;
+                if (mode == 0)
+                    herf = '/DeviceManage/CircuitEdit?pid=' + pid + '&did=' + did + '&cid=' + cid;
+                else
+                    herf = '/DeviceManage/ElectricMeterEdit?pid=' + pid + '&did=' + did + '&cid=' + cid + '&eid=' + eid;
+
+                $('#editwin').window({
+                    modal: true,
+                    draggable: false, //可拖动，默认false
+                    resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false
+                    href: herf,
+                    onClose: function () {
+                        $('#list_data').treegrid('reload');
+                    }
+                });
+                $('#editwin').window('open');
+            }
+            //datagrid宽度高度自动调整的函数
+            $.fn.extend({
+                resizeDataGrid: function (pageHeight, pageWidth, heightMargin, widthMargin, minHeight, minWidth) {
+                    var height = pageHeight - heightMargin;
+                    var width = pageWidth - widthMargin;
+                    height = height < minHeight ? minHeight : height;
+                    width = width < minWidth ? minWidth : width;
+                    $(this).datagrid('resize', {
+                        height: height,
+                        width: width
+                    });
+                }
+            });
+            var pageHeight, pageWidth;
+            if (typeof window.innerHeight != 'undefined') {
+                //针对非IE8及其以下的浏览器
+                pageHeight = window.innerHeight;
+                pageWidth = window.innerWidth;
+                var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;
+                if (!isChrome) {
+                    pageHeight = pageHeight - 10;
+                }
+            }
+            $('#list_data').resizeDataGrid(pageHeight, pageWidth, 15, 20, 0, 0);
+            $(window).resize(function () {
+                var pageHeight, pageWidth;
+                if (typeof window.innerHeight != 'undefined') {
+                    //针对非IE8及其以下的浏览器
+                    pageHeight = window.innerHeight;
+                    pageWidth = window.innerWidth;
+                    var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;
+                    if (!isChrome) {
+                        pageHeight = pageHeight - 10;
+                    }
+                }
+                $('#list_data').resizeDataGrid(pageHeight, pageWidth, 15, 20, 0, 0);
+            });
+        </script>
+        <div id="editwin" title="编辑信息" class="easyui-window" closed="true" style="width: 700px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        </div>
+</body>
+</html>

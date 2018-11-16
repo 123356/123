@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Share/_Layout.cshtml";
+}
+
+@section HeadSpecificStyleSheetIncludes{
+      <link href="/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=bGVaSGrmhUZR7nKvysHpsf1rx6DTSCrV"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+<script src="/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+<script src="/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+
+<script src="~/Content/js/weather.js"></script>
+
+    <style type="text/css">
+   body {
+            position: absolute;
+            /*background-color: #000;*/
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #container {
+            /*height: 100%;
+            width:100%;*/
+            position:absolute;
+            top: 54px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #leftDiv {
+            height: 100%;
+            width: 300px;
+            position: absolute;
+            background: #FFFFFF;
+        }
+        a:hover{
+            text-decoration:none
+        }
+        
+    </style>
+}
+ 
+
+<div id="container" class="tpl-content-wrapper" style="min-height:50%;top:56px;">
+    <div  id  ="dituContent" style="height:100%;"> 
+        
+        <iframe src="UserInfoMap" name="main_frame" id="main_frame" style="width:100%;height:100%;"></iframe>
+
+    </div>
+     <!--报警弹窗-->
+    <div class="alarm_popups_box radius5" id="alarm_popups" >
+        <h3>提示信息
+            <button type="button" class="closeBtn" style="outline:none !important"><img src="~/Content/images/close_btn.png"/></button>
+        </h3>
+        <div class="alarm_popups_content" id="alarm_content">
+        </div>
+
+        <div class="alarm_popups_btn">
+            <form target="main_frame" action="/AlarmManage/Index?pid=0">
+                <a href="" id="alarmDetail" target="main_frame">立即查看</a>
+            </form>
+        </div>
+    </div>
+   
+
+</div>
+
+<script type="text/javascript">
+    $(".closeBtn").click(function () {
+       
+        $("#alarm_popups").fadeOut("slow")
+    })
+    var obj = document.getElementById("alarm_popups")
+    obj.addEventListener("click", function () {
+        $("#alarm_popups").fadeOut()
+    })
+    $(function () {
+       
+    })
+
+    
+
+</script>
+
+
+

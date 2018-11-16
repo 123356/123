@@ -1,0 +1,124 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="record_config" class="logo_title">录像参数</div>
+               <div class="item_R">
+               	   <div id="RECconfigCP" class="logo_link">Copy</div>
+                   <div id="RECconfigRf" class="logo_link">Refresh</div>
+                   <div id="RECconfigDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="RECconfigSave" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table" id="REC_CHN_TABLE">
+                    <div class="table_L" id="rpz_channel_num">通道号</div>
+                    <div class="table_R">
+                        <select  id="RECConfigChid" class="select"></select>
+        			</div>
+                </div>  
+            <!--table 2-free-->
+        		<div class="table">
+                    <div class="table_L" id="record_startup">启用录像</div>
+                    <div class="table_R">
+                    	<select id="ChnCloseOrOpen" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">开启</option>
+                        </select>
+                     </div>
+                </div>
+                
+              	<div class="table">
+                    <div class="table_L" id="record_stream_mode">码流模式</div>
+                    <div class="table_R">
+                    	<select id="RecStreamMode" class="select">
+                            <option value="0">主码流</option>
+                            <option value="1">子码流</option>
+                        </select>
+                     </div>
+                </div>
+         		
+              <!--table 2-->
+                <div class="table" id="rec_pack_table" >
+                    <div class="table_L" id="record_pack_time">录像打包时间</div>
+                    <div class="table_R">
+                    	<select id="RECPackTime" class="select">
+                            <option value="0" >15分钟</option>
+                            <option value="1" >30分钟</option>
+                            <option value="2" >45分钟</option>
+                            <option value="3" >60分钟</option>
+                        </select>
+                     </div>
+                </div>
+                <!--table 3-->
+                <div class="table" style="display:none;">
+                    <div class="table_L" id="record_mode">录像模式</div>
+                    <div class="table_R">
+                        <select id="RECRecordMode" class="select">
+                            <option value="0">定时录像</option>
+                            <option value="1">开机录像</option>
+                        </select>
+        			</div>
+                </div>  
+                <div class="table">
+                    <div class="table_L" id="pre_record_time">预录开关</div>
+                    <div class="table_R">
+                    	<select id="RECPreRecordTime" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">开启</option>
+                        </select>
+                     </div>
+                </div>
+                
+                <!--table 4-->
+               <!-- <div class="table">
+                    <div class="table_box">
+                    <input id="ChnCloseOrOpen" type="checkbox"/>
+               		<font id="record_startup">启用录像</font>
+                    </div>
+                </div>-->
+                 <!--table 5-->
+            
+           <div id = "pzCopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "pzSelectCopy">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">                
+                        <input type="checkbox" id="pzck"/>              
+                        <font id="pzSelectAll"> 全选</font>
+                        <input type="button" value="确定" id="pzOk"/>
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="pz_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="pz_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="pz_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="pz_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="pz_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="pz_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="pz_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="pz_TDNum_4">
+                        </div>
+                   </div>
+            </div>
+       
+    </div>	
+</div>
+<div class="disp"></div>

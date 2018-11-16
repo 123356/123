@@ -1,0 +1,1126 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StationRoom</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="runningstate">
+        <div class="runningstatetitle">
+            <h3 class="column_h3" id="Dn"></h3>
+            <div class="r_urrentloop">
+                <label>
+                    当前回路
+                </label>
+                <select id="CID" style="width: 200px;">
+                </select>
+            </div>
+            <div class="runningstatetitle_wd"  id = "Environment">环境温度：-- ℃&nbsp;&nbsp;环境湿度：-- %</div>
+        </div>
+        <div class="runningstatetop">
+            <div class="r_topleft">
+                <div>
+                    <img id="DeviceImg" src="" /></div>
+            </div>
+            <div class="box demo2">
+                <ul class="tab_menu tab_menu2">
+                    <li class="current" value = "1"  onclick ="Initialize()">温度</li>
+                    <li value = "2" onclick = "GetPoints(2,'')">电流</li>
+                    <li value = "3" onclick = "GetPoints(3,'')">电压</li>
+                </ul>
+                <div class="tab_box">
+                    <span class="r_toprightcontentlarm">
+                        <label>
+                            <input type="checkbox" checked id="AlarmLine" />报警线</label></span>
+                    <div style="height:100%;">
+                        <div class="r_toprightcontent">
+                            <div class="r_toptemperature">
+                                <label>
+                                    <input type="radio" id = "s" name="a" checked onclick="GetPoints(1,'上触头');" value = "上触头"/>上触头</label>
+                                <label>
+                                    <input type="radio" id = "x" name="a" onclick="GetPoints(1,'下触头');" value = "下触头" />下触头</label>
+                                <label>
+                                    <input type="radio" id = "d" name="a" onclick="GetPoints(1,'电缆头');" value = "电缆头"/>电缆头</label>
+                            </div>
+                            <div id="canvas1">
+                                <div class="runningstate_charts1" id="Charts1" style = 'color: White;text-align: center;margin-top:10%;font-size: 40px;'>没有近1小时的数据！
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div style="height:100%;">
+                        <div class="r_toprightcontent">
+                            <div id="canvas2">
+                                <div class="runningstate_charts1" id="Charts2" style = 'color: White;text-align: center;margin-top:10%;font-size: 40px;'>没有近1小时的数据！
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:100%;">
+                        <div class="r_toprightcontent">
+                            <div id="canvas3">
+                                <div class="runningstate_charts1" id="Charts3" style = 'color: White;text-align: center;margin-top:10%;font-size: 40px;'>没有近1小时的数据！
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="r_topright">
+                    <div class="r_topright_wdcontentA" style =" margin:5px 0px; overflow:hidden;">
+                     <div style = "width:33%; float:left;color: #fff;">&nbsp 上触头</div><div style = "width:33%; float:left;color: #fff;">下触头 </div><div style = "width:33%; float:left;color: #fff;">电缆头</div>
+                    </div>
+                <div class="r_topright_wd">
+                    <h3>A相温度（℃）</h3>
+                    <div id = "phase0" class="r_topright_wdcontent">
+
+                    </div>
+                </div>
+                <div class="r_topright_wd">
+                    <h3>B相温度（℃）</h3>
+                    <div id = "phase1" class="r_topright_wdcontent">
+                    </div>
+                </div>
+                <div class="r_topright_wd">
+                    <h3>C相温度（℃）</h3>
+                    <div id = "phase2" class="r_topright_wdcontent">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="runningstatebottom">
+            <div class="r_bottomleft">
+                <div class="r_bottomselect">
+                    <select id= "CoV">
+                        <option value = "0" onclick = "RealTimeData()">电流</option>
+                        <option value = "1" onclick = "RealTimeData()">电压</option>
+                    </select>
+                </div>
+                <div class="r_bottomleftechart" id="userCharts4"></div>
+                <div class="r_bottomleftechart" id="userCharts5"></div>
+                <div class="r_bottomleftechart" id="userCharts6"></div>
+            </div>
+            <div class="r_bottomright">
+                <div class="r_bottomselect">
+                    <select id= "Power">
+                        <option value = "0" onclick = "RealTimeData()">有功功率</option>
+                        <option value = "1" onclick = "RealTimeData()">无功功率</option>
+                    </select>
+                </div>
+                <div class="r_bottomleftechart" id="userCharts7"></div>
+                <div class="r_bottomleftechart" id="userCharts8"></div>
+                <div class="r_bottomleftechart" id="userCharts9"></div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdid" value="7" />
+    <input type="hidden" id="hpid" value="8" />
+</body>
+</html>
+<script type="text/javascript">
+    var lastType, Po;
+    $("#currPosition", window.top.document).html("当前位置：状态 > 实时 > 运行状态");
+    //    var pid = $.cookie('cookiepid');
+    var Request = new Object();
+    Request = GetRequest();
+    var pid = Request['pid'], did = Request['did'], totaltype = 1, datatypeid = 1, datestart, dateend;
+    $("#CID").combobox({
+        url: "/BaseInfo/BindCircuit?showall=0&pid="+ pid + "&did=" + did,
+        valueField: 'CID',
+        textField: 'CName',
+        editable: false,
+        onLoadSuccess: function () { //数据加载完毕事件
+            var data = $('#CID').combobox('getData');
+            if (data.length > 0) {
+                $("#CID").combobox('select', data[0].CID);
+            }
+        }
+    });
+    $(document).ready(function () {
+        srcString = "../content/images/g0" + 8 + ".png";
+        document.getElementById("DeviceImg").src = srcString;
+        var aLine = '1';
+        Initialize();
+    });
+    //曲线图的初始化
+    function Initialize() {
+        GetPoints(1, '上触头');
+        $("input[name=a][value='上触头']").attr("checked",true);
+    }
+    //定义历史曲线变量值
+    var ajaxbg = top.$("#loading_background,#loading");
+    var Json = "", xAxisFormat = [], yAxisFormat = [], LegendData = [], SeriesData = [], Colors = [], graphtype = 6,Index = 1;
+    function GG() {
+        lastType = $(".current").attr("value");
+        if (lastType == 1) {
+            Po = $("input[name=a]:checked").attr("value");
+            GetPoints(lastType, Po);
+        }
+        else {
+            Po = "";
+            GetPoints(lastType, Po);
+        }
+    }
+    function GetPoints(type, Pos) {
+        //请求前先清空
+        Json = [], xAxisFormat = [], yAxisFormat = [], LegendData = [], SeriesData = []
+        $.post("/Graphs/GetGraphsInDev", { "pid": pid, "did": did, "datatypeid": type, "Position": Pos }, function (data) {
+            var dataJson = eval("(" + data + ")");
+            Json = dataJson;
+            Index = type;
+            if (dataJson.xLength > 1) {
+                SetGraphOption();
+            }
+            else {
+                $('#canvas' + type).html("<div id='Charts" + type + "' style = 'color: White;text-align: center;margin-top:10%;font-size: 40px;'>没有近1小时的数据！</div>");
+            }
+        });
+    }
+    function SetGraphOption() {
+        var Xarr = Json.xAxis.split(',');
+        for (i = 0; i < Json.xLength; i++) {
+            var ym = Xarr[i].split(' ')[0].split('/');
+            var hm = Xarr[i].split(' ')[1].split(':');
+            if (hm[0].length == 1 && graphtype == 6)
+                xAxisFormat.push('0' + hm[0] + ':' + hm[1]);
+            else if (hm[0].length == 1 && graphtype != 6)
+                xAxisFormat.push(ym[1] + '-' + ym[2] + ' 0' + hm[0] + ':' + hm[1]);
+            else if (hm[0].length != 1 && graphtype == 6)
+                xAxisFormat.push(hm[0] + ':' + hm[1]);
+            else
+                xAxisFormat.push(ym[1] + '-' + ym[2] + ' ' + hm[0] + ':' + hm[1]);
+        }
+
+        var exDataTypeID = 0, index = 0, yMax = Json.Max[0], yMin = Json.Min[0], aValue = 0, yMax1 = Json.Max[1], yMin1 = Json.Min[1], aValue1 = 0;
+        if (Json.AlarmValue.length > 1) {
+            aValue = Json.AlarmValue[0];
+            aValue1 = Json.AlarmValue[1];
+        }
+        else
+            aValue = Json.AlarmValue[0];
+        if ($("#AlarmLine").attr("checked") == 'checked' && aValue > yMax && aValue < 2000) {
+            yMax = aValue;
+        }
+        if ($("#AlarmLine").attr("checked") == 'checked' && aValue < yMin && aValue > -2000) {
+            yMin = aValue;
+        }
+        if ($("#AlarmLine").attr("checked") == 'checked' && aValue1 > yMax1 && aValue1 < 2000) {
+            yMax1 = aValue1;
+        }
+        if ($("#AlarmLine").attr("checked") == 'checked' && aValue1 < yMin1 && aValue1 > -2000) {
+            yMin1 = aValue1;
+        }
+
+        for (j = 0; j < Json.Count; j++) {
+            if (Json.Graph[j].DataTypeID != exDataTypeID && index == 0) {
+                yAxisFormat.push({
+                    name: Json.Graph[j].Position + '(' + Json.Graph[j].单位 + ')',
+                    type: 'value',
+                    index: index,
+                    axisLabel: {
+                        formatter: function (v) { return parseInt(v) },
+                        textStyle: { color: '#fff' }
+                    },
+                    splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed'} },
+                    axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+                    max: yMax * 1.1,
+                    min: yMin * 0.9
+                });
+                exDataTypeID = Json.Graph[j].DataTypeID;
+                index++;
+            }
+            else if (Json.Graph[j].DataTypeID != exDataTypeID && index == 1) {
+                yAxisFormat.push({
+                    name: Json.Graph[j].Position + '(' + Json.Graph[j].单位 + ')',
+                    type: 'value',
+                    index: index,
+                    axisLabel: {
+                        formatter: function (v) { return parseInt(v) },
+                        textStyle: { color: '#fff' }
+                    },
+                    splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed'} },
+                    axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+                    max: yMax1 * 1.1,
+                    min: yMin1 * 0.9
+                });
+                exDataTypeID = Json.Graph[j].DataTypeID;
+                index++;
+            }
+
+            SeriesData.push({
+                name: Json.Graph[j].设备点名,
+                type: 'line',
+                smooth: true,
+                yAxisIndex: index - 1,
+                symbolSize: 2,
+                data: eval("[" + Json.Graph[j].置1说明 + "]"),
+                markPoint: {
+                    data: [{ type: 'max', name: '最大值' },
+                                 { type: 'min', name: '最小值'}]
+                }
+            });
+            LegendData.push(Json.Graph[j].设备点名);
+        }
+        //曲线着色
+        Colors = ["#cd5c5c", "#ffa500", "#40e0d0", "#ee90ff", "#ff6347", "#7b68ee", "#7b68ee", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+        Colors[Json.Count] = "rgb(255,0,0)";
+        ajaxbg.hide();
+        BuildGraphVeiw();
+    }
+    function BuildGraphVeiw() {
+        var currSeriesData = "";
+        var AlarmLine = [];
+        currSeriesData = SeriesData;
+        //报警线
+        if ($("#AlarmLine").attr("checked") == 'checked') {
+            for (a = 0; a < Json.xLength; a++)
+                AlarmLine.push(Json.AlarmValue);
+            currSeriesData.push({
+                name: "报警值",
+                type: "line",
+                yAxisIndex: 0,
+                lineStyle: { normal: { color: 'rgb(255, 0, 0)'} },
+                data: eval("[" + AlarmLine + "]"),
+                symbol: "emptyCircle",
+                smooth: true
+            });
+        }
+        $('#canvas' + Index).html("<div id='Charts" + Index + "' style='height: 350px;top:40px; z-index: 1; padding: 5px; background-color: #333 !important;'>");
+        var option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: LegendData,
+                textStyle: { color: '#fff' }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLabel: { textStyle: { color: '#fff'} },
+                    splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed'} },
+                    axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+                    data: xAxisFormat
+                }],
+            yAxis: yAxisFormat,
+            color: Colors,
+            series: currSeriesData
+        };
+        // 为echarts对象加载数据 
+        if (Index == 1) {
+            var myHisChart = echarts.init(document.getElementById("Charts1"));
+            myHisChart.setOption(option);
+            myHisChart.on('datazoom', CheckZoom);
+        }
+        if (Index == 2) {
+            var myHisChart2 = echarts.init(document.getElementById("Charts2"));
+            myHisChart2.setOption(option);
+            myHisChart.on('datazoom', CheckZoom);
+        }
+        if (Index == 3) {
+            var myHisChart3 = echarts.init(document.getElementById("Charts3"));
+            myHisChart3.setOption(option);
+            myHisChart.on('datazoom', CheckZoom);
+        }
+        function CheckZoom(param) {
+            var s = param.batch[0].startValue;
+            var e = param.batch[0].endValue;
+            var axis = Json.Graph[0].置0说明.split(',');
+            var graphtype = $("input[name='GraphType']:checked").val();
+            startdate = axis[s].split(' ')[0].split('/');
+            enddate = axis[e].split(' ')[0].split('/');
+            datestart = startdate[0] + '-' + startdate[1] + '-' + startdate[2];
+            dateend = enddate[0] + '-' + enddate[1] + '-' + enddate[2];
+
+            var aDate, oDate1, oDate2, iDays
+            aDate = datestart.split("-");
+            oDate1 = new Date(datestart);     //转换为12-18-2002格式
+            aDate = dateend.split("-");
+            oDate2 = new Date(dateend);
+            iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+
+            if (iDays < 8 && IsZoom == 0 && (graphtype == 144 || graphtype == 707)) {
+                $('#GraphTypezdy').attr('checked', 'checked');
+                getPoinType = 0;
+
+                unlock();
+                $('#time').removeClass('curve_switchactive');
+                $('#one').addClass('curve_switchactive');
+                $('#EndDate').datebox('setValue', dateend);
+                $('#StartDate').datebox('setValue', datestart);
+                GetGraphData()
+                IsZoom = 1;
+                getPoinType = 1;
+            }
+        }
+    }
+
+    $('.curve_switch a').bind('click', function () {
+        $('.curve_switch a').removeClass('curve_switchactive');
+        $(this).addClass('curve_switchactive');
+    });
+    var aLine = '1';
+    $("#AlarmLine").change(function () {
+        if ($(this).attr("checked") == 'checked') {
+            aLine = '1';
+        } else {
+            //当前为不选中状态
+            aLine = '';
+        }
+        GG();
+    });
+    loadDeviceInfo();
+    function loadDeviceInfo() {
+        $.post("/DeviceManage/DeviceDetail", { "did": did }, function (data) {
+            var info = eval("(" + data + ")");
+            $("#Dn").html(info.DeviceName);
+        });
+    }
+
+    var myChart4 = echarts.init(document.getElementById('userCharts4'));
+    var myChart5 = echarts.init(document.getElementById('userCharts5'));
+    var myChart6 = echarts.init(document.getElementById('userCharts6'));
+    var myChart7 = echarts.init(document.getElementById('userCharts7'));
+    var myChart8 = echarts.init(document.getElementById('userCharts8'));
+    var myChart9 = echarts.init(document.getElementById('userCharts9'));
+    var unit = "A", unit1 = "kW", ChartTypeL = "Current", ChartTypeR = "ActivePower", ChartNameL = "电流";
+    RealTimeData();
+    /*实时刷新*/
+    var timeTicket;
+    clearInterval(timeTicket);
+    timeTicket = setInterval(function () {
+        RealTimeData();
+    }, 10000);
+    function RealTimeData() {
+        $.post("/Graphs/DeviceStates", { "pid": pid, "did": did, "datatypeid": "1,2,3,45,47" }, function (data) {
+            var DataJson = eval("(" + data + ")");
+            var wd = "--", sd = "--"
+            if (DataJson.Temperature[0] > 0) {
+                wd = DataJson.Temperature[0];
+            }
+            if (DataJson.Humidity[0] > 0) {
+                sd = DataJson.Humidity[0];
+            }
+            $('#Environment').html("环境温度：" + wd + "℃&nbsp;&nbsp;环境湿度：" + sd + "%");
+            //实时值，工程下限，工程上限
+            var count = 0; Astate = 1;
+            for (k = 0; k < 3; k++) {
+                var Dom = "";
+                var val1 = "--", val2 = "--", val3 = "--";
+                if (DataJson.Position0[k][0] > 0)
+                    val1 = DataJson.Position0[k][0];
+                if (DataJson.Position1[k][0] > 0)
+                    val2 = DataJson.Position1[k][0];
+                if (DataJson.Position2[k][0] > 0)
+                    val3 = DataJson.Position2[k][0];
+
+                Dom += "<div><span><i class='r_wd" + DataJson.Position0[k][4] + "' style='height:" + parseInt(DataJson.Position0[k][0]) + "%'></i></span><label>" + val1 + "</label></div>";
+                Dom += "<div><span><i class='r_wd" + DataJson.Position1[k][4] + "' style='height:" + parseInt(DataJson.Position1[k][0]) + "%'></i></span><label>" + val2 + "</label></div>";
+                Dom += "<div><span><i class='r_wd" + DataJson.Position2[k][4] + "' style='height:" + parseInt(DataJson.Position2[k][0]) + "%'></i></span><label>" + val3 + "</label></div>";
+                $('#phase' + k).html(Dom);
+            }
+            count = 3;
+            if ($("#CoV").val() == 0) {
+                ChartTypeL = "Current";
+                ChartNameL = "电流";
+                unit = "A";
+            }
+            else if ($("#CoV").val() == 1) {
+                ChartTypeL = "Voltage";
+                ChartNameL = "电压";
+                unit = "V"
+            }
+
+            if ($("#Power").val() == 0) {
+                ChartTypeR = "ActivePower";
+            }
+            else if ($("#Power").val() == 1) {
+                ChartTypeR = "ReactivePower";
+            }
+
+            for (i = 0; i < 3; i++) {
+                count++;
+                eval("val" + count + "=DataJson." + ChartTypeL + "[" + i + "][0]");
+                eval("Maxval" + count + "=DataJson." + ChartTypeL + "[" + i + "][2]");
+                eval("Alarval" + count + "=DataJson." + ChartTypeL + "[" + i + "][3]");
+            }
+            for (i = 0; i < 3; i++) {
+                count++;
+                eval("val" + count + "=DataJson." + ChartTypeR + "[" + i + "][0]");
+                eval("Maxval" + count + "=DataJson." + ChartTypeR + "[" + i + "][2]");
+                eval("Alarval" + count + "=DataJson." + ChartTypeR + "[" + i + "][3]");
+            }
+            var option4 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "A相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val4,
+                    name: unit
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval4, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    // fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval4,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "A相" + ChartNameL,
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart4.setOption(option4);
+            var option5 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "B相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val5,
+                    name: unit
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval5, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    //fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval5,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "B相" + ChartNameL,
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart5.setOption(option5);
+            var option6 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "C相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val6,
+                    name: unit
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval6, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    //fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval6,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "C相" + ChartNameL,
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart6.setOption(option6);
+            var option7 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit1
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "A相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit1,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val7,
+                    name: "kW"
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval7, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    //fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval7,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "A相功率",
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart7.setOption(option7);
+            var option8 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit1
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "B相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit1,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val8,
+                    name: "kW"
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval8, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    //fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval8,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "B相功率",
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart8.setOption(option8);
+            var option9 = {
+                tooltip: {
+                    formatter: "{a} : {c}" + unit1
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                series: [
+        {
+            name: "C相",
+            type: "gauge",
+            detail: {
+                show: true,
+                textStyle: {
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    fontWeight: "bold"
+                },
+                offsetCenter: [0, 67],
+                formatter: "{value} " + unit1,
+                width: 60,
+                height: 30,
+                backgroundColor: "rgb(0, 0, 0)"
+            },
+            data: [
+                {
+                    value: val9,
+                    name: "kW"
+                }
+            ],
+            splitNumber: 10,
+            axisLine: {
+                lineStyle: {
+                    color: [[Alarval9, "rgb(0, 191, 0)"], [1, "rgb(255, 0, 0)"]],
+                    width: 3
+                },
+                show: true
+            },
+            center: ["50%", "38%"],
+            title: {
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    fontStyle: "normal",
+                    color: "#fff"
+                },
+                show: false,
+                offsetCenter: [0, 43]
+            },
+            axisLabel: {
+                show: true,
+                formatter: "{value}",
+                textStyle: {
+                    //fontWeight: "bold",
+                    fontSize: 14,
+                    fontStyle: "normal"
+                }
+            },
+            axisTick: {
+                show: true,
+                length: 5,
+                lineStyle: {
+                    type: "solid"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    width: 2
+                },
+                length: 10
+            },
+            pointer: {
+                length: "65%",
+                width: 8
+            },
+            min: 0,
+            max: Maxval9,
+            radius: "75%",
+            startAngle: 225,
+            endAngle: -45
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                title: {
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontWeight: "normal",
+                        fontSize: 16
+                    },
+                    text: "C相功率",
+                    left: "center",
+                    y: "185",
+                    padding: 40
+                }
+            };
+            myChart9.setOption(option9);
+        });
+    }
+</script>

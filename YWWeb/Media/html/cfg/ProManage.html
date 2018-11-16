@@ -1,0 +1,84 @@
+<!--管理协议界面-->
+<div class="config_content">
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="proManage" class="logo_title">协议管理</div>
+               <div class="item_R">             
+                   <div id="ProMRf" class="logo_link">Refresh</div>
+                   <div id="ProMSV" class="logo_link">Save</div>
+                   <div id="ProMEx" class="logo_link">Exit</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="prom_select">自定义协议</div>
+                    <div class="table_R">
+                        <select  id="promanagent_select" class="select" style="width:295px"></select>
+                    </div>
+                </div>
+               <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="prom_name">协议名称</div>
+                    <div class="table_R">
+                        <input  id="promanagent_name" class="select" style="width:295px" maxlength="15"></input>
+                    </div>
+                </div>
+                <!--table 3-->
+                <div class="table">
+                    <div class="table_L" id="prom_Streamtype">码流类型</div>
+                    <div class="table_R">             
+                    <div class="table_R_L"><div id="mainStream" style="margin-left:53px">主码流</div></div>
+                    <div class="table_R_R"><div style="float:left;"><div id="subStream" style="float:left; margin-left:15px;">子码流</div>
+                    <input id="subStreamVS" style=" float: left; margin-top: 6px; margin-left: 15px;"type="checkbox" /></div></div>
+                     </div>
+                </div>
+                <!--table 4-->
+                <div class="table">
+                    <div class="table_L" id="prom_type">类型</div>
+                    <div class="table_R">             
+                    <div class="table_R_L" id="prom_type0"> <select  id="prom_type0_select" class="select" style="width:130px">
+                    </select></div>
+                    <div class="table_R_R" id="prom_type1"> <select  id="prom_type1_select" class="selectPC" style="width:130px"/>
+                    </select></div>
+                    </div>
+                </div>
+                <!--table 5-->                
+                <div class="table"  style="display:none;">
+                    <div class="table_L" id="prom_pro">传输协议</div>
+                    <div class="table_R">             
+                    <div class="table_R_L" id="prom_pro0"> <select  id="prom_pro0_select" class="select" style="width:130px">
+                    </select></div>
+                    <div class="table_R_R" id="prom_pro1"> <select  id="prom_pro1_select" class="selectPC" style="width:130px"/>
+                    </select></div>
+                    </div>
+                </div>
+                <!--table 6-->
+                <div class="table">
+                    <div class="table_L" id="prom_port">端口</div>
+                    <div class="table_R">             
+                    <div class="table_R_L"> <input  id="prom_port0" class="select" style="width:130px" maxlength="5" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)};" onblur="if(this.value == '') this.value='9000'"/></div>
+                    <div class="table_R_R"> <input  id="prom_port1" class="selectPC" style="width:130px" maxlength="5" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)};" onblur="if(this.value == '') this.value='9000'"/></div>
+                    </div>
+                </div>
+                 <!--table 7-->
+                <div class="table">
+                    <div class="table_L" id="prom_root">资源路径</div>
+                    <div class="table_R">             
+                    <div class="table_R_L"> <input  id="prom_root0" class="select" style="width:130px" maxlength="119"/></div>
+                    <div class="table_R_R"><input  id="prom_root1" class="selectPC" style="width:130px" maxlength="119"/></div>
+                    </div>
+                </div>
+    <!--table end-->
+</div>
+<div class="config_content"><div class="tablePC" id="example">示例：</br>[类型]://[IP地址]:[端口]/[资源路径]</br>rtsp://192.168.0.1:554/ch1/resourcePath
+</div></div>
+<div class="disp"></div>
+<div id="isfix"></div>
+

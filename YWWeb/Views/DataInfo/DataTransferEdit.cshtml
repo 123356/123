@@ -1,0 +1,200 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DataTransferEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                GUID：
+            </td>
+            <td class="d_l_d">
+                <input id="SysCode" runat="server" name="SysCode" missingmessage="GUID必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <input id="ID" type="hidden" />
+            </td>
+            <td class="d_l_t">
+                名称：
+            </td>
+            <td class="d_l_d">
+                <input id="SysName" runat="server" name="SysName" missingmessage="名称必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                点限制：
+            </td>
+            <td class="d_l_d">
+                <input id="pointLimit" runat="server" name="pointLimit" missingmessage="点限制必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+            </td>
+            <td class="d_l_t">
+                时间限制：
+            </td>
+            <td class="d_l_d">
+                <input id="timeLimit" runat="server" name="pointLimit" missingmessage="时间限制必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                @* <input id="timeLimit" name="timeLimit" class="easyui-datebox" style="width: 208px;" />*@
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                IP地址：
+            </td>
+            <td class="d_l_d">
+                <input id="CenterIP" runat="server" name="CenterIP" missingmessage="IP地址必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+            <td class="d_l_t">
+                端口：
+            </td>
+            <td class="d_l_d">
+                <input id="CenterPort" runat="server" name="CenterPort" missingmessage="端口必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                用户名：
+            </td>
+            <td class="d_l_d">
+                <input id="UserName" runat="server" name="UserName" missingmessage="用户名必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+            <td class="d_l_t">
+                密码：
+            </td>
+            <td class="d_l_d">
+                <input id="Pwd" runat="server" name="Pwd" missingmessage="必填" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                数据类型：
+            </td>
+            <td class="d_l_d">
+                <input id="DBType" runat="server" name="DBType" missingmessage="数据类型必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+            <td class="d_l_t">
+                数据库名：
+            </td>
+            <td class="d_l_d">
+                <input id="DBName" runat="server" name="DBName" missingmessage="数据库名必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                连接字符：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <input id="ConnectString" runat="server" name="ConnectString" missingmessage="连接字符必填项！"
+                    class="easyui-validatebox" style="width: 540px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                备注：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="Remarks" class="easyui-validatebox" style="height: 100px; width: 300px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        function loadDataTransferInfo() {
+            var  id=@Html.Raw(Request.QueryString["id"]);    
+            $.post("/DataInfo/LoadDataTransferInfo", {"id":id}, function (data) {
+                var data=eval("("+data+")");
+                  $("#SysCode").val(data.SysCode);
+                  $("#SysName").val(data.SysName);
+                  $("#pointLimit").val(data.pointLimit);
+                  $("#timeLimit").val(data.timeLimit);
+                  $("#ID").val(data.ID);
+                   
+                  $("#CenterIP").val(data.CenterIP);
+                  $("#CenterPort").val(data.CenterPort);
+                  $("#UserName").val(data.UserName);
+                  $("#Pwd").val(data.Pwd);
+                  $("#DBType").val(data.DBType);
+                   
+                  $("#DBName").val(data.DBName);
+                  $("#ConnectString").val(data.ConnectString);
+                  $("#Remarks").val(data.Remarks);
+                                 
+          })
+        }
+        
+        $(function () {
+            loadDataTransferInfo();
+            $("#btnSave").click(function () {
+               
+                 if($("#SysCode").val()=="")
+                {
+                    $.messager.alert("提示", "请输入GUID！", "info");
+                    return false;
+                }
+                else if($("#SysName").val()=="")
+                {
+                    $.messager.alert("提示", "请输入名称！", "info");
+                    return false;
+                }
+                else if($("#pointLimit").val()=="")
+                {
+                    $.messager.alert("提示", "请输入请点限制！", "info");
+                    return false;
+                }
+//                else if($('#timeLimit').datebox('getValue')=="")
+//                {
+//                    $.messager.alert("提示", "请输入时间限制！", "info");
+//                    return false;
+//                }
+                 
+                var postData = {                
+                    SysCode: $("#SysCode").val(),
+                    SysName: $("#SysName").val(),
+                    pointLimit: $("#pointLimit").val(),
+                    timeLimit: $("#timeLimit").val(),
+                    ID: $("#ID").val(),
+
+                    CenterIP: $("#CenterIP").val(),
+                    CenterPort: $("#CenterPort").val(),
+                    UserName: $("#UserName").val(),
+                    Pwd: $("#Pwd").val(),
+                    DBType: $("#DBType").val(),
+
+                    DBName: $("#DBName").val(),
+                    ConnectString: $("#ConnectString").val(),
+                    Remarks: $("#Remarks").val()
+
+                                
+                };
+
+                //发送异步请求，添加用户
+                $.post("/DataInfo/SaveDataTransferInfo", postData, function (data) {
+                    if (data == "OK") {
+                        $.messager.alert("提示", "编辑成功！", "info");
+                        $('#editwin').window('close');
+                    }
+                    else {
+                        alert(data);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

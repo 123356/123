@@ -1,0 +1,228 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>暂态曲线</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="~/jquery-easyui-1.4.5/themes/black/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-easyui-1.4.5/themes/icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.lazyload.js"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js"></script>
+    <link href="~/Content/css/LBYWBase.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/respond.src.js"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/zrender/esl.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="curve_table" style="padding: 8px 0px 5px 40px;">
+        @*光纤设备：
+        <select id="devicesinfoid" style="width: 150px; height: 26px;">
+        </select>
+        光纤通道：
+        <select id="channelsinfoid" style="width: 150px; height: 26px;">
+        </select>*@ 时间：
+        <input id="rectime" class="easyui-datetimebox" style="width: 200px; height: 26px;" />
+        <input id="channelsinfoid" type="hidden" />
+        <button class="page_table_but" style="margin: 0px" data-options="iconCls:'icon-ok'"
+            id="btnHour" onclick="showGraphs()">
+            <img src="/Content/images/Icon16/refresh.png" />确定
+        </button>
+    </div>
+    <div id="canvas" style="width: 75%; margin: 0 auto; padding-top: 30px;">
+        <div id="userCharts" class="energy_top_righttb" style="width: 100%; height: 600px;
+            padding: 0px;">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 1, pid = 1;
+        if (Request['did'] != null)
+            did = Request['did'];
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+
+        var pointscount = 0,startpoint=0, pointstemp = [];
+        $(function () {
+            var curr_time = new Date();
+            var strDate = curr_time.getFullYear() + "-";
+            strDate += curr_time.getMonth() + 1 + "-";
+            strDate += curr_time.getDate() + " ";
+            strDate += curr_time.getHours() + ":";
+            strDate += curr_time.getMinutes() + ":";
+            strDate += curr_time.getSeconds();
+            $("#rectime").datetimebox("setValue", strDate);
+
+            //            $("#devicesinfoid").combobox({
+            //                url: "/OpticFiber/GetDevicesinfo",
+            //                valueField: 'id',
+            //                textField: 'text',
+            //                editable: false,
+            //                onLoadSuccess: function () { //数据加载完毕事件
+            //                    var data = $('#devicesinfoid').combobox('getData');
+            //                    if (data.length > 0) {
+            //                        $("#devicesinfoid").combobox('select', data[0].id);
+            //                        loadChannelinfo(data[0].id);
+            //                    }
+            //                },
+            //                onSelect: function (data) {
+            //                    loadChannelinfo(data.id);
+            //                }
+            //            });
+
+            showGraphs();
+        });
+
+        //        function loadChannelinfo(pid) {
+        //            $("#channelsinfoid").combobox({
+        //                url: "/OpticFiber/Getchannelsinfo?pid=" + pid,
+        //                valueField: 'id',
+        //                textField: 'text',
+        //                editable: false,
+        //                onLoadSuccess: function () { //数据加载完毕事件                   
+        //                    var data = $('#channelsinfoid').combobox('getData');
+        //                    if (data.length > 0) {
+        //                        $("#channelsinfoid").combobox('select', data[0].id);
+        //                        showGraphs();
+        //                    }
+        //                }
+        //            });
+        //        }
+
+        function showGraphs() {
+            pointstemp = [];
+            $.post("/OpticFiber/GetChannelsInfoID", { "did": did }, function (data) {
+                var channelsinfoid = data;
+                var rectime = $("#rectime").datetimebox("getValue");
+                $.ajaxSettings.async = true;  //同步才能获取数据
+                $.post("/OpticFiber/Getrtmdatatemp", { "did": channelsinfoid, "rectime": rectime }, function (data) {
+                    var arrtemp = data.split('|');
+                    startpoint = arrtemp[0];
+                    pointscount = arrtemp[1];
+                    var arrpointstemp = arrtemp[2].split(',');
+                    for (var count = startpoint; count < arrpointstemp.length; count++) {
+                        pointstemp.push(arrpointstemp[count]);
+                    }
+                    loadgraph();
+                });
+            });
+        }
+        function loadgraph() {
+            var myChart = echarts.init(document.getElementById('userCharts')); 
+            var option = {
+                title: {
+                    top: 10,
+                    left: 10,
+                    text: '温度 ℃',
+                    textStyle: { color: '#fff' }
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    axisLabel: { textStyle: { color: '#fff'} },
+                    data: (function () {
+                        var res = [];
+                        for (var len = 0; len < pointscount; len++) {
+                            res.push(len);
+                        }
+                        return res;
+                    })()
+                },
+                yAxis: {
+                    axisLabel: { textStyle: { color: '#fff'} },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                grid: { y: 60, y2: 70, x: 50, x2: 150 },
+                toolbox: {
+                    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+                    top: 10,
+                    right: 150,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        restore: {}
+                        //saveAsImage: {}
+                    }
+
+                },
+                dataZoom: [{
+                    textStyle: {
+                        color: '#28c6de',
+                        align: 'left'
+                    },
+                    startValue: '999'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 65,
+                        color: '#82c421'
+                    }, {
+                        gt: 65,
+                        lte: 75,
+                        color: 'yellow'
+                    }, {
+                        gt: 75,
+                        lte: 85,
+                        color: '#ed9700'
+                    }, {
+                        gt: 85,
+                        color: '#b00000'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: '温度 ℃',
+                    type: 'line',
+                    data: pointstemp
+                    //                    markLine: {
+                    //                        silent: true,
+                    //                        data: [{
+                    //                            yAxis: 50
+                    //                        }, {
+                    //                            yAxis: 100
+                    //                        }, {
+                    //                            yAxis: 150
+                    //                        }, {
+                    //                            yAxis: 200
+                    //                        }, {
+                    //                            yAxis: 300
+                    //                        }]
+                    //                    }
+                }
+            };
+            myChart.setOption(option);
+        }       
+    </script>
+</body>
+</html>

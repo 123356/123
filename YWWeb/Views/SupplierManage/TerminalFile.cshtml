@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TerminalFile(终端档案)</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+        });
+    });
+    </script>
+
+</head>
+<body>
+
+    <div class="container-fluid" style="padding-top:2%">
+        <div class="clearfix">
+
+          <div class="tabbable" id="tabs-934315" style="margin-top:30px; width:60%;padding-left:60px;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#panel-197846" data-toggle="tab">TCP/IP转换器</a>
+                        </li>
+                        <li>
+                            <a href="#panel-10531" data-toggle="tab">GPRS传输终端</a>
+                        </li>
+                        <li>
+                            <a href="#panel-10532" data-toggle="tab">水表集中器</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panel-197846">
+
+
+                           <div>
+                               <table class="table">
+                                   <tr>
+                                       <td style="vertical-align: middle;text-align:center;">
+                                           IP地址：
+                                       </td>
+                                       <td>
+                                           <input type="text" class="form-control" placeholder="192.168.1.11">
+                                       </td>
+                                       <td rowspan="2" style="vertical-align: middle;text-align:center;">
+                                           <button type="button" class="btn btn-default">保存</button><button type="button" class="btn btn-default" style="margin-left:22px;">删除</button>
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td style="vertical-align: middle;text-align:center;">
+                                           安装位置：
+                                       </td>
+                                       <td>
+                                           <input type="text" class="form-control" placeholder="A区4号楼">
+                                       </td>
+                                   </tr>
+                               </table>
+                           </div>
+
+                            <table class="table table-bordered" style="padding-top:12px;">
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        IP地址：
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        安装位置：
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        192.168.1.11
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        A区1号楼
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        192.168.2.22
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        A区2号楼
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        192.168.3.33
+                                    </td>
+                                    <td style="vertical-align: middle;text-align:center;">
+                                        A区3号楼
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="tab-pane" id="panel-10531">
+                            <p>
+                                Howdy, I'm in Section 2.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

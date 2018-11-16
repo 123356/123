@@ -1,0 +1,409 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //达到条件显示滚动条
+            //var scrollHeight = document.body.scrollHeight; //获取内容高度
+            var archives_manage = $(".archives_manage").height() - $(".scroll_bar thead").height() - $(".searchbar").height() - 10; //获取div高度并减去表头高度
+            var tabheight = $(".scroll_bar tbody").height(); //获取表格主体高度
+            if (tabheight > archives_manage) {//如果页面内容高度大于div高度
+                $(".scroll_bar thead tr").append("<th></th>"); //在表头最后增加一个th
+                $(".scroll_bar tbody").css({ "overflow-y": "auto" }).height(archives_manage); //让表格主体高度等于div的高度并出现垂直滚动条
+                var scrollbarWidth = $('.scroll_bar tbody')[0].offsetWidth - $('.scroll_bar tbody')[0].scrollWidth; //获取垂直滚动条的宽度
+                $(".scroll_bar thead tr th:last-child").width(scrollbarWidth - 1); //让表头最后一个th的宽度等于滚动条的宽度
+            }
+        });
+</script>
+</head>
+<body style="overflow:hidden;">
+        <div class="archives_manage tabbg3">
+            <div id="Histb" class="searchbar">
+                <div class="searchrow">
+                    站点名称:
+                    <select id="SPID" class="easyui-combobox" style="width: 150px; height: 26px;">
+                        <option>天保生活区B08站</option>
+                    </select>
+                </div>
+                <div class="searchbutton">
+                    <button title="查 询" onclick="" class="page_table_but">
+                        <img src="/Content/images/Icon16/zoom.png" />查 询</button>
+                    <button title="上 传" onclick="" class="page_table_but">
+                    <img src="/Content/images/Icon16/upload.png" />上 传</button>
+                </div>
+             </div>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="page_table_list scroll_bar">
+                    <thead>
+                        <tr>
+                            <th height="35" scope="col" width="5%">
+                                序号
+                            </th>
+                            <th scope="col">
+                                文档名称
+                            </th>
+                            <th scope="col">
+                                文档类型
+                            </th>
+                            <th scope="col">
+                                文档大小
+                            </th>
+                            <th scope="col">
+                                上传时间
+                            </th>
+                            <th scope="col">
+                                操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th width="5%">
+                                1
+                            </th>
+                            <td>
+                                操作使用说明书
+                            </td>
+                            <td>
+                                说明书
+                            </td>
+                            <td>
+                                2Mb
+                            </td>
+                            <td>
+                                2016-06-09 13：53：25
+                            </td>
+                            <td>
+                                 <button class="archives_download_btn archives_btn" title="下载">下 载</button>
+                                <button class="defect_delete_btn archives_btn" title="删除">删 除</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                2
+                            </th>
+                            <td>
+                                2016技术手册大纲
+                            </td>
+                            <td>
+                                技术手册
+                            </td>
+                            <td>
+                                22Mb
+                            </td>
+                            <td>
+                                2016-07-03 11：02：08
+                            </td>
+                            <td>
+                                 <button class="archives_download_btn archives_btn" title="下载">下 载</button>
+                                <button class="defect_delete_btn archives_btn" title="删除">删 除</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                3
+                            </th>
+                            <td>
+                                站室平面图
+                            </td>
+                            <td>
+                                图纸
+                            </td>
+                            <td>
+                                1Mb
+                            </td>
+                            <td>
+                                2016-04-23 09：10：37
+                            </td>
+                            <td>
+                                 <button class="archives_download_btn archives_btn" title="下载">下 载</button>
+                                <button class="defect_delete_btn archives_btn" title="删除">删 除</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                4
+                            </th>
+                            <td>
+                                站定监控视频
+                            </td>
+                            <td>
+                                视频
+                            </td>
+                            <td>
+                                56Mb
+                            </td>
+                            <td>
+                                2016-06-27 17：21：09
+                            </td>
+                            <td>
+                                 <button class="archives_download_btn archives_btn" title="下载">下 载</button>
+                                <button class="defect_delete_btn archives_btn" title="删除">删 除</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                5
+                            </th>
+                            <td>
+                                其他
+                            </td>
+                            <td>
+                                其他
+                            </td>
+                            <td>
+                                3Mb
+                            </td>
+                            <td>
+                                2016-04-03 09：01：39
+                            </td>
+                            <td>
+                                 <button class="archives_download_btn archives_btn" title="下载">下 载</button>
+                                <button class="defect_delete_btn archives_btn" title="删除">删 除</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="5%">
+                                
+                            </th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>         
+        </div>
+
+
+</body>
+</html>

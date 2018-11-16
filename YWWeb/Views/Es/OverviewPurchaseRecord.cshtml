@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>购电量录入</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" class="easyui-datagrid" idfield="RoleID" pagination="true"
+           data-options="iconCls:'icon-edit',rownumbers:true,pageSize:20,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
+           fitcolumns="true">
+        <thead>
+            <tr>
+                <th data-options="field:'id',checkbox:true"></th>
+                <th data-options="field:'categoryID',hidden:true"></th>
+                <th field='year' width="80px">
+                    年度
+                </th>
+                <th field='month' width="100px">
+                    月份
+                </th>
+                <th field='category_name' width="100px">
+                    品种
+                </th>
+                @*<th field='company' width="100px">
+                    售电方名称
+                </th>*@
+                <th field='TradeSourceID' width="80px" formatter="setSourceText">
+                    交易来源
+                </th>
+                <th field='quantity' width="80px">
+                    购电量((MW·H))
+                </th>
+                <th field='trade_price' width="150px">
+                    交易电价(元/MW·H)
+                </th>
+                <th field='Indexweek' width="80px" formatter="setWeekText">
+                    第几周
+                </th>
+                <th field='TradeTime' width="80px" formatter="crtDateFtt">
+                    交易时间
+                </th>
+                 
+                @*<th field='CreateTime' width="100px">创建时间
+                    </th>*@
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            品种:
+            <input id="pzselect" />
+        </div>
+        <div class="searchrow">
+            交易来源:
+            <input id="ly" />
+        </div>
+        <div class="searchrow">
+            月份:
+            <input id="monthselect" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+    <div id="editwin" title="编辑计划信息" class="easyui-dialog" closed="true" style="width: 800px; height: 350px; padding: 5px;"
+         minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    年度：
+                </td>
+                <td class="d_l_d">
+                    <select id="year" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    <b class="RStar">&nbsp*</b>
+                    <input id="id" type="hidden" />
+                </td>
+                <td class="d_l_t">
+                    月份：
+                </td>
+                <td class="d_l_d">
+                    <select id="month" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    购电量(MW·H)：
+                </td>
+                <td class="d_l_d">
+                    <input id="quantity" runat="server" name="BugLocation" missingmessage="购电量必填项！"
+                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="id" type="hidden" />
+                </td>
+                <td class="d_l_t">
+                    售电方名称：
+                </td>
+                <td class="d_l_d">
+                    <input id="company" runat="server" name="BugLocation" 
+                           class="easyui-validatebox" style="width: 195px;" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    品种：
+                </td>
+                <td class="d_l_d">
+                    <select id="PZ" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    交易电价(元/MW·H)：
+                </td>
+                <td class="d_l_d">
+                    <input id="jiaoyi" runat="server" name="BugLocation" missingmessage="购电量必填项！"
+                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    周：
+                </td>
+                <td class="d_l_d">
+                    <select id="Indexweek" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    @*<b class="RStar">&nbsp*</b>*@
+                </td>
+                <td class="d_l_t">
+                    交易时间：
+                </td>
+                <td class="d_l_d">
+                    <input id="TradeTime" runat="server" name="TradeTime" missingmessage="购电量必填项！"
+                           class="easyui-datebox" style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    交易来源：
+                </td>
+                <td class="d_l_d">
+                    <select id="cbxSource" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                  
+                </td>
+                <td class="d_l_d">
+                    
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+               data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                                                          data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+    <script src="~/Content/UserJS/OverviewPurchaseRecord._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

@@ -1,0 +1,957 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="powerquality">
+        <div id="Histb" class="searchbar searchbar2">
+            <div class="searchrow">
+                设备名称:
+                <select id="SDID" style="width: 150px; height: 26px;">
+                </select>
+            </div>
+            <div class="searchrow">
+                回路名称:
+                <select id="Circuit" style="width: 150px; height: 26px;">
+                </select>
+            </div>
+            <div class="searchrow">
+                监测日期:
+                <input type="radio" class="GraphType" name="GraphType" value="0" checked="checked" />近一日
+                <input type="radio" class="GraphType" name="GraphType" value="1" />近一周
+                <input type="radio" class="GraphType" name="GraphType" value="2" />近一月
+                <input type="radio" class="GraphTypeOg" name="GraphType" value="3" onclick="unlock()" />自定义
+                <div id="scroll" style="float: right; display: none">
+                    <input id="StartDate" style="width: 150px; height: 26px;" />
+                    至
+                    <input id="EndDate" style="width: 150px; height: 26px;" />
+                    <div class="searchbutton" style="float: right">
+                        <button title="查 询" onclick="DoSearch()" class="page_table_but">
+                            <img src="/Content/images/Icon16/zoom.png">查 询</button>
+                    </div>
+                </div>
+                <span class="r_toprightcontentlarmK">
+                    <label id="LabelAlarmLine"><input type="checkbox" checked id="AlarmLine" />报警线</label></span>
+            </div>
+        </div>
+        <div id="cavans" class="powerquality_box">
+                    
+            <h3 class="current_selection" id = "Object">当前对象：天保生活区B08变</h3>
+            <div id="userCharts1" class="powerquality_curve   lineloss_curve">
+            </div>
+            <div class="lineloss_hxbox">
+                <div id="userCharts2" class="lineloss_hx">
+                </div>
+                <div class="lineloss_info">
+                    <span id="Total">供电量：1000kWh</span> <span id="Use">用电量：1000kWh</span> <span id="Lose">
+                        损耗量：1000kWh</span> <span id="Rate">损耗率：1000kWh</span>
+                </div>
+            </div>
+            <div id="userCharts3" class="lineloss_zz">
+            </div>
+            <div class="clear"></div>
+            <div id="" class="lineloss_tab">
+            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="page_table_list scroll_bar">
+                 <thead>
+                    <tr>
+                        <td height="35" colspan="8" scope="col"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th width="50">序号</th>
+                            <th width="200">线路名称</th>
+                            <td width="800">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th colspan="2" height="40" width="400">输入端</th>
+                            <th colspan="2" height="40" width="400">输出端</th>
+                          </tr>
+                          <tr>
+                            <td align="center" width="200">电表名称</td>
+                            <td align="center" width="200">电量(kWh)</td>
+                            <td align="center" width="200">电表名称</td>
+                            <td align="center" width="200">电量(kWh)</td>
+                          </tr>
+                        </table>
+                            </td>
+                            <th width="200">损耗(kWh)</th>
+                            <th width="200">损耗率(%)</th>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    </thead>
+                    <tbody id='list'>
+                        </tbody>
+				</table>
+            </div>
+        </div>
+        <div id='Error' style='color: White; text-align: center; font-size: 20px; display: none;padding:200px;'>
+            未查到数据！</div>
+    </div>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：电能 > 损耗分析");
+        var pid = 1, did = 1,cid=13, totaltype = 1, datatypeid = 8, datestart, dateend, canAdd = 0;
+        var aline = '1';
+        var eline = '0';
+        var DataJson;
+        $("#AlarmLine").change(function () {
+            LoadGraphData();
+        });
+        $("#SDID").combotree({
+            url: "/BaseInfo/PdrTraComboTreeMenu",
+            onBeforeSelect: function (node) {
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    var dids = "";
+                    for (i = 0; i < node.children.length; i++) {
+                        var vv = node.children[i].id.split('_');
+                        pid = vv[0];
+                        dids += vv[1] + ",";
+                    }
+                    $('#Object').html("当前对象：" +  node.text);
+                    $("#AlarmLine").removeAttr("checked");
+                    $('#LabelAlarmLine').fadeOut();
+                }
+                else {
+                    pid = node.id.split('_')[0];
+                    did = node.id.split('_')[1];
+                    loadCircuit(did);
+                    $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                    $('#Object').html("当前对象：" + node.text);
+                    $("#AlarmLine").prop("checked", true);
+                    $('#LabelAlarmLine').fadeIn();
+                }
+            },
+            onLoadSuccess: function (data) {
+                $('#SDID').combotree('tree').tree("collapseAll");
+                var roots = $('#SDID').combotree('tree').tree('getRoots');
+                var Lastpid = $.cookie('cookiepid'), Index = 0;
+                for (i = 0; i < roots.length; i++) {
+                    if (roots[i].id == Lastpid) {
+                        Index = i
+                    }
+                }
+                var child = $('#SDID').combotree('tree').tree('getChildren', roots[Index].target);
+                pid = child[0].id.split('_')[0];
+                did = child[0].id.split('_')[1];
+                loadCircuit(did);
+                $('#Object').html("当前对象：" + child[0].text);
+                $('#SDID').combotree('setValue', child[0].text);
+                $('#SDID').combotree('tree').tree("expand", roots[0].target); //展开
+            }
+        });
+
+        function loadCircuit(did) {
+            $("#Circuit").combobox({
+                url: "/BaseInfo/BindCircuit?DID=" + did,
+                valueField: 'CID',
+                textField: 'CName',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    cid = parseInt(data[0].CID);
+                    cid == 0 ? cid : 0;
+                    $("#Circuit").combobox('select', cid);
+                },
+                onSelect: function (data) {
+                    cid = data.CID;
+                    lock();
+                }
+            });
+        }
+
+        $('.GraphType').click(function () {
+            lock();
+        });
+        var unit = " A", DataType = "电流";
+
+        $('#SPID').combobox({
+            valueField: 'value',
+            textField: 'text',
+            width: 135,
+            data: [{
+                value: '1',
+                text: '电流'
+            }, {
+                value: '2',
+                text: '电压'
+            }],
+            onSelect: function (data) {
+                if (data.value == '1') {
+                    unit = " A";
+                    DataType = data.text;
+                }
+                else if (data.value == '2') {
+                    unit = " V";
+                    DataType = data.text;
+                }
+                datatypeid = data.value;
+            },
+            onLoadSuccess: function () { //加载完成后,设置选中第一项
+                var val = $(this).combobox("getData");
+                $(this).combobox("select", val[0][value]);
+            }
+        });
+
+        function lock() {
+            $('#scroll').fadeOut();
+            totaltype = $("input[name='GraphType']:checked").val();
+            startdate = "";
+            enddate = "";
+            canAdd = 0;
+            if (totaltype == 0) {
+                $('#time').removeClass('curve_switchactive');
+                $('#one').addClass('curve_switchactive');
+            }
+            else {
+                $('#one').removeClass('curve_switchactive');
+                $('#time').addClass('curve_switchactive');
+            }
+            LoadGraphData();
+        }
+        function unlock() {
+            $('#StartDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#EndDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#StartDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#EndDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#scroll').fadeIn();
+            canAdd = 1;
+            totaltype = $("input[name='GraphType']:checked").val();
+            $('#one').removeClass('curve_switchactive');
+            $('#time').addClass('curve_switchactive');
+        }
+        function DoSearch() {
+            datestart = $('#StartDate').datebox('getValue');
+            dateend = $('#EndDate').datebox('getValue');
+            if (datestart == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择开始日期！", "info");
+            }
+            else if (dateend == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择结束日期！", "info");
+            }
+            else if (canAdd == 1) {
+                var aDate, oDate1, oDate2, iDays
+                aDate = datestart.split("-");
+                oDate1 = new Date(datestart);     //转换为12-18-2002格式
+                aDate = dateend.split("-");
+                oDate2 = new Date(dateend);
+                iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+                if (iDays < 8) {
+                    $('#time').removeClass('curve_switchactive');
+                    $('#one').addClass('curve_switchactive');
+                }
+                else {
+                    $('#one').removeClass('curve_switchactive');
+                    $('#time').addClass('curve_switchactive');
+                }
+                LoadGraphData();
+            }
+            else {
+                LoadGraphData();
+            }
+        }
+
+        function LoadGraphData() {
+            if ($(AlarmLine).attr("checked") == 'checked') {
+                aline = '1';
+            } else {
+                //当前为不选中状态
+                aline = '0';
+            }
+            $.post("/PowerQuality/PowerQualityData", {
+                "pid": pid,
+                "did": did,
+                "cid": cid,
+                "totaltype": totaltype,
+                "datatypeid": datatypeid,
+                "datestart": datestart,
+                "dateend": dateend,
+                "aline": aline,
+                "eline": eline
+            }, function (data) {
+                //展示用数据
+                var data1 = "{\"xAxis\":\"03-08 17:00,03-08 18:00,03-08 19:00,03-08 20:00,03-08 21:00,03-08 22:00,03-08 23:00,03-09 00:00,03-09 01:00,03-09 02:00,03-09 03:00,03-09 04:00,03-09 05:00,03-09 06:00,03-09 07:00,03-09 08:00,03-09 09:00,03-09 10:00,03-09 11:00,03-09 12:00,03-09 13:00,03-09 14:00,03-09 15:00,03-09 16:00,03-09 17:00,03-09 18:00,03-09 19:00,03-09 20:00,03-09 21:00,03-09 22:00,03-09 23:00,03-10 00:00,03-10 01:00,03-10 02:00,03-10 03:00,03-10 04:00,03-10 05:00,03-10 06:00,03-10 07:00,03-10 08:00,03-10 09:00,03-10 10:00,03-10 11:00,03-10 12:00,03-10 13:00,03-10 14:00,03-10 15:00,03-10 16:00,03-10 17:00,03-10 18:00,03-10 19:00,03-10 20:00,03-10 21:00,03-10 22:00,03-10 23:00,03-11 00:00,03-11 01:00,03-11 02:00,03-11 03:00,03-11 04:00,03-11 05:00,03-11 06:00,03-11 07:00,03-11 08:00,03-11 09:00,03-11 10:00,03-11 11:00,03-11 12:00,03-11 13:00,03-11 14:00,03-11 15:00,03-11 16:00,03-11 17:00,03-11 18:00,03-11 19:00,03-11 20:00,03-11 21:00,03-11 22:00,03-11 23:00,03-12 00:00,03-12 01:00,03-12 02:00,03-12 03:00,03-12 04:00,03-12 05:00,03-12 06:00,03-12 07:00,03-12 08:00,03-12 09:00,03-12 10:00,03-12 11:00,03-12 12:00,03-12 13:00,03-12 14:00,03-12 15:00,03-12 16:00,03-12 17:00,03-12 18:00,03-12 19:00,03-12 20:00,03-12 21:00,03-12 22:00,03-12 23:00,03-13 00:00,03-13 01:00,03-13 02:00,03-13 03:00,03-13 04:00,03-13 05:00,03-13 06:00,03-13 07:00,03-13 08:00,03-13 09:00,03-13 10:00,03-13 11:00,03-13 12:00,03-13 13:00,03-13 14:00,03-13 15:00,03-13 16:00,03-13 17:00,03-13 18:00,03-13 19:00,03-13 20:00,03-13 21:00,03-13 22:00,03-13 23:00,03-14 00:00,03-14 01:00,03-14 02:00,03-14 03:00,03-14 04:00,03-14 05:00,03-14 06:00,03-14 07:00,03-14 08:00,03-14 09:00,03-14 10:00,03-14 11:00,03-14 12:00,03-14 13:00,03-14 14:00,03-14 15:00,03-14 16:00,03-14 17:00,03-14 18:00,03-14 19:00,03-14 20:00,03-14 21:00,03-14 22:00,03-14 23:00,03-15 00:00,03-15 01:00,03-15 02:00,03-15 03:00,03-15 04:00,03-15 05:00,03-15 06:00,03-15 07:00,03-15 08:00,03-15 09:00,03-15 10:00,03-15 11:00,03-15 12:00,03-15 13:00,03-15 14:00,03-15 15:00,03-15 16:00\",\"yData\":[\"1245.4,1256.8,1272,1239.8,1260.7,1239.8,1254.4,1265.8,1245,1248.8,1277.9,1243.2,1253.9,1283.1,1242.5,1243.2,1260.9,1276.2,1237.6,1266.1,1281.3,1249.7,1264.3,1275.7,1254.8,1275.1,1243.5,1258.7,1269.5,1248.6,1252.4,1281.6,1242.3,1257.6,1276,1236.7,1257.6,1275.3,1240.6,1269.7,1260.7,1246.2,1243.7,1265.2,1257,1279.2,1265.3,1237.5,1248.3,1234.4,1245.2,1266.8,1246,1244.7,1241.5,1253,1274.5,1260.6,1272,1254.1,1272.2,1270,1281.4,1278.3,1239,1261.2,1247.4,1276.4,1270.8,1236.1,1264.5,1276,1241.2,1269.7,1274.2,1253.3,1267.9,1279.3,1254,1245.2,1267.4,1253.5,1254.1,1240.2,1251,1273.2,1247.9,1280.8,1250.5,1272.7,1258.1,1269.6,1241.8,1266.4,1238.6,1249.4,1235.5,1257.7,1249.5,1260.2,1253.6,1275.8,1237.2,1258.7,1270.2,1242.4,1253.1,1247.8,1255.5,1266.9,1281.4,1260.6,1265.1,1243.6,1255,1270.2,1248.7,1263.9,1243.1,1269.7,1237.4,1252.6,1281.8,1250.5,1236.6,1258.8,1255,1277.2,1266.4,1252.5,1274.7,1272.2,1280.5,1254,1276.2,1262.3,1234.5,1273.8,1259.9,1282,1267.5,1250.4,1236.6,1275.8,1248,1244.2,1234.1,1255.6,1245.5,1281.6,1263.9,1238.7,1277.9,1250.1,1246.3,1268.5,1258.4,1243.9,1236.5,1258.7,1244.8,1267,1256.2,1253.7,1236,1265.1,1262,1283.5\",\"1278.4,1278.4,1278.6,1278.5,1277.7,1277.7,1277.8,1277.9,1277.8,1278,1277.9,1278.1,1278.1,1278.1,1277.2,1277.3,1277.2,1277.4,1277.4,1277.3,1277.5,1277.4,1277.6,1277.6,1277.6,1276.8,1276.7,1276.9,1276.9,1276.8,1277,1277,1277,1277.2,1277.1,1277.1,1276.3,1276.2,1276.4,1276.4,1296.2,1296,1295.8,1295.9,1294.8,1294.8,1294.7,1294.7,1294.8,1294.6,1294.6,1296.5,1296.4,1295.3,1295.2,1295.2,1295.2,1295.1,1295.1,1327.5,1296.9,1309.1,1309.1,1309,1309,1309.1,1308.9,1306.8,1306.9,1307.1,1307,1307,1307.2,1307.2,1307.3,1307.2,1307.4,1307.5,1309.3,1308.2,1308.2,1308.1,1308.1,1307.9,1307.9,1308,1307.8,1307.9,1308.6,1308.7,1308.5,1308.5,1308.6,1308.4,1308.4,1308.5,1308.3,1308.4,1307.2,1307.2,1238.2,1238.2,1238.3,1238.3,1238.4,1238.4,1238.5,1308.9,1308.8,1308.8,1309,1308.9,1309.1,1309,1309,1309.2,1309.2,1309.4,1309.3,1307.6,1307.5,1307.7,1307.6,1248.9,1248.7,1248.8,1248.6,1248.7,1248.6,1248.4,1248.5,1248.4,1248.3,1246,1246,1245.8,1245.9,1245.9,1245.7,1245.8,1245.6,1245.7,1245.5,1245.5,1245.5,1245.4,1245.4,1245.4,1245.4,1245.2,1245.3,1247,1247,1247.1,1246.9,1247,1247,1246.8,1246.3,1246.4,1246.2,1246.3,1246.2,1244.2,1244.2,1244.2,1244,1244.1\"],\"Max\":\"1327.52\",\"Min\":\"1234.09\",\"Average\":\"1269.00976190476\",\"AlarmTotal\":\"0\",\"AValue\":\"1650\",\"EValue\":\"125\"}";
+                DataJson = JSON.parse(data1);
+                BuildGraph();
+            });
+
+        }
+        function BuildGraph() {
+                var Series = [],
+                ABC = [ "损耗量", "用电量"];
+                if (DataJson.xAxis != '') {
+                    $('#Error').css('display', 'none');
+                    $('#cavans').css('display', '');
+                    var Max = parseFloat(DataJson.Max), Min = parseFloat(DataJson.Min);
+                    var Avalue = parseFloat(DataJson.AValue), Evalue = parseFloat(DataJson.EValue)
+                    for (i = 0; i < DataJson.yData.length; i++) {
+                        Series.push({
+                            name: ABC[i],
+                            type: "line",
+                            stack: "总量",
+                            itemStyle: {
+                                normal: {
+                                    areaStyle: {
+                                        type: "default"
+                                    }
+                                }
+                            },
+                            data: DataJson.yData[i].split(',')
+                        });
+                    }
+
+                    var al = [];
+                    if (Max < Avalue) {
+                        Max = Avalue * 1.1;
+                    }
+                    else
+                        Max = Max * 1.1;
+                    for (z = 0; z < DataJson.xAxis.split(',').length; z++) {
+                        al.push(DataJson.AValue);
+                    }
+
+                    if ($("#AlarmLine").attr("checked") == 'checked') {
+                        Series.push({
+                            name: "报警线",
+                            type: "line",
+                            lineStyle: { normal: { color: 'rgb(255, 0, 0)'} },
+                            data: al,
+                            //stack: "总量",
+                            smooth: false
+                        });
+                    }
+
+                    var LL = DataJson.yData[0].split(','), LU = DataJson.yData[1].split(',')
+                    LineLose = parseFloat(LL[LL.length - 1]);
+                    LineUse = parseFloat(LU[LU.length - 1]);
+                    TotalValue = LineLose + LineUse;
+                    LoseRate = LineLose / TotalValue * 100;
+                    $("#Total").html("供电量：" + TotalValue.toFixed(2) + " Kwh");
+                    $("#Use").html("用电量：" + LineUse.toFixed(2) + " Kwh");
+                    $("#Lose").html("损耗量：" + LineLose.toFixed(2) + " Kwh");
+                    $("#Rate").html("损耗率：" + LoseRate.toFixed(2) + " %");
+                    var myChart = echarts.init(document.getElementById('userCharts1'));
+                    var option = {
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        legend: {
+                            data: ["用电量", "损耗量"],
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            padding: 20,
+                            borderColor: "#ccc"
+                        },
+                        grid: {
+                            x: 54,
+                            y: 50,
+                            x2: 60,
+                            y2: 60,
+                            borderWidth: 0
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none',
+                                    title: { back: '' },
+                                    icon: { back: 'image://' }
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar", "stack", "tiled"]
+                                },
+
+                                saveAsImage: {
+                                    show: true
+                                }
+
+                            },
+                            top: "50",
+                            right: "10",
+                            orient: "vertical",
+                            showTitle: true
+                        },
+                        calculable: true,
+                        xAxis: [{
+                            type: "category",
+                            boundaryGap: false,
+                            data: DataJson.xAxis.split(','),
+                            axisLabel: {
+                                textStyle: {
+                                    color: "rgb(255, 255, 255)"
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#4c4c4c',
+                                    type: 'dashed'
+                                }
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: "rgb(255, 255, 255)",
+                                    width: 3
+                                },
+                                show: true
+                            },
+                            splitNumber: 15
+                        }],
+                        yAxis: [{
+                            name: "电量(Kwh)",
+                            type: "value",
+                            axisLabel: {
+                                textStyle: {
+                                    color: "rgb(255, 255, 255)"
+                                },
+                                show: true,
+                                formatter: "{value}"
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#4c4c4c',
+                                    type: 'dashed'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgb(255, 255, 255)",
+                                    width: 3
+                                }
+                            }
+                        }, ],
+                        dataZoom: [{
+                            type: 'inside',
+                            filterMode: 'filter'
+                        }],
+                        series: Series,
+                        backgroundColor: "#17689d",
+                        color: ["#ff9934", "#336799", "rgb(255, 0, 0)"]
+                    };
+                    myChart.setOption(option);
+
+                    var myChart2 = echarts.init(document.getElementById('userCharts2'));
+                    var option2 = {
+                        tooltip: {
+                            trigger: "item",
+                            formatter: "{a} <br>{b} : {c} ({d}%)",
+                            show: true
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                dataView: {
+                                    readOnly: true
+                                }
+                            }
+                        },
+                        series: [{
+                            name: "损耗总量统计",
+                            type: "pie",
+                            itemStyle: {
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        position: "center",
+                                        textStyle: {
+                                            fontSize: "30",
+                                            fontWeight: "normal"
+                                        }
+                                    }
+                                }
+                            },
+                            data: [{
+                                value: LineUse.toFixed(2),
+                                name: "用电量"
+                            }, {
+                                value: LineLose.toFixed(2),
+                                name: "损耗量"
+                            }],
+                            center: ["65%", "50%"],
+                            radius: ["50%", "70%"],
+                            tooltip: {
+                                trigger: "item"
+                            }
+                        }],
+                        backgroundColor: "#17689d",
+                        title: {
+                            text: "线损总量统计",
+                            x: "left",
+                            y: "top",
+                            padding: 15,
+                            textStyle: {
+                                color: "rgb(255, 255, 255)",
+                                fontWeight: "normal"
+                            }
+                        },
+                        color: ["#336799", "#ff9934"],
+                        calculable: true
+                    };
+                    myChart2.setOption(option2);
+                    LoadBar();
+                }
+                else {
+                    $('#cavans').css('display', 'none');
+                    $('#Error').fadeIn();
+                }
+            }
+        var LiL ="",LiU =""
+        function LoadBar() {
+            $.post("/PowerQuality/LineLossAnalysis", {
+                "pid": pid,
+                "totaltype": totaltype,
+                "datestart": datestart,
+                "dateend": dateend
+            }, function (data) {
+                var data1 = "1#变,2#变$1272.12,1372.12$1277.24,1440.89";  //展示用数据
+                //X轴，曲线参数,曲线参数（A相，B相，C相），最大值，最小值,线损电流，使用电流
+                var XaxisObj, GraphObj, MaxObj, MinObj;
+                var Series = [],
+            LineLose = [],
+            LineUse = [],
+            ABC = ["", "损耗量", "用电量"];
+                GraphObj = data1.split('$');
+                XaxisObj = GraphObj[0];
+                LineLose = GraphObj[1];
+                LineUse = GraphObj[2];
+                MinObj = GraphObj[5] * 0.9;
+                MaxObj = GraphObj[4] * 1.1;
+
+                DataGrid(GraphObj[1].split(','),GraphObj[2].split(','));
+                var myChart3 = echarts.init(document.getElementById('userCharts3'));
+                var option3 = {
+                    title: {
+                        show: true,
+                        text: "线损分布统计",
+                        x: "left",
+                        y: "top",
+                        padding: 15,
+                        textStyle: {
+                            color: "rgb(255, 255, 255)",
+                            fontWeight: "normal"
+                        }
+                    },
+                    tooltip: {
+                        trigger: "axis",
+                        axisPointer: {
+                            type: "shadow"
+                        }
+                    },
+                    legend: {
+                        data: ["用电量", "损耗量"],
+                        padding: 15,
+                        borderColor: "#ccc",
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        }
+                    },
+                    toolbox: {
+                        show: false,
+                        orient: "vertical",
+                        x: "right",
+                        y: "center",
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            magicType: {
+                                show: false,
+                                type: ["line", "bar", "stack", "tiled"]
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [{
+                        type: "category",
+                        data: XaxisObj.split(','),
+                        splitLine: {
+                            lineStyle: {
+                                color: "rgb(51, 51, 51)"
+                            },
+                            show: false
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: "rgb(255, 255, 255)",
+                                width: 3
+                            }
+                        }
+                    }],
+                    yAxis: [{
+                        name: "",
+                        type: "value",
+                        axisLine: {
+                            lineStyle: {
+                                color: "rgb(255, 255, 255)",
+                                width: 3
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: "rgb(51, 51, 51)"
+                            }
+                        }
+                    }],
+                    series: [{
+                        name: "用电量",
+                        type: "bar",
+                        data: LineUse.split(','),
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                }
+                            }
+                        },
+                        barWidth: 50,
+                        stack: "线损分布情况"
+                    }, {
+                        name: "损耗量",
+                        type: "bar",
+                        stack: "线损分布情况",
+                        data: LineLose.split(',')
+                    }],
+                    color: ["rgb(51, 103, 153)", "rgb(255, 153, 50)"],
+                    backgroundColor: "#17689d"
+
+                };
+                myChart3.setOption(option3);
+
+            });
+        }
+        var TotalA = [], TotalB = [], TotalC = [], counter = 0;
+        function PDRGraphData(pid, did) {
+            if ($(AlarmLine).attr("checked") == 'checked') {
+                aline = '1';
+            } else {
+                //当前为不选中状态
+                aline = '0';
+            }
+            $.post("/PowerQuality/TotalPDR", {
+                "pid": pid,
+                "did": did,
+                "totaltype": totaltype,
+                "datatypeid": datatypeid,
+                "datestart": datestart,
+                "dateend": dateend,
+                "aline": aline
+            }, function (data) {
+                //X轴，曲线参数,曲线参数（A相，B相，C相），最大值，最小值,线损电流，使用电流
+                var XaxisObj, GraphObj, MaxObj, MinObj, LineLose = 0, LineUse = 0;
+                var Series = [], ABC = ["", "损耗量", "用电量"];
+                GraphObj = data.split('$');
+                XaxisObj = GraphObj[0];
+                if (XaxisObj != '') {
+                    $('#Error').css('display', 'none');
+                    $('#cavans').css('display', '');
+                    MinObj = GraphObj[5] * 0.9;
+                    MaxObj = GraphObj[4] * 1.1;
+
+                    for (i = 1; i < 3; i++) {
+                        Series.push({
+                            name: ABC[i],
+                            type: "line",
+                            stack: "总量",
+                            smooth: false,
+                            itemStyle: {
+                                normal: {
+                                    areaStyle: {
+                                        type: "default"
+                                    }
+                                }
+                            },
+                            data: GraphObj[i].split(','),
+                            smooth: false
+                        });
+                    }
+                    if ($("#AlarmLine").attr("checked") == 'checked') {
+                        Series.push({
+                            name: "报警线",
+                            type: "line",
+                            lineStyle: { normal: { color: 'rgb(255, 0, 0)'} },
+                            data: GraphObj[8].split(','),
+                            //stack: "总量",
+                            smooth: false
+                        });
+                    }
+                    var LL = GraphObj[1].split(','), LU = GraphObj[2].split(',');
+                    LineLose = parseFloat(LL[LL.length - 1]);
+                    LineUse = parseFloat(LU[LU.length - 1]);
+                    TotalValue = LineLose + LineUse;
+                    LoseRate = LineLose / TotalValue * 100;
+                    $("#Total").html("供电量：" + TotalValue.toFixed(2) + " Kwh");
+                    $("#Use").html("用电量：" + LineUse.toFixed(2) + " Kwh");
+                    $("#Lose").html("损耗量：" + LineLose.toFixed(2) + " Kwh");
+                    $("#Rate").html("损耗率：" + LoseRate.toFixed(2) + " %");
+
+                    var myChart = echarts.init(document.getElementById('userCharts1'));
+                    var myChart2 = echarts.init(document.getElementById('userCharts2'));
+
+                    var option = {
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        legend: {
+                            data: ["用电量", "损耗量"],
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            padding: 15,
+                            borderColor: "#ccc"
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '3%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none',
+                                    title: { back: '' },
+                                    icon: { back: 'image://' }
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar", "stack", "tiled"]
+                                },
+
+                                saveAsImage: {
+                                    show: true
+                                }
+
+                            },
+                            top: "50",
+                            right: "10",
+                            orient: "vertical",
+                            showTitle: true
+                        },
+                        calculable: true,
+                        xAxis: [{
+                            type: "category",
+                            boundaryGap: false,
+                            data: XaxisObj.split(','),
+                            axisLabel: {
+                                textStyle: {
+                                    color: "rgb(255, 255, 255)"
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#4c4c4c',
+                                    type: 'dashed'
+                                }
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: "rgb(255, 255, 255)",
+                                    width: 3
+                                },
+                                show: true
+                            },
+                            splitNumber: 15
+                        }],
+                        yAxis: [{
+                            name: "电量(Kwh)",
+                            type: "value",
+                            axisLabel: {
+                                textStyle: {
+                                    color: "rgb(255, 255, 255)"
+                                },
+                                show: true,
+                                formatter: "{value}"
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#4c4c4c',
+                                    type: 'dashed'
+                                }
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgb(255, 255, 255)",
+                                    width: 3
+                                }
+                            }
+                        }, ],
+                        dataZoom: [{
+                            type: 'inside',
+                            filterMode: 'filter'
+                        }],
+                        series: Series,
+                        backgroundColor: "#17689d",
+                        color: ["#ff9934", "#336799"]
+                    };
+                    myChart.setOption(option);
+
+                    var option2 = {
+                        tooltip: {
+                            trigger: "item",
+                            formatter: "{a} <br>{b} : {c} ({d}%)",
+                            show: true
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                dataView: {
+                                    readOnly: true
+                                }
+                            }
+                        },
+                        series: [{
+                            name: "线损总量统计",
+                            type: "pie",
+                            itemStyle: {
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        position: "center",
+                                        textStyle: {
+                                            fontSize: "30",
+                                            fontWeight: "normal"
+                                        }
+                                    }
+                                }
+                            },
+                            data: [{
+                                value: LineUse.toFixed(2),
+                                name: "用电量"
+                            }, {
+                                value: LineLose.toFixed(2),
+                                name: "损耗量"
+                            }],
+                            center: ["65%", "50%"],
+                            radius: ["50%", "70%"],
+                            tooltip: {
+                                trigger: "item"
+                            }
+                        }],
+                        backgroundColor: "#17689d",
+                        title: {
+                            text: "损耗总量统计",
+                            x: "left",
+                            y: "top",
+                            padding: 15,
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            }
+                        },
+                        color: ["#336799", "#ff9934"],
+                        calculable: true
+                    };
+                    myChart2.setOption(option2);
+                }
+                else {
+                    $('#cavans').css('display', 'none');
+                    $('#Error').fadeIn();
+                }
+            });
+
+        }
+
+        function DataGrid(ll,lu) {
+            $.post("/EnergyEfficiency/ElectricMeterData", {
+                "did": 3,
+                "cid": 0,
+                "Graphtype": 144,
+                "startdate": "",
+                "enddate": ""
+            }, function (data) {
+                var DataJson = eval("(" + data + ")");
+                var DOM = "";
+                for (i = 0; i < DataJson.length; i++) {
+                    var P = ll[i] / lu[i] * 100;
+                    DOM += "<tr><th width='50' align='center'>1</th><td width='200' align='center'>" + DataJson[i].CName + "</td>";
+                    DOM += "<td align='center' width='200'>" + DataJson[i].EM[0].EName + "</td><td align='center' width='200'>" + DataJson[i].EM[0].PV + "</td><td align='center' width='200'>" + DataJson[i].EM[1].EName + "</td><td align='center' width='200'>" + DataJson[i].EM[1].PV + "</td><td align='center' width='200'>" + ll[i]+ "</td><td align='center' width='200'>" + P.toFixed(2) + "%</td></tr>"
+                }
+                $('#list').html(DOM);
+            });
+        
+        }
+    </script>
+</body>
+</html>

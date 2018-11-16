@@ -1,0 +1,702 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html style="overflow: auto">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="~/jquery-easyui-1.4.5/themes/black/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-easyui-1.4.5/themes/icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.lazyload.js"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js"></script>
+    <link href="~/Content/css/LBYWBase.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/respond.src.js"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/zrender/esl.js" type="text/javascript"></script>
+</head>
+<body style="overflow: auto;">
+    <div class="energy_manage">
+        <div class="energy_top">
+            <div class="energy_top_left">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="energy_top_leftimg">
+                            <img src="../content/images/energy_manage_gyg.png" />
+                        </td>
+                        <td>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="page_table_list energy_table">
+                                <tr>
+                                    <td colspan="4" class="energy_table_title defect_charttitle">
+                                        <i></i>高压受总柜 H6
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        三相电压
+                                    </th>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        电流
+                                    </th>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        有功功率
+                                    </th>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        无功功率
+                                    </th>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                    <td>
+                                        --
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        功率因数
+                                    </th>
+                                    <td colspan="3">
+                                        --
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+                    <tr>
+                        <td class="energy_top_leftimg">
+                            <img src="../content/images/energy_manage_dyg.png" />
+                        </td>
+                        <td>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="page_table_list energy_table"
+                                id="table2">
+                                <tr>
+                                    <td colspan="4" class="energy_table_title defect_charttitle">
+                                        <i></i>高压受总柜 H6
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        三相电压
+                                    </th>
+                                    <td>
+                                        6.1kvV
+                                    </td>
+                                    <td>
+                                        6.1kvV
+                                    </td>
+                                    <td>
+                                        6.1kvV
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        电流
+                                    </th>
+                                    <td>
+                                        20.4A
+                                    </td>
+                                    <td>
+                                        20.4A
+                                    </td>
+                                    <td>
+                                        20.4A
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        有功功率
+                                    </th>
+                                    <td>
+                                        124.48kW
+                                    </td>
+                                    <td>
+                                        21.5kVar
+                                    </td>
+                                    <td>
+                                        21.5kVar
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        无功功率
+                                    </th>
+                                    <td>
+                                        21.5kVar
+                                    </td>
+                                    <td>
+                                        21.5kVar
+                                    </td>
+                                    <td>
+                                        21.5kVar
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        功率因数
+                                    </th>
+                                    <td colspan="3">
+                                        0.82
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table class="energy_table_bottom" width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            当前负荷：--kW 功率因素：-- 今日能耗：--kWh
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="energy_top_right floatright">
+                <div id="userCharts1" class="energy_top_righttb">
+                </div>
+                <div id="userCharts2" class="energy_top_righttb">
+                </div>
+                <div id="userCharts3" class="energy_top_righttb">
+                </div>
+                <div id="userCharts4" class="energy_top_righttb">
+                </div>
+            </div>
+        </div>
+        <div class="energy_bottom">
+            <div class="energy_bottom_tab">
+                <div class="tab_mainbox demo2 backgroundnone">
+                    <ul class="tab_menu energy_tabmenu">
+                        <li>日</li>
+                        <li class="current">周</li>
+                        <li>月</li>
+                        <li>年</li>
+                    </ul>
+                    <div class="tab_box bordernone">
+                        <h3 class="defect_charttitle defect_charttitle2">
+                            <i></i>用电负荷(kW)</h3>
+                        <!--日-->
+                        <table width="99%" border="0" cellspacing="0" cellpadding="0" class="tabbg tabbg2">
+                            <tr>
+                                <td style="width: 70%; height: 240px; padding: 0px;">
+                                    <div id="userCharts5" style="height: 240px; padding: 0px;">
+                                    </div>
+                                </td>
+                                <td style="width: 30%;">
+                                    <div class="load_trend_inf" style="padding: 0px;">
+                                        <p>
+                                            <i class="upTrend_icon"></i>5% 今日最高：720.46kW</p>
+                                        <p>
+                                            <i class="upTrend_icon"></i>6% 本周最高：1201.00kW</p>
+                                        <p>
+                                            <i class="upTrend_icon"></i>10% 当月最高：1601.12kW</p>
+                                        <p>
+                                            <i class="downTrend_icon"></i>3% 本年最高：1601.12kW</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        @*<div class="tabbg tabbg2" style="display:inline-flex;">
+                            <div id="userCharts5" style="width: 75%; height:240px; padding: 0px;">
+                            </div>
+                            <div class="load_trend_inf">
+                                <p><i class="upTrend_icon"></i>5%  今日最高：720.46kW</p>
+                                <p><i class="upTrend_icon"></i>6%  本周最高：1201.00kW</p>
+                                <p><i class="upTrend_icon"></i>10%  当月最高：1601.12kW</p>
+                                <p><i class="downTrend_icon"></i>3%  本年最高：1601.12kW</p>
+                            </div>
+                        </div>*@
+                        <!--周-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts6" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                        </div>
+                        <!--月-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts7" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                        </div>
+                        <!--年-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts8" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="energy_bottom_tab floatright">
+                <div class="tab_mainbox demo3 backgroundnone">
+                    <ul class="tab_menu energy_tabmenu">
+                        <li>日</li>
+                        <li class="current">周</li>
+                        <li>月</li>
+                        <li>年</li>
+                    </ul>
+                    <div class="tab_box bordernone">
+                        <h3 class="defect_charttitle defect_charttitle2">
+                            耗电量（kWh）</h3>
+                        <!--日-->
+                        <table width="99%" border="0" cellspacing="0" cellpadding="0" class="tabbg tabbg2">
+                            <tr>
+                                <td style="width: 70%; height: 240px; padding: 0px;">
+                                    <div id="userCharts9" style="height: 240px; padding: 0px;">
+                                    </div>
+                                </td>
+                                <td style="width: 30%;">
+                                    <div class="power_trend_inf">
+                                        <p><i class="downTrend_icon"></i>7% 今日最高：186.86kWh</p>
+                                        <p><i class="upTrend_icon"></i>2% 本周最高：213.12kWh</p>
+                                        <p><i class="upTrend_icon"></i>5% 当月最高：235.76kWh</p>
+                                        <p><i class="downTrend_icon"></i>1% 本年最高：235.76kWh</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--周-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts10" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                            <div class="power_trend_inf">
+                            </div>
+                        </div>
+                        <!--月-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts11" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                        </div>
+                        <!--年-->
+                        <div class="tabbg tabbg2 hide">
+                            <div id="userCharts12" style="width: 75%; height: 240px; padding: 0px;">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        $.post("/Energy/EntryTable", "", function (data) {  //获取测点列表
+            $("#table2").html(data);
+        });
+        require.config({
+            paths: {
+                zrender: '../../Content/js/zrender/zrender',
+                'zrender/shape/Circle': '../../Content/js/zrender/zrender'
+            }
+        });
+        require(
+        ['zrender', 'zrender/shape/Circle'],
+        function (zrender) {
+            var zr = zrender.init(document.getElementById('userCharts1'));
+            var myChart = echarts.init(document.getElementById('userCharts1'));
+            var myChart2 = echarts.init(document.getElementById('userCharts2'));
+            var myChart3 = echarts.init(document.getElementById('userCharts3'));
+            var myChart4 = echarts.init(document.getElementById('userCharts4'));
+            var myChart5 = echarts.init(document.getElementById('userCharts5'));
+            var myChart6 = echarts.init(document.getElementById('userCharts6'));
+            var myChart7 = echarts.init(document.getElementById('userCharts7'));
+            var myChart8 = echarts.init(document.getElementById('userCharts8'));
+            var myChart9 = echarts.init(document.getElementById('userCharts9'));
+            var myChart10 = echarts.init(document.getElementById('userCharts10'));
+            var myChart11 = echarts.init(document.getElementById('userCharts11'));
+            var myChart12 = echarts.init(document.getElementById('userCharts12'));
+            var option = {
+                tooltip: {
+                    formatter: "{a} <br/>{b} : {c}%"
+                },
+                toolbox: {
+                    show: false
+                },
+                title: {
+                    show: true,
+                    text: "当前负荷：--kW\n月平均负荷率：--%\n年平均负荷率：--%\n一年最大负荷：--kW\n",
+                    x: "center",
+                    y: "70%",
+                    padding: 5,
+                    textAlign: "left",
+                    textStyle: {
+                        fontSize: 12,
+                        color: "#e1dede",
+                        fontWeight: "normal",
+                        align: "left",
+                        baseline: "middle"
+                    }
+                },
+                series: [
+        {
+            name: '负荷统计',
+            type: 'gauge',
+            startAngle: 150,
+            endAngle: 30,
+            radius: "55%",
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    width: 30,
+                    color: [[0.6, "#33cc33"], [0.8, "#ffff00"], [1, "#fe0100"]]
+                }
+            },
+            axisLabel: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            pointer: {
+                length: "60%",
+                width: 5,
+                color: 'auto'
+            },
+            detail: {
+                show: false,
+                formatter: '{value}%'
+            },
+            data: [{ value: 50, name: ''}]
+        }
+
+    ]
+            };
+            myChart.setOption(option);
+            var option2 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    y: 'bottom',
+                    x: 'center',
+                    data: ['', ''],
+                    textStyle: { color: '#e1dede' }
+                },
+                calculable: true,
+                title: {
+                    show: true,
+                    text: "月电压合格率：--%",
+                    x: "center",
+                    y: "90%",
+                    textStyle: {
+                        fontSize: 12,
+                        fontWeight: "normal",
+                        color: "#e1dede"
+                    }
+                },
+                series: [
+        {
+            name: '月电压合格率',
+            type: 'pie',
+            startAngle: 15,
+            radius: ['30%', '55%'],
+            tooltip: { show: false },
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: false,
+                        position: 'center',
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            },
+            data: [
+                { value: 0.8, itemStyle: { normal: { color: '#34cc67'}} },
+                { value: 0.2, itemStyle: { normal: { color: '#333'}} }
+            ]
+        }
+    ]
+            };
+            myChart2.setOption(option2);
+            var option3 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'center',
+                    y: 'bottom',
+                    data: ['用电量:--kWh', '损耗量:--kWh'],
+                    itemWidth: 15,
+                    itemHeight: 10,
+                    itemGap: 5,
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#e1dede'
+                    }
+                },
+                calculable: true,
+                series: [
+        {
+            name: '电量统计',
+            type: 'pie',
+            startAngle: 45,
+            radius: ['30%', '55%'],
+            tooltip: { show: false },
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: false,
+                        position: 'center',
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            },
+            data: [
+                { value: 0.87, name: '用电量:--kWh', itemStyle: { normal: { color: '#31b2e9'}} },
+                { value: 0.13, name: '损耗量:--kWh', itemStyle: { normal: { color: '#fc6800'}} }
+            ]
+        }
+    ]
+            };
+            myChart3.setOption(option3);
+            var option4 = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    y: 'bottom',
+                    x: 'center',
+                    data: ['', ''],
+                    textStyle: { color: '#eee' }
+                },
+                calculable: true,
+                title: {
+                    show: true,
+                    text: "月三相电流平衡度合格率：--%",
+                    x: "center",
+                    y: "90%",
+                    textStyle: {
+                        fontSize: 12,
+                        fontWeight: "normal",
+                        color: "#e1dede"
+                    }
+                },
+                series: [
+        {
+            name: '月三相电流平衡度统计',
+            type: 'pie',
+            startAngle: -15,
+            radius: ['30%', '55%'],
+            tooltip: { show: false },
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: false,
+                        position: 'center',
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            },
+            data: [
+                { value: 0.7, itemStyle: { normal: { color: '#fdff00'}} },
+                { value: 0.3, itemStyle: { normal: { color: '#333'}} }
+            ]
+        }
+    ]
+            };
+            myChart4.setOption(option4);
+
+
+            var option5 = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                calculable: true,
+                grid: { x: 50, y: 20, x2: 50, y2: 50 },
+                xAxis: [
+        {
+            type: 'category',
+            axisLabel: { textStyle: { color: '#fff'} },
+            boundaryGap: false,
+            data: ['9/7', '10/7', '11/7', '12/7', '13/7', '14/7', '15/7']
+        }
+    ],
+                yAxis: [
+        {
+            type: 'value',
+            axisLabel: { textStyle: { color: '#fff'} },
+            min: '300'
+        }
+    ],
+                series: [
+        {
+            name: '用电负荷',
+            type: 'line',
+            smooth: true,
+            //itemStyle: { normal: { areaStyle: { type: 'default', color: '#33cc33'}} },
+
+
+            itemStyle: { normal: { color: "#2fd430", areaStyle: { type: 'default', color:
+                       (function () {
+
+                           var zrColor = require('zrender/tool/color');
+                           return zrColor.getLinearGradient(
+                            0, 0, 0, 400,
+                            [[0, 'green'], [0.5, 'rgba(255,255,255,0.1)']]
+                        )
+                       })()
+            }
+            }
+            },
+
+
+            /* */
+            data: [1320, 1132, 1601, 1234, 1120, 890, 720]
+        }
+    ]
+            };
+
+            myChart5.setOption(option5);
+
+            var option6 = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                calculable: true,
+                grid: { x: 50, y: 20, x2: 50, y2:50 },
+                xAxis: [
+        {
+            type: 'category',
+            axisLabel: { textStyle: { color: '#fff'} },
+            boundaryGap: false,
+            data: ['9/7', '10/7', '11/7', '12/7', '13/7', '14/7', '15/7']
+        }
+    ],
+                yAxis: [
+        {
+            type: 'value',
+            axisLabel: { textStyle: { color: '#fff'} },
+            min: '90'
+        }
+    ],
+                series: [
+        {
+            name: '功率因数',
+            type: 'line',
+            smooth: true,
+            //itemStyle: { normal: { areaStyle: { type: 'default', color: '#33cc33'}} },
+
+
+            itemStyle: { normal: { color: "#c934aa", areaStyle: { type: 'default', color:
+                       (function () {
+
+                           var zrColor = require('zrender/tool/color');
+                           return zrColor.getLinearGradient(
+                            0, 0, 0, 400,
+                            [[0, '#c934aa'], [0.5, 'rgba(255,255,255,0.1)']]
+                        )
+                       })()
+            }
+            }
+            },
+
+
+            /* */
+            data: [196.33, 185.64, 220.05, 219.34, 235.66, 205.50, 186.86]
+        }
+    ]
+            };
+            myChart6.setOption(option6);
+
+            myChart7.setOption(option6);
+            myChart8.setOption(option5);
+            myChart9.setOption(option6);
+            myChart10.setOption(option5);
+            myChart11.setOption(option5);
+            myChart12.setOption(option5);
+        }
+        )
+
+
+
+        $("#currPosition", window.parent.document).html("当前位置：能耗管理");
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="nbe_base_config" class="logo_title">基本配置</div>
+               <div class="item_R">             
+                   <div id="NBRf" class="logo_link">Refresh</div>
+                   <div id="NBDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="NBSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="online_mode">联网方式</div>
+                    <div class="table_R">
+                        <select id="NBNetworkMode" class="select">
+                            <option class="option" value="0">DHCP</option>
+                            <option class="option" value="1">PPPoE</option> 
+                            <option class="option" value="2">Static</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table" id="net_mediaport" style="display:none">
+                    <div class="table_L" id="nbe_media_port">媒体端口</div>
+                    <div class="table_R">
+                    	<input id="NBPort" style="ime-mode:disabled" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)};" onblur="if(this.value == '') this.value='9000'"/>
+                    </div>
+                </div> 
+                <div class="table" id="net_webport" style="display:none">
+                    <div class="table_L" id="nbe_web_port">web端口</div>
+                    <div class="table_R">
+                    	<input id="NBWebPort" style="ime-mode:disabled" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>
+                    </div>
+                </div>
+                <div class="table" id="net_MobilePort" style="display:none">
+                    <div class="table_L" id="nbe_Mobile_port">Mobile端口</div>
+                    <div class="table_R">
+                    	<input id="NBMobilePort_base" style="ime-mode:disabled" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>
+                    </div>
+                </div>
+                <div class="table" id="net_IpKBPort" style="display:none">
+                    <div class="table_L" id="nbe_IpKB_port">IP键盘端口</div>
+                    <div class="table_R">
+                    	<input id="NBIpKBPort" style="ime-mode:disabled" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='80'"/>
+                    </div>
+                </div>
+                
+                <div class="table" id="net_Apn" style="display:none">
+                    <div class="table_L" id="nbe_Apn">APN</div>
+                    <div class="table_R">
+                    	<input id="NBApn" style="ime-mode:disabled" class="select"  maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\/]/ig,'')}"/>
+                    </div>
+                </div>
+                
+                <div class="table" id="net_DialCode" style="display:none">
+                    <div class="table_L" id="nbe_DialCode">3G拨号切入点</div>
+                    <div class="table_R">
+                    	<input id="NBDialCode" style="ime-mode:disabled" class="select"  maxlength="16" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\/]/ig,'')}"/>
+                    </div>
+                </div>
+                
+                <div class="table" id="net_WirelessUser" style="display:none">
+                    <div class="table_L" id="nbe_WirelessUser">3G网络用户名</div>
+                    <div class="table_R">
+                    	<input id="NBWirelessUser" style="ime-mode:disabled" class="select"  maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\/]/ig,'')}"/>
+                    </div>
+                </div>
+                
+                <div class="table" id="net_WirelessPwd" style="display:none">
+                    <div class="table_L" id="nbe_WirelessPwd">3G网络密码</div>
+                    <div class="table_R">
+                    	<input type="password" class="select NBWirelessPwd" maxlength="32"/>
+                    </div>
+                </div>
+                
+                <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="ip_address">ip地址</div>
+                    <div class="table_R">
+                    <input id="NBipAddress" style="ime-mode:disabled" class="select"/>
+                    </div>
+                </div>
+            <!--table 3-->
+            	<div class="table" id="net_mask" style="display:none">
+                    <div class="table_L" id="subnet_mask">子网掩码</div>
+                    <div class="table_R">
+                        <input id="NBNetMask" style="ime-mode:disabled" class="select"/>
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table" id="net_gateway" style="display:none">
+                    <div class="table_L" id="nbe_default_gateway">默认网关</div>
+                    <div class="table_R">
+                    	<input id="NBGateWay" style="ime-mode:disabled" class="select" />
+                    </div>
+                </div>
+            <!--table 2-free-->
+         		
+              <div  id="pppoeName">
+              <div class="table">
+                    <div class="table_L" id="npe_usename">用户名</div>
+                    <div class="table_R">
+                    	<input id="PPPOEuser" style="ime-mode:disabled" class="select"  maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\/]/ig,'')}"/>
+                    </div>
+                </div>
+                <!--table 11-->
+              <div class="table">
+                    <div class="table_L" id="npe_passwd">密　码</div>
+                    <div class="table_R">
+                    	<input type="password" style="ime-mode:disabled" class="select PPPOEpw" maxlength="32"/>
+                    </div>
+                </div>
+           </div>
+             <!--table 5-->
+         		<div class="table">
+                    <div class="table_L" id="first_DNS">首选DNS</div>
+                    <div class="table_R">
+                    	<input id="NBdns1" style="ime-mode:disabled" class="select"/>
+                    </div>
+                </div>
+             <!--table 6-->
+         	<div class="table">
+                    <div class="table_L" id="standy_DNS">备用DNS</div>
+                    <div class="table_R">
+                    	<input id="NBdns2" style="ime-mode:disabled" class="select"/>
+                    </div>
+                </div>
+              
+             <!--table 7-->
+                  <div class="table">
+                    <div class="table_L" id="pnp">UPNP</div>
+                    <div class="table_R">
+                        <select id="NBUseUPNP" class="select">
+                            <option class="option" value="0">关闭</option>
+                            <option class="option" value="1">打开</option>
+                        </select>
+                    </div>
+                </div>
+                <!--table 8--> 
+                <div class="table" id="net_encryption" style="display:none">
+                    <div class="table_L" id="name_encryption">encryption</div>
+                    <div class="table_R">
+                        <select id="NBUseEncryption" class="select">
+                            <option class="option" value="0">关闭</option>
+                            <option class="option" value="1">打开</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table" id="net_bandwidth" style="display:none">
+                    <div class="table_L" id="name_bandwidth">BandWidth</div>
+                    <div class="table_R">
+                        <select id="NBbandwidth" class="select">
+                        </select>
+                    </div>
+                </div>        
+                <!--table 9--> 
+                 <div class="table" id="net_pppoe_tipshow" style="display:none">
+                     <div class="table_box syspm_use_backup_L">              
+                     <input id="net_pppoe_tip" class="select"  readonly="readonly"/>
+                     </div>
+                  </div>
+    </div>
+    <!--table end-->
+		
+</div>
+<div class="disp"></div>
+<div id="isfix"></div>

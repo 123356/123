@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>电量分析</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
+    <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+
+    <table id="list_data" class="easyui-datagrid" style="width: auto;" idfield="ID"
+           pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
+           fitcolumns="true" fit="true" singleselect="true">
+        <thead>
+            <tr>
+                <th field=' ' checkbox="true">
+                </th>
+                <th data-options="field:'CID',width:15">
+                    CID
+                </th>
+                <th data-options="field:'CName',width:65">
+                    回路名称
+                </th>
+                <th data-options="field:'RecordTime',width:80" formatter="crtTimeFtt">
+                    时间
+                </th>
+                <th data-options="field:'UsePower',width:80,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
+                    用电量
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            站室名称:
+            @*<input data-options="lines:true" style="width: 400px;" id="StationName" />*@
+            <select id="StationName" class="easyui-combobox" name="StationName" style="width: 400px;"></select><b class="RStar">&nbsp*&nbsp</b>
+            数据类型：
+            <select id="dataSrc" class="easyui-combobox" name="src" style="width: 100px;">
+                <option value="1">日</option>
+                <option value="2">月</option>
+                <option value="3">年</option>
+            </select>
+            开始时间：
+            <input id="StartDate" style="width: 120px; height: 26px;" />
+            结束时间:
+            <input id="EndDate" style="width: 120px; height: 26px;" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="~/Content/UserJS/OverviewList._jm.js"></script>
+
+</body>
+</html>

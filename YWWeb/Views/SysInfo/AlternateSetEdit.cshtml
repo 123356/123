@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AlternateSetEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                变电站：
+            </td>
+            <td class="d_l_d" id="pname">
+            </td>
+            <td class="d_l_t">
+                设备名称：
+            </td>
+            <td class="d_l_d" id="dname">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                测点位置：
+            </td>
+            <td class="d_l_d" id="position" colspan="3">
+            </td>
+            <!--           <td class="d_l_t">
+                检测位置：
+            </td>
+            <td class="d_l_d" id="mpid">
+            </td>-->
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                环境ID：
+            </td>
+            <td class="d_l_d">
+                <select id="cbTagID" class="easyui-combobox" style="width: 140px; height: 26px;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                A相测点：
+            </td>
+            <td class="d_l_d" id="TagID_A">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                B相测点：
+            </td>
+            <td class="d_l_d" id="TagID_B">
+            </td>
+            <td class="d_l_t">
+                C相测点：
+            </td>
+            <td class="d_l_d" id="TagID_C">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                关注值(%)：
+            </td>
+            <td class="d_l_d">
+                <input id="IntersetVal" class="easyui-numberbox" precision="2" style="width: 140px;
+                    height: 26px;" />
+            </td>
+            <td class="d_l_t">
+                预警值(%)：
+            </td>
+            <td class="d_l_d">
+                <input id="WarningVal" class="easyui-numberbox" precision="2" style="width: 140px;
+                    height: 26px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                报警值(%)：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <input id="AlarmVal" class="easyui-numberbox" precision="2" style="width: 140px;
+                    height: 26px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                上一次修改人：
+            </td>
+            <td class="d_l_d" id="updater">
+            </td>
+            <td class="d_l_t">
+                修改日期：
+            </td>
+            <td class="d_l_d" id="updatedate">
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var pid=@Html.Raw(Request.QueryString["pid"]); 
+        var asid=@Html.Raw(Request.QueryString["asid"]);
+ 
+        $("#cbTagID").combobox({
+            url: "/BaseInfo/BindPDRTemp?pid="+pid,
+            valueField: 'TagID',
+            textField: 'Position',
+            editable: false,
+            onLoadSuccess: function () { //数据加载完毕事件
+                var data = $('#cbTagID').combobox('getData');
+                if (data.length > 0) {
+                    $("#cbTagID").combobox('select', data[0].TagID);
+                    loadDeviceList(data[0].TagID);
+                }
+            }
+        });
+        loadAlarmInfo();
+        var inval, warval, alaval;
+        function save() {  
+            var tinval = $("#IntersetVal").numberbox('getValue');
+            var twarval = $("#WarningVal").numberbox('getValue');
+            var talaval = $("#AlarmVal").numberbox('getValue');
+            var tagid = $("#cbTagID").combobox('getValue');
+            if (tagid == "") {
+                $.messager.alert("提示", "请设置环境ID！", "info");
+                return false;
+            }
+            else if (tinval == "") {
+                $.messager.alert("提示", "请设置关注值！", "info");
+                $("#IntersetVal")[0].focus();
+                return false;
+            }
+            else if (twarval == "") {
+                $.messager.alert("提示", "请设置预警值！", "info");
+                $("#WarningVal")[0].focus();
+                return false;
+            }
+            else if (talaval == "") {
+                $.messager.alert("提示", "请设置报警值！", "info");
+                $("#AlarmVal")[0].focus();
+                return false;
+            }
+            else if(twarval<tinval)
+            {
+                $.messager.alert("提示", "预警值不能小于关注值（"+tinval+"）！", "info");
+                return false;
+            }
+            else if(talaval<twarval)
+            {
+                $.messager.alert("提示", "报警值不能小于预警值（"+twarval+"）！", "info");
+                return false;
+            }
+            var postData = {
+                AlternateID: asid,
+                TagID: tagid,
+                IntersetVal: tinval,
+                WarningVal: twarval,
+                AlarmVal: talaval
+            };
+            $.post("/SysInfo/SaveAlternateSetModel", postData, function (data) {
+                if (data == "1") {
+                    $.messager.alert("提示", "相间报警值设置成功！", "info");
+                    $("#list_data").datagrid("reload");
+                    $("#editwin").dialog("close");
+                    $('#list_data').datagrid('uncheckAll');
+                }
+                else
+                    $.messager.alert("提示", "操作失误！", "info");
+            });
+        }
+        function loadAlarmInfo() {
+            $.post("/SysInfo/AlternateSetModel", { "asid": asid }, function (data) {
+                var row = eval("(" + data + ")");
+                inval = row.IntersetVal;
+                warval = row.WarningVal;
+                alaval = row.AlarmVal;
+                $("#IntersetVal").numberbox('setValue', inval);
+                $("#WarningVal").numberbox('setValue', warval);
+                $("#AlarmVal").numberbox('setValue', alaval);
+                $("#pname").html(row.PName);
+                $("#dname").html(row.DName);
+                // $("#mpid").html(row.MPID);
+                $("#position").html(row.Position);
+                $("#datatypename").html(row.DataTypeName);
+                $("#cbTagID").combobox('setValue', row.TagID);
+                //$("#TagID").combobox('setValue', row.Ponsion.TagID);
+                $("#TagID_A").html(row.Position + 'A相测点');
+                $("#TagID_B").html(row.Position + 'B相测点');
+                $("#TagID_C").html(row.Position + 'C相测点');
+                var update = row.UpdateDate;
+                if (update == '' || update == undefined)
+                    update = '2016-01-01';
+                else
+                    update = new Date(update).Format("yyyy-MM-dd");
+                var updater = row.Updater;
+                if (updater == '' || updater == 'admin' || updater == undefined)
+                    updater = '系统管理员';
+                $("#updater").html(updater);
+                $("#updatedate").html(update);
+            });
+        }
+    </script>
+</body>
+</html>

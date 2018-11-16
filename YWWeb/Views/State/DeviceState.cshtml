@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <div class="equipment_stanus" id="deviceinfostate"></div>
+    <div id="graphwin" minimizable="false" maximizable="false" collapsible="false"  closed = "false" title = "false">
+    </div>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 1, pid = 1;
+        if (Request['did'] != null)
+            did = Request['did'];
+        $.post("/PDRInfo/GetDeviceInfo", { "did": did }, function (data) {  //获取测点列表
+            $("#deviceinfostate").html(eval("(" + data + ")"));
+        });
+       
+    </script>
+
+</body>
+</html>

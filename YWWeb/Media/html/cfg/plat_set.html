@@ -1,0 +1,71 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="plat_config" class="logo_title">Platform</div>
+               <div class="item_R">
+                   <div id="PlatRF" class="logo_link">Refresh</div>
+                   <div id="PlatSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="NMPlat_Enable">Enable Platform</div>
+                    <div class="table_R">
+                    <select id="SLPlat_Enable" class="select" >
+                    	<option value="0">Disable</option>
+                        <option value="1">Enable</option>
+                    </select>    
+                    </div>
+                </div>
+            <!--table 2-free-->
+            	<div class="table">
+                    <div class="table_L" id="NMPlat_Address">Platform IP</div>
+                    <div class="table_R">
+                        <input id="TSPlat_Address" maxlength="28" class="select"/>
+                     </div>
+                </div>
+           <!--table 3-free-->     
+                <div class="table">
+                    <div class="table_L" id="NMPlat_Port">Platform Port</div>
+                    <div class="table_R">
+                    	<input id="TSPlat_Port" class="select" maxlength="5" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)}" onblur="if(this.value == '') this.value='9000'"/>
+                    </div>
+                </div>
+           <!--table 4-free-->      
+                <div class="table">
+                    <div class="table_L" id="NMPlat_Select">Platform</div>
+                    <div class="table_R">
+                    	<select id="SLPlat_Select" class="select">
+        					<option value="0">RSPlatform</option>
+        				</select>
+                    </div>
+                </div>
+          <!--table 5-free-->       
+         		<div class="table">
+                    <div class="table_L" id="NMPlat_Protocol">Protocol</div>
+                    <div class="table_R">
+                    <select id="SLPlat_Protocol" class="select">
+                        <option value="0">UDP</option>
+            			<option value="1">TCP</option>
+                    </select>
+                    </div>
+                </div>  
+         <!--table 6-->
+                <div class="table">
+                    <div class="table_L" id="NMPlat_Puid">Puid</div>
+                    <div class="table_R">
+                    <input id="TSPlat_Puid" maxlength="28" class="select"/>
+                    </div>
+                </div>        
+    </div>
+    <!--table end-->		
+</div>

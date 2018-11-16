@@ -1,0 +1,910 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Overview</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <div class="leftmenu" style="float: left;">
+        <span class="leftmenutitle"><a href="#"></a></span>
+        <div class="leftmenu_content">
+            <div class="leftmenu_search leftmenu_search_padding">
+                <input data-options="lines:true" style="width: 200px;" id="StationID" />
+            </div>
+            <div>
+                <ul class="one" id="menuinfo">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="statushome" style="float: left; display: none" id="allcharts">
+        <div class="statushomeleft">
+            <div class="statushomeleft_top">
+                <div class="statushome_charts1" id="userCharts1">
+                </div>
+                <div class="statushome_charts1info">
+                    最高负荷：<span id="maxpower"></span>kw，最高负载率：<span id="maxpowerrate"></span>%</div>
+            </div>
+            <div class="statushomeleft_bottom">
+                <div class="statushome_charts2" id="userCharts2">
+                </div>
+                <div class="statushome_charts3" id="userCharts3">
+                </div>
+            </div>
+        </div>
+        <div class="statushomeright">
+            <div class="statushome_charts4">
+                <h3>
+                    功率因数</h3>
+                <span style="width: 35%">
+                    <p>
+                        合格率：<label id="fpyfactor"></label>%<br />
+                        最小值：<label id="minfactor"></label><br />
+                        当前值：<label id="nowfactor"></label>
+                    </p>
+                </span><span id="userCharts4" style="width: 65%"></span>
+            </div>
+            <div class="statushome_charts5">
+                <h3>
+                    电压不平衡度</h3>
+                <span style="width: 35%">
+                    <p>
+                        合格率：<label id="fpyvoltaget"></label>%<br />
+                        最小值：<label id="minvoltaget"></label><br />
+                        当前值：<label id="nowvoltaget"></label></p>
+                </span><span id="userCharts5" style="width: 65%"></span>
+            </div>
+            <div class="statushome_charts6">
+                <h3>
+                    电流不平衡度</h3>
+                <span style="width: 35%">
+                    <p>
+                        合格率：<label id="fpycurrent"></label>%<br />
+                        最小值：<label id="mincurrent"></label><br />
+                        当前值：<label id="nowcurrent"></label></p>
+                </span><span id="userCharts6" style="width: 65%"></span>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id='empty' style='color: White; text-align: center; font-size: 40px; padding-top: 15%;;padding:200px;'>
+        未查到数据！</div>
+</body>
+</html>
+<script type="text/javascript">
+    $("#currPosition", window.top.document).html("当前位置：状态 > 总览 ");
+
+    var pid = $.cookie('cookiepid');
+    var first = 0;
+    $(function () {
+        $(".statushome").width($(window).width() - $(".leftmenu").innerWidth());
+        var indexpage = document.body.clientWidth;
+        var leftmenu = $(".leftmenu").width();
+        var indexrightwidth = $(".index_right").width();
+        var cwidth = indexpage - leftmenu;
+        var ccount = 0;
+        $(".leftmenutitle a").click(function () {
+            if (ccount % 2 == 0) {
+                $(".leftmenu").animate({ "margin-left": -leftmenu }, 150);
+                $(".statushome").width(indexpage);
+                $(".leftmenutitle a").attr("class", "leftmenutitleh");
+                $(".leftmenutitle").css({ "right": "-10px" });
+
+            }
+            else {
+                $(".leftmenu").animate({ "margin-left": 0 }, 150);
+                $(".statushome").width(cwidth);
+                $(".leftmenutitle a").attr("class", "leftmenutitlec");
+                $(".leftmenutitle").css({ "right": "3px" });
+
+            }
+            ccount++;
+        });
+
+        $.post("/Home/StationDeviceTree", { "pid": pid, "typeName": "变压器室" }, function (data) {
+            $("#menuinfo").html(data);
+            $(".one > li > a").click(function () {
+                $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                $(this).parents().siblings().find(".two").hide(300);
+                $(this).siblings(".two").toggle(300);
+                $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+            });
+            $(".two > li > a").click(function () {
+                $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+            });
+            var pageHeight = document.documentElement.clientHeight - 50; //iframe
+            var accordionheight = ($(".one").children("ul li").length * 39);
+            $('.two').height(pageHeight - accordionheight);
+        });
+        var gpid = $.cookie('cookiepid');
+        if (gpid != undefined || gpid != 6) {
+            $("#StationID").combotree("setValue", gpid);
+        }
+    });
+    $('#StationID').combotree({
+        url: '/Home/ComboTreeMenu',
+        multiple: false,
+        onBeforeSelect: function (node) {
+            if (!$(this).tree('isLeaf', node.target)) {
+                $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                return false;
+            }
+        },
+        onClick: function (node) {
+            if (!$(this).tree('isLeaf', node.target)) {
+                $('#StationID').combo('showPanel');
+            }
+            else {
+                //返回树对象                
+                if (node.id != 0) {
+                    pid = node.id;
+                    $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                    //$("#maincontent", window.parent.document).attr('src', '/State/Overview?pid=' + pid + '&did=0');
+                    $("#main_frame", window.parent.document).attr('src', '/State/Overview?pid=' + pid + '&did=0');
+                    $.post("/Home/StationDeviceTree", { "pid": pid, "typeName": "变压器室" }, function (data) {
+                        $("#menuinfo").html(data);
+                        $(".one > li > a").click(function () {
+                            $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                            //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                            $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                            $(this).parents().siblings().find(".two").hide(300);
+                            $(this).siblings(".two").toggle(300);
+                            $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                        });
+                        $(".two > li > a").click(function () {
+                            $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                        });
+                        var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                        var accordionheight = ($(".one").children("ul li").length * 39);
+                        $('.two').height(apgeHeight - accordionheight);
+                    });
+                }
+            }
+        }
+    });
+
+    var Request = new Object();
+    Request = GetRequest();
+    var did = 0, pid = 103;
+    pid = $.cookie('cookiepid');
+    if (Request['did'] != null)
+        did = Request['did'];
+    if (Request['pid'] != null)
+        pid = Request['pid'];
+
+    var ajaxbg = top.$("#loading_background,#loading");
+    ajaxbg.show();
+    $.ajaxSettings.async = true;  //同步才能获取数据
+    callAway(pid, did);
+    function callAway(pid, did) {
+        $.post("/State/StateData", { "pid": pid, "did": did }, function (data) {
+
+            var datafull = data.split('$');
+            if (datafull[0] != "[]") {
+                $('#allcharts').css('display', '');
+                $('#empty').css('display', 'none');
+                ajaxbg.hide();
+                var datapower = datafull[3].split(',');
+                var datatemperature = datafull[6].split(',');
+                var datafactor = datafull[7].split(',');
+                var datacurrent = datafull[8].split(',');
+                var datavoltaget = datafull[9].split(',');
+                var factor = datafactor[0].replace('"', '');
+                var current = datacurrent[0].replace('"', '');
+                var voltaget = datavoltaget[0].replace('"', '');
+
+                //页面显示
+                $('#maxpower').html(datapower[2]);
+                $('#maxpowerrate').html(datapower[3].replace('"', ''));
+
+                $('#fpyfactor').html(factor);
+                $('#minfactor').html(datafactor[1]);
+                $('#nowfactor').html(datafactor[2].replace('"', ''));
+
+                $('#fpycurrent').html(current);
+                $('#mincurrent').html(datacurrent[1]);
+                $('#nowcurrent').html(datacurrent[2].replace('"', ''));
+
+                $('#fpyvoltaget').html(voltaget);
+                $('#minvoltaget').html(datavoltaget[1]);
+                $('#nowvoltaget').html(datavoltaget[2].replace('"', ''));
+
+                var myChart = echarts.init(document.getElementById('userCharts1'));
+                var myChart2 = echarts.init(document.getElementById('userCharts2'));
+                var myChart4 = echarts.init(document.getElementById('userCharts4'));
+                var myChart5 = echarts.init(document.getElementById('userCharts5'));
+                var myChart6 = echarts.init(document.getElementById('userCharts6'));
+                var option = {
+                    title: {
+                        text: "今日用电负荷情况",
+                        x: 'center',
+                        textStyle: {
+                            color: "rgb(255, 255, 255)",
+                            fontSize: 20,
+                            fontWeight: "bolder"
+                        },
+                        padding: 15
+                    },
+                    tooltip: {
+                        trigger: "axis"
+                    },
+                    legend: {
+                        //                data: ["环比", "当前", "平均值"],
+                        data: [
+            {
+                name: '环比',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 'bolder',
+                    color: '#cccccc'
+                }
+            },
+            {
+                name: '当前',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 'bolder',
+                    color: '#cccccc'
+                }
+            },
+            {
+                name: '平均值',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 'bolder',
+                    color: '#cccccc'
+                },
+                icon: '../../Content/images/pj.png'
+            }
+        ],
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        },
+                        x: "right",
+                        padding: 15
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            magicType: {
+                                show: false,
+                                type: ["line", "bar"]
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [
+        {
+            type: "category",
+            data: eval("(" + datafull[0] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                formatter: ""
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false,
+                areaStyle: {
+                    type: "default"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            }
+        }
+    ],
+                    yAxis: [
+        {
+            type: "value",
+            min: eval("(" + datapower[0].replace('"', '') + ")"),
+            max: eval("(" + datapower[1] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "dashed",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            nameLocation: "end",
+            name: "负荷（kW）",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            }
+        }
+    ],
+                    series: [
+        {
+            name: "环比",
+            type: "bar",
+            data: eval("(" + datafull[1] + ")"),
+            barWidth: 26
+        },
+        {
+            name: "当前",
+            type: "line",
+            data: eval("(" + datafull[2] + ")"),
+            markLine: {
+                symbol: 'none',
+                itemStyle: {
+                    normal: {
+                        color: '#1e90ff',
+                        label: {
+                            show: false
+                        }
+                    }
+                },
+                data: [
+                    { type: 'average', name: '平均值' }
+                ]
+            }
+        }
+    ],
+                    backgroundColor: "rgb(0, 0, 0)",
+                    grid: {
+                        x: 54,
+                        y: 76,
+                        x2: 33,
+                        y2: 60,
+                        borderWidth: 0
+                    },
+                    color: ["rgb(29, 187, 55)", "rgb(255, 127, 0)", "rgb(86, 170, 255)", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+                };
+                myChart.setOption(option);
+
+                var option2 = {
+                    title: {
+                        text: "最高温度",
+                        textStyle: {
+                            color: "rgb(255, 255, 255)",
+                            fontSize: 20,
+                            fontWeight: "normal"
+                        },
+                        padding: 15
+                    },
+                    tooltip: {
+                        trigger: "axis"
+                    },
+                    legend: {
+                        data: ["环比", "当前"],
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        },
+                        x: "right",
+                        padding: 15
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            magicType: {
+                                show: false,
+                                type: ["line", "bar"]
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [
+        {
+            type: "category",
+            data: eval("(" + datafull[0] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                formatter: ""
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false,
+                areaStyle: {
+                    type: "default"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            }
+        }
+    ],
+                    yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "dashed",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            nameLocation: "end",
+            name: "温度（℃）",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            min: eval("(" + datatemperature[0].replace('"', '') + ")"),
+            max: eval("(" + datatemperature[1].replace('"', '') + ")"),
+            splitNumber: 4
+        }
+    ],
+                    series: [
+        {
+            name: "环比",
+            type: "line",
+            data: eval("(" + datafull[4] + ")"),
+            symbol: "circle"
+        },
+        {
+            name: "当前",
+            type: "line",
+            data: eval("(" + datafull[5] + ")"),
+            symbol: "circle"
+        }
+    ],
+                    backgroundColor: "rgb(0, 0, 0)",
+                    grid: {
+                        x: 54,
+                        y: 76,
+                        x2: 33,
+                        y2: 60,
+                        borderWidth: 0
+                    },
+                    color: ["rgb(255, 0, 0)", "rgb(86, 170, 255)", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+                };
+                myChart2.setOption(option2);
+
+
+                var option4 = {
+                    tooltip: {
+                        trigger: "item",
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    series: [
+        {
+            name: "功率因数",
+            type: "pie",
+            radius: ["50%", "70%"],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        formatter: "{a}",
+                        position: "left"
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: eval("(" + (100 - factor) + ")"),
+                    name: "不合格率"
+                },
+                {
+                    value: eval("(" + factor + ")"),
+                    name: "合格率"
+                }
+            ]
+        }
+    ],
+                    backgroundColor: "rgb(0, 0, 0)",
+                    color: ["rgb(51, 51, 51)", "rgb(51, 103, 153)", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                    title: {
+                        text: "",
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        },
+                        padding: 15
+                    }
+                };
+                myChart4.setOption(option4);
+
+                var option5 = {
+                    tooltip: {
+                        trigger: "item",
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    series: [
+        {
+            name: "电压不平衡度",
+            type: "pie",
+            radius: ["50%", "70%"],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        formatter: "{a}",
+                        position: "left"
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: eval("(" + (100 - voltaget) + ")"),
+                    name: "不合格率"
+                },
+                {
+                    value: eval("(" + voltaget + ")"),
+                    name: "合格率"
+                }
+            ]
+        }
+    ],
+                    backgroundColor: "rgb(0, 0, 0)",
+                    color: ["rgb(51, 51, 51)", "#417777", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                    title: {
+                        text: "",
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        },
+                        padding: 15
+                    }
+                };
+                myChart5.setOption(option5);
+
+                var option6 = {
+                    tooltip: {
+                        trigger: "item",
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: true
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    series: [
+        {
+            name: "电流不平衡度",
+            type: "pie",
+            radius: ["50%", "70%"],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        formatter: "{a}",
+                        position: "left"
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: eval("(" + (100 - current) + ")"),
+                    name: "不合格率"
+                },
+                {
+                    value: eval("(" + current + ")"),
+                    name: "合格率"
+                }
+            ]
+        }
+    ],
+                    backgroundColor: "rgb(0, 0, 0)",
+                    color: ["rgb(51, 51, 51)", "#993365", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                    title: {
+                        text: "",
+                        textStyle: {
+                            color: "rgb(255, 255, 255)"
+                        },
+                        padding: 15
+                    }
+                };
+                myChart6.setOption(option6);
+            }
+            else {
+                ajaxbg.hide();
+                $('#allcharts').css('display', 'none');
+                $('#empty').fadeIn();
+            }
+            if (first == 0) {
+                LoadRanking();
+                first++
+            }
+        });
+    }
+    var Circuits = [], Datalist = [];
+    function LoadRanking() {
+        $.post("/State/StateMaxLoad", { "pid": pid, "did": did }, function (data) {
+            var dataJson = eval("(" + data + ")");
+            var colors = ['#35cc31', '#34b0ee', '#9cfeff', '#ff9a30', '#fe0100'];
+            for (i = 0; i < dataJson.length; i++) {
+                Circuits.push(dataJson[i].CName);
+                Datalist.push(
+          {
+              value: parseInt(dataJson[i].MaxValue),
+              itemStyle: {
+                  normal: { color: colors[i] }
+              }
+          });
+            }
+            var myChart3 = echarts.init(document.getElementById('userCharts3'));
+            var option3 = {
+                title: {
+                    text: "最大负荷",
+                    textStyle: {
+                        color: "rgb(255, 255, 255)",
+                        fontSize: 20,
+                        fontWeight: "normal"
+                    },
+                    padding: 15
+                },
+                tooltip: {
+                    trigger: "axis"
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        dataView: {
+                            show: true,
+                            readOnly: true
+                        },
+                        magicType: {
+                            show: false,
+                            type: ["line", "bar"]
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                calculable: true,
+                xAxis: [
+        {
+            type: "value",
+            boundaryGap: [0, 0.01],
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                show: false,
+                formatter: "{value}kW"
+            },
+            splitLine: {
+                show: false
+            },
+            nameLocation: "end",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            position: "bttom"
+        }
+    ],
+                yAxis: [
+        {
+            type: "category",
+            data: Circuits,
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            axisTick: {
+                show: false
+            }
+        }
+    ],
+                series: [
+        {
+            type: "bar",
+            name: "最大负荷",
+            data: Datalist,
+            itemStyle: {
+                normal: {
+                    color: "rgb(136, 136, 201)",
+                    label: {
+                        show: true,
+                        position: "right",
+                        formatter: "{c} kW"
+                        //textStyle: {
+                        // color: "rgb(255, 255, 255)"
+                        //}
+                    }
+                }
+            }
+        }
+    ],
+                backgroundColor: "rgb(0, 0, 0)",
+                color: ["rgb(255, 0, 0)", "rgb(255, 127, 0)", "rgb(86, 255, 255)", "rgb(86, 170, 255)", "#6495ed", "rgb(86, 255, 86)", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                grid: {
+                    x: 74,
+                    y: 76,
+                    x2: 33,
+                    y2: 40,
+                    borderWidth: 0
+                }
+            };
+            myChart3.setOption(option3);
+        });
+    }
+
+</script>

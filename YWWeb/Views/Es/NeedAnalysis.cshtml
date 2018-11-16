@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>最大需量分析</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/jquery-easyui-1.4.5/macarons.js"></script>
+    <script src="~/Content/js/json2.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div id="tb" class="searchbar">
+                    <div class="searchrow">
+                        用户名称:
+                        <input class="easyui-combobox" style="width: 180px; height: 26px;" id="UnitID" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="searchrow">
+                    <span style="font-size: 18px;">最大需量趋势图</span>
+                    &nbsp&nbsp&nbsp&nbsp选择:
+                    <input type="radio" class="GraphType" name="GraphType" value="0" checked="checked" />月最大需量
+                    <input type="radio" class="GraphType" name="GraphType" value="1" />年最大需量
+                </div>
+                <div id="userCharts1" class="powerquality_curve   lineloss_curve" style="overflow: auto">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <span style="font-size: 18px;">月最大需量</span>
+        <table id="list_data" class="easyui-datagrid" style="width:100%;height:350px"
+               iconCls="icon-save"
+               rownumbers="true" pagination="true">
+            <thead>
+                <tr>
+
+                    <th field='RecordTime' width="20%">
+                        月份
+                    </th>
+                    <th field='CompanyName' width="20%">
+                        公司名称
+                    </th>
+                    <th field='NeedPower' width="20%">
+                        最大需量  KW
+                    </th>
+                    <th field='UsePower' width="20%">
+                        当月用电量 MW‧h
+                    </th>
+                    <th field='NeedPowerTime' width="20%">
+                        最大需量时间
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div id='Error' style='color: White; text-align: center; font-size: 20px; display: none;padding:200px; z-index:100000'>
+        未查到数据！
+    </div>
+</body>
+</html>
+<script src="~/Content/UserJS/NeedAnalysis._jm.js"></script>

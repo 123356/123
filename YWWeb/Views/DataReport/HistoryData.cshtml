@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "历史数据查询";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <style type="text/css">
+    .searchrow i{padding-right:10px; font-style:normal;}    
+   	.paging { height:30px; width:100%; background:#555; border:1px solid #222; font-size:12px; color:#fff; position:fixed; left:0px; bottom:0px;}
+	.paging span { display:block; height:30px; padding:2px; float:left;}
+	.paging select, .paging input { outline:none; resize:none; border:none; padding:0; -moz-border-radius: 5px; -webkit-border-radius: 5px;  border-radius:5px;}
+	.paging select { width:50px; height:25px; min-height:inherit;}
+	.paging input { width:30px; height:25px; min-height :inherit; line-height:20px; text-align:center; margin:0px 5px; }
+	.homepage a, .previouspage a, .nextpage a, .lastpage a { display:block; width:8px; height:12px; margin:6px; background:url(../content/images/pagination_icons.png) no-repeat;}
+	.homepage a { background-position:0 0;}
+	.previouspage a { background-position:-16px 0;}
+	.nextpage a { background-position:-32px 0;}
+	.lastpage a { background-position:-48px 0;} 
+    </style>
+</head>
+<body>
+    <table id="list_data" style="width: auto;" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#Histb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                @*<th field='设备名称' width="70px">
+                    设备名称
+                </th>
+                <th field='设备编码' width="100px">
+                    设备编码
+                </th>*@
+                <th field='TagName' width="100px">
+                    测点名称
+                </th>
+                <th field='TagID' width="60px">
+                    测点编号
+                </th>
+                <th field='Remarks' width="30px">
+                    监测位置
+                </th>
+                <th field='PV' sortable="true"  width="30px">
+                    测量值
+                </th>
+                @*<th field='报警限值' width="30px">
+                    报警限值
+                </th>*@
+                <th field='AlarmStatus' width="40px">
+                    报警状态
+                </th>
+                <th field='RecTime' width="50px">
+                    监测时间
+                </th>
+            </tr>
+        </thead>
+    </table>
+<div class="paging">
+	<span class="pagingnumber"><select><option>10</option><option selected = "selected">20</option></select></span>
+    <span class="homepage"><a onclick="JumpPage(-9999)" style =" cursor:pointer"></a></span>
+    <span class="previouspage"><a onclick="JumpPage(-1)" style =" cursor:pointer"></a></span>
+    <span>第<input type="text" id = "Index"/>页</span>
+    <span class="nextpage"><a onclick="JumpPage(1)" style =" cursor:pointer"></a></span>
+@*    <span class="lastpage"><a href=""></a></span>*@
+</div>
+    <div id="Histb" class="searchbar">
+        <div class="searchrow history_search">
+            <i>站室：
+            <select id="SPID" style="width: 150px; height: 26px;">起始时间
+            </select></i><i> 设备：
+                <select id="selDID" style="width: 150px; height: 26px;">
+                </select>
+                </i><i> 回路：
+                <select id="selCID" style="width: 150px; height: 26px;">
+                </select>
+                   @*      </i> <i>监测类型：
+                    <select id="cbType" style="width: 120px; height: 26px;">
+                    </select>*@
+                </i><i>监测名称：
+                    <input id="cname" style="width: 120px;" /></i> <i>起始时间：
+                        <input id="StartDate" style="width: 120px; height: 26px;" />
+                    </i><i>结束时间：
+                        <input id="EndDate" style="width: 120px; height: 26px;" /></i>
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+    <script src="~/Content/UserJS/HistoryData._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

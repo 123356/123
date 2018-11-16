@@ -1,0 +1,293 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>StationInfo</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3>
+                    <div id="pName">兴顺达客运公司天宫院站1</div>
+
+                    <div id="daysinfo" style="display:none;margin-left:40%">
+
+                        <tr class="info">
+                            <td>
+                                安全运行：
+                            </td>
+                            <td>
+                                <font id="days" color="red"></font>
+                            </td>
+                            天
+                        </tr>
+                    </div>
+                </h3>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+
+                <table class="table">
+                    <tbody>
+                        <tr class="info">
+                            <td>
+                                站室编码：
+                            </td>
+                            <td>
+                                <div id="pCode"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                公司名称 ：
+                            </td>
+                            <td>
+                                <div id="pCompanyName"></div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                位置：
+                            </td>
+                            <td>
+                                <div id="pPosition"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                客户联系人：
+                            </td>
+                            <td>
+                                <div id="pLinkMan"> </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                手机号码：
+                            </td>
+                            <td>
+                                <div id="pMobile"> </div>
+                            </td>
+                        </tr>
+
+                        @*<tr >
+                                <td>
+                                    所属区域：
+                                </td>
+                                <td>
+                                    <div id="pAreaID"> </div>
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td>
+                                    站室分类：
+                                </td>
+                                <td>
+                                    <div id="pTypeID"> </div>
+                                </td>
+                            </tr>*@
+                        <tr>
+                            <td>
+                                投运时间：
+                            </td>
+                            <td>
+                                <div id="OperationDate"></div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                合同期限：
+                            </td>
+                            <td>
+                                <div id="duration"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                备注：
+                            </td>
+                            <td>
+                                <div id="pRemarks"></div>
+                            </td>
+                        </tr>
+
+                        <tr class="info">
+                            <td>
+                                运维人员：
+                            </td>
+                            <td>
+                                <div id="ywman"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                电话：
+                            </td>
+                            <td>
+                                <div id="ywmantel"></div>
+                            </td>
+                        </tr>
+
+                        <tr class="info">
+                            <td>
+                                电压等级：
+                            </td>
+                            <td>
+                                <div id="Vlevel"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                变压器台数：
+                            </td>
+                            <td>
+                                <div id="Transformers"></div>
+                            </td>
+                        </tr>
+
+                        <tr class="info">
+                            <td>
+                                总容量：
+                            </td>
+                            <td>
+                                <div id="CapTotal"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                当前时间
+                            </td>
+                            <td>
+                                <div id="time"></div>
+                            </td>
+                        </tr>
+
+                        <tr class="info">
+                            <td>
+                                <h4></h4>
+                            </td>
+                            <td>
+                                <h4></h4>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-6 column">
+                <div id="dituContent" style="height: 330px;">
+                    @*<iframe scrolling="auto" allowtransparency="true" name="main" style="width:100%;height:90%;background:url(../../Content/images/yx_map.png) no-repeat ; background-size:contain"> </iframe>*@
+                    <iframe src="../Home/MapPageBaidu" name="main_frame" id="main_frame" style="width:100%;height:99%;" scrolling="no"></iframe>
+                </div>
+                <!--报警弹窗-->
+                <div class="alarm_popups_box radius5" id="alarm_popups">
+                    <h3>提示信息</h3>
+                    <div class="alarm_popups_content" id="alarm_content">
+                    </div>
+                    <div class="alarm_popups_btn">
+                        <form target="main_frame" action="/AlarmManage/Index?pid=0">
+                            <input type="button"
+                                   value="关闭" class="btn_style btn_cancel" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var Request = GetRequest();
+        var pid = 0;
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        else
+            pid = $.cookie('cookiepid');
+
+        getPDRInfoById(pid);
+
+        function getPDRInfoById(pId) {
+
+            $.post("/PDRInfo/getPDRInfoById", { "PID": pId }, function (data) {
+                var row = eval("(" + data + ")");
+                if (row == null)
+                    return;
+
+                $("#pName").html(row.pdrInfo.Name);
+                $("#ywmantel").html(row.Mobilephone);
+
+
+                $("#Vlevel").html(row.pdrInfo.Vlevel);
+                $("#Transformers").html(row.pdrInfo.Transformers);
+                $("#CapTotal").html(row.pdrInfo.CapTotal);
+
+                $("#pCode").html(row.pdrInfo.EadoCode == "" ? "<br>" : row.pdrInfo.EadoCode);
+                $("#pCompanyName").html(row.pdrInfo.pCompanyName == "" ? "<br>" : row.pdrInfo.CompanyName);
+                $("#pPosition").html(row.pdrInfo.Position == "" ? "<br>" : row.pdrInfo.Position);
+
+                $("#pLinkMan").html(row.pdrInfo.LinkMan == "" ? "<br>" : row.pdrInfo.LinkMan);
+                $("#pMobile").html(row.pdrInfo.Mobile == "" ? "<br>" : row.pdrInfo.Mobile);
+                //$("#pAreaID").html(row.AreaID);
+                //$("#pTypeID").html(row.TypeID);
+
+                if (row.pdrInfo.Remarks != null)
+                    $("#pRemarks").html(row.pdrInfo.Remarks.replace(/<br\s*\>/g, "\n"));
+                else
+                    $("#pRemarks").html("<br>");
+
+                $("#imgCarousel_1").attr('src', "/UploadFiles/PDR/pdr" + pid + "_1.jpg");
+                $("#imgCarousel_2").attr('src', "/UploadFiles/PDR/pdr" + pid + "_2.jpg");
+                $("#imgCarousel_3").attr('src', "/UploadFiles/PDR/pdr" + pid + "_3.jpg");
+
+                var date = new Date()
+                var timeStr = (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate())
+                //var timeStr = time.getYear() + "-" + time.getMonth() + "-" + time.getDay()
+                $("#time").html(timeStr)
+                if (row.pdrInfo.OperationDate && row.pdrInfo.OperationDate.indexOf('T') > 0)
+                    $("#OperationDate").html(row.pdrInfo.OperationDate.replace('T', ' '))
+
+                if (row.constract) {
+                    $("#ywman").html(row.constract.person);
+                    var start = row.constract.start_time;
+                    var end = row.constract.end_time;
+                    $("#duration").html(start.substring(0, start.indexOf("T")) + "~" + end.substring(0, end.indexOf("T")))
+                    startDate = new Date(start.replace('T', ' '))
+                    var days = Date.daysBetween(startDate, date) - 1;
+                    if (days) {
+                        $("#days").html(days)
+                        document.getElementById('daysinfo').style.display = '';
+                    } else {
+                        document.getElementById('daysinfo').style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        Date.daysBetween = function (date1, date2) {   //Get 1 day in milliseconds
+            var one_day = 1000 * 60 * 60 * 24;    // Convert both dates to milliseconds
+            var date1_ms = date1.getTime();
+            var date2_ms = date2.getTime();    // Calculate the difference in milliseconds
+            var difference_ms = date2_ms - date1_ms;        // Convert back to days and return
+            return Math.round(difference_ms / one_day);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>需量分析</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="elc_anlysis">
+        <div id="Histb" class="searchbar searchbar2">
+            <div class="searchrow">
+                设备名称:
+                <select id="SDID" style="width: 150px; height: 26px;">
+                </select>
+            </div>
+            @*<div class="searchrow">
+                回路名称:
+                <select id="Circuit" style="width: 150px; height: 26px;">
+                </select>
+            </div>*@
+            <div class="searchrow">
+                监测日期:
+                <input type="radio" class="GraphType" name="GraphType" value="0" checked="checked" />近一日
+                <input type="radio" class="GraphType" name="GraphType" value="1" />近一周
+                <input type="radio" class="GraphType" name="GraphType" value="2" />近一月
+                <input type="radio" class="GraphTypeOg" name="GraphType" value="3" onclick="unlock()" />自定义
+                <div id="scroll" style="float: right; display: none">
+                    <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                    至
+                    <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                    <div class="searchbutton" style="float: right">
+                        <button title="查 询" onclick="DoSearch();" class="page_table_but">
+                            <img src="/Content/images/Icon16/zoom.png">查 询</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cavans" class="elc_anlysis_box">
+            <h3 class="current_selection">
+                当前对象：<span id="obj"></span> 容量：<span id="obje"></span>kvA</h3>
+            <div id="userCharts1" class="elc_anlysis_curve">
+            </div>
+            <div id="" class="elc_anlysis_tab">
+                <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="page_table_list scroll_bar">
+                    <thead>
+                        <tr>
+                            <th height="35" scope="col">
+                                日期
+                            </th>
+                            <th scope="col">
+                                最大需量
+                            </th>
+                            <th scope="col">
+                                发生时间
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td align="center" id="DateTime">
+                                2017-03-03
+                            </td>
+                            <td align="center" id="MaxNeed">
+                                1200
+                            </td>
+                            <td align="center" id="HappenTime">
+                                2017-03-03 15:29:00
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                            <td align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id='Error' style='color: White; text-align: center; font-size: 20px; display: none;padding:200px;'>
+            未查到数据！</div>
+    </div>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：电能 > 需量分析 ");
+        var pid = 1, did = 1, cid = 0, totaltype = 1, datatypeid = 13, datestart, dateend, canAdd = 0;
+        var aline = '1';
+        $("#AlarmLine").change(function () {
+            LoadGraphData();
+        });
+        $("#SDID").combotree({
+            url: "/BaseInfo/PdrTraComboTreeMenu",
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#SDID').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#SDID').combo('showPanel');
+                }
+                else {
+                    pid = node.id.split('_')[0];
+                    did = node.id.split('_')[1];
+                    //loadCircuit(did);
+                    lock();
+                    $('#obj').html(node.text);
+                    $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                }
+            },
+            onLoadSuccess: function (data) {
+                $('#SDID').combotree('tree').tree("collapseAll");
+                var roots = $('#SDID').combotree('tree').tree('getRoots');
+                var Lastpid = $.cookie('cookiepid'), Index = 0;
+                for (i = 0; i < roots.length; i++) {
+                    if (roots[i].id == Lastpid) {
+                        Index = i
+                    }
+                }
+                var child = $('#SDID').combotree('tree').tree('getChildren', roots[Index].target);
+                pid = child[0].id.split('_')[0];
+                did = child[0].id.split('_')[1];
+                //loadCircuit(did);
+                lock();
+                $('#obj').html(child[0].text);
+                $('#SDID').combotree('setValue', child[0].text);
+                $('#SDID').combotree('tree').tree("expand", roots[Index].target); //展开
+            }
+        });
+        function loadCircuit(did) {
+            $("#Circuit").combobox({
+                url: "/BaseInfo/BindCircuit?DID=" + did,
+                valueField: 'CID',
+                textField: 'CName',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    cid = parseInt(data[0].CID);
+                    cid == 0 ? cid : 0;
+                    $("#Circuit").combobox('select', cid);
+                },
+                onSelect: function (data) {
+                    cid = data.CID;
+                    lock();
+                }
+            });
+        }
+        $('.GraphType').click(function () {
+            lock();
+        });
+        function lock() {
+            $('#scroll').fadeOut();
+            totaltype = $("input[name='GraphType']:checked").val();
+            startdate = "";
+            enddate = "";
+            canAdd = 0;
+            if (totaltype == 0) {
+                $('#time').removeClass('curve_switchactive');
+                $('#one').addClass('curve_switchactive');
+            }
+            else {
+                $('#one').removeClass('curve_switchactive');
+                $('#time').addClass('curve_switchactive');
+            }
+            LoadGraphData();
+        }
+        function unlock() {
+            $('#StartDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#EndDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#StartDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#EndDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#scroll').fadeIn();
+            canAdd = 1;
+            totaltype = $("input[name='GraphType']:checked").val();
+            $('#one').removeClass('curve_switchactive');
+            $('#time').addClass('curve_switchactive');
+        }
+        function DoSearch() {
+            datestart = $('#StartDate').datebox('getValue');
+            dateend = $('#EndDate').datebox('getValue');
+            if (datestart == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择开始日期！", "info");
+            }
+            else if (dateend == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择结束日期！", "info");
+            }
+            else if (canAdd == 1) {
+                var aDate, oDate1, oDate2, iDays
+                aDate = datestart.split("-");
+                oDate1 = new Date(datestart);     //转换为12-18-2002格式
+                aDate = dateend.split("-");
+                oDate2 = new Date(dateend);
+                iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+                if (iDays < 8) {
+                    $('#time').removeClass('curve_switchactive');
+                    $('#one').addClass('curve_switchactive');
+                }
+                else {
+                    $('#one').removeClass('curve_switchactive');
+                    $('#time').addClass('curve_switchactive');
+                }
+                LoadGraphData();
+            }
+            else {
+                LoadGraphData();
+            }
+        }
+
+        function LoadGraphData() {
+            $.post("/PowerQuality/PowerQualityData", { "pid": pid, "did": did, "cid": cid, "totaltype": totaltype, "datatypeid": datatypeid, "datestart": datestart, "dateend": dateend, "aline": aline }, function (data) {
+                DataJson = JSON.parse(data);
+
+                if (DataJson.xAxis != '') {
+                    $('#Error').css('display', 'none');
+                    $('#cavans').css('display', '');
+
+                    var zl = [];
+                    for (z = 0; z < DataJson.xAxis.split(',').length; z++) {
+                        zl.push(DataJson.Capacity);
+                    }
+                    $('#obje').html(DataJson.Capacity);
+                    $('#MaxNeed').html(DataJson.Max);
+                    $('#HappenTime').html(DataJson.HappenTime);
+                    $('#DateTime').html("近一日");
+                    totaltype = $("input[name='GraphType']:checked").val();
+                    if (totaltype == 1)
+                        $('#DateTime').html("近一周");
+                    else if (totaltype == 2)
+                        $('#DateTime').html("近一月");
+                    else if (totaltype == 3)
+                        $('#DateTime').html("自定义");
+
+                    var myChart = echarts.init(document.getElementById('userCharts1'));
+                    var option = {
+                        title: {
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            padding: 15
+                        },
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        legend: {
+                            data: ["总量", "需量"],
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            x: "center",
+                            padding: 20,
+                            y: "top",
+                            orient: "horizontal"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar"]
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        xAxis: [
+        {
+            type: "category",
+            data: DataJson.xAxis.split(','),
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 1
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            }
+        }
+    ],
+                        yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 1
+                }
+            },
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: false
+            },
+            nameLocation: "end",
+            name: "单位(kW)"
+        }
+    ],
+                        series: [
+        {
+            type: "line",
+            name: "总量",
+            data: zl,
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        type: "dashed"
+                    }
+                }
+            },
+            smooth: true
+        },
+        {
+            type: "line",
+            name: "需量",
+            data: DataJson.yData[0].split(','),
+            smooth: true
+        }
+    ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        grid: {
+                            x: 54,
+                            y: 50,
+                            x2: 33,
+                            y2: 60,
+                            borderWidth: 0
+                        },
+                        color: ["rgb(0, 255, 0)", "rgb(0, 127, 255)", "rgb(0, 127, 255)"]
+                    };
+                    myChart.setOption(option);
+                }
+                else {
+                    $('#cavans').css('display', 'none');
+                    $('#Error').fadeIn();
+                }
+            });
+        }
+    </script>
+    @*<script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('userCharts1'));
+        var option = {
+            title: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                padding: 15
+            },
+            tooltip: {
+                trigger: "axis"
+            },
+            legend: {
+                data: ["总量", "需量"],
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                x: "center",
+                padding: 20,
+                y: "top",
+                orient: "horizontal"
+            },
+            toolbox: {
+                show: false,
+                feature: {
+                    mark: {
+                        show: true
+                    },
+                    dataView: {
+                        show: true,
+                        readOnly: true
+                    },
+                    magicType: {
+                        show: false,
+                        type: ["line", "bar"]
+                    },
+                    restore: {
+                        show: true
+                    },
+                    saveAsImage: {
+                        show: true
+                    }
+                }
+            },
+            calculable: false,
+            xAxis: [
+        {
+            type: "category",
+            data: ["2-11", "2-12", "2-13", "2-14", "2-15", "2-16", "2-17", "2-18", "2-19", "2-20", "2-21", "2-22"],
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 1
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            }
+        }
+    ],
+            yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "solid",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 1
+                }
+            },
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            axisTick: {
+                show: false
+            },
+            splitArea: {
+                show: false
+            },
+            nameLocation: "end",
+            name: "单位(kW)"
+        }
+    ],
+            series: [
+        {
+            type: "line",
+            name: "总量",
+            data: [350, 350, 350, 350, 350, 350, 350, 350, 350, 350, 350, 350],
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        type: "dashed"
+                    }
+                }
+            },
+            smooth: true
+        },
+        {
+            type: "line",
+            name: "需量",
+            data: [220, 180, 190, 230, 290, 330, 320, 290, 270, 280, 260, 250],
+            smooth: true
+        }
+    ],
+            backgroundColor: "rgb(0, 0, 0)",
+            grid: {
+                x: 54,
+                y: 50,
+                x2: 33,
+                y2: 60,
+                borderWidth: 0
+            },
+            color: ["rgb(0, 255, 0)", "rgb(0, 127, 255)", "rgb(0, 127, 255)"]
+        };
+        myChart.setOption(option);
+    </script>*@
+</body>
+</html>

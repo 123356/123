@@ -1,0 +1,548 @@
+﻿@{
+    ViewBag.Title = "历史曲线";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="curve">
+        <div class="curve_table">
+            <table id="curve_table1" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="100" align="right">
+                        时间选择：
+                    </td>
+                    <td width="360">
+                       <input type="radio" class="GraphType" name="GraphType" value="6" checked="checked" />
+                                    近一天
+                       <input type="radio" class="GraphType" name="GraphType" value="72"/>
+                                    近一周
+                       <input type="radio" class="GraphType" name="GraphType" value="144" />
+                                    近一月
+@*                       <input type="radio" class="GraphType" name="GraphType" value="616"/>
+                                    近一年*@
+                       <input type="radio" class="GraphTypeOg" name="GraphType" value="707" onclick="unlock()" />
+                                    自定义
+                    </td>
+                    <td align="left">
+                    <div id="scroll" style="display:none">
+                        <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                        至
+                        <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="right">
+                        参数选择：
+                    </td>
+                    <td align="left">
+                        <input id="DataTypeParams" data-options="lines:true" style="width: 350px;" />
+                    </td>
+                    <td colspan="2" width="185">
+                        <button class="page_table_but" style="margin: 0px" data-options="iconCls:'icon-ok'"
+                            id="btnHist" onclick="DoSearch()">
+                            <img src="/Content/images/Icon16/refresh.png" />确定
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+         
+         <div id="canvas">
+                <div id="HisCharts" style="height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;">
+         </div>
+    </div>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 1, pid = 1;
+        if (Request['did'] != null)
+            did = Request['did'];
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        var datestart, dateend;
+        var graphtype = 6,getPoinType = 0 ,IsZoom = 0;;       
+
+        $('#time').removeClass('curve_switchactive');
+        $('#one').addClass('curve_switchactive');
+        //显示隐藏曲线表格
+        $(".curve_toggle").click(function () {
+            $(".curve_table table").slideToggle("slow");
+            $(this).toggleClass("curve_toggles");
+        });
+        $('.GraphType').click(function () {
+            datestart = '';
+            dateend = '';
+            IsZoom = 0;
+            graphtype = $("input[name='GraphType']:checked").val();
+            if(graphtype == 144 || graphtype == 707){
+                getPoinType = 1;
+            }
+            else 
+                getPoinType = 0;
+            lockaway();
+        });
+        function lockaway() {
+            $('#scroll').fadeOut();
+            totaltype = $("input[name='GraphType']:checked").val();
+            startdate = "";
+            enddate = "";
+            if (totaltype == 6 || totaltype == 72) {
+                $('#time').removeClass('curve_switchactive');
+                $('#one').addClass('curve_switchactive');
+            }
+            else {
+                $('#one').removeClass('curve_switchactive');
+                $('#time').addClass('curve_switchactive');
+            }
+            canAdd = 0;
+            showGraphs();
+        }
+        function unlock() {
+            $('#StartDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#EndDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var s1 = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    var el = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return s1 <= date && date <= el;
+                }
+            });
+            $('#StartDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#EndDate').datebox({
+                onSelect: function () { //输入判断
+                    datestart = $('#StartDate').datebox('getValue');
+                    dateend = $('#EndDate').datebox('getValue');
+                    if (datestart > dateend) {
+                        $('#EndDate').datebox('setValue', datestart);
+                    }
+                }
+            });
+            $('#scroll').fadeIn();
+            $('#one').removeClass('curve_switchactive');
+            $('#time').addClass('curve_switchactive');
+            canAdd = 1;
+        }
+        var firstOpen = 0, canAdd = 0;
+        var ids = '', tid = '';
+        //绑定树
+        $('#DataTypeParams').combotree
+        ({
+            url: '/BaseInfo/DataTypeParams?pid=' + pid + '&did=' + did,
+            multiple: true,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#DataTypeParams').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#StationID').combo('showPanel');
+                }
+            },
+            onCheck: function (node, checked) {
+                var typecount = getSelectedType($("#DataTypeParams").combotree("getValues"));
+                //至少选择一个测点
+                if (typecount == 0) {
+                    var t = $('#DataTypeParams').combotree('tree'); //得到树对象
+                    $.messager.show({
+                        title: '提示',
+                        msg: '至少选择一个测点',
+                        timeout: 2000
+                    });
+                    t.tree('check', node.target);
+                    //不选中当前的节点
+                }
+                if (typecount > 2) {
+                    var t = $('#DataTypeParams').combotree('tree'); //得到树对象
+                    $.messager.show({
+                        title: '提示',
+                        msg: '只能选择两类参数',
+                        timeout: 2000
+                    });
+                    t.tree('uncheck', node.target);
+                    //不选中当前的节点
+                }
+            },
+            onLoadSuccess: function (data) {
+                $.post("/BaseInfo/SelectPoints", { "pid": pid, "did": did }, function (data) {
+                    $('#DataTypeParams').combotree('tree').tree("collapseAll");
+                    $("#DataTypeParams").combotree("setValues", data);
+                    DoSearch();
+                });
+            },
+            onLoadError: function (data) {
+                $('#canvas').html("<div id='HisCharts' style = 'color: White;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
+            }
+        });
+
+        function goback() {
+            window.location.href = "/PDRInfo/StationRoom?pid=" + pid;
+        }
+
+        var pageHeight, pageWidth;
+        if (typeof window.innerHeight != 'undefined') {
+            //针对非IE8及其以下的浏览器
+            pageHeight = window.innerHeight;
+            pageWidth = window.innerWidth;
+            var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;
+            if (!isChrome) {
+                pageHeight = pageHeight - 90;
+            }
+        }
+        $(".m_tab").css("min-height", pageHeight);
+        $(".m_tab").css("max-height", pageHeight);
+
+        var sid, pointinfo, tagid;
+        var Hisrolelist;
+        var maxtemp = 0, mintemp = 0;
+        var initdata = [];
+        var initlen = 100;
+        while (initlen--) {
+            initdata.push(0);
+        }
+
+        function DoSearch() {
+            datestart = $('#StartDate').datebox('getValue');
+            dateend = $('#EndDate').datebox('getValue');
+            if (datestart == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择开始日期！", "info");
+            }
+            else if (dateend == "" && canAdd == 1) {
+                $.messager.alert("提示", "请选择结束日期！", "info");
+            }
+            else if(canAdd == 1){
+                var aDate, oDate1, oDate2, iDays
+                aDate = datestart.split("-");
+                oDate1 = new Date(datestart);     //转换为12-18-2002格式
+                aDate = dateend.split("-");
+                oDate2 = new Date(dateend);
+                iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+                if (iDays < 8 ) {
+                    $('#time').removeClass('curve_switchactive');
+                    $('#one').addClass('curve_switchactive');
+                    getPoinType = 0;
+                    IsZoom = 1;
+                    }
+                else{
+                    $('#one').removeClass('curve_switchactive');
+                    $('#time').addClass('curve_switchactive');
+                    getPoinType = 1;
+                    }
+                showGraphs();
+            }
+            else
+                showGraphs();
+        }
+
+        //定义历史曲线变量值
+        var Histagid = '', Hisarrselected, Hislen, Hisunitlist, Hisptype, Hisinitdata; //测点id列表，选择的taglist，选中的测点数,单位列表
+        var Hishourdata = [], Hisseriesdata = [], yaxisdata = [];
+        var Hisiserror = 0, Hismintemp = 0, Hismaxtemp = 0;
+        var ajaxbg = top.$("#loading_background,#loading");
+
+        //显示历史曲线
+        function showGraphs() {
+            graphtype = $("input[name='GraphType']:checked").val();
+            ajaxbg.show();
+            Histagid = '';
+            Hishourdata = []; yaxisdata = [];
+            Hisrolelist = $("#DataTypeParams").combotree("getValues") + '';
+            if (Hisrolelist == "") {
+                Hisiserror = 1;
+                return false;
+            }
+            var arrtagid = Hisrolelist.split(','); //获取TagID list
+            len = arrtagid.length;
+            for (var j = 0; j < len; j++) {
+                if (arrtagid[j].indexOf('_') > 0) {
+                    tagid = arrtagid[j].split('_')[1];        //曲线TagID
+                    Histagid += tagid + ',';                    //曲线TagID,数组
+                }
+            }
+            $.ajaxSettings.async = true;  //同步才能获取数据
+            $.post("/Graphs/HisGraphsGetPoints", { "pid": pid,  "selGraphtype": graphtype,"getPoinType":getPoinType, "tagid": Histagid, "startdatetime": datestart, "enddatetime": dateend }, function (data) {
+                var DataFull = data.split('^');
+                Hisinitdata = DataFull[0];    //测点的历史数据         
+                Hisseriesdata = [];
+                Hisarrselected = DataFull[1].split('$'); //测点的基本信息，0当前值1名称2单位3数据类型4最小值5最大值
+                Hislen = Hisarrselected.length;
+                Hisunitlist = "{b}<br/>";
+                var Hisarrdate = Hisinitdata.split('|');
+                var datatype = '', curdatatype = '', type1 = '', type2 = '', typecount = 0; //上一次数据类型,当前数据类型,数据类型数目
+                for (var i = 0; i < Hislen; i++) {
+                    Hishourdata.push(Hisarrselected[i].split('|')[1]);  //测点名称
+
+                    Hisptype = Hisarrselected[i].split('|')[2]; //测点单位
+                    if (i == 0)
+                        Hisunitlist = Hisunitlist + "{a}:{c} " + Hisptype + " <br/>";
+                    else
+                        Hisunitlist = Hisunitlist + "{a" + i + "}:{c" + i + "} " + Hisptype + "<br/>";
+
+                    //测点类型
+                    curdatatype = Hisarrselected[i].split('|')[3];
+
+                    if (datatype != curdatatype)//如果数据类型不匹配
+                    {
+                        typecount++;
+                        if (i == 0)
+                            type1 = curdatatype;
+                        else
+                            type2 = curdatatype;
+                        yaxisdata.push({
+                            name: curdatatype + '(' + Hisptype + ')',
+                            type: 'value',
+                            axisLabel: {
+                                formatter: function (v) { return parseInt(v) },
+                                textStyle: { color: '#fff' }
+                            },
+                            splitLine: { show: true, lineStyle: { color: '#4c4c4c', type: 'dashed'} },
+                            axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+                            min: Hisarrdate[0].split('|')[0].split('#')[typecount - 1],
+                            max: Hisarrdate[1].split('|')[0].split('#')[typecount - 1]
+                        });
+                    }
+                    if (Hisinitdata.split('|')[2] != '[]' && Hisinitdata.split('|')[2] != null) //如果数据数组 不为空
+                    {
+                        if (curdatatype == type1) {
+                            //显示数据
+                            Hisseriesdata.push({
+                                name: Hishourdata[i],
+                                type: 'line',
+                                smooth: true,
+//                                showAllSymbol: true,
+                                data: eval("(" + Hisarrdate[i + 3] + ")"),
+                                markPoint: {
+                                    data: [
+                                    { type: 'max', name: '最大值' },
+                                    { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            });
+                        }
+                        else {
+                            //显示数据
+                            Hisseriesdata.push({
+                                name: Hishourdata[i],
+                                type: 'line',
+                                smooth: true,
+//                                showAllSymbol: true,
+                                yAxisIndex: 1,
+                                data: eval("(" + Hisarrdate[i + 3] + ")"),
+                                markPoint: {
+                                    data: [
+                                    { type: 'max', name: '最大值' },
+                                    { type: 'min', name: '最小值' }
+                                    ]
+                                }
+                            });
+                        }
+                    }
+                    datatype = curdatatype; //重置数据类型
+                }
+
+                if (Hisinitdata.split('|')[2] != '[]' && Hisinitdata.split('|')[2] != null) //如果数据数组不为空
+                {
+                    ajaxbg.hide();
+                    $('#canvas').html("<div id='HisCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;'>");
+                    loadHisimg();
+                }
+                else {
+                    ajaxbg.hide();
+                    $('#canvas').html("<div id='HisCharts' style = 'color: White;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
+                }
+            });
+        }
+        function loadHisimg() {
+
+            var myHisChart = echarts.init(document.getElementById('HisCharts'), 'macarons');
+
+            var Xarr = eval("(" + Hisinitdata.split('|')[2] + ")");
+            var XarrFromat = [];
+
+            var graphtype = $("input[name='GraphType']:checked").val();
+            if (graphtype != 6) {
+                for (i = 0; i < Xarr.length; i++) {
+                    var ym = Xarr[i].split(' ')[0].split('/');
+                    var hm = Xarr[i].split(' ')[1].split(':');
+                    XarrFromat.push(ym[1] + '月' + ym[2] + '日' + ' ' + hm[0] + '时' + hm[1] + '分');
+                }
+            }
+            else {
+                for (i = 0; i < Xarr.length; i++) {
+                    var ym = Xarr[i].split(' ')[0].split('/');
+                    var hm = Xarr[i].split(' ')[1].split(':');
+                    XarrFromat.push(hm[0] + '时' + hm[1] + '分');
+                }
+            }
+
+            var option = {
+                title: {
+                    text: '历史趋势图',
+                    textStyle: { color: '#fff' }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    //formatter: Hisunitlist
+//                    formatter: function (params) {
+//                        var res = params.name + '<br/>';
+//                        //获取X坐标轴信息
+//                        var xdataarr = eval("(" + Hisinitdata.split('|')[2] + ")");
+//                        var myseries = option.series;
+//                        //获取对应值的下标
+//                        var xindex = xdataarr.indexOf(params.name);
+//                        for (var i = 0; i < myseries.length; i++) {
+//                            //遍历与当前选择项匹配的数据
+//                            if (myseries[i].data[xindex] == params.value)
+//                                res = res + myseries[i].name + ' : ' + myseries[i].data[xindex] + '</br>';
+//                        }
+//                        return res;
+//                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none',
+                            title: { back: '' },
+                            icon: { back: 'image://' }
+                        },
+                        restore: {}
+                    },
+                    iconStyle:{normal  :{textPosition:'top',borderColor  :'#66ccff'},emphasis :{textPosition:'top',borderColor  :'#ff33ee'}},
+                    top: '0%',
+                    right: '0%',
+                    itemSize: '21'
+                },
+                legend: {
+                    data: Hishourdata,
+                    textStyle: { color: '#fff' }
+                },
+                xAxis: [
+        {
+            type: 'category',
+            boundaryGap: false,
+            axisLabel: { textStyle: { color: '#fff'} },
+            splitLine: { show: true, lineStyle: { color: '#4c4c4c', type: 'dashed'} },
+            axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+            data: XarrFromat
+        }
+    ],
+                yAxis: yaxisdata,
+                dataZoom: [{
+                    type: 'inside',
+                    filterMode: 'filter'
+                }],
+                color: ["#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                series: Hisseriesdata
+            };
+            // 为echarts对象加载数据 
+            myHisChart.setOption(option);
+            myHisChart.on('datazoom', CheckZoom);
+            function CheckZoom(param) {
+                var s = param.batch[0].startValue;
+                var e = param.batch[0].endValue;
+                var axis = eval("(" + Hisinitdata.split('|')[2] + ")");
+                var graphtype = $("input[name='GraphType']:checked").val();
+                startdate = axis[s].split(' ')[0].split('/');
+                enddate = axis[e].split(' ')[0].split('/');
+
+                datestart = startdate[0] + '-' +startdate[1] + '-' + startdate[2] ;
+                dateend = enddate[0] + '-' +enddate[1] + '-' + enddate[2];
+
+                var aDate, oDate1, oDate2, iDays
+                aDate = datestart.split("-");
+                oDate1 = new Date(datestart);     //转换为12-18-2002格式
+                aDate = dateend.split("-");
+                oDate2 = new Date(dateend);
+                iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+                if (iDays < 8 && IsZoom == 0 && (graphtype == 144 || graphtype == 707)) {
+
+                    $('#GraphTypezdy').attr('checked','checked');
+
+                    getPoinType = 0;
+
+                    unlock();
+
+                    $('#time').removeClass('curve_switchactive');
+                    $('#one').addClass('curve_switchactive');
+
+                    $('#EndDate').datebox('setValue',dateend );
+                    $('#StartDate').datebox('setValue', datestart);
+                    showGraphs();
+                    IsZoom = 1;
+                    getPoinType = 1;
+                }
+//                else {
+//                    $('#GraphTypezdy').attr('checked','checked');
+//                    graphtype = 6;
+//                    unlock();
+//                    $('#EndDate').datebox('setValue',dateend );
+//                    $('#StartDate').datebox('setValue', datestart);
+//                }
+            }
+        }
+        var mh = 0; //高度
+        var step = 1; //每次变化的量
+        var ms = 10; //循环时间
+        function toggle(o) {
+            if (!o.tid) o.tid = "_" + Math.random() * 100;
+            if (!window.toggler) window.toggler = {};
+            if (!window.toggler[o.tid]) {
+                window.toggler[o.tid] = {
+                    obj: o,
+                    maxHeight: o.offsetHeight,
+                    minHeight: mh,
+                    timer: null,
+                    action: 1
+                };
+            }
+            o.style.height = o.offsetHeight + "px";
+            if (window.toggler[o.tid].timer) clearTimeout(window.toggler[o.tid].timer);
+            window.toggler[o.tid].action *= -1;
+            window.toggler[o.tid].timer = setTimeout("anim('" + o.tid + "')", ms);
+        }
+        function anim(id) {
+            var t = window.toggler[id];
+            var o = window.toggler[id].obj;
+            if (t.action < 0) {
+                if (o.offsetHeight <= t.minHeight) {
+                    clearTimeout(t.timer);
+                    return;
+                }
+            }
+            else {
+                if (o.offsetHeight >= t.maxHeight) {
+                    clearTimeout(t.timer);
+                    return;
+                }
+            }
+            o.style.height = (parseInt(o.style.height, 10) + t.action * step) + "px";
+            window.toggler[id].timer = setTimeout("anim('" + id + "')", ms);
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

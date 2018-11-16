@@ -1,0 +1,1315 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OneGraph 神华总图</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/onepub.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/SHyicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+</head>
+<body class="tabbg2">
+    <div class="shyczt">
+        <ul class="sh_page tab_menu">
+            @*翻页*@
+            <li class="page_size_tb current">总图1 </li>
+            <li class="page_size_tb">总图2 </li>
+            <li class="page_size_tb">总图3 </li>
+            <li class="page_size_tb">总图4 </li>
+        </ul>
+        <div class="tab_box">
+            <!--一次总图-01-->
+            <div class="ycmain shzt01_ycbg">
+                <!--1#配电室-->
+                <ul class="alertmenu" id="p111">
+                    <!--451 液压泵站控柜-->
+                    <li class="w516">
+                        <dt id="d516" onclick="deviceinfo(516,111);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w516_1"><b id="t12611" class="temper_a">--</b> <b id="t12612" class="temper_b">
+                                --</b> <b id="t12613" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w516_2"><b id="t12614" class="temper_a">--</b> <b id="t12615" class="temper_b">
+                                --</b> <b id="t12616" class="temper_c">--</b> </span></dt>
+                        <dd id="t516">
+                        </dd>
+                    </li>
+                    <!--416 快速定量装车站低压配电柜-->
+                    <li class="w517">
+                        <dt id="d517" onclick="deviceinfo(517,111);">
+                            <!--1#上母排ABC三相温度-->
+                            <span class="w517_1"><b id="t12617" class="temper_a">--</b> <b id="t12618" class="temper_b">
+                                --</b> <b id="t12619" class="temper_c">--</b> </span>
+                            <!--2#上母排ABC三相温度-->
+                            <span class="w517_2"><b id="t12620" class="temper_a">--</b> <b id="t12621" class="temper_b">
+                                --</b> <b id="t12622" class="temper_c">--</b> </span></dt>
+                        <dd id="t517">
+                        </dd>
+                    </li>
+                </ul>
+                <!--2#配电室-->
+                <ul class="alertmenu" id="p112">
+                    <!--651 电源进线柜-->
+                    <li class="w518">
+                        <dt id="d518" onclick="deviceinfo(518,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w518_1"><b id="t12623" class="temper_a">--</b> <b id="t12624" class="temper_b">
+                                --</b> <b id="t12625" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w518_2"><b id="t12626" class="temper_a">--</b> <b id="t12627" class="temper_b">
+                                --</b> <b id="t12628" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w518_3"><b id="t12629" class="temper_a">--</b> <b id="t12630" class="temper_b">
+                                --</b> <b id="t12631" class="temper_c">--</b> </span></dt>
+                        <dd id="t518">
+                        </dd>
+                    </li>
+                    <!--611 变压器控制柜-->
+                    <li class="w519">
+                        <dt id="d519" onclick="deviceinfo(519,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w519_1"><b id="t12632" class="temper_a">--</b> <b id="t12633" class="temper_b">
+                                --</b> <b id="t12634" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w519_2"><b id="t12635" class="temper_a">--</b> <b id="t12636" class="temper_b">
+                                --</b> <b id="t12637" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w519_3"><b id="t12638" class="temper_a">--</b> <b id="t12639" class="temper_b">
+                                --</b> <b id="t12640" class="temper_c">--</b> </span></dt>
+                        <dd id="t519">
+                        </dd>
+                    </li>
+                    <!--612 207#胶带机1#电机启动柜-->
+                    <li class="w520">
+                        <dt id="d520" onclick="deviceinfo(520,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w520_1"><b id="t12641" class="temper_a">--</b> <b id="t12642" class="temper_b">
+                                --</b> <b id="t12643" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w520_2"><b id="t12644" class="temper_a">--</b> <b id="t12645" class="temper_b">
+                                --</b> <b id="t12646" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w520_3"><b id="t12647" class="temper_a">--</b> <b id="t12648" class="temper_b">
+                                --</b> <b id="t12649" class="temper_c">--</b> </span></dt>
+                        <dd id="t520">
+                        </dd>
+                    </li>
+                    <!--613 207#胶带机2#电机启动柜-->
+                    <li class="w521">
+                        <dt id="d521" onclick="deviceinfo(521,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w521_1"><b id="t12650" class="temper_a">--</b> <b id="t12651" class="temper_b">
+                                --</b> <b id="t12652" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w521_2"><b id="t12653" class="temper_a">--</b> <b id="t12654" class="temper_b">
+                                --</b> <b id="t12655" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w521_3"><b id="t12656" class="temper_a">--</b> <b id="t12657" class="temper_b">
+                                --</b> <b id="t12658" class="temper_c">--</b> </span></dt>
+                        <dd id="t521">
+                        </dd>
+                    </li>
+                    <!--451 低压进线柜-->
+                    <li class="w522">
+                        <dt id="d522" onclick="deviceinfo(522,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w522_1"><b id="t12659" class="temper_a">--</b> <b id="t12660" class="temper_b">
+                                --</b> <b id="t12661" class="temper_c">--</b> </span></dt>
+                        <dd id="t522">
+                        </dd>
+                    </li>
+                    <!--412 给煤机控制柜-->
+                    <li class="w523">
+                        <dt id="d523" onclick="deviceinfo(523,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w523_1"><b id="t12662" class="temper_a">--</b> <b id="t12663" class="temper_b">
+                                --</b> <b id="t12664" class="temper_c">--</b> </span></dt>
+                        <dd id="t523">
+                        </dd>
+                    </li>
+                    <!--413 给煤机控制柜-->
+                    <li class="w524">
+                        <dt id="d524" onclick="deviceinfo(524,112);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w524_1"><b id="t12665" class="temper_a">--</b> <b id="t12666" class="temper_b">
+                                --</b> <b id="t12667" class="temper_c">--</b> </span></dt>
+                        <dd id="t524">
+                        </dd>
+                    </li>
+                    <!--414 1#装车站低压电源控制柜-->
+                    <li class="w525">
+                        <dt id="d525" onclick="deviceinfo(525,112);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w525_1"><b id="t12668" class="temper_a">--</b> <b id="t12669" class="temper_b">
+                                --</b> <b id="t12670" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w525_2"><b id="t12671" class="temper_a">--</b> <b id="t12672" class="temper_b">
+                                --</b> <b id="t12673" class="temper_c">--</b> </span></dt>
+                        <dd id="t525">
+                        </dd>
+                    </li>
+                    <!--1#变压器-->
+                    <li class="w526">
+                        <dt id="d526" onclick="deviceinfo(526,112);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w526_1"><b id="t12674" class="temper_a">--</b> <b id="t12675" class="temper_b">
+                                --</b> <b id="t12676" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w526_2"><b id="t12677" class="temper_a">--</b> <b id="t12678" class="temper_b">
+                                --</b> <b id="t12679" class="temper_c">--</b> </span></dt>
+                        <dd id="t526">
+                        </dd>
+                    </li>
+                </ul>
+                <!--3#配电室-->
+                <ul class="alertmenu" id="p113">
+                    <!--651 I段电源进线柜-->
+                    <li class="w527">
+                        <dt id="d527" onclick="deviceinfo(527,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w527_1"><b id="t12680" class="temper_a">--</b> <b id="t12681" class="temper_b">
+                                --</b> <b id="t12682" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w527_2"><b id="t12683" class="temper_a">--</b> <b id="t12684" class="temper_b">
+                                --</b> <b id="t12685" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w527_3"><b id="t12686" class="temper_a">--</b> <b id="t12687" class="temper_b">
+                                --</b> <b id="t12688" class="temper_c">--</b> </span></dt>
+                        <dd id="t527">
+                        </dd>
+                    </li>
+                    <!--652 II段电源进线柜-->
+                    <li class="w528">
+                        <dt id="d528" onclick="deviceinfo(528,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w528_1"><b id="t12689" class="temper_a">--</b> <b id="t12690" class="temper_b">
+                                --</b> <b id="t12691" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w528_2"><b id="t12692" class="temper_a">--</b> <b id="t12693" class="temper_b">
+                                --</b> <b id="t12694" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w528_3"><b id="t12695" class="temper_a">--</b> <b id="t12696" class="temper_b">
+                                --</b> <b id="t12697" class="temper_c">--</b> </span></dt>
+                        <dd id="t528">
+                        </dd>
+                    </li>
+                    <!--611 2#配电室电源柜-->
+                    <li class="w531">
+                        <dt id="d531" onclick="deviceinfo(531,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w531_1"><b id="t12698" class="temper_a">--</b> <b id="t12699" class="temper_b">
+                                --</b> <b id="t12700" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w531_2"><b id="t12701" class="temper_a">--</b> <b id="t12702" class="temper_b">
+                                --</b> <b id="t12703" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w531_3"><b id="t12704" class="temper_a">--</b> <b id="t12705" class="temper_b">
+                                --</b> <b id="t12706" class="temper_c">--</b> </span></dt>
+                        <dd id="t531">
+                        </dd>
+                    </li>
+                    <!--612 5#配电室电源柜-->
+                    <li class="w532">
+                        <dt id="d532" onclick="deviceinfo(532,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w532_1"><b id="t12707" class="temper_a">--</b> <b id="t12708" class="temper_b">
+                                --</b> <b id="t12709" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w532_2"><b id="t12710" class="temper_a">--</b> <b id="t12711" class="temper_b">
+                                --</b> <b id="t12712" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w532_3"><b id="t12713" class="temper_a">--</b> <b id="t12714" class="temper_b">
+                                --</b> <b id="t12715" class="temper_c">--</b> </span></dt>
+                        <dd id="t532">
+                        </dd>
+                    </li>
+                    <!--661 I段变压器柜-->
+                    <li class="w533">
+                        <dt id="d533" onclick="deviceinfo(533,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w533_1"><b id="t12716" class="temper_a">--</b> <b id="t12717" class="temper_b">
+                                --</b> <b id="t12718" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w533_2"><b id="t12719" class="temper_a">--</b> <b id="t12720" class="temper_b">
+                                --</b> <b id="t12721" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w533_3"><b id="t12722" class="temper_a">--</b> <b id="t12723" class="temper_b">
+                                --</b> <b id="t12724" class="temper_c">--</b> </span></dt>
+                        <dd id="t533">
+                        </dd>
+                    </li>
+                    <!--662 II段变压器柜-->
+                    <li class="w534">
+                        <dt id="d534" onclick="deviceinfo(534,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w534_1"><b id="t12725" class="temper_a">--</b> <b id="t12726" class="temper_b">
+                                --</b> <b id="t12727" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w534_2"><b id="t12728" class="temper_a">--</b> <b id="t12729" class="temper_b">
+                                --</b> <b id="t12730" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w534_3"><b id="t12731" class="temper_a">--</b> <b id="t12732" class="temper_b">
+                                --</b> <b id="t12733" class="temper_c">--</b> </span></dt>
+                        <dd id="t534">
+                        </dd>
+                    </li>
+                    <!--623 7#配电室电源柜-->
+                    <li class="w535">
+                        <dt id="d535" onclick="deviceinfo(535,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w535_1"><b id="t12734" class="temper_a">--</b> <b id="t12735" class="temper_b">
+                                --</b> <b id="t12736" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w535_2"><b id="t12737" class="temper_a">--</b> <b id="t12738" class="temper_b">
+                                --</b> <b id="t12739" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w535_3"><b id="t12740" class="temper_a">--</b> <b id="t12741" class="temper_b">
+                                --</b> <b id="t12742" class="temper_c">--</b> </span></dt>
+                        <dd id="t535">
+                        </dd>
+                    </li>
+                    <!--621 6#、8#配电室电源柜-->
+                    <li class="w536">
+                        <dt id="d536" onclick="deviceinfo(536,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w536_1"><b id="t12743" class="temper_a">--</b> <b id="t12744" class="temper_b">
+                                --</b> <b id="t12745" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w536_2"><b id="t12746" class="temper_a">--</b> <b id="t12747" class="temper_b">
+                                --</b> <b id="t12748" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w536_3"><b id="t12749" class="temper_a">--</b> <b id="t12750" class="temper_b">
+                                --</b> <b id="t12751" class="temper_c">--</b> </span></dt>
+                        <dd id="t536">
+                        </dd>
+                    </li>
+                    <!--622 204#胶带机启动柜-->
+                    <li class="w537">
+                        <dt id="d537" onclick="deviceinfo(537,113);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w537_1"><b id="t12752" class="temper_a">--</b> <b id="t12753" class="temper_b">
+                                --</b> <b id="t12754" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w537_2"><b id="t12755" class="temper_a">--</b> <b id="t12756" class="temper_b">
+                                --</b> <b id="t12757" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w537_3"><b id="t12758" class="temper_a">--</b> <b id="t12759" class="temper_b">
+                                --</b> <b id="t12760" class="temper_c">--</b> </span></dt>
+                        <dd id="t537">
+                        </dd>
+                    </li>
+                    <!--681 I段互感器柜-->
+                    <li class="w538">
+                        <dt id="d538" onclick="deviceinfo(538,113);">
+                            <!--上触头ABC三相温度-->
+                            <span class="w538_1"><b id="t12761" class="temper_a">--</b> <b id="t12762" class="temper_b">
+                                --</b> <b id="t12763" class="temper_c">--</b> </span></dt>
+                        <dd id="t538">
+                        </dd>
+                    </li>
+                    <!--682 II段互感器柜-->
+                    <li class="w539">
+                        <dt id="d539" onclick="deviceinfo(539,113);">
+                            <!--上触头ABC三相温度-->
+                            <span class="w539_1"><b id="t12764" class="temper_a">--</b> <b id="t12765" class="temper_b">
+                                --</b> <b id="t12766" class="temper_c">--</b> </span></dt>
+                        <dd id="t539">
+                        </dd>
+                    </li>
+                    <!--1#变压器-->
+                    <li class="w529">
+                        <dt id="d529" onclick="deviceinfo(529,113);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w529_1"><b id="t12767" class="temper_a">--</b> <b id="t12768" class="temper_b">
+                                --</b> <b id="t12769" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w529_2"><b id="t12770" class="temper_a">--</b> <b id="t12771" class="temper_b">
+                                --</b> <b id="t12772" class="temper_c">--</b> </span></dt>
+                        <dd id="t529">
+                        </dd>
+                    </li>
+                    <!--2#变压器-->
+                    <li class="w530">
+                        <dt id="d530" onclick="deviceinfo(530,113);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w530_1"><b id="t12773" class="temper_a">--</b> <b id="t12774" class="temper_b">
+                                --</b> <b id="t12775" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w530_2"><b id="t12776" class="temper_a">--</b> <b id="t12777" class="temper_b">
+                                --</b> <b id="t12778" class="temper_c">--</b> </span></dt>
+                        <dd id="t530">
+                        </dd>
+                    </li>
+                </ul>
+                <!--5#配电室-->
+                <ul class="alertmenu" id="p115">
+                    <!--451 I段电源进线柜-->
+                    <li class="w544">
+                        <dt id="d544" onclick="deviceinfo(544,115);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w544_1"><b id="t12797" class="temper_a">--</b> <b id="t12798" class="temper_b">
+                                --</b> <b id="t12799" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w544_2"><b id="t12800" class="temper_a">--</b> <b id="t12801" class="temper_b">
+                                --</b> <b id="t12802" class="temper_c">--</b> </span></dt>
+                        <dd id="t544">
+                        </dd>
+                    </li>
+                    <!--413 203#胶带机控制柜-->
+                    <li class="w545">
+                        <dt id="d545" onclick="deviceinfo(545,115);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w545_1"><b id="t12803" class="temper_a">--</b> <b id="t12804" class="temper_b">
+                                --</b> <b id="t12805" class="temper_c">--</b> </span></dt>
+                        <dd id="t545">
+                        </dd>
+                    </li>
+                    <!--418 209#胶带机控制柜-->
+                    <li class="w546">
+                        <dt id="d546" onclick="deviceinfo(546,115);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w546_1"><b id="t12806" class="temper_a">--</b> <b id="t12807" class="temper_b">
+                                --</b> <b id="t12808" class="temper_c">--</b> </span></dt>
+                        <dd id="t546">
+                        </dd>
+                    </li>
+                    <!--613 照明变压器控制柜-->
+                    <li class="w547">
+                        <dt id="d547" onclick="deviceinfo(547,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w547_1"><b id="t12809" class="temper_a">--</b> <b id="t12810" class="temper_b">
+                                --</b> <b id="t12811" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w547_2"><b id="t12812" class="temper_a">--</b> <b id="t12813" class="temper_b">
+                                --</b> <b id="t12814" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w547_3"><b id="t12815" class="temper_a">--</b> <b id="t12816" class="temper_b">
+                                --</b> <b id="t12817" class="temper_c">--</b> </span></dt>
+                        <dd id="t547">
+                        </dd>
+                    </li>
+                    <!--611 二级破碎机1#电机启动柜-->
+                    <li class="w548">
+                        <dt id="d548" onclick="deviceinfo(548,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w548_1"><b id="t12818" class="temper_a">--</b> <b id="t12819" class="temper_b">
+                                --</b> <b id="t12820" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w548_2"><b id="t12821" class="temper_a">--</b> <b id="t12822" class="temper_b">
+                                --</b> <b id="t12823" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w548_3"><b id="t12824" class="temper_a">--</b> <b id="t12825" class="temper_b">
+                                --</b> <b id="t12826" class="temper_c">--</b> </span></dt>
+                        <dd id="t548">
+                        </dd>
+                    </li>
+                    <!--612 二级破碎机2#电机启动柜-->
+                    <li class="w549">
+                        <dt id="d549" onclick="deviceinfo(549,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w549_1"><b id="t12827" class="temper_a">--</b> <b id="t12828" class="temper_b">
+                                --</b> <b id="t12829" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w549_2"><b id="t12830" class="temper_a">--</b> <b id="t12831" class="temper_b">
+                                --</b> <b id="t12832" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w549_3"><b id="t12833" class="temper_a">--</b> <b id="t12834" class="temper_b">
+                                --</b> <b id="t12835" class="temper_c">--</b> </span></dt>
+                        <dd id="t549">
+                        </dd>
+                    </li>
+                    <!--651 电源进线柜-->
+                    <li class="w550">
+                        <dt id="d550" onclick="deviceinfo(550,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w550_1"><b id="t12836" class="temper_a">--</b> <b id="t12837" class="temper_b">
+                                --</b> <b id="t12838" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w550_2"><b id="t12839" class="temper_a">--</b> <b id="t12840" class="temper_b">
+                                --</b> <b id="t12841" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w550_3"><b id="t12842" class="temper_a">--</b> <b id="t12843" class="temper_b">
+                                --</b> <b id="t12844" class="temper_c">--</b> </span></dt>
+                        <dd id="t550">
+                        </dd>
+                    </li>
+                    <!--614 202#胶带机1#电机启动柜-->
+                    <li class="w551">
+                        <dt id="d551" onclick="deviceinfo(551,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w551_1"><b id="t12845" class="temper_a">--</b> <b id="t12846" class="temper_b">
+                                --</b> <b id="t12847" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w551_2"><b id="t12848" class="temper_a">--</b> <b id="t12849" class="temper_b">
+                                --</b> <b id="t12850" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w551_3"><b id="t12851" class="temper_a">--</b> <b id="t12852" class="temper_b">
+                                --</b> <b id="t12853" class="temper_c">--</b> </span></dt>
+                        <dd id="t551">
+                        </dd>
+                    </li>
+                    <!--615 202#胶带机2#电机启动柜-->
+                    <li class="w552">
+                        <dt id="d552" onclick="deviceinfo(552,115);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w552_1"><b id="t12854" class="temper_a">--</b> <b id="t12855" class="temper_b">
+                                --</b> <b id="t12856" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w552_2"><b id="t12857" class="temper_a">--</b> <b id="t12858" class="temper_b">
+                                --</b> <b id="t12859" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w552_3"><b id="t12860" class="temper_a">--</b> <b id="t12861" class="temper_b">
+                                --</b> <b id="t12862" class="temper_c">--</b> </span></dt>
+                        <dd id="t552">
+                        </dd>
+                    </li>
+                </ul>
+            </div>
+            <!--一次图总图-02-->
+            <div class="ycmain shzt02_ycbg hide">
+                <!--4#配电室-->
+                <ul class="alertmenu" id="p114">
+                    <!--451 I段电源进线柜-->
+                    <li class="w540">
+                        <dt id="d540" onclick="deviceinfo(540,114);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w540_1"><b id="t12779" class="temper_a">--</b> <b id="t12780" class="temper_b">
+                                --</b> <b id="t12781" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w540_2"><b id="t12782" class="temper_a">--</b> <b id="t12783" class="temper_b">
+                                --</b> <b id="t12784" class="temper_c">--</b> </span></dt>
+                        <dd id="t540">
+                        </dd>
+                    </li>
+                    <!--452 II段电源进线柜-->
+                    <li class="w541">
+                        <dt id="d541" onclick="deviceinfo(541,114);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w541_1"><b id="t12785" class="temper_a">--</b> <b id="t12786" class="temper_b">
+                                --</b> <b id="t12787" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w541_2"><b id="t12788" class="temper_a">--</b> <b id="t12789" class="temper_b">
+                                --</b> <b id="t12790" class="temper_c">--</b> </span></dt>
+                        <dd id="t541">
+                        </dd>
+                    </li>
+                    <!--411 205#胶带机控制柜-->
+                    <li class="w542">
+                        <dt id="d542" onclick="deviceinfo(542,114);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w542_1"><b id="t12791" class="temper_a">--</b> <b id="t12792" class="temper_b">
+                                --</b> <b id="t12793" class="temper_c">--</b> </span></dt>
+                        <dd id="t542">
+                        </dd>
+                    </li>
+                    <!--412 206#胶带机控制柜-->
+                    <li class="w543">
+                        <dt id="d543" onclick="deviceinfo(543,114);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w543_1"><b id="t12794" class="temper_a">--</b> <b id="t12795" class="temper_b">
+                                --</b> <b id="t12796" class="temper_c">--</b> </span></dt>
+                        <dd id="t543">
+                        </dd>
+                    </li>
+                </ul>
+                <!--6#配电室-->
+                <ul class="alertmenu" id="p116">
+                    <!--611_208＃胶带机启动柜-->
+                    <li class="w553">
+                        <dt id="d553" onclick="deviceinfo(553,116);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w553_1"><b id="t12863" class="temper_a">--</b> <b id="t12864" class="temper_b">
+                                --</b> <b id="t12865" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w553_2"><b id="t12866" class="temper_a">--</b> <b id="t12867" class="temper_b">
+                                --</b> <b id="t12868" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w553_3"><b id="t12869" class="temper_a">--</b> <b id="t12870" class="temper_b">
+                                --</b> <b id="t12871" class="temper_c">--</b> </span></dt>
+                        <dd id="t553">
+                        </dd>
+                    </li>
+                    <!--451 低压进线柜-->
+                    <li class="w554">
+                        <dt id="d554" onclick="deviceinfo(554,116);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w554_1"><b id="t12872" class="temper_a">--</b> <b id="t12873" class="temper_b">
+                                --</b> <b id="t12874" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w554_2"><b id="t12875" class="temper_a">--</b> <b id="t12876" class="temper_b">
+                                --</b> <b id="t12877" class="temper_c">--</b> </span></dt>
+                        <dd id="t554">
+                        </dd>
+                    </li>
+                    <!--412 低压配电柜-->
+                    <li class="w555">
+                        <dt id="d555" onclick="deviceinfo(555,116);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w555_1"><b id="t12878" class="temper_a">--</b> <b id="t12879" class="temper_b">
+                                --</b> <b id="t12880" class="temper_c">--</b> </span></dt>
+                        <dd id="t555">
+                        </dd>
+                    </li>
+                    <!--413 103＃胶带机低压控制柜-->
+                    <li class="w556">
+                        <dt id="d556" onclick="deviceinfo(556,116);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w556_1"><b id="t12881" class="temper_a">--</b> <b id="t12882" class="temper_b">
+                                --</b> <b id="t12883" class="temper_c">--</b> </span></dt>
+                        <dd id="t556">
+                        </dd>
+                    </li>
+                    <!--414 102＃胶带机低压控制柜-->
+                    <li class="w557">
+                        <dt id="d557" onclick="deviceinfo(557,116);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w557_1"><b id="t12884" class="temper_a">--</b> <b id="t12885" class="temper_b">
+                                --</b> <b id="t12886" class="temper_c">--</b> </span></dt>
+                        <dd id="t557">
+                        </dd>
+                    </li>
+                    <!--415 刮板机控制柜-->
+                    <li class="w558">
+                        <dt id="d558" onclick="deviceinfo(558,116);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w558_1"><b id="t12887" class="temper_a">--</b> <b id="t12888" class="temper_b">
+                                --</b> <b id="t12889" class="temper_c">--</b> </span></dt>
+                        <dd id="t558">
+                        </dd>
+                    </li>
+                    <!--室外变压器-->
+                    <li class="w559">
+                        <dt id="d559" onclick="deviceinfo(559,116);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w559_1"><b id="t12890" class="temper_a">--</b> <b id="t12891" class="temper_b">
+                                --</b> <b id="t12892" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w559_2"><b id="t12893" class="temper_a">--</b> <b id="t12894" class="temper_b">
+                                --</b> <b id="t12895" class="temper_c">--</b> </span></dt>
+                        <dd id="t559">
+                        </dd>
+                    </li>
+                </ul>
+                <!--7#配电室-->
+                <ul class="alertmenu" id="p117">
+                    <!--651 破碎机高压电源柜-->
+                    <li class="w560">
+                        <dt id="d560" onclick="deviceinfo(560,117);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w560_1"><b id="t12896" class="temper_a">--</b> <b id="t12897" class="temper_b">
+                                --</b> <b id="t12898" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w560_2"><b id="t12899" class="temper_a">--</b> <b id="t12900" class="temper_b">
+                                --</b> <b id="t12901" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w560_3"><b id="t12902" class="temper_a">--</b> <b id="t12903" class="temper_b">
+                                --</b> <b id="t12904" class="temper_c">--</b> </span></dt>
+                        <dd id="t560">
+                        </dd>
+                    </li>
+                    <!--611 变压器控制柜-->
+                    <li class="w561">
+                        <dt id="d561" onclick="deviceinfo(561,117);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w561_1"><b id="t12905" class="temper_a">--</b> <b id="t12906" class="temper_b">
+                                --</b> <b id="t12907" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w561_2"><b id="t12908" class="temper_a">--</b> <b id="t12909" class="temper_b">
+                                --</b> <b id="t12910" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w561_3"><b id="t12911" class="temper_a">--</b> <b id="t12912" class="temper_b">
+                                --</b> <b id="t12913" class="temper_c">--</b> </span></dt>
+                        <dd id="t561">
+                        </dd>
+                    </li>
+                    <!--613 破碎机2#电机启动柜-->
+                    <li class="w562">
+                        <dt id="d562" onclick="deviceinfo(562,117);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w562_1"><b id="t12914" class="temper_a">--</b> <b id="t12915" class="temper_b">
+                                --</b> <b id="t12916" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w562_2"><b id="t12917" class="temper_a">--</b> <b id="t12918" class="temper_b">
+                                --</b> <b id="t12919" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w562_3"><b id="t12920" class="temper_a">--</b> <b id="t12921" class="temper_b">
+                                --</b> <b id="t12922" class="temper_c">--</b> </span></dt>
+                        <dd id="t562">
+                        </dd>
+                    </li>
+                    <!--614 101#胶带机高压启动柜-->
+                    <li class="w563">
+                        <dt id="d563" onclick="deviceinfo(563,117);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w563_1"><b id="t12923" class="temper_a">--</b> <b id="t12924" class="temper_b">
+                                --</b> <b id="t12925" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w563_2"><b id="t12926" class="temper_a">--</b> <b id="t12927" class="temper_b">
+                                --</b> <b id="t12928" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w563_3"><b id="t12929" class="temper_a">--</b> <b id="t12930" class="temper_b">
+                                --</b> <b id="t12931" class="temper_c">--</b> </span></dt>
+                        <dd id="t563">
+                        </dd>
+                    </li>
+                    <!--612 破碎机1#电机启动柜-->
+                    <li class="w564">
+                        <dt id="d564" onclick="deviceinfo(564,117);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w564_1"><b id="t12932" class="temper_a">--</b> <b id="t12933" class="temper_b">
+                                --</b> <b id="t12934" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w564_2"><b id="t12935" class="temper_a">--</b> <b id="t12936" class="temper_b">
+                                --</b> <b id="t12937" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w564_3"><b id="t12938" class="temper_a">--</b> <b id="t12939" class="temper_b">
+                                --</b> <b id="t12940" class="temper_c">--</b> </span></dt>
+                        <dd id="t564">
+                        </dd>
+                    </li>
+                    <!--451 低压进线柜-->
+                    <li class="w565">
+                        <dt id="d565" onclick="deviceinfo(565,117);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w565_1"><b id="t12941" class="temper_a">--</b> <b id="t12942" class="temper_b">
+                                --</b> <b id="t12943" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w565_2"><b id="t12944" class="temper_a">--</b> <b id="t12945" class="temper_b">
+                                --</b> <b id="t12946" class="temper_c">--</b> </span></dt>
+                        <dd id="t565">
+                        </dd>
+                    </li>
+                    <!--412 刮板机电源控制柜-->
+                    <li class="w566">
+                        <dt id="d566" onclick="deviceinfo(566,117);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w566_1"><b id="t12947" class="temper_a">--</b> <b id="t12948" class="temper_b">
+                                --</b> <b id="t12949" class="temper_c">--</b> </span></dt>
+                        <dd id="t566">
+                        </dd>
+                    </li>
+                </ul>
+                <!--8#配电室-->
+                <ul class="alertmenu" id="p118" style="display: block;">
+                    <!--651 高压进线柜-->
+                    <li class="w567">
+                        <dt id="d567" onclick="deviceinfo(567,118);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w567_1"><b id="t12950" class="temper_a">--</b> <b id="t12951" class="temper_b">
+                                --</b> <b id="t12952" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w567_2"><b id="t12953" class="temper_a">--</b> <b id="t12954" class="temper_b">
+                                --</b> <b id="t12955" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w567_3"><b id="t12956" class="temper_a">--</b> <b id="t12957" class="temper_b">
+                                --</b> <b id="t12958" class="temper_c">--</b> </span></dt>
+                        <dd id="t567">
+                        </dd>
+                    </li>
+                    <!--611 201#胶带机启动柜-->
+                    <li class="w568">
+                        <dt id="d568" onclick="deviceinfo(568,118);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w568_1"><b id="t12959" class="temper_a">--</b> <b id="t12960" class="temper_b">
+                                --</b> <b id="t12961" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w568_2"><b id="t12962" class="temper_a">--</b> <b id="t12963" class="temper_b">
+                                --</b> <b id="t12964" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w568_3"><b id="t12965" class="temper_a">--</b> <b id="t12966" class="temper_b">
+                                --</b> <b id="t12967" class="temper_c">--</b> </span></dt>
+                        <dd id="t568">
+                        </dd>
+                    </li>
+                    <!--612 21#破碎机 1#电机启动柜-->
+                    <li class="w569">
+                        <dt id="d569" onclick="deviceinfo(569,118);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w569_1"><b id="t12968" class="temper_a">--</b> <b id="t12969" class="temper_b">
+                                --</b> <b id="t12970" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w569_2"><b id="t12971" class="temper_a">--</b> <b id="t12972" class="temper_b">
+                                --</b> <b id="t12973" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w569_3"><b id="t12974" class="temper_a">--</b> <b id="t12975" class="temper_b">
+                                --</b> <b id="t12976" class="temper_c">--</b> </span></dt>
+                        <dd id="t569">
+                        </dd>
+                    </li>
+                    <!--613 21#破碎机 2#电机启动柜-->
+                    <li class="w570">
+                        <dt id="d570" onclick="deviceinfo(570,118);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w570_1"><b id="t12977" class="temper_a">--</b> <b id="t12978" class="temper_b">
+                                --</b> <b id="t12979" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w570_2"><b id="t12980" class="temper_a">--</b> <b id="t12981" class="temper_b">
+                                --</b> <b id="t12982" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w570_3"><b id="t12983" class="temper_a">--</b> <b id="t12984" class="temper_b">
+                                --</b> <b id="t12985" class="temper_c">--</b> </span></dt>
+                        <dd id="t570">
+                        </dd>
+                    </li>
+                    <!--451 低压进线柜-->
+                    <li class="w571">
+                        <dt id="d571" onclick="deviceinfo(571,118);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w571_1"><b id="t12986" class="temper_a">--</b> <b id="t12987" class="temper_b">
+                                --</b> <b id="t12988" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w571_2"><b id="t12989" class="temper_a">--</b> <b id="t12990" class="temper_b">
+                                --</b> <b id="t12991" class="temper_c">--</b> </span></dt>
+                        <dd id="t571">
+                        </dd>
+                    </li>
+                    <!--411 21#刮板机变频空调控制室-->
+                    <li class="w572">
+                        <dt id="d572" onclick="deviceinfo(572,118);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w572_1"><b id="t12992" class="temper_a">--</b> <b id="t12993" class="temper_b">
+                                --</b> <b id="t12994" class="temper_c">--</b> </span></dt>
+                        <dd id="t572">
+                        </dd>
+                    </li>
+                    <!--1#变压器-->
+                    <li class="w573">
+                        <dt id="d573" onclick="deviceinfo(573,118);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w573_1"><b id="t12995" class="temper_a">--</b> <b id="t12996" class="temper_b">
+                                --</b> <b id="t12997" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w573_2"><b id="t12998" class="temper_a">--</b> <b id="t12999" class="temper_b">
+                                --</b> <b id="t13000" class="temper_c">--</b> </span></dt>
+                        <dd id="t573">
+                        </dd>
+                    </li>
+                </ul>
+            </div>
+            <!--一次图总图-03-->
+            <div class="ycmain shzt03_ycbg hide">
+                <!--9#配电室-->
+                <ul class="alertmenu" id="p119">
+                    <!--412 31#给料机控制柜-->
+                    <li class="w574">
+                        <dt id="d574" onclick="deviceinfo(574,119);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w574_1"><b id="t13001" class="temper_a">--</b> <b id="t13002" class="temper_b">
+                                --</b> <b id="t13003" class="temper_c">--</b> </span></dt>
+                        <dd id="t574">
+                        </dd>
+                    </li>
+                    <!--451 I段电源进线柜-->
+                    <li class="w575">
+                        <dt id="d575" onclick="deviceinfo(575,119);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w575_1"><b id="t13004" class="temper_a">--</b> <b id="t13005" class="temper_b">
+                                --</b> <b id="t13006" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w575_2"><b id="t13007" class="temper_a">--</b> <b id="t13008" class="temper_b">
+                                --</b> <b id="t13009" class="temper_c">--</b> </span></dt>
+                        <dd id="t575">
+                        </dd>
+                    </li>
+                    <!--613 变压器控制柜-->
+                    <li class="w576">
+                        <dt id="d576" onclick="deviceinfo(576,119);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w576_1"><b id="t13010" class="temper_a">--</b> <b id="t13011" class="temper_b">
+                                --</b> <b id="t13012" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w576_2"><b id="t13013" class="temper_a">--</b> <b id="t13014" class="temper_b">
+                                --</b> <b id="t13015" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w576_3"><b id="t13016" class="temper_a">--</b> <b id="t13017" class="temper_b">
+                                --</b> <b id="t13018" class="temper_c">--</b> </span></dt>
+                        <dd id="t576">
+                        </dd>
+                    </li>
+                    <!--611 31#破碎机正转控制柜-->
+                    <li class="w577">
+                        <dt id="d577" onclick="deviceinfo(577,119);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w577_1"><b id="t13019" class="temper_a">--</b> <b id="t13020" class="temper_b">
+                                --</b> <b id="t13021" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w577_2"><b id="t13022" class="temper_a">--</b> <b id="t13023" class="temper_b">
+                                --</b> <b id="t13024" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w577_3"><b id="t13025" class="temper_a">--</b> <b id="t13026" class="temper_b">
+                                --</b> <b id="t13027" class="temper_c">--</b> </span></dt>
+                        <dd id="t577">
+                        </dd>
+                    </li>
+                    <!--612 31#破碎机反转控制柜-->
+                    <li class="w578">
+                        <dt id="d578" onclick="deviceinfo(578,119);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w578_1"><b id="t13028" class="temper_a">--</b> <b id="t13029" class="temper_b">
+                                --</b> <b id="t13030" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w578_2"><b id="t13031" class="temper_a">--</b> <b id="t13032" class="temper_b">
+                                --</b> <b id="t13033" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w578_3"><b id="t13034" class="temper_a">--</b> <b id="t13035" class="temper_b">
+                                --</b> <b id="t13036" class="temper_c">--</b> </span></dt>
+                        <dd id="t578">
+                        </dd>
+                    </li>
+                    <!--651 高压进线柜-->
+                    <li class="w579">
+                        <dt id="d579" onclick="deviceinfo(579,119);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w579_1"><b id="t13037" class="temper_a">--</b> <b id="t13038" class="temper_b">
+                                --</b> <b id="t13039" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w579_2"><b id="t13040" class="temper_a">--</b> <b id="t13041" class="temper_b">
+                                --</b> <b id="t13042" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w579_3"><b id="t13043" class="temper_a">--</b> <b id="t13044" class="temper_b">
+                                --</b> <b id="t13045" class="temper_c">--</b> </span></dt>
+                        <dd id="t579">
+                        </dd>
+                    </li>
+                    <!--1#变压器-->
+                    <li class="w580">
+                        <dt id="d580" onclick="deviceinfo(580,119);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w580_1"><b id="t13046" class="temper_a">--</b> <b id="t13047" class="temper_b">
+                                --</b> <b id="t13048" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w580_2"><b id="t13049" class="temper_a">--</b> <b id="t13050" class="temper_b">
+                                --</b> <b id="t13051" class="temper_c">--</b> </span></dt>
+                        <dd id="t580">
+                        </dd>
+                    </li>
+                </ul>
+                <!--14#配电室-->
+                <ul class="alertmenu" id="p120">
+                    <!--651 I段高压进线柜-->
+                    <li class="w581">
+                        <dt id="d581" onclick="deviceinfo(581,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w581_1"><b id="t13052" class="temper_a">--</b> <b id="t13053" class="temper_b">
+                                --</b> <b id="t13054" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w581_2"><b id="t13055" class="temper_a">--</b> <b id="t13056" class="temper_b">
+                                --</b> <b id="t13057" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w581_3"><b id="t13058" class="temper_a">--</b> <b id="t13059" class="temper_b">
+                                --</b> <b id="t13060" class="temper_c">--</b> </span></dt>
+                        <dd id="t581">
+                        </dd>
+                    </li>
+                    <!--652 II段高压进线柜-->
+                    <li class="w582">
+                        <dt id="d582" onclick="deviceinfo(582,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w582_1"><b id="t13061" class="temper_a">--</b> <b id="t13062" class="temper_b">
+                                --</b> <b id="t13063" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w582_2"><b id="t13064" class="temper_a">--</b> <b id="t13065" class="temper_b">
+                                --</b> <b id="t13066" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w582_3"><b id="t13067" class="temper_a">--</b> <b id="t13068" class="temper_b">
+                                --</b> <b id="t13069" class="temper_c">--</b> </span></dt>
+                        <dd id="t582">
+                        </dd>
+                    </li>
+                    <!--681 PT柜-->
+                    <li class="w583">
+                        <dt id="d583" onclick="deviceinfo(583,120);">
+                            <!--上触头ABC三相温度-->
+                            <span class="w583_1"><b id="t13070" class="temper_a">--</b> <b id="t13071" class="temper_b">
+                                --</b> <b id="t13072" class="temper_c">--</b> </span></dt>
+                        <dd id="t583">
+                        </dd>
+                    </li>
+                    <!--611 311#胶带机电源柜-->
+                    <li class="w584">
+                        <dt id="d584" onclick="deviceinfo(584,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w584_1"><b id="t13073" class="temper_a">--</b> <b id="t13074" class="temper_b">
+                                --</b> <b id="t13075" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w584_2"><b id="t13076" class="temper_a">--</b> <b id="t13077" class="temper_b">
+                                --</b> <b id="t13078" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w584_3"><b id="t13079" class="temper_a">--</b> <b id="t13080" class="temper_b">
+                                --</b> <b id="t13081" class="temper_c">--</b> </span></dt>
+                        <dd id="t584">
+                        </dd>
+                    </li>
+                    <!--612 312#胶带机电源柜-->
+                    <li class="w585">
+                        <dt id="d585" onclick="deviceinfo(585,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w585_1"><b id="t13082" class="temper_a">--</b> <b id="t13083" class="temper_b">
+                                --</b> <b id="t13084" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w585_2"><b id="t13085" class="temper_a">--</b> <b id="t13086" class="temper_b">
+                                --</b> <b id="t13087" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w585_3"><b id="t13088" class="temper_a">--</b> <b id="t13089" class="temper_b">
+                                --</b> <b id="t13090" class="temper_c">--</b> </span></dt>
+                        <dd id="t585">
+                        </dd>
+                    </li>
+                    <!--614 变压器控制柜-->
+                    <li class="w586">
+                        <dt id="d586" onclick="deviceinfo(586,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w586_1"><b id="t13091" class="temper_a">--</b> <b id="t13092" class="temper_b">
+                                --</b> <b id="t13093" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w586_2"><b id="t13094" class="temper_a">--</b> <b id="t13095" class="temper_b">
+                                --</b> <b id="t13096" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w586_3"><b id="t13097" class="temper_a">--</b> <b id="t13098" class="temper_b">
+                                --</b> <b id="t13099" class="temper_c">--</b> </span></dt>
+                        <dd id="t586">
+                        </dd>
+                    </li>
+                    <!--615 刮板机电源启动柜-->
+                    <li class="w587">
+                        <dt id="d587" onclick="deviceinfo(587,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w587_1"><b id="t13100" class="temper_a">--</b> <b id="t13101" class="temper_b">
+                                --</b> <b id="t13102" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w587_2"><b id="t13103" class="temper_a">--</b> <b id="t13104" class="temper_b">
+                                --</b> <b id="t13105" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w587_3"><b id="t13106" class="temper_a">--</b> <b id="t13107" class="temper_b">
+                                --</b> <b id="t13108" class="temper_c">--</b> </span></dt>
+                        <dd id="t587">
+                        </dd>
+                    </li>
+                    <!--616 311#胶带机启动柜-->
+                    <li class="w588">
+                        <dt id="d588" onclick="deviceinfo(588,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w588_1"><b id="t13109" class="temper_a">--</b> <b id="t13110" class="temper_b">
+                                --</b> <b id="t13111" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w588_2"><b id="t13112" class="temper_a">--</b> <b id="t13113" class="temper_b">
+                                --</b> <b id="t13114" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w588_3"><b id="t13115" class="temper_a">--</b> <b id="t13116" class="temper_b">
+                                --</b> <b id="t13117" class="temper_c">--</b> </span></dt>
+                        <dd id="t588">
+                        </dd>
+                    </li>
+                    <!--617 312#胶带机启动柜-->
+                    <li class="w589">
+                        <dt id="d589" onclick="deviceinfo(589,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w589_1"><b id="t13118" class="temper_a">--</b> <b id="t13119" class="temper_b">
+                                --</b> <b id="t13120" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w589_2"><b id="t13121" class="temper_a">--</b> <b id="t13122" class="temper_b">
+                                --</b> <b id="t13123" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w589_3"><b id="t13124" class="temper_a">--</b> <b id="t13125" class="temper_b">
+                                --</b> <b id="t13126" class="temper_c">--</b> </span></dt>
+                        <dd id="t589">
+                        </dd>
+                    </li>
+                    <!--TG-1 变压器-->
+                    <li class="w590">
+                        <dt id="d590" onclick="deviceinfo(590,120);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w590_1"><b id="t13127" class="temper_a">--</b> <b id="t13128" class="temper_b">
+                                --</b> <b id="t13129" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w590_2"><b id="t13130" class="temper_a">--</b> <b id="t13131" class="temper_b">
+                                --</b> <b id="t13132" class="temper_c">--</b> </span></dt>
+                        <dd id="t590">
+                        </dd>
+                    </li>
+                    <!--451 低压进线柜-->
+                    <li class="w591">
+                        <dt id="d591" onclick="deviceinfo(591,120);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w591_1"><b id="t13133" class="temper_a">--</b> <b id="t13134" class="temper_b">
+                                --</b> <b id="t13135" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w591_2"><b id="t13136" class="temper_a">--</b> <b id="t13137" class="temper_b">
+                                --</b> <b id="t13138" class="temper_c">--</b> </span></dt>
+                        <dd id="t591">
+                        </dd>
+                    </li>
+                    <!--411 1#低压出线柜-->
+                    <li class="w592">
+                        <dt id="d592" onclick="deviceinfo(592,120);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w592_1"><b id="t13139" class="temper_a">--</b> <b id="t13140" class="temper_b">
+                                --</b> <b id="t13141" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w592_2"><b id="t13142" class="temper_a">--</b> <b id="t13143" class="temper_b">
+                                --</b> <b id="t13144" class="temper_c">--</b> </span></dt>
+                        <dd id="t592">
+                        </dd>
+                    </li>
+                    <!--412 2#低压出线柜-->
+                    <li class="w593">
+                        <dt id="d593" onclick="deviceinfo(593,120);">
+                            <!--下母排ABC三相温度-->
+                            <span class="w593_1"><b id="t13145" class="temper_a">--</b> <b id="t13146" class="temper_b">
+                                --</b> <b id="t13147" class="temper_c">--</b> </span></dt>
+                        <dd id="t593">
+                        </dd>
+                    </li>
+                    <!--413 3#低压出线柜-->
+                    <li class="w594">
+                        <dt id="d594" onclick="deviceinfo(594,120);">
+                            <!--下母排ABC三相温度-->
+                            <span class="w594_1"><b id="t13148" class="temper_a">--</b> <b id="t13149" class="temper_b">
+                                --</b> <b id="t13150" class="temper_c">--</b> </span></dt>
+                        <dd id="t594">
+                        </dd>
+                    </li>
+                </ul>
+            </div>
+            <!--一次图总图-04-->
+            <div class="ycmain sh15_ycbg hide">
+                <!--15#配电室-->
+                <ul class="alertmenu" id="p121">
+                    <!--651 I段高压进线柜-->
+                    <li class="w595">
+                        <dt id="d595" onclick="deviceinfo(595,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w595_1"><b id="t13151" class="temper_a">--</b> <b id="t13152" class="temper_b">
+                                --</b> <b id="t13153" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w595_2"><b id="t13154" class="temper_a">--</b> <b id="t13155" class="temper_b">
+                                --</b> <b id="t13156" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w595_3"><b id="t13157" class="temper_a">--</b> <b id="t13158" class="temper_b">
+                                --</b> <b id="t13159" class="temper_c">--</b> </span></dt>
+                        <dd id="t595">
+                        </dd>
+                    </li>
+                    <!--652 II段高压进线柜-->
+                    <li class="w596">
+                        <dt id="d596" onclick="deviceinfo(596,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w596_1"><b id="t13160" class="temper_a">--</b> <b id="t13161" class="temper_b">
+                                --</b> <b id="t13162" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w596_2"><b id="t13163" class="temper_a">--</b> <b id="t13164" class="temper_b">
+                                --</b> <b id="t13165" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w596_3"><b id="t13166" class="temper_a">--</b> <b id="t13167" class="temper_b">
+                                --</b> <b id="t13168" class="temper_c">--</b> </span></dt>
+                        <dd id="t596">
+                        </dd>
+                    </li>
+                    <!--681 PT柜-->
+                    <li class="w597">
+                        <dt id="d597" onclick="deviceinfo(597,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w597_1"><b id="t13169" class="temper_a">--</b> <b id="t13170" class="temper_b">
+                                --</b> <b id="t13171" class="temper_c">--</b> </span></dt>
+                        <dd id="t597">
+                        </dd>
+                    </li>
+                    <!--611 I段变压器控制柜-->
+                    <li class="w598">
+                        <dt id="d598" onclick="deviceinfo(598,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w598_1"><b id="t13172" class="temper_a">--</b> <b id="t13173" class="temper_b">
+                                --</b> <b id="t13174" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w598_2"><b id="t13175" class="temper_a">--</b> <b id="t13176" class="temper_b">
+                                --</b> <b id="t13177" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w598_3"><b id="t13178" class="temper_a">--</b> <b id="t13179" class="temper_b">
+                                --</b> <b id="t13180" class="temper_c">--</b> </span></dt>
+                        <dd id="t598">
+                        </dd>
+                    </li>
+                    <!--621 II段变压器控制柜-->
+                    <li class="w599">
+                        <dt id="d599" onclick="deviceinfo(599,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w599_1"><b id="t13181" class="temper_a">--</b> <b id="t13182" class="temper_b">
+                                --</b> <b id="t13183" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w599_2"><b id="t13184" class="temper_a">--</b> <b id="t13185" class="temper_b">
+                                --</b> <b id="t13186" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w599_3"><b id="t13187" class="temper_a">--</b> <b id="t13188" class="temper_b">
+                                --</b> <b id="t13189" class="temper_c">--</b> </span></dt>
+                        <dd id="t599">
+                        </dd>
+                    </li>
+                    <!--613 302#胶带机2#电机启动柜-->
+                    <li class="w600">
+                        <dt id="d600" onclick="deviceinfo(600,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w600_1"><b id="t13190" class="temper_a">--</b> <b id="t13191" class="temper_b">
+                                --</b> <b id="t13192" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w600_2"><b id="t13193" class="temper_a">--</b> <b id="t13194" class="temper_b">
+                                --</b> <b id="t13195" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w600_3"><b id="t13196" class="temper_a">--</b> <b id="t13197" class="temper_b">
+                                --</b> <b id="t13198" class="temper_c">--</b> </span></dt>
+                        <dd id="t600">
+                        </dd>
+                    </li>
+                    <!--614 302#胶带机1#电机启动柜-->
+                    <li class="w601">
+                        <dt id="d601" onclick="deviceinfo(601,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w601_1"><b id="t13199" class="temper_a">--</b> <b id="t13200" class="temper_b">
+                                --</b> <b id="t13201" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w601_2"><b id="t13202" class="temper_a">--</b> <b id="t13203" class="temper_b">
+                                --</b> <b id="t13204" class="temper_c">--</b> </span>
+                            <!--电缆头ABC三相温度-->
+                            <span class="w601_3"><b id="t13205" class="temper_a">--</b> <b id="t13206" class="temper_b">
+                                --</b> <b id="t13207" class="temper_c">--</b> </span></dt>
+                        <dd id="t601">
+                        </dd>
+                    </li>
+                    <!--TG-1 变压器-->
+                    <li class="w602">
+                        <dt id="d602" onclick="deviceinfo(602,121);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w602_1"><b id="t13208" class="temper_a">--</b> <b id="t13209" class="temper_b">
+                                --</b> <b id="t13210" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w602_2"><b id="t13211" class="temper_a">--</b> <b id="t13212" class="temper_b">
+                                --</b> <b id="t13213" class="temper_c">--</b> </span></dt>
+                        <dd id="t602">
+                        </dd>
+                    </li>
+                    <!--TG-2 变压器-->
+                    <li class="w603">
+                        <dt id="d603" onclick="deviceinfo(603,121);">
+                            <!--高压侧ABC三相温度-->
+                            <span class="w603_1"><b id="t13214" class="temper_a">--</b> <b id="t13215" class="temper_b">
+                                --</b> <b id="t13216" class="temper_c">--</b> </span>
+                            <!--低压侧ABC三相温度-->
+                            <span class="w603_2"><b id="t13217" class="temper_a">--</b> <b id="t13218" class="temper_b">
+                                --</b> <b id="t13219" class="temper_c">--</b> </span></dt>
+                        <dd id="t603">
+                        </dd>
+                    </li>
+                    <!--421 馈电及控制柜-->
+                    <li class="w604">
+                        <dt id="d604" onclick="deviceinfo(604,121);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w604_1"><b id="t13220" class="temper_a">--</b> <b id="t13221" class="temper_b">
+                                --</b> <b id="t13222" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w604_2"><b id="t13223" class="temper_a">--</b> <b id="t13224" class="temper_b">
+                                --</b> <b id="t13225" class="temper_c">--</b> </span></dt>
+                        <dd id="t604">
+                        </dd>
+                    </li>
+                    <!--040 联络柜-->
+                    <li class="w605">
+                        <dt id="d605" onclick="deviceinfo(605,121);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w605_1"><b id="t13226" class="temper_a">--</b> <b id="t13227" class="temper_b">
+                                --</b> <b id="t13228" class="temper_c">--</b> </span></dt>
+                        <dd id="t605">
+                        </dd>
+                    </li>
+                    <!--412 馈电及控制柜-->
+                    <li class="w606">
+                        <dt id="d606" onclick="deviceinfo(606,121);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w606_1"><b id="t13229" class="temper_a">--</b> <b id="t13230" class="temper_b">
+                                --</b> <b id="t13231" class="temper_c">--</b> </span></dt>
+                        <dd id="t606">
+                        </dd>
+                    </li>
+                    <!--411 馈电及控制柜-->
+                    <li class="w607">
+                        <dt id="d607" onclick="deviceinfo(607,121);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w607_1"><b id="t13232" class="temper_a">--</b> <b id="t13233" class="temper_b">
+                                --</b> <b id="t13234" class="temper_c">--</b> </span></dt>
+                        <dd id="t607">
+                        </dd>
+                    </li>
+                    <!--451 I段低压进线柜-->
+                    <li class="w608">
+                        <dt id="d608" onclick="deviceinfo(608,121);">
+                            <!--1#电缆头ABC三相温度-->
+                            <span class="w608_1"><b id="t13235" class="temper_a">--</b> <b id="t13236" class="temper_b">
+                                --</b> <b id="t13237" class="temper_c">--</b> </span>
+                            <!--2#电缆头ABC三相温度-->
+                            <span class="w608_2"><b id="t13238" class="temper_a">--</b> <b id="t13239" class="temper_b">
+                                --</b> <b id="t13240" class="temper_c">--</b> </span></dt>
+                        <dd id="t608">
+                        </dd>
+                    </li>
+                    <!--421-1 304#胶带机低压进线柜-->
+                    <li class="w609">
+                        <dt id="d609" onclick="deviceinfo(609,121);">
+                            <!--上母排ABC三相温度-->
+                            <span class="w609_1"><b id="t13241" class="temper_a">--</b> <b id="t13242" class="temper_b">
+                                --</b> <b id="t13243" class="temper_c">--</b> </span>
+                            <!--下母排ABC三相温度-->
+                            <span class="w609_2"><b id="t13244" class="temper_a">--</b> <b id="t13245" class="temper_b">
+                                --</b> <b id="t13246" class="temper_c">--</b> </span></dt>
+                        <dd id="t609">
+                        </dd>
+                    </li>
+                    <!--421 304#胶带机低压启动柜-->
+                    <li class="w610">
+                        <dt id="d610" onclick="deviceinfo(610,121);">
+                            <!--电缆头ABC三相温度-->
+                            <span class="w610_1"><b id="t13247" class="temper_a">--</b> <b id="t13248" class="temper_b">
+                                --</b> <b id="t13249" class="temper_c">--</b> </span></dt>
+                        <dd id="t610">
+                        </dd>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ajaxbg = top.$("#loading_background,#loading");
+        function loadPointsInfo() {
+            ajaxbg.show();
+            //获取实时温度数据
+            $.post("/PDRInfo/PointsData", { "pid": 0 }, function (data) {
+                ajaxbg.hide();
+                var arrpoints = data.split('$');
+                var pointvalue = arrpoints[1].split(',');
+                for (var i = 0; i < pointvalue.length; i++) {
+                    $("#t" + pointvalue[i].split('_')[0]).html(pointvalue[i].split('_')[1]);
+                }
+                var tablevalue = arrpoints[0].split(',');
+                for (var t = 0; t < tablevalue.length; t++) {
+                    $("#t" + tablevalue[t].split('|')[0]).html(tablevalue[t].split('|')[1]);
+                }
+            });
+        }
+        loadPointsInfo();
+        function deviceinfo(did, pid) {
+            $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+            $("#leftmenu",window.top.document).attr('src', '/Home/LeftMenu');
+            parent.location.href = "/DeviceManage/Index?sid=0&did=" + did + "&pid="+pid;
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.shyczt').Tabs({
+                event: 'click'
+            });
+        });	
+    </script>
+</body>
+</html>

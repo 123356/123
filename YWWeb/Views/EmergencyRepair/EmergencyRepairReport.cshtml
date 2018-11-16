@@ -1,0 +1,215 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>应急抢修报告</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 780px; width: 100%" idfield="ID"
+        pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='Fk_ID' checkbox="true">
+                </th>
+                <th field='FileExtension' width="100px" data-options="field:'FileExtension',width:50,formatter:loadImage">
+                </th>
+                <th field='FileName' width="200px">
+                    文件名称
+                </th>
+                <th field='CommitTime' width="100px" data-options="formatter: DateFormat">
+                    上传时间
+                </th>
+                <th field='FileSize' width="100px">
+                    文件大小
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div class="stand_file">
+        <div id="tb" class="searchbar">
+            <div class="searchrow">
+                站室名称:
+                <input data-options="lines:true" style="width: 200px;" id="StationName" />
+            </div>
+            <div id="userbutton" class="searchbutton">
+            </div>
+        </div>
+        @* <div class="searchrow">                
+         <div class="searchbutton" style="float: right">
+               <button title="查 询" onclick="DoSearch()" class="page_table_but"><img src="/Content/images/Icon16/zoom.png">查 询</button>
+         </div>
+ </div>*@ @*     <div id="Histb" class="searchbar searchbar2">
+        <ul>
+            <li>
+                <div>
+                    <img src="../content/images/wordicon.png" />
+                    <span>
+                        <h3>抢修报告名称</h3>
+                        <p>生成时间：2016-09-10 12：30：36</p>
+                        <p>大小：1.2M</p>
+                    </span>
+                </div>
+                <div class="standfile_btn"><button class="page_table_but3 radius5"><img src="../content/images/download.png" />下载</button><button class="page_table_but3 radius5"><img src="../content/images/delete_new.png" />删除</button></div>
+            </li>
+            <li>
+                <div>
+                    <img src="../content/images/wordicon.png" />
+                    <span>
+                        <h3>抢修报告名称</h3>
+                        <p>生成时间：2016-09-10 12：30：36</p>
+                        <p>大小：1.2M</p>
+                    </span>
+                </div>
+                <div class="standfile_btn"><button class="page_table_but3 radius5"><img src="../content/images/download.png" />下载</button><button class="page_table_but3 radius5"><img src="../content/images/delete_new.png" />删除</button></div>
+            </li>
+            <li>
+                <div>
+                    <img src="../content/images/wordicon.png" />
+                    <span>
+                        <h3>抢修报告名称</h3>
+                        <p>生成时间：2016-09-10 12：30：36</p>
+                        <p>大小：1.2M</p>
+                    </span>
+                </div>
+                <div class="standfile_btn"><button class="page_table_but3 radius5"><img src="../content/images/download.png" />下载</button><button class="page_table_but3 radius5"><img src="../content/images/delete_new.png" />删除</button></div>
+            </li>
+        </ul>
+    </div>*@
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $("#currPosition", window.top.document).html("当前位置：应急抢修 > 应急抢修报告");
+
+    //查询站室名称
+    $('#StationName').combotree({
+        url: '/Home/ComboTreeMenu',
+        multiple: false,
+        //选择之前处理事件
+        onBeforeSelect: function (node) {
+            //判断是否叶子节点。
+            if (!$(this).tree('isLeaf', node.target)) {
+                $('#StationName').combotree('tree').tree("expand", node.target); //展开
+                return false;
+            }
+        },
+        //点击事件
+        onClick: function (node) {
+            if (!$(this).tree('isLeaf', node.target)) {
+                $('#StationName').combo('showPanel');
+            }
+            else {
+                //返回树对象                
+                if (node.id != 0) {
+                    $("#PID").val(node.id);
+                    $("#PName").val(node.text);
+                    var ppid = $('#StationName').combotree('getValue');
+                    EmergencyRepairReportList(ppid);
+                }
+            }
+        },
+        //加载
+        onLoadSuccess: function (node) {
+            var roots = $('#StationName').combotree('tree').tree('getRoots');
+            //alert(JSON.stringify(roots[0].children[0].children[0].id));
+            var Lastpid = roots[0].children[0].children[0].id;
+            $('#StationName').combotree('setValue', Lastpid);
+            EmergencyRepairReportList(Lastpid);
+        }
+    });
+
+    //刷新应急抢修报告名称列表
+    function EmergencyRepairReportList(pid) {
+        //    alert("thj1");
+        //    alert(pid);
+        dosearch();
+        //   alert("thj2");
+    }
+
+    //查询
+    function dosearch() {
+        var pid = $("#StationName").combobox('getValue');
+        $('#list_data').datagrid('load', { "pid": pid });
+        $('#list_data').datagrid('uncheckAll');
+    }
+    $('#list_data').datagrid({
+        url: '/EmergencyRepair/GetEmergencyRepairReportFileInfo?rom=' + Math.random(),
+        pagination: true
+    });
+    //下载
+    function download() {
+        var ids = [];
+        var rows = $('#list_data').datagrid('getSelections');
+        for (var i = 0; i < rows.length; i++) {
+            ids.push(rows[i].Fk_ID);
+        }
+        if (ids.length > 1) {
+            $.messager.alert("提示", "下载时只能选择一行数据！", "info");
+            $('#list_data').datagrid('uncheckAll');
+        }
+        else {
+            var row = $('#list_data').datagrid('getSelected');
+            if (row) {
+                window.open(row.FilePath.replace(/~/, "../.."));
+            }
+            else {
+                $.messager.alert("提示", "请选择要下载的行！", "info");
+            }
+        }
+    }
+    //删除
+    function Delete() {
+        var rows = $('#list_data').datagrid('getSelections');
+        if (rows.length < 1) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+        }
+        else {
+            $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+                if (r) {
+                    var ids = [];
+                    for (var i = 0; i < rows.length; i++) {
+                        ids.push(rows[i].Fk_ID);
+                    }
+                    $.post("/EmergencyRepair/DeleteEmergencyRepairReportInfo?Rnum=" + Math.random(), { "ids": ids.join(',') }, function (data) {
+                        if (data == "success") {
+                            // window.location.reload();
+                        }
+                        else {
+                            $.messager.alert("提示", data, "info");
+                        }
+                        dosearch();
+                    });
+                }
+            })
+        }
+    }
+    //日期转换
+    function DateFormat(value, row, index) {
+        var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss');
+        return lDate
+    }
+    //查看详情
+    function loadDetail(value, row, index) {
+        return "<a href='" + row.FilePath.replace(/~/, "../..") + "'  target='_blank'><button class='page_table_but3 radius5'><img src='../content/images/download.png' />下载</button></a><button class='page_table_but3 radius5' onclick='DoDelete(" + row.ID + ");'><img src='../content/images/delete_new.png' />删除</button>"
+    }
+    //显示文件类型图标
+    function loadImage(FileExtension) {
+        if (FileExtension == ".doc" || FileExtension == ".docx")
+            return '<img src="../content/images/wordicon.png"  width="35px" height="35px"/>';
+        else if (FileExtension == ".xls" || FileExtension == ".xlsx")
+            return '<img src="../content/images/excelicon.png"  width="35px" height="35px"/>';
+        else if (FileExtension == ".zip" || FileExtension == ".rar)")
+            return '<img src="../content/images/raricon.png"  width="35px" height="35px"/>';
+        else if (FileExtension == ".pdf")
+            return '<img src="../content/images/pdficon.png"  width="35px" height="35px"/>';
+        else if (FileExtension == ".mp4" || FileExtension == ".rmvb)" || FileExtension == ".wav")
+            return '<img src="../content/images/videoicon.png"  width="35px" height="35px"/>';
+        else
+            return '<img src="../content/images/drawingicon.png"  width="35px" height="35px"/>';
+    }
+</script>

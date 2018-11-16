@@ -1,0 +1,197 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>首页</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <div class="equipment_account radius5">
+        <h3>
+            设备台账</h3>
+        <table width="48%" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr class="account_tr">
+                <th scope="row">
+                    设备编码
+                </th>
+                <td id="tDeviceCode">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    所属配电房
+                </th>
+                <td id="tPName">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    设备型号
+                </th>
+                <td id="tDeviceModel">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    设备结构类型
+                </th>
+                <td id="tDSTID">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    生产厂家
+                </th>
+                <td id="tMFactory">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    购买日期
+                </th>
+                <td id="tBuyTime">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    安装地点
+                </th>
+                <td id="tInstallAddr">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    所属单位
+                </th>
+                <td id="tCompany">
+                </td>
+            </tr>
+        </table>
+        <table width="48%" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr class="account_tr">
+                <th scope="row">
+                    设备名称
+                </th>
+                <td id="tDeviceName">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    设备类型
+                </th>
+                <td id="tDTID">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    重要程度
+                </th>
+                <td id="tMLID">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    出厂编号
+                </th>
+                <td id="tFactoryNumber">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    建档日期
+                </th>
+                <td id="tBuildDate">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    投运日期
+                </th>
+                <td id="tUseDate">
+                </td>
+            </tr>
+            <tr class="account_tr">
+                <th scope="row">
+                    使用状态
+                </th>
+                <td id="tUseState">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    最后维护日期
+                </th>
+                <td id="tLastMtcDate">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 1, pid = 1;
+        if (Request['did'] != null)
+            did = Request['did'];
+        if (Request['pid'] != null)
+            pid = Request['pid']; 
+
+        $(function () {
+            loadDeviceInfo();
+            loadFile();
+        });
+        var ajaxbg = top.$("#loading_background,#loading");
+        ajaxbg.show();
+        function loadDeviceInfo() {
+            $.post("/DeviceManage/DeviceDetail", { "did": did }, function (data) {
+                var info = eval("(" + data + ")");
+                ajaxbg.hide();
+                $("#tDeviceCode").html(info.DeviceCode);
+                $("#tDeviceName").html(info.DeviceName);
+                $("#tPName").html(info.PName);
+                $("#tDeviceModel").html(info.DeviceModel);
+                $("#tDTID").html(info.DeviceType);
+                $("#tDSTID").html(info.DeviceStructureType);
+                $("#tMLID").html(info.MajorLevel);
+                $("#tMFactory").html(info.MFactory);
+                $("#tFactoryNumber").html(info.FactoryNumber);
+                setDateVale("tUseDate", info.UseDate);
+                setDateVale("tBuyTime", info.BuyTime);
+                setDateVale("tLastMtcDate", info.LastMtcDate);
+                setDateVale("tBuildDate", info.BuildDate);
+                $("#tInstallAddr").html(info.InstallAddr);
+                var UseState
+                if(info.UseState == 0)
+                UseState = "正常使用";
+                else
+                UseState = "暂停使用";
+                $("#tUseState").html(UseState);
+                $("#tCompany").html(info.Company);
+                $("#tRemarks").html(info.Remarks);
+            });
+        }
+
+        function setDateVale(dkey, dvalue) {
+            var LastMtcDate = dvalue;
+            if (LastMtcDate != null)
+                LastMtcDate = new Date(LastMtcDate).Format("yyyy-MM-dd");
+            $("#" + dkey).html(LastMtcDate);
+        }
+        function loadFile() {
+            $.post("/DeviceManage/DeviceFiles", { "did": did }, function (data) {
+                    $("#flies").html(data);
+            });
+        }
+        function ShowImage(id,did) {
+            var src = $("#img"+id).attr("src");
+            $('#ShowImage').dialog({
+            });
+            $("#bigImg").attr("src",src) ;
+            $('#ShowImage').window('open');
+        }
+    </script>
+</body>
+</html>

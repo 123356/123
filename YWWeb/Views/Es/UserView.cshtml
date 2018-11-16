@@ -1,0 +1,248 @@
+﻿@{
+    ViewBag.Title = "UserView";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <title>二级页面</title>
+    
+   
+    
+    <link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/swiper.min.css" />
+    <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
+    <link rel="stylesheet" href="~/Content/css/userView2.css" />
+</head>
+<body>
+    <p class="comName">
+        <i class="iconfont icon-icon1"></i>
+        <!--<span class="ubitNme" ></span>-->
+      
+        <select class="form-control select" style="height:32px;">
+           
+        </select>
+           
+    </p>
+    <div class="con">
+        <div class="conFlex">
+
+            <!--左侧 s-->
+            <div class="left">
+                <div class="left-top">
+                    <div class="item item1 itemComStyle">
+                        <div class="title littleTitle">
+                            <i class="iconfont icon-guidangxiangmu"></i>
+                            <span class="titleName">运行概况</span>
+                        </div>
+                        <div class="itemCon">
+                            <!--轮播-->
+                            <div class="swiper-container swiper1">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide slide1 slide1-1">
+                                        <!--
+                                        <p class="normal">安全运行</p>
+                                        <span class="littltInfo">正常116天</span>-->
+                                    </div>
+                                    <div class="swiper-slide slide1 slide2">
+                                        
+                                    </div>
+                                    <div class="swiper-slide slide1 slide3"></div>
+                                </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination" style="margin-bottom: 10px;"></div>
+                            </div>
+                            <!--轮播-->
+                        </div>
+                    </div>
+                    <div class="item item2 itemComStyle">
+                        <div class="row">
+                            <div class="col col-lg-4">
+                                <div class="title littleTitle" >
+                                    <i class="iconfont icon-lightningbshandian"></i>
+                                    <span class="titleName ">当日累计电量</span>
+                                    <span class="other">(kWh)</span>
+                                </div>
+                                <div class="dayElectricity yearTQ">
+                                    <p class="thisDayPower"></p>
+                                    <!--
+                                        <span>上年同期对比 <span class="num thisDayOccupation">%</span><img src="~/Content/images/icon4/up.png" /></span>
+                                    
+                                        -->
+                                    
+                                </div>
+                            </div>
+                            <div class="col col-lg-4">
+                                <div class="title littleTitle">
+                                    <i class="iconfont icon-lightningbshandian"></i>
+                                    <span class="titleName">上月用电</span>
+                                    <span class="other">(kWh)</span>
+                                </div>
+                                <div class="dayElectricity yearMonTB">
+                                    <p class="thisMonthPower">0</p>
+                                    
+                                </div>
+                            </div>
+                            <div class="col col-lg-4">
+                                <div class="title littleTitle">
+                                    <i class="iconfont icon-lightningbshandian"></i>
+                                    <span class="titleName">当年累计电量</span>
+                                </div>
+                                <div class="" style="text-align: center;padding-top:15px;width:100%">
+                                    <div id="monElChart" style="margin:0 auto"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="left-bottom itemComStyle" style="padding-right: 0;position:relative">
+                    <!--
+                    <button type="button"  class="pageBtn upbtn"><img src="~/Content/images/pageleft.png" /></button>
+                    <button type="button" class="pageBtn nextbtn" onclick="nextPage()"><img src="~/Content/images/pageright.png" /></button>-->
+                    <div class="title">
+                        <i class="iconfont icon-gaikuang"></i>
+                        <span class="titleName">配电室信息</span>
+                    </div>
+                    <div class="edRoomInfo" >
+                    
+                        <div class="roomBtn btnList">
+                            <div class="list">
+                                
+                                
+                            </div>
+                        </div>
+
+
+                            <div class="row roomBtn edRoomInfoDetail row">
+                                <div class="tranList col col-lg-1" style="width:30px;padding:0">
+                                    <span class="listTitle">变压器</span>
+                                    <ul>
+                                        
+                                    </ul>
+                                </div>
+                                <div class="burthen col col-11">
+                                    <div class="burthenInfo">
+                                        <div class="row" style="font-size:1.2em">
+                                            <div class="col col-lg-12">
+                                                <div class="" style="text-align:center;font-size:0.7em;float:left;margin-right:10px">
+                                                    <span class="desc byq"></span>
+                                                </div>
+                                                <div class="" style="float:left">
+                                                    <!--
+            <i class="iconfont icon-bianyaqi"></i>-->
+                                                    <img src="~/Content/images/icon4/tran.png" class="iconImg" />
+                                                    <span>变压器容量</span>
+                                                    <span class="num"></span>
+                                                    <span class="dw">kVA</span>
+
+                                                    <img src="~/Content/images/icon4/elec.png" class="iconImg" />
+                                                    <span>当前负荷</span>
+                                                    <span class="num"></span>
+                                                    <span class="dw">kVA</span>
+
+                                                    <img src="~/Content/images/icon4/elecLoad.png" class="iconImg" />
+                                                    <span>负载率</span>
+                                                    <span class="num"></span>
+                                                    <span class="dw">%</span>
+
+                                                    <button class="detailBtn" onclick="pdsDetail()" style="cursor:pointer">配电室详情<i class="iconfont icon-xiangyou2"></i></button>
+                                                </div>
+                                            </div>
+                                            <!--
+                        <div class="col col-lg-2">
+                            <button class="detailBtn">配电室详情<i class="iconfont icon-xiangyou2"></i></button>
+                        </div>
+                            -->
+                                        </div>
+                                    </div>
+                                    <div style="position: relative;">
+                                        <p class="noBurthenChart" style="display:none;text-align:center;font-size:20px;color:#000;margin-top:30px;">未检测</p>
+                                        <div class="chart" id="burthenChart" style="width:100%">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <!--左侧 e-->
+            <!--右侧 s-->
+            <div class="right">
+                <div class="right-top itemComStyle">
+                    <div class="title">
+                        <i class="iconfont icon-gaikuang"></i>
+                        <span class="titleName">用电概况</span>
+                    </div>
+                    <div class="electricityUsage">
+                        <div class="row">
+                            <div class="col col-lg-4 text">
+                                <p class="normal Sumload">0</p>
+                                <span>当前负荷(kVA)</span>
+                            </div>
+                            <div class="col col-lg-4 text">
+                                <p class="normal RatedCapacity">--</p>
+                                <span>总负载率</span>
+                            </div>
+                            <div class="col col-lg-4 text">
+                                <div id="elecUsageChart">
+                                    <p class="noElecUsageChart">--</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-middle itemComStyle">
+                    <div class="title">
+                        <i class="iconfont icon-icon"></i>
+                        <span class="titleName">消息通知</span>
+                    </div>
+                    <div class="msgList">
+                        <ul>
+                            <!--
+                            <li class="newMsg"><p><time>9/18</time>有工单需要及时处理&nbsp;&gt;</p></li>
+                            <li class="newMsg"><p><time>9/08</time>1#总配电室电流过大，请及时查看&nbsp;&gt;</p></li>
+                            <li><p><time>9/11</time>有工单需要及时处理&nbsp;&gt;</p></li>
+                            <li><p><time>9/16</time>1#总负载率过高，存在风险&nbsp;&gt;</p></li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="right-bottom itemComStyle">
+                    <div class="title">
+                        <img src="~/Content/images/icon4/info.png" style="height:20px"/>
+                        <span class="titleName">项目信息</span>
+                    </div>
+                    <div class="projectInfo">
+                        <p style="float:left;"><i class="iconfont icon-user"></i><span class="linkName"></span></p>
+                        <p style="float:left;margin-left:4rem"><i class="iconfont icon-dianhua"></i><span class="linkPhone"></span></p>
+                        <p style="clear:both">客户名称：<span class="UnitName"></span></p>
+                        <p>从事行业：<span class="ndustryName"></span></p>
+                        <p>装机容量：<span class="InstalledCapacitys"></span> kVA</p>
+                        <p>电压等级：<span class="dianya"></span></p>
+                        <p>项目类型：<span class="UnitProjectTypeName "></span></p>
+                        <p>客户经理：<span class="CSMMan"></span></p>
+                        <p>客户经理电话：<span class="CSMPhone"></span></p>
+                        <p>联系地址：<span class="LinkAddress"></span></p>
+                    </div>
+                </div>
+            </div>
+            <!--右侧 e-->
+        </div>
+
+    </div>
+    
+</body>
+</html>
+<script type="text/javascript">
+    @*var unitId=@Html.Raw(Request.QueryString["unitId"]);*@
+</script>
+<script src="~/Content/js/jquery-1.12.2.min.js"></script>
+<script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
+<script src="~/Content/js/swiper.min.js"></script>
+<script type="text/javascript" src="~/Content/js/userView2.js"></script>
+

@@ -1,0 +1,287 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserPayTheFees（住户缴费查询）</title>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+        });
+    });
+    </script>
+
+    <style>
+        td {
+            vertical-align: middle;
+            text-align: center;
+            font-family: "微软雅黑";
+        }
+    </style>
+
+</head>
+<body>
+  
+    <div class="container-fluid" style="padding-top:2%">
+        <div class="clearfix">
+
+            @*左侧固定格式*@
+            <div style="width:19%;float:left;height:660px;border-right:1px solid #000000;">
+                @*树形菜单*@
+                <div class="tree" style="overflow-y:scroll;height:560px;">
+                    <ul>
+                        <li>
+                            <span style="cursor:pointer">住户列表</span>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K1楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K2楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <span style="cursor:pointer">K3楼</span>
+                                    <ul>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">101室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">102室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">201室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">202室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">301室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">302室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">401室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">402室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">501室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">502室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">601室</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a href="#" style="text-decoration: none;">602室</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    @*<ul>
+                    <li>
+                        <span style="cursor:pointer">数据查询</span>
+                        <ul>
+                            <li>
+                                <span style="cursor:pointer"><i class="glyphicon glyphicon-plus-sign"></i>数据分类</span>
+                                <ul>
+                                    <li>
+                                        <span><a href="#" style="text-decoration: none;">近期数据</a></span>
+                                    </li>
+                                    <li>
+                                        <span><i class="icon-time"></i><a href="#" style="text-decoration: none;">历史数据</a></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>*@
+                </div>
+                <div style="width:270px;padding-left:20px;">
+                    <table class="table">
+                        <tr>
+                            <td style="width:100px;">开始时间：</td>
+                            <td><input type="text" class="form-control" placeholder="请输入开始时间"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:100px;">结束时间：</td>
+                            <td><input type="text" class="form-control" placeholder="请输入结束时间"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="2" style="vertical-align: middle;text-align:left;"><button type="button" class="btn btn-default">导出</button><button type="button" class="btn btn-default" style="margin-left:9px;">查询</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div style="float:left;padding-left:15px;width:40%">
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <td colspan="8">住户缴费查询</td>
+                        </tr>
+                        <tr>
+                            <td>住户</td>
+                            <td>开始时间</td>
+                            <td>结束时间</td>
+                            <td>应缴金额</td>
+                            <td>上交金额</td>
+                            <td>缴费明细</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">
+                                101
+                            </td>
+                            <td>
+                                2018-01-01
+                            </td>
+
+                            <td style="vertical-align: middle;text-align:center;">
+                                2018-08-31
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                照明50，家具50
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;text-align:center;">
+                                102
+                            </td>
+                            <td>
+                                2018-01-01
+                            </td>
+
+                            <td style="vertical-align: middle;text-align:center;">
+                                2018-08-31
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                100.00
+                            </td>
+                            <td style="vertical-align: middle;text-align:center;">
+                                照明50，家具50
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

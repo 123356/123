@@ -1,0 +1,102 @@
+ <div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="ddns_config" class="logo_title">DDNS</div>
+               <div class="item_R">
+                   <div id="DDNSRf" class="logo_link">Refresh</div>
+                   <div id="DDNSDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="DDNSSave" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+             	<div class="table">
+                    <div class="table_L" id="nd_DDNS_startup">启用DDNS</div>
+                    <div class="table_R">
+                    	<select id="DDNSUseDDNS" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">开启</option>
+                        </select>
+                     </div>
+                </div>
+                <!--<div class="table">
+                	<div class="table_box">
+                	<input id="DDNSUseDDNS" type="checkbox"/>
+                    <font id="nd_DDNS_startup">启用DDNS</font>
+                    </div>
+                </div>-->
+            <!--table 2-free-->
+        <div id="DDNSDivBox" style="border:none">
+         		<div class="table">
+                    <div class="table_L" id="nds_server_address">服务器地址</div>
+                    <div class="table_R">
+                    	<select id="DDNSServerAddr" class="select">
+                        <!--
+                            <option  value="0">MYQ_SEE</option>
+                            <option  value="1">LTSCCTV</option>
+                            <option  value="2">SystemPort</option>
+                            <option  value="3">3322</option>
+                            <option  value="4">DYNDNS</option>
+                            <option  value="5">EASTERNDNS</option>
+                            <option  value="6">NEWDDNS</option>
+                            <option  value="7">NIGHTOWLDVR</option>
+                            <option  value="8">LOREXDDNS</option>
+                            <option  value="9">SMARTCONTROLDNS</option>
+                            <option  value="10">KGUARD</option>
+                            <option  value="11">ZSH</option>
+                            <option  value="12">NO-IP</option>
+                            <option  value="13">FREEDNS</option>
+                            <option  value="14">CHANGEIP</option>
+                            <option  value="15">DNSEXIT</option>
+                        -->
+                         </select>
+                    </div>
+                </div>  
+              <!--table 2-->
+              	<div class="table" id="TABLE_SERVICEID" style="display:none">
+                    <div class="table_L" id="service_id">Service ID</div>
+                    <div class="table_R">
+                    	<input type="text" id="DDNSServiceID"  class="select"   maxlength="16" readonly="readonly"/>
+                    </div>    
+                </div>
+                
+                <div class="table" id="TABLE_HOSTNAME">
+                    <div class="table_L" id="host_name">主机名称</div>
+                    <div class="table_R">
+                    	<input type="text" id="DDNSHostName"  style="ime-mode:disabled" class="select"   maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\-\/]/ig,'')}"/>
+                        <label id="HOST_NAME_TEXT"></label>
+                    </div>    
+                </div>
+            <!--table 3-->
+            	<div class="table" id="TABLE_USERNAME">
+                    <div class="table_L" id="nd_usename">用户名</div>
+                    <div class="table_R">
+                        <input  type="text" id="DDNSUserName" style="ime-mode:disabled" class="select"  maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\-\/]/ig,'')}"/>
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table" id="TABLE_PASSWORD">
+                    <div class="table_L" id="nd_passwd">密码</div>
+                    <div class="table_R">
+                    	<input type="password" class="select DDNSUserPW" maxlength="32"/>
+                    </div>
+                </div>
+         <div class="table none"></div>
+         <div class="table top" id="DDNS_DISPLAY" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50; display:none">
+        	 <input  id="DDNSTest" class="ButtonToDiv" type="button" value="DDNS测试"/> 
+             <!--<div id="DDNSTest" class="ButtonToDiv">DDNS测试</div>-->
+       	 </div>
+         <div class="table top" id="DDNS_DISPLAY_GETID" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50; display:none">
+        	 <input  id="DDNSGetID" class="ButtonToDiv_big" type="button" value="Get ID"/>
+       	 </div>
+      </div>  
+    </div>
+    <!--table end-->
+		
+</div>

@@ -1,0 +1,50 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>实时视频监控</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #myPlayer {
+            max-width: 1200px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://open.ys7.com/sdk/js/1.3/ezuikit.js"></script>
+    <video id="myPlayer" width="1150px" height="766px" poster="" controls playsinline webkit-playsinline autoplay>
+        <source id="src1"  type="" />
+        <source id="src2"  type="application/x-mpegURL" />
+    </video>
+    <script>
+        var Request = new Object();
+        Request = GetRequest();
+        var srcId ="";
+        if (Request['srcId'] != null)
+            srcId = Request['srcId'];
+        //console.log("srcId=" + srcId)
+        document.getElementById("src1").src = "rtmp://rtmp.open.ys7.com/openlive/"+srcId+".hd";
+        document.getElementById("src2").src = "https://hls.open.ys7.com/openlive/"+srcId+".hd.m3u8";
+        var player = new EZUIPlayer('myPlayer');
+
+        function GetRequest() {
+            var url = location.search; //��ȡurl��"?"������ִ� 
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+    </script>
+</body>
+</html>

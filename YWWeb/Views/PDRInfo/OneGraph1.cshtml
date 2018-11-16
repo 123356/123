@@ -1,0 +1,207 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>一次图_1_一号总一次图</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/onepub.css"></link>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css"></link>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu1_11.css"></link>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+</head>
+<body class="tabbg2">
+
+
+
+
+    <div class="ycmain page_content">
+        <ul class="alertmenu" id="p1">
+            <li class="other_g0" id="other_g0"></li>
+            <li class="switch_size switch_s_off zxb_g1104" id="t1104"></li>
+            <li class="switch_size switch_s_off zxb_g1105" id="t1105"></li>
+            <li class="switch_size switch_s_off zxb_g1106" id="t1106"></li>
+            <li class="switch_size switch_s_off zxb_g1098" id="t1098"></li>
+            <li class="switch_size switch_s_off zxb_g1099" id="t1099"></li>
+            <li class="switch_size switch_s_off zxb_g1100" id="t1100"></li>
+            <li class="switch_size switch_s_off zxb_g1101" id="t1101"></li>
+            <li class="switch_size switch_s_off zxb_g1102" id="t1102"></li>
+            <li class="switch_size switch_s_off zxb_g1103" id="t1103"></li>
+            <li class="switch_size switch_s_off zxb_g1097" id="t1097"></li>
+            <li class="switch_size switch_s_off zxb_g1096" id="t1096"></li>
+            <li class="switch_size switch_s_off zxb_g1095" id="t1095"></li>
+            <li class="switch_size switch_s_off zxb_g1094" id="t1094"></li>
+            <li class="switch_size switch_s_off zxb_g1093" id="t1093"></li>
+            <li class="switch_size switch_s_off zxb_g1092" id="t1092"></li>
+            <li class="switch_size switch_s_off zxb_g1091" id="t1091"></li>
+            <li class="switch_size switch_s_off zxb_g1107" id="t1107"></li>
+            <!--AH2进线柜-->
+            <li class="w1 alarmico">
+                <dt id="d1" onclick="circuitInfo(107,1);"></dt>
+                <dd id="t1"></dd>
+            </li>
+            <!--AH4馈线柜-->
+            <li class="w2 alarmico">
+                <dt id="d2" onclick="circuitInfo(107,2);"></dt>
+                <dd id="t2"></dd>
+            </li>
+            <!--AH5馈线柜-->
+            <li class="w3 alarmico">
+                <dt id="d3" onclick="circuitInfo(107,3);"></dt>
+                <dd id="t3"></dd>
+            </li>
+            <!--AH6馈线柜-->
+            <li class="w4 alarmico">
+                <dt id="d4" onclick="circuitInfo(107,4);"></dt>
+                <dd id="t4"></dd>
+            </li>
+            <!--AH7馈线柜-->
+            <li class="w5 alarmico">
+                <dt id="d5" onclick="circuitInfo(107,5);"></dt>
+                <dd id="t5"></dd>
+            </li>
+            <!--AH8馈线柜-->
+            <li class="w6 alarmico">
+                <dt id="d6" onclick="circuitInfo(107,6);"></dt>
+                <dd id="t6"></dd>
+            </li>
+            <!--AH9馈线柜-->
+            <li class="w7 alarmico">
+                <dt id="d7" onclick="circuitInfo(107,7);"></dt>
+                <dd id="t7"></dd>
+            </li>
+            <!--AH10馈线柜-->
+            <li class="w8 alarmico">
+                <dt id="d8" onclick="circuitInfo(107,8);"></dt>
+                <dd id="t8"></dd>
+            </li>
+            <!--AH11馈线柜-->
+            <li class="w9 alarmico">
+                <dt id="d9" onclick="circuitInfo(107,9);"></dt>
+                <dd id="t9"></dd>
+            </li>
+            <!--AH19馈线柜-->
+            <li class="w16 alarmico">
+                <dt id="d16" onclick="circuitInfo(107,16);"></dt>
+                <dd id="t16"></dd>
+            </li>
+            <!--AH18馈线柜-->
+            <li class="w15 alarmico">
+                <dt id="d15" onclick="circuitInfo(107,15);"></dt>
+                <dd id="t15"></dd>
+            </li>
+            <!--AH17馈线柜-->
+            <li class="w14 alarmico">
+                <dt id="d14" onclick="circuitInfo(107,14);"></dt>
+                <dd id="t14"></dd>
+            </li>
+            <!--AH16馈线柜-->
+            <li class="w13 alarmico">
+                <dt id="d13" onclick="circuitInfo(107,13);"></dt>
+                <dd id="t13"></dd>
+            </li>
+            <!--AH15馈线柜-->
+            <li class="w12 alarmico">
+                <dt id="d12" onclick="circuitInfo(107,12);"></dt>
+                <dd id="t12"></dd>
+            </li>
+            <!--AH14馈线柜-->
+            <li class="w11 alarmico">
+                <dt id="d11" onclick="circuitInfo(107,11);"></dt>
+                <dd id="t11"></dd>
+            </li>
+            <!--AH13馈线柜-->
+            <li class="w10 alarmico">
+                <dt id="d10" onclick="circuitInfo(107,10);"></dt>
+                <dd id="t10"></dd>
+            </li>
+            <!--AH21-->
+            <li class="w17 alarmico">
+                <dt id="d17" onclick="circuitInfo(107,17);"></dt>
+                <dd id="t17"></dd>
+            </li>
+            <!--NAH1-->
+            <li class="w92 alarmico">
+                <dt id="d92" onclick="circuitInfo(107,92);"></dt>
+                <dd id="t92"></dd>
+            </li>
+            <!--NAH2-->
+            <li class="w93 alarmico">
+                <dt id="d93" onclick="circuitInfo(107,93);"></dt>
+                <dd id="t93"></dd>
+            </li>
+            <!--NAH3-->
+            <li class="w94 alarmico">
+                <dt id="d94" onclick="circuitInfo(107,94);"></dt>
+                <dd id="t94"></dd>
+            </li>
+            <!--NAH4-->
+            <li class="w95 alarmico">
+                <dt id="d95" onclick="circuitInfo(107,95);"></dt>
+                <dd id="t95"></dd>
+            </li>
+            <!--NAH5-->
+            <li class="w96 alarmico">
+                <dt id="d96" onclick="circuitInfo(107,96);"></dt>
+                <dd id="t96"></dd>
+            </li>
+            <!--NAH6-->
+            <li class="w97 alarmico">
+                <dt id="d97" onclick="circuitInfo(107,97);"></dt>
+                <dd id="t97"></dd>
+            </li>
+            <!--NAH7-->
+            <li class="w98 alarmico">
+                <dt id="d98" onclick="circuitInfo(107,98);"></dt>
+                <dd id="t98"></dd>
+            </li>
+            <!--NAH14-->
+            <li class="w105 alarmico">
+                <dt id="d105" onclick="circuitInfo(107,105);"></dt>
+                <dd id="t105"></dd>
+            </li>
+            <!--NAH13-->
+            <li class="w104 alarmico">
+                <dt id="d104" onclick="circuitInfo(107,104);"></dt>
+                <dd id="t104"></dd>
+            </li>
+            <!--NAH12-->
+            <li class="w103 alarmico">
+                <dt id="d103" onclick="circuitInfo(107,103);"></dt>
+                <dd id="t103"></dd>
+            </li>
+            <!--NAH11-->
+            <li class="w102 alarmico">
+                <dt id="d102" onclick="circuitInfo(107,102);"></dt>
+                <dd id="t102"></dd>
+            </li>
+            <!--NAH10-->
+            <li class="w101 alarmico">
+                <dt id="d101" onclick="circuitInfo(107,101);"></dt>
+                <dd id="t101"></dd>
+            </li>
+            <!--NAH9-->
+            <li class="w100 alarmico">
+                <dt id="d100" onclick="circuitInfo(107,100);"></dt>
+                <dd id="t100"></dd>
+            </li>
+            <!--NAH8-->
+            <li class="w99 alarmico">
+                <dt id="d99" onclick="circuitInfo(107,99);"></dt>
+                <dd id="t99"></dd>
+            </li>
+
+            <li class="tb_pageI"><span class="page_size_pm_no">高压</span></li>
+            <li class="tb_pageII"><a href="/PDRInfo/OneGraph?id=1_55" class="page_size_pm">低压母线1段</a></li>
+            <li class="tb_pageIII"><a href="/PDRInfo/OneGraph?id=1_56" class="page_size_pm">低压母线2段</a></li>
+
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var pid = 1; var graphType = "low"; var OGdid = "1,2,3,4,5,6,7,8,9,16,15,14,13,12,11,10,17,92,93,94,95,96,97,98,105,104,103,102,101,100,99";
+    </script>
+</body>
+</html>
+<script src="~/Content/UserJS/lfywufl._jm.js?pid" type="text/javascript"></script>

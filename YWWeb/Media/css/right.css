@@ -1,0 +1,80 @@
+/* CSS Document */
+.jjjiao,.gqjiao,.bjjiao{
+	background-image:url(../images/cruise.png); 
+	width:30px; 
+	height:25px; 
+	float:left; 
+	background-position:0px;
+	float:left; 
+	margin:-15px 0px -15px 0px;
+}
+
+.bjjiao{background-position:0 0px;}
+.jjjiao{background-position:0 0px;}
+.gqjiao{background-position:0 0px;}
+
+.jjline{
+	float:left; 
+	background:url(../images/yt_set_bg.png);
+	width:105px; 
+	height:25px; 
+	overflow:hidden; 
+	margin:-15px 0px -15px 30px;
+	+margin:-15px 0px -15px 0px;
+}
+
+.jjjian,.gqjian,.bjjian{
+	background-image:url(../images/cruise.png); 
+	width:30px; 
+	height:25px;  
+	float:left;
+	margin:-15px -15px -15px 135px;
+}
+
+.bjjian{background-position:0 -30px;}
+.jjjian{background-position:0 -30px;}
+.gqjian{background-position:0 -30px;}
+
+
+
+.rtstyle1{background-image:url(../images/cruise.png); width:28px;  height:28px;  float:left;}
+.rtstyle2{background-position:0 -90px; }
+.rtstyle3{background-position:0 -60px; }
+.rtstyle4{background-position:0 -120px; }
+
+
+.rtstyle1_1{
+	background-image:url(../images/cruise.png);  
+	width:43px; 
+	height:28px; 
+	margin-left:50px; 
+	margin-top:10px;
+}
+	
+.rtstyle6{background-position:0 -150px;}
+.rtstyle7{background-position:0 -180px; }
+
+.rtstyle5{
+	background:url(../images/cruise.png); 
+	background-position:0 -210px; 
+	width:95px; 
+	height:28px; 
+	margin-left:55px; 
+	margin-top:10px;
+}
+
+table tr td img,table tr td div{overflow:hidden}
+
+#preset option{background:black; color:white; }
+#cruise option{background:black; color:white; }
+#PTZ_interval_sel option{background:black; color:white; }
+#PTZ_Speed_sel option{background:black; color:white;}
+
+.yt_cruisemode{
+	margin-right:10px;
+	float:right;
+	width:160px;
+	height:18px; 
+	background:transparent;
+	text-align:center;
+}

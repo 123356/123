@@ -1,0 +1,407 @@
+<div class="config_content" >
+	<div class="login"></div>
+    <div class="item" id="item_motion">
+        <div id="amv_move_sense" class="logo_title">&nbsp;&nbsp;&nbsp;移动侦测</div>
+        <div class="item_R">
+            <div id="MotionCP" class="logo_link" style="display:none;">Copy</div>
+            <div id="MotionRf" class="logo_link">Refresh</div>
+                       <div id="MotionDf" class="logo_link" style="display:none;">Default</div>
+            <div id="MotionSave" class="logo_link">Save</div>
+            <div id="MotionExit" class="logo_link" style="display:none;">Exit</div>
+        </div>
+    </div>
+
+    <div class="table_content" id="table_motion">
+        <div class="table" id="table_channel">
+            <div class="table_L">
+                <font id="channels_num_1">通道号</font>
+            </div>
+            <div class="table_R">
+                <select id="MotionChid" class="select"></select>
+            </div>
+        </div>
+              
+        <div class="table" id="table_sense">
+            <div class="table_box">
+                <input id="MotionChnSwitch" type="checkbox"/>
+                <font id="start_move_sense">启用移动侦测</font>
+            </div>
+        </div>
+        
+        <div class="table_content bottom bottomMac" id="MotionDivBoxAll" style="width:598px; border:none; border-right:1px solid white;">
+        	<div class="table_L_content">       
+            	<div class="table mv" id="MotionSense">
+                    <div class="table_L mv_L" id="sense_grade">侦测等级</div>
+                    <div class="table_R mv_R" style="overflow:hidden;">
+                        <select id="MotionSensitivity" class="sel_mv">
+                            <option value="0">8级</option>
+                            <option value="1">7级</option>
+                            <option value="2">6级</option>
+                            <option value="3">5级</option>
+                            <option value="4">4级</option>
+                            <option value="5">3级</option>
+                            <option value="6">2级</option>
+                            <option value="7">1级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table mv" id="MotionSense1" style="display:none">
+                	<div class="table_L mv_L" id="sense_grade1">侦测等级1</div>
+                    <div class="table_R mv_R" style="overflow:hidden;">
+                        <select id="MotionSensitivity1" class="sel_mv">
+                            <option value="0">10级</option>
+                            <option value="1">9级</option>
+                            <option value="2">8级</option>
+                            <option value="3">7级</option>
+                            <option value="4">6级</option>
+                            <option value="5">5级</option>
+                            <option value="6">4级</option>
+                            <option value="7">3级</option>
+                            <option value="8">2级</option>
+                            <option value="9">1级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table mv" id="MotionSense2" style="display:none">
+                	<div class="table_L mv_L" id="sense_grade2">侦测等级2</div>
+                    <div class="table_R mv_R" style="overflow:hidden;">
+                        <select id="MotionSensitivity2" class="sel_mv">
+                            <option value="0">10级</option>
+                            <option value="1">9级</option>
+                            <option value="2">8级</option>
+                            <option value="3">7级</option>
+                            <option value="4">6级</option>
+                            <option value="5">5级</option>
+                            <option value="6">4级</option>
+                            <option value="7">3级</option>
+                            <option value="8">2级</option>
+                            <option value="9">1级</option>
+                        </select>
+                    </div>
+                </div><div class="table mv" id="MotionSense3" style="display:none">
+                	<div class="table_L mv_L" id="sense_grade3">侦测等级3</div>
+                    <div class="table_R mv_R" style="overflow:hidden;">
+                        <select id="MotionSensitivity3" class="sel_mv">
+                            <option value="0">10级</option>
+                            <option value="1">9级</option>
+                            <option value="2">8级</option>
+                            <option value="3">7级</option>
+                            <option value="4">6级</option>
+                            <option value="5">5级</option>
+                            <option value="6">4级</option>
+                            <option value="7">3级</option>
+                            <option value="8">2级</option>
+                            <option value="9">1级</option>
+                        </select>
+                    </div>
+                </div><div class="table mv" id="MotionSense4" style="display:none">
+                	<div class="table_L mv_L" id="sense_grade4">侦测等级4</div>
+                    <div class="table_R mv_R" style="overflow:hidden;">
+                        <select id="MotionSensitivity4" class="sel_mv">
+                            <option value="0">10级</option>
+                            <option value="1">9级</option>
+                            <option value="2">8级</option>
+                            <option value="3">7级</option>
+                            <option value="4">6级</option>
+                            <option value="5">5级</option>
+                            <option value="6">4级</option>
+                            <option value="7">3级</option>
+                            <option value="8">2级</option>
+                            <option value="9">1级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table mv" id="mv_buzzerTime">
+                    <div class="table_L mv_L" id="buzzer_moo_time">蜂鸣器鸣叫时间</div>
+                    <div class="table_R mv_R" id="buzzer_moo_time_r" style="overflow:hidden;">
+                        <select id="MotionBuzzerMooTime" class="sel_mv">
+                        <option value="0">关闭</option>
+                        <option value="1">10秒</option>
+                        <option value="2">20秒</option>
+                        <option value="3">40秒</option>
+                        <option value="4">60秒</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table mv" id="defaultFullScreen" style="display:none">
+                     <div class="table_box">
+                        <input id="MotionFullScreen" type="checkbox"/>
+                        <font id="MVFullScreen">全屏输出</font>
+                     </div>
+                     <div class="table_box" id="MotionPush_div" style="display:none;">
+                        <input id="MotionPush" type="checkbox" />
+                        <font id="motion_push">Push</font>
+                    </div>
+                </div>
+                
+                <div class="table mv" id="urmetFullScreen" style="display:none">
+                     <div class="table_L mv_L" id="urmet_MVFullScreen">全屏输出</div>
+                     <div class="table_R mv_R" id="urmet_MVFullScreen_r" style="overflow:hidden;">
+                        <select id="urmet_MotionFullScreen" class="sel_mv">
+                        <option value="0">关闭</option>
+                        <option value="1">1秒</option>
+                        <option value="2">2秒</option>
+                        <option value="3">3秒</option>
+                        <option value="4">5秒</option>
+                        <option value="5">7秒</option>
+                        <option value="6">10秒</option>
+                        <option value="7">20秒</option>
+                        <option value="8">30秒</option>
+                        </select>
+                    </div>
+                </div>     
+                
+                <div class="table mv" id="mvalarm_out_0">
+                     <div class="table_box">
+                        <input  id="MotionAlarmOut" type="checkbox"/>
+                        <font  id="MOTIONALARMOUTPUT">报警输出</font>
+                     </div>
+                     
+                     <div class="syspm_use_backup_R" id="MotionAlarmChannelDiv" style="padding:0px 10px;margin-top:2px"></div>
+                </div>
+                     
+                <div class="table mv" id="mvalarm_time_0">
+                    <div class="table_L mv_L" id="MotionLatchTime">Latch Time</div>
+                    <div class="table_R mv_R" id="MotionLatchTime_r" style="overflow:hidden;">
+                        <select id="MotionAlarmOutTime" class="sel_mv">
+                        <option value="0">10秒</option>
+                        <option value="1">20秒</option>
+                        <option value="2">40秒</option>
+                        <option value="3">60秒</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div  class="table mv" id="startTouchRecord">
+                     <div class="table_box">
+                        <input id="MotionRecord" type="checkbox"  />
+                        <font id="start_touch_record_1">启用触发录像</font>
+                    </div>   
+                </div> 
+
+                <div class="table mv" id="recordDelayTime">
+                    <div class="table_L mv_L" id="record_delay_time_1">录像延迟时间</div>
+                    <div class="table_R mv_R" id="record_delay_time_1_r" style="overflow:hidden;">
+                     <select id="MotionRecordDelayTime" class="sel_mv"> 
+                            <option value="0">30秒</option>
+                            <option value="1">1分钟</option>
+                            <option value="2">2分钟</option>
+                            <option value="3">5分钟</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table mv" id="motionShowMessage">
+                    <div class="table_box" style="margin-left:0px;">
+                        <input  id="MotionShowMessage" type="checkbox" />
+                        <font  id="show_message">显示消息</font>
+                    </div>
+                    <div class="table_box">
+                        <input id="MotionSendEmail" type="checkbox" />
+                        <font id="start_sendEmail">启用邮件发送</font>
+                    </div>
+                </div>      
+                  
+                <div class="table mv" id="recordChannel_IPCHIDE" style="border-bottom:none;">
+                    <div class="table_L mv_L" id="linkage_record_channel">联动录像通道</div>
+                    <div class="table_box">
+                        <input type="checkbox"  id="amv_all_checked"/>
+                        <font id="amv_all">全选</font>
+                    </div>
+                </div> 
+                <div class="table mv" id="alarm_blank_1" style="border-top-style:solid; border-top-color:#ccc; border-top-width:1px; border-bottom:none; display:none;">
+                </div>
+                <div class="table mv" id="alarm_blank_2" style="border-bottom:none; display:none;">
+                </div>
+			</div>
+				
+			<div class="table_R_content" id ="MotionSP"></div>
+            <div class="buttom_mv">
+               <input  id="ClearBtn" class="ButtonToDiv" type="button" value="清除"/>
+               <input  id="SelectBtn" class="ButtonToDiv" type="button" style="margin-left:10px;"  value="全选"/>
+               <!--div id="ClearBtn" class="ButtonToDiv">清除</div>
+               <div id="SelectBtn" class="ButtonToDiv" style="margin-left:10px; ">全选</div-->
+            </div>
+            <div class="table top" id="motion_chn1" style="border-right:none;">
+                <div class="tableChn">
+                    <div id="mvch1" style="float:left;"><input class="RecordCh1" type="checkbox" /><font id="RecordCh1_1_1">通道1</font></div>
+                    <div id="mvch2" style="float:left;"><input class="RecordCh2" type="checkbox" /><font id="RecordCh1_1_2">通道2</font></div>
+                    <div id="mvch3" style="float:left;"><input class="RecordCh3" type="checkbox" /><font id="RecordCh1_1_3">通道3</font></div>
+                    <div id="mvch4" style="float:left;"><input class="RecordCh4" type="checkbox" /><font id="RecordCh1_1_4">通道4</font></div>
+                    <div id="mvch5" style="float:left;"><input class="RecordCh5" type="checkbox" /><font id="RecordCh1_1_5">通道5</font></div>
+                    <div id="mvch6" style="float:left;"><input class="RecordCh6" type="checkbox" /><font id="RecordCh1_1_6">通道6</font></div>
+                    <div id="mvch7" style="float:left;"><input class="RecordCh7" type="checkbox" /><font id="RecordCh1_1_7">通道7</font></div>
+                    <div id="mvch8" style="float:left;"><input class="RecordCh8" type="checkbox" /><font id="RecordCh1_1_8">通道8</font></div>
+                </div>
+        	</div>
+            <div class="table" id="motion_chn2" style="border-right:none;">
+                <div class="tableChn">
+                    <div id="mvch9" style="float:left;"><input class="RecordCh9" type="checkbox" /><font id="RecordCh1_1_9">通道9</font></div>
+                    <div id="mvch10" style="float:left;"><input class="RecordCh10" type="checkbox" /><font id="RecordCh1_1_10">通道10</font></div>
+                    <div id="mvch11" style="float:left;"><input class="RecordCh11" type="checkbox" /><font id="RecordCh1_1_11">通道11</font></div>
+                    <div id="mvch12" style="float:left;"><input class="RecordCh12" type="checkbox" /><font id="RecordCh1_1_12">通道12</font></div>
+                    <div id="mvch13" style="float:left;"><input class="RecordCh13" type="checkbox" /><font id="RecordCh1_1_13">通道13</font></div>
+                    <div id="mvch14" style="float:left;"><input class="RecordCh14" type="checkbox" /><font id="RecordCh1_1_14">通道14</font></div>
+                    <div id="mvch15" style="float:left;"><input class="RecordCh15" type="checkbox" /><font id="RecordCh1_1_15">通道15</font></div>
+                    <div id="mvch16" style="float:left;"><input class="RecordCh16" type="checkbox" /><font id="RecordCh1_1_16">通道16</font></div>
+                </div>
+        	</div>  
+            <div class="table" id="motion_chn3" style="border-right:none;">
+                <div class="tableChn">
+                    <div id="mvch17" style="float:left;"><input class="RecordCh17" type="checkbox" /><font id="RecordCh1_1_17">通道17</font></div>
+                    <div id="mvch18" style="float:left;"><input class="RecordCh18" type="checkbox" /><font id="RecordCh1_1_18">通道18</font></div>
+                    <div id="mvch19" style="float:left;"><input class="RecordCh19" type="checkbox" /><font id="RecordCh1_1_19">通道19</font></div>
+                    <div id="mvch20" style="float:left;"><input class="RecordCh20" type="checkbox" /><font id="RecordCh1_1_20">通道20</font></div>
+                    <div id="mvch21" style="float:left;"><input class="RecordCh21" type="checkbox" /><font id="RecordCh1_1_21">通道21</font></div>
+                    <div id="mvch22" style="float:left;"><input class="RecordCh22" type="checkbox" /><font id="RecordCh1_1_22">通道22</font></div>
+                    <div id="mvch23" style="float:left;"><input class="RecordCh23" type="checkbox" /><font id="RecordCh1_1_23">通道23</font></div>
+                    <div id="mvch24" style="float:left;"><input class="RecordCh24" type="checkbox" /><font id="RecordCh1_1_24">通道24</font></div>
+                </div>
+            </div>
+            <div class="table" id="motion_chn4" style="border-right:none;">
+                <div class="tableChn">
+                    <div id="mvch25" style="float:left;"><input class="RecordCh25" type="checkbox" /><font id="RecordCh1_1_25">通道25</font></div>
+                    <div id="mvch26" style="float:left;"><input class="RecordCh26" type="checkbox" /><font id="RecordCh1_1_26">通道26</font></div>
+                    <div id="mvch27" style="float:left;"><input class="RecordCh27" type="checkbox" /><font id="RecordCh1_1_27">通道27</font></div>
+                    <div id="mvch28" style="float:left;"><input class="RecordCh28" type="checkbox" /><font id="RecordCh1_1_28">通道28</font></div>
+                    <div id="mvch29" style="float:left;"><input class="RecordCh29" type="checkbox" /><font id="RecordCh1_1_29">通道29</font></div>
+                    <div id="mvch30" style="float:left;"><input class="RecordCh30" type="checkbox" /><font id="RecordCh1_1_30">通道30</font></div>
+                    <div id="mvch31" style="float:left;"><input class="RecordCh31" type="checkbox" /><font id="RecordCh1_1_31">通道31</font></div>
+                    <div id="mvch32" style="float:left;"><input class="RecordCh32" type="checkbox" /><font id="RecordCh1_1_32">通道32</font></div>
+                </div>
+            </div>
+            
+            <!--混合DVR 10路、12路-->
+            <div class="table top" id="motion_H12_1" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:150px;"><input class="mvCh_MN_CkAll" type="checkbox" /><font id="RecCh_MNCkAll">模拟通道</font></div>
+                    <div style="float:left; width:35px; "><font>1</font><input class="RecordCh1" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>2</font><input class="RecordCh2" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>3</font><input class="RecordCh3" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>4</font><input class="RecordCh4" type="checkbox" /></div>
+                </div>
+        	</div>
+            <div class="table" id="motion_H12_2" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:150px;"><input class="mvCh_IP_CkAll" type="checkbox" /><font id="RecCh_IPCkAll">IP通道</font></div>
+                    <div style="float:left; width:35px; "><font>1</font><input class="RecordCh5" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>2</font><input class="RecordCh6" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>3</font><input class="RecordCh7" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>4</font><input class="RecordCh8" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>5</font><input class="RecordCh9" type="checkbox" /></div>
+                    <div style="float:left; width:35px; "><font>6</font><input class="RecordCh10" type="checkbox" /></div>
+                    <div style="float:left; width:35px; " id="idMv_div7"><font>7</font><input class="RecordCh11" type="checkbox" /></div>
+                    <div style="float:left; width:35px; " id="idMv_div8"><font>8</font><input class="RecordCh12" type="checkbox" /></div>
+                </div>
+        	</div>
+			
+			<!--混合DVR 24路 8+16 -->
+            <div class="table top" id="motion_H24_1" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:130px;"><input class="mvCh_MN_CkAll" type="checkbox" /><font id="RecCh_MNCkAll2">模拟通道</font></div>
+                    
+					<div style="float:left; width:28px; " id="almv_1"><font>1</font><input class="RecordCh1" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_2"><font>2</font><input class="RecordCh2" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_3"><font>3</font><input class="RecordCh3" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_4"><font>4</font><input class="RecordCh4" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_5"><font>5</font><input class="RecordCh5" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_6"><font>6</font><input class="RecordCh6" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_7"><font>7</font><input class="RecordCh7" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_8"><font>8</font><input class="RecordCh8" type="checkbox" /></div>
+                </div>
+        	</div>
+            <div class="table" id="motion_H24_2" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:130px;"><input class="mvCh_IP_CkAll" type="checkbox" /><font id="RecCh_IPCkAll2">IP通道</font></div>
+                    
+                    <div style="float:left; width:28px; " id="almv_9"><font>1</font><input class="RecordCh9" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_10"><font>2</font><input class="RecordCh10" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_11"><font>3</font><input class="RecordCh11" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv_12"><font>4</font><input class="RecordCh12" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_13"><font>5</font><input class="RecordCh13" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_14"><font>6</font><input class="RecordCh14" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_15"><font>7</font><input class="RecordCh15" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_16"><font>8</font><input class="RecordCh16" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_17"><font>9</font><input class="RecordCh17" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_18"><font>10</font><input class="RecordCh18" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_19"><font>11</font><input class="RecordCh19" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_20"><font>12</font><input class="RecordCh20" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_21"><font>13</font><input class="RecordCh21" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_22"><font>14</font><input class="RecordCh22" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_23"><font>15</font><input class="RecordCh23" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv_24"><font>16</font><input class="RecordCh24" type="checkbox" /></div>
+                </div>
+        	</div>
+			
+			<!--混合DVR 24路 16+8 -->
+            <div class="table top" id="motion_H168_1" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:130px;"><input class="mvCh_MN_CkAll" type="checkbox" /><font id="RecCh_MNCkAll3">模拟通道</font></div>
+                    
+					<div style="float:left; width:28px; " id="almv168_1"><font>1</font><input class="RecordCh1" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_2"><font>2</font><input class="RecordCh2" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_3"><font>3</font><input class="RecordCh3" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_4"><font>4</font><input class="RecordCh4" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_5"><font>5</font><input class="RecordCh5" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_6"><font>6</font><input class="RecordCh6" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_7"><font>7</font><input class="RecordCh7" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_8"><font>8</font><input class="RecordCh8" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_9"><font>9</font><input class="RecordCh9" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_10"><font>10</font><input class="RecordCh10" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_11"><font>11</font><input class="RecordCh11" type="checkbox" /></div>
+                    <div style="float:left; width:28px; " id="almv168_12"><font>12</font><input class="RecordCh12" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_13"><font>13</font><input class="RecordCh13" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_14"><font>14</font><input class="RecordCh14" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_15"><font>15</font><input class="RecordCh15" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_16"><font>16</font><input class="RecordCh16" type="checkbox" /></div>
+                </div>
+        	</div>
+            <div class="table" id="motion_H168_2" style="border-right:none; display:none;">
+                <div class="tableChn">
+                    <div style="float:left; width:130px;"><input class="mvCh_IP_CkAll" type="checkbox" /><font id="RecCh_IPCkAll3">IP通道</font></div>
+                    
+					<div style="float:left; width:28px; " id="almv168_17"><font>1</font><input class="RecordCh17" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_18"><font>2</font><input class="RecordCh18" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_19"><font>3</font><input class="RecordCh19" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_20"><font>4</font><input class="RecordCh20" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_21"><font>5</font><input class="RecordCh21" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_22"><font>6</font><input class="RecordCh22" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_23"><font>7</font><input class="RecordCh23" type="checkbox" /></div>
+					<div style="float:left; width:28px; " id="almv168_24"><font>8</font><input class="RecordCh24" type="checkbox" /></div>
+                </div>
+        	</div>
+        </div>
+	</div>
+       
+    <div id = "mvCopyTD" style="display:none;">
+        <div class="table" id="table_cp_d">
+            <div id = "mvSelectCopy">请选择需要复制的通道</div>
+        </div> 
+
+        <div class="table" id="table_cp_ok">
+            <div class="table_box syspm_use_backup_L">          
+                <input type="checkbox" id="mvck"/>          
+                <font id="mvSelectedAll"> 全选</font>
+                <input type="button" value="确定" id="mvOk"/>
+            </div>
+        </div>
+
+       <div class = "table" id="mv_TDNum_1_1">
+            <div class="syspm_use_backup_R" id="mv_TDNum_1"></div>
+       </div>
+
+        <div class = "table" id="mv_TDNum_2_2">
+            <div class="syspm_use_backup_R" id="mv_TDNum_2"></div>
+        </div>
+        <div class = "table" id="mv_TDNum_3_3">
+            <div class="syspm_use_backup_R" id="mv_TDNum_3"></div>
+       </div>
+
+        <div class = "table" id="mv_TDNum_4_4">
+            <div class="syspm_use_backup_R" id="mv_TDNum_4"></div>
+        </div>
+    </div>
+		
+</div>
+<div id="isfix"></div>

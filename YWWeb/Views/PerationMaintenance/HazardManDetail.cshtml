@@ -1,0 +1,234 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HazardManDetail</title>
+    <script src="../../Content/js/jquery-1.12.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="~/jquery-easyui-1.4.5/themes/black/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-easyui-1.4.5/themes/icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.lazyload.js" type="text/javascript"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js" type="text/javascript"></script>
+    <link href="~/Content/css/LBYWBase.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/respond.src.js" type="text/javascript"></script>
+    <script src="~/Content/js/echarts-all.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbywlfmu._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="d_list">
+        <tr id="TrDeviceInfo">
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th colspan="4" align="left" height="40">
+                            设备信息：
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t" width="80px">
+                            设备名称：
+                        </td>
+                        <td class="d_l_d" >
+                            <span id="DeviceName"></span>
+                        </td>
+                        <td class="d_l_t"width="80px">
+                            设备型号：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="DeviceModel"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            电压等级：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="voltageGrade"></span>
+                        </td>
+                        <td class="d_l_t">
+                            安装位置：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="InstallAddr"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="d_list">
+                    <tr>
+                        <th colspan="4" align="left" height="40">
+                            缺陷信息：
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t" width="80px">
+                            报告时间：
+                        </td>
+                        <td class="d_l_d" width="">
+                            <span id="ReportDate"></span>
+                        </td>
+                        <td class="d_l_t" width="80px">
+                            确认时间：
+                        </td>
+                        <td class="d_l_d" width="">
+                            <span id="HandleDate"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            报告人：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="ReportUser"></span>
+                        </td>
+                        <td class="d_l_t">
+                            确认人：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="UserName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            报告方式：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="ReportWay"></span>
+                        </td>
+                        <td class="d_l_t">
+                            处理情况：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="Situation"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            缺陷部位：
+                        </td>
+                        <td >
+                            <span id="BugLocation"></span>
+                        </td>
+                        <td class="d_l_d">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t" width="80px">
+                            缺陷描述：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <span id="BugDesc"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="d_list">
+                    <tr>
+                        <th colspan="6" align="left" height="40">
+                            检查信息：
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t" width="80px">
+                            检查时间：
+                        </td>
+                        <td class="d_l_d">
+                            <div id="div_checktime">
+                                <select id='sel_checktime'>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="d_l_t" width="80px">
+                            现场图片：
+                        </td>
+                        <td class="d_l_d">
+                            <div id="roll"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            现场录音：
+                        </td>
+                        <td class="d_l_d">
+                            <div id="divVideo" style="float: left;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            现场录像：
+                        </td>
+                        <td class="d_l_d">
+                            <div id="divVideoX" style="float: left;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            处理措施：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="HandleRemark"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            检查人员：
+                        </td>
+                        <td class="d_l_d">
+                            <span id="CheckName"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div class="popbtn">
+        处理情况：
+        <select id="HandeS"  style="width: 120px; height: 26px;">
+        </select>
+        <button class="page_table_but" onclick="save();">
+            提 交</button>
+    </div>
+    <div id="videowin" title="录像播放" class="easyui-window" closed="true" minimizable="false" maximizable="true" collapsible="false">
+        <video id="vedio1" width = "100%" height = "99%" src="" controls="controls"></video>
+    </div>
+    <div id="imgwin" title="图形查看" class="easyui-window" closed="true" minimizable="false" maximizable="true" collapsible="false">
+        <img id="img1" width = "100%" height = "99%" src="" controls="controls"></img>
+    </div>
+    <script type="text/javascript">
+        var bugid=@Html.Raw(Request.QueryString["bugid"]);
+    </script>
+    <script src="~/Content/UserJS/HazardManDetail._jm.js"></script>
+</body>
+</html>

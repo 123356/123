@@ -1,0 +1,840 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BugList</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="~/jquery-easyui-1.4.5/themes/black/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-easyui-1.4.5/themes/icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.lazyload.js"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js"></script>
+    <link href="~/Content/css/LBYWBase.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/respond.src.js"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //达到条件显示滚动条
+            var pagetablebody = $(".scroll_bar tbody").height();
+            if (pagetablebody > 540) {
+                $(".scroll_bar thead tr").append("<th style='width:1.2em;'></th>");
+                $(".scroll_bar tbody").css({ "height": "85%", "overflow-y": "auto" });
+            }
+            //弹出编辑框
+            $(".defect_edit_btn").click(function () {
+                $(".defect_edit").fadeIn();
+                $(".defect_details").fadeOut();
+            });
+            $(".defect_close").click(function () {
+                $(".defect_edit").fadeOut();
+                $(".defect_details").fadeOut();
+            });
+            //弹出详情框
+            $(".defect_details_btn").click(function () {
+                $(".defect_details").fadeIn();
+                $(".defect_edit").fadeOut();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="tab_mainbox demo2">
+        @*<ul class="tab_menu">
+            <li class="current">缺陷管理</li>
+            <li>工单管理</li>
+        </ul>*@
+        <div class="tab_box">
+            <!--缺陷管理-->
+            <div class="tabbg tabbg3">
+                <div class="defect_manage">
+                    <div class="defect_manage_left">
+                        <div class="defect_chart1">
+                            <h2 class="defect_charttitle">
+                                <i></i>缺陷设备统计</h2>
+                            <div id="userCharts1" style="width: 100%; height: 70%; margin: 0 auto;">
+                            </div>
+                        </div>
+                        <div class="defect_chart2">
+                            <h2 class="defect_charttitle">
+                                <i></i>设备消缺率统计</h2>
+                            <div id="userCharts2" style="width: 100%; height: 70%; margin: 0 auto;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="defect_manage_right">
+                        <div id="Histb" class="searchbar">
+                            <div class="searchrow">
+                                站点名称:
+                                <select id="SPID" class="easyui-combobox" style="width: 150px; height: 26px;">
+                                    <option>天宝生活区B08</option>
+                                </select>
+                                缺陷等级:
+                                <select id="selDID" class="easyui-combobox" style="width: 150px; height: 26px;">
+                                </select>
+                                处理进度:
+                                <select id="cbType" class="easyui-combobox" style="width: 150px; height: 26px;">
+                                </select>
+                            </div>
+                            <div class="searchrow">
+                                起始时间:
+                                <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                                到
+                                <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                            </div>
+                            <div class="searchbutton">
+                                <button title="查 询" onclick="" class="page_table_but">
+                                    <img src="/Content/images/Icon16/zoom.png">查 询</button>
+                            </div>
+                        </div>
+                        <div class="defect_add">
+                            <button class="defect_add_btn">
+                                添加</button></div>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="page_table_list scroll_bar">
+                            <thead>
+                                <tr>
+                                    <th height="35" scope="col" width="5%">
+                                        序号
+                                    </th>
+                                    <th scope="col">
+                                        站点名称
+                                    </th>
+                                    <th scope="col">
+                                        设备类型
+                                    </th>
+                                    <th scope="col">
+                                        设备名称
+                                    </th>
+                                    <th scope="col">
+                                        缺陷等级
+                                    </th>
+                                    <th scope="col">
+                                        处理进程
+                                    </th>
+                                    <th scope="col">
+                                        报告时间
+                                    </th>
+                                    <th scope="col">
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th width="5%">
+                                        1
+                                    </th>
+                                    <td>
+                                        天宝生活区B08
+                                    </td>
+                                    <td>
+                                        变压器
+                                    </td>
+                                    <td>
+                                        1#变压器
+                                    </td>
+                                    <td>
+                                        一般故障
+                                    </td>
+                                    <td>
+                                        已处理
+                                    </td>
+                                    <td>
+                                        2016-06-23 09：50：21
+                                    </td>
+                                    <td>
+                                        <button class="defect_edit_btn" title="编辑">
+                                            编辑</button>
+                                        <button class="defect_details_btn" title="详情">
+                                            详情</button>
+                                        <button class="defect_delete_btn" title="删除">
+                                            删除</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                        2
+                                    </th>
+                                    <td>
+                                        天宝生活区B08
+                                    </td>
+                                    <td>
+                                        高压柜
+                                    </td>
+                                    <td>
+                                        H6高压柜
+                                    </td>
+                                    <td>
+                                        一般故障
+                                    </td>
+                                    <td>
+                                        已处理
+                                    </td>
+                                    <td>
+                                        2016-03-02 08：36：03
+                                    </td>
+                                    <td>
+                                        <button class="defect_edit_btn" title="编辑">
+                                            编辑</button>
+                                        <button class="defect_details_btn" title="详情">
+                                            详情</button>
+                                        <button class="defect_delete_btn" title="删除">
+                                            删除</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                        3
+                                    </th>
+                                    <td>
+                                        天宝生活区B08
+                                    </td>
+                                    <td>
+                                        低压柜
+                                    </td>
+                                    <td>
+                                        1BB1低压受总柜
+                                    </td>
+                                    <td>
+                                        一般故障
+                                    </td>
+                                    <td>
+                                        已处理
+                                    </td>
+                                    <td>
+                                        2016-07-03 06：42：49
+                                    </td>
+                                    <td>
+                                        <button class="defect_edit_btn" title="编辑">
+                                            编辑</button>
+                                        <button class="defect_details_btn" title="详情">
+                                            详情</button>
+                                        <button class="defect_delete_btn" title="删除">
+                                            删除</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="5%">
+                                    </th>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--工单管理-->
+            <div class="tabbg tabbg3 hide">
+                工单管理
+            </div>
+        </div>
+    </div>
+    <div class="defect_edit radius5">
+        <h3>
+            编辑</h3>
+        <button class="defect_close">
+            关闭</button>
+        <div class="defect_edit_content">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="right">
+                        站点名称
+                    </td>
+                    <td>
+                        <select name="select" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        设备类型
+                    </td>
+                    <td>
+                        <select name="select9" class="easyui-combobox" style="width: 200px;">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        设备名称
+                    </td>
+                    <td>
+                        <select name="select2" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        录入时间
+                    </td>
+                    <td>
+                        <select name="select10" class="easyui-combobox" style="width: 200px;">
+                            <option>系统时间</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        故障原因
+                    </td>
+                    <td>
+                        <select name="select3" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        缺陷等级
+                    </td>
+                    <td>
+                        <select name="select11" class="easyui-combobox" style="width: 200px;">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        报告来源
+                    </td>
+                    <td>
+                        <select name="select4" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        报告时间
+                    </td>
+                    <td>
+                        <select name="select12" class="easyui-combobox" style="width: 200px;">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        工单类型
+                    </td>
+                    <td>
+                        <select name="select5" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        报告人
+                    </td>
+                    <td>
+                        <input type="text" class="validatebox-invalid" style="width: 190px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        工单编号
+                    </td>
+                    <td>
+                        <select name="select6" class="easyui-combobox" style="width: 200px;">
+                            <option>XX变电站</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        缺陷描述
+                    </td>
+                    <td colspan="3">
+                        <textarea cols="50" rows="3" style="width: 550px;">描述</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right" height="50" class="alarm_btn">
+                        <a href="javascript:;" class="btn_style">上传资料</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="defect_details radius5">
+        <h3>
+            详情</h3>
+        <button class="defect_close">
+            关闭</button>
+        <div class="defect_details_content">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="page_table_list">
+                <thead>
+                    <tr>
+                        <th scope="col" height="35">
+                            站点名称
+                        </th>
+                        <th scope="col">
+                            设备类型
+                        </th>
+                        <th scope="col">
+                            设备名称
+                        </th>
+                        <th scope="col">
+                            缺陷等级
+                        </th>
+                        <th scope="col">
+                            处理进程
+                        </th>
+                        <th scope="col">
+                            报告时间
+                        </th>
+                        <th scope="col">
+                            备注
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            XX变电站
+                        </td>
+                        <td>
+                            变压器
+                        </td>
+                        <td>
+                            1#变压器
+                        </td>
+                        <td>
+                            一般故障
+                        </td>
+                        <td>
+                            已处理
+                        </td>
+                        <td>
+                            2016-06-09 13：53：25
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('userCharts1'));
+        var myChart2 = echarts.init(document.getElementById('userCharts2'));
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                y: 'bottom',
+                x: 'center',
+                data: ['高压柜', '低压柜', '变压器'],
+                textStyle: { color: '#fff' }
+            },
+            calculable: true,
+            series: [
+        {
+            name: '访问来源',
+            type: 'pie',
+            radius: ['40%', '60%'],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: 'center',
+                        textStyle: {
+                            fontSize: '18',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            },
+            data: [
+                { value: 335, name: '高压柜' },
+                { value: 310, name: '低压柜' },
+                { value: 234, name: '变压器' }
+            ]
+        }
+    ]
+        };
+        myChart.setOption(option);
+        var option2 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: ['未处理', '已处理'],
+                textStyle: { color: '#fff' }
+            },
+            calculable: true,
+            grid: { y: 40, y2: 70, x2: 20 },
+            xAxis: [
+        {
+            type: 'category',
+            axisLabel: { textStyle: { color: '#fff'} },
+            data: ['高压柜', '低压柜', '变压器']
+        },
+        {
+            type: 'category',
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false },
+            splitArea: { show: false },
+            splitLine: { show: false },
+            data: ['高压柜', '低压柜', '变压器']
+        }
+    ],
+            yAxis: [
+        {
+            type: 'value',
+            axisLabel: { formatter: '{value}', textStyle: { color: '#fff'} }
+        }
+    ],
+            series: [
+       {
+           name: '未处理',
+           type: 'bar',
+           barCategoryGap: '60',
+           itemStyle: { normal: { color: '#999999', label: { show: true}} },
+           data: [30, 0, 25]
+       },
+        {
+            name: '已处理',
+            type: 'bar',
+            xAxisIndex: 1,
+            barCategoryGap: '60',
+            itemStyle: { normal: { color: '#698fda', label: { show: true, formatter: function (p) { return p.value > 0 ? (p.value + '\n') : ''; } }} },
+            data: [130, 224, 164]
+        }
+    ]
+        };
+        myChart2.setOption(option2);
+    </script>
+</body>
+</html>

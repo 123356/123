@@ -1,0 +1,174 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModuleEdit</title>
+    <style type="text/css">
+        .divicons
+        {
+            float: left;
+            border: solid 1px #ccc;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .divicons:hover
+        {
+            color: #FFF;
+            border: solid 1px #3399dd;
+            background: #2288cc;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
+            background: linear-gradient(top, #33bbee, #2288cc);
+            background: -moz-linear-gradient(top, #33bbee, #2288cc);
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+            text-shadow: -1px -1px 1px #1c6a9e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" align="right" width="40%">
+                模块名称：
+            </td>
+            <td class="d_l_d">
+                <input id="ModuleName" runat="server" name="ModuleName" data-options="required:true" class="radius5" /><b class = "RStar">&nbsp*</b>
+                <input id="ModuleID" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                所属模块：
+            </td>
+            <td class="d_l_d">
+                <input class="easyui-combotree radius5" id="parent" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                链接地址：
+            </td>
+            <td class="d_l_d">
+                <input id="Location" runat="server" name="Location" class="easyui-validatebox radius5"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                图标：
+            </td>
+            <td class="d_l_d">
+                <input id="Menu_Img" type="hidden" runat="server" />
+                <img id="Img_Menu_Img" src="/Content/Images/illustration.png" runat="server" alt=""
+                    style="vertical-align: middle; padding-right: 10px;" />
+                <a href="javascript:" onclick="OpenIconList()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+                    选择图标</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                Target：
+            </td>
+            <td class="d_l_d">
+                <select id="target" class="radius5">
+                    <option value="main_frame">IFrame</option>
+                    <option value="Onclick">Onclick</option>
+                    <option value="Href">Href</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" align="right">
+                序号：
+            </td>
+            <td class="d_l_d">
+                <input id="SN" name="SN" class="easyui-numberbox" data-options="required:true" /><b class = "RStar">&nbsp*</b>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align:center;">
+        <a href="javascript:" id="btnSave" onclick="save()" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">保存</a>
+         <a href="javascript:" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'" onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <div id="editWin" class="easyui-dialog" style="width: 750px; height: auto; padding: 10px 20px;
+        left: 1000px; top: 150px; max-height:550px;" data-options="closed:true,buttons:'#dlg-buttons'"
+        title="系统图标">
+        <div class="div-body" id="icon_data">
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#parent').combotree({url: '/SysInfo/ModuleComboData',required: true});  
+        $(function () {
+            loadUserInfo();
+        });
+        function save() {
+            if ($("#ModuleName").val() == "") {
+                $.messager.alert("提示", "请输入模块名称！", "info");
+                return false;
+            }
+            var postData = {
+                ModuleName: $("#ModuleName").val(),
+                ParentID: $('#parent').combotree('getValue'),
+                Icon: $("#Menu_Img").val(),
+                Target: $("#target").val(),
+                Location: $("#Location").val(),
+                SN: $("#SN").val(),
+                ModuleID: $("#ModuleID").val()
+            };
+            //发送异步请求，添加用户
+            $.post("/SysInfo/SaveModule", postData, function (data) {
+                if (data == "OK") {
+                    $.messager.alert("提示", "模块编辑成功！", "info");
+                    window.location.reload();
+                    $('#editwin').window('close');
+                }
+                else {
+                    alert(data);
+                }
+            });
+        }
+        function OpenIconList() {
+            $.post("/SysInfo/CreateIconList", "", function (data) {
+                var iconlist = eval("(" + data + ")");
+                $("#icon_data").html(iconlist);
+                $(".divicons1").click(function () {
+                    Get_Menu_Img($(this).attr('title'));
+                });
+            });
+            $('#editWin').dialog({
+                //title: title,
+                closed: false,
+                minimizable: false, //最小化，默认false  
+                maximizable: false, //最大化，默认false  
+                collapsible: false, //可折叠，默认false  
+                resizable: true//可缩放，即可以通脱拖拉改变大小，默认false  
+            });
+        }
+        function loadUserInfo() {
+            var moduleid=@Html.Raw(Request.QueryString["moduleid"]);
+            if(moduleid > 0 ){
+                $.post("/SysInfo/LoadModule", { "moduleid": moduleid }, function (data) {
+                var obj = eval("(" + data + ")");
+                $("#ModuleName").val(obj.ModuleName);
+                $("#parent").combotree("setValue", obj.ParentID);
+                $("#Img_Menu_Img").attr("src", '/Content/Images/menu/' + obj.Icon);
+                $("#Menu_Img").val(obj.Icon);
+                $("#Target").val(obj.Target);
+                $("#Location").val(obj.Location);
+                $("#SN").numberbox("setValue", obj.SN);
+                $("#ModuleID").val(obj.ModuleID);
+                });
+            }
+        }
+        //全取图标
+        function Get_Menu_Img(img) {
+            $("#Img_Menu_Img").attr("src", '/Content/Images/menu/' + img);
+            $("#Menu_Img").val(img);
+        }
+    </script>
+</body>
+</html>

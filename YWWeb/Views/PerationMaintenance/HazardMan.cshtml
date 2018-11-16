@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HazardMan</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <table id="list_data"  style="width: auto; height: 780px; width: 100%"
+        idfield="BugID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='DID' checkbox="true">
+                </th>
+                <th field='PName' width="100px">
+                    站室名称
+                </th>
+                <th field='DeviceName' width="100px">
+                    设备名称
+                </th>
+                <th field='ReportDate' width="100px" data-options="formatter: DateFormat">
+                    报告时间
+                </th>
+                <th field='ReportUser' width="100px">
+                    报告人
+                </th>
+                <th field='ReportWay' width="100px">
+                    报告方式
+                </th>
+                <th field='BugLocation' width="100px">
+                    缺陷部位
+                </th>
+                <th field='BugDesc' width="200px">
+                    缺陷描述
+                </th>
+                <th field='HandeSituation' width="100px">
+                    处理情况
+                </th>
+                <th field='HandleDate' width="100px" data-options="formatter: DateFormat">
+                    处理时间
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            站室名称:
+            <input data-options="lines:true" style="width: 200px;" id="StationName" />
+            <input id="SPID" type="hidden" />
+            处理情况：
+            <select id="HandeSituation" class="easyui-combobox" style="width: 120px; height: 26px;">
+            </select>
+            记录日期:
+            <input type="radio" class="GraphType" name="GraphType" value="6" onclick="onclick_month()" />当月
+            <input type="radio" class="GraphType" name="GraphType" value="72" onclick="onclick_year()" />本年
+            <input type="radio" class="GraphType" name="GraphType" value="616" />自定义
+            <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+            至
+            <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <div id="detailwin" title="查看隐患信息详情" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+    <div id="editwin" title="编辑隐患信息" class="easyui-dialog" closed="true" style="width: 650px;
+        height: 350px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    站室名称：
+                </td>
+                <td class="d_l_d">
+                    <input data-options="lines:true" style="width: 200px;" id="StationID" />
+                    <b class="RStar">&nbsp*</b>
+                    <input id="PID" type="hidden" />
+                    <input id="PName" type="hidden" />
+                </td>
+                <td class="d_l_t">
+                    缺陷等级：
+                </td>
+                <td class="d_l_d">
+                    <select id="BugLevel" class="easyui-combobox" style="width: 200px; height: 26px;">
+                    </select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    设备名称：
+                </td>
+                <td class="d_l_d">
+                    <input id="DID" class="easyui-combotree" style="width: 200px; height: 26px;" /><b
+                        class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    报告方式：
+                </td>
+                <td class="d_l_d">
+                    <select id="ReportWay" class="easyui-combobox" style="width: 200px; height: 26px;">
+                    </select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    缺陷部位：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <input id="BugLocation" runat="server" name="BugLocation" missingmessage="缺陷部位必填项！"
+                        class="easyui-validatebox" style="width: 500px;" data-options="required:true" /><b
+                            class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    缺陷描述：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <textarea id="BugDesc" class="easyui-validatebox" style="height: 100px; width: 500px;"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                    data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+
+    <script src="~/Content/UserJS/HazardMan._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>一次图_10_二N总配电室</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/onepub.css"></link>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css"></link>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu10_32.css"></link>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+</head>
+<body class="tabbg2">
+
+
+
+
+    <div class="ycmain page_content">
+        <ul class="alertmenu" id="p10">
+            <li class="other_g0" id="other_g0"></li>
+            <li class="switch_size switch_s_off zxb_g14998" id="t14998"></li>
+            <li class="switch_size switch_s_off zxb_g14999" id="t14999"></li>
+            <li class="switch_size switch_s_off zxb_g15000" id="t15000"></li>
+            <li class="switch_size switch_s_off zxb_g15001" id="t15001"></li>
+            <!--AH1-->
+            <li class="w1 alarmico">
+                <dt id="d1" onclick="circuitInfo(107,1);"></dt>
+                <dd id="t1"></dd>
+            </li>
+            <!--AH2-->
+            <li class="w2 alarmico">
+                <dt id="d2" onclick="circuitInfo(107,2);"></dt>
+                <dd id="t2"></dd>
+            </li>
+            <!--AH3-->
+            <li class="w3 alarmico">
+                <dt id="d3" onclick="circuitInfo(107,3);"></dt>
+                <dd id="t3"></dd>
+            </li>
+            <!--AH4-->
+            <li class="w4 alarmico">
+                <dt id="d4" onclick="circuitInfo(107,4);"></dt>
+                <dd id="t4"></dd>
+            </li>
+            <li class="tb_pageI"><span class="page_size_pm_no">高压</span></li>
+            <li class="tb_pageII"><a href="/PDRInfo/OneGraph?id=10_74" class="page_size_pm">低压母线1段</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var pid = 10; var graphType = "low"; var OGdid = "1,2,3,4";
+    </script>
+</body>
+</html>
+<script src="~/Content/UserJS/lfywufl._jm.js?pid" type="text/javascript"></script>

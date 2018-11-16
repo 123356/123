@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <style type="text/css">
+        .closepic {
+            float: right;
+            width: 105px;
+            right: 20px;
+            top: 120px;
+        }
+    </style>
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 780px;" idfield="UserID" pagination="true"
+           data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='UserID' checkbox="true">
+                </th>
+                <th field='UserName' width="80px">
+                    用户名
+                </th>
+                <th field='Company' width="150px">
+                    公司名称
+                </th>
+                <th field='Post' width="100px">
+                    职位
+                </th>
+                <th field='Telephone' width="100px">
+                    办公电话
+                </th>
+                <th field='Mobilephone' width="100px">
+                    移动电话
+                </th>
+                <th data-options="field:'IsScreen',width:100,formatter:isScreen">
+                    状态
+                </th>
+                <th field='IsAdmin' width="100px" formatter="setAdmin">
+                    是否为管理员
+                </th>
+                <th field='OpenAlarmMsg' width="100px" formatter="setAlarmMsg">
+                    是否短信提醒
+                </th>
+                <th field='RoleName' width="100px">
+                    角色
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            用户名:
+            <input id="uname" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <script src="~/Content/UserJS/UserList._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="编辑用户信息" class="easyui-window" closed="true" style="width: 800px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

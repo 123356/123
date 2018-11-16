@@ -1,0 +1,142 @@
+
+<meta charset="utf-8" />
+<div class="config_content"  >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="NVR_stream_config" class="logo_title">码流配置</div>
+               <div class="item_R">
+               	   <div id="NVR_CHNCP" class="logo_link_cy">Copy</div>
+                   <div id="NVR_CHNRf" class="logo_link">Refresh</div>
+                   <div id="NVR_CHNSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+            <!--table 0--->
+            <div class="table" id="NVR_CHN_TABLE">
+            	<div class="table_L">
+                	<font id="NVR_channel_num">通道号</font>
+                </div>
+                <div class="table_R">
+                	<select id="NVR_CHNchn" class="select"></select>
+                </div>
+            </div>
+            <div class="table" id="NVR_REFRESH_RATE">
+            	<div class="table_L">
+                	<font id="NVR_refresh_rate">刷新频率</font>
+                </div>
+                <div class="table_R">
+                	<select id="NVR_RefreshRate" class="select">
+                    	<option value="0" selected="selected">60Hz</option>
+                        <option value="1">50Hz</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table" id="NVR_STREAM_MODE">
+            	<div class="table_L">
+                	<font id="NVR_stream_mode">码流模式</font>
+                </div>
+                <div class="table_R">
+                	<select id="NVR_StreamMode" class="select">
+                    	<option value="0" selected="selected">单码流</option>
+                        <option value="1">双码流</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table">
+            	<div class="table_L" id="NVR_stream_f_b_l" >分辨率</div>
+                	<div class="table_R">
+                 	<select id="NVR_CHNmSl" class="select">
+            				
+            		</select>
+                </div>
+            </div>      
+              <!--table 2-->
+             <div id="NVR_main" >
+	             <div style="height:30px"></div> 
+             	 <div class="table top">
+                    <div class="table_box">
+        				<font  id="Main">主码流</font>
+                    </div>
+                </div> 
+                <div class="table">
+                    <div class="table_L" id="NVR_main_stream_frame_ratio">帧率</div>
+                    <div class="table_R">
+                    <select id="NVR_main_CHNdzl" class="select"></select>
+                    </div>
+                </div>     
+            <!--table 3-->
+               	<div class="table" id="NVR_main_LorexD">
+                    <div class="table_L" id="NVR_main_bit_rate">比特率</div>
+                    <div class="table_R" id="NVR_main_bitrate">
+                        <input id="NVR_main_DefineBitrate" class="select" maxlength="8" onkeyup="checkDefineMainBitrateRange()" style="ime-mode:Disabled; height:15px; width:295px;"/>
+                    </div>
+                </div> 
+             </div> 
+             <div id="NVR_sub" style="display:none;">
+             	<div style="height:30px"></div>
+             	<div class="table top">
+                    <div class="table_box">
+        				<font  id="Sub">子码流</font>
+                    </div>
+                </div> 
+                <div class="table">
+                    <div class="table_L" id="NVR_sub_stream_frame_ratio">帧率</div>
+                    <div class="table_R">
+                    <select id="NVR_sub_CHNdzl" class="select"></select>
+                    </div>
+                </div>     
+            <!--table 3-->
+               	<div class="table" id="NVR_sub_LorexD">
+                    <div class="table_L" id="NVR_sub_bit_rate">比特率</div>
+                    <div class="table_R" id="NVR_sub_bitrate">
+                        <input id="NVR_sub_DefineBitrate" class="select" maxlength="8" onkeyup="checkDefineSubBitrateRange()" style="ime-mode:Disabled; height:15px; width:295px;"/>
+                    </div>
+                </div> 
+             </div> 
+            <!--table 5-->
+ 
+                 <!--table 10-->
+               <div id="NVR_CopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "NVR_selectID">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">                 
+                        <input type="checkbox" id="NVR_ck" style="margin-left:3px;"/>                   
+                        <font id="NVR_selectedAll"> 全选</font>
+                        <input type="button" value="确定" id="NVR_Ok" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="NVR_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="NVR_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="NVR_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="NVR_TDNum_3">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="NVR_TDNum_4">
+                        </div>
+                   </div>
+       		   </div> 
+     
+    </div>
+    <!--table end-->
+		
+</div>
+<div id="isfix"></div>

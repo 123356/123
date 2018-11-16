@@ -1,0 +1,359 @@
+<div class="config_content"  >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="sdt_base_config" class="logo_title">基本配置</div>
+               <div class="item_R">
+                   <div id="SysDstRf" class="logo_link">Refresh</div>
+                   <div id="SysDstDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="SysDstSave" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+            <!--table 0--->
+             <!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="system_time">系统时间</div>
+                    <div id="Dst_SysTime"></div>
+                    <div class="table_R">
+                    	<div style="width:206px; float:left;">
+                            <input id="SysDstSysTime" readonly="readonly" type="text" style=" float:right; width:150px;" glcal=""/>
+                        </div>
+                        <div id="SysDstSysTimerObj" style="float:left;height:25px; overflow:hidden" ></div> 
+                     </div>
+                </div>
+            <!--table 2-free-->
+                <div class="table">
+                    <div class="table_L" id="sys_date_format" >日期格式</div>
+                    <div class="table_R">
+                    	<select id="SysDstDateMode" class="select" >
+                            <option  value="0">月/日/年</option>
+                            <option  value="1">年/月/日</option>
+                            <option  value="2">日/月/年</option>
+            			</select>
+                    </div>
+                </div>      
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="sys_time_format">时间格式</div>
+                    <div class="table_R">
+                    <select id="SysDstTimeMode" class="select">
+            	<option  value="0">24小时</option>
+                <option  value="1">12小时</option>
+            </select>
+                    </div>
+                </div> 
+                <!--table 2 --none-->
+                <div class="table none"></div>
+            <!--table 3-->
+                    <div class="table" id="table_language" style="border-top:1px solid #FFF;">
+                		<div id ="SYS_LANGUAGE" class="table_L">Language</div>
+                		<div class="table_R">
+                    		<select id="DSTLanguage" disabled="disabled" class="select">
+                        		<option value="0">中文</option>
+                                <option value="1">繁体中文</option>
+                                <option value="2">CZECH</option>
+                                <option value="3">DANISH</option>
+                                <option value="4" selected="selected">ENGLISH</option>
+                                <option value="5">FINNISH</option>
+                        		<option value="6">FRENCH</option>
+                                <option value="7">DEUTSCH</option>
+                                <option value="8">GREEK</option>
+                                <option value="9">HEBREW</option>
+                                <option value="10">HUNGARIAN</option>
+                                <option value="11">ITALIANO</option>
+                                <option value="12">JAPANESE</option>
+                                <option value="13">POLISH</option>
+                                <option value="14">PORTUGUESE</option>
+                                <option value="15">РУССКИЙ</option> 
+                                <option value="16">SPANISH</option>
+                                <option value="17">THAI</option>
+                                <option value="18">SLOVENIA</option>
+                                <option value="19">ROMANIA</option>
+                                <option value="20">BULGARIAN</option>
+		                        <option value="21">ARABIC</option>
+		                        <option value="22">HINDI</option>
+		                        <option value="23">VIETNAM</option>
+		                        <option value="24">HOLLAND</option>
+		                        <option value="25">TURKEY</option>
+                        		<option value="26">PERSION</option>
+								<option value="27">SVENSKA</option>
+								<option value="28">KOREAN</option>
+                                <option value="29">INDONESIA</option>
+                        		<option value="30">BRAZILE</option>
+                			</select>
+                    	</div>
+                	</div>
+                <div class="table" id="table_videoformat">
+                	<div id= "VIDEO_FORMAT" class="table_L">Video Format
+                    </div>
+                	<div class="table_R">
+                    <select id="DSTVideoFormat" disabled="disabled" class="select">
+                        <option value="0">PAL</option>
+                        <option value="1">NTSC</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="table" id="table_autologout">
+                	<div id="AUTOLOGOUT" class="table_L">Auto Logout
+                    </div>
+                	<div class="table_R">
+                    <select id="DSTAutoLogout" class="select">
+                    	
+                    </select>
+                    </div>
+                </div>
+                <div class="table" id = "start_show_wizard">
+                    <div class="table_L" id="show_wizard">显示向导</div>
+                    <div class="table_R">
+                    <select id="SysStartShowWizard" class="select">
+                        <option value="0">关闭</option>
+            			<option value="1">打开</option>
+                    </select>
+                    </div>
+                </div>
+    </div>
+            	<div class="table top">
+                    <div class="table_box">
+                    	<div id="DSTDiv" style="float:left;">
+                    	<input id="ChoseDST" type="radio" name="a"/>DST &nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <input id="ChoseNTP" name="a" type="radio" />NTP
+                    </div>
+                </div> 
+               
+            <!--table 4-->
+           <div id="ChoseDstT" style=" height:0px; overflow:hidden;">
+             <div class="table top">
+                    <div class="table_box">
+                    	<input id="SysDstUseDST" type="checkbox"/>
+        				<font  id="Dst">夏令时</font>
+                    </div>
+                </div> 
+            <div id="DSTXLSEnable">
+               <div class="table">
+                    <div class="table_L" id="daylight_saving_time" style="width:190px;">夏令时模式</div>
+                    <div class="table_R" style="width:370px">
+                     <select id="SysDstMode" class="select">
+                          <option value="0">周模式</option>
+                          <option value="1">日期模式</option>
+                      </select>
+                    </div>
+                </div> 
+            <!--table 5-->
+            	<div class="table">
+                	<div class="table_L" id="py_zc_time_value" style="width:190px;">偏移正常时间</div>
+                	<div class="table_R" style="width:200px;">
+                    <select id="SysDstOffset" class="select">
+                        <option value="0">1小时</option>
+                        <option value="1">2小时</option>
+                    </select>
+                    </div>
+                </div>
+             <!--table 6-->
+             <div id="DstDate">
+            	<div class="table">
+                	<div class="table_L" id="starup_time">开始于
+                    </div>
+                	<div class="table_R">
+                        <div style="width:300px; overflow:hidden; clear:left; float:left; margin-left:5px;">
+                            <select id="DstStartMonth">
+                            <option  value="0">1月</option>
+                            <option  value="1">2月</option>
+                            <option  value="2">3月</option>
+                            <option  value="3">4月</option>
+                            <option  value="4">5月</option>
+                            <option  value="5">6月</option>
+                            <option  value="6">7月</option>
+                            <option  value="7">8月</option>
+                            <option  value="8">9月</option>
+                            <option  value="9">10月</option>
+                            <option  value="10">11月</option>
+                            <option  value="11">12月</option>
+                        </select>　<select id="DstStartWeek" >
+                            <option  value="0">第一周</option>
+                            <option  value="1">第二周</option>
+                            <option  value="2">第三周</option>
+                            <option  value="3">第四周</option>
+                            <option  value="4">第五周</option>
+                        </select> <select id="DstStartWeekDay" >
+                            <option  value="0">星期日</option>
+                            <option  value="1">星期一</option>
+                            <option  value="2">星期二</option>
+                            <option  value="3">星期三</option>
+                            <option  value="4">星期四</option>
+                            <option  value="5">星期五</option>
+                            <option  value="6">星期六</option>
+                            </select>
+                        </div>
+                    
+                    	<div id="dstTimer1" style="height:25px; overflow:hidden"></div>
+                    </div>
+                </div>
+               <!--table 7-->
+            	<div class="table">
+                	<div class="table_L" id="sdt_stop_time">结束于
+                    </div>
+                	<div class="table_R">
+                    <div style="width:300px; overflow:hidden; clear:left; float:left; margin-left:5px;">
+                        <select id="DstEndMonth">
+                        <option  value="0">1月</option>
+                        <option  value="1">2月</option>
+                        <option  value="2">3月</option>
+                        <option  value="3">4月</option>
+                        <option  value="4">5月</option>
+                        <option  value="5">6月</option>
+                        <option  value="6">7月</option>
+                        <option  value="7">8月</option>
+                        <option  value="8">9月</option>
+                        <option  value="9">10月</option>
+                        <option  value="10">11月</option>
+                        <option  value="11">12月</option>
+                    </select>　<select id="DstEndWeek" >
+                        <option  value="0">第一周</option>
+                        <option  value="1">第二周</option>
+                        <option  value="2">第三周</option>
+                        <option  value="3">第四周</option>
+                        <option  value="4">第五周</option>
+                    </select> <select id="DstEndWeekDay" >
+                        <option  value="0">星期日</option>
+                        <option  value="1">星期一</option>
+                        <option  value="2">星期二</option>
+                        <option  value="3">星期三</option>
+                        <option  value="4">星期四</option>
+                        <option  value="5">星期五</option>
+                        <option  value="6">星期六</option>
+                    	</select>
+               		</div>
+                
+                    	<div id="dstTimer2" style="height:25px; overflow:hidden"></div>
+                    </div>
+                </div>
+               </div>
+                 <!--table 8-->
+           <div id="DstTime">
+            	<div class="table">
+                    <div class="table_L" id="startup_time_1">起始时间</div>
+                    <div id="Dst_SysTime"></div>
+                    <div class="table_R">
+                        <div style="width:250px; float:left;">
+                            <input id="DstStartDate" class="addTimeClick" black="" readonly="readonly" type="text" style="margin-left:50px;" glcal=""/>
+                         </div>
+                         <div id="dstTimer3" style="float:left; height:25px; overflow:hidden"></div>
+                     </div>
+                </div>
+                 <!--table 9-->
+            	<div class="table">
+                    <div class="table_L" id="End_time_1">结束时间</div>
+                    <div id="Dst_SysTime"></div>
+                    <div class="table_R">
+                    	<div style="width:250px; float:left;">
+                   		<input id="DstEndDate" class="addTimeClick" black="" readonly="readonly" type="text" style=" margin-left:50px;" glcal=""/>
+                 
+                     	</div>
+                     	<div id="dstTimer4" style="float:left;height:25px; overflow:hidden"></div>
+                     </div>
+                </div>
+              </div>
+           </div>
+        </div>
+        <div id="ChoseNTPT" style="display:none">
+         <div class="table">
+                	<div class="table_box">
+                	<input id="NtpUseNtp" type="checkbox"/>
+                    <font id="NTP_startup">启用NTP</font>
+                    </div>
+                </div>
+            <!--table 2-free-->
+        <div id="NtpDivBox">
+         		<div class="table">
+                    <div class="table_L" id="nnp_server_address">服务器地址</div>
+                    <div class="table_R">
+                        <select id="NtpNtpIPAddr" class="select">
+                            <option value="0">time.windows.com</option>
+                            <option value="1">time.nist.gov</option>
+                            <option value="2">pool.ntp.org</option>
+                            <option value="3">ntp.lorexddns.net</option>
+                        </select>
+        			</div>
+                </div>  
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="nnp_GMT">时区</div>
+                    <div class="table_R">
+                    	<select  id="NtpTimeZone" class="select">
+                            <option value="0">GMT-12:00</option>
+                            <option value="1">GMT-11:00</option>
+                            <option value="2">GMT-10:00</option>
+                            <option value="3">GMT-09:00</option>
+                            <option value="4">GMT-08:00</option>
+                            <option value="5">GMT-07:00</option>
+                            <option value="6">GMT-06:00</option>
+                            <option value="7">GMT-05:00</option>
+                            <option value="8">GMT-04:30</option>
+                            <option value="9">GMT-04:00</option>
+                            <option value="10">GMT-03:30</option>
+                            <option value="11">GMT-03:00</option>
+                            <option value="12">GMT-02:00</option>
+                            <option value="13">GMT-01:00</option>
+                            <option value="14">GMT</option>
+                            <option value="15">GMT+01:00</option>
+                            <option value="16">GMT+02:00</option>
+                            <option value="17">GMT+03:00</option>
+                            <option value="18">GMT+03:30</option>
+                            <option value="19">GMT+04:00</option>
+                            <option value="20">GMT+04:30</option>
+                            <option value="21">GMT+05:00</option>
+                            <option value="22">GMT+05:30</option>
+                            <option value="23">GMT+05:45</option>
+                            <option value="24">GMT+06:00</option>
+                            <option value="25">GMT+06:30</option>
+                            <option value="26">GMT+07:00</option>
+                            <option value="27">GMT+08:00</option>
+                            <option value="28">GMT+09:00</option>
+                            <option value="29">GMT+09:30</option>
+                            <option value="30">GMT+10:00</option>
+                            <option value="31">GMT+11:00</option>
+                            <option value="32">GMT+12:00</option>
+                            <option value="33">GMT+13:00</option>
+                         </select>
+                     </div>
+                </div>
+         </div>
+        </div>
+    <!--table end-->
+    <div class="table top" id="chn_resolution_div" style="margin-top:30px; display:none; ">
+            <div class="table_L" id="chn_resolution_lang">Resolution</div>
+            <div class="table_R">
+            <select id="chn_resolution" class="select">
+                 <!--option value="0">800 x 600</option-->
+                <option value="1">1024 x 768</option>
+                <option value="2">1280 x 1024</option>
+                <option value="3">1440 x 900</option>
+                <option value="4">1280 x 720</option>
+                <option value="5">1920 x 1080</option>
+                <option value="6">1680 x 1050</option>
+                <option value="7">1600 x 1200</option>
+                <option value="8">1900 x 1200</option>
+                <option value="9">2560 x 1440</option>
+                <option value="10">3840 x 2160</option>
+            </select>
+            </div>
+        </div>
+		
+</div>
+<div id="Dst_EndTime" ></div>
+<div id="Dst_StartTime"></div>
+<div id="isfix"></div>
+<div class="disp"></div>
+<div id="DstPiTimer1" style="width:285px; height:0px; overflow:hidden;"></div>
+<div id="DstPiTimer2" style="width:285px;height:0px; overflow:hidden;"></div>
+<div id="DstPiTimer3" style="width:285px;height:0px; overflow:hidden;"></div>
+<iframe id="iframe1" style="width:0px; height:0px; border:0px; overflow:hidden;"></iframe>
+<iframe id="iframe2" style="width:0px; height:0px; border:0px; overflow:hidden;"></iframe>
+<iframe id="iframe3" style="width:0px; height:0px; border:0px; overflow:hidden;"></iframe>

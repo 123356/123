@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "供应商列表";
+    S5001Web.Controllers.LoginAttribute loginbll = new S5001Web.Controllers.LoginAttribute();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SupplierList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" style="width: auto;" idfield="SupplierID" pagination="true"
+        data-options="iconCls:'icon-save',rownumbers:true,pageSize:20,pageList:[10,15,20,30,50],toolbar:'#tb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='SupplierID' checkbox="true">
+                </th>
+                <th field='SupplierCode' width="60px">
+                    供应商编码
+                </th>
+                <th field='SupplierName' width="100px">
+                    供应商名称
+                </th>
+                <th field='Contacter' width="60px">
+                    联系人
+                </th>
+                <th field='Telephone' width="60px">
+                    电话号码
+                </th>
+                <th field='MobilePhone' width="60px">
+                    手机号码
+                </th>
+                <th field='SupplierAddress' width="180px">
+                    地址
+                </th>
+                <th field='Remarks' width="100px">
+                    备注
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            供应商名称:
+            <input id="suppliername" />
+            联系人:
+            <input id="cname" />
+            手机号码:
+            <input id="mpnumber" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+    <script src="~/Content/UserJS/SupplierList._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="编辑供应商信息" class="easyui-window" closed="true" style="width: 800px;
+        height: 360px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

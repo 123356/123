@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>站室实时数据</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <!-- 表格-->
+    <link href="/Content/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/Content/css/dataTables.bootstrap.css" rel="stylesheet">
+    <script src="/Content/js/jquery.dataTables.js"></script>
+    <script src="/Content/js/dataTables.bootstrap.js"></script>
+    <script src="/Content/UserJS/CommonUnit._jm.js"></script>
+    <link href="/Content/css/yw_table.css" rel="stylesheet">
+</head>
+<style type="text/css">
+    .align-center {
+        margin: 0 auto; /* 居中 这个是必须的，，其它的属性非必须 */
+        text-align: center; /* 文字等内容居中 */
+    }
+
+    th, td {
+        text-align: center;
+    }
+</style>
+<body>
+    <div style="background: #fff;">
+        <div class="project-list" style=" width:99%">
+            <table id="datalist" class="table table-bordered data-table mydatatable">
+                <thead>
+                    <tr>
+                        <th width="15%">
+                            类别
+                        </th>
+                        <th width="20%">
+                            设备名称
+                        </th>
+                        <th width="15%">
+                            回路/调度号
+                        </th>
+                        <th width="15%">
+                            监测位置
+                        </th>
+                        <th width="15%">
+                            测值
+                        </th>
+                        <th width="5%">
+                            单位
+                        </th>
+                        <th width="20%">
+                            采集时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="graphwin" minimizable="false" maximizable="false" collapsible="false" closed="false" title="false"></div>
+        </div>
+    </div>
+    <script src="~/Content/UserJS/PowerMapDetail._zc.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+@using S5001Web;
+
+
+
+<li class="sidebar-nav-link am-panel" style="background-color:transparent;">
+    <a href="/Home/MapPageBaidu" target="main_frame">
+        <i class="am-icon-map sidebar-nav-link-logo"></i>监控地图
+    </a>
+    </li>
+
+@foreach (S5001Web.t_CM_Module item in ViewData["list"] as List<S5001Web.t_CM_Module>)
+{
+    string sTarget = "main_frame";
+    if (item.Target.Equals("IFrame"))
+    {
+        sTarget = "main_frame";
+    }
+    else
+    {
+        sTarget = item.Target;
+    }   
+    
+    List<t_CM_Module> list2 = ViewData["list" + item.ModuleID] as List<t_CM_Module>;
+    if (null!=list2&&list2.Count > 0)
+    {
+    <li class="sidebar-nav-link am-panel" style="background-color:transparent;">
+        <a data-am-collapse="{parent: '#collapase-nav-1', target: '#@item.ModuleID'}" href="javascript:;" class="sidebar-nav-sub-title">
+            
+            <i class="sidebar-nav-link-logo" ><img src="../Content/images/menu/@item.Icon" alt="" width="20"  height="20"></i>@item.ModuleName  
+            <span class="am-icon-abgle-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub am-list am-collapse " id="@item.ModuleID">
+            
+
+            @foreach (t_CM_Module item2 in list2)
+            {
+                if (item2.Target.Equals("IFrame"))
+                {
+                    sTarget = "main_frame";
+                }else{
+                    sTarget = item2.Target;
+                }       
+               
+        }
+        </ul>
+    </li>
+    }
+    else
+    {
+                        
+    <li class="sidebar-nav-link am-panel" style="background-color:transparent;">
+        <a href="@item.Location" target="@sTarget">
+            <i class=" sidebar-nav-link-logo"><img src="../Content/images/menu/@item.Icon" alt="" width="20" height="20"></i>@item.ModuleName
+        </a>
+    </li>
+    }
+
+
+}

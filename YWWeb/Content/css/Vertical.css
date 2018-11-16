@@ -1,0 +1,296 @@
+﻿/*#region 湖北电缆竖井*/
+.hbjhscsj{width:1440px; height:700px; background-color:#b2b2b2; position:absolute; float:left;font-family:"Microsoft YaHei";}
+
+/*#region 电缆竖井*/
+.hbjhscsjt{background-image:url(../pingmiantu/hbjhsc/sj17F.png);left:333px;top:22px;width:156px; height:665px;position:absolute;}
+.hbjhscsjt div{position:absolute; cursor:pointer;}
+/*#region 竖井元素*/
+#d437{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:20px;width:15px; height:35px;}
+#d436{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:54px;width:15px; height:35px;}
+#d435{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:88px;width:15px; height:35px;}
+#d434{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:122px;width:15px; height:35px;}
+#d433{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:156px;width:15px; height:35px;}
+#d432{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:190px;width:15px; height:35px;}
+#d431{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:224px;width:15px; height:35px;}
+#d430{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:258px;width:15px; height:35px;}
+#d429{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:292px;width:15px; height:35px;}
+#d428{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:326px;width:15px; height:35px;}
+#d427{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:360px;width:15px; height:35px;}
+#d426{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:394px;width:15px; height:35px;}
+#d425{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:428px;width:15px; height:35px;}
+#d424{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:462px;width:15px; height:35px;}
+#d423{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:496px;width:15px; height:35px;}
+#d422{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:530px;width:15px; height:35px;}
+#d397{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:564px;width:15px; height:35px;}
+#d3971{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:598px;width:15px; height:35px;}
+#d3972{background-image:url(../pingmiantu/hbjhsc/397A.png);left:35px;top:632px;width:15px; height:35px;}
+/*#region 竖井实时状态*/
+.sjzt_table{left:490px; top:45px; width:166px;position:absolute;}
+.sjzt_info{margin-left:800px; margin-top:100px;position:absolute; width:500px}
+/*#region 竖井实时状态表格宽度*/
+table.bgw3{width:165px;color:#000000;left:490px; top:22px;}
+table.bgw3 td,th{ height:31px; line-height:30px; cursor:pointer;}
+table.bgw3 th{text-align:center; font-size:14px;}
+table.bgw3 td{text-align:left; font-size:12px;}
+/* 竖井实时状态图形位置*/
+.ShowIt{ width:328px; height:463px; left:200px}
+/*#endregion 湖北电缆竖井*/
+.bgw2{border-collapse:collapse; width:100%; margin-bottom:20px; margin-top:20px;font-family:"Microsoft YaHei";font-size:18px; color:#333333;}
+table.bgw2 td,.bgw2 tr,.bgw2 th{border-style:dashed; border-width:1px; border-color:#666666; height:35px;}
+ .gs01 
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#e5e5e5,endColorStr=#cccccc); /*IE*/ 
+ background :-moz-linear-gradient(top,#e5e5e5,#cccccc);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#e5e5e5), to(#cccccc));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #e5e5e5),color-stop(1, #cccccc));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e5e5e5', endColorstr='#cccccc'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e5e5e5', endColorstr='#cccccc')"; /* IE8 */ 
+ background: linear-gradient(#e5e5e5,#cccccc);  /* IE11 */ 
+ }
+.gs02
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#ffffff,endColorStr=#e5e5e5); /*IE*/ 
+ background :-moz-linear-gradient(top,#ffffff,#e5e5e5);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffffff), to(#e5e5e5));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #ffffff),color-stop(1, #e5e5e5));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5')"; /* IE8 */ 
+ background: linear-gradient(#ffffff,#e5e5e5); /* IE11 */ 
+  font-weight:bolder;color:#2c3299 ;
+ }
+ .gs03
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#7f7f7f,endColorStr=#666666); /*IE*/ 
+ background :-moz-linear-gradient(top,#7f7f7f,#666666);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#7f7f7f), to(#666666));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #7f7f7f),color-stop(1, #666666));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#7f7f7f', endColorstr='#666666'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#7f7f7f', endColorstr='#666666')"; /* IE8 */ 
+ background: linear-gradient(#7f7f7f,#666666); /* IE11 */ 
+ color:White;}
+ .gs05
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#ffffff,endColorStr=#e5e5e5); /*IE*/ 
+ background :-moz-linear-gradient(top,#ffffff,#e5e5e5);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffffff), to(#e5e5e5));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #ffffff),color-stop(1, #e5e5e5));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5')"; /* IE8 */ 
+ background: linear-gradient(#ffffff,#e5e5e5); /* IE11 */ 
+ font-family:"Arial"; font-size:19px;color:#2c3299 ;
+ }
+ .gs06
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#b6dbd4,endColorStr=#66bdae); /*IE*/ 
+ background :-moz-linear-gradient(top,#b6dbd4,#66bdae);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b6dbd4), to(#66bdae));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #b6dbd4),color-stop(1, #66bdae));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#b6dbd4', endColorstr='#66bdae'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#b6dbd4', endColorstr='#66bdae')"; /* IE8 */ 
+ background: linear-gradient(#b6dbd4,#66bdae); /* IE11 */ 
+ }
+ .gs07
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#cae2e5,endColorStr=#8bcbc1); /*IE*/ 
+ background :-moz-linear-gradient(top,#cae2e5,#8bcbc1);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#cae2e5), to(#8bcbc1));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #cae2e5),color-stop(1, #8bcbc1));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#cae2e5', endColorstr='#8bcbc1'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#cae2e5', endColorstr='#8bcbc1')"; /* IE8 */ 
+ background: linear-gradient(#cae2e5,#8bcbc1); /* IE11 */ 
+ }
+ .gs08
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#e4edee,endColorStr=#a3d4cd); /*IE*/ 
+ background :-moz-linear-gradient(top,#e4edee,#a3d4cd);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#e4edee), to(#a3d4cd));/*谷歌*/ 
+ background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #e4edee),color-stop(1, #a3d4cd));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e4edee', endColorstr='#a3d4cd'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e4edee', endColorstr='#a3d4cd')"; /* IE8 */ 
+ background: linear-gradient(#e4edee,#a3d4cd); /* IE11 */ 
+ }
+ /* 左上角指示条*/
+.state_bg_1{background-color:#ffff00;}
+.state_bg_2{background-color:#ff6633;}
+.state_bg_3{background-color:#ff0000;}
+.state_fc_1{color:#ffff00;}
+.state_fc_2{color:#ff6633;}
+.state_fc_3{color:#ff0000;}
+
+.sjcontent{background:url(../pingmiantu/hbjhsc/sj_nodl.png) no-repeat; width:328px; height:463px;}
+.sjdla{background:url(../pingmiantu/hbjhsc/dlA.png) no-repeat; width:62px; height:231px;position:absolute; left:100px; top:103px;}
+.sjdla_1{background:url(../pingmiantu/hbjhsc/dlA_1.png) no-repeat; width:62px; height:231px;position:absolute; left:100px; top:103px;}
+.sjdla_2{background:url(../pingmiantu/hbjhsc/dlA_2.png) no-repeat; width:62px; height:231px;position:absolute; left:100px; top:103px;}
+.sjdla_3{background:url(../pingmiantu/hbjhsc/dlA_3.png) no-repeat; width:62px; height:231px;position:absolute; left:100px; top:103px;}
+.sjdlb{background:url(../pingmiantu/hbjhsc/dlB.png) no-repeat; width:62px; height:231px;position:absolute; left:133px; top:103px;}
+.sjdlb_1{background:url(../pingmiantu/hbjhsc/dlB_1.png) no-repeat; width:62px; height:231px;position:absolute; left:133px; top:103px;}
+.sjdlb_2{background:url(../pingmiantu/hbjhsc/dlB_2.png) no-repeat; width:62px; height:231px;position:absolute; left:133px; top:103px;}
+.sjdlb_3{background:url(../pingmiantu/hbjhsc/dlB_3.png) no-repeat; width:62px; height:231px;position:absolute; left:133px; top:103px;}
+.sjdlc{background:url(../pingmiantu/hbjhsc/dlC.png) no-repeat; width:62px; height:231px;position:absolute; left:148px; top:103px;}
+.sjdlc_1{background:url(../pingmiantu/hbjhsc/dlC_1.png) no-repeat; width:62px; height:231px;position:absolute; left:148px; top:103px;}
+.sjdlc_2{background:url(../pingmiantu/hbjhsc/dlC_2.png) no-repeat; width:62px; height:231px;position:absolute; left:148px; top:103px;}
+.sjdlc_3{background:url(../pingmiantu/hbjhsc/dlC_3.png) no-repeat; width:62px; height:231px;position:absolute; left:148px; top:103px;}
+.sjdln{background:url(../pingmiantu/hbjhsc/dlN.png) no-repeat; width:62px; height:231px;position:absolute; left:170px; top:103px;}
+.sjdln_1{background:url(../pingmiantu/hbjhsc/dlN_1.png) no-repeat; width:62px; height:231px;position:absolute; left:170px; top:103px;}
+.sjdln_2{background:url(../pingmiantu/hbjhsc/dlN_2.png) no-repeat; width:62px; height:231px;position:absolute; left:170px; top:103px;}
+.sjdln_3{background:url(../pingmiantu/hbjhsc/dlN_3.png) no-repeat; width:62px; height:231px;position:absolute; left:170px; top:103px;}
+
+
+.worddesc{padding-top:20px;}
+.worddesc span{ padding-right:20px;}
+
+#RealTimeInfo{width: 500px;margin-top: 20px;}
+
+
+        /*弹出层*/
+        .ClickMe
+        {
+            border: none;
+        }
+        .goodcover
+        {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 133%;
+            background-color: #000;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: 0.50;
+            filter: alpha(opacity=80);
+        }
+        .code
+        {
+            width: 730px;
+            background-color: #e5e5e5;
+            padding: 5px;
+            border: 1px solid #000;
+            position: absolute;
+            display: none;
+            left: 40%;
+            top:10%;
+            z-index: 1002;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 2px 0px #000;
+            -moz-box-shadow: 0 0 2px 0px #000;
+            box-shadow: 0 0 2px 0px #000;
+        }
+        .sjico
+        {
+            width: 13px;
+            height: 19px;
+            position: absolute;
+            left: -13px;
+            top: 50%;
+            margin-top: -9px;
+        }
+        .closebt
+        {
+            position: absolute;
+            right: 7px;
+            top: 10px;
+            height: 10px;
+            width: 10px;
+        }
+        .closebt img
+        {
+            width: 10px;
+            border: none;
+        }
+        .goodtxt
+        {
+            font-family: "微软雅黑";
+            color: #333;
+        }
+        
+        .goodtxttitle
+        {
+            display: block;
+            font-size: 18px;
+            padding: 0px 0px 5px 5px;
+            font-weight: normal;
+        }
+        .goodtxtcontent
+        {
+            background-color: #fff;
+            border: 1px solid #999;
+            padding: 10px;
+        }
+        .rl_temperature span
+        {
+            display: block;
+            border-top: 1px solid #999;
+            height: 1px;
+            margin: 10px 0px 15px 0px;
+            position: relative;
+        }
+        .rl_temperature span h3
+        {
+            display: block;
+            width: 75px;
+            background: #fff;
+            font-size: 18px;
+            margin: 0px;
+            font-weight: normal;
+            position: absolute;
+            left: 0px;
+            top: -15px;
+        }
+        .rl_temperature table
+        {
+            border-collapse: collapse;
+            border: none;
+        }
+
+        .rl_temperature table td td
+        {
+            border: 1px solid #999;
+            background: #e5e5e5;
+            padding: 0px 20px;
+            text-align: center;
+        }
+        .rl_color
+        {
+            color: #f00;
+        }
+        
+        /*选项卡*/
+        .history_curve
+        {
+            margin-top: 20px;
+            height: 330px;
+        }
+        .history_curve_tab
+        {
+            border-bottom: 1px solid #999;
+            height: 24px;
+        }
+        .history_curve_tab ul
+        {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            text-align: left;
+        }
+        .history_curve_tab li
+        {
+            display: inline;
+        }
+        .history_curve_tab li a
+        {
+            color: #000000;
+            text-decoration: none;
+            padding: 3px 5px;
+            background: #e5e5e5;
+            border: 1px solid #999;
+            border-bottom: none;
+        }
+        .history_curve_tab li a.tabactive
+        {
+            background-color: #fff;
+            border: 1px solid #999;
+            border-bottom: none;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        #history_curve_tabcontent1, #history_curve_tabcontent2
+        {
+            padding: 5px;
+        }

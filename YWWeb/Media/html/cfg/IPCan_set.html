@@ -1,0 +1,131 @@
+<div class="config_content" id="IPCconfigure">   
+        <div class="login" style="float:left;"></div>
+        <div class="item" style="width:700px;">
+             <div id="ipcan_info" class="logo_title">IPC Set</div>
+        </div>
+    <!--div id="IPC_TABLE" class="table_content"-->
+    <!--table id="maingrid4" style="width:598px; height:400px;"></table-->
+    <div id="list_table">
+        <div class="table" style="width:700px;">
+               <div id="IPCDelete" class="logo_link_ipc">Delete</div>
+               <div id="QuickAdd" class="logo_link_ipc">Quick Add</div>
+               <div id="IPCRefresh" class="logo_link_ipc">Refresh</div>
+               <div id="IPCProtocolManagement" class="logo_link_ipc" style="display:none; width:150px;">协议管理</div>
+               <div id="IPCAutoAdd" class="logo_link_ipc" style="display:none; width:170px;">Auto Assign Channels</div>
+        </div>
+        <div id="listDataGrid" style="margin:0; padding:0"></div>
+    </div>
+    
+	<!--快速添加页面-->
+    <div id="quickadd_table" style="display:none">
+		<!--头 -->
+        <div class="table" style="width:700px;">
+               <div id="quickadd_ok" class="logo_link_ipc">Add</div>
+               <div id="quickadd_cancel" class="logo_link_ipc">Cancel</div>
+               <div id="quickadd_refresh" class="logo_link_ipc">Refresh</div>
+        </div>
+        <!--表格 -->
+        <div id="searchDataGrid" style="margin:0; padding:0"></div>
+        <div style="margin-top:10px;">
+        	<div class="syspm_use_range_R_L">
+            	<font id="ipc_user_name">User Name:</font>
+            </div>
+            <div >
+            	<input id="IPCUserName" class="syspm_use_range_R_R" type="text" maxlength="8" value="admin"/>
+            </div>
+            <div class="syspm_use_range_R_L">
+            	<font id="ipc_user_password">Password:</font>
+            </div>
+            <div>
+            	<input class="syspm_use_range_R_R IPCUserPassword" type="password" maxlength="8" value=""/>
+            </div>
+        </div>
+    </div>
+    
+    <div id="IPC_SET" class="table_content" style="width:700px; display:none">
+    	<div class="table" style="width:700px;">
+               <div id="IPCSet_Ok" class="logo_link_ipc">Ok</div>
+               <div id="IPCSet_Cancel" class="logo_link_ipc">Cancel</div>
+        </div>
+        <div class="table" style="width:700px"  id="ipc_indexTable">
+            <div class="table_L" id="ipc_chlIndex">Channel</div>
+            <div class="table_R">
+            	<div id="IPCChannelIndex" class="select"></div>
+                <!--input id="IPCChannelIndex" class="select" disabled="disabled"/-->
+            </div>
+        </div>
+        <div class="table" style="width:700px; display:none;"  id="ipc_nameTable">
+            <div class="table_L" id="ipc_name">Name</div>
+            <div class="table_R">
+            	<input id="IPCChlName" class="select" maxlength="11"/>
+            </div>
+        </div>
+        <div class="table" style="width:700px; display:none;"  id="ipc_positionTable">
+            <div class="table_L" id="ipc_chlPosition">Name Position</div>
+            <div class="table_R">
+            	<select id="IPCChlNamePosition" class="select" >
+                	<option value="0">Left-Top</option>
+                    <option value="1">Right-Top</option>
+                    <option value="2">Left-Bottom</option>
+                    <option value="3">Right-Bottom</option>
+                    <option value="4">Hide alias</option>
+                </select>
+            </div>
+        </div>
+        <div class="table" style="width:700px" >
+            <div class="table_L" id="ipc_address">IP Address</div>
+            <div class="table_R">
+            	<input id="IPCAddress" class="select" maxlength="60"/>
+            </div>
+        </div>
+        <div class="table" style="width:700px"  id="ipc_netmaskTable">
+            <div class="table_L" id="ipc_netmask">NetMask</div>
+            <div class="table_R">
+            	<input id="IPCNetmask" class="select"/>
+            </div>
+        </div>
+            
+         <div class="table" style="width:700px" >
+            <div class="table_L" id="ipc_media_port">Port</div>
+            <div class="table_R">
+                <input id="IPCPort" class="select" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,65535)} " onblur="if(this.value == '') this.value='9000'"/>
+            </div>
+        </div> 
+        <div class="table"  style="width:700px" id="ipc_protocolTable">
+            <div class="table_L" id="ipc_protocol">Protocol</div>
+            <div class="table_R">
+            	<select id="IPCProtocol" class="select">
+                	<option value="0">Private</option>
+                    <option value="1">Private2</option>
+                	<option value="4">Onvif</option>
+                </select>
+            </div>
+        </div>
+        <div class="table"  style="width:700px" id="ipc_frontboundTable">
+            <div class="table_L" id="ipc_frontbound">Front Bound Channel</div>
+            <div class="table_R">
+            	<select id="IPCFrontBound" class="select">
+                    <option value="0">CH1</option>
+                	<option value="1">CH2</option>
+                    <option value="2">CH3</option>
+                    <option value="3">CH4</option>
+                </select>
+            </div>
+        </div>
+        <div class="table" style="width:700px" >
+            <div class="table_L" id="ipc_usename">User Name</div>
+            <div class="table_R">
+                <input id="IPCuser" class="select"  maxlength="32" onkeyup="if(keyboardFilter()) {value=value.replace(/[^\w\.\@\!\#\$\%\^\&\*\/]/ig,'')}"/>
+            </div>
+        </div>
+            <!--table 6-->
+     	<div class="table" style="width:700px" >
+            <div class="table_L" id="ipc_passwd">Password</div>
+            <div class="table_R">
+                <input type="password" class="select IPCpw" maxlength="32"/>
+            </div>
+        </div>
+    </div>     
+</div>
+
+

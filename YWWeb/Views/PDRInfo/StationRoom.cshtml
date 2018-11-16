@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StationRoom</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="tab_mainbox demo2">
+        <ul class="tab_menu" id="menuInfo">
+        </ul>
+        <div class="tab_box">
+            <!--平面布置图-->
+            <div class="tabbg">
+                <iframe frameborder="0" src="" scrolling="auto" width="100%" height="100%" name="leftmenu"
+                    id="sysContent"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var Request = new Object();
+    Request = GetRequest();
+    var pid = 6, sid = 0;   
+    if (Request['pid'] != null)
+        pid = Request['pid'];
+    if (Request['sid'] != null)
+        sid = Request['sid'];
+    if (pid > 0)
+        $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+    pid = $.cookie('cookiepid');
+    //$.cookie('cookiepid', pid, { expires: 7, path: '/' });
+    //var ajaxbg = top.$("#loading_background,#loading");
+    //    var timeTicket;
+    //    clearInterval(timeTicket);
+    //    timeTicket = setInterval(function () {
+    //        initRealTemp();
+    //    }, 300000);
+    //    initRealTemp(); //获取实时数据
+    //    function initRealTemp() {
+    //        //ajaxbg.show();
+    //        $.ajaxSettings.async = true;  //同步才能获取数据
+    //        $.post("/PDRInfo/RealTimeTemp", { "pid": pid }, function (data) {
+    //            var pointslist = eval("(" + data + ")");
+    //            //ajaxbg.hide();
+    //            $("#realtempinfo").html(pointslist);
+    //        });
+    //    }
+
+    // $("#onecontent").attr('src', '/PDRInfo/OneGraph?pid=23');
+    //$("#currPosition", window.parent.document).html("当前位置:"); 设置当前位置
+    $.post("/Home/GetCurrentNav", { "pid": pid }, function (data) {
+        var currnav = data.split('|');
+        $("#currPosition", window.parent.document).html(currnav[0]);
+        //$.cookie('eadonav', currnav[0], { expires: 7, path: '/' });
+    });
+</script>

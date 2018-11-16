@@ -1,0 +1,110 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="Cloemail_config" class="logo_title">Email</div>
+               <div class="item_R">
+                   <div id="CloEmailRf" class="logo_link">Refresh</div>
+                   <div id="CloEmailSave" class="logo_link">Save</div>
+                   <div id="CloEmailExit" class="logo_link">Exit</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content" style="height:700px; overflow:hidden;">
+             <!--table 1-->
+             
+             <div class="table">
+                <div class="table_L" id="CloEmail_startup">Email</div>
+                <div class="table_R" >
+                	<div class="table_box" style="margin-left:0px">
+                    <select id="CloEmEmailSwitch" class="select">
+                        <option value="0">关闭</option>
+                        <option value="1">打开</option>
+                        <option value="2">Default</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div id="CloEmDivBox">
+                <div class="table">
+                    <div class="table_L" id="CloSSL_switch">SSL开关</div>
+                    <div class="table_R" >
+                    	<select id="CloEmSSLSwitch" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">打开</option>
+                        </select>
+                        <label id="Clodefaultoff" style="display:none; margin-left:53px;">off</label>
+                    </div>
+                </div>
+                <div class="table">
+                    <div class="table_L" id="Cloport_num">端口号</div>
+                    <div class="table_R" >
+                    	<input type="text" id="CloEmPort"  class="select"/>
+                        <label id="Clodefaultport" style="display:none; margin-left:53px;">2525</label>
+                    </div>
+                </div>
+                <div class="table">
+                
+                    <div class="table_L" id="CloSMTP_server">SMTP服务器</div>			
+                    <div class="table_R">
+                   		 <input  id="CloEmSMTP"  class="select inputCss" maxlength="32"/>
+                         <label id="Clodefaultserver" style="display:none; margin-left:53px;">mysmtp.lorexddns.net</label>
+                    </div>
+                </div>  
+            <!--table 2-free-->
+        
+         		
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="Cloaddresser_address">发件人地址</div>
+                    <div class="table_R">
+                    	<input type="text" id="CloEmSendEmail"  class="select inputCss"   maxlength="32" />
+                    </div>
+                </div>
+            <!--table 3-->
+            	<div class="table">
+                    <div class="table_L" id="Cloaddresser_passwd">发件人密码</div>
+                    <div class="table_R">
+                        <input type="password" class="select CloEmSendEmailPW" maxlength="32"/>
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table" style="display:none">
+                    <div class="table_L" id="Cloaddressee_adress">收件人地址</div>
+                    <div class="table_R">
+                    	<input type="text" id="CloEmRecvEmail"  class="select"  maxlength="32"/>
+                    </div>
+                </div>
+             <!--table 5-->
+         		
+              <!--table 6-->
+         		
+               <!--table 7-->
+         		<div class="table" style="display:none">
+                    <div class="table_L" id="ClosendEmail_alternate" style="border-bottom:1px solid #FFF">邮件发送间隔</div>
+                    <div class="table_R">
+                    	<select id="CloEmintervaltime" class="select">
+                            <option value="0">1分钟</option>
+                            <option value="1">3分钟</option>
+                            <option value="2">5分钟</option>
+                            <option value="3">10分钟</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table none"></div>
+                <div class="table top" id="CloEMAIL_DISPLAY" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50; display:none">
+                	<input  id="CloEmailTest" class="ButtonToDiv" type="button" value="邮件测试"/>
+             		<!--<input  id="CloEmailTest" type="button" value="邮件测试"/>-->
+       			</div>
+         </div>
+    </div>
+    <!--table end-->
+		
+</div>
+<div class="disp"></div>

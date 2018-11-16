@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangePwd</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body class="alarm_body" style="overflow:hidden;">
+    <table cellpadding="" cellspacing="" border="0" class="changepassword">
+        <tr>
+            <td class="" align="right">
+                当前用户：
+            </td>
+            <td class="" id="username">
+                <h3>
+                    admin</h3>
+            </td>
+        </tr>
+        <tr>
+            <td class="" align="right">
+                原密码：
+            </td>
+            <td class="">
+                <input id="oldpwd" type="password" name="password" class="easyui-validatebox input_style radius5"
+                    data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="" align="right">
+                新密码：
+            </td>
+            <td class="">
+                <input id="newpwd" type="password" name="password"  class="easyui-validatebox input_style radius5"
+                    data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td class="" align="right">
+                确认密码：
+            </td>
+            <td class="">
+                <input id="newpwd2" type="password" name="password" class="easyui-validatebox input_style radius5"
+                    data-options="required:true" validtype="equalTo['#newpwd']" invalidmessage="两次输入密码不匹配" />
+            </td>
+        </tr>
+        <tr>
+            <td class="" align="right">
+                &nbsp;
+            </td>
+            <td class="alarm_btn" align="right">
+                <a href="javascript:;" id="btnSave" onclick="save()" class="btn_style" data-options="iconCls:'icon-ok'">
+                    保存</a>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        var opwd;
+        $.post("/UserInfo/LoadCurrentUser", "", function (data) {
+            var user = data.split(',');
+            $("#username").html("<h3>" + user[0] + "</h3>");
+            opwd = user[1];
+        });
+        $.extend($.fn.validatebox.defaults.rules, {
+            /*必须和某个字段相等*/
+            equalTo: { validator: function (value, param) { return $(param[0]).val() == value; }, message: '字段不匹配' }
+        });
+        function save() {
+            if ($("#oldpwd").val() == "") {
+                $.messager.alert("提示", "请输入原密码！", "info");
+            }
+            else if ($("#oldpwd").val() != opwd)
+                $.messager.alert("提示", "原密码输入有误！", "info");
+            else if ($("#newpwd").val() == "")
+                $.messager.alert("提示", "请输入新密码！", "info");
+            else if ($("#newpwd2").val() == "")
+                $.messager.alert("提示", "请输入确认密码！", "info");
+            else if ($("#newpwd").val() != $("#newpwd2").val())
+                $.messager.alert("提示", "两次密码不一致！", "info");
+            else if ($("#oldpwd").val() == $("#newpwd").val())
+                $.messager.alert("提示", "新密码不能跟原密码一致！", "info");
+            else {
+                $.post("/UserInfo/Changepassword", { "oldpwd": $("#oldpwd").val(), "password": $("#newpwd").val() }, function (data) {
+                    if (data == "OK") {
+                        $.messager.confirm('提示', '用户密码修改成功,建议您重新登录后使用完整功能！', function (r) {
+                            if (r) {
+                                top.location.href = "/Home/Login";
+                            }
+                        });
+                    }
+                    else
+                        $.messager.alert("提示", data, "info");
+                });
+            }
+        }
+    </script>
+</body>
+</html>

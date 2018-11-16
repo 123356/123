@@ -1,0 +1,81 @@
+
+<html>
+<head>
+<script src="../js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script>
+
+	var userAgent = navigator.userAgent.toLowerCase();
+	if (!$.browser) {
+		$.browser = {};
+	}
+	$.browser.version = (userAgent.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1];
+	$.browser.safari = userAgent.indexOf("safari")>0 && userAgent.indexOf("chrome")<0;
+	$.browser.opera =  /opera/.test(userAgent);
+	$.browser.msie = ("ActiveXObject" in window);
+	$.browser.mozilla = !("ActiveXObject" in window) && /mozilla/.test(userAgent) && !/(compatible|webkit)/.test(userAgent);
+	$.browser.firefox = userAgent.indexOf("firefox")>0;
+	$.browser.chrome = userAgent.indexOf("chrome")>0;
+	
+$(function(){
+	if($.browser.safari){
+		var str = window.location.href;
+		var ip = str.split("//")[1].split("/")[0];
+		var port = 80;
+		var version = "NORMAL";
+	
+		if (ip.indexOf(":") != -1){
+			port = ip.split(":")[1];
+			ip = ip.split(":")[0];
+		}
+	
+		$.ajax({
+			type:'get',
+			url:'http://'+ip+':'+port+'/cgi-bin/mediaport.cgi?' + new Date(),
+			async:true,
+			timeout:5000,
+			datatype:"xml",
+			success:function(data){
+				if ( (typeof data=='string')&&data.constructor==String){
+					data = ("<xml>"+data+"</xml>");
+				}
+				$(data).find("Root").each(function(){
+					version = $(this).find("custom").text();
+				})
+	            $("#DownLoadAddr").attr("href", "../SurveillanceClient.dmg");	
+				$("#DownLoadDiv").css("display","block");		
+			},
+			error:function(data, textstate){
+				$("#TextTip").html("Download page error!");
+				$("#DownLoadDiv").css("display","block");
+			}
+		});
+	}else{
+    $("#DownLoadAddr").attr("href", "http://1111.91:8004/Media/NVR2_Web_plugin.exe");
+		$("#DownLoadDiv").css("display","block");
+	}
+})
+</script>
+<style>
+body{
+	text-align:center;
+	}
+em{
+	font-style: normal;
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312"/>
+</head>
+<body>
+    <div>
+    	<div id="DownLoadDiv" style="font-size:20px;margin-top:150px; margin:7%; display:none">
+            <b id="TextTip">
+                您尚未安装视频插件或视频插件不是最新。<br/><br/>
+                请点击这里 <a id="DownLoadAddr"><em>下载插件</em></a> 下载最新插件。
+                <br/><br/>
+                
+                请在插件安装完成后刷新浏览器（按F5键）。
+            </b>
+  		</div>
+   </div>
+</body>
+</html>

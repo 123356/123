@@ -1,0 +1,474 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeviceEdit</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body onbeforeunload="removeChart()"  onunload="removeChart()">
+    <div class="tab_mainbox demo2">
+        <ul class="tab_menu">
+            <li class="current">基本信息</li>
+            <li onclick = "Setupload('image')" >设备图片</li>
+            <li onclick = "Setupload('file')">设备资料</li>
+            <li onclick = "Setupload('video')">设备台账</li>
+        </ul>
+        <div class="tab_box">
+            <!--基本信息-->
+            <div class="tabbg tabbg3">
+            <table cellpadding="" cellspacing="" border="0" class="d_list">
+                <tr>
+                    <td class="d_l_t">
+                        设备编码：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="DeviceCode" name="DeviceCode" missingmessage="设备编码必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                        <input id="DID" type="hidden" />
+                        <input id="MainID" type="hidden" />
+                    </td>
+                    <td class="d_l_t">
+                        设备名称：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="DeviceName" name="DeviceName" missingmessage="设备名称必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        所属配电房：
+                    </td>
+                    <td class="d_l_d" colspan="3">
+                        <select id="PID" class="easyui-combobox" style="width: 205px;">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        设备型号：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="DeviceModel" name="DeviceModel" missingmessage="设备型号必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                    <td class="d_l_t">
+                        设备类型：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="DTID" class="easyui-combobox" style="width: 205px;">
+                            <option value="0">生产设备</option>
+                            <option value="1">检验设备</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        设备结构类型：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="DSTID" class="easyui-combobox" style="width: 205px;">
+                            <option value="0">生产设备</option>
+                            <option value="1">检验设备</option>
+                        </select>
+                    </td>
+                    <td class="d_l_t">
+                        重要程度：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="MLID" class="easyui-combobox" style="width: 205px;">
+                            <option value="0">一般</option>
+                            <option value="1">重要</option>
+                            <option value="2">非常重要</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        生产厂家：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="MFactory" name="MFactory" missingmessage="生产厂家必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                    <td class="d_l_t">
+                        出厂编号：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="FactoryNumber" name="FactoryNumber" missingmessage="出厂编号必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        购买日期：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="BuyTime" name="BuyTime" class="easyui-datebox" style="width: 205px;"/>
+                    </td>
+                    <td class="d_l_t">
+                        投运日期：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="UseDate" name="UseDate" class="easyui-datebox" style="width: 205px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        安装地点：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="InstallAddr" name="InstallAddr" missingmessage="安装地点必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                    <td class="d_l_t">
+                        使用状态：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="UseState" class="easyui-combobox" style="width: 205px;">
+                            <option value="0">正常使用</option>
+                            <option value="1">暂停使用</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        所属单位：
+                    </td>
+                    <td class="d_l_d" colspan="3">
+                        <input id="Company" name="Company" missingmessage="所属单位必填项！" class="easyui-validatebox"
+                            style="width: 200px;" data-options="required:true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        最后维护日期：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="LastMtcDate" name="LastMtcDate" class="easyui-datebox" style="width: 205px;"/>
+                    </td>
+                    <td class="d_l_t">
+                        建档日期：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="BuildDate" name="BuildDate" class="easyui-datebox" style="width: 205px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        备注：
+                    </td>
+                    <td class="d_l_d" colspan="3">
+                        <textarea id="Remarks" class="easyui-validatebox" style="height: 80px; width: 660px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <!--设备图片-->
+            <div class="tabbg tabbg3 hide">
+             <table cellpadding="" cellspacing="" border="0" class="d_list" id = "imageUp">
+                <tr>
+                    <td class="d_l_t" style="width: 200px;">
+                        上传图片：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="image_upload" class="fileupload" name="image_upload" type="file" multiple="multiple" />
+                        <div id="imageQueue" class="fileQueue">
+                        </div>
+                        <div id="div_image">
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <!--设备资料-->
+            <div class="tabbg tabbg3 hide">
+            <table cellpadding="" cellspacing="" border="0" class="d_list">
+                <tr>
+                    <td class="d_l_t" style="width: 200px;">
+                        上传资料：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple"  style = " top : 50px"/>
+                        <div id="fileQueue" class="fileQueue">
+                        </div>
+                        <div id="div_files">
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <!--上传视频-->
+            <div class="tabbg tabbg3 hide">
+            <table cellpadding="" cellspacing="" border="0" class="d_list">
+                <tr>
+                    <td class="d_l_t" style="width: 200px;">
+                        上传视频：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="video_upload" class="fileupload" name="video_upload" type="file" multiple="multiple" />
+                        <div id="videoQueue" class="fileQueue">
+                        </div>
+                        <div id="div_video">
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>
+@*    <div class="easyui-tabs" style="height: 480px" id = "UItabs">
+        <div title="基本信息" style="padding: 10px">
+
+        </div>
+        <div title="设备图片" style="padding: 10px"  >
+            <a onclick = "fix()">Fix</a>
+
+        </div>
+        <div title="设备资料" style="padding: 10px">
+
+        </div>
+        <div title="设备视频" style="padding: 10px">
+
+        </div>
+    </div>*@
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="closeWin()">关闭</a>
+    </div>
+    <script type="text/javascript">
+     var did=@Html.Raw(Request.QueryString["did"]);
+        function  loadDeviceInfo() {
+        if(did>0)
+        {
+            $.post("/DeviceManage/DeviceInfoDetail", {"did":did},function(data){
+                var row = eval("("+data+")");
+                var did = row.DID;
+                $("#DID").val(did);
+                $("#DeviceCode").val(row.DeviceCode);
+                $("#DeviceName").val(row.DeviceName);
+                $("#DeviceModel").val(row.DeviceModel);
+                //在加载时会不能打开页面
+                $("#DTID").combobox('setValue', row.DTID);                
+                $("#DSTID").combobox('setValue', row.DSTID);                
+                $("#MLID").combobox('setValue', row.MLID);               
+                $("#PID").combobox('setValue', row.PID);
+                getMDate(row.BuyTime, 'BuyTime'); 
+                getMDate(row.UseDate, 'UseDate'); 
+                getMDate(row.LastMtcDate, 'LastMtcDate');
+                getMDate(row.BuildDate, 'BuildDate');
+                $("#MFactory").val(row.MFactory);
+                $("#FactoryNumber").val(row.FactoryNumber);
+                $("#InstallAddr").val(row.InstallAddr);
+                $("#UseState").val(row.UseState);
+                $("#Company").val(row.Company);
+                if(row.Remarks != null)
+                $("#Remarks").val(row.Remarks.replace(/<br\s*\>/g,"\n"));
+                else
+                $("#Remarks").val(row.Remarks);
+                loadDeviceImage(did, "image");
+                loadDeviceImage(did, "file");
+                loadDeviceImage(did, "video")
+            });}
+        }
+        $(function () {
+            $("#MainID").val("");
+            loadDeviceType();
+            loadDeviceStructureType();
+            loadMajorLevel();
+            loadPDRInfo();
+            uploadImg('image');
+            uploadImg('file');
+            uploadImg('video');
+            loadDeviceInfo();
+
+        });
+        function fix(){
+           $('.swfupload').css('margin-top','10px');
+        }
+        function loadDeviceType() {
+            $('#DTID').combobox({
+                url: '/BaseInfo/BindDeviceType',
+                valueField: 'DTID',
+                textField: 'Name',
+                onLoadSuccess:function(data){
+                $('#DTID').combobox('setValue',data[0].DTID)
+                }
+            });
+        }
+        function loadDeviceStructureType() {
+            $('#DSTID').combobox({
+                url: '/BaseInfo/BindDeviceStructureType',
+                valueField: 'DSTID',
+                textField: 'Name',
+                onLoadSuccess:function(data){
+                $('#DSTID').combobox('setValue',data[0].DSTID)
+                }
+            });
+        }
+        function loadMajorLevel() {
+            $('#MLID').combobox({
+                url: '/BaseInfo/BindMajorLevel',
+                valueField: 'MLID',
+                textField: 'Name',
+                onLoadSuccess:function(data){
+                $('#MLID').combobox('setValue',data[0].MLID)
+                }
+            });
+        }
+        function loadPDRInfo() {
+            $("#PID").combobox({
+                url: "/BaseInfo/BindPDRInfo",
+                valueField: 'PID',
+                textField: 'Name',
+                onLoadSuccess:function(data){
+                $('#PID').combobox('setValue',data[0].PID)
+                }
+            });
+        }
+        function uploadImg(cname) {
+            //添加界面的附件管理
+            var fileType= '';
+            if(cname == 'image'){
+                fileType= '*.gif; *.jpg; *.png; *.bmp;';
+            }
+            else if(cname == 'file'){
+                fileType= '*.tif;*.txt;*.doc;*.xls;*.zip';
+            }
+            else if(cname == 'video'){
+                fileType= '*.mp4;*.flv;*.rmvb;*.ogg;';
+            }
+            $('#' + cname + "_upload").uploadify({
+                'swf': '/Content/uplaodfy/uploadify.swf',  //FLash文件路径
+                'buttonText': '浏  览',                    //按钮文本
+                'uploader': '/FileUpload/Upload',          //处理文件上传Action
+                'queueID': cname + 'Queue',                //队列的ID
+                'queueSizeLimit': 10,                      //队列最多可上传文件数量，默认为999
+                'auto': true,                              //选择文件后是否自动上传，默认为true
+                'multi': true,                             //是否为多选，默认为true
+                'removeCompleted': false,                  //是否完成后移除序列，默认为true
+                'fileSizeLimit': '10MB',                   //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
+                'fileTypeDesc': '文件类型',             //文件描述
+                'fileTypeExts': fileType,  //上传的文件后缀过滤器                
+                'onUploadStart': function (file) {
+                    $("#" + cname + "_upload").uploadify("settings", 'formData', { 'folder': 'Image', 'ctype': cname,'DID': did}); //动态传参数
+                },
+                'onUploadSuccess': function (file, fname, response) {
+                    var cancel = $('#' + cname + 'Queue .uploadify-queue-item[id="' + file.id + '"]').find(".cancel a");
+                    if (cancel) {
+
+                        cancel.click(function () {
+
+                           DeleteFile(fname, cname);
+                           loadDeviceImage(did,cname);
+                    }
+                }
+            });
+        }
+        function setDateVale(dkey,dvalue)
+        {
+            var LastMtcDate=dvalue;
+            if(LastMtcDate!=null)
+                LastMtcDate= new Date(LastMtcDate).Format("yyyy-MM-dd");
+            $("#"+dkey).html(LastMtcDate);
+        }
+        function save() {
+            if ($("#DeviceCode").val() == "" || $("#DeviceName").val() == "" || $("#DeviceModel").val() == "" || $("#MFactory").val() == "" || $("#MFactory").val() == "" || $("#FactoryNumber").val() == "" || $("#InstallAddr").val() == "" || $("#Company").val() == "") {
+                $.messager.alert("提示", "请填写必填项目！", "info");
+                return false;
+            }
+            var postData = {
+                DID: $("#DID").val(),
+                DeviceCode: $("#DeviceCode").val(),
+                DeviceName: $("#DeviceName").val(),
+                DeviceModel: $("#DeviceModel").val(),
+                DTID: $("#DTID").combobox('getValue'),
+                DSTID: $("#DSTID").combobox('getValue'),
+                MLID: $("#MLID").combobox('getValue'),
+                PID: $("#PID").combobox('getValue'),
+                PName: $("#PID").combobox('getText'),
+                MFactory: $("#MFactory").val(),
+                FactoryNumber: $("#FactoryNumber").val(),
+                InstallAddr: $("#InstallAddr").val(),
+                UseState: $("#UseState").val(),
+                Company: $("#Company").val(),
+                BuyTime: $('#BuyTime').datebox('getValue'),
+                UseDate: $('#UseDate').datebox('getValue'),
+                LastMtcDate: $('#LastMtcDate').datebox('getValue'),
+                BuildDate: $('#BuildDate').datebox('getValue'),
+                Remarks: $("#Remarks").val()
+            };
+            $.post("/DeviceManage/SaveDeviceInfo", postData, function (data) {
+                if (data != "此设备已存在，请重新录入！") {
+                $.messager.alert("提示", "设备信息保存成功！", "info"); 
+                    $("#DID").val("");
+                    $("#list_data").datagrid("reload");
+                OpenClose();
+                    $('#list_data').datagrid('uncheckAll');
+                }
+                else
+                    alert(data);
+            });
+        }
+        function closeWin(){
+//            removeChart();
+            removeTempFlie();
+            OpenClose();
+        }
+        function loadDeviceImage(did, ctype) {
+            $.post("/DeviceManage/LoadDeviceFile", { "DID": did, "type": ctype }, function (data) {
+                var obj = eval("(" + data + ")");
+                $("#" + ctype + "Queue").html(obj);
+            });
+        }
+        function DeleteFile(fname, cname) {
+            $.post("/FileUpload/DeleteFile?Rnum=" + Math.random(), { "filename": fname, "ctype": cname }, function (data) {
+                if(data){
+                $.messager.alert("提示", "删除成功", "info");
+                }
+            });
+        }
+        function Setupload(type){
+        if(type == 'image'){
+            uploadImg('image');
+            loadDeviceImage(did, "image");
+            }
+        else if(type == 'file'){
+            uploadImg('file');
+            loadDeviceImage(did, "file");
+            }
+        else if(type == 'video'){
+            uploadImg('video');
+            loadDeviceImage(did, "video");
+            }
+        }
+        function removeTempFlie(){
+           $.post("/FileUpload/DeleteTempFile", "", function (data) {
+                        //删除临时数据
+           });
+        }
+        function removeChart() {     
+            try {         
+                if ($('#image_upload').length > 0) {          //注意jquery下检查一个元素是否存在必须使用 .length >0 来判断              
+                    $('#image_upload').uploadify('destroy');          
+                    }  
+                if ($('#file_upload').length > 0) {                   
+                    $('#file_upload').uploadify('destroy');          
+                    }  
+                if ($('#video_upload').length > 0) {                   
+                    $('#video_upload').uploadify('destroy');          
+                    }                                              
+                } 
+           catch (e) { 
+                } 
+       }
+    </script>
+</body>
+</html>

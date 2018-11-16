@@ -1,0 +1,909 @@
+/* CSS Document */
+/*页面结构*/
+/*c-container 内容部分*/
+/*l-left 左， r-right 右*/
+/*m-main 主体*/
+/*mcright -- 主体部分下的内容部分的右边栏*/
+#dvrocx {
+	width:1px;
+	height:1px;
+	position:relative;
+	z-index:101;
+}
+.container {
+	height:100%;
+	width:100%;
+	position:relative;
+	min-width:1110px;
+	min-height:740px;
+	margin-left:0px;
+}
+.header {
+	height:0px;
+	overflow:hidden;
+}
+.headermune {
+	height:40px;
+	overflow:hidden;
+	margin-top:15px;
+		
+}
+.headermune {/*
+filter:progid:DXImageTransform.microsoft.gradient(enabled=bEnabled, startColorStr=#ff666666, endColorStr=#00ffffff);
+*/
+}
+.mheader {
+	height:14px;
+	overflow:hidden;
+	position:relative;
+	display:none;
+}
+.main {
+	position:absolute;
+	top:55px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	overflow:hidden;
+	width:1px;
+	_height:80%;
+	_min-height:760px;
+	_padding-top:54px;
+	_padding-bottom:0px;
+	height:1px;
+	background-color:#4c4c4c;
+}
+.mcontainer {
+	height:100%;
+	position:relative;
+	width:100%;
+	background-color: rgb(85,85,85);
+}
+.mcleft {
+	width:244px;
+	height:100%;
+}
+.mcmain {
+	float:left;
+	position:absolute;
+	right:0px;/*244px*/
+	left:244px;
+	top:0px;
+	bottom:0px;
+	z-index:5001;
+	_height:100%;/*_padding-right:244px;*/
+}
+.mcright {
+	width:244px;
+	height:100%;
+	float:right;
+	overflow:hidden;
+	_position:relative;/*_right:-244px;*/
+}
+
+.mclcontainer {
+	width:226px;
+	height:100%;
+	float:right;
+	overflow:hidden;
+	left:0px
+}
+.mcrcontainer {
+	width:226px;
+	height:100%;
+	float:left;
+	overflow:hidden;
+	position:relative;
+	
+}
+.mcrborder {
+	width:18px;
+	height:100%;
+	float:right;
+	position:relative;
+}
+.mcmcontainer {
+	width:100%;
+	height:100%;
+	position:relative;
+	overflow:hidden;
+	_position:absolute;
+}
+.mcmcmain {
+	position:absolute;
+	left:0px;
+	top:0px;
+	bottom:57px;
+	right:244px;
+	_height:auto;
+	_padding-bottom:57px;
+	_width:auto;
+	_padding-right:244px;
+}
+.mcmbottom {
+	position:absolute;
+	bottom:10px;
+	height:57px;
+	width:100%;
+	background-position:0 -106px;
+	overflow:hidden;
+}
+#IPCTooltip {
+	bottom:0px;
+	width:100%;
+	background:url(../images/paopaotitie.gif);
+	height:31px;
+	line-height:31px;
+	font:Arial;
+	color:#FFF;
+	text-align:center;
+	display:none;
+}
+a:link
+{
+	font-size:16px;
+	color:red;/*#0099FF;/*连接默认的颜色变化*/
+}
+
+a:visited
+{
+	font-size:16px;
+}
+
+#IPCTooltip a:link  
+{  
+   color:#69F;
+}
+
+#IPCTooltip a:visited  
+{  
+   color:#F60;  
+}
+
+.logo {
+	position:absolute;
+	right:10px;
+	top:0px;
+	height:40px;
+	width:190px
+}
+.mcrcmain {
+	position:absolute;
+	bottom:72px;
+	top:0px;
+	width:100%;
+	background:#262626;
+	_height:100%;
+}
+#playback_slider, #safari_pbDownList {
+	display:none;
+}
+#LiveMenu, #PlayBackMenu, #ConfigMenu, #PathMenu, #LogoutMenu {
+	height:40px;
+	float:left;
+}
+/*
+.Menu1{ background:url(../images/livebtn.gif); width:44px; height:39px;float:left;}
+.Menu2{ background:url(../images/playbackbtn.gif); width:39px; height:39px;float:left;}
+.Menu3{ background:url(../images/configbtn.gif); width:44px; height:39px;float:left;}
+.Menu4{ background:url(../images/pathbtn.gif); width:44px; height:39px;float:left;}
+.Menu5{ background:url(../images/logoutbtn.gif); width:37px; height:39px;float:left;}
+*/
+.Menu1, .Menu2, .Menu3, .Menu4, .Menu5 {
+	margin-top:13px;
+	font-size:16px;
+	white-space:nowrap;
+}
+.MenuText {
+	width:80px;
+	float:left;
+}
+#LiveMenu, #PlayBackMenu, #ConfigMenu, #PathMenu, #LogoutMenu {
+	width:160px;
+	margin-top:0px;
+	height:40px;
+	margin-right:10px;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+	border-radius:5px 5px 0 0;
+	
+	/*margin-right:40px;*/
+	/*background-image:none;*/
+}
+.menubg_active {
+	color:#0E2D5F;
+	background:#fff;
+	background: -webkit-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: -moz-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: -o-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: linear-gradient(to bottom,#EFF5FF 0,#E0ECFF 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
+	}
+.menubg_out {
+	color:#ff;
+	background: #E0ECFF;
+	background: -webkit-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: -moz-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: -o-linear-gradient(top,#EFF5FF 0,#E0ECFF 100%);
+	background: linear-gradient(to bottom,#EFF5FF 0,#E0ECFF 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
+	font-weight:normal;
+	}
+/*左边结构*/
+#left {
+	position:relative;
+}
+#playbackleft{
+	width:226px;
+	/*height:100%;*/
+	float:left;
+	position:absolute;
+	top:0px;
+	bottom:52px;
+	left:226px;
+	/*background:#000;*/
+}
+
+#configleft {
+	width:226px;
+	/*height:100%;*/
+	float:left;
+	position:absolute;
+	top:0px;
+	bottom:52px;
+	left:452px;
+}
+
+#pathConfig {
+	width:226px;
+	/*height:100%;*/
+	float:left;
+	position:absolute;
+	top:0px;
+	bottom:52px;
+	left:678px;
+}
+
+#liveleft{
+	padding-left:20px;
+	width:206px;
+	/*height:100%;*/
+	float:left;
+	overflow-y:auto;
+	position:absolute;
+	top:0px;
+	bottom:52px;
+	
+	overflow-x:hidden;
+	
+	background:url(../images/content_bg.png);
+}
+#liveright, #playbackright, #configright {
+	width:250px;
+	height:100%;
+    background-color: rgb(85,85,85);	
+    float:left;
+}
+#login {
+	overflow:hidden;
+}
+/*底部*/
+.liveBtnBt1, .liveBtnBt2, .liveBtnBt3, .liveBtnBt4, .liveBtnBt5, .liveBtnBt6, .liveBtnBt7, .liveBtnBt8, .liveBtnBt9,.liveBtnBt10,.liveBtnBt11 {
+	background:url(../images/live_icons.png);
+	height:32px;
+	width:32px;
+	float:left;
+}
+
+.liveBtnBt1 {
+	margin-left:20px;
+	background-position:0px 0px;
+}
+.liveBtnBt2 {
+	background-position:0px -32px;
+}
+.liveBtnBt3 {
+	background-position:0px -64px;
+}
+.liveBtnBt4 {
+	background-position:0px -96px;
+}
+.liveBtnBt5 {
+	background-position:0px -128px;
+}
+
+.liveBtnBt10{
+	background-position:0px -160px;
+}
+.liveBtnBt6 {
+	background-position:0px -192px;
+}
+.liveBtnBt8 {
+	float:right;
+	display:none;
+	background-position:0px -224px;
+	margin-top: 4px;
+}
+
+.liveBtnBt7 {
+	float:right;
+	background-position:0px -160px;
+}
+
+
+.liveBtnBt9 {
+	background:url(../images/sound.png);
+	width:32px;
+	height:32px;
+	margin-top:4px;
+	background-position:-32px;
+	
+}
+
+.liveBtnBt11 {
+	background:url(../images/zoom.png);
+	width:32px;
+	height:32px;
+	margin-top:4px;
+	background-position:-32px;
+	
+}
+
+.liveSSBtn {
+	height:25px;
+	margin-top:5px;
+	float:left;
+	width:240px;
+	overflow:hidden;
+}
+.liveBtnSbt1, .liveBtnSbt2, .liveBtnSbt3, .liveBtnSbt4, .liveBtnSbt5, .liveBtnSbt6, .liveBtnSbt7, 
+.liveBtnSbt8, .liveBtnSbt9, .liveBtnSbt10, .liveBtnSbt11, .liveBtnSbt12, .liveBtnSbt12_13, .liveBtnSbt13, .liveBtnSbt14 {
+	background:url(../images/style.png);
+	height:25px;
+	width:25px;
+	float:left;
+	margin-top:0px;	
+}
+.liveBtnSbt1 {
+	background-position:0px 0px;
+}
+.liveBtnSbt2 {
+	background-position:0px -25px;
+}
+.liveBtnSbt3 {
+	background-position:0px -50px;
+}
+.liveBtnSbt4 {
+	background-position:0px -75px;
+}
+.liveBtnSbt5 {
+	background-position:0px -100px;
+}
+.liveBtnSbt6 {
+	background-position:0px -125px;
+}
+.liveBtnSbt7 {
+	background-position:0px -150px;
+}
+.liveBtnSbt8 {
+	background-position:0px -175px;
+}
+.liveBtnSbt9 {
+	background-position:0px -200px;
+}
+.liveBtnSbt10 {
+	background-position:0px -225px;
+}
+.liveBtnSbt11 {
+	background-position:0px -250px;
+}
+.liveBtnSbt12 {
+	background-position:0px -275px;
+}
+.liveBtnSbt12_13 {
+	background-position:0px -300px;
+}
+.liveBtnSbt13 {
+	background-position:0px -325px;
+}
+.liveBtnSbt14 {
+	background-position:0px -350px;
+}
+
+.style4 {
+	position:absolute;
+	top:34px;
+	height:100%;
+	width:100%;
+	background:#262626
+}
+.style7 {
+	position:absolute;
+	bottom:0px;
+	height:72px;
+	width:100%;
+	background:#262626;
+}
+.style10 {
+	float:left;
+	width:10px;
+}
+.style11 {
+	position:relative;
+	display:none;
+	height:100%;
+	width:100%;
+}
+.style12 {
+	width:171px;
+	height:93px;
+	background:url(../images/LOGO.gif);
+	float:left;
+}
+.style13 {
+	float:right;
+	height:40px;
+	margin:35px 40px;
+}
+.style15 {
+	height:14px;
+	position:absolute;
+	left:0px;
+	right:0px;
+	background:#262626;  /*url(../images/dsmid_up.gif)*/
+	background-position:0 -50px;
+	_width:100%
+}
+.style17 {
+	width:18px;
+	height:34px;
+	background:#262626;
+}
+.style18 {
+	position:absolute;
+	top:34px;
+	bottom:72px;
+	width:18px;
+	_height:100%;
+	background:#262626;
+}
+.style21 {
+	position:absolute;
+	bottom:0px;
+	height:72px;
+	width:18px;
+	background:#262626;
+}
+.style26 {
+	margin-top:-10px;
+}
+
+.style28 {
+	width:410px;
+	height:36px;
+	float:left;
+}
+.style29 {
+	display:none;
+	margin-top:10px;
+	height:740px;
+	overflow:hidden;
+	margin-left:10px;
+	min-height:700px;
+}
+
+.style29 input[type='text']{
+	background:transparent;
+	color:#FFF;
+    border:1px solid #069;
+	height:18px;
+	+height:15px;
+    margin-top:3px;
+	padding-top:4px;
+}
+
+.style30 {
+	padding-top:5px;
+	padding-bottom:50px;
+	height:100%;
+	widows:100%;
+	background:url(../images/content_bg.png);
+	overflow-y:auto;
+	height:200%;
+}
+
+.cfgactive {
+	display:block;
+}
+/*calendar*/
+.datepicker {
+	border-collapse:collapse;
+	border-collapse:separate;
+	width:199px;
+	height:199px; /*180*/
+	position: absolute;
+	background:url(../images/calendar_bg.png);
+	z-index:5000;
+	/*top:0px; */ /*5*/
+}
+.datepicker table thead tr.controls {
+	height:20px;
+	overflow:hidden;
+}
+.datepicker table thead tr.controls th {
+	height: 20px;
+	font-size: 11px;
+	text-align:center;
+	overflow:hidden;
+}
+.datepicker select {
+	font-size: 13px;
+	font-weight:bold;
+	color:#CCC;
+	background:transparent;
+	border:0px;
++margin:-4px;
+	_margin:-2px;
+}
+.datepicker tr.days{
+	width:199px;
+}
+.datepicker tr.days th {
+	height: 21px;
+	font-size:10px;
+	text-align: center;
+	width:27px;
+	overflow:hidden;
+	background:transparent;
+	border-top:1px solid #272727;
+	border-right:1px solid #272727;
+	color:#777777;
+}
+.datepicker tfoot td {
+	height: 20px;
+	text-align: center;
+	text-transform: capitalize;
+	background:transparent;
+}
+.datepicker th, .datepicker tfoot td {
+	font: 10px/18px Verdana, Arial, Helvetica, sans-serif;
+	color:#CCC;
+	background:transparent;
+}
+.datepicker th span, .datepicker tfoot td span {
+	font-weight: bold;
+}
+.ToData {
+	height:50px;
+	line-height:50px;
+	top:35px;
+	width:80px;
++width:auto;
++left:15px;
+	text-align:center;
+	vertical-align:middle;
+	font-size:50px;
+	position:absolute;
+	z-index:50001
+}
+.ToDayS {
+	position:absolute;
+	top:88px;
+	width:80px;
++width:auto;
++left:15px;
+	text-align:center;
+	z-index:50001
+}
+.prevMonth {
+	background:url(../images/rll.gif);
+	width:27px;
+	height:20px;
+}
+.prevMonth:hover{background-position: -27px 0px;}
+
+.nextMonth {
+	background:url(../images/rlr.gif);
+	width:27px;
+	height:20px;	
+}
+.nextMonth:hover{background-position: -27px 0px;}
+
+  .datepicker tbody td {
+	height:10px;
+	font: 10px/13px Arial, Helvetica, sans-serif;
+	color:#CCC;
+	text-align: center;
+	overflow:hidden;
+	background:transparent;
+	border-top:1px solid #272727;
+	border-right:1px solid #272727;
+	height:21px;
+}
+.datepicker tbody td.date {
+	cursor: pointer;
+	width:28px;  /*22px*/
+	overflow:hidden;
+}
+.datepicker tbody td.date.over {
+	background:url(../images/calendar-hilite.gif) inherit;
+}
+.datepicker tbody td.date.chosen {
+	font-weight: bold;
+	width:28px;   /*18px*/
+	background:url(../images/bgactive0_1_2.gif) no-repeat;
+	background-position:0px 0px;   // 0
+}
+.datepicker tbody td.date.chosen2 {
+	font-weight: bold;
+	width:28px;  /*18px*/
+	background:url(../images/bgactive0_1_2.gif) no-repeat;
+	background-position:-54px 0px;  //-37px 0px
+}
+.datepicker tbody td.date.chosen3 {
+	font-weight: bold;
+	width:28px;  /*18px*/
+	background:url(../images/bgactive0_1_2.gif) no-repeat;
+	background-position:-27px 0px;  // -19px 0px
+}
+.selectMonth {
+	width:22px;
+	+width:16px;
+	overflow:hidden;
+	float:left;
+	margin-left:6px;
+	/*background:transparent;*/
+	margi-top:6px;
+}
+.yearselect {
+	float:left;
+	width:41px;
+	+width:30px;
+	overflow:hidden;
+	/*background:transparent;*/
+	margi-top:6px;
+}
+
+.calendar_ctrl
+{
+	background:transparent;
+}
+
+.calendar_ctrl:hover
+{
+	cursor:pointer;
+}
+
+/*timer*/
+.timer tr td div {
+	background:#000;
+	width:20px;
+	overflow:hidden;
+}
+.timer tr td div select {
+	margin:-2px;
+}
+#MaskLayout {
+	position:absolute;
+	left:0px;
+	top:0px;
+	display:none;
+	right:0px;
+	bottom:0px;
+	background:#999;
+	z-index:10001;
+filter:progid:DXImageTransform.Microsoft.Alpha(style=0, opacity=60, finishOpacity=40) opacity: 0.6;
+}
+#loading {
+	position:absolute;
+	left:47%;
+	top:40%;
+	/*background:url(../images/loading.gif) no-repeat;*/
+	width:60px;
+	height:60px;
+}
+#MsgPaop {
+	z-index: 20000;
+	width: 240px;
+	height: 150px;
+	background-color:#CCC;
+	left:2px;
+	bottom: 2px;
+	font-size: 12px;
+	display: none;
+	position:fixed;
+	_position:absolute;
+}
+.paopao_close {
+	background:url(../images/close.png);
+	float:right;
+	margin-top:13px;
+	margin-right:13px;
+	width:15px;
+	height:15px;
+	float:right;
+}
+#Paoptitle {
+	width:200px;
+	overflow:hidden;
+	padding-top:10px;
+	float:left;
+	padding-left: 10px; 
+	color: #cccccc;
+}
+
+.input1 {
+	border:0px;
+	background:trens;
+	height:18px;
+	color:#FFF
+}
+.select1 {
+	height:18px;
+}
+#userlogin {
+	color:#000;
+	margin-left:100px;
+	_margin-left:45px;
+	font-size:18px;
+	padding-top:15px;
+	float:left;
+	width:260px;
+	text-align:center;
+}
+#userlogin {
+	margin-left:100px\9\0;
+}
+#usermodifi {
+	color:#000;
+	margin-left:100px;
+	_margin-left:45px;
+	font-size:18px;
+	padding-top:15px;
+	float:left;
+	width:260px;
+	text-align:center;
+}
+#usermodifi {
+	margin-left:100px\9\0;
+}
+.safariBug1 {
+}
+.safariBug2 {
+}
+
+/*针对谷歌、Safari浏览器内核支持的CSS样式*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+html, body {
+background-image:-webkit-gradient(linear, 100% 100%, 100% 100%, from(#374560), to(#11151E), color-stop(10.0, #374560))
+}
+ .mcmcontainer {
+height:auto;
+position:static;
+}
+ .safariBug1 {
+height:auto
+}
+ .safariBug2 {
+height:100%
+}
+ #MacDisplay {
+	/*display:none;*/
+}
+
+ #MaskLayout {
+opacity:0.6;
+}
+}
+/* 拖动条改为点击1E232A*/
+.cursorCube {
+	/*border-top:1px solid #262626;*/
+	border:none;
+	width:21px;
+	height:1px;
+	line-height:1px;
+	font-size:0;
+}
+.cursorPar {
+	width:21px;
+	height:121px;
+}
+ol {
+	padding:0px;
+	list-style-type: none;
+	margin:0px;
+	width:21px;
+	height:117px;
+}
+em {
+	font-style: normal;
+	font-size:12px;	
+	padding-left: 3px;
+  	/*width:21px;
+	height:21px; 无用 */	
+}
+
+/*---滚动条默认显示样式--*/  
+	/*---滚动条默认显示样式--*/ 
+html,body{	
+scrollbar-arrow-color: white;  /*图6,三角箭头的颜色*/
+scrollbar-face-color: #333;  /*图5,立体滚动条的颜色*/
+scrollbar-3dlight-color: #262626;  /*图1,立体滚动条亮边的颜色*/
+scrollbar-highlight-color: #262626;  /*图2,滚动条空白部分的颜色*/
+scrollbar-shadow-color: #262626;  /*图3,立体滚动条阴影的颜色*/
+scrollbar-darkshadow-color: #262626;  /*图4,立体滚动条强阴影的颜色*/
+scrollbar-track-color: #262626;  /*图7,立体滚动条背景颜色*/
+scrollbar-base-color:#262626;  /*滚动条的基本颜色*/
+}
+
+::-webkit-scrollbar-thumb{
+   background-color:#333;  
+}
+/*---鼠标点击滚动条显示样式--*/ 
+/*  
+::-webkit-scrollbar-thumb:hover{      
+	background-color:#FB4446;      
+	height:50px;      
+	-webkit-border-radius:4px;  
+} 
+*/    
+/*---滚动条大小--*/   
+::-webkit-scrollbar{     
+	width:16px;      
+	height:16px;   
+}     
+ /*---滚动框背景样式--*/   
+::-webkit-scrollbar-track-piece{      
+	background-color:#262626;   
+}
+ /*---滚动条两端的按钮--*/ 
+ /*
+::-webkit-scrollbar-button:vertical {
+    background-color: red;
+    border: 1px dashed blue;
+}*/
+
+/*边角*/
+::-webkit-scrollbar-corner{
+	background-color:#262626;   
+}
+
+#devchange_prompt div li,#reboot_prompt div li, #user_prompt div li, #cloud_prompt div li {
+	line-height:30px;
+	font-style:normal
+	list-style-position:inherit;
+	list-style-type:none;
+}
+#devchange_title,#reboot_title, #user_title, #cloud_title {
+	width:400px;
+	height:30px;
+	background:#999;
+	border:1px solid #aaa;
+	border-bottom:none;
+}
+#devchange_content,#reboot_content, #user_content, #cloud_content {
+	padding-top:10px;
+	width:400px;
+	height:80px;
+	background:#CCC;
+	border:1px solid #aaa;
+	border-top:none;
+}
+#devchange_prompt em,#reboot_prompt em, #user_prompt em, #cloud_prompt em {
+	line-height:30px;
+	font-style:normal;
+}
+#reboot_input, #cloud_input {
+	width:150px;
+}
+
+#btn_devchange_ok, #btn_devchange_cancle, #btn_reboot_ok, #btn_reboot_cancle, #btn_user_ok, #btn_user_cancle, #btn_cloud_ok, #btn_cloud_cancle, #btn_cloud_ok2 {
+	margin:0 0 0 20px;
+	width:70px;
+}
+#btn_devchange_ok, #btn_reboot_ok, #btn_user_ok, #btn_cloud_ok, #btn_cloud_ok2{
+	margin-left:0px;
+}
+#devchange_prompt, #reboot_prompt, #user_prompt, #cloud_prompt{ position:absolute; left:35%;width:400px; top:35%; z-index:10005; text-align:center;display:none;}

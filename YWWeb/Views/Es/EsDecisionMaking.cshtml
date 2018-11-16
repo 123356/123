@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>售电辅助决策</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="tb" class="searchbar">
+            <div class="searchrow">
+                客户:
+                <input id="unitselect" />
+            </div>
+            @*<div id=userbuttonThis" class="searchbutton">
+                <button title="修改" onclick="" class="page_table_but">
+                    <img src="/Content/images/Icon16/add.png">修改
+                </button>
+            </div>*@
+            @*<div class="searchrow">
+                品种:
+                <input id="pzselect" />
+            </div>*@
+            @*<div id="userbutton" class="searchbutton">
+                </div>*@
+        </div>
+        <hr>
+        <h4 style="font-weight:bold;">用电量偏差曲线(本月 MW▪H)</h4>
+        <div class="row clearfix">
+            <div class="col-md-9 column">
+                <div id="userCharts1" class="powerquality_curve   lineloss_curve" style="height:300px;">
+                </div>
+            </div>
+            @*<div class="col-md-3 column" style="margin-top:80px;">
+                <h4 style="color:red;cursor:pointer;margin-bottom:10px;" onclick="showRemrk()">本月有<b id="SumUnit" style="width:7px;height:7px;background:#999;color:#fff;border-radius:50%;"></b>个用户上报计划</h4>
+                <table cellpadding="" cellspacing="" border="1" class="d_list" id="tablist1"></table>
+            </div>*@
+
+        </div>
+        <hr>
+
+        <h4 style="font-weight:bold;">用电量偏差曲线(下月 MW▪H)</h4>
+        <div class="row clearfix">
+            <div class="col-md-9 column">
+                <div id="userCharts2" class="powerquality_curve   lineloss_curve" style="height:300px;">
+                </div>
+            </div>
+            <div class="col-md-3 column" style="margin-top:80px;">
+                <table cellpadding="" cellspacing="" border="1" class="d_list" id="tablist2"></table>
+            </div>
+        </div>
+    </div>
+    <div id='Error' style='color: White; text-align: center; font-size: 20px; display: none;padding:200px; z-index:100000'>
+        未查到数据！
+    </div>
+
+
+
+    <div id="editwin4" title="计划上报" class="easyui-dialog" closed="true" style="width: 800px; height: 500px; text-align:center; padding: 5px;"
+         minimizable="false" maximizable="false" collapsible="false">
+        <h2>本月计划上报</h2>
+        <div style="text-align:center; margin-top:50px;" id="contentUnit">
+         
+        </div>
+        <div style="text-align: center;">
+            <a href="javascript:;" class="table_btn1 btn_style radius5"
+               data-options="iconCls:'icon-cancel'" onclick="$('#editwin4').dialog('close');">关闭</a>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/Content/UserJS/EsDecisionMaking._jm.js"></script>

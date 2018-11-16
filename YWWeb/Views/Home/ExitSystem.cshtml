@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ExitSystem</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/lbywfw._jm.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function logout() {
+
+            ResetLoginDate();
+            parent.window.location.href = "/Home/Login";
+        }
+        var browserName = navigator.appName;
+        if (browserName == "Netscape") {
+            function exitSystem() {
+                alert("请直接关闭浏览器。");
+            }
+        }
+        else if (browserName == "Microsoft Internet Explorer") {
+            function exitSystem() {
+                parent.window.opener = null;
+                parent.window.open("#", "_self");
+                parent.window.close();
+                window.close();
+                ResetLoginDate();
+            }
+            function closynoshowsme() {
+                window.opener = "whocares";
+                window.close();
+                ResetLoginDate();
+            }
+        }
+        function ResetLoginDate() { //重置登录时间，使用户可以立即再登录
+            $.post("/UserInfo/ResetLoginDate");
+        }
+    </script>
+</head>
+<body class="alarm_body">
+   <div class="exit">
+    <span>注销后必须登录，才能正常监测!</span>
+    <span>
+        <a href="#" onclick="logout();" class="btn_style radius5 exit_btn table_btn1" data-options="iconCls:'icon-ok'">注销用户</a>
+        <a href="#" onclick="OpenClose();" class="btn_style radius5 exit_btn table_btn1" data-options="iconCls:'icon-cancel'">取消</a>
+    </span>
+    </div>
+</body>
+</html>

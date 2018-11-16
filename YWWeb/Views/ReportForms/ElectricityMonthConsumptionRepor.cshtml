@@ -1,0 +1,273 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>月用电量分析</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+    <style>
+        #pzhtml td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="tb" class="searchbar">
+
+        <div class="searchrow">
+            站室:
+            <select id="SPID" style="width: 200px;"></select>
+        </div>
+        <div class="searchrow">
+            月份: <input id="Time" name="PlanDate" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+        <a href="#" id="bt_print" onclick="openOrPrint()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="margin-top: 5px;margin-left: 5px;">
+            打印
+        </a>
+        <a href="#" id="bt_print" onclick="ExcelPort()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="margin-top: 5px;margin-left: 5px;">
+            导出
+        </a>
+    </div>
+    <p><span id="CTitle" style="text-align:center;font-size:25px;margin-left:625px;"></span><span style="font-size: 21px;margin-left: 575px;">单位kW•h</span></p>
+    <table cellpadding="" cellspacing="" border="1" class="d_list" style="margin-top:20px; font-size:14px;" id="pzhtml">
+        @*<caption style="font-weight:bold;" id="CTitle"></caption>*@
+        <thead>
+            <tr id="header" style='background-color:#F5F5F7'>
+                @*<th>序号</th>
+
+                <th>日期</th>
+
+                <th>1号</th>
+
+                <th>2号</th>*@
+            </tr>
+        </thead>
+        <tbody id="content" style="background-color:#FFFFFF">
+            <tr>
+                @*<td>品种1</td>
+                <td>品种1</td>
+                <td>品种1</td>
+                <td>品种1</td>*@
+                @*<td>品种1</td>
+                    <td>品种1</td>*@
+            </tr>
+
+        </tbody>
+
+        <tfoot id="fotter" style='font-weight:bold;background-color:#FFFFFF'>
+            @*<tr>
+
+                <td></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td>最大值</td>
+                <td></td>
+                <td></td>
+                </tr>*@
+        </tfoot>
+    </table>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+    var type = 2;
+    ////获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    var flag = getUrlParam("isHide");
+    if (flag == 1) {
+        $("#tb").hide()
+    } else {
+        $("#tb").show();
+    }
+
+    $.ajaxSettings.async = false;
+    $('#Time').datebox({
+            onShowPanel: function () {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层    
+                span.trigger('click'); // 触发click事件弹出月份层    
+                if (!tds)
+                    setTimeout(function () {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔    
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e) {
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件    
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份    
+                            , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份    
+                            $('#Time').datebox('hidePanel')// 隐藏日期对象    
+                            .datebox('setValue', year + '-' + month); // 设置日期的值    
+                        });
+                    }, 0);
+            },
+            parser: function (s) {// 配置parser，返回选择的日期    
+                if (!s)
+                    return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                var month = d.getMonth();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                if (d.getMonth() == 0) {
+                    return d.getFullYear() - 1 + '-' + 12;
+                } else {
+                    return d.getFullYear() + '-' + month;
+                }
+            }// 配置formatter，只返回年月    
+            
+        });
+       var p = $('#Time').datebox('panel'), // 日期选择对象    
+        tds = false, // 日期选择对象中月份    
+        span = p.find('span.calendar-text'); // 显示月份层的触发控件
+  
+    $("#SPID").combobox({
+        url: "/BaseInfo/BindPDRInfo?showall=0",
+        valueField: 'PID',
+        textField: 'Name',
+        editable: true,
+        onLoadSuccess: function () { //数据加载完毕事件
+            var data = $('#SPID').combobox('getData');
+            //alert(1);
+            //console.log(data);
+            if ($.cookie('cookiepid') > 0) {
+                $("#SPID").combobox('select', $.cookie('cookiepid'));
+                return
+            }
+            else if (data.length > 0) {
+                $("#SPID").combobox('select', data[0].PID);
+            }
+        }, onSelect: function (v) {
+            $.cookie('cookiepid', v.PID, { expires: 7, path: '/' });
+            dosearch();
+        }
+    });
+    function dosearch() {
+        var t = getUrlParam("Time");
+        if (t != null && t != "") {
+            var dd = new Date(t);
+            var ddd = dd.getFullYear() + "-" + (dd.getMonth() + 2);
+            $('#Time').datebox("setValue", ddd);
+        }
+        if ($("#Time").datebox("getValue") == "" || $("#Time").datebox("getValue") == null) {
+            $('#Time').datebox("setValue", getNowFormatDate());
+        }
+        $.post("/ReportForms/getPowerQualityData", { "pid": $('#SPID').combobox("getValue"), "Time": $('#Time').datebox("getValue"), "type": type }, function (data) {
+            $("#header").empty();
+            $("#content").empty();
+            $("#fotter").empty();
+            var str = "";
+            if ($("#Time").datebox("getValue") != "") {
+                str = $("#Time").datebox("getValue") + "月用电量数据分析";
+            }
+            $("#CTitle").html(str)
+            var Hhtml = "<th style='background-color:#fafafa'>日期</th>";
+            $.each(data.Cname, function (index, val) {
+                Hhtml += " <th>" + val.CID + "号回路" + val.CName + "</th>";
+            })
+            Hhtml += " <th>合计</th>"
+            $("#header").html(Hhtml);
+            var html = "";
+            var inn = 1;
+
+            $.each(data.Rtime, function (index, val) {
+                var summ = 0;
+                var itt = 1;
+                html += "<tr>";
+                //html += "<td>" + (index + 1) + "</td>"
+                html += "<td>" + (DateFormat(val)) + "</td>"
+                $.each(data.list[index], function (inde, va) {
+                    summ += va.Aphase;
+                    html += "<td>" + va.Aphase + "</td>"
+                    itt++;
+                })
+                for (itt; itt <= data.Cname.length; itt++) {
+                    html += "<td>0</td>"
+                }
+                html += "<td>" + summ.toFixed(2) + "</td>";
+                html += "</tr>"
+            })
+            $("#content").html(html);
+            var fhtml = "<tr><td>最大值</td>";
+            for (var index = 0; index < data.Cname.length + 1; index++) {
+                fhtml += " <td>" + (getMaxValue(1, index + 1)) + "</td>";
+            }
+            fhtml += "</tr>"
+            var summmm = 0;
+            fhtml += "<tr><td>小计</td>";
+            for (var index = 0; index < data.Cname.length + 1; index++) {
+                summmm += parseFloat((getTdValue(1, index + 1)));
+                fhtml += " <td>" + (getTdValue(1, index + 1)) + "</td>";
+            }
+            fhtml += "</tr>"
+            $("#fotter").html(fhtml);
+        });
+    }
+
+    function DateFormat(value, row, index) {
+        var lDate = formatDate(value, 'MM-dd');
+        return lDate;
+    }
+
+    function getTdValue(ii, x) {
+        var tableId = document.getElementById("pzhtml");
+        var str = 0;
+        //alert(tableId.rows[1].cells[2].innerHTML);
+        for (var i = ii; i < tableId.rows.length; i++) {
+
+            str += parseFloat(tableId.rows[i].cells[x].innerHTML);
+
+
+        }
+        return str.toFixed(2);
+    }
+    function getMaxValue(ii, x) {
+        var tableId = document.getElementById("pzhtml");
+        //alert(tableId.rows[1].cells[2].innerHTML);
+        var obj = [];
+        for (var i = ii; i < tableId.rows.length; i++) {
+
+            obj.push(parseFloat(tableId.rows[i].cells[x].innerHTML));
+        }
+        var max = Math.max.apply(obj, obj);
+        return max;
+    }
+    function openOrPrint() {
+        window.open('/ReportForms/ElectricityMonthConsumptionRepor?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1", '_blank');
+        window.print()
+    }
+    function ExcelPort() {
+        window.open('/ReportForms/ExportData?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1" + "&type=" + type, '_blank');
+        //window.print()
+    }
+
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 2;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+</script>

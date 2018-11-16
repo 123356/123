@@ -1,0 +1,195 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderCheckInfo</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" title="工单列表" class="easyui-datagrid" style="width: auto; height: 780px;"
+        idfield="OrderID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:20, pageList:[20,30,50,100],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='OrderID' checkbox="true">
+                </th>
+                <th field='OrderNO' width="50px">
+                    工单编号
+                </th>
+                <th field='PName' width="40px">
+                    站室
+                </th>
+                <th field='OrderContent' width="100px">
+                    工单内容
+                </th>
+                <th field='UserName' width="40px">
+                    检查人
+                </th>
+                <th field='PlanDate' width="60px">
+                    执行日期
+                </th>
+                <th field='CheckDate' width="60px">
+                    完成日期
+                </th>
+                <th field='Priority' width="30px">
+                    优先级
+                </th>
+                <th field='OrderState' width="30px">
+                    状态
+                </th>
+                <th field='IsQualified' width="40px">
+                    是否合格
+                </th>
+                <th field='CheckInfo' width="100px">
+                    检查情况
+                </th>
+                <th field='Rectification' width="100px">
+                    整改措施
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" style="padding: 5px; height: 65px;">
+        <div style="margin-bottom: 5px">
+            <div id="userbutton">
+            </div>
+        </div>
+        <div>
+            工单内容:
+            <input id="ocontent" />
+            检查人:
+            <input id="uname" />
+            <a href="#" class="button green" id="btnsearch" onclick="dosearch()"><span class="icon-botton"
+                style="background: url('../../jquery-easyui-1.4.2/themes/icons/Search.png') no-repeat scroll 0px 4px;">
+            </span>查&nbsp;&nbsp;&nbsp;询</a>
+        </div>
+    </div>
+    <div id="detailwin" title="查看工单详情" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            loadUser();
+        });
+
+        $('#list_data').datagrid({
+            url: '/OrderInfo/OrderInfoList?rom=' + Math.random(),
+            columns: [[
+                { field: 'OrderID', title: 'Order ID', width: 30, checkbox: true },
+                { field: 'OrderNO', title: '工单编号', width: 50 },
+                { field: 'PName', title: '站室', width: 50 },
+            // { field: 'OrderContent', title: '工单内容', width: 100 },
+                {field: 'UserName', title: '检查人', width: 30 },
+                 {
+                     field: 'PlanDate', title: '执行日期', width: 50, formatter: function (val) {
+                     if (val != "")
+                         return new Date(val).Format("yyyy-MM-dd");
+                     else
+                         return "";
+                 }
+                 },
+                {
+                    field: 'CheckDate', title: '完成日期', width: 50, formatter: function (val) {
+                    if (val != "")
+                        return new Date(val).Format("yyyy-MM-dd");
+                    else
+                        return "";
+                }
+                },
+                { field: 'Priority', title: '优先级', width: 30, formatter: function (val) {
+                    if (val == 1)
+                        return "一般";
+                    else if (val == 2)
+                        return "高";
+                    else if (val == 3)
+                        return "很高";
+                }
+                },
+                { field: 'OrderState', title: '状态', width: 30, formatter: function (val) {
+                    if (val == 0)
+                        return "待接收";
+                    else if (val == 1)
+                        return "已受理";
+                    else if (val == 2)
+                        return "已完成";
+                }
+                },
+                { field: 'IsQualified', title: '是否合格', width: 40, formatter: function (val) {
+
+                    if (val == 0)
+                        return "<b style='color:red;'>不合格</b>";
+                    else if (val == 1)
+                        return "<b style='color:green;'>合格</b>";
+                    else
+                        return "";
+                }
+                },
+                { field: 'CheckInfo', title: '检查情况', width: 100 },
+                { field: 'Rectification', title: '整改措施', width: 100 }
+                ]]
+        });
+        function loadUser() {
+            $('#uname').combobox({
+                url: '/BaseInfo/BindUserInfo',
+                valueField: 'UserID',
+                textField: 'UserName'
+            });
+        }
+        function dosearch() {
+            var ocontent = $("#ocontent").val();
+            var uname = $("#uname").combobox("getText");
+            $('#list_data').datagrid('load', { "ocontent": ocontent, "uname": uname });
+            $('#list_data').datagrid('uncheckAll');
+        }
+        function detail() {
+            var row = $('#list_data').datagrid('getSelected');
+            if (row) {
+                $('#detailwin').window({
+                    modal: true,
+                    href: '/OrderInfo/OrderDetail?orderid=' + row.OrderID
+                });
+                $('#detailwin').window('open');
+            }
+            else {
+                $.messager.alert("提示", "请选择要查看的工单！", "info");
+            }
+        }
+
+        var pageHeight, pageWidth;
+        if (typeof window.innerHeight != 'undefined') {
+            //针对非IE8及其以下的浏览器
+            pageHeight = window.innerHeight;
+            pageWidth = window.innerWidth;
+            var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;
+            if (!isChrome) {
+                pageHeight = pageHeight - 10;
+            }
+        }
+        //datagrid宽度高度自动调整的函数
+        $.fn.extend({
+            resizeDataGrid: function (heightMargin, widthMargin, minHeight, minWidth) {
+                var height = pageHeight - heightMargin;
+                var width = pageWidth - widthMargin;
+                //alert("height:" + height + "width:" + width + "pageHeight:" + pageHeight + "pageWidth:" + pageWidth + "heightMargin:" + heightMargin + "widthMargin:" + widthMargin + "minHeight:" + minHeight + "minWidth:" + minWidth);
+                height = height < minHeight ? minHeight : height;
+                width = width < minWidth ? minWidth : width;
+                $(this).datagrid('resize', {
+                    height: height,
+                    width: width
+                });
+            }
+        });
+        var heightMargin = 15;
+        var widthMargin = 20; //  - $("#tb").width();
+        // 第一次加载时和当窗口大小发生变化时，自动变化大小
+        $('#list_data').resizeDataGrid(heightMargin, widthMargin, 0, 0);
+        $(window).resize(function () {
+            $('#list_data').resizeDataGrid(heightMargin, widthMargin, 0, 0);
+        });     
+    </script>
+</body>
+</html>

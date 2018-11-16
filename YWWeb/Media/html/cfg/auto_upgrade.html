@@ -1,0 +1,72 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="auto_upgrade" class="logo_title">Auto Upgrade</div>
+               <div class="item_R">
+                   <div id="au_refresh" class="logo_link">Refresh</div>
+                   <div id="au_default" class="logo_link" style="display:none;">Default</div>
+                   <div id="au_save" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+            <!--table 1-->
+				<div class="table" id="au_DeviceType_div" style="display:none;">
+                    <div class="table_L" id="au_Device_Type">Device Type</div>
+                    <div class="table_R">
+						<input id="au_DeviceType" readonly="readonly" class="select"/>
+                    </div>
+                </div>
+				
+				<div class="table" id="au_SoftwareVer_div" style="display:none;">
+                    <div class="table_L" id="au_Software_Ver">Firmware Version</div>
+                    <div class="table_R">
+						<input id="au_SoftwareVer" readonly="readonly" class="select"/>
+                    </div>
+                </div>
+			 
+                <div class="table">
+                    <div class="table_L" id="au_enable">Auto Upgrade</div>
+                    <div class="table_R">
+                        <select  id="au_switch" class="select">
+                            <option value="0">Disable</option>
+                            <option value="1">Enable</option>
+                        </select>
+                    </div>
+                </div>
+            <!--table 2-free--> 
+                <div class="table" id="au_check">
+                	<input id="au_tip_switch" type="checkbox" checked="checked" style="margin-left:12px;"/> Check For updates    
+                </div>
+				<div class="table none"></div>
+                <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50;">
+             		<input  id="CheckUpdate" type="button" value="  Detect  "/>
+                    <div>
+                    	<div id="UpgradeTip" style="float:left; margin-left:120px; display:none;">New firmware update is available ! Do you want to upgrade?</div>
+                    	<input id="UpgradeBtn" style="float:left; margin-left:10px; display:none;" type="button" value="Yes"/>
+                        <input id="UpgradeBtnCancel" style="float:left; margin-left:5px; display:none;" type="button" value=" No "/>
+                    </div>
+       			</div>
+                <div class="table none"></div>
+                <div class="table" style="border:0px" id="FTPUPDATESTATE1">
+                   	<div id="FTPUPDATESTATE" style="display:none">
+                        <div style="border:none; background-color:#525252; width:400px; height:15px; margin-top:7px;float:left; margin-left:98px;_margin-left:50px;">
+                            <div id="FTPaa" style="background-color:#0F0; margin-top:2px; overflow:hidden; height:10px; width:0px;text-align:left; border:none;">
+                            </div>
+                        </div>
+                    	<label id="FTPupdateMsg"></label>
+                    </div>
+                </div>  
+                
+
+    </div>
+    <!--table end-->
+		
+</div>

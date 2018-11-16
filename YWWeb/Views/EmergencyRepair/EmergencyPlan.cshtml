@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+    S5001Web.Controllers.LoginAttribute loginbll = new S5001Web.Controllers.LoginAttribute();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>应急预案</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
+    <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" style="width: auto; height: 780px; width: 100%" idfield="ID"
+        pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='Fk_ID' checkbox="true">
+                </th>
+                <th field='FileExtension' width="100px" data-options="field:'FileExtension',width:50,formatter:loadImage">
+                </th>
+                <th field='FileName' width="200px">
+                    文件名称
+                </th>
+                <th field='CommitTime' width="100px" data-options="formatter: DateFormat">
+                    上传时间
+                </th>
+                <th field='FileSize' width="100px">
+                    文件大小
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div class="stand_file">
+        <div id="tb" class="searchbar">
+            <div class="searchrow">
+                站室名称:
+                <input data-options="lines:true" style="width: 200px;" id="StationName" />
+            </div>
+            <div id="userbutton" class="searchbutton">
+            </div>
+        </div>
+        <div class="standfile_content">
+            <div id="content">
+            </div>
+        </div>
+    </div>
+    <div id="editwin" title="上传应急预案" class="easyui-dialog" closed="true" style="width: 600px;
+        height: 300px; padding: 20px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    站室名称：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <input data-options="lines:true" style="width: 200px;" id="StationID" />
+                    <b class="RStar">&nbsp*</b>
+                    <input id="PID" type="hidden" />
+                    <input id="PName" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    上传资料：
+                </td>
+                <td class="d_l_d" colspan="3">
+                    <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple" />
+                    <div id="fileQueue" class="fileQueue">
+                    </div>
+                    <div id="div_files">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var uid = @loginbll.CurrentUser.UserID; 
+</script>
+<script src="~/Content/UserJS/EmergencyPlan._jm.js"></script>

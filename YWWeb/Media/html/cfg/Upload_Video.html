@@ -1,0 +1,121 @@
+
+<div class="config_content"  >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+	
+    <!--item 1-->
+        <div class="item" style="width:758px; ">
+               <div id="UploadVideo_Title" class="logo_title">Upload Video</div>
+               <div class="item_R">
+                   <div id="UploadVideoRf" class="logo_link">Refresh</div>
+                   <div id="UploadVideoSave" class="logo_link">Save</div>
+				   <div id="UploadVideoExit" class="logo_link">Exit</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+	
+    <!--table -->
+    	<div class="table_content">
+		<!--table 1-->
+			<div class="table" style="width:758px; ">
+				<div class="table_L" id="UploadVideo_MotionVideoChannel">Channel</div>  
+				<div class="table_R">
+					<select  id="UploadVideoMotionVideoChannel" class="select" style="width:200px"></select>					
+				</div>
+			</div>			
+            <div class="table" id="video_channel" style="width:758px;">
+                <div class="table_L" id="video_qx">Week</div>
+                <div class="table_R">
+                    <select  id="VIDEOQX" class="select" style="width:200px">
+                        <option  value="0">星期日</option>
+                        <option  value="1">星期一</option>
+                        <option  value="2">星期二</option>
+                        <option  value="3">星期三</option>
+                        <option  value="4">星期四</option>
+                        <option  value="5">星期五</option>
+                        <option  value="6">星期六</option>
+                    </select>
+                    <input type="button" value="Next" id="SCSP_WEEKNEXT" style="margin-left:10px ; margin-top:3px;+margin-top:-26px; display:none" />
+                </div>
+           </div> 
+        </div>
+    <!--table end-->
+    
+    <div class="tabel" id="video_show_0" style="height:130px; border:1px solid #FFF; width:758px; border-top:0px; position:relative;">
+    	<div style="height:20px; overflow:hidden;"></div>
+    	<div id="video_headTitle_div" style="width:740px; overflow:hidden; height:20px;_height:23px;margin-left:10px;">
+        	<div id="SCSP_HeaderText"></div>
+    	</div>
+    	<div id="video_Header_div" style="width:740px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        	<div id="SCSP_Header"></div>
+    	</div>
+        <div id="video_Motion_div" style="width:740px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        	<div id="SCSP_motion"></div>
+    	</div>
+        
+        <div id="video_tag" style="width:740px;height:27px; padding-left:240px; margin-left:20px; padding-top:20px;+padding-top:5px;">
+        	<div style="float:left; width:110px;">
+            	<div style="height:20px; width:20px;float:left; background:rgb(0,102,0);color:#FFF"></div>
+            	<div id="video_upload" style="float:left;">&nbsp;&nbsp;Upload</div>
+        	</div>
+            <div id="video_show_6" style="float:left;width:120px;"> 
+            	<div style="height:20px; width:20px; float:left;background:transparent; border:1px solid #FFF;color:#FFF"></div>
+            	<div id="video_noupload" style="float:left;">&nbsp;&nbsp;No Upload</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table" id="video_copy_day" style="width:758px; display:none;">
+        <div id="video_copyDay" class="table_L">Copy Day</div>
+        <div style="margin-left:20px;">
+			<div style="width:130px;float:left;">&nbsp;
+				<select id="SCSP_CPQXQ" style="width:80px; margin-left:25px;">
+					<option  value="0">星期日</option>
+					<option  value="1">星期一</option>
+					<option  value="2">星期二</option>
+					<option  value="3">星期三</option>
+					<option  value="4">星期四</option>
+					<option  value="5">星期五</option>
+					<option  value="6">星期六</option>
+				</select>
+			</div>
+			<div style="width:242px;overflow:hidden; float:left;">
+				<div style="margin-left:10px;">
+					<label id="VIDEO_COPY_WEEK_TO" >to</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select id="SCSP_CPHXQ" style="width:80px; margin-left:10px;">
+						<option  value="7">All</option>
+						<option  value="0">星期日</option>
+						<option  value="1">星期一</option>
+						<option  value="2">星期二</option>
+						<option  value="3">星期三</option>
+						<option  value="4">星期四</option>
+						<option  value="5">星期五</option>
+						<option  value="6">星期六</option>
+				   </select>
+                   				   
+				   <input type="button" value="确定" class="ButtonToDiv" id="SCSP_CPXQQD" style="float:right; margin-top:0px;+margin-top:-30px;" />
+                   <!--<div id="LXJH_CPXQQD" class="ButtonToDiv"  style="float:right; margin-top:0px;+margin-top:-30px;">确定</div> -->
+				</div>
+			</div>           
+        </div>
+    </div>
+    <div style="height:20px; overflow:hidden;"></div>
+    <div class="table" id="video_copy_ch" style="border:1px solid #FFF; width:758px; display:none;">
+        <div id="video_copyCh" class="table_L">Copy Channel</div>
+        <div style="margin-left:20px;">
+            <div style="width:130px;float:left;">&nbsp;
+                <select id="SCSP_CPQTD" style="width:80px; margin-left:25px;" ></select>
+            </div>
+            <div style="width:240px;overflow:hidden;">
+                <div style="margin-left:10px;">
+                    <label id="VIDEO_COPY_CH_TO">to</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select id="SCSP_CPHTD" style="width:80px; margin-left:10px;"></select>
+                    <input id="SCSP_CPTDQD" class="ButtonToDiv" type="button" value="确定" style=" float:right; margin-top:0px;+margin-top:-30px;"/> 
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+<div class="disp"></div>

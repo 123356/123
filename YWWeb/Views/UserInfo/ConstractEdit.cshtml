@@ -1,0 +1,208 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>合同编辑</title>
+    <style type="text/css">
+        .divicons
+        {
+            float: left;
+            border: solid 1px #ccc;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .divicons:hover
+        {
+            color: #FFF;
+            border: solid 1px #3399dd;
+            background: #2288cc;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
+            background: linear-gradient(top, #33bbee, #2288cc);
+            background: -moz-linear-gradient(top, #33bbee, #2288cc);
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+            text-shadow: -1px -1px 1px #1c6a9e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 80px;text-align:left;padding-left:20px;">
+                合同名称：
+            </td>
+            <td class="d_l_d">
+                <input id="CtrName" runat="server" name="CtrName" maxlength="20" 
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
+                        class="RStar">&nbsp*</b>
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                运维客户：
+            </td>
+            <td class="d_l_d">
+                <input id="CtrAdmin" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="id" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                站名称：
+            </td>
+            <td class="d_l_d">
+                <select id="CtrPName" runat="server" name="CtrName" maxlength="20" 
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                负责人员：
+            </td>
+            <td class="d_l_d">
+                <select id="person" runat="server" name="CtrName" maxlength="20"
+                        class="textbox-text validatebox-text validatebox-readonly" style="width: 210px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>         
+        </tr>
+        <tr>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                开始日期：
+            </td>
+            <td class="d_l_d">
+                <input id="start_time" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-datebox" style="width: 210px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:left;padding-left:20px;">
+                结束日期：
+            </td>
+            <td class="d_l_d">
+                <input id="end_time" runat="server" name="CtrName" maxlength="20" 
+                       class="easyui-datebox" style="width: 210px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="id" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                合同内容
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" rowspan="2" style="text-align:center">
+               日常巡检
+            </td>
+
+            <td class="d_l_d" style="background-color: #E4E4E4">
+                添加运维项：
+                <input id="templateIds" runat="server" maxlength="50"
+                       class="easyui-validatebox" style="width: 260px; height: 54px;" />
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:center">
+                添加时间安排
+                <input id="cs_xj_time" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-datebox" style="width: 20px; height: 20px;" data-options="required:true" />
+                <button onclick="clear_xj()">清除</button>
+            </td>
+            <td class="d_l_t" style="text-align:center; background-color: #E4E4E4">关联工单</td>
+        </tr>
+        <tr>
+            <td class="d_l_t" id="listrc" style="padding-left:20px;background-color:#EFEDF2"></td>
+            <td class="d_l_t" id="listtimerc" style="padding-left:20px;background-color:#EFEDF2"></td>
+            <td class="d_l_t" id="listOrdersDays" style="padding-left:20px;background-color:#EFEDF2"></td>
+        </tr>
+
+
+        <tr>
+            <td class="d_l_t" rowspan="2" style="text-align:center">
+                检修试验
+            </td>
+
+            <td class="d_l_d" style="background-color: #E4E4E4">
+                添加运维项：
+                <input id="templateIds2" runat="server" maxlength="50"
+                       class="easyui-validatebox" style="width: 260px; height: 54px;" />
+                <input id="id" type="hidden" />
+            </td>
+            <td class="d_l_t" style="text-align:center">
+                添加时间安排
+                <input id="cs_xj_time2" runat="server" name="CtrName" maxlength="20"
+                       class="easyui-datebox" style="width: 20px; height: 24px;" data-options="required:true" />
+                <button onclick="clear_xj2()">清除</button>
+            </td>
+            <td class="d_l_t" style="text-align:center;background-color: #E4E4E4">关联工单</td>
+        </tr>
+        <tr>
+            <td class="d_l_t" id="listrc2" style="padding-left:20px;background-color:#EFEDF2"></td>
+            <td class="d_l_t" id="listtimerc2" style="padding-left:20px;background-color:#EFEDF2"></td>
+            <td class="d_l_t" id="listOrdersTests" style="padding-left:20px;background-color:#EFEDF2"></td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                合同备注
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="height:60px; text-align: left;padding-left:20px;background-color:#EFEDF2">
+                <textarea id="CtrInfo" class="easyui-validatebox validatebox-text" style="height:60px;  width: 97%;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" colspan="4" style="text-align:left;padding-left:20px;background-color:#EFEDF2">
+                合同外工单
+            </td>
+        </tr>
+
+        <tr>
+            <td class="d_l_t" colspan="4" id="listOthers" style="padding-left:20px;background-color:#EFEDF2"></td>
+        </tr>
+        @*<tr>
+            <td class="d_l_t">
+                日常检修：
+            </td>
+            <td class="d_l_d">
+                <input id="dayCount" runat="server" name="CtrName" maxlength="20" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b><b style="color:black;">次/年</b>
+                <input id="id" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                检修试验：
+            </td>
+            <td class="d_l_d">
+                <input id="testCount" runat="server" name="CtrName" maxlength="20"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b><b style="color:black;">次/年</b>
+                <input id="id" type="hidden" />
+            </td>
+        </tr>*@
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <div id="editWin" class="easyui-dialog" style="width: 800px; height: auto; padding: 10px 20px;
+        left: 850px; top: 60px; max-height: 550px;" data-options="closed:true,buttons:'#dlg-buttons'"
+        title="用户Logo列表">
+        <div class="div-body" id="icon_data">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var id=@Html.Raw(Request.QueryString["id"]);
+      
+    </script>
+    <script src="~/Content/UserJS/YwConstractEdit._jm.js"></script>
+
+    <div id="editwin2" title="编辑工单信息" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+
+    <div id="detailwin" title="查看工单详情" class="easyui-window" closed="true" style="width: 1000px;
+        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

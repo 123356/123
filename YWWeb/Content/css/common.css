@@ -1,0 +1,128 @@
+.page-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #666;
+}
+
+.page-loading .loading-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.line {
+  height: 1px;
+  background-color: #e5e5e5;
+}
+
+.greendark {
+  color: #1e8977;
+}
+
+.itemcolor {
+  background: #182132;
+}
+
+.h {
+  /*指定水平排列*/
+  display: flex;
+  flex-direction: row;
+}
+
+.green {
+  color: #32bba4;
+}
+
+.font-white {
+  color: white;
+}
+
+.font-red {
+  color: #ff1200;
+}
+
+.font-grey {
+  color: #666;
+}
+
+.font80 {
+  font-size: 80%;
+}
+
+.font120 {
+  font-size: 120%;
+}
+
+.v {
+  /*指定垂直排列*/
+  display: flex;
+  flex-direction: column;
+}
+
+.vcenter {
+  /*指定垂直居中*/
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+
+.verCenter {
+  /*指定垂直居中*/
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.cCenter {
+  /*指定内容居中*/
+  text-align: center;
+}
+
+.vhcenter {
+  /*指定垂直水平居中*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.ivhcenter {
+  /*指定item内容垂直居中*/
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+
+.hcenter {
+  /*指定水平居中*/
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.imgHcenter {
+  /*指定图片水平居中*/
+  margin: 0 auto;
+}
+
+.imgcenter {
+  /*指定水平居中*/
+  margin: auto 0;
+}
+
+.colorC {
+  color: #ccc;
+}
+
+.hright {
+  /*指定水平居右边*/
+  position: absolute;
+  left: 93.33%;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}

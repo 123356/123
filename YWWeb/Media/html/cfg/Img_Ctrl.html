@@ -1,0 +1,374 @@
+<div class="config_content">
+    <!--logo start-->
+    <div class="login">
+    </div>
+    <!--logo end-->
+    <!--item 1-->
+    <div class="item">
+        <div id="cam_config" class="logo_title">Image Control</div>
+        <div class="item_R">
+            <div id="ChncamCp" class="logo_link" style="display:none;">Copy</div>
+            <div id="ChncamRf" class="logo_link">Refresh</div>
+            <div id="ChncamDf" class="logo_link" style="display:none;">Default</div>
+            <div id="ChncamSV" class="logo_link">Save</div>
+        </div>
+    </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+        <!--上1-->
+        <div class="table" id="CAM_CHN_TABLE">
+            <div class="table_L" id="cam_channel_num">Channel</div>
+            <div class="table_R">
+                <select id="ChncamChannelMask" class="select">
+                </select>
+            </div>
+        </div>
+		
+        <!--上2-->
+        <div class="table">
+            <div class="table_L" id="Cam_IRCutMode_L">IrCut Mode</div>
+            <div class="table_R">
+                <select id="Cam_IRCutMode" class="select"><!--1 IRCutMode-->
+                    <option value="0">auto</option>
+                    <option value="1">day</option>
+                    <option value="2">night</option>
+                    <option value="3">video</option>
+                </select>
+            </div>
+        </div>
+		
+		<!--上3-->
+        <div class="table" style="display: none;">
+            <div class="table_L" id="Cam_IRCutSensitive_L">CutSensitive</div>
+            <div class="table_R">
+                <select id="Cam_IRCutSensitive" class="select"><!--2、IRCutSensitive-->
+                    <option value="0">High</option>
+                    <option value="1">Midd</option>
+                    <option value="2">Low</option>
+                </select>
+            </div>
+        </div>
+		
+		<!--上4-->
+        <div class="table">
+            <div class="table_L" id="Cam_IRCutDelay_L">IR-Cut Delay</div>
+            <div class="table_R">
+                <div style="float: left; height: 20px; width: 50px;"></div>
+                <div style="float: left; height: 20px; width: 150px;">
+                    <div style="float: left; height: 6px; width: 150px;"></div>
+                    <div id="gsliderCovCam" class="ImgCtrl_Hide_Delay" style="background-image: url(images/scrollBarBg1.gif); background-repeat: no-repeat;height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                        <div id="gsliderCam" style="background: url(images/scroll23.gif); height: 17px; width: 20%;background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                    </div>
+                    <div id="gsliderBtnCam" class="ImgCtrl_Hide_Delay" style="background-image: url(images/scrollbtn.gif); height: 12px;width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                </div>
+                <div style="float: left; height: 30px; width: 20px; overflow: hidden;">
+                    <input type="text" value="15" style="font-color; width: 100px; height: 18px; border: 0px;background: none;" id="Cam_IRCutDelay" readonly="readonly"></input>&nbsp;<!--3、IRCutDelay-->
+                </div>
+            </div>
+        </div>
+		
+		<!--上5-->
+        <div class="table">
+            <div class="table_box">
+                <input id="Cam_Flip" style="margin-left: 15px; float: left; margin-top: 4px;"type="checkbox" /><!--4、Flip-->
+                <div id="Cam_Flip_R" style="float: left;">Lens Flip</div>
+                <input id="Cam_Mirror" style="margin-left: 140px; float: left; margin-top: 4px;"type="checkbox" /><!--5、Mirror-->
+                <div id="Cam_Mirror_R" style="float: left;">Angle Flip</div>
+                <div id="Cam_Trad_R" style="float: left; margin-left: 100px; display:none;">Angle Trad</div>
+                <select id="Cam_Angle_Trad" style="float: left;margin-top: 4px;  display:none;"><!--6 BackLightMode-->
+                    <option value="0">0</option>
+                    <option value="1">90</option>
+                    <option value="2">180</option>
+                    <option value="3">270</option>
+                </select>
+            </div>
+        </div>
+		
+        <div class="table_content bottom bottomMac" id="ImgDivBoxAll" style="width: 599px;">
+			<!--下左-->
+            <div class="table_L_content">
+				<!--下左1-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="Backlight_com">Back Light</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_BackLightMode" class="sel_mv" style="width: 100px;"><!--6 BackLightMode-->
+                            <option value="0">disable</option>
+                            <option value="1">enable</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左2-->
+                <div class="table mv" id="backlight_lvl">
+                    <div class="table_L mv_L" id="give_lvl"  style="font-size: 11px;">BLC Level</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_BackLightLevel" class="sel_mv" style="width: 100px;"><!--7 BackLightLevel-->
+                            <option value="0">low</option>
+                            <option value="1">middle</option>
+                            <option value="2">high</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左3-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="SDno_reduct">3D Noise Reduction</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_R3dnrMode" class="sel_mv" style="width: 100px;"><!--8 R3dnrMode-->
+                            <option value="0">disable</option>
+                            <option value="1">auto</option>
+                            <option value="2">manual</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左4-->
+                <div class="table mv" id="3D_reduct">
+                    <div class="table_R">
+                        <div id="reduct_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Level</div>
+                        <div style="float: left; height: 20px; width: 150px;">
+                            <div style="float: left; height: 6px; width: 150px;"></div>
+                            <div id="R3dnrThreshTarget_1" class="ImgCtrl_Hide_Level" style="background-image: url(images/scrollBarBg1.gif);background-repeat: no-repeat; height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                                <div id="R3dnrThreshTarget_2" style="background: url(images/scroll23.gif); height: 17px;width: 20%; background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                            </div>
+                            <div id="R3dnrThreshTarget_3" class="ImgCtrl_Hide_Level" style="background-image: url(images/scrollbtn.gif);height: 12px; width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                        </div>
+                        <div style="float: left; height: 30px; width: 100px; overflow: hidden;">
+							<input type="text" value="15" style="font-color; font-size: 10px;width: 100px; height: 18px; border: 0px;background: none;" id="Cam_R3dnrThreshTarget" readonly="readonly"></input>&nbsp;<!--9 R3dnrThreshTarget-->
+                        </div>
+						<!--<div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+							<input id="3dnrThreshTarget" class="sel_mv" style="width: 95px;">
+                        </div>-->
+                    </div>
+                </div>
+				
+                <!--下左5-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="Digital_dynamic">WDR</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_DwdrMode" class="sel_mv" style="width: 100px;"><!--10 DwdrMode-->
+                            <option value="0">disable</option>
+                            <option value="1">enable</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左6-->
+                <div class="table mv" id="digital_wide" style="display:none;">
+                    <div class="table_R">
+                        <div id="wide_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Level</div>
+                        <div style="float: left; height: 20px; width: 150px;">
+                            <div style="float: left; height: 6px; width: 150px;"></div>
+                            <div id="DwdrStrength_1" style="background-image: url(images/scrollBarBg1.gif); background-repeat: no-repeat;height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                                <div id="DwdrStrength_2" style="background: url(images/scroll23.gif); height: 17px;width: 20%; background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                            </div>
+                            <div id="DwdrStrength_3" style="background-image: url(images/scrollbtn.gif); height: 12px;width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                        </div>
+                        <div style="float: left; height: 30px; width: 20px; overflow: hidden;">
+                            <input type="text" value="15" style="font-color;font-size: 10px; width: 100px; height: 18px; border: 0px;background: none;" id="Cam_DwdrStrength" readonly="readonly"></input>&nbsp;<!--11 DwdrStrength-->
+                        </div>
+                        <!--<div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                            <input id="Cam_DwdrStrength" class="sel_mv" style="width: 95px;">
+                        </div>-->
+                    </div>
+                </div>
+				
+                <!--下左7-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="Gain_control">AGC</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_GainControlMode" class="sel_mv" style="width: 100px;"><!--12 GainControlMode-->
+                            <option value="0">off</option>
+                            <option value="1">Low</option>
+                            <option value="2">Midd</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
+                </div>
+				
+                <!--下左8-->
+                <div class="table mv" style="height:35px;">
+                    <div class="table_L mv_L" id="White_balance">White Balance</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_WBMode" class="sel_mv" style="width: 100px;"><!--13 WBMode-->
+                            <option value="0">auto</option>
+                            <option value="1">manual</option>
+                            <option value="2">indoor</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左9-->
+                <div class="table mv" id="Cam_Rgain_div" style="display:none;">
+                    <div class="table_R">
+                        <div id="red_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Red</div>
+                        <div style="float: left; height: 20px; width: 150px;">
+                            <div style="float: left; height: 6px; width: 150px;"></div>
+                            <div id="Rgain_1" style="background-image: url(images/scrollBarBg1.gif); background-repeat: no-repeat;height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                                <div id="Rgain_2" style="background: url(images/scroll23.gif); height: 17px; width: 20%;background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                            </div>
+                            <div id="Rgain_3" style="background-image: url(images/scrollbtn.gif); height: 12px;width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                        </div>
+                        <div style="float: left; height: 30px; width: 20px; overflow: hidden;">
+                            <input type="text" value="15" style="font-color;font-size: 10px; width: 100px; height: 18px; border: 0px;background: none;" id="Cam_Rgain" readonly="readonly"></input>&nbsp;<!--14 Rgain-->
+                        </div>
+						<!--<div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                            <input id="Cam_Rgain" class="sel_mv" style="width: 95px;">
+                        </div>-->
+                    </div>
+                </div>
+				
+				<!--下左10-->
+                <div class="table mv" id="Cam_Ggain_div" style="display:none;">
+                    <div class="table_R">
+                        <div id="green_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Green</div>
+                        <div style="float: left; height: 20px; width: 150px;">
+                            <div style="float: left; height: 6px; width: 150px;"></div>
+                            <div id="Ggain_1" style="background-image: url(images/scrollBarBg1.gif); background-repeat: no-repeat;height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                                <div id="Ggain_2" style="background: url(images/scroll23.gif); height: 17px; width: 20%;background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                            </div>
+                            <div id="Ggain_3" style="background-image: url(images/scrollbtn.gif); height: 12px;width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                        </div>
+                        <div style="float: left; height: 30px; width: 20px; overflow: hidden;">
+                            <input type="text" value="15" style="font-color;font-size: 10px; width: 100px; height: 18px; border: 0px;background: none;" id="Cam_Ggain" readonly="readonly"></input>&nbsp;<!--15 Ggain-->
+                        </div>
+						<!--<div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                            <input id="Cam_Ggain" class="sel_mv" style="width: 95px;">
+                        </div>-->
+                    </div>
+                </div>
+				
+				<!--下左11-->
+                <div class="table mv" id="Cam_Bgain_div" style="display:none;">
+                    <div class="table_R">
+                        <div id="black_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Blue</div>
+                        <div style="float: left; height: 20px; width: 150px;">
+                            <div style="float: left; height: 6px; width: 150px;"></div>
+                            <div id="Bgain_1" style="background-image: url(images/scrollBarBg1.gif); background-repeat: no-repeat;height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                                <div id="Bgain_2" style="background: url(images/scroll23.gif); height: 17px; width: 20%;background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                            </div>
+                            <div id="Bgain_3" style="background-image: url(images/scrollbtn.gif); height: 12px;width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                        </div>
+                        <div style="float: left; height: 30px; width: 20px; overflow: hidden;">
+                            <input type="text" value="15" style="font-color;font-size: 10px; width: 100px; height: 18px; border: 0px;background: none;" id="Cam_Bgain" readonly="readonly"></input>&nbsp;<!--16 Bgain-->
+                        </div>
+						<!--<div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                            <input id="Cam_Bgain" class="sel_mv" style="width: 95px;">
+                        </div>-->
+                    </div>
+                </div>
+				
+                <!--下左12-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="shutter">Shutter</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_ShutterMode" class="sel_mv" style="width: 100px;"><!--17 ShutterMode-->
+                            <option value="0">auto</option>
+                            <option value="1">manual</option>
+                        </select>
+                    </div>
+                </div>
+				
+				<!--下左13-->
+                <div class="table mv">
+                    <div class="table_L mv_L" id="shutter_value" style="font-size: 11px;">Time Exposure</div>
+                    <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                        <select id="Cam_eShutterSpeed" class="sel_mv" style="width: 100px;"><!--18 eShutterSpeed-->
+                            <option value="0">1/25</option>
+                            <option value="1">1/30</option>
+                            <option value="2">1/50</option>
+                            <option value="3">1/60</option>
+                            <option value="4">1/100</option>
+                            <option value="5">1/120</option>
+                            <option value="6">1/150</option>
+                            <option value="7">1/180</option>
+                            <option value="8">1/200</option>
+                            <option value="9">1/240</option>
+                            <option value="10">1/250</option>
+                            <option value="11">1/300</option>
+                            <option value="12">1/360</option>
+                            <option value="13">1/480</option>
+                            <option value="14">1/500</option>
+                            <option value="15">1/600</option>
+                            <option value="16">1/700</option>
+                            <option value="17">1/1000</option>
+                            <option value="18">1/1500</option>
+                            <option value="19">1/2500</option>
+                            <option value="20">1/5000</option>
+                            <option value="21">1/10000</option>
+                            <option value="22">1/12000</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table mv" id="Defog_Mode_Div" style="display:none;">
+                <div class="table_L mv_L" id="Defog_Mode">Defog Mode</div>
+                <div class="table_R mv_R" style="overflow: hidden; width: 110px;">
+                    <select id="Cam_DefogMode" class="sel_mv" style="width: 100px;">
+                        <option value="0">disable</option>
+                        <option value="1">auto</option>
+                        <option value="2">manual</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table mv" id="Defog_level"  style="display:none;">
+                <div class="table_R">
+                    <div id="level_value" style="float: left; height: 20px; width: 50px; font-size: 11px;text-align:center;">Level</div>
+                    <div style="float: left; height: 20px; width: 150px;">
+                        <div style="float: left; height: 6px; width: 150px;"></div>
+                        <div id="DefogThreshTarget_1" style="background-image: url(images/scrollBarBg1.gif);background-repeat: no-repeat; height: 17px; width: 140px; overflow: hidden; margin-left: 2px;">
+                            <div id="DefogThreshTarget_2" style="background: url(images/scroll23.gif); height: 17px;width: 20%; background-repeat: no-repeat; overflow: hidden; margin-top: 6px;"></div>
+                        </div>
+                        <div id="DefogThreshTarget_3" style="background-image: url(images/scrollbtn.gif);height: 12px; width: 12px; overflow: hidden; position: relative; margin-top: -14px;"></div>
+                    </div>
+                    <div style="float: left; height: 30px; width: 100px; overflow: hidden;">
+                        <input type="text" value="15" style="font-color; font-size: 10px;width: 100px; height: 18px; border: 0px;background: none;" id="Cam_DefogThreshTarget" readonly="readonly"></input>&nbsp;
+                    </div>
+                </div>
+            </div>
+			
+			<!--下右-->
+            <div id="Vidoecamera"></div>  
+                      
+        </div>
+
+                 <!--table 7-->
+             <div id = "NVR_imgctrlCopyTD" class="table" style="display:none;float:left;overflow:scroll;overflow-x:hidden;height:110px;">
+                   <div class="table">
+                   		<div id = "NVR_imgctrlSelectCopy" style="border-top:1px solid white;">Please select the channel you want to copy</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">   
+                        <input type="checkbox" id="NVR_imgctrlck"/>
+                        <font id="NVR_imgctrlSeletedAll">All</font>
+                        <input type="button" value="Copy" id="NVR_imgctrlOk" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="NVR_imgctrl_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="NVR_imgctrl_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_imgctrl_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="NVR_imgctrl_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_imgctrl_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="NVR_imgctrl_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_imgctrl_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="NVR_imgctrl_TDNum_4">
+                        </div>
+                   </div>
+                   
+            </div>
+
+    </div>
+    <!--table end-->
+</div>

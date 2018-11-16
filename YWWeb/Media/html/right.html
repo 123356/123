@@ -1,0 +1,137 @@
+
+<div id ="live_right" style=" height:100%; width:100%; background:rgb(85,85,85);">
+	<div id="liveright" style="margin-left:30px;">	
+		<div id="live_ptz_show" style="display:none">
+			<div style="height:0px; overflow:hidden;"></div>
+			<div id="LIVE_YT" style=" height:160px; width:160px; margin-left:20px; overflow:hidden; background:url(images/yt.png) no-repeat; position:relative; display:none">
+				<div id="live_yt1_1" style="width:25px; height:25px; position:absolute; left: 68px; top: 12px;"></div> 
+				<div id="live_yt2_5" style="width:25px; height:25px; position:absolute; left: 30px; top: 30px;"></div> 
+				<div id="live_yt3_6" style="height:25px; width:25px; position:absolute; left: 110px; top: 28px;"></div>
+				<div id="live_yt5_3"  style="width:25px; height:25px; position:absolute; left: 15px; top: 70px;"></div>  
+				<div id="live_yt6_21" style="width:35px; height:35px; position:absolute; left: 62px; top: 62px;"></div>
+				<div id="live_yt4_4" style="height:25px; width:25px; position:absolute; left: 125px; top: 68px;"></div>
+				<div id="live_yt2_7" style="width:25px; height:25px; position:absolute; left: 30px; top: 105px;"></div>
+				<div id="live_yt3_8" style="height:30px; width:30px; position:absolute; left: 105px; top: 105px;"></div>		  
+				<div id="live_yt1_2" style="width:30px; height:30px; position:absolute; left: 67px; top: 120px;"></div>
+			</div>
+			<div style="height:20px; overflow:hidden;"></div>
+			<div id="ptz_speed" style="height:35px; width:171px; margin-left:10px; overflow:hidden; padding-top:5px;  display:none">
+				<div id="gsliderCov" style="background-image:url(images/live_scrollBar_bg.png); background-repeat:no-repeat;height:12px; width:171px; overflow:hidden; margin-left:2px;">
+					<div id="gslider" style=" background:url(images/live_scrollBar.png);height:6px;width:171px; background-repeat:no-repeat;overflow:hidden; margin-top:2px;"></div>
+				</div>
+				<div id="gsliderBtn" style="background-image:url(images/live_scrollBar_btn.png); height:22px; width:22px;overflow:hidden; position:relative; margin-top:-16px;"></div>
+				<div id="vernier" style="background-image:url(images/vernier.gif); background-repeat:no-repeat;height:17px; width:171px; overflow:hidden; margin-left:15px; float:left;"></div>
+			</div>
+			<div id="ptz_speed_down_border" style="height:10px; overflow:hidden;  display:none"></div>
+			<div id="ptz_line" style="margin-left:15px;  display:none">
+				<div style="height:30px;zoom:1" id="ytzoom">
+					<div style="font-size:12px;position:relative; width:55px; color:#fff; margin-left:65px;" id = "zoom">变焦</div>
+					<div class="bjjiao" id="live_yt_12"></div>
+					<div class="jjline"></div>
+					<div class="bjjian" id="live_yt_11"></div>
+				</div>
+				<div style="height:30px;zoom:1;" id="ytfocuss">
+					<div style="font-size:12px; position:relative;color:#fff;width:55px; margin-left:65px;" id = "focuss">聚焦</div>
+					<div class="jjjiao" id="live_yt_14"></div>
+					<div class="jjline"></div>
+					<div class="jjjian" id="live_yt_13"></div>
+				</div>
+				<div style="height:30px;zoom:1" id="ytaperture">
+					<div style="font-size:12px; position:relative; color:#fff;width:55px; margin-left:65px;" id = "aperture">光圈</div>
+					<div class="gqjiao" id="live_yt_16"></div>
+					<div class="jjline"></div>
+					<div class="gqjian" id="live_yt_15"></div>
+				</div>
+			</div>
+			<div id="ptz_line_border" style="height:10px; overflow:hidden;  display:none"></div>
+            <div id="cruise_modeDiv_xian"  style="display:none; text-align:center;">
+                    <select class="Live_select" id="cruise_mode">
+                    </select>
+             </div>
+             <div style="height:10px; "></div>
+             <div style = " display:none">
+			<div id="ptz_preset" style="padding-left:5px; height:30px; overflow:hidden; display:none ">
+				<div id="pre_pos" style="clear:left; float:left; width:60px;color:#FFF;font-size:12px; margin-top:6px; display:none;">预制点:</div>
+				<div style="float:left; width:26px; height:26px; border:1px solid #124293; overflow:hidden; display:none;" id="ytpreset">
+					<select id="preset" style="width:45px;height:28px; background:transparent;border:0px;color:white; " >
+					</select>&nbsp;&nbsp;
+				</div>
+				<div id="pre_add" class="rtstyle1 rtstyle2" style="margin-right:5px; display:none;"></div>
+				<div id="pre_sub" class="rtstyle1 rtstyle3" style="margin-right:5px; display:none;"></div>
+				<div id = "pre_goto" class="rtstyle1 rtstyle4" style="margin-right:0px; display:none;"></div>
+			</div>
+            <div style="height:5px; "></div>
+            <div id="PTZ_interval_div" style="padding-left:5px; height:30px; overflow:hidden; display:none;">
+                <div id="PTZ_interval" style="clear:left; float:left; width:60px;color:#FFF;font-size:12px; margin-top:6px;">时间间隔:</div>
+                <div style="float:left; margin-left:30px; width:80px; height:26px; border:1px solid #124293; overflow:hidden;" id="PTZ_interval_box">
+                    <select id="PTZ_interval_sel" style="width:100px;height:28px; background:transparent;border:0px;color:white; " >
+                    </select>&nbsp;&nbsp;
+                </div>
+            </div>
+             <div style="height:5px;  display:none"></div>
+            <div id="PTZ_Scan_div" style="padding-left:5px; height:30px; overflow:hidden; display:none;">
+                <div id="PTZ_Scan" style="clear:left; float:left; width:60px;color:#FFF;font-size:12px; margin-top:6px;">区域扫描:</div>
+                <div id="Scan_start" class="rtstyle1_1 rtstyle6" style="margin-left:88px; margin-top:0px; margin-right:5px;"></div>
+				<div id="Scan_stop" class="rtstyle1_1 rtstyle7" style="margin-left:140px; margin-top:-28px; margin-right:5px;"></div>
+            </div>
+            <div id="PTZ_Speed_div" style="padding-left:5px; height:30px; overflow:hidden; display:none;">
+                <div id="PTZ_Speed" style="clear:left; float:left; width:60px;color:#FFF;font-size:12px; margin-top:6px;">速度:</div>
+                <div style="float:left; margin-left:30px; width:80px; height:26px; border:1px solid #124293; overflow:hidden;" id="PTZ_Speed_box">
+                    <select id="PTZ_Speed_sel" style="width:100px;height:28px; background:transparent;border:0px;color:white; " >
+                    </select>&nbsp;&nbsp;
+                </div>
+            </div>
+			<div style="height:5px;  display:none"></div>
+			<div id="ptz_cruise" style="padding-left:5px; height:30px; overflow:hidden;  display:none ">
+				<div id="cruise_path" style="clear:left; float:left; width:60px; color:#FFF; font-size:12px; margin-top:6px; display:none;">巡航:</div>
+				<div style="float:left; width:26px; height:26px; border:1px solid #124293; overflow:hidden;display:none;" id="ytcruise">
+					<select id="cruise" style="width:45px; height:28px; border:0px; background:transparent;color:white;" >
+						<option>1</option>
+					</select>&nbsp;&nbsp;
+				</div>
+				<div id="cruise_start" class="rtstyle1_1 rtstyle6" style="margin-left:88px; margin-top:0px; margin-right:5px; display:none;"></div>
+				<div id="cruise_stop" class="rtstyle1_1 rtstyle7" style="margin-left:140px; margin-top:-28px; margin-right:5px; display:none;"></div>
+			</div>
+           </div>
+		</div>
+		
+        
+		<div id="color_pic_show " style = "margin-left: 20px;">
+			<div id="ptz_color" style="width:180px; height:156px; margin-left:10px; margin-top:10px; overflow:hidden; ">
+				<div style="float:left; clear:left; width:45px;" id="live_hue">
+					<div id="live_wd_sj" flag="4" bs="63" style="height:142px;font-size:9px;color:#FFF; width:21px; ">0</div>
+					<div style="height:2px; overflow:hidden;"></div>
+					<div id="live_wd_sj1" style="background:url(images/bar_icons.png) no-repeat; background-position:0px 0px; height:12px; width:12px; margin-left:5px;"></div>                
+				</div>
+				<div style="float:left;width:45px;" id="live_light">
+					<div id="live_wd_ld" flag="1" bs="63" style="height:142px; font-size:9px;color:#FFF; width:21px;">0</div>
+					<div style="height:2px; overflow:hidden;"></div>
+					<div id="live_wd_dbd1" style="background:url(images/bar_icons.png) no-repeat; background-position:0px -13px; height:12px; width:12px; margin-left:5px;"></div>
+						  
+				</div>
+				<div style="float:left;width:45px;" id="live_constrast">
+					<div id="live_wd_dbd" flag="2" bs="63" style="height:142px;font-size:9px;color:#FFF; width:21px; ">0</div>
+					<div style="height:2px; overflow:hidden;"></div>
+					<div id="live_wd_ld1" style=" background:url(images/bar_icons.png) no-repeat; background-position:0px -26px; height:12px; width:12px; margin-left:5px;"></div>
+				</div>
+				<div style="float:left;width:45px;" id="live_saturation">
+					<div id="live_wd_bhd" flag="3" bs="63" style="height:142px;font-size:9px;color:#FFF; width:21px;">0</div>
+					<div style="height:2px; overflow:hidden;"></div>
+					<div id="live_wd_bhd1" style="background:url(images/bar_icons.png) no-repeat; background-position:0px -39px; height:12px; width:12px; margin-left:5px;"></div>
+				</div>
+				<!-- <div style="float:left;width:30px;">
+					<div id="live_wd_sd" flag="5" bs="100" style="height:120px;font-size:9px;color:#FFF; width:15px;">0</div>
+					<div style="height:10px; overflow:hidden;"></div>
+					<div id="live_wd_sd1" style="background:url(images/tiaojie.gif) no-repeat; background-position:-32px 0px; height:16px; width:16px;"></div>
+				</div>-->
+			</div>
+            <div style="display:none;">
+			<div id="ptz_default" class="rtstyle5" style="display:none;">&nbsp;&nbsp;&nbsp;
+				<label id="color_default" style="font-size:14px; line-height:25px; color:#FFF;">默认值</label>
+			</div>
+            </div>
+		</div>
+	</div>	
+</div>
+
+

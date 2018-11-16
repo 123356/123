@@ -1,0 +1,222 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>StationInfo</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>   
+
+</head>
+<body>
+
+  
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <h3>
+                    <div id="pName">兴顺达客运公司天宫院站1</div>        
+                    <hr>           
+                </h3>
+            </div>
+            <div class="col-md-6 column">
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <dl>
+                    <dt>
+                        站室编码：
+                    </dt>
+                    <dd>
+                        <div id="pCode"></div>                        
+                    </dd>
+                    <dt>
+                        公司名称 ：
+                    </dt>
+                    <dd>
+                        <div id="pCompanyName"></div>
+                    </dd>
+                    <dt>
+                        位置：
+                    </dt>
+                    <dd>
+                        <div id="pPosition"> </div>
+                    </dd>
+                    <dt>
+                        联系人：
+                    </dt>
+                    <dd>
+                        <div id="pLinkMan"> </div>
+                    </dd>
+                    <dt>
+                        手机号码：
+                    </dt>
+                    <dd>
+                        <div id="pMobile"> </div>
+                    </dd>
+                    <dt>
+                        所属区域：
+                    </dt>
+                    <dd>
+                        <div id="pAreaID"> </div>
+                    </dd>
+                    <dt>
+                        站室分类：
+                    </dt>
+                    <dd>
+                        <div id="pTypeID"> </div>
+                    </dd>
+                    <dt>
+                        投运时间：
+                    </dt>
+
+                    <dd>
+                        2016.11.11
+                    </dd>
+
+                    <dt>
+                        合同期限：
+                    </dt>
+                    <dd>
+                        2017.1.1 --  2019.1.1
+                    </dd>
+
+
+                    <dt>
+                        备注：
+                    </dt>
+                    <dd>
+                        <div id="pRemarks"></div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-6 column">
+                <div id="myCarousel" class="carousel slide">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img id="imgCarousel_1" src="" alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img id="imgCarousel_2" src="" alt="Second slide">
+</div>
+                        <div class="item">
+                            <img id="imgCarousel_3" src="" alt="Third slide">
+                        </div>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#myCarousel"
+                       data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#myCarousel"
+                       data-slide="next">&rsaquo;</a>
+                </div> 
+
+            </div>
+        </div>
+    </div>
+
+
+   
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var pid;
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        else
+            pid = $.cookie('cookiepid');
+
+        getPDRInfoById(pid);
+        function getPDRInfoById(pId) {
+
+            $.post("/PDRInfo/getPDRInfoById", { "PID": pId }, function (data) {
+                var row = eval("(" + data + ")");
+                if (row == null)
+                    return;
+               
+                $("#pName").html(row.Name);
+                $("#pCode").html(row.EadoCode == "" ? "<br>" : row.EadoCode);
+                $("#pCompanyName").html(row.pCompanyName == "" ? "<br>" : row.CompanyName);
+                $("#pPosition").html(row.Position == "" ? "<br>" : row.Position);
+
+                $("#pLinkMan").html(row.LinkMan == "" ? "<br>" : row.LinkMan);
+                $("#pMobile").html(row.Mobile == "" ? "<br>" : row.Mobile);
+                $("#pAreaID").html(row.AreaID);
+                $("#pTypeID").html(row.TypeID);
+
+                if (row.Remarks != null)
+                    $("#pRemarks").html(row.Remarks.replace(/<br\s*\>/g, "\n"));
+                else
+                    $("#pRemarks").html("<br>");
+
+                $("#imgCarousel_1").attr('src', "/UploadFiles/PDR/pdr1_1.jpg");
+                $("#imgCarousel_2").attr('src', "/UploadFiles/PDR/pdr1_2.jpg");
+                $("#imgCarousel_3").attr('src', "/UploadFiles/PDR/pdr1_3.jpg");
+
+                //        $("#EadoCode").html(row.EadoCode);
+                //        $("#Name").val(row.Name);
+                //        $("#CompanyName").combotree("setText", row.CompanyName);
+                //        $("#LinkMan").val(row.LinkMan);
+                //        $("#Mobile").val(row.Mobile);
+                //        $("#Position").val(row.Position);
+                //        $("#UseState").val(row.UseState);
+                //        if (row.Remarks != null)
+                //            $("#Remarks").val(row.Remarks.replace(/<br\s*\>/g, "\n"));
+                //        else
+                //            $("#Remarks").val(row.Remarks);
+                //        $("#Coordination").val(row.Coordination);
+                //        $("#AppCoordination").val(row.AppCoordination);
+                //        loadPDRTypeList(row.TypeID);
+                //        $("#AreaID").combotree("setValue", row.AreaID);                
+            });
+
+        //var pId = "1";       
+        //    var row = $('#list_data').datagrid('getSelected');
+        //    if (row) {
+        //        $("#PID").val(pId);
+        //        $("#EadoCode").html(row.EadoCode);
+        //        $("#Name").val(row.Name);
+        //        $("#CompanyName").combotree("setText", row.CompanyName);
+        //        $("#LinkMan").val(row.LinkMan);
+        //        $("#Mobile").val(row.Mobile);
+        //        $("#Position").val(row.Position);
+        //        $("#UseState").val(row.UseState);
+        //        if (row.Remarks != null)
+        //            $("#Remarks").val(row.Remarks.replace(/<br\s*\>/g, "\n"));
+        //        else
+        //            $("#Remarks").val(row.Remarks);
+        //        $("#Coordination").val(row.Coordination);
+        //        $("#AppCoordination").val(row.AppCoordination);
+        //        loadPDRTypeList(row.TypeID);
+        //        $("#AreaID").combotree("setValue", row.AreaID);
+        //        $("#editwin").dialog({
+        //            closed: false,
+        //            top: ($(window).height() - 400) * 0.5,
+        //            left: ($(window).width() - 600) * 0.5,
+        //            height: ($(window).height() - 0) * 0.7,
+        //            minimizable: false, //最小化，默认false
+        //            maximizable: false, //最大化，默认false
+        //            collapsible: false, //可折叠，默认false
+        //            draggable: false, //可拖动，默认false
+        //            resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+        //        });
+        //        $('#list_data').datagrid('uncheckAll');
+        //    }
+            
+    }
+    </script>
+
+    </body>
+    </html>

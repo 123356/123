@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>系统模块管理</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" idfield="ModuleID" pagination="true" data-options="iconCls:'icon-edit',rownumbers:true,toolbar:'#tb',method: 'get'"
+        fitcolumns="true" treefield="ModuleName">
+        <thead>
+            <tr>
+                <th field="ModuleName" width="180">
+                    模块名称
+                </th>
+                <th field="Location" width="180">
+                    连接地址
+                </th>
+                <th data-options="field:'Icon',width:100,formatter:locdicon" align="center">
+                    图标
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div id="userbutton">
+        </div>
+    </div>
+    <script src="~/Content/UserJS/ModuleList_jm.js"></script>
+    <div id="editButton" class="easyui-dialog" style="width: 800px; height: auto; padding: 10px;
+        left: 600px; top: 50px;" data-options="closed:true,buttons:'#dlg-buttons'" title="系统模块信息">
+        <input id="Button_ID_Hidden" type="hidden" runat="server" />
+        <div id="Buttonlist">
+            <div id="Buttonlistleft" style="float: left; width: 48.6%; border: 1px solid #333;
+                margin-right: 5px;">
+                <div class="box-title">
+                    所有按钮 > <span>双击添加</span>
+                </div>
+                <div class="div-overflow abc" id="allButton" style="overflow-x: hidden; overflow-y: scroll;
+                    margin-bottom: 5px;">
+                </div>
+            </div>
+            <div id="Buttonlistright" style="float: left; width: 48.6%; border: 1px solid #333;">
+                <div class="box-title">
+                    已选按钮 > <span>双击移除</span>
+                </div>
+                <div class="div-overflow" id="selectedButton" style="overflow-x: hidden; overflow-y: scroll;
+                    margin-bottom: 5px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="editwin" title="编辑模块信息" class="easyui-window" closed="true" style="width: 700px;
+        height: 400px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+    <style>
+        .abc div
+        {
+            float: left;
+            border: 1px solid #999;
+            width: 47px;
+            height: 35px;
+            margin: 5px;
+            padding: 3px;
+            text-align: center;
+            overflow: hidden;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SOEevent</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <table id="list_data" title="SOE列表" style="width: auto; height: 780px; width: 100%"
+        idfield="SoeID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                @*<th field='SoeID' width="50px">
+                            序号
+                        </th>*@
+                <th field='HappenDate' width="200px" data-options="formatter: DateFormat">
+                    发生时间
+                </th>
+                <th field='DeviceName' width="200px">
+                    设备名称
+                </th>
+                <th field='PointValue' width="200px">
+                    测点值
+                </th>
+                <th field='SoeDesc' width="200px">
+                    事件描述
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            站室选择:
+            <select id="SPID" class="easyui-combobox" style="width: 200px;">
+            </select>
+        </div>
+        <div class="searchrow">
+            发生日期:
+            <input type="radio" class="GraphType" name="GraphType" value="6" onclick="onclick_month()" />当月
+            <input type="radio" class="GraphType" name="GraphType" value="72" onclick="onclick_year()" />本年
+            <input type="radio" class="GraphType" name="GraphType" value="616" />自定义
+            <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+            至
+            <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $("#currPosition", window.top.document).html("当前位置：状态 > 报警 > SOE事件");
+
+    //日期转换
+    function DateFormat(value, row, index) {
+        var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss');
+        return lDate
+    }
+
+    $("#SPID").combobox({
+        url: "/BaseInfo/BindPDRInfo?showall=1",
+        valueField: 'PID',
+        textField: 'Name',
+        editable: false,
+        onLoadSuccess: function () { //数据加载完毕事件
+            var data = $('#SPID').combobox('getData');
+            if (data.length > 0) {
+                $("#SPID").combobox('select', data[0].PID);
+            }
+        }
+    });
+
+    function onclick_month() {
+
+        var myDate = new Date();
+
+        var thisyear = myDate.getFullYear();
+
+        var thismonth = myDate.getMonth() + 1;
+
+        var startdate = formatDate(thisyear + "-" + thismonth + "-01", 'yyyy-MM-dd');
+
+        var enddate = formatDate(myDate.toDateString(), 'yyyy-MM-dd');
+
+        $("#StartDate").datebox('setValue', startdate);
+        $("#EndDate").datebox('setValue', enddate);
+    }
+
+    function onclick_year() {
+
+        var myDate = new Date();
+
+        var thisyear = myDate.getFullYear();
+
+        var startdate = formatDate(thisyear + "-01-01", 'yyyy-MM-dd');
+
+        var enddate = formatDate(myDate.toDateString(), 'yyyy-MM-dd');
+
+        $("#StartDate").datebox('setValue', startdate);
+        $("#EndDate").datebox('setValue', enddate);
+    }
+
+    function dosearch() {
+        var PID = $("#SPID").combobox('getValue');
+        var StartHappenDate = $("#StartDate").datebox('getValue');
+        var EndHappenDate = $("#EndDate").datebox('getValue');
+        $('#list_data').datagrid('load', { "PID": PID, "StartHappenDate": StartHappenDate, "EndHappenDate": EndHappenDate });
+        $('#list_data').datagrid('uncheckAll');
+    }
+    $('#list_data').datagrid({
+        url: '/AlarmManage/SoeListData?rom=' + Math.random()
+    })
+</script>

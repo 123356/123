@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderDetail</title>
+</head>
+<body>
+    <div id="Tempcontent">
+    </div>
+    <div style="text-align:center;">
+        <p style="color:blue;cursor:pointer;" onclick="DownHanjian()">函件模板</p>
+    </div>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#detailwin').window('close');">
+            关闭
+        </a>
+    </div>
+    <div id="videowin" title="录像播放" class="easyui-window" closed="true" minimizable="false" maximizable="true" collapsible="false">
+        <video id="vedio1" width="100%" height="99%" src="" controls="controls"></video>
+    </div>
+    <script type="text/javascript">
+        loadDetail();
+        function loadDetail() {
+            var id = @Html.Raw(Request.QueryString["id"]);
+            $.post("/Constract/getTempDetail", { "id": id }, function (data) {
+                $("#Tempcontent").html(data);
+            })
+        }
+          function ShowImage(filaname,id,conid,module) {
+              var url = "/Constract/YunYingImagesView?imgurl="+filaname+"&id="+id+"&conid="+conid+"&module="+module;
+             top.openDialog(url, 'ShowImage', '查阅工单图片详情', 1000, 680, 50, 50);
+          }
+          function DownHanjian() {
+              var id = @Html.Raw(Request.QueryString["id"]);
+              $.post("/Constract/GetHanJianMoBan?Rum=" + Math.random(), { "id": id }, function (data) {
+                  window.open(data.replace(/~/, "../.."));
+              })
+
+          }
+        //  function rejectEnter(orderid) {
+        //      if($("#reason").val()==''){
+        //          alert("请输入拒绝理由！")
+        //          return
+        //      }
+        //      $.post("/OrderInfo/rejectEnter", { "id": id,"rejectReason":$("#reason").val()}, function (data) {
+        //          $("#rejectEnterInfo").html(data);
+        //      })
+        //  }
+        //  function ApplyEnter(orderid) {
+
+        //      $.post("/OrderInfo/ApplyEnter", { "id": id }, function (data) {
+        //          $("#ApplyEnterInfo").html(data);
+        //      })
+        //  }
+
+        //function Full(src){
+        // $('#videowin').window({
+        //       width: document.body.clientWidth * 0.4,
+        //       height: document.body.clientHeight * 0.6,
+        //       onBeforeOpen:function(){
+        //         var myVideo=document.getElementById("vedio1");
+        //         myVideo.src = src;
+        //       }
+        // });
+
+        // $('#videowin').window('open');
+
+        // }
+    </script>
+</body>
+</html>

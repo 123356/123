@@ -1,0 +1,96 @@
+<div class="config_content"  >
+    <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="atuo_title" class="logo_title">自动维护</div>
+               <div class="item_R">
+                   <div id="AUTOWHRF" class="logo_link">Refresh</div>
+                   <div id="AUTOWHDF" class="logo_link" style="display:none;">Default</div>
+                   <div id="AUTOWHSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+        <div class="table" id="DefaultUser" style="display:none;">
+        	<div class="table_L" id="SysMainRbUser">选择重启用户</div>
+            <div class="table_R" >
+            	<select id="SysMainUserSwitch" class="select">
+                	<option value="0">OFF</option>
+                 	<option value="1">admin</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+            <div class="table_L" id="auto_vindicate">aaa</div>
+            <div class="table_R" >
+                <select id="SysInfautomaintain" class="select">
+                    <option value="0">Disable</option>
+                    <option value="1">Enable</option>
+                </select>
+            </div>
+        </div>
+        <div class="table" id="SysInfDivBox">
+            <div class="table_L" id="SysMainReboot">aaaaa</div>
+            <div class="table_R" >
+            	<table style="padding-left:2px; margin-left:53px; margin-top:5px;">
+                	<tr>
+                    	<td><select id="SysInfmaintainperiod1">
+                                <option value="0">每一天</option>
+                                <option value="1">每一周</option>
+                                <option value="2">每个月</option>
+                            </select>
+                		</td>
+                        <td><select id="SysInfmaintainperiod2"></select></td>
+                        <td>
+                            <div id="auto_timer" style="height:25px; overflow:hidden; margin-top:-6px; "></div>
+                        </td>
+                    </tr>
+                </table>
+			</div>                  
+   		</div>    	
+    
+    <div class="table none"></div>
+    <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+          <input class="ButtonToDiv" id="RemoteReboot" type="button" value="重启" style="display:none"/>
+    </div>
+    <div class="table none"></div>
+    <div id="ipc_remotereboot_div" style="display:none;">
+        <div class="table_content">
+           <div class="table">
+                <div id = "IPCSelectReboot" style="border-top:1px solid white;">请选择需要重启的IPC</div>
+           </div> 
+           <div class="table">
+                <div class="table_box syspm_use_backup_L">   
+                <input type="checkbox" id="RemoteRebootck_ipc"/>
+                <font id="RemoteRebootSeletedAll_ipc"> 全选</font>
+                </div>
+            </div>
+            <div class = "table" id="RemoteReboot_TDNum_ipc_1_1">
+                <div class="syspm_use_backup_R" id="RemoteReboot_TDNum_ipc_1">
+                </div>
+            </div>
+            <!--table 13-->
+            <div class = "table" id="RemoteReboot_TDNum_ipc_2_2">
+                <div class="syspm_use_backup_R" id="RemoteReboot_TDNum_ipc_2">
+                </div>
+            </div>
+            <div class = "table" id="RemoteReboot_TDNum_ipc_3_3">
+                <div class="syspm_use_backup_R" id="RemoteReboot_TDNum_ipc_3">
+                </div>
+            </div>
+            <div class = "table" id="RemoteReboot_TDNum_ipc_4_4">
+                <div class="syspm_use_backup_R" id="RemoteReboot_TDNum_ipc_4">
+                </div>
+            </div>
+        </div>
+        <div class="table none"></div>
+        <div class="table top" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50">
+              <input class="ButtonToDiv" id="RemoteReboot_ipc" type="button" value="重启"/>
+        </div>	
+        <!--table end-->
+	</div>
+</div>
+<div class="disp"></div>

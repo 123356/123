@@ -1,0 +1,57 @@
+<div class="config_content" >
+    <!--logo start-->
+	<div class="login">
+	</div>
+    <!--logo end-->
+	
+    <!--item 1-->
+	<div class="item" >
+		   <div id="UploadPhoto_Title" class="logo_title">Upload Photo</div>
+		   <div class="item_R">
+			   <div id="UploadPhotoRf" class="logo_link">Refresh</div>
+			   <div id="UploadPhotoSV" class="logo_link">Save</div>
+			   <div id="UploadPhotoExit" class="logo_link">Exit</div>  
+		   </div>
+	</div>
+    <!--item 1_end-->
+	
+    <!--table -->
+    <div class="table_content">
+		<!--table 1-->
+		<div class="table" style="padding:0px; height:90px; ">
+			<div id="UploadPhoto_Channel" style="float:left; margin-left:20px;">Channel</div>
+			<div id="UploadPhoto_Right" style="margin-left:10px; margin-top:2px; float:left;">
+				<div id="UploadPhotoChannelBox"></div>
+			</div>
+		</div>
+		
+		<!--table 2-free-->
+		<div class="table">
+			<div class="table_L" id="UploadPhoto_TimeTrigger">Time Trigger</div>
+			<div class="table_R">
+			<select id="UploadPhotoTimeTrigger" class="select">
+				<option value="0">OFF</option>
+				<option value="1">1Min</option>  <!--1分钟时，只可以选4个通道；多选会弹出提示框 -->
+				<option value="2">3Min</option>	 
+				<option value="3">5Min</option>
+				<option value="4">10Min</option>
+				<option value="5">20Min</option>
+				<option value="6">30Min</option>
+				<option value="7">60Min</option>
+			</select>
+			</div>
+		</div>
+	
+		<!--table 3-free-->
+		<div class="table">
+			<div class="table_L" id="UploadPhoto_MotionSnapEnable">Motion Detection</div>
+			<div class="table_R">                    
+				<select id="UploadPhotoMotionSnapEnable" class="select" style="width:200px;  float:left; margin-right:20px; ">
+					<option value="0">Disable</option>
+					<option value="1">Enable</option>
+				</select>
+				<input type="button" value="SetUp" id="gotoalarm_mv" style="display:none; margin-top:5px;" />  
+			</div>
+		</div>
+    </div>
+</div>

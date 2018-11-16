@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "历史数据查询";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" title="历史数据查询" style="width: auto;"
+        pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:20,pageList:[10,15,20,30,50],toolbar:'#Histb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='设备编码' width="60px">
+                    设备编码
+                </th>
+                <th field='设备名称' width="100px">
+                    设备名称
+                </th>
+                <th field='记录时间' width="60px">
+                    记录时间
+                </th>
+                <th field='测点编号' width="60px">
+                    测点编号
+                </th>
+                <th field='测点名称' width="60px">
+                    测点名称
+                </th>
+                <th field='测点位置' width="60px">
+                    测点位置
+                </th>
+                <th field='监测位置' width="60px">
+                    监测位置
+                </th>
+                <th field='测量值' width="60px">
+                    测量值
+                </th>
+                <th field='报警限值' width="60px">
+                    报警限值
+                </th>
+                <th field='报警状态' width="60px">
+                    报警状态
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="Histb" class="searchbar">
+        <div class="searchrow">
+            配&nbsp;&nbsp;电&nbsp;&nbsp;房:
+            <select id="SPID" style="width: 200px; height: 26px;">
+            </select>
+            设备名称:
+            <select id="selDID" style="width: 300px; height: 26px;">
+            </select>
+            测点类型:
+            <select id="cbType" style="width: 200px; height: 26px;">
+            </select>
+            <span>测点名称:
+                <input id="cname" style="width: 200px;" /></span>
+        </div>
+        <div class="searchrow">
+            开始时间:
+            <input id="StartDate" style="width: 200px; height: 26px;" />
+            结束时间:
+            <input id="EndDate" style="width: 200px; height: 26px;" />
+            <span style="margin-left: 20px;">
+                <button type="submit" class="page_table_but" id="btnsearch" onclick="dosearch()">
+                    <img src="../../Content/images/button/search.png" />查&nbsp;&nbsp;询</button></span>
+            <span>
+                <button type="submit" class="page_table_but" id="btnexport1" onclick="export1()">
+                    <img src="../../Content/images/button/printer.png" />导&nbsp;&nbsp;出</button></span>
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var dname, cname, pid, hpid, startdate, enddate, typename, docount = 0;
+        var sendname = "XJBLT";
+        var Startdate = new Date();
+        var DS = Startdate.getFullYear() + "-" + (Startdate.getMonth()+1) + "-" + (Startdate.getDate()-7);
+ 
+        $('#StartDate').datebox({
+            value: DS,
+            onSelect: function () { //输入判断
+                startdate = $('#StartDate').datebox('getValue');
+                enddate = $('#EndDate').datebox('getValue');
+                if (startdate > enddate) {
+                    alert('开始日期不能大于结束日期！');
+                    $('#StartDate').datebox('setValue', enddate);
+                }
+            }
+        });
+        $('#EndDate').datebox({
+            value: '24:00'
+        });
+        $('#EndDate').datebox('calendar').calendar({
+            validator: function (date) {
+                var now = new Date();
+                return date <= now;
+            }
+        });
+        function dosearch() {
+            dname = $("#selDID").combobox('getText');
+            cname = $("#cname").val();
+            pid = $("#SPID").combobox('getValue');
+            startdate = $('#StartDate').datebox('getValue');
+            enddate = $('#EndDate').datebox('getValue');
+            typename = $("#cbType").combobox('getText');
+            $('#list_data').datagrid('load', { "pid": pid, "dname": dname, "cname": cname, "startdate": startdate, "enddate": enddate, "typename": typename });
+        }
+
+        $("#SPID").combobox({
+            url: "/BaseInfo/BindPDRInfo?showall=7",
+            valueField: 'PID',
+            textField: 'Name',
+            editable: false,
+            onLoadSuccess: function (data) { //数据加载完毕事件
+                if (hpid == undefined) {
+                    if (data.length > 0) {
+                        pid = data[0].PID;
+                    }
+                }
+                else {
+                    pid = hpid;
+
+                }
+                $("#SPID").combobox('select', pid);
+                if (docount == 0)
+                    loadDeviceList(pid);
+                docount == 0;
+            },
+            onSelect: function (data) {
+                pid = data.PID;
+                loadDeviceList(pid);
+                docount++;
+            }
+        });
+        function loadDeviceList(pid) {
+            $("#selDID").combobox({
+                url: "/BaseInfo/BindDeviceInfo?pid=" + pid,
+                valueField: 'DID',
+                textField: 'DeviceName',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+
+                    //                    if (did == undefined || did == "0") {
+                    if (data.length > 0) {
+                        $("#selDID").combobox('select', data[0].DID);
+                        did = data[0].DID;
+                    }
+                    //                    }
+                    //                    else {
+                    //                        $("#selDID").combobox('setValue', did);
+                    //                    }
+                    //                    dname = data[0].DeviceName;
+                    //                    loadDataType(data[0].DID);
+                },
+                onSelect: function (data) {
+                    did = 0;
+                    dname = data.DeviceName;
+                    loadDataType(data.DID);
+                }
+            });
+        }
+        function loadDataType(did) {
+            $("#cbType").combobox({
+                url: "/BaseInfo/BindValueType?did=" + did,
+                valueField: 'DataTypeID',
+                textField: 'Name',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    if (data.length > 0) {
+                        $("#cbType").combobox('select', data[0].DataTypeID);
+                    }
+                    dosearch();
+                }
+            });
+
+        }
+        $('#list_data').datagrid({
+            url: 'empty.json'
+        });
+        function export1() {
+            var dname = $("#selDID").combobox('getText');
+            var cname = $("#cname").val();
+            var pid = $("#SPID").combobox('getValue');
+            var startdate = $('#StartDate').datebox('getValue');
+            var enddate = $('#EndDate').datebox('getValue');
+            var typename = $("#cbType").combobox('getText');
+            var ajaxbg = top.$("#loading_background,#loading");
+            ajaxbg.show();
+            $.get("/DataReport/ExportHisData",
+                { 'pid': pid, 'dname': dname, 'cname': cname, 'startdate': startdate, 'enddate': enddate, 'typename': typename },
+                function (data, status) {
+                    ajaxbg.hide();
+                    if ('success' == status) {
+                        if (-1 == data.indexOf("Fail")) {
+                            window.open('http://' + window.location.host + data);
+                        }
+                        else {
+                            alert(data);
+                        }
+                    }
+                    else {
+                        alert('导出失败');
+                    }
+                }
+            );
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/js/ResizeList.js"></script>
+</body>
+</html>

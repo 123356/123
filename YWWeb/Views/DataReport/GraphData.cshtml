@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "曲线报表";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GraphData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="curve">
+        <div class="curve_table">
+            <table id="curve_table1" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="100" align="right">
+                        时间选择：
+                    </td>
+                    <td width="360">
+                        <input type="radio" class="GraphType" name="GraphType" value="6" checked="checked" />
+                        近一日
+                        <input type="radio" class="GraphType" name="GraphType" value="72" />
+                        近一周
+                        <input type="radio" class="GraphType" name="GraphType" value="144" />
+                        近一月 
+                       <input type="radio" class="GraphTypeOg" name="GraphType" id="GraphTypezdy" value="707"
+                            onclick="unlock()" />
+                        自定义
+                        
+                    <td align="left" colspan="10">
+                        <div id="scroll" style="display: none; width: 600px;">
+                            <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                            至
+                            <input id="EndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+                        </div>
+                    </td>@**@
+                </tr>
+                <tr>
+                    <td width="100" align="right">
+                        设备名称：
+                    </td>
+                    <td colspan="5" align="left" valign="top">
+                        <select id="SPID" style="width: 350px; height: 26px;">
+                        </select>
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td width="100" align="right">
+                        回路名称：
+                    </td>
+                    <td colspan="5" align="left" valign="top">
+                        <select id="SCID" style="width: 350px; height: 26px;"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="right">
+                        参数选择：
+                    </td>
+                    <td align="left" align="left">
+                        <input id="DataTypeParams" data-options="lines:true" style="width: 452px;" />
+                    </td>
+                    <td colspan="2" width="85">
+                        <button class="page_table_but" style="margin: 0px" data-options="iconCls:'icon-ok'"
+                            id="btnHour" onclick=" DoSearch()">
+                            <img src="/Content/images/Icon16/refresh.png" />确定
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <div id= 'df' style =" width:800px"></div>
+        </div>
+        <div id="canvas" style="background:#17689D;">
+            <div id="HisGraphCharts" style="height: 500px; z-index: 10; padding: 5px;">
+            </div>
+        </div>
+    </div>
+
+    @*<table id="list_data" title="汇总数据" class="easyui-datagrid" style="width:100%;height:250px;padding-top:10px;"
+          singleSelect="true" iconCls="icon-save"  rownumbers="true">
+        <thead>
+            <tr>
+                <th rowspan="2" field="CName" width="20%" align="center">信息名称</th>
+                <th colspan="2">最大值</th>
+                <th colspan="2">最小值</th>
+            </tr>
+            <tr>
+                <th field="listprice" width="15%" align="center">值（KW）</th>
+                <th field="RecordTime" width="15%" align="center">时间</th>
+
+                <th field="attr1" width="15%" align="center">值（KW）</th>
+                <th field="RecordTime" width="15%" align="center">时间</th>
+            </tr>
+        </thead>
+    </table>*@
+
+
+    <script src="~/Content/UserJS/GraphData_jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

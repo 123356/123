@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>尖谷平峰设置</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="jangupfset">
+        <div id="Histb" class="searchbar searchbar2">
+            <div class="searchrow">
+                站室选择:
+                <select id="SPID" style="width: 150px; height: 26px;">
+                </select>
+            </div>
+            <div class="searchrow">
+                <div class="searchbutton" style="float: right">
+                    <button title="查 询" onclick="dosearch();" class="page_table_but">
+                        <img src="/Content/images/Icon16/zoom.png">查 询</button>
+                    <button title="新 增" onclick="add();" class="page_table_but">
+                        <img src="/Content/images/Icon16/add.png">新 增</button>
+                    <button title="编 辑" onclick="edit();" class="page_table_but">
+                        <img src="/Content/images/Icon16/edit.png">编 辑</button>
+                    <button title="删 除" onclick="delect();" class="page_table_but">
+                        <img src="/Content/images/Icon16/delete.png">删 除</button>
+                </div>
+            </div>
+        </div>
+        <table id="list_data" style="width: auto; height: 780px; width: 100%" idfield="ID"
+            pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
+            fitcolumns="true" fit="true">
+            <thead>
+                <tr>
+                    <th field='ID' checkbox="true">
+                    </th>
+                    <th field='FileExtension' width="3%" data-options="field:'FileExtension',width:50,formatter:loadImage">
+                    </th>
+                    <th field='StageName' width="200px">
+                        文件名称
+                    </th>
+                    <th field='UserName' width="100px">
+                        创建人
+                    </th>
+                    <th field='DateStart' width="100px">
+                        起始时间
+                    </th>
+                    <th field='DateEnd' width="100px">
+                        结束时间
+                    </th>
+                    <th field='CreateDate' width="100px" data-options="formatter: DateFormat">
+                        创建时间
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div id="editwin" title="错峰用电设置" class="easyui-window" closed="true" style="width: 1000px;
+            height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false" closable ="false">
+        </div>
+    </div>
+    <div class="pop_windowbg">
+    </div>
+    <div class="pop_window radius5">
+        <button class="popclose" onclick="popclose();">
+            <img src="../Content/images/popclosebtn.png" /></button>
+        <h3 id="aaa">
+            错峰用电添加</h3>
+        <div class="pop_content">
+            <div class="jiangupfset_popcontent">
+                <div class="jiangupfset_text">
+                    <label>
+                        错峰用电名称</label>
+                    <p>
+                        <input type="text" /></p>
+                </div>
+                <div class="jiangupfset_text">
+                    <label>
+                        错峰周期</label>
+                    <p>
+                        <input id="StartDate" class="easyui-datebox" data-options="required:true,showSeconds:false"
+                            style="width: 123px;" />
+                        -
+                        <input id="EndDate" class="easyui-datebox" data-options="required:true,showSeconds:false"
+                            style="width: 123px;" /></p>
+                </div>
+                <div class="jiangupfset_text">
+                    <label>
+                        错峰时段</label>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="optionContainer"
+                        class="jiangupfset_table">
+                        <thead>
+                            <tr>
+                                <th align="center" height="45">
+                                    时段类型
+                                </th>
+                                <th align="center">
+                                    起始时间
+                                </th>
+                                <th align="center">
+                                    结束时间
+                                </th>
+                                <th align="center">
+                                    电价
+                                </th>
+                                <th align="center">
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="option1">
+                                <td align="center">
+                                    <select class="radius5">
+                                        <option>平时时段</option>
+                                        <option>高峰时段</option>
+                                    </select>
+                                </td>
+                                <td align="center">
+                                    <input type="text" class="easyui-datetimebox" data-options="required:true,showSeconds:false"
+                                        style="width: 150px;" />
+                                </td>
+                                <td align="center">
+                                    <input type="text" class="easyui-datetimebox" data-options="required:true,showSeconds:false"
+                                        style="width: 150px;" />
+                                </td>
+                                <td align="center">
+                                    <input type="text" style="width: 100px;" />
+                                </td>
+                                <td align="center">
+                                    <button onclick="addRow()">
+                                        <img src="../Content/images/Icon16/add.png"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="popbtn">
+                    <button class="page_table_but">
+                        保存</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!--弹出窗-->
+<script src="~/Content/UserJS/JianguPingfengSet._jm.js"></script>

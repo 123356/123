@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>一次图</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    
+</head>
+<body class="tabbg2">
+    <!--一次图-->
+    <div class="ycmain ld_ycbg">
+        <ul class="alertmenu" id="p1">
+            <li class="w1 alarmico_r">
+                <dt id="yd1" onclick="deviceinfo(107,1);"></dt>
+                <dd id="t1">
+                </dd>
+            </li>
+            <li class="w2 alarmico_r">
+                <dt id="yd2" onclick="deviceinfo(107,2);"></dt>
+                <dd id="t2">
+                </dd>
+            </li>
+            <li class="w3 alarmico_r">
+                <dt id="yd3" onclick="deviceinfo(107,3);"></dt>
+                <dd id="t3">
+                </dd>
+            </li>
+            <li class="w4 alarmico_l">
+                <dt id="yd4" onclick="deviceinfo(107,4);"></dt>
+                <dd id="t4">
+                </dd>
+            </li>
+            <li class="w5 alarmico_r">
+                <dt id="yd5" onclick="deviceinfo(107,5);"></dt>
+                <dd id="t5">
+                </dd>
+            </li>
+            <li class="w6 alarmico_r">
+                <dt id="d6" onclick="deviceinfo(107,6);"></dt>
+                <dd id="t6">
+                </dd>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var pid = $.cookie('cookiepid');
+</script>
+<script src="~/Content/UserJS/lfywufl._jm.js" type="text/javascript"></script>

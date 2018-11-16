@@ -1,0 +1,211 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>报警处理</title>
+    <link href="~/Content/css/common.css" rel="stylesheet" type="text/css" />
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div>
+                <div class="ww" style="width: 100%;
+	        height: 97px;
+	        background-image: linear-gradient(0deg, 
+		        #54b3fa 0%, 
+		        #1565c0 100%), 
+	        linear-gradient(
+		        #1565c0, 
+		        #1565c0);
+	        background-blend-mode: normal, 
+		        normal;">
+                    <div style="width: 208px;
+	        height: 26px;
+	        font-family: MicrosoftYaHei;
+	        font-size: 26px;
+	        font-weight: normal;
+	        font-stretch: normal;
+	        line-height: 24px;
+	        letter-spacing: 0px;
+	        color: #ffffff;padding-top:36px;padding-left:56px">设备报警详细页面</div>         
+                </div>
+                <div style="display:inline-block;margin-top: 18px;" >
+                    <button onclick="showalarm()" style="margin-left:50px;font-family: MicrosoftYaHei;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: #1565c0;">
+                        报警内容
+                    </button>
+                    <button onclick="showreason()" style="margin-left:100px;font-family: MicrosoftYaHei;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: #1565c0;">
+                        可能原因
+                    </button>
+                    <button onclick="showhandle()" style="margin-left:100px;font-family: MicrosoftYaHei;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: #1565c0;">
+                        处理流程
+                    </button>
+                </div>
+
+                <div id="info" style="height:140px;background-color:white">
+                    <table style="margin-left:50px;height:100%;border-width:1px">
+                        <tr>
+                            <th style="width:10%;">报警级别</th>
+                            <th style="width:20%;font-size:14px" id="ALarmType"></th>
+                            <th style="width:10%">日期</th>
+                            <th style="width:20%" id="AlarmDate"></th>
+                            <th style="width:10%">时间</th>
+                            <th style="width:20%" id="AlarmTime"></th>
+                        </tr>
+                        <tr>
+                            <th style="width:10%">报警类型</th>
+                            <th style="width:20%" id="AlarmCate"></th>
+                            <th style="width:10%">数值</th>
+                            <th style="width:20%" id="AlarmValue"></th>
+                            <th style="width:10%">设备</th>
+                            <th style="width:20%" id="AlarmArea"></th>
+                        </tr>
+                        <tr> <th>监测位置</th> <th id="AlarmAddress" colspan="2"></th><th>监测站点</th> <th id="Company" colspan="2"></th>  </tr>
+                    </table>
+                </div>
+                <div id="tel">        
+                </div>
+               <div style="padding-right:50px;margin-left:50px;margin-top: 10px;">
+                   <div>
+                       选择批注：
+                   </div>
+                   <div class="radio m">
+                       <label>
+                           <input type="radio" name="group1" id="optionsRadios1" value="设备调试">设备调试
+                       </label>
+                   </div>
+                   <div class="radio">
+                       <label>
+                           <input type="radio" name="group1" id="optionsRadios2" value="真实故障">真实故障
+                       </label>
+                   </div>
+                   <div class="radio">
+                       <label>
+                           <input type="radio" name="group1" id="optionsRadios3" value="误报">误报
+                       </label>
+                   </div>
+                   <div class="radio">
+                       <label>
+                           <input type="radio" name="group1" id="optionsRadios4" value="其他">其他
+                       </label>
+                       <input id="ii" />
+                   </div>
+               </div>
+                <button onclick="subbmit()" style="width: 116px;height: 31px;background-color: #1565c0;color:white;position: relative;left: 440px;top:40px;">提交</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var alarmObj = @Html.Raw(Request.QueryString["alarmObj"]);
+        $.post("/AlarmManage/getMan", { "AlarmID": alarmObj.AlarmID }, function (data) {
+            $('#tel').html("<div style=\"margin-left:50px;margin-top:10px;\">"+data+"</div>");
+        });
+        if (alarmObj != null) {
+            //console.log(alarmObjStr)
+            //var str = unescape(alarmObjStr)
+            //alarmObj = JSON.parse(str);
+            showAlarmInfo()
+        }
+        function showAlarmInfo(){
+            document.getElementById("ALarmType").innerHTML = alarmObj.ALarmType;
+            document.getElementById("AlarmDate").innerHTML = alarmObj.AlarmDate;
+            document.getElementById("AlarmTime").innerHTML = alarmObj.AlarmTime;
+            document.getElementById("AlarmCate").innerHTML = alarmObj.AlarmCate;
+            document.getElementById("AlarmValue").innerHTML = ValueReset(alarmObj.AlarmValue, alarmObj);
+            document.getElementById("AlarmAddress").innerHTML = alarmObj.AlarmAddress;
+            document.getElementById("AlarmArea").innerHTML = alarmObj.AlarmArea;
+            document.getElementById("Company").innerHTML = alarmObj.Company;
+           
+        }
+        //开关量显示设置
+        function ValueReset(value, row) {
+            if (row.AlarmCate == "开关量") {
+                if (value == 0)
+                    value = "关";
+                else
+                    value = "开";
+            }
+            return value;
+        }
+        function showalarm(){
+            var content="<table style=\"height:100%;margin-left:50px;font-size: 14px;\"><tr><th style=\"width:10%;\">报警级别</th><th style=\"width:20%\" id=\"ALarmType\"></th><th style=\"width:10%\">日期</th><th style=\"width:20%\" id=\"AlarmDate\"></th><th style=\"width:10%\">时间</th><th style=\"width:20%\" id=\"AlarmTime\"></th></tr><tr><th style=\"width:10%\">报警类型</th><th style=\"width:20%\" id=\"AlarmCate\"></th><th style=\"width:10%\">数值</th><th style=\"width:20%\" id=\"AlarmValue\"></th><th style=\"width:10%\">设备</th><th style=\"width:20%\" id=\"AlarmArea\"></th></tr><tr> <th>监测位置</th> <th id=\"AlarmAddress\" colspan=\"2\"></th><th>监测站点</th> <th id=\"Company\" colspan=\"2\"></th></tr></table>";
+            $('#info').html(content);
+            showAlarmInfo()
+        }
+        function showreason(){
+            var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.浸水.\n2.误报.</textarea>"
+            $('#info').html(content);
+        }
+        function showhandle(){
+            var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.联系负责人核实报警情况，要求15分钟内反馈结果.\n2.依据结果处理报警.\n3.如为：真实故障，自动下发工单，并短信通知相关人员，电话通知值班班长，安排抢修事宜.\n4.跟踪工单进展.</textarea>"
+            $('#info').html(content);
+        }
+
+        function subbmit() {
+            //console.log("subbmit")
+            //console.log(alarmObj)
+            if (alarmObj) {
+                var AlarmTreatment = ""
+                var group1 = $("[name='group1']").filter(":checked");
+                //console.log(group1.attr("id"));
+
+                if (group1.val() != "其他") {
+                    AlarmTreatment= group1.val()
+                } else {
+                    AlarmTreatment = document.getElementById("ii").value
+                }
+                            
+                //console.log(AlarmTreatment);
+                if(AlarmTreatment==undefined||AlarmTreatment==""){
+                    alert("批注不能为空")
+                    return;
+                }
+
+                //去掉前后空格               
+                AlarmTreatment =  AlarmTreatment.replace(/(^\s*)|(\s*$)/g, ""); 
+                //console.log("AlarmTreatment ="+AlarmTreatment);
+
+                $.post("/AlarmManage/DelAlarmById", { "AlarmID": alarmObj.AlarmID, "AlarmTreatment": AlarmTreatment }, function (data) {
+                    alert(data);
+                    $('#editwin').window('close');
+                });
+            }
+        }
+        function GetRequest() {
+            var url = location.search;
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+    </script>
+</body>
+</html>

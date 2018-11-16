@@ -1,0 +1,258 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- 头部 -->
+        <header>
+            
+            <!-- logo -->
+            <div class="am-fl tpl-header-logo">
+                <a href="javascript:;"><img src="../Content/images/logo/@ViewData["LogUrl"]" alt=""></a>
+            </div>
+
+            <!-- 右侧内容 -->
+            <div class="tpl-header-fluid">
+                <!-- 侧边切换 -->
+                <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+
+                </span>
+                </div>
+                <div class="am-fl tpl-header-navbar">
+                    <ul>
+                        <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+                    </ul>
+                </div>
+                @*<iframe src="/home/ReFlash" style="display:none;"></iframe>*@
+                <!-- 搜索 -->
+                @*<div class="am-fl tpl-header-search">
+                    <form class="tpl-header-search-form" action="javascript:;">
+                        <button class="tpl-header-search-btn am-icon-search"></button>
+                        <input class="tpl-header-search-box" type="text" placeholder="搜索内容...">
+                    </form>
+                </div>*@
+                
+                <!-- 其它功能-->
+                <div class="am-fr tpl-header-navbar">
+                    <ul>
+                        <!-- 欢迎语 -->
+
+                        
+                        
+                        <li class="am-text-sm tpl-header-navbar-welcome">
+                            <dl>
+                                <dt>
+                                    <a>欢迎您, <span> @ViewData["UserName"]</span><i class="am-icon-chevron-down" style="transform:rotate(0deg);font-size:18px;font-weight: bold;"></i> </a>
+                                </dt>
+                                <dd>
+                                    <p class="tb" style=""></p>
+                                    <p onclick="chgPwd()" style="margin-top:-10px">修改密码</p>
+                                    <p onclick="LoginOut()">退出</p>
+                                </dd>
+                            </dl>
+                               
+                            @*<a href="javascript:;">欢迎你, <span> @ViewData["UserName"]</span> </a>*@
+                        </li>
+    @**@ <!-- 新工单通知 -->
+    <li class="am-dropdown tpl-dropdown" data-am-dropdown>
+        <a href="/Orderinfo/OrderList" target="main_frame" >
+            <span class="am-badge am-radius textBadge">
+                工单
+            </span>
+            <i class="iconfont icon-order"  id="orderIcon"></i>
+            @*<span class="am-badge am-badge-success am-round item-feed-badge">4</span>*@ 
+        </a>
+
+    </li>
+
+    <!-- 新隐患提示 -->
+    <li class="am-dropdown" data-am-dropdown>
+        <a href="/PerationMaintenance/HazardMan" target="main_frame" >
+            <span class="am-badge am-radius textBadge">
+                隐患
+            </span>
+            <i class="iconfont icon-yinhuandianwei"  id="bugIcon" style=""></i>
+            @* <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>*@<span class="am-badge am-badge-warning am-round item-feed-badge"></span>
+        </a>
+
+    </li>
+                         <!-- 报警 -->
+                        <li class="am-text-sm">
+                            <a href="/AlarmManage/Index?pid=0" target="main_frame" >
+                                <span class="am-badge am-radius textBadge">
+                                    报警
+                                </span>
+                                <i class="iconfont icon-real-time-alarm" id="alarmIcon"></i> 
+                                @*<span class="am-badge am-badge-warning am-round item-feed-badge" id="alarmNum">2</span>*@
+                            </a>
+                        </li>
+                        <!-- 修改秘密 -->
+                        <!--
+                        <li class="am-text-sm">
+                            <a href="javascript:chgPwd();">
+                                <span class="am-icon-key"></span> 修改密码
+                            </a>
+                        </li>
+                            -->
+                        <!-- 退出 
+                        <li class="am-text-sm">
+                            <a href="javascript:LoginOut();">
+                                <span class="am-icon-sign-out"></span> 退出
+                            </a>
+                        </li>
+                            -->
+
+                        <li class="am-text-sm" style="display:inline">
+                            <p style="text-align:left; color:#fff;padding:12px 10px 10px 20px;opacity:0.8;margin:0;font-size:10px;line-height:33px;width:140px" id="curTIme">
+                                <time class="curTIme">00.00  00:00</time>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </header>
+        <!-- 风格切换 -->
+       @*<div class="tpl-skiner">
+        <div class="tpl-skiner-toggle am-icon-cog">
+        </div>
+
+        <div class="tpl-skiner-content">
+            <div class="tpl-skiner-content-title">
+                选择主题
+            </div>
+            <div class="tpl-skiner-content-bar">
+                <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                <span class="skiner-color skiner-black" data-color="theme-black"></span>
+            </div>
+        </div>
+    </div>*@
+ <!-- 系统监测概括 -->
+<div class="tpl-skiner active">
+    <div class="tpl-skiner-toggle am-icon-cog">
+
+    </div>
+
+    <div class="tpl-skiner-content">
+        <!--
+            <div class="tpl-skiner-content-title">
+            运维概况
+        </div>
+        -->
+        <div class="site">
+            <h1 class="num">13<span>个</span></h1>
+            <p>总站点数</p>
+            <div class="row">
+                <div class="col col-lg-4">
+                    <p class="num">10</p>
+                    <span>户内</span>
+                </div>
+                <div class="col col-lg-4">
+                    <p class="num">2</p>
+                    <span>户外</span>
+                </div>
+                <div class="col col-lg-4">
+                    <p class="num">1</p>
+                    <span>充电站</span>
+                </div>
+            </div>
+        </div>
+        <div class="weather">
+            <p class="title">未来七天预报</p>
+            <div id="weatherChart" style="width:100%"></div>
+
+        </div>
+        <div class="operation">
+            <p class="title">报警概况</p>
+            @*<div id="userCharts1" ></div>*@
+            <div class="row" style="margin-top:12px;">
+                <div class="col col-lg-4">
+                    <num>--</num>
+                    <p>故障报警</p>
+                </div>
+                <div class="col col-lg-4">
+                    <num>--</num>
+                    <p>通讯报警</p>
+                </div>
+                <div class="col col-lg-4">
+                    <num>--</num>
+                    <p>隐患报警</p>
+                </div>
+            </div>
+            <div class="legend">
+                <span class="square" style="background:#b3b3b3"></span>
+                <span class="text">未监测</span>
+                <span class="square" style="background:#4eab50"></span>
+                <span class="text">正常</span>
+                <span class="square" style="background:#fff94d"></span>
+                <span class="text">一般</span>
+                <span class="square" style="background:#eb9334"></span>
+                <span class="text">严重</span>
+                <span class="square" style="background:#ae0b1b"></span>
+                <span class="text">危急</span>
+            </div>
+        </div>
+        
+    </div>
+    <!--
+    <div class="tpl-skiner-content">
+        <div class="tpl-skiner-content-title">
+            报警概况
+        </div>
+        <div id="userCharts2" style="width: 100%; height: 240px; padding: 0px; background-color:#000;font-size:14px;color:white">累计报警：20个；<br><br>处理报警：20个；<br><br>未处理报警 0个；</div>
+    </div>
+       -->
+</div>@**@
+
+ 
+
+<script type="text/javascript" src="~/Content/UserJS/lbyw-base._jm.js" ></script>
+<script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
+<script src="~/Content/UserJS/_Header1.jm.js"></script>
+<script src="~/Content/UserJS/_Header2.jm.js"></script>
+<script src="~/Content/UserJS/_Header3.jm.js"></script>
+<script type="text/javascript">
+    $(".theme-black .am-fr a").on("click", function () {
+        $("#collapase-nav-1 li").find("a").attr("style", "background-color:#262a35;border: #262a35;")
+        $(".theme-black .am-fr a").css("background", "none");
+        $(this).css("background", "#40ae95").css("color","#fff");
+    })
+    $(" .tpl-header-navbar-welcome dl").hover(function () {
+        $(this).find("dd").fadeIn()
+    }, function () {
+        $(this).find("dd").fadeOut()
+    })
+    $(function () {
+        setInterval(function () {
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = (date.getMonth()) + 1
+            var day = date.getDate()
+            var hour = date.getHours()
+            var min = date.getMinutes()
+            var seconds = date.getSeconds()
+            if (day < 10) {
+                day = "0" + day
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds
+            }
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (hour < 10) {
+                hour = "0" + hour
+            }
+            if (min < 10) {
+                min = "0" + min
+            }
+            $(".curTIme").html(month + "." + day + " &nbsp;&nbsp;" + hour + " : " + min )
+        }, 1000)
+    })
+    $(".tpl-header-navbar li a").hover(function () {
+        $(this).parent("li").find(".textBadge").fadeIn()
+    }, function () {
+        $(this).parent("li").find(".textBadge").fadeOut()
+    })
+</script>
+<script src="~/Content/UserJS/appliction.js"></script>

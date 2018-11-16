@@ -1,0 +1,57 @@
+<meta charset="utf-8" />
+<div style="height:100%; width:100%; text-align:left;color:#FFF; margin-top:15%;margin-left: 10%;">
+	<div id="configPath123" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">路径配置 </div>
+  	<div class="pathcontent" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+    	<br />
+        <div class="pathconfig">
+            <div id="recordfile">录像文件</div>
+            <input id="Path_2" readonly="readonly"/>
+            <div class="browerBtn" id="PathBtn_2"></div>
+        </div>
+        
+		<div class="pathconfig">
+            <div id="longfiledown">远程文件下载</div>
+            <input id="Path_3" readonly="readonly"/>
+            <div class="browerBtn" id="PathBtn_3"></div>
+        </div>
+        
+        <div class="pathconfig">
+            <div id="getimg">图片抓拍文件</div>
+            <input id="Path_1" readonly="readonly"/>
+            <div class="browerBtn" id="PathBtn_1"></div>
+        </div>
+        
+        <div class="pathconfig">
+            <div id="filetype">文件类型</div>
+            <div id="filetype_select" style="float:left;">
+                <select id="Path_fileType">
+                    <option value="1">h264</option>
+                    <option value="2">avi</option>
+                </select>
+            </div>
+            <div id="MacDisplay">
+                <div style="float:left; margin-left:50px;">
+                	<label id="recordtime">录像切换时间</label>
+                    <input id="minuteTime" onkeyup="if(keyboardFilter()) {value=NumberRangeLimt(this,1,60)}"/>&nbsp;&nbsp;
+                    <label id="minute">分钟</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pathconfig" id="Original" style="display:none;">
+            <div id="OriginalVideo">原始比例</div>
+            <div style="float:left; font-size:12px;">
+				<input value=1 type="radio"  name="vscale"  style="margin-left:5px"/>
+				<label id="OriginalVideoSwitch">原始比例</label>
+				<input value=0 type="radio"  name="vscale"  style="margin-left:5px"/>
+				<label id="FullVideoSwitch">铺满窗口</label>
+            </div>
+        </div>
+        
+        <div class="pathSave">
+        	<font id="setSave">保存</font>
+        </div>
+        
+   	</div>
+</div>
+

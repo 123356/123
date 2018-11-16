@@ -1,0 +1,147 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="NVR_osd_config" class="logo_title">Live</div>
+               <div class="item_R">
+               	   <div id="NVR_ChnOSDCP" class="logo_link_cy"  style="display:none;">Copy</div>
+                   <div id="NVR_ChnOSDRf" class="logo_link">Refresh</div>
+                   <div id="ChnOSDDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="NVR_ChnOSDSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table" id="NVR_OSD_CHN_TABLE">
+                    <div class="table_L" id="NVR_cod_channel_num">通道号</div>
+                    <div class="table_R">
+                    <select id="NVR_ChnOSDChannelMask" class="select" ></select>
+                    </div>
+                </div>
+                
+                <div class="table" id = "NVR_chn_show_name">
+                    <div class="table_L" id="NVR_show_name">显示名称</div>
+                    <div class="table_R">
+                    <select id="NVR_ChnOSDShowName" class="select">
+                        <option value="0">关闭</option>
+            			<option value="1">打开</option>
+                    </select>
+                    </div>
+                </div>  
+              <!--table 2-->
+                <div class="table" id="NVR_chn_show_time">
+                    <div class="table_L" id="NVR_show_time">显示时间</div>
+                    <div class="table_R">
+                    <select id="NVR_ChnOSDShowTime" class="select">
+                        <option value="0">关闭</option>
+            			<option value="1">打开</option>
+                    </select>
+                    </div>
+                </div>
+                
+            <!--table 2-free-->
+            	<div class="table">
+                    <div class="table_L" id="NVR_channel_name">通道名称</div>
+                    <div class="table_R">
+                        <input id="NVR_ChnOSDChnName" class="select" maxlength="35" style="height:15px; width:293px;" onkeyup="toUpper()" onblur="liveCheckLen(this.value, this.id, -1)"/>
+                     </div>
+                </div>
+                
+                <div class="table" id="NVROSd_RecTimeFlag_div" style="display:none;">
+                    <div class="table_L" id="NVROSd_RecTimeFlag_L">Record Time</div>
+                    <div class="table_R">
+                    	<select id="NVROSd_RecTimeFlag" class="select">
+        					<option value="0">关闭</option>
+            				<option value="1">打开</option>
+        				</select>
+                    </div>
+                </div> 
+                
+                <div class="table" id="NVR_pre_OSD" style="display:none;">
+                    <div class="table_L" id="pre_OSD">预览OSD</div>
+                    <div class="table_R">
+                    	<select id="ChnOSDPreview" class="select">
+        					<option value="0">关闭</option>
+            				<option value="1">打开</option>
+        				</select>
+                    </div>
+                </div> 
+                
+                 <div class="table" id="NVR_chn_date_format" style="display:none;">
+                    <div class="table_L" id="NVR_date_format">日期格式</div>
+                    <div class="table_R">
+                    <select id="NVR_ChnOSDDateFormat" class="select">
+                        <option value="0">月/日/年</option>
+            			<option value="1">年/月/日</option>
+                        <option value="2">日/月/年</option>
+                    </select>
+                    </div>
+                </div>
+                
+                 <div class="table" id="NVR_chn_time_format" style="display:none;">
+                    <div class="table_L" id="NVR_time_format">时间格式</div>
+                    <div class="table_R">
+                    <select id="NVR_ChnOSDTimeFormat" class="select">
+                        <option value="0">24小时</option>
+            			<option value="1">12小时</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="table" id="NVR_LIVE_REFRESH_RATE" style="display:none;">
+            	<div class="table_L">
+                	<font id="flicker_ctrl">闪烁控制</font>
+                </div>
+                <div class="table_R">
+                	<select id="ChnOSDFlickerCtrl" class="select">
+                    	<option value="0" selected="selected">50Hz</option>
+                        <option value="1">60Hz</option>
+                    </select>
+                </div>
+            </div>
+                
+            <div id="Vidoeposition" style="display:none;"></div>   
+                
+             <!--table 7-->
+             <div id = "NVR_osdCopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "NVR_osdSelectCopy" style="border-top:1px solid white;">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">   
+                        <input type="checkbox" id="NVR_osdck"/>
+                        <font id="NVR_osdSeletedAll"> 全选</font>
+                        <input type="button" value="确定" id="NVR_osdOk" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="NVR_osd_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="NVR_osd_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="NVR_osd_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="NVR_osd_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_osd_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="NVR_osd_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="NVR_osd_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="NVR_osd_TDNum_4">
+                        </div>
+                   </div>
+                   
+            </div>
+    </div>
+    <!--table end-->
+		
+</div>

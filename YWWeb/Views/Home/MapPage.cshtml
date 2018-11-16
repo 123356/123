@@ -1,0 +1,907 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>欢迎使用</title>
+    <style type="text/css">
+        html, body
+        {
+            margin: 0;
+            padding: 0;
+        }
+        .iw_poi_title
+        {
+            color: #CC5522;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            padding-right: 13px;
+            white-space: nowrap;
+        }
+        .iw_poi_content
+        {
+            font: 12px arial,sans-serif;
+            overflow: visible;
+            padding-top: 4px;
+            white-space: -moz-pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/getscript?v=2.0&ak=kZsKlcEXbTKGC3ETRSWirVWt&s=1"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <link href="~/Content/baiduMap/script/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Content/baiduMap/script/TrafficControl_min.js"></script>
+    <script type="text/javascript" src="~/Content/baiduMap/script/DistanceTool_min.js"></script>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/easySlider.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $("#left_sidebar", window.parent.document).hide();
+        $("#leftmenu", window.parent.document).css("left", "0px");
+        //$("#main_frame", window.parent.document).css("left", "210px");
+        $("#leftmenu", window.parent.document).css("display", "block");
+        var indexrightwidth, indexleftwidth, indexbottomwidth;
+        $(document).ready(function () {
+            $("#slider").easySlider({
+                slideSpeed: 500,
+                paginationSpacing: "10px",
+                paginationDiameter: "12px",
+                paginationPositionFromBottom: "20px",
+                slidesClass: ".slides",
+                controlsClass: ".controls",
+                paginationClass: ".pagination"
+            });
+            //点击左边导航按钮时隐藏左边菜单
+
+            var indexpage = document.body.clientWidth;
+            var leftmenu = $(".leftmenu").width();
+            var indexrightwidth = $(".index_right").width();
+            var cwidth = indexpage - leftmenu;
+            var ccount = 0;
+            var bwidth = 0;
+            $(".index_center").width(indexpage - leftmenu - indexrightwidth);
+            $(".leftmenutitle a").click(function () {
+                //                $(".leftmenu").animate({ "width": "toggle" }, 300);
+                //$(".leftmenutitle a").toggleClass("leftmenutitleh");
+                //                $(".main_content").toggleClass("main_contentwidth");
+                if (ccount % 2 == 0) {
+                    $(".leftmenu").animate({ "margin-left": -leftmenu }, 150);
+                    $(".index_center").width(indexpage);
+                    $(".leftmenutitle a").attr("class", "leftmenutitleh");
+                    $(".leftmenutitle").css({ "right": "-10px" });
+                    //$(".leftmenu_content").css({ "overflow": "hidden", "padding-right": "0px" });
+                    $("#dituContent").width(indexpage);
+                    indexrightwidth = $(".index_right").width();
+                    indexrightright = $(".index_right").css("right");
+                    indexbottomwidth = $(".index_bottom").width();
+                    if (indexrightright < 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 16px" });
+                    }
+                    if (indexrightright == 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - indexrightwidth }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 10px" });
+                    }
+                }
+                else {
+                    $(".leftmenu").animate({ "margin-left": 0 }, 150);
+                    $(".index_center").width(cwidth);
+                    $(".leftmenutitle a").attr("class", "leftmenutitlec");
+                    $(".leftmenutitle").css({ "right": "3px" });
+                    //$(".leftmenu_content").css({ "overflow": "auto", "padding-right": "3px" });
+                    $("#dituContent").width(cwidth);
+                    indexrightright = $(".index_right").css("right");
+                    if (indexrightright < 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - leftmenu }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 16px" });
+                    }
+                    if (indexrightright == 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - indexrightwidth - leftmenu }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 10px" });
+                    }
+                }
+                ccount++;
+            });
+
+            var rightheight = $(".index_right").height();
+            $("#dituContent").height(rightheight);
+
+
+            //点击右边隐藏按钮时隐藏右边栏
+            var ccount1 = 0;
+            $(".index_rightchart").height(bottomheight - 3);
+            $(".index_righttitle a").click(function () {
+                if (ccount1 % 2 == 0) {
+                    $(".index_right").animate({ right: '-25%' }, 150);
+                    $(".index_righttitle a").attr("class", "index_righttitleh");
+                    $(".index_righttitle").css({ "left": "-16px" });
+                    indexrightwidth = $(".index_right").width();
+                    indexleftwidth = $(".leftmenu").width();
+                    indexbottomwidth = $(".index_bottom").width();
+                    var indexleftmarginleft = $(".leftmenu").css("margin-left");
+                    if (indexleftmarginleft == 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - indexleftwidth }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 16px" });
+                    }
+                    if (indexleftmarginleft == -indexleftwidth + 'px') {
+                        $(".index_bottom").animate({ width: indexpage }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 16px" });
+                    }
+                }
+                else {
+                    $(".index_right").animate({ right: 0 }, 150);
+                    $(".index_righttitle a").attr("class", "index_righttitlec");
+                    $(".index_righttitle").css({ "left": "0" });
+                    //$(".baidumap").animate({ width: pageWidth1 }, 150);
+                    indexrightwidth = $(".index_right").width();
+                    indexleftwidth = $(".leftmenu").width();
+                    indexbottomwidth = $(".index_bottom").width();
+                    var indexleftmarginleft = $(".leftmenu").css("margin-left");
+                    if (indexleftmarginleft == 0 + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - indexleftwidth - indexrightwidth }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 10px" });
+                    }
+                    if (indexleftmarginleft == -indexleftwidth + 'px') {
+                        $(".index_bottom").animate({ width: indexpage - indexrightwidth }, 300);
+                        $(".content-slider li div").css({ "margin": "25px 10px" });
+                    }
+                }
+                ccount1++;
+            });
+
+            //点击下边隐藏按钮时隐藏下边栏
+            var ccount2 = 0;
+            var bottomheight = $(".index_bottom").height();
+            $(".index_bottom").width(indexpage - leftmenu - indexrightwidth);
+            $(".index_bottomtitle a").click(function () {
+                if (ccount2 % 2 == 0) {
+                    $(".index_bottom").animate({ height: 0 }, 150).css({ position: 'fixed', bottom: '0' });
+                    $(".index_bottomtitle a").attr("class", "index_bottomtitleh");
+                    $(".index_bottomtitle").css({ "top": "-16px", "z-index": "9999" });
+                    //$(".baidumap").animate({ height: pageHeight2 }, 150);
+                }
+                else {
+                    $(".index_bottom").animate({ height: bottomheight }, 150);
+                    $(".index_bottomtitle a").attr("class", "index_bottomtitlec");
+                    $(".index_bottomtitle").css({ "top": "0px" });
+                }
+                ccount2++;
+            });
+            var pname = $("#pname").val();
+            if (pname == "站室名")
+                pname = "";
+            $.post("/Home/AccordionMenu", { "pname": pname }, function (data) {
+                $("#leftmenu").html(data);
+                $(".one > li > a").click(function () {
+                    $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                    //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                    $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                    $(this).parents().siblings().find(".two").hide(300);
+                    $(this).siblings(".two").toggle(300);
+                    $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                });
+                $(".two > li > a").click(function () {
+                    $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                    $(this).toggleClass("two_open").parents().siblings().find("a").removeClass("two_open");
+                    $(this).parents().siblings().find(".thr").hide(300);
+                    $(this).siblings(".thr").toggle(300);
+                })
+
+                $(".thr > li > a").click(function () {
+                    $(this).addClass("xuan").parents().siblings().find("a").removeClass("xuan");
+                    $(this).parents().siblings().find(".thr_nr").hide();
+                    $(this).siblings(".thr_nr").toggle();
+                });
+                //263=95+47+42+35+30+9《padding》
+                //var pageHeight = document.body.clientHeight - 263; 嵌套
+                var pageHeight = document.documentElement.clientHeight - 50; //iframe
+                var accordionheight = ($(".one").children("ul li").length * 39);
+                //var twoheight = (($(".two:first").children("ul li").length -1)* 39);
+                $('.two').height(pageHeight - accordionheight);
+            });
+        });
+        function searchAccord() {
+            var pname = $("#pname").val();
+            if (pname == "站室名")
+                pname = "";
+            $.post("/Home/AccordionMenu", { "pname": pname }, function (data) {
+                $("#leftmenu").html(data);
+                $(".one > li > a").click(function () {
+                    $(this).addClass("xz").parents().siblings().find("a").removeClass("xz");
+                    //$(".one > li > a > i").toggleClass("one_open").parents().siblings().find("a").removeClass("one_open");
+                    $(this).children(":first").toggleClass("one_open").parents().siblings().find("i").removeClass("one_open");
+                    $(this).parents().siblings().find(".two").hide(300);
+                    $(this).siblings(".two").toggle(300);
+                    $(this).parents().siblings().find(".two > li > .thr").hide().parents().siblings().find(".thr_nr").hide();
+                });
+                $(".two > li > a").click(function () {
+                    $(this).addClass("sen_x").parents().siblings().find("a").removeClass("sen_x");
+                    $(this).toggleClass("two_open").parents().siblings().find("a").removeClass("two_open");
+                    $(this).parents().siblings().find(".thr").hide(300);
+                    $(this).siblings(".thr").toggle(300);
+                })
+
+                $(".thr > li > a").click(function () {
+                    $(this).addClass("xuan").parents().siblings().find("a").removeClass("xuan");
+                    $(this).parents().siblings().find(".thr_nr").hide();
+                    $(this).siblings(".thr_nr").toggle();
+                });
+                //263=95+47+42+35+30+9《padding》
+                var pageHeight = document.documentElement.clientHeight - 42; //iframe
+                var accordionheight = ($(".one").children("ul li").length * 39);
+                //var twoheight = (($(".two:first").children("ul li").length -1)* 39);
+                $('.two').height(pageHeight - accordionheight);
+            });
+        }
+        var isdb;
+        function aa(x, y) {
+            isdb = false;
+            window.setTimeout(cc, 500)
+            function cc() {
+                if (isdb != false) return;
+                //$("#maincontent", window.parent.document).attr('src', '/Home/MapPage?x=' + x + '&y=' + y);
+                var frames = window.parent.window.document.getElementById("maincontent");
+                frames.contentWindow.setPosition(x, y);
+            }
+        }
+        function bb(pid) {
+            isdb = true;
+            $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+            window.location.href = "/PowerQuality/Index?mid=21";
+
+            
+            //获取二级菜单列表
+            $.post("/Home/GetChildMenuInfo", { "url": '/State/Overview' }, function (data) {
+                $("#left_sidebar", window.parent.document).html(data);
+                //$("#SecondMenu li:first").click();
+            });
+        }
+        //界面跳转
+        function PageRedirect(mid,url) {
+            //获取二级菜单列表
+            $.post("/Home/GetChildMenuInfo", { "url": url }, function (data) {
+                $("#left_sidebar", window.parent.document).html(data);
+                //$("#SecondMenu li:first").click();
+            });
+            window.location.href = url ;
+        }
+    </script>
+</head>
+<body>
+    <!--百度地图容器-->
+    <div class="leftmenu">
+        <span class="leftmenutitle"><a href="#"></a></span>
+        <div class="leftmenu_content">
+            <div class="leftmenu_search">
+                <span class="leftmenu_search_txt">
+                    <input type="text" value="站室名" class="radius5" onfocus="if (value =='站室名'){value =''}"
+                        onblur="if (value ==''){value='站室名'}" id="pname" /></span> <span class="leftmenu_search_btn">
+                            <input type="button" value="" class="btn_style" onclick="searchAccord()" /></span>
+            </div>
+            <div>
+                <ul class="one" id="leftmenu">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="index_center">
+        <div id="t1" class="baidumap">
+            <div style="border: #ccc solid 1px; margin: 0 auto" id="dituContent">
+            </div>
+        </div>
+        <div class="index_bottom">
+            <span class="index_bottomtitle"><a href="javascript:;"></a></span>
+            <div id="slider">
+                <ul class="slides clearfix content-slider">
+                    <li> 
+                        <div>
+                            <h2>
+                                报警站点</h2>
+                            <a href="###" onclick="PageRedirect(268, '/AlarmManage/Index?pid=0');" class="bjzd">
+                                <img src="../Content/images/bjzd.png" /></a></div>
+                        <div>
+                            <h2>
+                                隐患排查</h2>
+                            <a href="###" onclick="PageRedirect(268,'/PerationMaintenance/HazardMan');"class="yhpc">
+                                <img src="../Content/images/yhpc.png" /></a></div>
+                        <div>
+                            <h2>
+                                用电质量</h2>
+                            <a href="###"  onclick="PageRedirect(55,'/State/Overview?mid=257');" class="ydzl">
+                                <img src="../Content/images/ydzl.png" /></a></div>
+                        <div>
+                            <h2>
+                                待办工单</h2>
+                            <a href="###" onclick="PageRedirect(268,'/Orderinfo/OrderList');"class="dbgd">
+                                <img src="../Content/images/dbgd.png" /></a></div>
+                    </li> 
+                 @*   <li>
+                        <div>
+                            <h2>
+                                待办工单</h2>
+                            <a href="###" class="dbgd">
+                                <img src="../Content/images/dbgd.png" /></a></div>
+                        <div>
+                            <h2>
+                                待办工单</h2>
+                            <a href="###" class="dbgd">
+                                <img src="../Content/images/dbgd.png" /></a></div>
+                        <div>
+                            <h2>
+                                待办工单0</h2>
+                            <a href="###" class="dbgd">
+                                <img src="../Content/images/dbgd.png" /></a></div>
+                        <div>
+                            <h2>
+                                待办工单1</h2>
+                            <a href="###" class="dbgd">
+                                <img src="../Content/images/dbgd.png" /></a></div>
+                    </li>*@
+                </ul>
+                <ul class="pagination">
+                    @*<li class="active"></li>
+                    <li></li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="index_right">
+        <div class="index_rightscroll">
+            <span class="index_righttitle"><a href="javascript:;"></a></span>
+            <div id="userCharts1" class="index_rightchart">
+            </div>
+            <div id="userCharts2" class="index_rightchart">
+            </div>
+            <div id="userCharts3" class="index_rightchart bordernone">
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('userCharts1'));
+    var myChart2 = echarts.init(document.getElementById('userCharts2'));
+    var myChart3 = echarts.init(document.getElementById('userCharts3'));
+    getTipsState();
+    function getTipsState(){
+        $.post("/SysInfo/getTipsState", "", function (data) {
+        var DataJson = JSON.parse(data);
+            if(DataJson.AlarmTip > 0){ $(".bjzd").append("<i class='radius10'>" + DataJson.AlarmTip + "</i>"); }
+            if(DataJson.BugTip > 0){ $(".yhpc").append("<i class='radius10'>" + DataJson.BugTip + "</i>"); }
+            if(DataJson.EnerTip > 0){ $(".ydzl").append("<i class='radius10'>" + DataJson.EnerTip + "</i>"); }
+            if(DataJson.OrderTip > 0){ $(".dbgd").append("<i class='radius10'>" + DataJson.OrderTip + "</i>"); }
+        });
+    }
+
+    var option = {tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
+        show: true,
+        textStyle: {
+            color: "#fff",
+            fontSize: 12
+        }
+    },
+    legend: {
+        orient: "vertical",
+        x: "right",
+        data: ["高压柜", "低压柜", "变压器", "电缆", "母线槽"],
+        y: "center",
+        textStyle: {
+            color: "rgb(255, 255, 255)",
+            fontSize: 14,
+            fontStyle: "normal",
+            fontWeight: "normal",
+            align: "center",
+            baseline: "middle"
+        },
+        padding: 50,
+        itemWidth: 20,
+        itemHeight: 10,
+        itemGap: 8
+    },
+    toolbox: {
+        show: false,
+        feature: {
+            dataView: {
+                readOnly: true
+            }
+        },
+        showTitle: true,
+        textStyle: {
+            fontSize: 12,
+            fontStyle: "normal",
+            fontWeight: "normal"
+        }
+    },
+    calculable:false,//饼图外边框
+    series: [
+        {
+            name: "设备维护统计",
+            type: "pie",            
+            radius: ["45%", "65%"],
+            itemStyle: {
+                //普通样式
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    borderWidth: 0,
+                    borderColor: "rgba(0, 0, 0, 0)"
+                },
+                //强调样式
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: 'inner',
+                        textStyle: {
+                            align:'center',
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            fontStyle: "normal",
+                            color: "rgb(255, 255, 255)"
+                        }
+                    },
+                }
+            },
+            data: [
+                {
+                    value: 150,
+                    name: "高压柜"
+                },
+                {
+                    value: 80,
+                    name: "低压柜"
+                },
+                {
+                    value: 50,
+                    name: "变压器"
+                },
+                {
+                    value: 30,
+                    name: "电缆"
+                },
+                {
+                    value: 450,
+                    name: "母线槽"
+                }
+            ],
+            center: ["35%", "55%"]
+            ,
+            selectedOffset: 10,
+            startAngle: 90
+        }
+    ],
+    title: {
+        text: "设备维护统计",
+        textStyle: {
+            fontSize: 18,
+            color: "rgb(255, 255, 255)",
+            fontWeight: "bolder",
+            fontStyle: "normal"
+        },
+        padding: 15
+    },
+    backgroundColor: "rgb(0, 0, 0)",
+    color: ["rgb(255, 123, 0)", "rgb(0, 196, 0)", "rgb(249, 249, 0)", "rgb(6, 124, 6)", "rgb(0, 164, 247)", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+
+};
+    myChart.setOption(option);
+
+    var option2 = {
+    title: {
+        text: "故障/隐患统计",
+        textStyle: {
+            color: "rgb(255, 255, 255)",
+            fontSize: 18,
+            fontStyle: "normal",
+            fontWeight: "bolder",
+            align: "left",
+            baseline: "top"
+        },
+        padding: 15
+    },
+    tooltip: {
+        trigger: "axis"
+    },
+    legend: {
+        data: ['故障统计', '隐患统计'],
+        x: "right",   
+        textStyle: {
+            color: "rgb(255, 255, 255)",
+            fontSize: 14,
+            fontStyle: "normal",
+            fontWeight: "normal",
+            align: "center",
+            baseline: "middle"
+        },
+        y: "top",
+        orient: "horizontal",
+        itemGap: 10,
+        itemHeight: 10,
+        itemWidth: 20,
+        padding: 15
+    },
+    toolbox: {
+        show: false,
+        feature: {
+            mark: {
+                show: true
+            },
+            dataView: {
+                show: true,
+                readOnly: false
+            },
+            restore: {
+                show: true
+            },
+            saveAsImage: {
+                show: true
+            }
+        }
+    },
+    calculable: false,
+    xAxis : [
+        {
+            type : 'category',
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 2
+                },
+                show: true
+            },
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 12,
+                fontStyle: "normal"
+            },
+            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        }
+    ],
+    
+    grid: {
+        y: 50,
+        x: 50,
+        x2:50,
+        y2:50
+        //坐标系的位置，可设置宽高
+    },
+    yAxis : [
+        {
+            type : 'value',
+            name : '',
+            axisLine: {
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 2
+                },
+                show: true
+            },
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 12,
+                fontStyle: "normal"
+            },
+             splitLine: {
+                show: false
+            }
+        },
+        {
+            type : 'value',
+            name : '',
+            axisLine: {
+                lineStyle: {
+                    color: "rgb(252, 252, 252)",
+                    width: 2
+                },
+                show: true
+            },
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 12,
+                fontStyle: "normal"
+            },
+             splitLine: {
+                show: false
+            },
+            splitArea: {
+                show: true
+            }
+        }
+    ],
+    series : [
+
+        {
+            name:'故障统计',
+            type:'bar',
+            data:[5, 3, 2, 7 , 9, 8, 6, 4, 2, 8, 3, 6],
+            barCategoryGap: "35%"
+        },
+        {
+            name:'隐患统计',
+            type:'line',
+            yAxisIndex: 1,
+            data:[3.7, 5.0, 4.5, 6.2, 7.9, 8.0, 9.3, 7.9, 8.2, 6.8, 5.9, 7.3],
+            symbol: "emptyRectangle",
+             itemStyle: {
+                normal: {
+                    lineStyle: {
+                        width: 3
+                    }
+                }
+            }
+        }
+    ],
+    backgroundColor: "rgb(0, 0, 0)",
+    color: ["rgb(255, 123, 0)", "rgb(0, 196, 0)"]
+};
+    myChart2.setOption(option2);
+
+    var option3 = {
+    
+    tooltip: {
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: "vertical",
+        x: "right",
+        data: [">70%", ">50%", "<50%", "未统计"],
+        textStyle: {
+            color: "rgb(255, 255, 255)",
+            fontSize: 14
+        },
+        y: "center",
+        itemHeight:10,
+        itemWidth:20,
+        itemGap: 8,
+        padding:45
+    },
+    calculable: false,
+    series: [
+        {
+            name: "站点负荷统计",
+            type: "pie",
+            radius: ["30%", "45%"],
+            itemStyle: {
+                normal: {
+                    labelLine: {
+                        show: true,
+                         lineStyle: {
+                          width: 2
+                    }
+                    },
+                    label:{ 
+                            show: true, 
+                            formatter: '{d}%',
+                            textStyle: {
+                            color: "rgb(255, 255, 255)",
+                            fontSize: 16
+                        },
+                                labelLine :{show:true}
+                            } 
+                    
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: "rgb(255, 255, 255)"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: 10,
+                    name: ">70%"
+                },
+                {
+                    value: 15,
+                    name: ">50%"
+                },
+                {
+                    value: 10,
+                    name: "<50%"
+                },
+                {
+                    value: 5,
+                    name: "未统计"
+                }
+            ],
+            center: ["35%", "60%"]
+            ,
+            tooltip: {
+                axisPointer: {
+                    lineStyle: {
+                        color: "rgb(120, 168, 191)",
+                        width: 1
+                    }
+                }
+            },
+            markPoint: {
+                data: []
+            }
+        }
+    ],
+    backgroundColor: "rgb(0, 0, 0)",
+    color: ["rgb(255, 123, 0)", "rgb(0, 196, 0)", "rgb(249, 249, 0)","rgb(0, 164, 247)"],
+    title: {
+        text: "站点负荷统计",
+        textStyle: {
+            color: "rgb(255, 255, 255)"
+        },
+        padding: 15
+    }
+};
+    myChart3.setOption(option3);
+</script>
+<script type="text/javascript">
+    var Request = new Object();
+    Request = GetRequest();
+    var x, y;
+    x = Request["x"];
+    y = Request["y"];
+    if (x == undefined)
+        x = 113.554768;
+    if (y == undefined)
+        y = 22.172356;
+    var pageHeight, pageWidth;
+    if (typeof window.innerHeight != 'undefined') {
+        //针对非IE8及其以下的浏览器
+        pageHeight = window.innerHeight - 10;
+        pageWidth = window.innerWidth - 10;
+    } else {
+        if (document.compatMode == "CSS1Compat") {
+            //判断是否处于混杂模式
+            pageHeight = document.documentElement.clientHeight - 10;
+            pageWidth = document.documentElement.clientWidth - 10;
+        } else {
+            pageHeight = document.body.clientHeight - 10;
+            pageWidth = document.body.clientWidth - 10;
+        }
+    }
+    // pageWidth = window.screen.width - 210 - 10;
+    pageWidth = window.screen.width;
+    $("#main_frame", window.parent.document).css("width", pageWidth);
+    $("#t1").html("<div id=\"dituContent\" style=\"width:" + pageWidth + "px;height:" + pageHeight + "px;\"></div>");
+
+
+    //创建和初始化地图函数：
+    function initMap() {
+        createMap(); //创建地图
+        setMapEvent(); //设置地图事件
+        addMapControl(); //向地图添加控件
+        addMarker(); //向地图中添加marker
+    }
+
+    //创建地图函数：
+    function createMap() {
+        var map = new BMap.Map("dituContent"); //在百度地图容器中创建一个地图
+        var point = new BMap.Point(x, y); //定义一个中心点坐标
+        map.centerAndZoom(point, 12); //设定地图的中心点和坐标并将地图显示在地图容器中
+        //map.setMapType(BMAP_HYBRID_MAP);
+        map.setMapStyle({ style: 'dark' });
+        window.map = map; //将map变量存储在全局
+
+    }
+
+    //地图事件设置函数：
+    function setMapEvent() {
+        map.enableDragging(); //启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom(); //启用地图滚轮放大缩小
+        map.enableDoubleClickZoom(); //启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard(); //启用键盘上下左右键移动地图
+    }
+
+    //地图控件添加函数：
+    function addMapControl() {
+        //向地图中添加缩放控件
+        var ctrl_nav = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE });
+        map.addControl(ctrl_nav);
+        //向地图中添加缩略图控件
+        var ctrl_ove = new BMap.OverviewMapControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: 1 });
+        map.addControl(ctrl_ove);
+        //向地图中添加比例尺控件
+        var ctrl_sca = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT });
+        map.addControl(ctrl_sca);
+
+        //var mapType1 = new BMap.MapTypeControl({ mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP] });
+
+        //map.addControl(mapType1);   //添加地图类型控件
+    }
+    var markerArr;
+    $.ajaxSettings.async = false;  //同步才能获取数据
+    $.post("/PDRInfo/getStationInfo", "", function (data) {
+        var arrdata = data.split('$');
+        markerArr = eval("(" + arrdata[0] + ")");
+        var pidlist = arrdata[1];
+        var pid = pidlist.split(',')[0], rpid = 0;
+//        if ($.cookie('cookiepid') != null) {
+//            rpid = $.cookie('cookiepid');
+//            if ((pidlist + ',').indexOf(rpid) >= 0) {
+//                pid = rpid;
+//            }
+//            else {
+//                $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+//            }
+//        }
+//        else {
+            $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+       // }
+        $.post("/Home/GetCurrentNav", { "pid": pid }, function (data) {
+            var currnav = data.split('|');
+            if (x == 113.554768) {
+                x = currnav[1];
+                y = currnav[2];
+            }
+            setPosition(x, y);
+            //$.cookie('eadonav', currnav[0], { expires: 7, path: '/' });
+            //$("#currPosition", window.parent.document).html(currnav[0]);
+        });
+    });    
+</script>
+<script type="text/javascript" src="~/Content/baiduMap/script/MakerClusterer.js"></script>
+<script type="text/javascript" src="~/Content/UserJS/mapzztool._jm.js">
+</script>
+<script type="text/javascript">
+    function setPosition(x, y) {
+        if (x != undefined && y != undefined) {
+            setLocation(x, y, 15);
+        }
+    }
+    alarmState();
+    var alarmJson = "";
+    var timeTicket;
+    clearInterval(timeTicket);
+    timeTicket = setInterval(function () {
+        alarmState();
+    }, 10000);
+    function alarmState() {
+        var typeid = 1;
+        $.post("/SysInfo/getStationAlarm", "", function (data) {
+            alarmJson = eval("(" + data + ")");
+            $.each(alarmJson, function (i) {
+                var jsonlist = alarmJson[i];
+                console.log(jsonlist)
+                for (var jcount = 0; jcount < jsonlist.length; jcount++) {
+                    typeid = jsonlist[jcount].typeid;
+                    if (typeid > 11)
+                        typeid = 1;
+                    SetMapPointState(jsonlist[jcount].name, jsonlist[jcount].state, typeid);
+                }
+            });
+        });
+    }
+
+    $("#currPosition", window.parent.document).html("当前位置：首页");
+    //
+    setMapIndexViewport();   
+</script>
+</html>

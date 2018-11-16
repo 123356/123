@@ -1,0 +1,128 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="Cap_Set" class="logo_title">抓图设置</div>
+               <div class="item_R">
+               	   <div id="CapSetCP" class="logo_link_cy">Copy</div>
+                   <div id="CapSetRf" class="logo_link">Refresh</div>
+                   <div id="CapSetDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="CapSetSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+             <!--table 1-->
+                <div class="table">
+                    <div class="table_L" id="cap_channel_num">通道号</div>
+                    <div class="table_R">
+                    <select id="CapChannelMask" class="select" ></select>
+                    </div>
+                </div>
+                
+                <div class="table">
+                    <div class="table_L" id="auto_cap">自动抓图</div>
+                    <div class="table_R">
+                    <select id="Cap_autocap" class="select">
+                        <option value="0">关闭</option>
+            			<option value="1">打开</option>
+                    </select>
+                    </div>
+                </div>  
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="cap_bitrate_mode">码流模式</div>
+                    <div class="table_R">
+                    <select id="cap_bitrate_switch" class="select">
+                        <option value="0"> 主码流</option>
+            			<option value="1">子码流</option>
+                    </select>
+                    </div>
+                </div>
+                
+            <!--table 2-free-->
+            	<div class="table">
+                    <div class="table_L" id="normal_interval">常规间隔</div>
+                    <div class="table_R">
+                        <select id="N_CapSet" class="select">
+                            <option value="0">5s</option>
+                            <option value="1">10s</option>
+                            <option value="2">30s</option>
+                            <option value="3">1min</option>
+                            <option value="4">10min</option>
+                            <option value="5">30min</option>
+                            <option value="6">1h</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table">
+                    <div class="table_L" id="motion_interval">动检间隔</div>
+                    <div class="table_R">
+                        <select id="M_CapSet" class="select">
+                            <option value="0">5s</option>
+                            <option value="1">10s</option>
+                            <option value="2">30s</option>
+                            <option value="3">1min</option>
+                            <option value="4">10min</option>
+                            <option value="5">30min</option>
+                            <option value="6">1h</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table">
+                    <div class="table_L" id="manual_cap">手动抓图</div>
+                    <div class="table_R">
+                    <select id="Cap_manualcap" class="select">
+                        <option value="0">关闭</option>
+            			<option value="1">打开</option>
+                    </select>
+                    </div>
+                </div> 
+                
+                 
+                
+             <!--table 7-->
+             <div id = "CapCopyTD" style="display:none;">
+                   <div class="table">
+                   		<div id = "CapSelectCopy" style="border-top:1px solid white;">请选择需要复制的通道</div>
+                   </div> 
+                 <!--table 11-->
+                   <div class="table">
+                        <div class="table_box syspm_use_backup_L">   
+                        <input type="checkbox" id="Capck"/>
+                        <font id="CapSeletedAll"> 全选</font>
+                        <input type="button" value="确定" id="CapOk" />
+                        </div>
+                   </div>
+                   <!--table 12-->
+                   <div class = "table" id="Cap_TDNum_1_1">
+                   		<div class="syspm_use_backup_R" id="Cap_TDNum_1">
+                        </div>
+                   </div>
+                   <!--table 13-->
+                   <div class = "table" id="Cap_TDNum_2_2">
+                   		<div class="syspm_use_backup_R" id="Cap_TDNum_2">
+                        </div>
+                   </div>
+                   <div class = "table" id="Cap_TDNum_3_3">
+                   		<div class="syspm_use_backup_R" id="Cap_TDNum_3">
+                        </div>
+                   </div>
+                   <div class = "table" id="Cap_TDNum_4_4">
+                   		<div class="syspm_use_backup_R" id="Cap_TDNum_4">
+                        </div>
+                   </div>
+                   
+            </div>
+    </div>
+    <!--table end-->
+		
+</div>

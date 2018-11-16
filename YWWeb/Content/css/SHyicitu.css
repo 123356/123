@@ -1,0 +1,651 @@
+@charset "utf-8";
+/* CSS Document */
+/* 
+   Author:Kevin
+   Date:2016-08-16
+*/
+
+.alertmenu li dd { position:relative; left:0px; margin-left:0px; display:none; }
+.alertmenu dt { width:auto; height:auto;}
+
+/*三相温度数值颜色样式*/
+.alertmenu dt span { display:block; position:absolute;}
+.alertmenu dt b{ display:block; line-height:10px; font-size:12px; font-weight:normal;}
+.temper_a{color:#FF0;}
+.temper_b{color:#6F0;}
+.temper_c{color:#F00;}
+
+/*神华宝日一次图*/
+
+/*总图01*/
+.shzt01_ycbg { background-image: url("../yicitu/shzt01.png");}
+
+
+/*总图02*/
+.shzt02_ycbg { background-image: url("../yicitu/shzt02.png");}
+
+
+/*总图03*/
+.shzt03_ycbg { background-image: url("../yicitu/shzt03.png");}
+
+
+/*总图01*/
+
+/*1#配电室*/
+/*451 液压泵站控柜*/
+.w516 { right:717px; bottom:139px;}
+.w516_1 { right:203px; bottom:-49px;}
+.w516_2 { right:165px; bottom:-49px;}
+
+/*416 快速定量装车站低压配电柜*/
+.w517 { right:815px; bottom:116px;}
+.w517_1 { right:-42px; bottom:42px;}
+.w517_2 { right:-42px; bottom:-1px;}
+
+
+/*2#配电室*/
+/*651 电源进线柜*/
+.w518 { left:171px; top:267px;}
+.w518_1 { left:-73px; top:61px;}
+.w518_2 { left:-73px; top:98px;}
+.w518_3 { left:-38px; top:182px;}
+
+/*611 变压器控制柜*/
+.w519 { left:462px; top:267px;}
+.w519_1 { left:-78px; top:63px;}
+.w519_2 { left:-78px; top:100px;}
+.w519_3 { left:-39px; top:182px;}
+
+/*612 207#胶带机1#电机启动柜*/
+.w520 { left:267px; top:267px;}
+.w520_1 { left:-73px; top:61px;}
+.w520_2 { left:-73px; top:98px;}
+.w520_3 { left:-39px; top:182px;}
+
+/*613 207#胶带机2#电机启动柜*/
+.w521 { left:362px; top:267px;}
+.w521_1 { left:-73px; top:61px;}
+.w521_2 { left:-73px; top:98px;}
+.w521_3 { left:-39px; top:182px;}
+
+/*451 低压进线柜*/
+.w522 { left:137px; top:369px;}
+.w522_1 { left:-47px; top:176px;}
+
+/*412 给煤机控制柜*/
+.w523 { left:351px; top:369px;}
+.w523_1 { left:-47px; top:176px;}
+
+/*413 给煤机控制柜*/
+.w524 { left:406px; top:369px;}
+.w524_1 { left:-47px; top:176px;}
+
+/*414 1#装车站低压电源控制柜*/
+.w525 { right:846px; bottom:134px;}
+.w525_1 { right:192px; bottom:-43px;}
+.w525_2 { right:132px; bottom:-43px;}
+
+/*1#变压器*/
+.w526 { right:1002px; bottom:299px;}
+.w526_1 { right:-45px; bottom:40px;}
+.w526_2 { right:-45px; bottom:-1px;}
+
+
+/*3#配电室*/
+/*651 I段电源进线柜*/
+.w527 { left:212px; top:59px;}
+.w527_1 { left:-73px; top:33px;}
+.w527_2 { left:-73px; top:70px;}
+.w527_3 { left:-40px; top:142px;}
+
+/*652 II段电源进线柜*/
+.w528 { right:203px; bottom:495px;}
+.w528_1 { right:-35px; bottom:133px;}
+.w528_2 { right:-35px; bottom:97px;}
+.w528_3 { right:-41px; bottom:25px;}
+
+/*611 2#配电室电源柜*/
+.w531 { left:297px; top:59px;}
+.w531_1 { left:-72px; top:32px;}
+.w531_2 { left:-72px; top:69px;}
+.w531_3 { left:-38px; top:142px;}
+
+/*612 5#配电室电源柜*/
+.w532 { left:384px; top:59px;}
+.w532_1 { left:-72px; top:32px;}
+.w532_2 { left:-72px; top:69px;}
+.w532_3 { left:-38px; top:142px;}
+
+/*661 I段变压器柜*/
+.w533 { left:470px; top:59px;}
+.w533_1 { left:-72px; top:32px;}
+.w533_2 { left:-72px; top:69px;}
+.w533_3 { left:-38px; top:142px;}
+
+/*662 II段变压器柜*/
+.w534 { right:606px; bottom:496px;}
+.w534_1 { right:-35px; bottom:132px;}
+.w534_2 { right:-35px; bottom:98px;}
+.w534_3 { right:-72px; bottom:23px;}
+
+/*623 7#配电室电源柜*/
+.w535 { right:273px; bottom:496px;}
+.w535_1 { right:-35px; bottom:132px;}
+.w535_2 { right:-35px; bottom:98px;}
+.w535_3 { right:-56px; bottom:23px;}
+
+/*621 6#、8#配电室电源柜*/
+.w536 { right:694px; bottom:496px;}
+.w536_1 { right:-35px; bottom:132px;}
+.w536_2 { right:-35px; bottom:98px;}
+.w536_3 { right:-72px; bottom:23px;}
+
+/*622 204#胶带机启动柜*/
+.w537 { right:350px; bottom:496px;}
+.w537_1 { right:-35px; bottom:132px;}
+.w537_2 { right:-35px; bottom:98px;}
+.w537_3 { right:-72px; bottom:23px;}
+
+/*681 I段互感器柜*/
+.w538 { right:897px; bottom:496px;}
+.w538_1 { right:-72px; bottom:23px;}
+
+/*682 II段互感器柜*/
+.w539 { right:450px; bottom:496px;}
+.w539_1 { right:-72px; bottom:23px;}
+
+/*1#变压器*/
+.w529 { left:498px; top:32px;}
+.w529_1 { left:-38px; top:101px;}
+.w529_2 { left:-38px; top:142px;}
+
+/*2#变压器*/
+.w530 { right:542px; bottom:505px;}
+.w530_1 { right:-35px; bottom:82px;}
+.w530_2 { right:-35px; bottom:41px;}
+
+
+/*5#配电室*/
+/*451 I段电源进线柜*/
+.w544 { right:730px; bottom:82px;}
+.w544_1 { right:-34px; bottom:5px;}
+.w544_2 { right:-34px; bottom:73px;}
+
+/*413 203#胶带机控制柜*/
+.w545 { right:440px; bottom:82px;}
+.w545_1 { right:-34px; bottom:5px;}
+
+/*418 209#胶带机控制柜*/
+.w546 { right:261px; bottom:82px;}
+.w546_1 { right:-34px; bottom:5px;}
+
+/*613 照明变压器控制柜*/
+.w547 { right:238px; bottom:268px;}
+.w547_1 { right:-42px; bottom:124px;}
+.w547_2 { right:-42px; bottom:88px;}
+.w547_3 { right:-81px; bottom:2px;}
+
+/*611 二级破碎机1#电机启动柜*/
+.w548 { right:754px; bottom:268px;}
+.w548_1 { right:-42px; bottom:124px;}
+.w548_2 { right:-42px; bottom:88px;}
+.w548_3 { right:-81px; bottom:2px;}
+
+/*612 二级破碎机2#电机启动柜*/
+.w549 { right:653px; bottom:268px;}
+.w549_1 { right:-42px; bottom:124px;}
+.w549_2 { right:-42px; bottom:88px;}
+.w549_3 { right:-84px; bottom:2px;}
+
+/*651 电源进线柜*/
+.w550 { right:827px; bottom:268px;}
+.w550_1 { right:-42px; bottom:124px;}
+.w550_2 { right:-42px; bottom:88px;}
+.w550_3 { right:-80px; bottom:2px;}
+
+/*614 202#胶带机1#电机启动柜*/
+.w551 { right:538px; bottom:268px;}
+.w551_1 { right:-42px; bottom:124px;}
+.w551_2 { right:-42px; bottom:88px;}
+.w551_3 { right:-77px; bottom:2px;}
+
+/*615 202#胶带机2#电机启动柜*/
+.w552 { right:437px; bottom:268px;}
+.w552_1 { right:-42px; bottom:124px;}
+.w552_2 { right:-42px; bottom:88px;}
+.w552_3 { right:-77px; bottom:2px;}
+
+
+
+/*总图02*/
+
+/*4#配电室*/
+/*451 I段电源进线柜*/
+.w540 { left:156px; top:512px;}
+.w540_1 { left:-55px; top:38px;}
+.w540_2 { left:-55px; top:75px;}
+
+/*452 II段电源进线柜*/
+.w541 { right:561px; bottom:26px;}
+.w541_1 { right:-47px; bottom:142px;}
+.w541_2 { right:-47px; bottom:42px;}
+
+/*411 205#胶带机控制柜*/
+.w542 { right:638px; bottom:25px;}
+.w542_1 { right:-68px; bottom:40px;}
+
+/*412 206#胶带机控制柜*/
+.w543 { right:736px; bottom:25px;}
+.w543_1 { right:-68px; bottom:40px;}
+
+
+/*6#配电室*/
+/*611 208＃胶带机启动柜*/
+.w553 { right:296px; bottom:460px;}
+.w553_1 { right:-87px; bottom:156px;}
+.w553_2 { right:-87px; bottom:118px;}
+.w553_3 { right:-87px; bottom:35px;}
+
+/*451 低压进线柜*/
+.w554 { right:473px; bottom:243px;}
+.w554_1 { right:-25px; bottom:58px;}
+.w554_2 { right:-80px; bottom:58px;}
+
+/*412 低压配电柜*/
+.w555 { right:334px; bottom:243px;}
+.w555_1 { right:-78px; bottom:58px;}
+
+/*413 103＃胶带机低压控制柜*/
+.w556 { right:259px; bottom:243px;}
+.w556_1 { right:-64px; bottom:58px;}
+
+/*414 102＃胶带机低压控制柜*/
+.w557 { right:187px; bottom:243px;}
+.w557_1 { right:-64px; bottom:58px;}
+
+/*415 刮板机控制柜*/
+.w558 { right:115px; bottom:243px;}
+.w558_1 { right:-64px; bottom:58px;}
+
+/*室外变压器*/
+.w559 { right:194px; bottom:460px;}
+.w559_1 { right:-77px; bottom:117px;}
+.w559_2 { right:-77px; bottom:76px;}
+
+
+/*7#配电室*/
+/*651 破碎机高压电源柜*/
+.w560 { left:240px; top:75px;}
+.w560_1 { left:-73px; top:28px;}
+.w560_2 { left:-73px; top:66px;}
+.w560_3 { left:-33px; top:152px;}
+
+/*611 变压器控制柜*/
+.w561 { right:940px; bottom:463px;}
+.w561_1 { right:-26px; bottom:153px;}
+.w561_2 { right:-26px; bottom:114px;}
+.w561_3 { right:-31px; bottom:31px;}
+
+/*613 破碎机2#电机启动柜*/
+.w562 { left:415px; top:75px;}
+.w562_1 {  left:-78px; top:28px;}
+.w562_2 { left:-78px; top:66px;}
+.w562_3 { left:-38px; top:152px;}
+
+/*614 101#胶带机高压启动柜*/
+.w563 { left:493px; top:75px;}
+.w563_1 { left:-78px; top:28px;}
+.w563_2 { left:-78px; top:66px;}
+.w563_3 { left:-38px; top:152px;}
+
+/*612 破碎机1#电机启动柜*/
+.w564 { left:325px; top:75px;}
+.w564_1 { left:-78px; top:28px;}
+.w564_2 { left:-78px; top:66px;}
+.w564_3 { left:-38px; top:152px;}
+
+/*451 低压进线柜*/
+.w565 { left:112px; top:287px;}
+.w565_1 { left:-75px; top:135px;}
+.w565_2 { left:-34px; top:135px;}
+
+/*412 刮板机电源控制柜*/
+.w566 { left:386px; top:287px;}
+.w566_1 { left:-33px; top:135px;}
+
+
+/*8#配电室*/
+/*651 高压进线柜*/
+.w567 { right:721px; bottom:463px;}
+.w567_1 { right:-87px; bottom:153px;}
+.w567_2 { right:-87px; bottom:114px;}
+.w567_3 { right:-87px; bottom:31px;}
+
+/*611 201#胶带机启动柜*/
+.w568 { right:630px; bottom:463px;}
+.w568_1 { right:-87px; bottom:153px;}
+.w568_2 { right:-87px; bottom:114px;}
+.w568_3 { right:-87px; bottom:31px;}
+
+/*612 21#破碎机 1#电机启动柜*/
+.w569 { right:522px; bottom:463px;}
+.w569_1 { right:-87px; bottom:153px;}
+.w569_2 { right:-87px; bottom:114px;}
+.w569_3 { right:-87px; bottom:31px;}
+
+/*613 21#破碎机 2#电机启动柜*/
+.w570 { right:424px; bottom:463px;}
+.w570_1 { right:-83px; bottom:153px;}
+.w570_2 { right:-83px; bottom:114px;}
+.w570_3 { right:-83px; bottom:31px;}
+
+/*451 低压进线柜*/
+.w571 { right:639px; bottom:255px;}
+.w571_1 { right:-26px; bottom:43px;}
+.w571_2 { right:-67px; bottom:43px;}
+
+/*411 21#刮板机变频空调控制室*/
+.w572 { right:857px; bottom:255px;}
+.w572_1 { right:-44px; bottom:43px;}
+
+/*1#变压器*/
+.w573 { right:550px; bottom:226px;}
+.w573_1 { right:-54px; bottom:120px;}
+.w573_2 { right:-54px; bottom:80px;}
+
+
+
+/*总图01*/
+
+/*9#配电室*/
+/*412 31#给料机控制柜*/
+.w574 {right:236px; bottom:67px;}
+/*电缆头ABC三相温度*/
+.w574_1 {right:-40px; bottom:67px;}
+
+/*451 I段电源进线柜*/
+.w575 {right:435px;bottom:86px;}
+/*1#电缆头ABC三相温度*/
+.w575_1 {right:-27px; bottom:48px;}
+/*2#电缆头ABC三相温度*/
+.w575_2 {right:-85px; bottom:48px;}
+
+/*613 变压器控制柜*/
+.w576 {right:157px; bottom:370px;}
+/*上母排ABC三相温度*/
+.w576_1 {right:-30px; bottom:156px;}
+/*下母排ABC三相温度*/
+.w576_2 {right:-30px; bottom:112px;}
+/*电缆头ABC三相温度*/
+.w576_3 {right:-110px; bottom:16px;}
+
+/*611 31#破碎机正转控制柜*/
+.w577 {right:390px; bottom:370px;}
+/*上母排ABC三相温度*/
+.w577_1 {right:-30px; bottom:156px;}
+/*下母排ABC三相温度*/
+.w577_2 {right:-30px; bottom:112px;}
+/*电缆头ABC三相温度*/
+.w577_3 {right:-79px; bottom:16px;}
+
+/*612 31#破碎机反转控制柜*/
+.w578 {right:256px; bottom:370px;}
+/*上母排ABC三相温度*/
+.w578_1 {right:-30px; bottom:156px;}
+/*下母排ABC三相温度*/
+.w578_2 {right:-30px; bottom:112px;}
+/*电缆头ABC三相温度*/
+.w578_3 {right:-90px; bottom:16px;}
+
+/*651 高压进线柜*/
+.w579 {right:515px; bottom:370px;}
+/*上母排ABC三相温度*/
+.w579_1 {right:-30px; bottom:156px;}
+/*下母排ABC三相温度*/
+.w579_2 {right:-30px; bottom:112px;}
+/*电缆头ABC三相温度*/
+.w579_3 {right:-111px; bottom:16px;}
+
+/*1#变压器*/
+.w580 {right:497px; bottom:108px;}
+/*高压侧ABC三相温度*/
+.w580_1 {right:-32px; bottom:119px;}
+/*低压侧ABC三相温度*/
+.w580_2 {right:-32px; bottom:63px;}
+
+
+/*14#配电室*/
+/*651 I段高压进线柜*/
+.w581 {left:153px; top:161px;}
+/*上母排ABC三相温度*/
+.w581_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w581_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w581_3 {left:-35px; top:175px;}
+
+/*652 II段高压进线柜*/
+.w582 {left:231px; top:161px;}
+/*上母排ABC三相温度*/
+.w582_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w582_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w582_3 {left:-35px; top:175px;}
+
+/*681 PT柜*/
+.w583 {left:300px; top:161px;}
+/*上触头ABC三相温度*/
+.w583_1 {left:-93px; top:33px;}
+
+/*611 311#胶带机电源柜*/
+.w584 {left:465px; top:161px;}
+/*上母排ABC三相温度*/
+.w584_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w584_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w584_3 {left:-35px; top:175px;}
+
+/*612 312#胶带机电源柜*/
+.w585 {left:564px; top:161px;}
+/*上母排ABC三相温度*/
+.w585_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w585_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w585_3 {left:-35px; top:175px;}
+
+/*614 变压器控制柜*/
+.w586 {left:382px; top:161px;}
+/*上母排ABC三相温度*/
+.w586_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w586_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w586_3 {left:-35px; top:175px;}
+
+/*615 刮板机电源启动柜*/
+.w587 {left:730px; top:161px;}
+/*上母排ABC三相温度*/
+.w587_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w587_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w587_3 {left:-35px; top:175px;}
+
+/*616 311#胶带机启动柜*/
+.w588 {left:898px; top:161px;}
+/*上母排ABC三相温度*/
+.w588_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w588_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w588_3 {left:-35px; top:175px;}
+
+/*617 312#胶带机启动柜*/
+.w589 {left:814px; top:161px;}
+/*上母排ABC三相温度*/
+.w589_1 {left:-79px; top:33px;}
+/*下母排ABC三相温度*/
+.w589_2 {left:-79px; top:77px;}
+/*电缆头ABC三相温度*/
+.w589_3 {left:-35px; top:175px;}
+
+/*TG-1 变压器*/
+.w590 {left:131px; top:416px;}
+/*高压侧ABC三相温度*/
+.w590_1 {left:-68px; top:94px;}
+/*低压侧ABC三相温度*/
+.w590_2 {left:-68px; top:150px;}
+
+/*451 低压进线柜*/
+.w591 {left:208px; top:445px;}
+/*1#电缆头ABC三相温度*/
+.w591_1 {left:-86px; top:132px;}
+/*2#电缆头ABC三相温度*/
+.w591_2 {left:-34px; top:132px;}
+
+/*411 1#低压出线柜*/
+.w592 {left:270px; top:436px;}
+/*上母排ABC三相温度*/
+.w592_1 {left:-80px; top:45px;}
+/*下母排ABC三相温度*/
+.w592_2 {left:-80px; top:90px;}
+
+/*412 2#低压出线柜*/
+.w593 {left:350px; top:436px;}
+/*下母排ABC三相温度*/
+.w593_1 {left:-74px; top:52px;}
+
+/*413 3#低压出线柜*/
+.w594 {left:460px; top:436px;}
+/*下母排ABC三相温度*/
+.w594_1 {left:-74px; top:52px;}
+
+
+
+
+
+
+/*15#配电室*/
+.sh15_ycbg { background-image: url("../yicitu/p121.png");}
+/*651 I段高压进线柜*/
+.w595 {left:247px; top:102px;}
+/*上母排ABC三相温度*/
+.w595_1 {left:-88px; top:-1px;}
+/*下母排ABC三相温度*/
+.w595_2 {left:-88px; top:72px;}
+/*电缆头ABC三相温度*/
+.w595_3 {left:-40px; top:202px;}
+
+/*652 II段高压进线柜*/
+.w596 {right:560px; bottom:437px;}
+/*上母排ABC三相温度*/
+.w596_1 {right:-40px; bottom:170px;}
+/*下母排ABC三相温度*/
+.w596_2 {right:-40px; bottom:99px;}
+/*电缆头ABC三相温度*/
+.w596_3 {right:-87px; bottom:-33px;}
+
+/*681 PT柜*/
+.w597 {right:920px; bottom:437px;}
+/*上母排ABC三相温度*/
+.w597_1 {right:-40px; bottom:170px;}
+
+/*611 I段变压器控制柜*/
+.w598 {left:377px; top:102px;}
+/*上母排ABC三相温度*/
+.w598_1 {left:-88px; top:-1px;}
+/*下母排ABC三相温度*/
+.w598_2 {left:-88px; top:72px;}
+/*电缆头ABC三相温度*/
+.w598_3 {left:-40px; top:202px;}
+
+/*621 II段变压器控制柜*/
+.w599 {left:500px; top:102px;}
+/*上母排ABC三相温度*/
+.w599_1 {left:-88px; top:-1px;}
+/*下母排ABC三相温度*/
+.w599_2 {left:-88px; top:72px;}
+/*电缆头ABC三相温度*/
+.w599_3 {left:-40px; top:202px;}
+
+/*613 302#胶带机2#电机启动柜*/
+.w600 {right:802px; bottom:437px;}
+/*上母排ABC三相温度*/
+.w600_1 {right:-40px; bottom:170px;}
+/*下母排ABC三相温度*/
+.w600_2 {right:-40px; bottom:99px;}
+/*电缆头ABC三相温度*/
+.w600_3 {right:-87px; bottom:-33px;}
+
+/*614 302#胶带机1#电机启动柜*/
+.w601 {right:678px; bottom:437px;}
+/*上母排ABC三相温度*/
+.w601_1 {right:-40px; bottom:170px;}
+/*下母排ABC三相温度*/
+.w601_2 {right:-40px; bottom:99px;}
+/*电缆头ABC三相温度*/
+.w601_3 {right:-87px; bottom:-33px;}
+
+/*TG-1 变压器*/
+.w602 {left:121px; top:437px;}
+/*高压侧ABC三相温度*/
+.w602_1 {left:-76px; top:66px;}
+/*低压侧ABC三相温度*/
+.w602_2 {left:-76px; top:122px;}
+
+/*TG-2 变压器*/
+.w603 {right:387px; bottom:100px;}
+/*高压侧ABC三相温度*/
+.w603_1 {right:-40px; bottom:96px;}
+/*低压侧ABC三相温度*/
+.w603_2 {right:-40px; bottom:41px;}
+
+/*421 馈电及控制柜*/
+.w604 {right:585px; bottom:100px;}
+/*1#电缆头ABC三相温度*/
+.w604_1 {right:-40px; bottom:55px;}
+/*2#电缆头ABC三相温度*/
+.w604_2 {right:-40px; bottom:3px;}
+
+/*040 联络柜*/
+.w605 {right:740px; bottom:100px;}
+/*电缆头ABC三相温度*/
+.w605_1 {right:-40px; bottom:3px;}
+
+/*412 馈电及控制柜*/
+.w606 {right:860px; bottom:100px;}
+/*电缆头ABC三相温度*/
+.w606_1 {right:-40px; bottom:3px;}
+
+/*411 馈电及控制柜*/
+.w607 {left:484px; top:480px;}
+/*电缆头ABC三相温度*/
+.w607_1 {left:-40px; top:126px;}
+
+/*451 I段低压进线柜*/
+.w608 {left:260px; top:437px;}
+/*1#电缆头ABC三相温度*/
+.w608_1 {left:-83px; top:165px;}
+/*2#电缆头ABC三相温度*/
+.w608_2 {left:-38px; top:165px;}
+
+/*421-1 304#胶带机低压进线柜*/
+.w609 {right:360px; bottom:437px;}
+/*上母排ABC三相温度*/
+.w609_1 {right:-43px; bottom:155px;}
+/*下母排ABC三相温度*/
+.w609_2 {right:-108px; bottom:155px;}
+
+/*421 304#胶带机低压启动柜*/
+.w610 {right:166px; bottom:437px;}
+/*电缆头ABC三相温度*/
+.w610_1 {right:-30px; bottom:-6px;}
+
+/*翻页*/
+.sh_page { position:fixed; left:25px; top:50%;  list-style:none; margin:0px; padding:0px;margin-top:-243px; z-index:2;}
+.sh_page li { width:78px; height:39px; margin-bottom:5px; cursor:pointer; background:url('../yicitu/sh_but.png') no-repeat;}
+.hide{display:none;}
+.current{ font-weight:bold;}

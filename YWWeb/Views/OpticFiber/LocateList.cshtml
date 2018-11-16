@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LocateList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" style="width: auto;" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:19,pageList:[10,19,20,30,50],toolbar:'#tb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='tagid' checkbox="true">
+                </th>
+                <th field='tagname' width="50px">
+                    定位点
+                </th>
+                <th field='startPt' width="30px">
+                    开始位置
+                </th>
+                <th field='endPt' width="30px">
+                    结束位置
+                </th>
+                <th field='dname' width="60px">
+                    设备名称
+                </th>
+                <th field='cname' width="60px">
+                    通道名称
+                </th>
+                <th field='zonename' width="60px">
+                    分区名称
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            定位点:
+            <input id="locatename" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：设置 > 定位点管理 ");
+        $('#list_data').datagrid({
+            url: '/OpticFiber/OpticFiberData?rom=' + Math.random(),
+            pagination: true
+            //            singleSelect: true
+        });
+        function add() {
+            OpenFrame(0);
+        }
+        function edit() {
+            var row = $('#list_data').datagrid('getSelected');
+            if (row) {
+                OpenFrame(row.tagid);
+            }
+            else {
+                $.messager.alert("提示", "请选择要编辑的行！", "info");
+            }
+        }
+        function OpenFrame(id) {
+            $('#editwin').window({
+                modal: true,
+                top: ($(window).height() - 400) * 0.5,
+                left: ($(window).width() - 800) * 0.5,
+                draggable: false, //可拖动，默认false  
+                resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false 
+                href: '/OpticFiber/LocateEdit?id=' + id,
+                onClose: function () { $('#list_data').datagrid('reload'); }
+            });
+            $('#editwin').window('open');
+        }
+        function Delete() {
+            var row = $('#list_data').datagrid('getSelections');
+            if (row) {
+                $.messager.confirm('提示', '你确定要删除选中的定位点？', function (r) {
+                    if (r) {
+                        var tags = [];
+                        for (i = 0; i < row.length; i++) {
+                            tags.push(row[i].tagid);
+                        }
+                        $.post("/OpticFiber/DeleteLocate?rumn=" + Math.random(), { "locateid": tags.join(',') }, function (data) {
+                            if (data == "OK")
+                                $('#list_data').datagrid('reload');
+                            else
+                                alert(data);
+                        })
+                    }
+                });
+            }
+            else {
+                $.messager.alert("提示", "请选择要删除的模块！", "info");
+            }
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="编辑定位点信息" class="easyui-window" closed="true" style="width: 450px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

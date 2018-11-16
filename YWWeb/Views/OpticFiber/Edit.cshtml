@@ -1,0 +1,168 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+<input type="hidden" id="dtspid" />
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 100px;">
+                测点名称：
+            </td>
+            <td class="d_l_d" id="tname" colspan="3">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                光纤设备：
+            </td>
+            <td class="d_l_d" id="dname" colspan="3">
+            </td>
+        </tr>
+        @*<tr>
+            <td class="d_l_t">
+                设备名称：
+            </td>
+            <td class="d_l_d" id="devicename">
+            </td>         
+        </tr>*@
+        <tr>
+            <td class="d_l_t">
+                光纤通道：
+            </td>
+            <td class="d_l_d">
+                <select id="channelsinfoid" style="width: 150px; height: 26px;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                光纤分区：
+            </td>
+            <td class="d_l_d">
+                <select id="zoneno" style="width: 150px; height: 26px;">
+                </select>
+                <input type="hidden" id="pid" />
+                <input type="hidden" id="did" />
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var id=@Html.Raw(Request.QueryString["id"]);
+ 
+        //获取光纤通道
+        function loadchannelsinfo(pid, did, zoneno) {
+            $("#channelsinfoid").combobox({
+                url: "/OpticFiber/Getchannelsinfo?showall=1&pid=" + pid,
+                valueField: 'id',
+                textField: 'text',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    if (did > 0) {
+                        $("#channelsinfoid").combobox('setValue', did);
+                        loadzone(pid, did, 0, zoneno);
+                    }
+                    else {
+                        var data = $('#channelsinfoid').combobox('getData');
+                        if (data.length > 0) {
+                            $("#channelsinfoid").combobox('select', data[0].id);
+                        }
+                    }
+                },
+                onSelect: function (data) {
+                    loadzone(pid, data.id, 0, 0);
+                }
+            });
+        }
+        //获取光纤分区
+        function loadzone(pid, did, showall, zoneno) {
+            $("#zoneno").combobox({
+                url: "/OpticFiber/Getchannelzone?showall=" + showall + "&pid=" + pid + "&did=" + did,
+                valueField: 'id',
+                textField: 'text',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    if (zoneno > 0) {
+                        $("#zoneno").combobox('setValue', zoneno);
+
+                    }
+                    else {
+                        var data = $('#zoneno').combobox('getData');
+                        if (data.length > 0) {
+                            $("#zoneno").combobox('select', data[0].id);
+                        }
+                    }
+                }
+            });
+        }
+        $(function () {
+            loadPointsInfo();
+            $("#btnSave").click(function () {
+                save();
+            });
+        });
+        function save() {
+            if ($("#channelsinfoid").combobox("getValue") == "0") {
+                $.messager.alert("提示", "请选择光纤通道！", "info");
+                return false;
+            }
+            else if ($("#zoneno").combobox("getValue") == "0" || $("#zoneno").combobox("getValue") == "") {
+                $.messager.alert("提示", "请选择光纤分区！", "info");
+                return false;
+            }
+            var postData = {
+                tagid: id,
+                pid: $("#pid").val(),
+                did: $("#did").val(),
+                devicesinfoid: $("#dtspid").val(),
+                dname: $("#dname").html(),
+                channelsinfoid: $("#channelsinfoid").combobox("getValue"),
+                cname: $("#channelsinfoid").combobox("getText"),
+                zoneno: $("#zoneno").combobox("getValue"),
+                zonename: $("#zoneno").combobox("getText")
+            };
+            //发送异步请求，添加用户
+            $.post("/OpticFiber/SavePointmapdts", postData, function (data) {
+                if (data == "OK") {
+                    $.messager.alert("提示", "光纤测温片区对应成功！", "info");
+                    $('#editwin').window('close');
+                }
+                else {
+                    alert(data);
+                }
+            });
+        }
+        //获取光纤设备名称
+        function loadDname(pid) {
+            $.post("/OpticFiber/GetDeviceName", { "pid": pid }, function (data) {
+                $("#dname").html(data);
+            });
+        }
+        function loadPointsInfo() {
+            if (id > 0) {
+                $.post("/OpticFiber/GetPointsInfo", { "tagid": id }, function (data) {
+                    var row = eval("(" + data + ")");
+                    var did = row.tagid;
+                    $("#tname").html(row.tagname);
+                    $("#devicename").html(row.did);
+                    $("#pid").val(row.pid);
+                    $("#did").val(row.did);
+                    $("#dtspid").val(row.devicesinfoid);
+                   loadDname(row.devicesinfoid);
+                    loadchannelsinfo(row.devicesinfoid, row.channelsinfoid, row.zoneno);
+                });
+            }
+            else
+                loadchannelsinfo(0, 0);
+        }
+    </script>
+</body>
+</html>

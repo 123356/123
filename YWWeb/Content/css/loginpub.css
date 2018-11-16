@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* 登录-电力设备运行服务平台 */
+html {height:100%;}
+body { background:url(../images/Login/login_bg.jpg) center center no-repeat; height:100%; margin:0px; padding:0px; font-family:"微软雅黑";}
+.radius5 {-moz-border-radius: 5px; -webkit-border-radius: 5px;  border-radius:5px; }
+.radius5_notop {-moz-border-radius:0px 5px 5px 5px; -webkit-border-radius:0px 5px 5px 5px;  border-radius:0px 5px 5px 5px; }
+img { border:none;}
+ol,ul,li { list-style:none; margin:0px; padding:0px;}
+input { font-family:"微软雅黑"; outline:none;}
+.login_line { width:100%; height:124px; background:url(../images/Login/login_line.png); position:fixed; left:0px; bottom:25px;}
+
+
+/*logo
+.logo { right:3%; top:7%; position:absolute;}
+.logo img { width:100%; max-width:313px; max-height:89px; }*/
+
+/*登录窗主体*/
+.login_content { text-align:center;background:#fff; background:-webkit-linear-gradient(#fff, #e5e5e5); /* Safari 5.1 - 6.0 */  background: -o-linear-gradient(#fff, #e5e5e5); /* Opera 11.1 - 12.0 */  background: -moz-linear-gradient(#fff, #e5e5e5); /* Firefox 3.6 - 15 */  background: linear-gradient(#fff, #e5e5e5); /* 标准的 */}
+
+/*用户登录*/
+/*标题*/
+.login_title { padding-top:50px;}
+/* 用户名密码输入框 */
+.user_login { background:url(../images/Login/login_icon.png) 105px 66px no-repeat; padding:60px 0px 15px 0px; font-size:16px;}
+.user_login span { width:500px; margin:0 auto; display:block; margin-bottom:15px; margin-left: 260px; text-align:left;}
+.user_login div { text-align:left;}
+.user_login span label { display:inline-block; padding-right:15px; width:55px; text-align:right;}
+.user_login div label { width:55px;}
+.username_text .password_text { border:none; padding:15px;}
+.username_text input,.password_text input{ width:384px; height:43px; background:url(../images/Login/input.png) 0px no-repeat; border:none; padding-left:15px; font-size:14px; color:#999;}
+.remember_password a { padding-left:5px; }
+.login_submit { width:100%;}
+.login_submit input { width:311px; height:51px; background:url(../images/Login/login_submit.png) 0px no-repeat; font-size:16px; color:#333; border:none; cursor:pointer; }
+.login_submit input:hover {filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8;  }
+/*下载中心*/
+.download_app{ height:350px; width:100%; letter-spacing:1px;}
+/*手机双视APP下载*/
+.app_hw {display:inline; float:left; height:315px; width:50%; background:url(../images/Login/hw_logo.png) 35px 8px no-repeat; background-size:auto 25%;}
+.app_hw span{ display:block; padding:10px; margin:-3px auto 0px 176px;text-align:left; border-right:1px dashed #ccc;}
+.app_hw span h2,.app_yw span h2{ line-height:25px;color:#408282; font-weight:normal; font-size:22px;}
+.app_hw span p,.app_yw span p{  line-height:12px; font-size:14px;}
+.app_hw span div,.app_yw span div{ width:120px;text-align:center; font-size:12px; margin-top:20px;}
+.app_hw span div img,.app_yw span div img{ margin:0px auto 5px auto;}
+.app_hw span b a, .app_yw span b a{ line-height:30px; font-size:20px; color:#84c225;}
+/*运维APP下载*/
+.app_yw { height:315px;width:50%;float:left; background:url(../images/Login/yw_logo.png) 75px 16px no-repeat; background-size:auto 17%; font-size:16px;}
+.app_yw span { display:block; padding:10px; margin:-3px auto 0px 176px;text-align:left;}
+
+/* box */
+.login_box{width:1024px; left:50%; top:50%; margin-left:-512px; margin-top:-235px; position:absolute;}
+.tab_menu{overflow:hidden;}
+.tab_menu li{float:left; width:169px; height:74px; line-height:87px; font-size:20px; color:#fff; background:url(../images/Login/login_table0.png); padding-left:80px;cursor:pointer; list-style:none; position:relative;}
+.tab_menu li.current{ background:url(../images/Login/login_table1.png); width:195px; height:74px; color:#333; line-height:74px; z-index:3 !important;}
+.tab_menu li a{color:#fff;text-decoration:none;}
+.tab_menu li.current a{color:#333;}
+.tab_box{padding:20px;}
+.tab_box li{height:24px;line-height:24px;overflow:hidden;}
+.tab_box li span{margin:0 5px 0 0;font-family:"宋体";font-size:12px;font-weight:400;color:#ddd;}
+.tab_box .hide{display:none;} 
+
+.login_bottom {   color: #fff;   font-size: 16px;   text-align: center;   padding: 10px 0px;}
+
+/*自适应分辨率调整*/
+@media screen and (max-width:1600px) 
+{
+/*logo*/
+.logo img { max-width:200px;} 
+/* box */
+.login_box{width:800px; margin-left:-400px; margin-top:-231px;}
+/*标题*/
+.login_title { padding-top:20px;}
+.login_title img {width:60%;}
+/* 用户名密码输入框 */
+.user_login { background:url(../images/Login/login_icon.png) 40px 90px no-repeat; background-size: 80px; padding:40px 0px 15px 0px;}
+.user_login span { margin-left: 155px;}

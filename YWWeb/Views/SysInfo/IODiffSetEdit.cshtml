@@ -1,0 +1,288 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AlternateSetEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                设备名称：
+            </td>
+            <td class="d_l_d" id="dname">
+                <select id="SDID" style="width: 200px; height: 26px;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                回路名称：
+            </td>
+            <td class="d_l_d">
+                <select id="Circuit" style="width: 200px; height: 26px;">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                进线测点：
+            </td>
+            <td class="d_l_d">
+                <select id="TagID_I" style="width: 200px; height: 26px;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                出线测点：
+            </td>
+            <td class="d_l_d">
+                <div id= "TagOff"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                关注值：
+            </td>
+            <td class="d_l_d">
+                <input id="IntersetVal" class="easyui-numberbox" precision="2" style="width: 200px;
+                    height: 26px;" />
+            </td>
+            <td class="d_l_t">
+                预警值：
+            </td>
+            <td class="d_l_d">
+                <input id="WarningVal" class="easyui-numberbox" precision="2" style="width: 200px;
+                    height: 26px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                报警值：
+            </td>
+            <td class="d_l_d" >
+                <input id="AlarmVal" class="easyui-numberbox" precision="2" style="width: 200px;
+                    height: 26px;" />
+            </td>
+            <td class="d_l_t">
+                位置 ：
+            </td>
+            <td class="d_l_d" >
+                <input id="Remark" style="width: 200px;height: 26px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                上一次修改人：
+            </td>
+            <td class="d_l_d" id="updater">
+            </td>
+            <td class="d_l_t">
+                修改日期：
+            </td>
+            <td class="d_l_d" id="updatedate">
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var Aid=@Html.Raw(Request.QueryString["Aid"]); 
+        var pid =0 ,did= 0 , cid = 0,tagID = "";
+        var linkTagID = 0;
+        loadDevice();
+        function loadDevice(){
+        $("#SDID").combotree({
+            url: "/BaseInfo/PdrTraComboTreeMenu?ShowAll=1",
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#SDID').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#SDID').combo('showPanel');
+                }
+                else {
+                    pid = node.id.split('_')[0];
+                    did = node.id.split('_')[2];
+                    loadCircuit(did);
+                    loadPoints(did);
+                    $.cookie('cookiepid', pid, { expires: 7, path: '/' });
+                }
+            },
+            onLoadSuccess: function (data) {
+                $('#SDID').combotree('tree').tree("collapseAll");
+                var roots = $('#SDID').combotree('tree').tree('getRoots');
+                var Lastpid = $.cookie('cookiepid'), Index = 0;
+                for (i = 0; i < roots.length; i++) {
+                    if (roots[i].id == Lastpid) {
+                        Index = i
+                    }
+                }
+                var child = $('#SDID').combotree('tree').tree('getChildren', roots[Index].target);
+                pid = child[0].id.split('_')[0];
+                did = child[0].id.split('_')[2];
+                if(Aid > 0){
+                    loadSet();
+                }
+                else{
+                    loadCircuit(did);
+                    loadPoints(did);                
+                }
+                $('#SDID').combotree('setValue', child[0].text);
+                $('#SDID').combotree('tree').tree("expand", roots[Index].target); //展开
+            }
+        });
+        }
+        function loadCircuit(did) {
+            $("#Circuit").combobox({
+                url: "/BaseInfo/BindCircuit?DID=" + did,
+                valueField: 'CID',
+                textField: 'CName',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    cid = parseInt(data[0].CID);
+                    cid == 0 ? cid : 0;
+                    $("#Circuit").combobox('select', cid);
+                },
+                onSelect: function (data) {
+                    cid = data.CID;
+                }
+            });
+        }
+        function loadPoints(did){
+         $("#TagID_I").combotree({
+            url: "/BaseInfo/PositionParams?DID=" + did + "&DataType=1" ,
+            valueField: 'id',
+            textField: 'text',
+            editable: false,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#TagID_I').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                }
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#TagID_I').combo('showPanel'); 
+                    return false;
+                }
+                tagID = node.id;
+                loadOther(tagID)
+            }
+          });
+        }
+
+        function loadOther(tid){
+            $.post("/SysInfo/FindOtherPoint", {"TagID":tid}, function (data) {
+              if(data != 'null'){
+                 var row = eval("(" + data + ")");
+                 $('#TagOff').html(row.TagName);
+                 linkTagID = row.TagID;
+              }
+              else
+              {
+                 $('#TagOff').html("没有关联测点");
+              }
+           });
+        }
+        function loadSet(){
+            $.post("/SysInfo/IODiffSetModel", {"asid":Aid}, function (data) {
+            var json = eval("("+ data + ")");
+                    loadCircuit(json.DID);
+                    loadPoints(json.DID);
+                    loadOther(json.TagID_I);
+                    pid = json.PID;
+                    did = json.DID;
+                    cid = json.CID;
+                    tagID = json.TagID_I;
+                    $("#IntersetVal").numberbox("setValue",json.IntersetVal);
+                    $("#WarningVal").numberbox("setValue",json.WarningVal);
+                    $("#AlarmVal").numberbox("setValue",json.AlarmVal);
+                    $("#SDID").combotree("setValue",json.DName);
+                    $("#Circuit").combobox("setValue",json.CName);
+                    $("#TagID_I").combotree("setValue",json.TagID_I);
+                    $('#Remark').val(json.Position);
+                    $('#list_data').datagrid('uncheckAll');
+            });        
+        }
+
+        function save() {  
+            var tinval = $("#IntersetVal").numberbox('getValue');
+            var twarval = $("#WarningVal").numberbox('getValue');
+            var talaval = $("#AlarmVal").numberbox('getValue');
+            
+            if (did == 0) {
+                $.messager.alert("提示", "请选择设备。", "info");
+                return false;
+            }
+            else if (cid == 0) {
+                $.messager.alert("提示", "请选择回路。", "info");
+                return false;
+            }
+            else if (tagID == "") {
+                $.messager.alert("提示", "请选择进线测点", "info");
+                return false;
+            }
+            else if (linkTagID == 0) {
+                $.messager.alert("提示", "没有关联的出线测点，请重新选择进线测点。", "info");
+                return false;
+            }
+            else if (tinval == "") {
+                $.messager.alert("提示", "请设置关注值！", "info");
+                $("#IntersetVal")[0].focus();
+                return false;
+            }
+            else if (twarval == "") {
+                $.messager.alert("提示", "请设置预警值！", "info");
+                $("#WarningVal")[0].focus();
+                return false;
+            }
+            else if (talaval == "") {
+                $.messager.alert("提示", "请设置报警值！", "info");
+                $("#AlarmVal")[0].focus();
+                return false;
+            }
+            else if(twarval<tinval)
+            {
+                $.messager.alert("提示", "预警值不能小于关注值（"+tinval+"）！", "info");
+                return false;
+            }
+            else if(talaval<twarval)
+            {
+                $.messager.alert("提示", "报警值不能小于预警值（"+twarval+"）！", "info");
+                return false;
+            }
+            var postData = {
+                AlternateID:Aid,
+                PID: pid,
+                DID: did,
+                CID: cid,
+                CName: $("#Circuit").combobox("getText"),
+                MPID:0,
+                TagID_I:tagID ,
+                TagID_O:linkTagID ,
+                Position:$('#Remark').val(),
+                IntersetVal: tinval,
+                WarningVal: twarval,
+                AlarmVal: talaval
+            };
+            $.post("/SysInfo/SaveAlarmConfig", postData, function (data) {
+                if (data == "OK") {
+                    $.messager.alert("提示", "温度差值报警设置成功！", "info");
+                    $("#list_data").datagrid("reload");
+                    $("#editwin").dialog("close");
+                    $('#list_data').datagrid('uncheckAll');
+                }
+                else
+                    $.messager.alert("提示", "设置失败！", "info");
+            });
+        }
+    </script>
+</body>
+</html>

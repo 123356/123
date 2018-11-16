@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Overview</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div style="position:relative;padding-left:60px;overflow-x:hidden">
+        <h4 style="font-weight:bold;">客户统计</h4>
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <div id="userCharts1" class="powerquality_curve   lineloss_curve" style="height:320px;">
+                </div>
+            </div>
+            <div class="col-md-6 column">
+                <div id="userCharts2" class="powerquality_curve   lineloss_curve" style="height:320px;">
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <h4 style="font-weight:bold;">年度用电（MW·H）</h4>
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+                <div id="userCharts3" class="powerquality_curve   lineloss_curve" style="height:320px;">
+                </div>
+            </div>
+            @*<div class="col-md-4 column">
+                    <div id="userCharts4" class="powerquality_curve   lineloss_curve" style="height:320px;">
+                    </div>
+                </div>*@
+            <div class="col-md-6 column">
+                <div id="userCharts5" class="powerquality_curve   lineloss_curve" style="height:320px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div id="userCharts6" class="powerquality_curve   lineloss_curve" style="height:380px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='Error' style='color: White; text-align: center; font-size: 20px; display: none;padding:200px; z-index:100000'>
+        未查到数据！
+    </div>
+</body>
+
+</html>
+<script src="~/Content/UserJS/Overview._jm.js"></script>
+

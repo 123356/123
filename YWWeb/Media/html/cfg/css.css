@@ -1,0 +1,443 @@
+/* CSS Document */
+.ipc_item_list{background:#0CF;}
+.ipc_item_list_click{background:#0F9;}
+.UserList{ background:#CCC;}
+.UserList2{ background:#0C6}
+.UserList3{background:rgb(25,135,222)}
+.UserList4{background:rgb(72, 155, 185)}
+.UserList5{background:rgb(142,12,58)}
+.UserList6{background:rgb(18, 112, 255)}
+.config_content{width:700px; height:450px; text-align:center; line-height:30px;
+ 				font-size:13px;
+ 				color:#FFF; 
+				vertical-align:center;
+				
+				
+				}
+				
+.btnSel{ line-height:16px; font-size:10px; background-color:#0F0}
+.times_1 {
+	float:left;
+	position:relative;
+	width:20px; 
+	border:none; 
+	overflow:hidden;
+	height:15px;
+	line-height:10px;
+	background:#40444d;
+	color:#CCC;
+	 }
+.spinner_up{width:17px;height:11px;font-size:0;border-bottom:0; background:#66C;cursor:pointer;}
+.spinner_up:hover{background-position: 17px 0px; }
+.spinner_down{ background:#0C6;width:17px;height:11px;font-size:0;border-top:0px; background-position:0px 11px;cursor:pointer;}
+.spinner_down:hover{background-position: 17px 11px;}
+.sd { float:left; position:relative}
+
+ /*.item,.table,table_L,table_R{height:30px;}*/
+ .login{width:70px;height:50px; background:#CCC; float:right; display:none;}
+ .item{width:598px; border:1px solid #ccc;text-align:left; font-size:20px;
+ 		font-weight:900;clear:both; line-height:30px; height:30px;}
+ .item_R{ width:350px; float:right; _width:350px;}
+ .table_content{width:700px;clear:both;}
+ .table{width:598px; 
+ 		border:1px solid #ccc; 
+		border-top:none;
+		clear:both;
+		text-align:left;
+		height:30px;
+		}
+ .tablePC{width:578px; 
+ 		border:1px solid #ccc; 
+		border-top:none;
+		clear:both;
+		text-align:left;
+		padding-left:20px;
+		}
+ .table_ipcSet{width:700px; 
+		border:1px solid #ccc; 
+		border-top:none;
+		clear:both;
+		text-align:left;
+		}
+ .table_L{width:160px;border-right:1px solid #ccc; float:left; padding-left:20px; height:30px;}
+ .table_R{ width:400px; float:left; height:30px;}
+ .table_R_L{ width:199px; float:left; height:30px;border-right:1px solid #ccc;}
+ .table_R_R{ width:200px; float:left; height:30px;}
+ .table_double{width:628px; height:65px; border:1px solid #ccc; border-top:none; clear:both; text-align:left;}
+ .logo_title{float:left; font-size:20px; color:#FFF;}
+ .logo_link{height:24px; line-height:24px; width:75px; cursor:pointer;font-size:14px;float:left; margin-left:10px; margin-top:3px; font-size:14px\9\0; text-align:center; white-space:nowrap;}
+  .logo_link_stream{height:24px; width:140px;cursor:pointer;font-size:16px;float:left; margin-left:0px; margin-top:3px; font-size:14px\9\0; text-align:center; background:#999; border:1px solid #ccc; }
+  .steam_selected{background:#83b245}
+ .logo_link_ipc{height:24px; line-height:24px; width:104px;cursor:pointer;font-size:16px;float:left; margin-left:1px; margin-top:3px; font-size:14px\9\0; text-align:center;}
+ .logo_link.urmet{ background:url(../../images/logo_link.gif)}
+ .logo_link:hover{ color:#CCF; cursor:pointer; background-position:-100px;}
+ .logo_link:active {cursor:pointer; color:#F00; background-position:-200px;}
+input.ButtonToDiv{height:30px; line-height:30px; width:85px;cursor:pointer;font-size:16px;float:left; 
+ 			margin-left:10px; margin-top:3px; font-size:14px; 
+            text-align:center;background:url(../../images/EmailTestButton_Bg.png);
+			background-position:0px 0px; 
+			margin-left:0px;
+			border:none;
+			color:white;
+} 
+input.ButtonToDiv:hover{ color:#757575; cursor:pointer; background-position:-85px 0px;} 
+input.ButtonToDiv:active {cursor:pointer; color:#0669d4; background-position:-170px 0px;}
+input.ButtonToDiv:disabled {cursor:pointer; color:gray; background-position:-170px 0px;}
+
+input.ButtonToDiv_big{height:30px; line-height:30px; width:100px;cursor:pointer;font-size:16px;float:left; 
+ 			margin-left:10px; margin-top:3px; font-size:14px; 
+            text-align:center;background:url(../../images/settings_btn_bg2.png);
+			background-position:0px 0px; 
+			margin-left:0px;
+			border:none;
+			color:white;
+} 
+input.ButtonToDiv_big:hover{ color:#757575; cursor:pointer; background-position:-100px 0px;} 
+input.ButtonToDiv_big:active {cursor:pointer; color:#0669d4; background-position:-200px 0px;}
+input.ButtonToDiv_big:disabled {cursor:pointer; color:gray; background-position:-200px 0px;}
+ 
+ 
+ .select{
+	 margin-left:53px;
+	 padding-left:2px;
+	 width:300px;
+	 -moz-border-radius: 8px;
+	 -khtml-border-radius: 8px;
+	 -webkit-border-radius: 8px;
+	 border-radius: 8px;
+	 border-top-right-radius:0px;
+	 border-bottom-right-radius:0px;
+	 height:20px;
+	 background:#3F444e;
+	 border:1px solid #FFF;
+	 margin-top:3px;
+	 color:#FFF;
+}
+.selectPC{
+	 margin-left:15px;
+	 padding-left:2px;
+	 width:300px;
+	 -moz-border-radius: 8px;
+	 -khtml-border-radius: 8px;
+	 -webkit-border-radius: 8px;
+	 border-radius: 8px;
+	 border-top-right-radius:0px;
+	 border-bottom-right-radius:0px;
+	 height:20px;
+	 background:#3F444e;
+	 border:1px solid #FFF;
+	 margin-top:3px;
+	 color:#FFF;
+}
+.style29 input[type='text']{
+	background:#3F444e;
+	color:#FFF;
+    border:1px solid #FFF;
+	height:18px;
+	+height:15px;
+    margin-top:3px;
+	padding-top:4px;
+}
+
+ .select option{
+	 -moz-border-radius: 8px;
+	 -khtml-border-radius: 8px;
+	 -webkit-border-radius: 8px;
+	 border-radius: 8px;
+	 padding:2px;
+	 background:url(../../images/fillShading.jpg);
+	 color:#FFF
+	 }
+ .table_box{
+	 float:left; margin-left:5px;
+	 font-size:14px;
+	 }
+	div [id^=IO_output]{float:left; width:150px; margin-left:10px;
+		}
+ #sense_grade{
+	 }
+ .mv{width:257px;float:left;clear:left;}
+ .mv_L{width:125px; padding-left:5px;}
+ .mv_R{width:110px;}
+ .sel_mv{width:100px;float:left; margin-top:3px; margin-left:10px;}
+ .table_R_content{width:330px; height:250px;border:1px solid #c6d0d9; float:left; margin:0px 7px; }
+ .table_L_content{float:left; clear:none;}
+ .bottom{ border:1px solid #FFF;}
+ .bottomMac{/*height:403px;*/}
+ .buttom_mv{ padding-left:300px;}
+ .buttom_mv32{ padding-left:300px; padding-top:100px;}
+ .base{ width:80px;}
+.spinner_up{  background-image:url(../../images/spinner.gif);
+width:17px;
+height:11px;
+font-size:0;
+border-bottom:0;}
+.spinner_up:hover{background-position: 17px 1px;}
+.spinner_up:active{background-position: 34px 1px;}
+.spinner_down{  background-image:url(../../images/spinner.gif);
+width:17px;
+height:11px;
+font-size:0;
+border-top:0px;
+background-position:0px 11px;}
+.spinner_down:hover{background-position: 17px 10px;}
+.spinner_down:active{background-position: 34px 12px;}
+.time_input{
+	width:100px; float:left; height:25px; font-size:14px; }
+.time_input input{ height:20px;border:none;}
+.time_spinner{width:17px; float:left; margin-top:2px;}
+.time_plugin{
+	width:110px; 
+	float:left;
+	margin-top:3px;
+	height:20px;
+	}
+
+.table_R_F{
+	width:240px;float:left; margin-left:50px;
+	}
+.table_range_hdd_1,.table_range_hdd_2,.table_range_hdd_3,.table_range_hdd_4{ width:100px; border-right:1px solid #CCC; float:left; padding-left:5px;}
+.table_range_hdd_2{ width:150px; }
+.table_range_hdd_3{ width:150px;}
+.table_range_hdd_4{ width:150px;border-right:0px}
+
+.table_analog_1,.table_analog_2,.table_analog_3{ width:100px; border-right:1px solid #CCC; float:left; padding-left:5px;}
+.table_analog_2{ width:150px; }
+.table_analog_3{ width:150px;border-right:0px}
+
+.none{ border:none;}
+.top{ border-top:1px solid #CCC;}
+.onlytop{border:none; border-top:1px solid #CCC;}
+.syspm_user_specialty{ width:399px;height:25px; overflow:hidden;}
+.syspm_user_specialty_L{width:399px;float:left;}
+.IE6Buga{_margin-left:16px;}
+.syspm_user_specialty_R{ width:230px; height:208px; float:left; border-right:1px solid #FFF}
+.syspm_user_specialty_1{width:250px; border:none;margin-top:8px;}
+.syspm_use_range_1,.syspm_use_range_2,.syspm_use_range_3,.syspm_use_range_4{ width:50px; border-right:1px solid #CCC; float:left; height:25px; padding-left:5px;}
+.syspm_use_range_2{ width:159px;}
+.syspm_use_range_3{ width:70px;}
+.syspm_use_range_4{ width:90px; border-right:0px;}
+
+.syspm_use_range_R_L{ width:130px;float:left; padding-left:5px;}
+.syspm_use_range_R_R{ width:115px;float:left;}
+.syspm_use_input{width:110px;}
+.syspm_use_backup_L{border-right:1px solid #CCC; float:left; text-align:left;}
+.syspm_use_backup_R{float:left;}
+.Date{ float:left;width:90px;background:#333;}
+.dst_time{margin-left:70px; 
+			border:1px solid #999;
+			margin-top:7px;
+			border-radius: 5px;
+			}
+#timeType{float:left; display:none;}
+.Dst_date{float:left; margin-left:84px; width:230px;}
+.Dst_date select{background:#D8D8D8;
+	 border-radius: 8px;
+	 padding:2px;
+	 _float:left;
+}
+
+.ipc_range_1,.ipc_range_2,.ipc_range_3,.ipc_range_4,.ipc_range_5{ width:50px; border-right:1px solid #CCC; float:left; height:30px; padding-left:5px; cursor:pointer;}
+.ipc_range_2{ width:135px;}
+.ipc_range_3{ width:150px;}
+.ipc_range_4{ width:135px;}
+.ipc_range_5{ width:70px; border-right:0px;}
+.ipclist{width:580px;}
+#IPClist_SEARCH{ 
+	width:600px; 
+	
+	overflow-y:auto;
+	border-bottom:1px solid #FFF;
+}
+
+/*#bmOk,#spOk,#ytOk,#osdOk{float:right;}*/
+#Vidoeshelter{height:280px; width:360px;border:1px solid #c6d0d9; margin-left:100px;_margin-left:0px;}
+#Vidoeposition{height:280px; width:360px;border:1px solid #c6d0d9; margin-left:100px;_margin-left:0px;}
+/*#Vidoecamera{height:280px; width:360px;border:1px solid #c6d0d9; margin-left:100px;_margin-left:0px;}*/
+#Vidoecamera{height:280px; width:338px;border:1px solid #c6d0d9; margin-left:259px;_margin-left:0px;}
+#spCopyTD{display:none;}
+#osdCopyTD{display:none;}
+#bmCopyTD{display:none;}
+#ytCopyTD{display:none;}
+#jhCopyTD{display:none;}
+
+
+#rjh_alarm{color:#FF0000}
+#rjh_normal{color:#33FF99}
+#rjh_no_rec{}
+#rss_all_color{height:245px; width:780px; background:#9C6;}
+#divBox_ScheHead{height:25px; line-height:20px;}
+#divBox_Schel{height:224px; width:28px; clear:left; float:left;}
+#divBoxSche{height:224px; clear:right; float:left;}
+/*#filepath,#filepath_ipc{display:none;}*/
+#aa{background-color:#0F0; height:15px; width:0px; text-align:left; display:none;}
+#UPStop,#UPStop_ipc{ margin-left:40px;}
+.mr_w{width:105px; float:left; clear:none; text-align:left; margin-left:12px;}
+.colon{float:left; width:8px; overflow:hidden; margin-top:-3px;}
+.btn{ line-height:16px; font-size:10px; background-color:#9dbcea}
+div [id $='CopyTD']{display:none;}
+.divBox,.divBoxl,.divBoxr{width:30px; height:30px; border:1px solid #000000; clear:right; float:left; border-left:none; border-bottom:none;}
+.divBoxl{ clear:left;border-left:1px solid #000000;}
+.divBoxr{ clear: right;}
+.divMain{ width:750px;}
+.ColorRed{color:#FF0000;}
+.ColorGreen{color:#33FF99;}
+.sysuserwidth{width:30px;}
+.bordernone{border:none;}
+#IO_output_1,#IO_output_2,#IO_output_3,#IO_output_4{display:none}
+input.select{width:293px;}
+inputCss{width:293px;}
+#syswhmr .mr_w{ width:400px;}
+.format_pro{
+	width: 12px; height: 24px; text-align: center; overflow: hidden; border-top-color: #fff; border-right-color: currentColor; border-bottom-color: #fff; border-left-color: #fff; border-top-width: 1px; border-right-width: medium; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: none; border-bottom-style: solid; border-left-style: solid; float: left; background: #666; margin-top:2px;
+}
+
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0){ 
+.select{
+	height:20px;
+	}
+#ClearShelter{
+	margin-left:320px;
+	}
+.tableChn1{}
+.tableChn{margin-left:10px;}
+select option{ background:url(../../images/fillShading.jpg)}
+ /*.mv{width:250px;float:left;clear:left; height:25px; overflow:hidden;}
+ .bottomMac{height:340px}*/
+}
+
+/*wh 2012.06.12*/
+ .logo_link_cy{height:24px; line-height:24px; width:75px;cursor:pointer;font-size:16px;float:left; margin-left:10px; margin-top:3px; font-size:14px\9\0; text-align:center;}
+ .logo_link_cy.urmet{ background:url(../../images/logo_link.gif)}
+ .logo_link_cy:hover{ color:#CCF; cursor:pointer; background-position:-100px;}
+ .logo_link_cy:active {cursor:pointer; color:#F00; background-position:-200px;}
+ 
+.WifiSet_range_1,.WifiSet_range_2,.WifiSet_range_3,.WifiSet_range_4,.WifiSet_range_5,.WifiSet_range_6,.WifiSet_range_7,.WifiSet_range_8{ width:75px; border-right:1px solid #CCC; float:left; height:30px;  cursor:pointer; text-align:center;}
+.WifiSet_range_2{ width:150px; }
+.WifiSet_range_3{ width:75px;}
+.WifiSet_range_4{ width:100px;}
+.WifiSet_range_5{ width:120px;}
+.WifiSet_range_6{ width:100px;}
+.WifiSet_range_7{ width:75px;}
+.WifiSet_range_8{ width:150px; border-right:0px;}
+.wifilist{width:870px;}
+#WifiList_search{ 
+	width:595px; 
+	overflow:auto;
+	border-top:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+	border-left:2px solid #FFF;
+	border-right:2px solid #FFF;
+}
+.IPFilter_select{
+	color:#fff;
+	background:#3F444E; /*#61666c;*/
+	border:1px solid #fff;
+	height:20px;
+	line-height:20px;
+	margin-left:3px;
+	margin-right:3px;
+	margin-top:3px;
+	width:140;
+	/*border-top-left-radius:8px;
+	border-bottom-left-radius:8px;*/
+	/*text-align:center;*/
+}
+#IPFilter_list{ 
+	width:599px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	border-top:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+	border-left:1px solid #FFF;
+	border-right:2px solid #FFF;
+}
+.IPFilter_range_1,.IPFilter_range_2,.IPFilter_range_3{ width:138px; border-right:1px solid #CCC; float:left; height:30px;  cursor:pointer; text-align:center;}
+.IPFilter_range_2{ width:300px; }
+.IPFilter_range_3{ width:138px; border-right:0px;}
+.IPFlist{width:597px;}
+
+.hwPlat_range_1,.hwPlat_range_2,.hwPlat_range_3,.hwPlat_range_4,.hwPlat_range_5{ width:80px; border-right:1px solid #CCC; float:left; height:30px;  cursor:pointer; text-align:center;}
+.hwPlat_range_2{ width:190px; }
+.hwPlat_range_3{ width:150px;}
+.hwPlat_range_4{ width:75px;}
+.hwPlat_range_5{ width:80px; border-right:0px;}
+.hwPlatlist{width:580px;}
+#hwPlatlist_SEARCH{ 
+	width:600px; 
+	overflow-y:auto;
+	border-bottom:1px solid #FFF;
+}
+
+.huawei_select{
+	color:#fff;
+	background:#3F444E; /*#61666c;*/
+	border:1px solid #fff;
+	height:20px;
+	line-height:20px;
+	margin-left:3px;
+	margin-top:3px;
+	/*border-top-left-radius:8px;
+	border-bottom-left-radius:8px;*/
+	/*text-align:center;*/
+}
+
+/*
+#SysInfmaintainperiod1,#SysInfmaintainperiod2{
+	background:transparent;
+	color: white; 
+	border:#069 1px solid;	
+}
+#SysInfmaintainperiod1 option,#SysInfmaintainperiod2 option{
+	background:black;
+	/*background:url(../../images/fillShading.jpg)*/	
+/*}
+*/
+
+#LXJH_CPQXQ{background:transparent; color: white; border:1px solid #069; }
+#LXJH_CPQXQ option{background:black; }
+
+#LXJH_CPHXQ{background:transparent; color: white; border:1px solid #069; }
+#LXJH_CPHXQ option{background:black; }
+
+#LXJH_CPQTD{background:transparent; color: white; border:1px solid #069; }
+#LXJH_CPQTD option{background:black; }
+
+#LXJH_CPHTD{background:transparent; color: white; border:1px solid #069; }
+#LXJH_CPHTD option{background:black; }
+
+
+#YJJH_CPQXQ{background:transparent; color: white; border:1px solid #069; }
+#YJJH_CPQXQ option{background:black; }
+
+#YJJH_CPHXQ{background:transparent; color: white; border:1px solid #069; }
+#YJJH_CPHXQ option{background:black; }
+
+#YJJH_CPQTD{background:transparent; color: white; border:1px solid #069; }
+#YJJH_CPQTD option{background:black; }
+
+#YJJH_CPHTD{background:transparent; color: white; border:1px solid #069; }
+#YJJH_CPHTD option{background:black; }
+
+
+#SCSP_CPQXQ{background:transparent; color: white; border:1px solid #069; }
+#SCSP_CPQXQ option{background:black; }
+
+#SCSP_CPHXQ{background:transparent; color: white; border:1px solid #069; }
+#SCSP_CPHXQ option{background:black; }
+
+#SCSP_CPQTD{background:transparent; color: white; border:1px solid #069; }
+#SCSP_CPQTD option{background:black; }
+
+#SCSP_CPHTD{background:transparent; color: white; border:1px solid #069; }
+#SCSP_CPHTD option{background:black; }
+
+/*
+.timerHour,.timerMin,.timerSec,.timerType{background:transparent; color:white; border:border:white 1px solid; margin-bottom: 2px;}
+.timerHour option,.timerMin option,.timerSec option,.timerType option{background:black; }
+*/
+
+.sysSjPathBtn{background:url(../../images/sysSjPathBtn.png); width:25px; height:23px; margin-left:303px; margin-top:-25px; border:1px solid white; }
+.sysSjPathBtn:hover{background-position: -25px 0px; cursor:pointer; }

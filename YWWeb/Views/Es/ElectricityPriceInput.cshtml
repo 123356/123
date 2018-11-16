@@ -1,0 +1,403 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>录入交易电价</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" class="easyui-datagrid" idfield="RoleID" pagination="true"
+        data-options="iconCls:'icon-edit',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th data-options="field:'id',checkbox:true"></th>
+                <th data-options="field:'unid',hidden:true"></th>
+                <th field='Name' width="80px">客户名称
+                </th>
+                <th field='trade_time' formatter="crtYMFtt" width="150px">年月
+                </th>
+                <th field='trade_price' width="100px">交易均价(元/MW·H)
+                </th>
+                <th field='trade_num' width="100px">实际交易量(MW·H)
+                </th>
+                <th field='catalog_price' width="120px">目录均价(元/MW·H)
+                </th>
+                <th field='save_cost' width="120px">节省电度电费(元)
+                </th>
+                <th field='pc_save_cost' width="120px">
+                    节省偏差考核费(元)
+                </th>
+                <th field='All_cost' width="120px">
+                    节省总费用(元)
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        
+        <div class="searchrow">
+            客户名称:
+            <input id="unitselect" />
+        </div>
+        <div class="searchrow">
+            开始时间: <input id="startTime" name="PlanDate" class="easyui-datebox" />
+        </div>
+        <div class="searchrow">
+            结束时间:
+            <input id="endTime" name="PlanDate" class="easyui-datebox" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+        <div class="searchbutton">
+            <button title="查看电价" class="page_table_but" onclick="ShowDianjia()"><img src="/Content/images/Icon16/zoom.png">查看电价</button>
+        </div>
+    </div>
+
+    <div id="editwin" title="编辑电价信息" class="easyui-dialog" closed="true" style="width: 900px; height: 250px; padding: 5px;"
+        minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">交易均价(元/MW·H)：
+                </td>
+                <td class="d_l_d">
+                    <input id="id" type="hidden"/>
+                    <input id="trade_price" runat="server" name="BugLocation" missingmessage="必填项！"
+                        class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b
+                            class="RStar">&nbsp*</b>
+                    <p style="color:red;">(品种1电量*品种1电价+品种2电量*品种2电价+...）<br />除以（品种1电量+品种2电量+...)</p>
+                </td>
+                <td class="d_l_t">实际交易量(MW·H)：
+                </td>
+                <td class="d_l_d">
+                    <input id="trade_num" runat="server" name="BugLocation" missingmessage="必填项！"
+                        class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b
+                            class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+           <tr>
+            <td class="d_l_t">年月：
+                </td>
+            <td class="d_l_d">
+                <input id="trade_time" name="trade_time" class="easyui-datebox" style="width:207px;" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+             <td class="d_l_t">客户名称：
+                </td>
+                <td class="d_l_d">
+                    <select id="unit" class="easyui-combobox" style="width: 200px; height: 26px;">
+                    </select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    目录电价(元/MW·H)：
+                </td>
+                <td class="d_l_d">
+                    <input id="catalog_price" name="trade_time" class="easyui-validatebox" style="width:207px;" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    节省偏差考核费(元)：
+                </td>
+                <td class="d_l_d">
+                    <input id="pc_save_cost" name="trade_time" class="easyui-validatebox" style="width:207px;" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                    data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+
+    <script src="~/Content/UserJS/ElectricityPriceInput._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+
+
+    <div id="editwin4" title="查看电价信息" class="easyui-dialog" closed="true" style="width: 800px; height: 500px; padding: 5px;"
+         minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="1" class="d_list" style="margin-top:20px;">
+            <tr>
+                <td rowspan="3" colspan="2" style="text-align:center;">项目</td>
+                <td style="text-align:center;" colspan="9">目录电价</td>
+            </tr>
+            <tr id="ping">
+               
+                <td colspan="3" style="text-align:center;">
+                    平水期：
+                </td>
+                <td colspan="3" style="text-align:center;">
+                    枯水期
+                </td>
+                <td colspan="3" style="text-align:center;">
+                    丰水期：
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:center;">
+                    平
+                </td>
+                <td style="text-align:center;">
+                    峰
+                </td>
+                <td style="text-align:center;">
+                    谷
+                </td>
+                <td style="text-align:center;">
+                    平
+                </td>
+                <td style="text-align:center;">
+                    峰
+                </td>
+                <td style="text-align:center;">
+                    谷
+                </td>
+                <td style="text-align:center;">
+                    平
+                </td>
+                <td style="text-align:center;">
+                    峰
+                </td>
+                <td style="text-align:center;">
+                    谷
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;" rowspan="3">50kVA(kW)<br />及以上一般<br />工商业及其他</td>
+                <td style="text-align:center;">1kv以下</td>
+                <td style="text-align:center;">
+                    0.76560
+                </td>
+                <td style="text-align:center;">
+                    1.14840
+                </td>
+                <td style="text-align:center;">
+                    0.38230
+                </td>
+                <td style="text-align:center;">
+                    0.80388
+                </td>
+                <td style="text-align:center;">
+                    1.20582
+                </td>
+                <td style="text-align:center;">
+                    0.40194
+                </td>
+                <td style="text-align:center;">
+                    0.72732
+                </td>
+                <td style="text-align:center;">
+                    1.09098
+                </td>
+                <td style="text-align:center;">
+                    0.36366
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">1—10kv</td>
+                
+                <td style="text-align:center;">
+                    0.75060
+                </td>
+                <td style="text-align:center;">
+                   1.12590
+                </td>
+                <td style="text-align:center;">
+                    0.37530
+                </td>
+                <td style="text-align:center;">
+                    0.78813
+                </td>
+                <td style="text-align:center;">
+                    1.18220
+                </td>
+                <td style="text-align:center;">
+                    0.39407
+                </td>
+                <td style="text-align:center;">
+                    0.71307
+                </td>
+                <td style="text-align:center;">
+                   1.06961
+                </td>
+                <td style="text-align:center;">
+                    0.35654
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">35—110kv以下</td>
+                <td style="text-align:center;">
+                    0.73560
+                </td>
+                <td style="text-align:center;">
+                    1.10340
+                </td>
+                <td style="text-align:center;">
+                   0.36780
+                </td>
+                <td style="text-align:center;">
+                    0.77238
+                </td>
+                <td style="text-align:center;">
+                    1.15857
+                </td>
+                <td style="text-align:center;">
+                    0.38619
+                </td>
+                <td style="text-align:center;">
+                    0.69882
+                </td>
+                <td style="text-align:center;">
+                    1.04823
+                </td>
+                <td style="text-align:center;">
+                    0.34941
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:center;" rowspan="4">大    工    业</td>
+                <td style="text-align:center;">1—10kv</td>
+                <td style="text-align:center;">
+                    0.52700
+                </td>
+                <td style="text-align:center;">
+                    0.79050
+                </td>
+                <td style="text-align:center;">
+                    0.26350
+                </td>
+                <td style="text-align:center;">
+                    0.55355
+                </td>
+                <td style="text-align:center;">
+                    0.83003
+                </td>
+                <td style="text-align:center;">
+                    0.27668
+                </td>
+                <td style="text-align:center;">
+                    0.50065
+                </td>
+                <td style="text-align:center;">
+                    0.75098
+                </td>
+                <td style="text-align:center;">
+                    0.25003
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">35—110kv以下</td>
+                <td style="text-align:center;">
+                    0.50700
+                </td>
+                <td style="text-align:center;">
+                   0.760650
+                </td>
+                <td style="text-align:center;">
+                    0.25350
+                </td>
+                <td style="text-align:center;">
+                    0.53235
+                </td>
+                <td style="text-align:center;">
+                    0.79853
+                </td>
+                <td style="text-align:center;">
+                    0.26218
+                </td>
+                <td style="text-align:center;">
+                    0.48165
+                </td>
+                <td style="text-align:center;">
+                    0.72248
+                </td>
+                <td style="text-align:center;">
+                    0.24083
+                </td>
+            </tr>
+            <tr>
+                 			 	 		 	 	
+
+                <td style="text-align:center;">110kv</td>
+                <td style="text-align:center;">
+                    0.48700
+                </td>
+                <td style="text-align:center;">
+                    0.73050 
+                </td>
+                <td style="text-align:center;">
+                    0.24350 
+                </td>
+                <td style="text-align:center;">
+                    0.51135
+                </td>
+                <td style="text-align:center;">
+                    0.76703
+                </td>
+                <td style="text-align:center;">
+                    0.25568 
+                </td>
+                <td style="text-align:center;">
+                    0.46265
+                </td>
+                <td style="text-align:center;">
+                    0.69398
+                </td>
+                <td style="text-align:center;">
+                    0.23133
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">220kv及以上</td>
+                 	 	 	 	 	 	 	 	
+
+                <td style="text-align:center;">
+                    0.46700
+                </td>
+                <td style="text-align:center;">
+                    0.70050
+                </td>
+                <td style="text-align:center;">
+                    0.23350
+                </td>
+                <td style="text-align:center;">
+                    0.49035
+                </td>
+                <td style="text-align:center;">
+                    0.73553
+                </td>
+                <td style="text-align:center;">
+                    0.24518
+                </td>
+                <td style="text-align:center;">
+                    0.44365
+                </td>
+                <td style="text-align:center;">
+                    0.66548
+                </td>
+                <td style="text-align:center;">
+                    0.22183
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-top:50px;">
+      <a href="javascript:;" class="table_btn1 btn_style radius5"
+                                                          data-options="iconCls:'icon-cancel'" onclick="$('#editwin4').dialog('close');">关闭</a>
+        </div>
+        <p style="color:red; text-align:center;">目录均价 =(峰电量*峰电价+平电量*平电价+谷电量*谷电价) 除以 (峰电量+平电量+谷电量)</p>
+        <p style="color:red; text-align:center;">交易均价 =(品种1电量*品种1电价+品种2电量*品种2电价+...) 除以 (品种1电量+品种2电量+...)</p>
+    </div>
+</body>
+</html>

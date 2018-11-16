@@ -1,0 +1,335 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DataTransferEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                子站编码：
+            </td>
+            <td class="d_l_d">
+                <input id="SysCode" runat="server" name="SysCode" missingmessage="子站编码必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="ID" type="hidden" />
+            </td>
+            <td class="d_l_t">
+                子站名称：
+            </td>
+            <td class="d_l_d">
+                <input id="SysName" runat="server" name="SysName" missingmessage="名称必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                子站地址：
+            </td>
+            <td class="d_l_d">
+                <input id="address" runat="server" name="address" missingmessage="子站地址必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                建子站时间：
+            </td>
+            <td class="d_l_d">
+                <input id="SetupDate" name="SetupDate" class="easyui-datebox" style="width: 208px;" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                通讯状态：
+            </td>
+            <td class="d_l_d">
+                <input id="CommStatus" runat="server" name="CommStatus" missingmessage="通讯状态必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                数据上传时间：
+            </td>
+            <td class="d_l_d">
+                <input id="UploadDate" name="UploadDate" class="easyui-datebox" style="width: 208px;" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t" style="width: 80px;">
+                子站版本：
+            </td>
+            <td class="d_l_d">
+                <input id="SysVersion" runat="server" name="SysVersion" missingmessage="子站版本必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                系统更新时间：
+            </td>
+            <td class="d_l_d">
+                <input id="SysUpdateDate" name="SysUpdateDate" class="easyui-datebox" style="width: 208px;" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                点限制：
+            </td>
+            <td class="d_l_d">
+                <input id="pointLimit" runat="server" name="pointLimit" missingmessage="点限制必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                时间限制：
+            </td>
+            <td class="d_l_d">
+                <input id="timeLimit" runat="server" name="timeLimit" missingmessage="时间限制必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                IP地址：
+            </td>
+            <td class="d_l_d">
+                <input id="CenterIP" runat="server" name="CenterIP" missingmessage="IP地址必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                端口：
+            </td>
+            <td class="d_l_d">
+                <input id="CenterPort" runat="server" name="CenterPort" missingmessage="端口必填项！"
+                    class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                用户名：
+            </td>
+            <td class="d_l_d">
+                <input id="UserName" runat="server" name="UserName" missingmessage="用户名必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                密码：
+            </td>
+            <td class="d_l_d">
+                <input id="Pwd" runat="server" name="Pwd" missingmessage="必填" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                数据类型：
+            </td>
+            <td class="d_l_d">
+                <input id="DBType" runat="server" name="DBType" missingmessage="数据类型必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_t">
+                数据库名：
+            </td>
+            <td class="d_l_d">
+                <input id="DBName" runat="server" name="DBName" missingmessage="数据库名必填项！" class="easyui-validatebox"
+                    style="width: 200px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                连接字符：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <input id="ConnectString" runat="server" name="ConnectString" missingmessage="连接字符必填项！"
+                    class="easyui-validatebox" style="width: 530px;" data-options="required:true" />
+                <b class="RStar">&nbsp*</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                备注：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="Remarks" class="easyui-validatebox" style="height: 60px; width: 530px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 10px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        function loadDataTransferInfo() {
+            var  id=@Html.Raw(Request.QueryString["id"]);    
+            $.post("/Web/LoadDataTransferInfo", {"id":id}, function (data) {
+                var row=eval("("+data+")");
+                  $("#SysCode").val(row.SysCode);
+                  $("#SysName").val(row.SysName);
+                  $("#address").val(row.address);              
+                  getMDate(row.SetupDate, 'SetupDate');
+                  $("#CommStatus").val(row.CommStatus);              
+                  getMDate(row.UploadDate, 'UploadDate');
+                  $("#SysVersion").val(row.SysVersion);      
+                  getMDate(row.SysUpdateDate, 'SysUpdateDate');
+                  $("#pointLimit").val(row.pointLimit);
+                  $("#timeLimit").val(row.timeLimit);
+                  $("#ID").val(row.ID);                  
+                  $("#CenterIP").val(row.CenterIP);
+                  $("#CenterPort").val(row.CenterPort);
+                  $("#UserName").val(row.UserName);
+                  $("#Pwd").val(row.Pwd);
+                  $("#DBType").val(row.DBType);                  
+                  $("#DBName").val(row.DBName);
+                  $("#ConnectString").val(row.ConnectString);
+                  $("#Remarks").val(row.Remarks);                                 
+          })
+        }
+        
+        $(function () {
+            loadDataTransferInfo();
+            $("#btnSave").click(function () {
+                 if($("#SysCode").val()=="")
+                {
+                    $.messager.alert("提示", "请输入子站编码！", "info");
+                    return false;
+                }
+                else if($("#SysName").val()=="")
+                {
+                    $.messager.alert("提示", "请输入子站名称！", "info");
+                    return false;
+                }
+                else if($("#address").val()=="")
+                {
+                    $.messager.alert("提示", "请输入子站地址！", "info");
+                    return false;
+                }
+                else if($('#SetupDate').datebox('getValue')=="")
+                {
+                    $.messager.alert("提示", "请输入建子站时间！", "info");
+                    return false;
+                }
+                else if($("#CommStatus").val()=="")
+                {
+                    $.messager.alert("提示", "请输入通讯状态！", "info");
+                    return false;
+                }
+                else if($('#UploadDate').datebox('getValue')=="")
+                {
+                    $.messager.alert("提示", "请输入数据上传时间！", "info");
+                    return false;
+                }
+                else if($("#SysVersion").val()=="")
+                {
+                    $.messager.alert("提示", "请输入子站版本！", "info");
+                    return false;
+                }
+                else if($('#SysUpdateDate').datebox('getValue')=="")
+                {
+                    $.messager.alert("提示", "请输入系统更新时间！", "info");
+                    return false;
+                }
+                else if($("#pointLimit").val()=="")
+                {
+                    $.messager.alert("提示", "请输入点限制！", "info");
+                    return false;
+                }
+                 else if($("#timeLimit").val()=="")
+                {
+                    $.messager.alert("提示", "请输入时间限制！", "info");
+                    return false;
+                }
+                 else if($("#CenterIP").val()=="")
+                {
+                    $.messager.alert("提示", "请输入IP地址！", "info");
+                    return false;
+                }
+                 else if($("#CenterPort").val()=="")
+                {
+                    $.messager.alert("提示", "请输入端口！", "info");
+                    return false;
+                }
+                 else if($("#UserName").val()=="")
+                {
+                    $.messager.alert("提示", "请输入用户名！", "info");
+                    return false;
+                }
+                 else if($("#Pwd").val()=="")
+                {
+                    $.messager.alert("提示", "请输入密码！", "info");
+                    return false;
+                }
+                 else if($("#DBType").val()=="")
+                {
+                    $.messager.alert("提示", "请输入数据类型！", "info");
+                    return false;
+                }
+                 else if($("#DBName").val()=="")
+                {
+                    $.messager.alert("提示", "请输入数据库名！", "info");
+                    return false;
+                }
+                 else if($("#ConnectString").val()=="")
+                {
+                    $.messager.alert("提示", "请输入连接字符！", "info");
+                    return false;
+                }     
+                    //IP地址验证         
+                    var ipAddress = $("#CenterIP").val();  
+                    var reg =  /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;  
+                    if(!reg.test(ipAddress)){  
+                      alert("IP地址格式不正确，请修改！");  
+                      return false;  
+                     }  
+                
+                var postData = {                
+                    SysCode: $("#SysCode").val(),
+                    SysName: $("#SysName").val(),
+                    address: $("#address").val(),
+                    SetupDate: $('#SetupDate').datebox('getValue'),
+                    CommStatus: $("#CommStatus").val(),
+                    UploadDate: $('#UploadDate').datebox('getValue'),
+                    SysVersion: $("#SysVersion").val(),
+                    SysUpdateDate:$('#SysUpdateDate').datebox('getValue'),
+                    pointLimit: $("#pointLimit").val(),
+                    timeLimit: $("#timeLimit").val(),
+                    ID: $("#ID").val(),
+                    CenterIP: $("#CenterIP").val(),
+                    CenterPort: $("#CenterPort").val(),
+                    UserName: $("#UserName").val(),
+                    Pwd: $("#Pwd").val(),
+                    DBType: $("#DBType").val(), 
+                    DBName: $("#DBName").val(),
+                    ConnectString: $("#ConnectString").val(),
+                    Remarks: $("#Remarks").val()
+                                
+                };
+
+                //发送异步请求，添加用户
+                $.post("/Web/SaveDataTransferInfo", postData, function (data) {
+                    if (data == "OK") {
+                        $.messager.alert("提示", "编辑成功！", "info");
+                        $('#editwin').window('close');
+                    }
+                    else {
+                        alert(data);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

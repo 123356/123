@@ -1,0 +1,101 @@
+﻿
+/*#region 运维网络版表格*/
+
+/*#region 定义画布大小 状态监测页面的实时数据表*/
+.web_table{width:90%; height:800px; background-color:#4c4c4c; position:relative; margin:0 auto;}
+/*#region 表格宽度*/
+.bgw{border-collapse:collapse; width:90%; min-width:1000px;  margin-top:20px; margin-bottom:40px; font-family:"Microsoft YaHei";font-size:18px; color:#333333;}
+.bgw td,.bgw tr,.bgw th{ border:1px solid #666; height:35px;}
+/*#region 单元格样式*/
+.gs01 
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#e5e5e5,endColorStr=#cccccc); /*IE*/ 
+ background :-moz-linear-gradient(top,#e5e5e5,#cccccc);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#e5e5e5), to(#cccccc));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #e5e5e5),color-stop(1, #cccccc));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e5e5e5', endColorstr='#cccccc'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e5e5e5', endColorstr='#cccccc')"; /* IE8 */ 
+ background: linear-gradient(#EFEDF2,#EFEDF2);  /* IE11 */ 
+ }
+.gs02
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#ffffff,endColorStr=#e5e5e5); /*IE*/ 
+ background :-moz-linear-gradient(top,#ffffff,#e5e5e5);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffffff), to(#e5e5e5));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #ffffff),color-stop(1, #e5e5e5));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5')"; /* IE8 */ 
+ background: linear-gradient(#FFFFFF,#FFFFFF); /* IE11 */ 
+  font-weight:bolder;color:#000 ;
+ }
+.gs553
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#e6e6e6,endColorStr=#e6e6e6); /*IE*/ 
+ background :-moz-linear-gradient(top,#e6e6e6,#e6e6e6);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#e6e6e6), to(#e6e6e6));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #e6e6e6),color-stop(1, #e6e6e6));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e6e6e6', endColorstr='#e6e6e6'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#e6e6e6', endColorstr='#e6e6e6')"; /* IE8 */ 
+ background: linear-gradient(#e6e6e6,#e6e6e6); /* IE11 */ 
+ font-weight:bolder;color:#5b5b5b ;
+ }
+ .gs03
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#efedf2,endColorStr=#efedf2); /*IE*/ 
+ background :-moz-linear-gradient(top,#efedf2,#efedf2);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#7f7f7f), to(#efedf2));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #efedf2),color-stop(1, #efedf2));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#efedf2', endColorstr='#efedf2'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#efedf2', endColorstr='#efedf2')"; /* IE8 */ 
+ background: linear-gradient(#efedf2,#efedf2); /* IE11 */ 
+ color:black;}
+
+ .gs05
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#ffffff,endColorStr=#e5e5e5); /*IE*/ 
+ background :-moz-linear-gradient(top,#ffffff,#e5e5e5);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffffff), to(#e5e5e5));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #ffffff),color-stop(1, #e5e5e5));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5')"; /* IE8 */ 
+ background: linear-gradient(#EFEDF2,#EFEDF2); /* IE11 */ 
+ font-family:"Arial";color:#000 ; min-width:80px;
+ }
+ .gs06
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#17689d,endColorStr=#17689d); /*IE*/ 
+ background :-moz-linear-gradient(top,#17689d,#17689d);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#17689d), to(#17689d));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #17689d),color-stop(1, #17689d));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d')"; /* IE8 */ 
+ background: linear-gradient(#17689d,#17689d); /* IE11 */ 
+ color:white;
+ }
+ .gs07
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#17689d,endColorStr=#17689d); /*IE*/ 
+ background :-moz-linear-gradient(top,#17689d,#17689d);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#17689d), to(#17689d));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #17689d),color-stop(1, #17689d));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d')"; /* IE8 */ 
+ background: linear-gradient(#17689d,#17689d); /* IE11 */ 
+ color:white;
+ }
+ .gs08
+{FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#17689d,endColorStr=#17689d); /*IE*/ 
+ background :-moz-linear-gradient(top,#17689d,#17689d);/*火狐*/ 
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#17689d), to(#17689d));/*谷歌*/ 
+ background: -webkit-gradient(linear,left bottom,left top,color-start(0, #17689d),color-stop(1, #17689d));/* Safari & Chrome*/ 
+ filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d'); /*IE6 & IE7*/ 
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#17689d', endColorstr='#17689d')"; /* IE8 */ 
+ background: linear-gradient(#17689d,#17689d); /* IE11 */ 
+ color:white;
+ }
+
+/*#endregion 运维网络版表格*/
+
+/*#region 运维网络版表格2*/
+
+/*#region 定义画布大小*/
+/*#region 表格宽度*/
+table.bgw2{border-collapse:collapse; font-family:"Microsoft YaHei";font-size:18px; color:#333; }
+table.bgw2 td,.bgw2 tr,.bgw2 th{ border:1px solid #666; height:35px;white-space:nowrap;}
+table.bgw2 .bgw2_title { background-color:#333333 !important; color:#fff;}
+/*#endregion 运维网络版表格2*/
+
+.tabletitle {background-color: #17689d;font-family:Microsoft YaHei; display:block; font-size:18px; color:#fff;text-align:center; height:35px; line-height:35px;}

@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" idfield="LogID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field="UserName" width="100px">
+                    操作人
+                </th>
+                <th field="LogType" width="100px">
+                    操作对象
+                </th>
+                <th field="Contents" width="280px">
+                    操作描述
+                </th>
+                <th data-options="field:'LogDate',width:60">
+                    操作时间
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            操作人:
+            <input id="uname" />
+            操作内容:
+            <input id="contents" />
+            操作时间:
+            <input id="datestart" class="easyui-datebox" />
+            到
+            <input id="dateend" class="easyui-datebox" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    <script src="~/Content/UserJS/LogList_jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

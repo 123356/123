@@ -1,0 +1,114 @@
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="NewCloSto_Title" class="logo_title">Cloud Storage</div>
+               <div class="item_R">
+                   <div id="NewCloStoRf" class="logo_link">Refresh</div>
+                   <div id="NewCloStoSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+    		<!--table 1-->
+			<div class="table">
+				<div class="table_L" id="NewCloSto_Enable">Cloud Storage</div>
+				<div class="table_R">
+                	<div class="table_box" style="margin-left:0px">
+                        <select id="NewCloStoEnable" class="select">
+                            <option value="0">Disable</option><!--Disable时，下面NewCloSto_divdisplay全部隐藏 -->
+                            <option value="1">Enable</option>
+                        </select>
+                    </div>
+                    <div class="table_box">
+                    	<input id="CloudCheck" type="button" value="Check" style="margin-left:20px;display:none;margin-top:5px;"/>
+                    </div>
+                </div>
+			</div>
+			
+            <!--隐藏区域 -->	
+            <div id="NewCloSto_divdisplay" style="display:none; ">
+				<!--table 2-->
+                <div class="table">
+                	<div class="table_L" id="NewCloSto_ServerType">Server Type</div>
+                    <div class="table_R">
+						<select id="NewCloStoServerType" class="select" >
+							<option value="0">Dropbox</option>        <!--value==0，显示DropboxDiv -->
+							<option value="1">Google Drive</option>   <!--value==1，显示GoogleDiv -->
+						</select>
+					</div>
+                </div>
+				
+				<!--table 3-free-->
+            	<div class="table">
+                	<div class="table_L" id="NewCloSto_DriveName">Drive Name</div>
+                    <div class="table_R">
+						<input id="NewCloStoDriveName" type="text" maxlength="16" class="select" value="CloudDVR"/>
+					</div>
+                </div>
+				
+				<!--table 4-free-->	
+                <div class="table">
+                	<div class="table_L" id="NewCloSto_SnapEnable">Upload Photo</div>
+                    <div class="table_R">                    
+						<select id="NewCloStoSnapEnable" class="select" style="width:200px; float:left; margin-right:20px;">
+							<option value="0">Disable</option>
+							<option value="1">Enable</option>
+						</select>
+                        <input type="button" value="SetUp" id="gotoUploadPhoto" style="display:none; margin-top:5px;" />  
+                    </div>
+                </div>
+				
+				<!--table 5-free-->
+				<div class="table">
+                	<div class="table_L" id="NewCloSto_VideoEnable">Upload Video</div>
+                    <div class="table_R">                    
+						<select id="NewCloStoVideoEnable" class="select" style="width:200px; float:left; margin-right:20px; ">
+							<option value="0">Disable</option>
+							<option value="1">Enable</option>
+						</select>
+                        <input type="button" value="SetUp" id="gotoUploadVideo" style="display:none; margin-top:5px;" />  
+                    </div>
+                </div>
+				
+				<!--table 6.1 Dropbox -->
+				<div id="DropboxDiv">					
+					<div class="table">
+						<div class="table_L" id="NewCloSto_RecvEmail">Receiver Email</div>
+						<div class="table_R">
+							<input id="NewCloStoRecvEmail" type="text" maxlength="36" class="select"/>
+						</div>
+					</div>
+				</div>
+				<!--table 6.2 Google Drive -->
+				<div id="GoogleDiv" style="display:none; ">					
+					<div class="table">
+						<div class="table_L" id="NewCloSto_Account">Gmail Account</div>
+						<div class="table_R">
+							<input id="NewCloStoAccount" type="text" maxlength="63" class="select" value="55555"/>
+						</div>
+					</div>
+					
+					<div class="table">
+						<div class="table_L" id="NewCloSto_AccountPW">Gmail Password</div>
+						<div class="table_R">
+							<input type="password" maxlength="63" class="select NewCloStoAccountPW"/>
+						</div>
+					</div>
+				</div>	
+				
+				<!--table 7-空行-->		
+                <div class="table none"></div>
+				
+				<!--Dropbox:显示 GoogleDrive:隐藏 -->
+                <div id="NewClo_ButtonDiv" class="table" style="border:none; display:none; ">  
+                	<input type="button" value="Activate Cloud" id="NewCloSto_Test_Email"/>
+                    <input type="button" value="Advanced E-mail Setup" id="gotoCloud_email" style="margin-left:20px;"/>   
+                </div>
+            </div>
+    </div> 
+</div>

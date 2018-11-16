@@ -1,0 +1,183 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t" style="width: 100px;">
+                测点名称：
+            </td>
+            <td class="d_l_d" id="tname">
+            </td>
+            <td class="d_l_t" style="width: 100px;">
+                中文描述：
+            </td>
+            <td class="d_l_d" id="cdesc">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                设备名称：
+            </td>
+            <td class="d_l_d" id="devicename">
+            </td>
+            <td class="d_l_t">
+                测点位置：
+            </td>
+            <td class="d_l_d" id="position">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                测点详细描述：
+            </td>
+            <td class="d_l_d" id="remarks" colspan="3">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                光纤设备：
+            </td>
+            <td class="d_l_d" colspan="3" id="dname">
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                光纤通道：
+            </td>
+            <td class="d_l_d">
+                <select id="channelsinfoid" style="width: 150px; height: 26px;">
+                </select>
+            </td>
+            <td class="d_l_t">
+                光纤分区：
+            </td>
+            <td class="d_l_d">
+                <select id="zoneno" style="width: 150px; height: 26px;">
+                </select>
+                <input type="hidden" id="pid" />
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var id=@Html.Raw(Request.QueryString["id"]);
+        //获取光纤通道
+        function loadchannelsinfo(pid, did, zoneno) {
+            $("#channelsinfoid").combobox({
+                url: "/PointsInfo/Getchannelsinfo?showall=1&pid=" + pid,
+                valueField: 'id',
+                textField: 'text',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    if (did > 0) {
+                        $("#channelsinfoid").combobox('setValue', did);
+                        loadzone(pid, did, 0, zoneno);
+                    }
+                    else {
+                        var data = $('#channelsinfoid').combobox('getData');
+                        if (data.length > 0) {
+                            $("#channelsinfoid").combobox('select', data[0].id);
+                        }
+                    }
+                },
+                onSelect: function (data) {
+                    loadzone(pid, data.id, 0, 0);
+                }
+            });
+        }
+        //获取光纤分区
+        function loadzone(pid, did, showall, zoneno) {
+            $("#zoneno").combobox({
+                url: "/PointsInfo/Getchannelzone?showall=" + showall + "&pid=" + pid + "&did=" + did,
+                valueField: 'id',
+                textField: 'text',
+                editable: false,
+                onLoadSuccess: function () { //数据加载完毕事件
+                    if (zoneno > 0) {
+                        $("#zoneno").combobox('setValue', zoneno);
+
+                    }
+                    else {
+                        var data = $('#zoneno').combobox('getData');
+                        if (data.length > 0) {
+                            $("#zoneno").combobox('select', data[0].id);
+                        }
+                    }
+                }
+            });
+        }
+        $(function () {
+            loadPointsInfo();
+            $("#btnSave").click(function () {
+                save();
+            });
+        });
+        function save() {
+            if ($("#channelsinfoid").combobox("getValue") == "0") {
+                $.messager.alert("提示", "请选择光纤通道！", "info");
+                return false;
+            }
+            else if ($("#zoneno").combobox("getValue") == "0" || $("#zoneno").combobox("getValue") == "") {
+                $.messager.alert("提示", "请选择光纤分区！", "info");
+                return false;
+            }
+            var postData = {
+                tagid: id,
+                pid: $("#pid").val(),
+                devicesinfoid: $("#pid").val(),
+                dname: $("#dname").html(),
+                channelsinfoid: $("#channelsinfoid").combobox("getValue"),
+                cname: $("#channelsinfoid").combobox("getText"),
+                zoneno: $("#zoneno").combobox("getValue"),
+                zonename: $("#zoneno").combobox("getText")
+            };
+            //发送异步请求，添加用户
+            $.post("/PointsInfo/SavePointmapdts", postData, function (data) {
+                if (data == "OK") {
+                    $.messager.alert("提示", "光纤测温片区对应成功！", "info");
+                    $('#editwin').window('close');
+                }
+                else {
+                    alert(data);
+                }
+            });
+        }
+        //获取光纤设备名称
+        function loadDname(pid) {
+            $.post("/PointsInfo/GetDeviceName", { "pid": pid }, function (data) {
+                $("#dname").html(data);
+            });
+        }
+        function loadPointsInfo() {
+            if (id > 0) {
+                $.post("/PointsInfo/GetPointsInfo", { "tagid": id }, function (data) {
+                    var row = eval("(" + data + ")");
+                    var did = row.TagID;
+                    $("#TagID").val(did);
+                    $("#tname").html(row.TagName);
+                    $("#cdesc").html(row.中文描述);
+                    $("#devicename").html(row.DID);
+                    $("#position").html(row.Position);
+                    $("#remarks").html(row.Remarks);
+                    $("#pid").val(row.PID);
+                    loadDname(row.PID);
+                    loadchannelsinfo(row.PID, row.channelsinfoid, row.zoneno);
+                });
+            }
+            else
+                loadchannelsinfo(0, 0);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StaffManage</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list">
+        <tr>
+            <td class="d_l_t">
+                接收人：
+            </td>
+            <td class="d_l_d">
+                <div id="ToPeople"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                短信内容：
+            </td>
+            <td class="d_l_d">
+                <textarea id="MsgText" runat="server" class="easyui-validatebox" style="width: 90%; height: 100%;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                发送时间：
+            </td>
+            <td class="d_l_d">
+                <input type="checkbox" id="cbkMsg" />定时发送</div>
+                <div id = "SD"  style = " display:none ; float:left"><input id="StartDate" style="width: 250px; height: 26px;" /></div>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 20px;">
+        <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
+            发送</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
+                onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var userid=@Html.Raw(Request.QueryString["userid"]);
+        $("#ToPeople").html(userid.Nam.toString());
+        $("#cbkMsg").click(function () {
+            if ($('#cbkMsg').is(':checked')){
+                $("#SD").fadeIn();
+            }
+            else{
+                $("#SD").fadeOut();
+            }
+        });
+        $('#StartDate').datetimebox().datebox('calendar').calendar({
+            validator: function (date) {
+             var now = new Date();
+             return now<=date;
+             }
+        });
+
+        $("#btnSave").click(function () {
+                var SendTime = "";
+                if ($("#MsgText").val() == "") {
+                    $.messager.alert("提示", "请输入短信内容！", "info");
+                    return false;
+                }
+                else if ($('#cbkMsg').is(':checked')) {
+                    SendTime = $("#StartDate").datebox("getText");
+                    if(SendTime == ""){
+                    $.messager.alert("提示", "请选择发送时间！", "info");                                       
+                    return false;
+                    }
+
+                }
+                var postData = {
+                    Mbno: "" + userid.Mob +"",
+                    SendTime:SendTime,
+                    Msg: $("#MsgText").val()
+                };
+                //发送异步请求，添加用户
+                $.post("/PerationMaintenance/InsertMsg", postData, function (data) {
+                    if (data == "OK") {
+                        $.messager.alert("提示", "发送信息成功！", "info");
+                        $('#editwin').window('close');
+                    }
+                    else {
+                        $.messager.alert("提示", "已经加入发送队列，请等待...", "info");
+                        $('#editwin').window('close');
+//                        alert(data);
+                    }
+                });
+         });
+
+    </script>
+</body>
+</html>

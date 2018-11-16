@@ -1,0 +1,9 @@
+/* CSS Document */
+.loginBtn{background-image:url(../images/loginButton.gif); background-repeat:no-repeat; width:80px; height:21px; float:left;}
+@media screen and (-webkit-min-device-pixel-ratio:0){
+	#passwd{ width:50px; overflow:hidden;}
+	#userpass{ margin-left:50px;}
+	#username{ width:147px;}
+	#loginmlsel{ overflow:auto; overflow-style:auto;}
+	#login_language{background:#FFF;}
+}

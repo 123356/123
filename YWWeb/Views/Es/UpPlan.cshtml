@@ -1,0 +1,295 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>上报计划</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <table id="list_data" class="easyui-datagrid" idfield="RoleID" pagination="true"
+           data-options="iconCls:'icon-edit',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true">
+        <thead>
+            <tr>
+                <th data-options="field:'id',checkbox:true"></th>
+                <th data-options="field:'unid',hidden:true"></th>
+                <th field='Name' width="80px">
+                    客户名称
+                </th>
+                <th field='trade_time' width="150px">
+                    年月
+                </th>
+                <th field='trade_price' width="100px">
+                    交易均价
+                </th>
+                <th field='trade_num' width="100px">
+                    实际交易量
+                </th>
+                <th field='catalog_price' width="120px">
+                    目录均价
+                </th>
+                <th field='save_cost' width="120px">
+                    节省电费
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+
+        <div class="searchrow">
+            客户名称:
+            <input id="unitselect" />
+        </div>
+        <div class="searchrow">
+            开始时间: <input id="startTime" name="PlanDate" class="easyui-datebox" />
+        </div>
+        <div class="searchrow">
+            结束时间:
+            <input id="endTime" name="PlanDate" class="easyui-datebox" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+    <div id="editwin" title="编辑计划信息" class="easyui-dialog" closed="true" style="width: 800px; height: 250px; padding: 5px;"
+         minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t">
+                    交易均价：
+                </td>
+                <td class="d_l_d">
+                    <input id="id" type="hidden" />
+                    <input id="trade_price" runat="server" name="BugLocation" missingmessage="缺陷部位必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <p style="color:red;">(品种1电量*品种1电价+品种2电量*品种2电价+...）<br />除以（品种1电量+品种2电量+...)</p>
+                </td>
+                <td class="d_l_t">
+                    实际交易量：
+                </td>
+                <td class="d_l_d">
+                    <input id="trade_num" runat="server" name="BugLocation" missingmessage="缺陷部位必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    年月：
+                </td>
+                <td class="d_l_d">
+                    <input id="trade_time" name="trade_time" class="easyui-datebox" style="width:207px;" />
+                    <b class="RStar">&nbsp*</b>
+                </td>
+                <td class="d_l_t">
+                    客户名称：
+                </td>
+                <td class="d_l_d">
+                    <select id="unit" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                    <b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
+               data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
+                                                          data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#currPosition", window.top.document).html("当前位置：电力交易 > 录入交易电价 ");
+            loadSelectUnit(0);
+        })
+
+
+
+        //加载客户下拉框
+        function loadSelectUnit(uid) {
+            if (uid != "0") {
+                $("#unit").combobox({
+                    url: "/ES/UnitComboData?isall=" + "false",
+                    valueField: 'UnitID',
+                    textField: 'UnitName',
+                    editable: true,
+                    width: 200,
+                    onLoadSuccess: function () { //数据加载完毕事件
+                        var data = $('#unit').combobox('getData');
+                        if (data.length > 0) {
+                            $("#unit").combobox('select', uid);
+                        }
+                    }
+                });
+            } else {
+                $("#unitselect").combobox({
+                    url: "/ES/UnitComboData?isall=" + "false",
+                    valueField: 'UnitID',
+                    textField: 'UnitName',
+                    editable: true,
+                    onLoadSuccess: function () { //数据加载完毕事件
+                        var data = $('#unitselect').combobox('getData');
+                        if (data.length > 0) {
+                            $("#unitselect").combobox('select', data[0].UnitID);
+                        }
+                    },
+                    onChange: function (n, o) {
+                        dosearch();
+                    }
+                });
+            }
+        }
+
+        //加载方法
+        function dosearch() {
+            var unit = $("#unitselect").combobox("getValue");
+            var startTime = $("#startTime").combobox("getValue");
+            var endTime = $("#endTime").combobox("getValue");
+            if (unit == "") {
+                unit = "0";
+            }
+            if (startTime == "") {
+                startTime = null;
+            }
+            if (endTime == "") {
+                endTime = null;
+            }
+            $('#list_data').datagrid({
+                url: '/ES/GetTradePriceList?Rnum=' + Math.random(),
+                queryParams: { "startTime": startTime, "unit": unit, "endTime": endTime }
+            });
+            // $('#list_data').datagrid('load', { "pz": pz,"pdf":pdf,"year":year });
+            $('#list_data').datagrid('uncheckAll');
+        }
+        function add() {
+            clearForm();
+            $("#editwin").dialog({
+                closed: false,
+                top: ($(window).height() - 300) * 0.5,
+                left: ($(window).width() - 600) * 0.5,
+                minimizable: false, //最小化，默认false
+                maximizable: false, //最大化，默认false
+                collapsible: false, //可折叠，默认false
+                draggable: false, //可拖动，默认false
+                resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+            });
+            //添加时默认选择配电室
+            var uid = $("#unitselect").combobox("getValue");
+            loadSelectUnit(uid)
+        }
+        function edit() {
+            var ids = [];
+            var rows = $('#list_data').datagrid('getSelections');
+            for (var i = 0; i < rows.length; i++) {
+                ids.push(rows[i].RoleID);
+            }
+            if (ids.length > 1) {
+                $.messager.alert("提示", "编辑时只能选择一行数据！", "info");
+                $('#list_data').datagrid('uncheckAll');
+            }
+            else {
+                var row = $('#list_data').datagrid('getSelected');
+                if (row) {
+                    loadSelectUnit(row.unid);
+                    $("#trade_price").val(row.trade_price),
+                    $("#trade_num").val(row.trade_num),
+                    getMDate(row.trade_time, 'trade_time'),
+                    $("#id").val(row.id)
+                    $("#editwin").dialog({
+                        closed: false,
+                        top: ($(window).height() - 300) * 0.5,
+                        left: ($(window).width() - 600) * 0.5,
+                        minimizable: false, //最小化，默认false
+                        maximizable: false, //最大化，默认false
+                        collapsible: false, //可折叠，默认false
+                        draggable: false, //可拖动，默认false
+                        resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+                    });
+                    $('#list_data').datagrid('uncheckAll');
+                }
+                else {
+                    $.messager.alert("提示", "请选择要编辑的行！", "info");
+                }
+            }
+        }
+        function save() {
+            if ($("#trade_price").val() == "") {
+                $.messager.alert("提示", "请输入交易电价！", "info");
+                return false;
+            }
+
+            else if ($("#trade_num").val() == "") {
+                $.messager.alert("提示", "请输入实际交易量！", "info");
+                return false;
+            }
+            else if ($("#trade_time").datebox("getValue") == "") {
+                $.messager.alert("提示", "请选择年月！", "info");
+                return false;
+            }
+            else if ($("#unit").combobox("getValue") == "") {
+                $.messager.alert("提示", "请选择客户！", "info");
+                return false;
+            }
+            var postData = {
+                trade_price: $("#trade_price").val(),
+                trade_num: $("#trade_num").val(),
+                trade_time: $("#trade_time").datebox("getValue"),
+                unid: $("#unit").combobox("getValue"),
+                id: $("#id").val()
+            };
+            console.log(postData);
+            $.post("/ES/SaveTradePrice", postData, function (data) {
+                if (data == "OK") {
+                    $.messager.alert("提示", "操作成功！", "info");
+                    $("#editwin").dialog("close");
+                    $("#list_data").datagrid("reload");
+                    $('#list_data').datagrid('uncheckAll');
+                }
+                else
+                    alert(data);
+            });
+        }
+        function Delete() {
+            var rows = $('#list_data').datagrid('getSelections');
+            if (rows.length < 1) {
+                $.messager.alert("提示", "请选择要删除的行！", "info");
+            }
+            else {
+                $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+                    if (r) {
+                        var ids = [];
+                        for (var i = 0; i < rows.length; i++) {
+                            ids.push(rows[i].id);
+                        }
+                        $.post("/ES/DeleteTradePrice?Rnum=" + Math.random(), { "id": ids.join(',') }, function (data) {
+                            if (data == "OK") {
+                                $.messager.alert("提示", "操作成功", "info");
+                                $("#list_data").datagrid("reload");
+                                $('#list_data').datagrid('uncheckAll');
+                            }
+                            else {
+                                $.messager.alert("提示", data, "info");
+                            }
+                        });
+                    }
+                })
+            }
+        }
+
+
+        function clearForm() {
+            $(':input', editwin).each(function () {
+                var type = this.type;
+                var tag = this.tagName.toLowerCase();
+                if (type == 'text' || type == 'password' || tag == 'textarea' || type == 'hidden') {
+                    this.value = "";
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+</body>
+</html>

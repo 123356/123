@@ -1,0 +1,102 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="hdd_message" class="logo_title">硬盘信息</div>
+               <div class="item_R">
+                   <div id="SysInfoHddRf" class="logo_link">Refresh</div>
+                   <div id="SysInfoHddDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="SysInfoHddSV" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content">
+            <!--table 0--->
+             <!--table 1-->
+         
+            <!--table 2-free-->
+          
+                <div class="table">
+                   <div class="table_range_hdd_1"id="serial_number_hdd">序号</div>
+                   <div class="table_range_hdd_2" id="state">状态</div>
+                   <div class="table_range_hdd_3" id="content_GB">剩余/容量(GB)</div>
+                   <div class="table_range_hdd_4" id="ramain_time">剩余可用时间</div>
+                </div>      
+              <!--table 2-->
+         	     <div id="HDDlist" style="display:none;">			
+              </div>    
+            <!--table 3-->
+                <div class="table none">
+                </div> 
+            <!--table 3-->
+        	    	<div class="table none">
+           		</div> 
+            <!--table 4-->
+  		   	              <div class="table top">
+                    <div class="table_L"  id="shd_over">Overwrite</div>
+                    <div class="table_R">
+                        <select id="HddOverWrite" class="select">
+                            <option value="0">Disable</option>
+                            <option value="1">Auto</option>
+                            <option value="2">1 Hour</option>
+                            <option value="3">3 Hours</option>
+                            <option value="4">1 Day</option>
+                            <option value="5">7 Days</option>
+                            <option value="6">30 Days</option>
+                            <option value="7">90 Days</option>
+                        </select>
+                    </div>
+                </div> 
+                 <!--table 2-->
+				 <div class="table" id="RecordStatue_show" style="display:none;">
+               		<div class="table_L" id="RecordState">RecordState</div>
+                    <div class="table_R">
+                		<input id="HddRecordState" class="select" readonly="readonly" />
+                	</div>
+                 </div>
+                <div class="table" id="ESataRec_div" style="display:none;">
+                <div class="table_L" id="ESataRec">ESataRecord</div>
+                    <div class="table_R">
+                		<select id="ESataRecEnable" class="select">
+                            <option value="0">Disable</option>
+                            <option value="1">Enable</option>
+                        </select>
+                	</div>
+                </div>
+				 
+				<div class="table none"></div>
+				
+                <div id="disk_format" style="display:block;">
+                    <div class="table top" style="margin-top:30px; text-align:center; font-size:16px" id="FormatTitle">Format</div>
+                    <div class="table" id="type_table" style="display:none;">
+                        <div class="table_box">
+                            <input id="Format_IPC" type="radio" name="format_radio" checked="checked"/>IPC &nbsp;&nbsp;&nbsp;&nbsp;<input id="Format_NVR" name="format_radio" type="radio" />NVR
+                        </div>
+                    </div> 
+                    <div class="table" id="IPC_Table" style="display:none;"> 
+                        <div class="table_L" id="ipc_chid">通道名</div>
+                        <div class="table_R" id="ipc_r">
+                            <select id="ipc_sel" class="select" style="width:220px;"></select>
+                            <input  id="IPCbtn" type="button" value="格式化"  style="margin-left:10px;"/>
+                        </div>
+                    </div>
+                    <div class="table" id="NVR_Table" style="display:block;"> 
+                        <div class="table_L" id="disk_no">序号</div>
+                        <div class="table_R" id="nvr_r">
+                            <select id="nvr_sel" class="select" style="width:220px;"></select>
+                            <input  id="NVRbtn" type="button" value="格式化"  style="margin-left:10px;"/>
+                        </div>
+                        <div class="table_R" id="nvr_nodisk" style="text-align:center;">没有接入硬盘</div>
+                    </div>
+                    <div class="table" id="FormatStatue" ></div>    
+                </div>
+    </div>
+    <!--table end-->
+		
+</div>

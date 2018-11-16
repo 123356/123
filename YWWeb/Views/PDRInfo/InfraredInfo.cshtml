@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InfraredInfo</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <style type="text/css">
+        .d_table
+        {
+            border-collapse: collapse;
+            background: #464646;
+        }
+        .d_table td
+        {
+            border: 1px solid #ddd;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+        }
+        .d_table th
+        {
+            text-align: left;
+            height: 35px;
+            line-height: 35px;
+            padding-left: 5px;
+            background-color: #999;
+        }
+        .info
+        {
+            text-align: center;
+            font-size: 36px;
+            line-height: 36px;
+        }
+        #cursor
+        {
+            position: absolute;
+            display: none;
+            height: 11px;
+            width: 11px;
+            background: url(../../Content/images/cursor.png);
+        }
+    </style>
+</head>
+<body style="margin: 0px auto;">
+    <div style="position: relative; width: 1280px; height: 450px;">
+        <div style="position: absolute; left: 199px; top: 100px; background: #333; color: #fff;
+            font-size: 20px; padding: 0px 5px;" id="tempvalue">
+        </div>
+        <canvas id="canvas" style="padding: 10px;" width="1280px" height="450px">Sorry, your browser dose not support canvas.</canvas>
+    </div>
+    <hr />
+    <div class="info" id="currentColor" style="display: none;">
+        点击上面的红外图像来查看温度</div>
+    <div id="cursor">
+    </div>
+    <script src="~/Content/js/gettemp.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var pid=@Html.Raw(Request.QueryString["pid"]);
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        context.shadowBlur = 20;
+        context.shadowColor = "#000000";
+
+        function draw(img) {
+            context.drawImage(img, 0, 0, 1280, 450);
+
+            canvas = $("#canvas");
+            canvas.mousemove(function (e) {
+                var canvasOffset = canvas.offset();
+                var canvasX = Math.floor(e.pageX - canvasOffset.left);
+                var canvasY = Math.floor(e.pageY - canvasOffset.top);
+                var colorData = document.getElementById("canvas").getPixelColor(canvasX, canvasY);
+
+                // 获取该点像素的数据
+//                console.log(colorData);
+//                var color = colorData.rgba;                
+                //zzz
+                var maxT = 30.46;
+                var minT = 19.13;
+                if (pid==8){
+                    maxT = 18.67;
+                    minT = 11.84;
+                };
+                var red = colorData.r;
+                var green = colorData.g;
+                var blue = colorData.b;
+                pix_color = red * 0.299 + green * 0.587 + blue * 0.114;
+
+                var clickT = pix_color * (maxT - minT) / 255 + minT;
+                var a = +clickT.toFixed(2);
+
+                //$("#currentColor").html("当前位置(" + canvasX + "," + canvasY + ")  温度为: " + a);
+
+                $("#tempvalue").html(a);
+                $("#tempvalue").css({ "left": canvasX+20, "top": canvasY+20 });
+                var cursorX = (e.pageX - 5) + "px";
+                var cursorY = (e.pageY - 5) + "px";
+//                $("#cursor").stop(true, true).css({
+//                    "display": "inline-block",
+//                    "left": cursorX,
+//                    "top": cursorY<img src="../../Content/pingmiantu/p"+pid+"/"+pid+".jpg" />
+//                }).fadeOut(2500);
+            });
+        }
+        $(document).ready(function () {
+            var img = new Image();
+            img.src = "../../Content/pingmiantu/p"+pid+"/"+pid+".jpg";
+            $(img).load(function () {
+                draw(img);
+            });
+            var ajaxbg = top.$("#loading_background,#loading");
+            ajaxbg.hide();
+        });
+//        $.post("/PDRInfo/GetInfraredInfo", { "pid": pid }, function (data) {
+//            var pointslist = eval("(" + data + ")");
+//            $("#infraredinfo").html(pointslist);
+//        });
+    </script>
+    <div style="padding: 10px; background-color: #464646; color: #fff;" id="infraredinfo">
+    </div>
+</body>
+</html>

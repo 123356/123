@@ -1,0 +1,475 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderEdit</title>
+</head>
+<body>
+    <table cellpadding="" cellspacing="" border="0" class="d_list" style="width: 100%;">
+        <tr>
+            <td class="d_l_t">
+                工单编号：
+            </td>
+            <td class="d_l_d">
+                <input id="OrderNo" disabled />
+                <input id="OrderID" type="hidden" />
+            </td>
+            <td class="d_l_t">
+                全部站室：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <select id="PName" style="width: 150px;"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                工单名称：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <input id="OrderName" name="DeviceName" class="easyui-validatebox"
+                       style="width: 85%;" data-options="required:true" />
+            </td>
+            <td class="d_l_t">
+                工单类型：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <select id="ordertype" class="easyui-combobox" style="width: 150px;">
+                    <option value="日常巡检" selected>日常巡检</option>
+                    <option value="检修试验">检修试验</option>
+                    <option value="应急抢修">应急抢修</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                关联隐患：
+            </td>
+            <td class="d_l_d">
+                <select id="BugInfo" class="easyui-combobox" style="width: 350px;"></select>
+            </td>
+            <td class="d_l_t">
+                检查人：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <select id="UserID" class="easyui-combobox" style="width: 150px;"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                执行日期：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <input id="PlanDate" name="PlanDate" class="easyui-datebox" />
+            </td>
+            <td class="d_l_t">
+                优先级：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d">
+                <select id="Priority" class="easyui-combobox" style="width: 150px;">
+                    <option value="1" selected>一般</option>
+                    <option value="2">高</option>
+                    <option value="3">很高</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                工单说明：<b class="RStar">&nbsp*</b>
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="OrderContent" class="easyui-validatebox" style="height: 60%; width: 97%;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                格式报告：
+            </td>
+            <td class="d_l_d" colspan="3">
+                选择项目加入：
+                <select id="cmbTemplateNameList" class="easyui-combobox" style="width: 350px;"></select>
+                数量：<input id="numTemplate" class="easyui-numberspinner" style="width:80px;"
+                          required="required" data-options="min:0,max:100,editable:true">
+                <a id="btnAddTemplate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+                <a id="btnDelTemplate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>
+                <br><br>
+                <table id="dgTemplateNameList" class="easyui-datagrid" style="height: 222px; width: 97%;" data-options="
+                       method:'get',
+                       showGroup:true,
+                       scrollbarSize:0,
+                       fitColumns:true,
+                       striped:true,
+                       rownumbers:false
+                       ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'项编号',width:70">
+                                项编号
+                            </th>
+                            <th data-options="field:'项名称',width:450">
+                                项名称
+                            </th>
+                            <th data-options="field:'项数量',width:100">
+                                项数量
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="d_l_t">
+                备注：
+            </td>
+            <td class="d_l_d" colspan="3">
+                <textarea id="Remarks" class="easyui-validatebox" style="height: 10%; width: 97%;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; padding-top: 5px;">
+        <a href="#" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+            下发工单
+        </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+                                                                            onclick="$('#editwin').window('close');">关闭</a>
+    </div>
+    <script type="text/javascript">
+        var id = @Html.Raw(Request.QueryString["orderid"]);
+        loadPID(0);
+        $(function(){
+            $('#btnAddTemplate').bind('click', function(){
+                if ($('#cmbTemplateNameList').combobox('getValue') == "") {
+                    $.messager.alert("提示", "请选择报告名称！", "info");
+                    return false;
+                }
+                if ($('#numTemplate').val() == ""||$('#numTemplate').val() == "0") {
+                    $.messager.alert("提示", "请选择报告数量！", "info");
+                    return false;
+                }
+                $('#dgTemplateNameList').datagrid('appendRow', { 项编号: $('#cmbTemplateNameList').combobox('getValue'),项名称: $('#cmbTemplateNameList').combobox('getText'), 项数量: $('#numTemplate').val() });
+            });
+
+            $('#btnDelTemplate').bind('click', function(){
+                var rows = $('#dgTemplateNameList').datagrid('getSelections');
+                if (rows.length != 1) {
+                    $.messager.alert("提示", "请选择一行删除！", "info");
+                }
+                else
+                {
+                    $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+                        if (r) {
+                            var row = $('#dgTemplateNameList').datagrid('getSelected');
+                            if (row) {
+                                var rowIndex = $('#dgTemplateNameList').datagrid('getRowIndex', row);
+                                $('#dgTemplateNameList').datagrid('deleteRow', rowIndex);
+                            }
+                        }
+                    })
+                }
+            });
+        });
+
+
+        $(function(){
+            //$('#DressInfo').combobox({
+            //    editable:false  //是否可编辑
+            //});
+            $('#Priority').combobox({
+                editable:false  //是否可编辑
+            });
+            $('#ordertype').combobox({
+                editable:false  //是否可编辑
+            });
+            $('#easyui-combobox').combobox({
+                editable:false  //是否可编辑
+            });
+
+            $("#ordertype").combobox({
+                onSelect: function () {
+                    var orderType = $("#ordertype").combobox("getValue");
+                    var selid = $("#PName").combobox("getValue");
+                    loadConstractInfo(selid,orderType);
+                }
+            });
+        })
+
+
+        var docount = 0;
+        function loadPID(pid) {
+            console.log("pid="+pid)
+            $("#PName").combobox({
+                url: "/BaseInfo/BindPDRInfo?showall=7",
+                valueField: 'PID',
+                textField: 'Name',
+                 onLoadSuccess: function () {
+                     var data = $('#PName').combobox('getData');
+                     console.log(data)
+                    if (data.length > 0) {
+                    $("#PName").combobox('select',data[0].PID);
+                    loadUser(data[0].PID, 0);
+                    loadBugInfo(data[0].PID, 0);
+                    loadDressInfo();
+
+                    var orderType = $("#ordertype").combobox("getValue");
+                    loadConstractInfo(data[0].PID,orderType);
+                 }
+                 },
+                onSelect: function () {
+                    if (docount > 0) {
+                        var selid = $("#PName").combobox("getValue");
+                        var orderType = $("#ordertype").combobox("getValue");
+
+                        loadUser(selid, 0);
+                        loadBugInfo(selid, 0);
+                        loadDressInfo();
+                        loadConstractInfo(selid,orderType);
+
+                    }
+                    docount++;
+                }
+            });
+        }
+
+        //function selectLoadConInfo() {
+        //    var selid = $("#PName").combobox("getValue");
+        //    var orderType = $("#ordertype").combobox("getValue");
+
+        //    alert(1111111);alert(orderType);
+
+        //    loadConstractInfo(selid,orderType);
+        //}
+
+        function loadConstractInfo(pid, orderType) {
+
+            var defultlist = [{ "templateId": "", "templateName": ""}];
+            $('#cmbTemplateNameList').combobox({
+                url: null,
+                valueField: 'templateId',
+                textField: 'templateName',
+                editable: false,
+                data: defultlist
+            })
+            $('#dgTemplateNameList').datagrid('loadData',{total:0,rows:[]});
+
+
+            if (typeof(pid) == "undefined"||typeof(orderType) == "undefined")
+            {
+                return;
+            }
+
+            $('#cmbTemplateNameList').combobox({
+                url: '/UserInfo/GetOrderTemplatesById?pid=' + pid+'&orderType='+orderType,
+                valueField: 'templateId',
+                textField: 'templateName',
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#cmbTemplateNameList').combobox('getData');
+                    if (data.length > 0) {
+                        //alert(data.length);
+                        $("#cmbTemplateNameList").combobox('select',data[0].templateId);
+                    }
+                }
+            });
+
+            //$.post("/UserInfo/GetOrderTemplatesById", { "pid": pid,"orderType": orderType }, function (data) {
+
+            //    var row = eval("(" + data + ")");
+
+            //    $.each(row, function (i) {
+            //        //$("#ConstractInfo").val(row[i].constractInfo);
+
+            //        //$("#cmbTemplateNameList").val(row[i].constractInfo);
+
+            //        dgTemplateNameList
+
+            //        return false;
+            //    });
+            //});
+
+        }
+
+        function loadUser(pid, userid) {
+            $('#UserID').combobox({
+                url: '/BaseInfo/BindUserByPID?pid=' + pid,
+                valueField: 'id',
+                textField: 'name',
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#UserID').combobox('getData');
+                    if (data.length > 0) {
+                        if (userid != 0)
+                            $("#UserID").combobox('select', userid);
+                        else
+                            $("#UserID").combobox('select',data[0].id);
+                    }
+                }
+            });
+        }
+
+        function loadBugInfo(pid, bugid) {
+            $("#BugInfo").combobox({
+                url: "/BaseInfo/BindBugInfo?showall=6&pid=" + pid,
+                valueField: 'id',
+                textField: 'name',
+                onLoadSuccess: function () { //数据加载完毕事件
+                    var data = $('#BugInfo').combobox('getData');
+                    if (data.length > 0) {
+                        if (bugid != 0)
+                            $("#BugInfo").combobox('select', bugid);
+                        else
+                            $("#BugInfo").combobox('select', data[0].id);
+
+                    }
+                }
+            });
+        }
+
+        function loadDressInfo() {
+            //
+        }
+
+        //得到模版信息
+        function listInitTemplateInfo(orderID) {
+            //
+            $(function () {
+                $('#dgTemplateNameList').datagrid({
+                    url: "/OrderInfo/getOrder_Info?OrderID="+orderID
+                });
+            });
+        }
+
+        loadOrderInfo();
+        function loadOrderInfo() {
+
+            if (id > 0) {
+                $.post("/OrderInfo/LoadOrder", { "OrderID": id }, function (data) {
+                    var row = eval("(" + data + ")");
+                    $("#OrderID").val(row.OrderID);
+                    $("#OrderNo").val(row.OrderNO);
+                    $('#PName').combobox('setValue', row.PID);
+                    loadUser(row.PID, row.UserID);
+                    loadBugInfo(row.PID, row.BugID);
+                    loadDressInfo();
+                    $('#Priority').combobox('setValue', row.Priority);
+                    $("#ordertype").combobox("setValue", row.OrderType);
+
+                    var OrderContent = "";
+                    if(row.OrderContent!=null){OrderContent = row.OrderContent.replace(/<br\s*\>/g, "\n")};
+                    $("#OrderContent").val(OrderContent);
+
+                    var orderremarks = "";
+                    if(row.Remarks!=null){orderremarks = row.Remarks.replace(/<br\s*\>/g, "\n")};
+                    $("#Remarks").val(orderremarks);
+
+                    getMDate(row.PlanDate, 'PlanDate');
+                    $("#OrderID").val(id);
+                    $("#OrderName").val(row.OrderName);
+
+                    listInitTemplateInfo(row.OrderID);
+
+                    loadConstractInfo(row.PID,$("#ordertype").combobox("getValue"));
+                });
+            }
+            else {
+                var ticks =@DateTime.Now.Ticks;
+                $("#OrderNo").val(ticks);
+            }
+        }
+        function save() {
+            if ($('#OrderName').val() == "") {
+                $.messager.alert("提示", "请录入工单名称！", "info");
+                return false;
+            }
+            if ($('#PName').combobox('getValue') == "") {
+                $.messager.alert("提示", "请选择站室！", "info");
+                return false;
+            }
+            if ($('#UserID').combobox('getValue') == "") {
+                $.messager.alert("提示", "请选择检查人！", "info");
+                return false;
+            }
+            //if ($('#DressInfo').combobox('getValue') == "") {
+            //    $.messager.alert("提示", "请选择入场要求！", "info");
+            //    return false;
+            //}
+            if ($('#PlanDate').datebox('getValue') == "") {
+                $.messager.alert("提示", "请选择执行日期！", "info");
+                return false;
+            }
+            if ($("#OrderContent").val() == "") {
+                $.messager.alert("提示", "请填写工单内容！", "info");
+                return false;
+            }
+
+            //读取工单内容
+            var sTemplateIDs = "";
+            var sTemplateCount = "";
+            var rows = $('#dgTemplateNameList').datagrid('getRows');
+            if (rows.length < 1) {
+                $.messager.confirm('提示', '确定不选 格式报告？', function (r) {
+                    if (r) {
+                        saveOrder("","");
+                    }else{
+                        return false;
+                    }
+                })
+            }else{
+                var sTemp1 = [];
+                var sTemp2 = [];
+                for (var i = 0; i < rows.length; i++) {
+                    sTemp1.push(rows[i].项编号);
+                    sTemp2.push(rows[i].项数量);
+                    sTemplateIDs = sTemp1.join(',');
+                    sTemplateCount = sTemp2.join(',');
+                }
+                saveOrder(sTemplateIDs,sTemplateCount);
+            }
+
+        }
+        function saveOrder(sTemplateIDs,sTemplateCount) {
+
+            //读取工单内容
+            //var sTemplateIDs = "";
+            //var sTemplateCount = "";
+
+            var DressInfo = 0;
+            if($("#ordertype").combobox("getValue")=="日常巡检")
+                DressInfo =1;
+            if($("#ordertype").combobox("getValue")=="检修试验")
+                DressInfo =2;
+            if($("#ordertype").combobox("getValue")=="应急抢修")
+                DressInfo =3;
+
+            var postData = {
+                OrderID: $("#OrderID").val(),
+                OrderNo: $("#OrderNo").val(),
+                PID: $('#PName').combobox('getValue'),
+                PName: $('#PName').combobox('getText'),
+                OrderContent: $("#OrderContent").val(),
+                UserID: $('#UserID').combobox('getValue'),
+                UserName: $('#UserID').combobox('getText'),
+                DressCodeID: DressInfo,//$('#DressInfo').combobox('getValue'),
+                Priority: $('#Priority').combobox('getValue'),
+                OrderType: $("#ordertype").combobox("getValue"),
+                PlanDate: $('#PlanDate').datebox('getValue'),
+                CtrOrderId: 0,
+                Remarks: $("#Remarks").val(),
+                BugInfo: $("#BugInfo").combobox("getText"),
+                BugID: $("#BugInfo").combobox("getValue"),
+                OrderName: $('#OrderName').val(),
+                sTemplateIDs:sTemplateIDs,
+                sTemplateCount:sTemplateCount
+            };
+            console.log('SaveOrder_templateList')
+            $.post("/OrderInfo/SaveOrder_templateList",postData, function (data) {
+            //$.post("/OrderInfo/SaveOrder", postData, function (data) {
+                if (data == "OK") {
+                    window.location.reload();
+                    $('#editwin').window('close');
+                }
+                else
+                    alert(data);
+            });
+        }
+    </script>
+</body>
+</html>

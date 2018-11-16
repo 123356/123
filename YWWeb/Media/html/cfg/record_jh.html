@@ -1,0 +1,193 @@
+
+<div class="config_content">
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" id="rd_item">
+               <div id="rjh_sch" class="logo_title">Schedule</div>
+               <div class="item_R">
+                   <div id="RecplanRf" class="logo_link">Refresh</div>
+                   <div id="RecplanDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="RecplanSave" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content" id="rd_table_content">
+      <!--table 0-->
+                <div class="table" id="smart_show_1" style="display:none">
+                    <div class="table_L" id="smart_mode">Rec Mode</div>
+                    <div class="table_R">
+                        <select id="SMARTMODE" class="select" style="width:200px">
+                        <option value="0">Normal</option>
+                        <option value="1">Smart</option>
+                        </select>
+        			</div>
+                </div>  
+             <!--table 1-->
+                <div class="table" id="JH_CHN_TABLE">
+                    <div class="table_L" id="rjh_channel">Channel</div>
+                    <div class="table_R">
+                        <select  id="RECORDchn" class="select" style="width:200px"></select>
+                        <input type="button" value="Next" id="LXJH_CHNEXT" style="margin-left:10px; margin-top:3px;+margin-top:-26px; display:none" />
+        			</div>
+                </div>  
+            <!--table 2-free--> 
+                <div class="table" id="rd_channel">
+                    <div class="table_L" id="rjh_qx">Week</div>
+                    <div class="table_R">
+                        <select  id="RECORDQX" class="select" style="width:200px">
+                        	<option  value="0">星期日</option>
+                            <option  value="1">星期一</option>
+                            <option  value="2">星期二</option>
+                            <option  value="3">星期三</option>
+                            <option  value="4">星期四</option>
+                            <option  value="5">星期五</option>
+                            <option  value="6">星期六</option>
+                        </select>
+                        <input type="button" value="Next" id="LXJH_WEEKNEXT" style="margin-left:10px ; margin-top:3px;+margin-top:-26px; display:none" />
+        			</div>
+                </div> 
+              <!--table 2-->
+         
+              
+    </div>
+    <!--table end-->
+    <div class="tabel" id="smart_show_0" style="height:180px; border:1px solid #FFF; width:598px; border-top:0px; position:relative;">
+   	  <div id="LXJH_SWANN_N" style="position:absolute; width:20px; height:20px; top: 46px;_top:54px; display:none">N</div>
+      <div id="LXJH_SWANN_M" style="position:absolute; width:20px; height:20px; top: 75px;_top:83px; display:none">M</div>
+      <div id="LXJH_SWANN_A" style="position:absolute; width:20px; height:20px; top: 102px; _top:110px; display:none">A</div>
+      <div id="LXJH_IPC_D" style="position:absolute; width:40px; height:26px; top: 20px;_top:80px; border:1px solid #FFF; display:none;">
+      	<div style="margin-top:0px;">Date</div>
+      </div>
+      <div id="LXJH_IPC_N" style="position:absolute; width:40px; height:54px; top: 46px;_top:80px; border:1px solid #FFF; display:none;">
+      	<div style=" float:right; height:15px; width:15px; margin-right:0px; margin-top:0px; line-height:10px;">M</div>
+        <div style="margin-top:5px; line-height:20px;">Normal</div>
+        <div style=" margin-left:25px; width:15px; height:15px; line-height:22px;">S</div>
+      </div>
+      <div id="LXJH_IPC_M" style="position:absolute; width:40px; height:53px; top: 100px;_top:83px; border:1px solid #FFF; display:none;">
+      	<div style=" float:right; height:15px; width:15px; margin-right:0px; margin-top:0px; line-height:10px;">M</div>
+        <div style="margin-top:5px; line-height:20px;">Motion</div>
+        <div style=" margin-left:25px; width:15px; height:15px; line-height:22px;">S</div>
+      </div>
+	  <div style="height:20px; overflow:hidden;"></div>
+     <div id="nvr_headTitle_div" style="width:580px; overflow:hidden; height:20px;_height:23px;margin-left:10px; display:none;">
+        <div id="LXJH_HeaderText"></div>
+     </div>
+     <div id="Header_div" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        <div id="LXJH_Header"></div>
+     </div>
+    
+     <div id="Normal_div" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        <div id="LXJH_normal"></div>
+     </div>
+     <div id="Normal_sub_div" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px; display:none;">
+        <div id="LXJH_normal_sub"></div>
+     </div>
+     <div id="smart_show_7" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        <div id="LXJH_motion"></div>
+     </div>
+     <div id="Normal_motion_div" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px; display:none;">
+        <div id="LXJH_motion_sub"></div>
+     </div>
+     <div id="Alarm_div" class="alarm_Bban" style="width:580px; overflow:hidden; height:27px;_height:30px;margin-left:20px;">
+        <div id="LXJH_alarm"></div>
+     </div>	
+     
+     <div id="smart_tag" style="width:580px;height:27px; padding-left:140px; margin-left:20px; padding-top:20px;+padding-top:5px;">
+        <div style="float:left; width:110px;">
+            <div id="rec_normal_hint" style="height:20px; width:20px;float:left; background:#060;color:#FFF"></div>
+            <div id="rec_normal" style="float:left;">&nbsp;&nbsp;normal</div>
+        </div>
+        <div id="smart_show_2" style="float:left; width:240px; line-height:27px; height:27px; margin-left:5px; clear: right; display:none">
+            <div style="height:20px; float:left;"><span id="rec_norRes">rec resolution</span></div>
+            <div style="float:left; margin-top:5px;">
+                <select  id="SMARTREC_RESOLUTION" style="width:110px">
+                <!-- <option value="0">720P</option> -->
+                    <option value="1">D1</option>
+                    <option value="2">CIF</option>
+                </select>
+            </div>
+        </div>
+        <br id="smart_line" style="display:none;"/>
+        <div id="smart_show_3" style="float:left;width:120px;">
+            <div id="rec_motion_hint"style="height:20px; width:20px;float:left; background:#FF0;color:#FFF"></div>
+            <div id="rec_motion" style="float:left;">&nbsp;&nbsp;motion</div>
+        </div>
+        <div id="smart_show_4" class="alarm_Bban" style="float: left;width:110px;"> 
+        <div style="height:20px; width:20px; float:left;background:#F00;color:#FFF"></div>
+            <div id="rec_alarm" style="float:left;">&nbsp;&nbsp;alarm</div>
+        </div>
+        <div id="smart_show_5" style="float:left; width:240px; line-height:27px; height:27px; margin-left:5px; display:none">
+            <div style="height:20px; float:left;"><span id="rec_alamRes">rec resolution</span></div>
+            <div style="float:left; margin-top:5px;">
+                <select  id="SMARTREC_RESOLUTION_ALARM" style="width:110px">
+                    <option value="0">720P</option>
+                    <option value="1">D1</option>
+                <!--  <option value="2">CIF</option> -->
+                </select>
+            </div>
+        </div>
+        <div id="smart_show_6" style="float:left;width:200px;"> 
+            <div style="height:20px; width:20px; float:left;background:transparent; border:1px solid #FFF;color:#FFF"></div>
+            <div id="rec_norecord" style="float:left;">&nbsp;&nbsp;no record</div>
+        </div>
+     </div>
+     <div style="margin-top:5px; display:none;" id="LAB_CLEAL_ALL"> 
+        <input  id="LXJH_CLEANALL" type="button" value="Clean All"/> 
+     </div> 
+     </div>
+     <div class="table" id="rd_copy_day">
+        <div id="rec_copyDay" class="table_L">Copy Day</div>
+        <div style="margin-left:20px;">
+			<div style="width:130px;float:left;">&nbsp;
+				<select id="LXJH_CPQXQ" style="width:80px; margin-left:25px;">
+					<option  value="0">星期日</option>
+					<option  value="1">星期一</option>
+					<option  value="2">星期二</option>
+					<option  value="3">星期三</option>
+					<option  value="4">星期四</option>
+					<option  value="5">星期五</option>
+					<option  value="6">星期六</option>
+				</select>
+			</div>
+			<div style="width:242px;overflow:hidden; float:left;">
+				<div style="margin-left:10px;">
+					<label id="COPY_WEEK_TO" >to</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select id="LXJH_CPHXQ" style="width:80px; margin-left:10px;">
+						<option  value="7">All</option>
+						<option  value="0">星期日</option>
+						<option  value="1">星期一</option>
+						<option  value="2">星期二</option>
+						<option  value="3">星期三</option>
+						<option  value="4">星期四</option>
+						<option  value="5">星期五</option>
+						<option  value="6">星期六</option>
+				   </select>
+                   				   
+				   <input type="button" value="确定" class="ButtonToDiv" id="LXJH_CPXQQD" style="float:right; margin-top:0px;+margin-top:-30px;" />
+                   <!--<div id="LXJH_CPXQQD" class="ButtonToDiv"  style="float:right; margin-top:0px;+margin-top:-30px;">确定</div> -->
+				</div>
+			</div>           
+        </div>
+    </div>
+    <div style="height:20px; overflow:hidden;"></div>
+    <div class="table" id="rd_copy_ch" style="border:1px solid #FFF">
+        <div id="rec_copyCh" class="table_L">Copy Channel</div>
+        <div style="margin-left:20px;">
+            <div style="width:130px;float:left;">&nbsp;
+                <select id="LXJH_CPQTD" style="width:80px; margin-left:25px;" ></select>
+            </div>
+            <div style="width:240px;overflow:hidden;">
+                <div style="margin-left:10px;">
+                    <label id="COPY_CH_TO">to</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select id="LXJH_CPHTD" style="width:80px; margin-left:10px;"></select>
+                    <input id="LXJH_CPTDQD" class="ButtonToDiv" type="button" value="确定" style=" float:right; margin-top:0px;+margin-top:-30px;"/> 
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+<div class="disp"></div>

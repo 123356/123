@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>暂态曲线</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="~/jquery-easyui-1.4.5/themes/black/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-easyui-1.4.5/themes/icon.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link href="~/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.lazyload.js"></script>
+    <script src="~/Content/uplaodfy/jquery.uploadify.js"></script>
+    <link href="~/Content/css/LBYWBase.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/respond.src.js"></script>
+    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
+    <script src="~/Content/js/zrender/esl.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="canvas" style="width: 75%; margin:0 auto; padding-top:30px;">
+        <div id="userCharts" class="energy_top_righttb" style="width:100%; height: 600px; padding: 0px;">
+        </div>
+    </div>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                zrender: '../../Content/js/zrender/zrender',
+                'zrender/shape/Circle': '../../Content/js/zrender/zrender'
+            }
+        });
+        require(
+        ['zrender', 'zrender/shape/Circle'],
+        function (zrender) {
+            var zr = zrender.init(document.getElementById('userCharts'));
+            var myChart = echarts.init(document.getElementById('userCharts'));
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                calculable: true,
+                grid: { x: 50, y: 20, x2: 50, y2: 50 },
+                xAxis: [
+        {
+            type: 'category',
+            axisLabel: { textStyle: { color: '#fff'} },
+            boundaryGap: false,
+            data: ['9/7', '10/7', '11/7', '12/7', '13/7', '14/7', '15/7']
+        }
+    ],
+                yAxis: [
+        {
+            type: 'value',
+            axisLabel: { textStyle: { color: '#fff'} },
+            min: '90'
+        }
+    ],
+                series: [
+        {
+            name: '功率因数',
+            type: 'line',
+            smooth: true,
+            //itemStyle: { normal: { areaStyle: { type: 'default', color: '#33cc33'}} },
+
+
+            itemStyle: { normal: { color: "green", areaStyle: { type: 'default', color:
+                       (function () {
+
+                           var zrColor = require('zrender/tool/color');
+                           return zrColor.getLinearGradient(
+                            0, 0, 0, 400,
+                            [[0, 'green'], [0.5, 'rgba(255,255,255,0.1)']]
+                        )
+                       })()
+            }
+            }
+            },
+
+
+            /* */
+            data: [196.33, 185.64, 220.05, 219.34, 235.66, 205.50, 186.86]
+        }
+    ]
+            };
+    myChart.setOption(option);
+        }
+        );        
+    </script>
+</body>
+</html>

@@ -1,0 +1,863 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>分析报告</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--表单内容-->
+    <table id="list_data" style="width: auto; height: 780px; width: 100%" idfield="ID"
+           pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+           fitcolumns="true" fit="true">
+        <thead>
+            <tr>
+                <th field='ID' checkbox="true">
+                </th>
+                <th field='RName' width="100px">
+                    报告名称
+                </th>
+                <th field='FType' width="100px">
+                    文件类型
+                </th>
+                <th field='RType' width="100px">
+                    报告类型
+                </th>
+                <th field='CreatDate' width="100px" data-options="formatter: DateFormat">
+                    报告日期
+                </th>
+                <th field='RSize' width="100px">
+                    文件大小
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <!--搜索窗-->
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            站室:
+            <select id="PDRName" style="width: 150px;"></select>
+            报告类型:
+            <select id="filetype" class="easyui-combobox" style="width: 150px;">
+                <option value="">全部</option>
+                <option value="运行监测">运行监测</option>
+                <option value="维护检修">维护检修</option>
+                <option value="用电分析">用电分析</option>
+                <option value="应急抢修">应急抢修</option>
+                <option value="监测报警">监测报警</option>
+                <option value="健康评估">健康评估</option>
+            </select>
+            报告日期：
+            <input id="StartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+        </div>
+        <div class="searchbutton">
+            <button title="查 询" onclick="dosearch()" class="page_table_but">
+                <img src="/Content/images/Icon16/zoom.png">查 询
+            </button>
+            <button title="下 载" onclick="download()" class="page_table_but">
+                <img src="/Content/images/Icon16/download.png">下 载
+            </button>
+            <button title="生成报告" onclick="$('#dlg').dialog('open')" class="page_table_but">
+                <img src="/Content/images/Icon16/download.png">生成报告
+            </button>
+        </div>
+        @* <div id="userbutton" class="searchbutton">
+            </div>*@
+    </div>
+    <!--生成报告窗-->
+    <div id="dlg" class="easyui-dialog" title="生成报告设置" data-options="iconCls:'icon-save'"
+         closed="true" style="padding: 50px 10px 50px 10px">
+        站室:
+        <select id="ReportPDRName" style="width: 150px;"></select>
+        报告类型:
+        <select id="ReportFileType" class="easyui-combobox" style="width: 150px;">
+            <option value="1">运行监测</option>
+            <option value="2">维护检修</option>
+            <option value="3">用电分析</option>
+        </select>
+        报告日期：
+        <input id="ReportStartDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+        -
+        <input id="ReportEndDate" class="easyui-datebox" style="width: 150px; height: 26px;" />
+        <button title="生成报告" onclick="Report();" class="page_table_but">
+            生成报告
+        </button>
+    </div>
+    <!--生成图表-->
+    <div class="statushome" style="float: left; display: none" id="allcharts">
+        <div class="statushomeleft">
+            <div class="statushomeleft_top">
+                <div class="statushome_charts1" id="userCharts1">
+                </div>
+                <div class="statushome_charts1info">
+                    最高负荷：<span id="maxpower"></span>kw，最高负载率：<span id="maxpowerrate"></span>%
+                </div>
+            </div>
+            <div class="statushomeleft_bottom">
+                <div class="statushome_charts2" id="userCharts2">
+                </div>
+                <div class="statushome_charts3" id="userCharts3">
+                </div>
+            </div>
+        </div>
+        <div class="statushomeright">
+            <div class="statushome_charts4">
+                <span id="userCharts4" style="width: 100%"></span>
+            </div>
+            <div class="statushome_charts5">
+                <span id="userCharts5" style="width: 100%"></span>
+            </div>
+            <div class="statushome_charts6">
+                <span id="userCharts6" style="width: 100%"></span>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $("#currPosition", window.top.document).html("当前位置：分析报告");
+    //查询站室信息
+    $("#PDRName").combobox({
+        url: "/BaseInfo/BindPDRInfo?showall=1",
+        valueField: 'PID',
+        textField: 'Name',
+        onLoadSuccess: function () {
+            var data = $('#PDRName').combobox('getData');
+            if (data.length > 0) {
+                $("#PDRName").combobox('select', $.cookie('cookiepid'));
+                dosearch();
+            }
+        },
+        onSelect: function (data) {
+            $.cookie('cookiepid', data.PID, { expires: 7, path: '/' });
+        }
+    });
+    //生成报告站室信息
+    $("#ReportPDRName").combobox({
+        url: "/BaseInfo/BindPDRInfo?showall=1",
+        valueField: 'PID',
+        textField: 'Name',
+        onLoadSuccess: function () {
+            var data = $('#ReportPDRName').combobox('getData');
+            if (data.length > 0) {
+                $("#ReportPDRName").combobox('select', $.cookie('cookiepid'));
+                dosearch();
+            }
+        },
+        onSelect: function (data) {
+            $.cookie('cookiepid', data.PID, { expires: 7, path: '/' });
+        }
+    });
+    //查询
+    function dosearch() {
+        var pid = $("#PDRName").combobox('getValue');
+        var ft = $('#filetype').combobox('getValue');
+        var rd = $('#StartDate').datebox('getValue');
+        $('#list_data').datagrid({
+            url: '/DataReport/ReportInfoList?rom=' + Math.random() + "&pid=" + pid + "&rtype=" + ft + "&reportdate=" + rd,
+            pagination: true
+        });
+        $('#list_data').datagrid('uncheckAll');
+    }
+    //下载
+    function download() {
+        var ids = [];
+        var rows = $('#list_data').datagrid('getSelections');
+        for (var i = 0; i < rows.length; i++) {
+            ids.push(rows[i].ID);
+        }
+        if (ids.length > 1) {
+            $.messager.alert("提示", "下载时只能选择一行数据！", "info");
+            $('#list_data').datagrid('uncheckAll');
+        }
+        else {
+            var row = $('#list_data').datagrid('getSelected');
+            if (row) {
+                window.open(row.RPath.replace(/~/, "../.."));
+            }
+            else {
+                $.messager.alert("提示", "请选择要下载的行！", "info");
+            }
+        }
+    }
+
+    BuildxAxis(6, 10, "");
+    function BuildxAxis(count, diff, ed) {
+        var dategg = new Date();
+        var xAixs = [];
+        for (i = count; i > 0; i--) {
+            dategg.setMinutes(dategg.getMinutes() - diff * i);
+            xAixs.push(dategg.toLocaleDateString() + " " + dategg.getHours() + ":" + dategg.getMinutes() + ":" + dategg.getSeconds());
+        }
+        return xAixs;
+    }
+    function RandomValue(base, count, diff) {
+        var yAixs = [];
+        for (i = count; i > 0; i--) {
+            yAixs.push(parseInt(base + Math.random() * diff));
+        }
+        return yAixs;
+    }
+    //日期转换
+    function DateFormat(value, row, index) {
+        var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss');
+        return lDate
+    }
+    //生成报告
+    function Report() {
+        if ($("#ReportPDRName").combobox('getValue') == "") {
+            $.messager.alert("提示", "请选择配电房！", "info");
+            return false;
+        }
+        if ($('#ReportFileType').combobox('getValue') == "") {
+            $.messager.alert("提示", "请选择报告类型！", "info");
+            return false;
+        }
+        if ($('#ReportStartDate').datebox('getValue') == "") {
+            $.messager.alert("提示", "请选择报告日期！", "info");
+            return false;
+        }
+        if ($('#ReportEndDate').datebox('getValue') == "") {
+            $.messager.alert("提示", "请选择报告日期！", "info");
+            return false;
+        }
+        var ft = $('#ReportFileType').combobox('getValue');
+        // 运行监测
+        if (ft == 1) {
+            $.post("/DataReport/RunData", { "PID": $("#ReportPDRName").combobox('getValue'), "ReportStartDate": $('#ReportStartDate').datebox('getValue'), "ReportEndDate": $('#ReportEndDate').datebox('getValue') }, function (data) {
+                var datafull = data.split('$');
+                var ImGStr2 = "", ImGStr3 = "", ImGStr4 = "", ImGStr5 = "", ImGStr6 = "";
+                if (datafull[0] != "[]" && datafull[0] != "异常！") {
+                    $('#allcharts').css('display', '');
+
+                    var current = datafull[10];
+                    var voltaget = datafull[11];
+
+                    var myChart2 = echarts.init(document.getElementById('userCharts2'));
+                    var myChart3 = echarts.init(document.getElementById('userCharts3'));
+                    var myChart4 = echarts.init(document.getElementById('userCharts4'));
+                    var myChart5 = echarts.init(document.getElementById('userCharts5'));
+                    var myChart6 = echarts.init(document.getElementById('userCharts6'));
+
+                    var option2 = {
+                        title: {
+                            text: "用电情况",
+                            textStyle: {
+                                color: "rgb(255, 255, 255)",
+                                fontSize: 20,
+                                fontWeight: "normal"
+                            },
+                            padding: 15
+                        },
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar"]
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        xAxis: [
+        {
+            type: "category",
+            data: eval("(" + datafull[0] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                formatter: ""
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false,
+                areaStyle: {
+                    type: "default"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            }
+        }
+                        ],
+                        yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "dashed",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            nameLocation: "end",
+            name: "负荷（kWh）",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            min: eval("(" + datafull[2] + ")"),
+            max: eval("(" + datafull[3] + ")"),
+            splitNumber: 4
+        }
+                        ],
+                        series: [
+        {
+            name: "负荷",
+            type: "line",
+            data: eval("(" + datafull[1] + ")"),
+            symbol: "circle"
+        }
+                        ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        grid: {
+                            x: 54,
+                            y: 76,
+                            x2: 33,
+                            y2: 60,
+                            borderWidth: 0
+                        },
+                        color: ["rgb(255, 0, 0)", "rgb(86, 170, 255)", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90f f", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+                    };
+                    myChart2.setOption(option2);
+
+                    var option3 = {
+                        title: {
+                            text: "最高温度",
+                            textStyle: {
+                                color: "rgb(255, 255, 255)",
+                                fontSize: 20,
+                                fontWeight: "normal"
+                            },
+                            padding: 15
+                        },
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar"]
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        xAxis: [
+        {
+            type: "category",
+            data: eval("(" + datafull[0] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                formatter: ""
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false,
+                areaStyle: {
+                    type: "default"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            }
+        }
+                        ],
+                        yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "dashed",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            nameLocation: "end",
+            name: "温度（℃）",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            min: eval("(" + datafull[5] + ")"),
+            max: eval("(" + datafull[6] + ")"),
+            splitNumber: 4
+        }
+                        ],
+                        series: [
+        {
+            name: "温度",
+            type: "line",
+            data: eval("(" + datafull[4] + ")"),
+            symbol: "circle"
+        }
+                        ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        grid: {
+                            x: 54,
+                            y: 76,
+                            x2: 33,
+                            y2: 60,
+                            borderWidth: 0
+                        },
+                        color: ["rgb(255, 0, 0)", "rgb(86, 170, 255)", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90f f", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+                    };
+                    myChart3.setOption(option3);
+
+                    var option4 = {
+                        tooltip: {
+                            trigger: "item",
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        series: [
+        {
+            name: "电压",
+            type: "pie",
+            radius: ["50%", "70%"],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        formatter: "{a}",
+                        position: "left"
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: eval("(" + (100 - voltaget) + ")"),
+                    name: "不合格率"
+                },
+                {
+                    value: eval("(" + voltaget + ")"),
+                    name: "合格率"
+                }
+            ]
+        }
+                        ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        color: ["rgb(51, 51, 51)", "#417777", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                        title: {
+                            text: "",
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            padding: 15
+                        }
+                    };
+                    myChart4.setOption(option4);
+
+                    var option5 = {
+                        tooltip: {
+                            trigger: "item",
+                            formatter: "{a} <br/>{b} : {c}%"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        series: [
+        {
+            name: "电流",
+            type: "pie",
+            radius: ["50%", "70%"],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: false,
+                        formatter: "{a}",
+                        position: "left"
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        position: "center",
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold"
+                        }
+                    }
+                }
+            },
+            data: [
+                {
+                    value: eval("(" + (100 - current) + ")"),
+                    name: "不合格率"
+                },
+                {
+                    value: eval("(" + current + ")"),
+                    name: "合格率"
+                }
+            ]
+        }
+                        ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        color: ["rgb(51, 51, 51)", "#993365", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+                        title: {
+                            text: "",
+                            textStyle: {
+                                color: "rgb(255, 255, 255)"
+                            },
+                            padding: 15
+                        }
+                    };
+                    myChart5.setOption(option5);
+
+                    var option6 = {
+                        title: {
+                            text: "功率因数",
+                            textStyle: {
+                                color: "rgb(255, 255, 255)",
+                                fontSize: 20,
+                                fontWeight: "normal"
+                            },
+                            padding: 15
+                        },
+                        tooltip: {
+                            trigger: "axis"
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                dataView: {
+                                    show: true,
+                                    readOnly: true
+                                },
+                                magicType: {
+                                    show: false,
+                                    type: ["line", "bar"]
+                                },
+                                restore: {
+                                    show: true
+                                },
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        calculable: false,
+                        xAxis: [
+        {
+            type: "category",
+            data: eval("(" + datafull[0] + ")"),
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                },
+                formatter: ""
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: "#C4EAFC"
+                }
+            },
+            splitArea: {
+                show: false,
+                areaStyle: {
+                    type: "default"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            }
+        }
+                        ],
+                        yAxis: [
+        {
+            type: "value",
+            axisLabel: {
+                textStyle: {
+                    color: "rgb(255, 255, 255)"
+                }
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    type: "dashed",
+                    color: "rgb(51, 51, 51)"
+                }
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: "rgb(255, 255, 255)",
+                    width: 3
+                }
+            },
+            nameLocation: "end",
+            name: "",
+            nameTextStyle: {
+                color: "rgb(255, 255, 255)",
+                fontSize: 14
+            },
+            min: eval("(" + datafull[8] + ")"),
+            max: eval("(" + datafull[9] + ")"),
+            splitNumber: 4
+        }
+                        ],
+                        series: [
+        {
+            name: "功率因数",
+            type: "line",
+            data: eval("(" + datafull[7] + ")"),
+            symbol: "circle"
+        }
+                        ],
+                        backgroundColor: "rgb(0, 0, 0)",
+                        grid: {
+                            x: 54,
+                            y: 76,
+                            x2: 33,
+                            y2: 60,
+                            borderWidth: 0
+                        },
+                        color: ["rgb(255, 0, 0)", "rgb(86, 170, 255)", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90f f", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
+                    };
+                    myChart6.setOption(option6);
+
+                    setTimeout(function () {
+                        var img2 = new Image();
+                        img2.src = myChart2.getDataURL({ pixelRatio: 2, backgroundColor: '#000' });
+                        ImGStr2 = img2.src;
+
+                        var img3 = new Image();
+                        img3.src = myChart3.getDataURL({ pixelRatio: 2, backgroundColor: '#000' });
+                        ImGStr3 = img3.src;
+
+                        var img4 = new Image();
+                        img4.src = myChart4.getDataURL({ pixelRatio: 2, backgroundColor: '#000' });
+                        ImGStr4 = img4.src;
+
+                        var img5 = new Image();
+                        img5.src = myChart5.getDataURL({ pixelRatio: 2, backgroundColor: '#000' });
+                        ImGStr5 = img5.src; ywpid
+
+                        var img6 = new Image();
+                        img6.src = myChart6.getDataURL({ pixelRatio: 2, backgroundColor: '#000' });
+                        ImGStr6 = img6.src;
+
+                        $('#allcharts').css('display', 'none');
+                    }, 1000);
+                }
+
+                setTimeout(function () {
+                    var ajaxbg2 = top.$("#loading_background,#loading");
+                    ajaxbg2.show();
+                    $.post("/DataReport/ExportRunDoc", { "Img2": ImGStr2, "Img3": ImGStr3, "Img4": ImGStr4, "Img5": ImGStr5, "Img6": ImGStr6, "PID": $("#ReportPDRName").combobox('getValue'), "ReportStartDate": $('#ReportStartDate').datebox('getValue'), "ReportEndDate": $('#ReportEndDate').datebox('getValue') }, function (data) {
+                        ajaxbg2.hide();
+                        if (data != "" || data != "error")
+                            window.open('http://' + window.location.host + data);
+                        else
+                            $.messager.alert("提示", "导出过程中出错！", "info");
+                    });
+                }, 1000);
+
+
+
+            });
+        }
+            //维护检修
+        else if (ft == 2) {
+            var ajaxbg2 = top.$("#loading_background,#loading");
+            ajaxbg2.show();
+            $.post("/DataReport/ExportRepairDoc", { "pid": $("#ReportPDRName").combobox('getValue'), "ReportStartDate": $('#ReportStartDate').datebox('getValue'), "ReportEndDate": $('#ReportEndDate').datebox('getValue') }, function (data) {
+                ajaxbg2.hide();
+                window.open('http://' + window.location.host + data);
+            });
+        }
+            //用电分析
+        else if (ft == 3) {
+
+        }
+    }
+
+
+
+
+    //电能数据
+
+    //    $.post("/Interface/MonthBoll", { "Month": 02, "PID": 1, "DID": 10001, "CID": 13 }, function (data) {
+    //        alert("OK");
+    //    });
+
+    //    $.post("/Interface/DayBoll", { "Month": 05, "PID": 158, "DID": 10001, "CID": 13 }, function (data) {
+    //        alert("OK");
+    //    });
+
+    //    $.post("/Interface/RealBoll", { "RDM": 02, "RDD": 23, "PID": 158, "DID": 10001, "CID": 13 }, function (data) {
+    //        alert("OK");
+    //    });
+
+</script>

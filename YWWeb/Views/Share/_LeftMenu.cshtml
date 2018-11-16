@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- 菜单 -->
+<div class="left-sidebar">
+   
+    
+    <ul class="sidebar-nav am-list admin-sidebar-list " id="collapase-nav-1" ></ul>
+        
+      @*  @Html.Action("GetMenuInfoNew","Home")*@
+            
+</div>
+<script src="~/Content/UserJS/_LeftMenu._jm.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var winHeight = $(window).height();
+        //var mins =  $("#curTIme").height() + 120;//85
+        $("#collapase-nav-1").height(winHeight-60)
+        
+        /*$("#collapase-nav-1 li a").on('click', function () {
+            alert(1)
+            $("#collapase-nav-1 li").find("a").attr("style", "background-color:#36414e;border: #36414e;")
+            $(this).attr("style", "background-color:#40af94; border: #40af94;color:#fff")
+
+        })*/
+        $("#collapase-nav-1").delegate("li","click",function () {
+           
+            var ulChild = $(this).find("ul").length
+            if (ulChild == 0) {
+                $("#collapase-nav-1 li").find("a").attr("style", "background-color:#232d37;border: #262a35;")
+                $(this).find("a").attr("style", "background:linear-gradient(to right, #41a49f , #40af94); border: #40af94;color:#fff")
+            } 
+            $(".theme-black .am-fr a").css("background", "none");
+        })
+        
+        
+
+    })
+</script>
+

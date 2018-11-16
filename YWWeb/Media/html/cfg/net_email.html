@@ -1,0 +1,113 @@
+ 
+
+<div class="config_content" >
+    <!--logo start-->
+        <div class="login">
+        </div>
+    <!--logo end-->
+    <!--item 1-->
+        <div class="item" >
+               <div id="email_config" class="logo_title">Email</div>
+               <div class="item_R">
+                   <div id="EmailRf" class="logo_link">Refresh</div>
+                   <div id="EmailDf" class="logo_link" style="display:none;">Default</div>
+                   <div id="EmailSave" class="logo_link">Save</div>
+               </div>
+        </div>
+    <!--item 1_end-->
+    <!--table -->
+    <div class="table_content" style="height:700px; overflow:hidden;">
+             <!--table 1-->
+             
+             <div class="table">
+                <div class="table_L" id="Email_startup"></div>
+                <div class="table_R" >
+                	<div class="table_box" style="margin-left:0px">
+                    <select id="EmEmailSwitch" class="select">
+                        <option value="0">关闭</option>
+                        <option value="1">打开</option>
+                        <option value="2">Default</option>
+                    </select>
+                    </div>
+                    <div class="table_box">
+                    <input id="EmailSetup" type="button" value="setup" style="margin-left:20px;display:none;margin-top:5px;"/>
+                    </div>
+                </div>
+            </div>
+            <div id="EmDivBox">
+                <div class="table">
+                    <div class="table_L" id="SSL_switch">SSL开关</div>
+                    <div class="table_R" >
+                    	<select id="EmSSLSwitch" class="select">
+                            <option value="0">关闭</option>
+                            <option value="1">打开</option>
+                        </select>
+                        <label id="defaultoff" style="display:none; margin-left:53px;">off</label>
+                    </div>
+                </div>
+                <div class="table">
+                    <div class="table_L" id="port_num">端口号</div>
+                    <div class="table_R" >
+                    	<input type="text" style="ime-mode:disabled" id="EmPort"  class="select"/>
+                        <label id="defaultport" style="display:none; margin-left:53px;">2525</label>
+                    </div>
+                </div>
+                <div class="table">
+                
+                    <div class="table_L" id="SMTP_server">SMTP服务器</div>			
+                    <div class="table_R">
+                   		 <input  id="EmSMTP"  class="select inputCss" maxlength="32" style="ime-mode:disabled"/>
+                         <label id="defaultserver" style="display:none; margin-left:53px;">mysmtp.lorexddns.net</label>
+                    </div>
+                </div>  
+            <!--table 2-free-->
+        
+         		
+              <!--table 2-->
+                <div class="table">
+                    <div class="table_L" id="addresser_address">发件人地址</div>
+                    <div class="table_R">
+                    	<input type="text" id="EmSendEmail"  class="select inputCss"   maxlength="32" style="ime-mode:disabled"/>
+                    </div>
+                </div>
+            <!--table 3-->
+            	<div class="table">
+                    <div class="table_L" id="addresser_passwd">发件人密码</div>
+                    <div class="table_R">
+                        <input type="password" class="select EmSendEmailPW" maxlength="32"/>
+                     </div>
+                </div>
+            <!--table 4-->
+         		<div class="table">
+                    <div class="table_L" id="addressee_adress">收件人地址</div>
+                    <div class="table_R">
+                    	<input type="text" id="EmRecvEmail"  class="select"  maxlength="32" style="ime-mode:disabled"/>
+                    </div>
+                </div>
+             <!--table 5-->
+         		
+              <!--table 6-->
+         		
+               <!--table 7-->
+         		<div class="table">
+                    <div class="table_L" id="sendEmail_alternate" style="border-bottom:1px solid #FFF">邮件发送间隔</div>
+                    <div class="table_R">
+                    	<select id="Emintervaltime" class="select">
+                            <option value="0">1分钟</option>
+                            <option value="1">3分钟</option>
+                            <option value="2">5分钟</option>
+                            <option value="3">10分钟</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table none"></div>
+                <div class="table top" id="EMAIL_DISPLAY" style="border:0px; margin-left:0px; _margin-left:0px; margin-top:50; display:none">
+             		<input  id="EmailTest" class="ButtonToDiv" type="button" value="邮件测试"/>
+                    <!--div id="EmailTest" class="ButtonToDiv">邮件测试</div-->
+       			</div>
+         </div>
+    </div>
+    <!--table end-->
+		
+</div>
+<div class="disp"></div>

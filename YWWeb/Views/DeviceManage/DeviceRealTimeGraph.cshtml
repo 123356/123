@@ -1,0 +1,298 @@
+﻿@{
+    ViewBag.Title = "实时曲线";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HistoryData</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <div class="curve">
+        <div class="curve_table">
+            参数选择：
+            <input id="DataTypeParams" data-options="lines:true" style="width: 500px;" />
+            <button id="showgraphs" onclick="showimg();" class="page_table_but" style="margin: 0px"
+                data-options="iconCls:'icon-ok'">
+                <img src="/Content/images/Icon16/refresh.png" />确定
+            </button>
+        </div>
+        <div id="userCharts" style="height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var did = 1, pid = 1;
+        if (Request['did'] != null)  
+            did = Request['did'];
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        var firstOpen = 0, canAdd = 1;
+        var ids = '', tid = '';
+        //绑定树
+        $('#DataTypeParams').combotree
+        ({
+            url: '/BaseInfo/DataTypeParams?pid=' + pid + '&did=' + did,
+            multiple: true,
+            onBeforeSelect: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#DataTypeParams').combotree('tree').tree("expand", node.target); //展开
+                    return false;
+                } 
+            },
+            onClick: function (node) {
+                if (!$(this).tree('isLeaf', node.target)) {
+                    $('#StationID').combo('showPanel');
+                }
+            },
+            onCheck: function (node, checked) {
+                var typecount = getSelectedType($("#DataTypeParams").combotree("getValues"));
+                //至少选择一个测点
+                if (typecount == 0) {
+                    var t = $('#DataTypeParams').combotree('tree'); //得到树对象
+                    $.messager.show({
+                        title: '提示',
+                        msg: '至少选择一个测点',
+                        timeout: 2000
+                    });
+                    t.tree('check', node.target);
+                    //不选中当前的节点
+                }
+                if (typecount > 2) {
+                    var t = $('#DataTypeParams').combotree('tree'); //得到树对象
+                    $.messager.show({
+                        title: '提示',
+                        msg: '只能选择两类参数',
+                        timeout: 2000
+                    });
+                    t.tree('uncheck', node.target);
+                    //不选中当前的节点
+                }
+            },
+            onLoadSuccess: function (data) {
+                var roots = $('#DataTypeParams').combotree('tree').tree('getRoots');
+                var child = $('#DataTypeParams').combotree('tree').tree('getChildren', roots[0].target);
+                var selid = '', thisid = '';
+                var docount = 0;
+                for (var i = 0; i < child.length; i++) {
+                    thisid = child[i].id;
+                    if (thisid.indexOf('_') > 0) {
+                        if (docount < 4) {//默认显示4个点
+                            tid = thisid.split('_')[0] + ',';
+                            if (ids.indexOf(tid) < 0) {//判断测点类型
+                                ids = ids + tid;
+                            }
+                            if (ids.split(',').length < 3) {//最多只显示2个测点类型
+                                if (docount > 0)
+                                    selid = selid + ',';
+                                selid = selid + thisid;
+                                docount++;
+                            }
+                            else
+                                break;
+                        }
+                        else
+                            break;
+                    }
+                }
+                $('#DataTypeParams').combotree('tree').tree("collapseAll");
+                $("#DataTypeParams").combotree("setValues", selid);
+                showimg();
+            }
+        });
+        //实时曲线
+        var pageHeight, pageWidth;
+        if (typeof window.innerHeight != 'undefined') {
+            //针对非IE8及其以下的浏览器
+            pageHeight = window.innerHeight;
+            pageWidth = window.innerWidth;
+            var isChrome = navigator.userAgent.toLowerCase().match(/chrome/) != null;
+            if (!isChrome) {
+                pageHeight = pageHeight - 90;
+            }
+        }
+        $(".m_tab").css("min-height", pageHeight);
+        $(".m_tab").css("max-height", pageHeight);
+        var imgdata = [], selidlist = '', beforidlist='', seriesdata = [], yaxisdata = [];
+        var unitlist = '', unitvalue = '', imgid = ''; //title显示,测点ID列表
+        var len = 0;
+        var ajaxbg = top.$("#loading_background,#loading");
+
+        function showimg() {
+            ajaxbg.show();
+            len = 0;
+            beforidlist = selidlist;
+            selidlist = $("#DataTypeParams").combotree("getValues") + '';
+            var arrtagid = selidlist.split(','); //获取TagID list
+            if (selidlist != "")
+                len = arrtagid.length;
+            seriesdata = []; yaxisdata = [];
+            unitlist = "{b}<br/>";
+            seriesdata = [];
+            imgdata = [];
+            imgid = '';
+            //如果没有选择测点
+            if (len == 0) {
+                ajaxbg.hide();
+                alert("请选择测点！");
+                return false;
+            }
+            else {
+                for (var j = 0; j < len; j++) {
+                    if (arrtagid[j].indexOf('_') > 0) {
+                        tagid = arrtagid[j].split('_')[1];        //曲线TagID
+                        imgid += tagid + ',';                    //曲线TagID,数组
+                    }
+                }
+                var initdata = [];
+                $.post("/Graphs/PointsTimeValue", { "pid": pid, "tagid": imgid }, function (data) {  //获取测点的历史数据，填充初始曲线
+                    var datalist = data.split('$');
+                    var datatype = '', curdatatype = '', type1 = '', type2 = ''; //上一次数据类型,当前数据类型
+                    for (var i = 0; i < datalist.length; i++) {
+                        var arrgraphinfo = datalist[i].split('|');
+                        //测点单位
+                        unitvalue = arrgraphinfo[2];
+                        //测点类型
+                        curdatatype = arrgraphinfo[3];
+
+                        if (datatype != curdatatype)//如果数据类型不匹配
+                        {
+                            if (i == 0)
+                                type1 = curdatatype;
+                            else
+                                type2 = curdatatype;
+                            yaxisdata.push({
+                                type: 'value',
+                                min: arrgraphinfo[4],
+                                max: arrgraphinfo[5],
+                                name: curdatatype + '(' + unitvalue + ')',
+                                nameTextStyle: { color: '#fff' },
+                                axisLabel: {
+                                    formatter: function (v) { return parseInt(v)},
+                                    textStyle: { color: '#fff' }
+                                }
+                            });
+                        }
+                        initdata = [];
+                        for (var docount = 0; docount < 30; docount++) {
+                            initdata.push(arrgraphinfo[0]);
+                        }
+                        if (curdatatype == type1) {
+                            //显示数据
+                            seriesdata.push({
+                                name: arrgraphinfo[1], //tagname
+                                type: 'line',
+                                smooth: true,
+                                data: initdata,
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                        ]
+                                }
+                            });
+                        }
+                        else {
+                            //显示数据
+                            seriesdata.push({
+                                name: arrgraphinfo[1], //tagname
+                                type: 'line',
+                                smooth: true,
+                                yAxisIndex: 1,
+                                data: initdata,
+                                markPoint: {
+                                    data: [
+                                        { type: 'max', name: '最大值' },
+                                        { type: 'min', name: '最小值' }
+                                        ]
+                                }
+                            });
+                        }
+                        if (i == 0)
+                            unitlist = unitlist + "{a}:{c} " + unitvalue + " <br/>";
+                        else
+                            unitlist = unitlist + "{a" + i + "}:{c" + i + "} " + unitvalue + "<br/>";
+                        datatype = curdatatype; //重置数据类型
+                        imgdata.push(arrgraphinfo[1]);
+                    }
+                    //$('#userCharts').html("<div id='userCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;'>");
+                    loadimg();
+                    ajaxbg.hide();
+                });
+            }
+        }
+        var timeTicket;
+        function loadimg() {
+            var myChart = echarts.init(document.getElementById('userCharts')); 
+            var option = {
+                title: {
+                    text: '实时曲线图',
+                    textStyle: { color: '#fff' }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: unitlist
+                },
+                legend: {
+                    data: imgdata,
+                    textStyle: { color: '#fff' }
+                },
+                xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            axisLabel: { textStyle: { color: '#fff'} },
+                            splitLine: { show: true, lineStyle: { color: '#4c4c4c', type: 'dashed'} },
+                            axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
+                            data: (function () {
+                                var now = new Date();
+                                var res = [];
+                                var len = 30;
+                                while (len--) {
+                                    res.push(now.toLocaleTimeString().replace(/^\D*/, ''));
+                                    now = new Date(now - 5000);
+                                }
+                                return res;
+                            })()
+                        }
+                       ],
+                yAxis: yaxisdata,
+                series: seriesdata
+            };
+
+            // 为echarts对象加载数据 
+            myChart.setOption(option);
+            clearInterval(timeTicket);
+            timeTicket = setInterval(function () {
+                RandANum1();
+            }, 5000);
+            var pointList = "0";
+            var count = 0;
+            var axisData;
+            function RandANum1() {
+                axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+                // 动态数据接口 addData
+                //$.ajaxSettings.async = false;  //同步才能获取数据
+                $.post("/Graphs/RealTimeData", { "tagid": imgid, "pid": pid }, function (realdata) {
+                    var pdata = realdata.split(',');
+                    var arradddate = [];
+                    var arrrealdata = '';
+                    for (var addlen = 0; addlen < pdata.length; addlen++) {
+                        arrrealdata = pdata[addlen].split('_');
+                        arradddate.push([
+                            addlen,        // 系列索引
+                            arrrealdata[1], // 新增数据
+                            true,    // 新增数据是否从队列头部插入
+                            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                            axisData  // 坐标轴标签
+                        ]);
+                    }
+                    myChart.addData(arradddate);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

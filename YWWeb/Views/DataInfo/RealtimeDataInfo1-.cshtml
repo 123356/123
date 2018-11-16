@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+<head style="background: #e6e6e6;">
+    <meta name="viewport" content="width=device-width" />
+    <title>站室实时数据</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <!-- 表格-->
+    <link href="/Content/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/Content/css/dataTables.bootstrap.css" rel="stylesheet">
+    <script src="/Content/js/jquery.dataTables.js"></script>
+    <script src="/Content/js/dataTables.bootstrap.js"></script>
+    <script src="/Content/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        table tr {
+            float: left;
+            width: 20%;
+            text-align: center;
+            display: block;
+        }
+
+        table td {
+            float: left;
+            width: 30%;
+            text-align: center;
+            display: block;
+        }
+    </style>
+</head>
+<body style="background: #EFEDF2;height:80%">
+    <div>
+        <div class="project-list" style=" width:99.1%">
+            <h3 class="text-center" style="margin-top:20px;color:#5b5b5b">高压开关</h3>
+            <table id="datalist" class="table data-table mydatatable" style="margin-left:20px; ">
+                <thead>
+                    <tr>
+                        <th width="0" height="0">
+                        </th>
+                        <th width="0" height="0">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="graphwin" minimizable="false" maximizable="false" collapsible="false" closed="false" title="false"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var pid = 103, sid = 0;
+
+        if (Request['pid'] != null)
+            pid = Request['pid'];
+        $(document).ready(function () {
+            //$('#tim').html("最新更新时间: " + top.$('#SJ').html());
+            //表格
+            var oTable = $('#datalist').dataTable({
+                "oLanguage": {
+                    //国际化
+                    "sProcessing": "<img src='/Content/Images/loading.gif'>  加载数据中...",
+                    "sLengthMenu": "每页显示&nbsp;_MENU_ &nbsp;条结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",
+                    "infoEmpty": "0条记录", //筛选为空时左下角的显示"
+                    "sInfoEmpty": "没有数据",
+                    "sInfoFiltered": "(从_MAX_条数据中检索)", //筛选之后的左下角筛选提示，
+                    "sZeroRecords": "没有数据"
+                    //"sSearch": '<span class="label label-success">&nbsp;搜索&nbsp;</span>'
+                },
+                "bProcessing": false, //DataTables载入数据时，是否显示‘进度’提示
+                "bServerSide": true, //是否启动服务器端数据导入
+                "bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+                "bJQueryUI": true, //是否使用 jQury的UI theme
+                "aLengthMenu": [10, 20, 40, 60], //更改显示记录数选项
+                "bLengthChange": false,
+                "iDisplayLength": 100, //默认显示的记录数
+                "bAutoWidth": true, //是否自适应宽度
+                //"bScrollInfinite" : false, //是否启动初始化滚动条
+                "bScrollCollapse": true, //是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变
+                "bPaginate": true, //是否显示（应用）分页器
+                "bInfo": true, //是否显示页脚信息，DataTables插件左下角显示记录数
+                "sPaginationType": "full_numbers", //详细分页组，可以支持直接跳转到某页
+                "bSort": false, //是否启动各个字段的排序功能
+                "bFilter": false, //是否启动过滤、搜索功能
+                "sAjaxSource": "/DataInfo/GetTaskJson1",
+                "aoColumns": [
+                     {
+                         "data": "Remarks",
+                         "mRender": function (data, type, row) {
+                             var sRtn = "";
+                             if (row.DID%2 == 0) {
+                                 sRtn = " <div style='background: #8e8a8ab3'> ";
+                              }else
+                             {
+                                 sRtn = " <div style='background: #D3D3D3;'> ";
+                             }
+                             return sRtn + row.Remarks + " </div>";
+                         }
+                     },
+                    {
+                        "data": "pointstatus",
+                        "mRender": function (data, type, row) {                           
+                            return " <img title='" + row.pv + "' src='/Content/images/ickgl/" + row.pv + ".png'/>";
+                        }
+                    }
+                ],
+                "aoColumnDefs": [
+                    {
+                        //报错：DataTables warning : Requested unknown parameter '1' from the data source for row 0
+                        //加上这段定义就不出错了。
+                        sDefaultContent: '',
+                        aTargets: ['_all']
+                    }
+                ],
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "pid", "value": pid }
+                        );
+
+                }
+            });
+            setInterval(function () {
+                $('#datalist').DataTable().ajax.reload(null, false);
+            }, 5000);
+        });
+        $('table th').hide();
+        //
+        function showhisgraph(tagid) {
+            $('#graphwin').window({
+                width: document.body.clientWidth * 0.3,
+                height: document.body.clientHeight * 0.5,
+                title: "",
+                href: '/DataReport/GraphWindow?TagID=' + tagid + '&pid=' + pid,
+                onClose: function () {
+                }
+            });
+        }
+        function hidegraph() {
+            $('#graphwin').window('close');
+        }
+        function mousePosition(ev) {
+            if (ev.pageX || ev.pageY) {//firefox、chrome等浏览器
+                return { x: ev.pageX, y: ev.pageY };
+            }
+            return {// IE浏览器
+                x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+                y: ev.clientY + document.body.scrollTop - document.body.clientTop
+            };
+        }
+        function mouseMove(ev) {
+            //            ev = ev || window.event;
+            //            var mousePos = mousePosition(ev);
+            //            var width = parseInt(document.getElementById("graphwin").style.width);
+            //            var height = parseInt(document.getElementById("graphwin").style.height);
+            //            var Winheight = document.body.clientHeight;
+            //            var left =  mousePos.x - width - 20;
+            //            var top = 0;
+            //            $('#xx').html(mousePos.x);
+            //            $('#yy').html($(document).scrollTop());
+            //            if (mousePos.y + height > Winheight * 0.95)
+            //                top = mousePos.y - height;
+            //            else
+            //                top = mousePos.y;
+            $('#graphwin').window('move', {
+                left: document.body.clientWidth * 0.3,
+                top: $(document).scrollTop() + 150
+            });
+        }
+        function Hg(did, tagid) {
+            var srcString = "/DataReport/GraphWindowDetail?did=" + did + "&tagid=" + tagid + "&pid=" + pid;
+            $("#sysContent", parent.document.body).attr("src", srcString);
+        }
+        document.onmousemove = mouseMove;
+    </script>
+    @*<table id="list_data" style="width: auto; height: 780px;" idfield="DID" pagination="true"
+            data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'get',striped:true"
+            fitcolumns="true" fit="true">
+            <thead>
+                <tr>
+                    <th field='PName' width="80px">
+                        站室名称
+                    </th>
+                    <th field='DeviceName' width="150px">
+                        设备名称
+                    </th>
+                    <th field='Position' width="100px">
+                        测点位置
+                    </th>
+                    <th field='pv' width="100px">
+                        测量值
+                    </th>
+                    <th field='rectime' width="100px">
+                        测量时间
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <script type="text/javascript">
+            $('#list_data').datagrid({
+                url: '/DataInfo/LoadRealPageData?rom=' + Math.random(),
+                pagination: true
+            });
+        </script>*@
+</body>
+</html>

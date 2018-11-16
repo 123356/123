@@ -1,0 +1,56 @@
+﻿/*#region 天宝生活区B08 10Kv变电站 */
+.plancontent { background:url(../pingmiantu/p105/bg_tb.png) no-repeat; position:relative;}
+/*母线桥*/
+.tb_mxq { background:url(../pingmiantu/p105/mxq.png) no-repeat;left:723px;top:78px; width:246px; height:67px;}
+/*变压器 1#~2#*/
+.tb_b1 { background:url(../pingmiantu/p105/475.png) no-repeat;left:286px;top:124px; width:100px; height:164px;}
+.tb_b2 { background:url(../pingmiantu/p105/472.png) no-repeat;left:1212px;top:98px; width:100px; height:182px;}
+/*低压柜 1AA1~1AA	8*/
+.tb_1aa1 { background:url(../pingmiantu/p105/AA1_AA8.png) no-repeat;left:382px;top:124px; width:51px; height:145px;}
+.tb_1aa2 { background:url(../pingmiantu/p105/AA2_AA3_BB2_BB3.png) no-repeat;left:430px;top:124px; width:51px; height:145px;}
+.tb_1aa3 { background:url(../pingmiantu/p105/AA2_AA3_BB2_BB3.png) no-repeat;left:478px;top:124px; width:51px; height:145px;}
+.tb_1aa4 { background:url(../pingmiantu/p105/AA4_AA5_BB5.png) no-repeat;left:526px;top:124px; width:51px; height:145px;}
+.tb_1aa5 { background:url(../pingmiantu/p105/AA4_AA5_BB5.png) no-repeat;left:574px;top:124px; width:51px; height:145px;}
+.tb_1aa6 { background:url(../pingmiantu/p105/AA6_BB8.png) no-repeat;left:622px;top:124px; width:51px; height:145px;}
+.tb_1aa7 { background:url(../pingmiantu/p105/AA7_BB7.png) no-repeat;left:670px;top:124px; width:51px; height:145px;}
+.tb_1aa8 { background:url(../pingmiantu/p105/AA1_AA8.png) no-repeat;left:718px;top:124px; width:51px; height:145px;}
+/*低压柜 1BB8~1BB1*/
+.tb_1bb8 { background:url(../pingmiantu/p105/AA6_BB8.png) no-repeat;left:828px;top:124px; width:51px; height:145px;}
+.tb_1bb7 { background:url(../pingmiantu/p105/AA7_BB7.png) no-repeat;left:876px;top:124px; width:51px; height:145px;}
+.tb_1bb6 { background:url(../pingmiantu/p105/BB6.png) no-repeat;left:924px;top:124px; width:51px; height:145px;}
+.tb_1bb5 { background:url(../pingmiantu/p105/AA4_AA5_BB5.png) no-repeat;left:972px;top:124px; width:51px; height:145px;}
+.tb_1bb4 { background:url(../pingmiantu/p105/471.png) no-repeat;left:1020px;top:124px; width:51px; height:145px;}
+.tb_1bb3 { background:url(../pingmiantu/p105/AA2_AA3_BB2_BB3.png) no-repeat;left:1068px;top:124px; width:51px; height:145px;}
+.tb_1bb2 { background:url(../pingmiantu/p105/AA2_AA3_BB2_BB3.png) no-repeat;left:1116px;top:124px; width:51px; height:145px;}
+.tb_1bb1 { background:url(../pingmiantu/p105/470.png) no-repeat;left:1164px;top:124px; width:51px; height:145px;}
+/*监控屏~直流屏 4面*/
+.tb_p_dc { background:url(../pingmiantu/p105/p_dc.png) no-repeat;left:470px;top:393px; width:53px; height:137px;}
+.tb_p_zl { background:url(../pingmiantu/p105/480.png) no-repeat;left:520px;top:393px; width:53px; height:137px;}
+.tb_p_jk { background:url(../pingmiantu/p105/p_jk.png) no-repeat;left:570px;top:393px; width:53px; height:137px;}
+/*H1~H9*/
+.tb_p_h1 { background:url(../pingmiantu/p105/p_h1_h9.png) no-repeat;left:670px;top:393px; width:60px; height:200px;}
+.tb_p_h2 { background:url(../pingmiantu/p105/p_h1_h9.png) no-repeat;left:722px;top:393px; width:60px; height:200px;}
+.tb_p_h3 { background:url(../pingmiantu/p105/p_h3_5.png) no-repeat;left:775px;top:393px; width:57px; height:186px;}
+.tb_p_h4 { background:url(../pingmiantu/p105/p_h3_5.png) no-repeat;left:826px;top:393px; width:57px; height:186px;}
+.tb_p_h5 { background:url(../pingmiantu/p105/p_h3_5.png) no-repeat;left:877px;top:393px; width:57px; height:186px;}
+.tb_p_h6 { background:url(../pingmiantu/p105/473.png) no-repeat;left:926px;top:393px; width:57px; height:200px;}
+.tb_p_h7 { background:url(../pingmiantu/p105/469.png) no-repeat;left:978px;top:393px; width:57px; height:200px;}
+.tb_p_h8 { background:url(../pingmiantu/p105/p_h1_h9.png) no-repeat;left:1030px;top:393px; width:60px; height:200px;}
+.tb_p_h9 { background:url(../pingmiantu/p105/p_h1_h9.png) no-repeat;left:1082px;top:393px; width:60px; height:200px;}
+/*视频监控 左~右 3台*/
+.tb_sp1 { background:url(../pingmiantu/p105/sp.png) no-repeat;left:795px;top:278px; width:24px; height:47px;}
+.tb_sp2 { background:url(../pingmiantu/p105/sp.png) no-repeat;left:987px;top:278px; width:24px; height:47px;}
+.tb_sp3 { background:url(../pingmiantu/p105/hjsp.png) no-repeat;left:1351px;top:210px; width:41px; height:37px;}
+/*环境温湿度*/
+.tb_wsd { background:url(../pingmiantu/p105/474.png) no-repeat;left:1270px;top:500px; width:27px; height:24px;}
+/*烟感*/
+.tb_yg { background:url(../pingmiantu/p105/476.png) no-repeat;left:913px;top:323px; width:24px; height:19px;}
+/*水浸*/
+.tb_sj { background:url(../pingmiantu/p105/477.png) no-repeat;left:1359px;top:378px; width:28px; height:24px;}
+/*变压器排风机*/
+.tb_pfj0 { background:url(../pingmiantu/p105/478.gif) no-repeat;left:144px;top:411px; width:35px; height:38px;}
+/*变压器柜顶排风机 左~右*/
+.tb_pfj1 { background:url(../pingmiantu/p105/pfj.gif) no-repeat; position:absolute;left:304px;top:125px; width:66px; height:32px; display:block;}
+.tb_pfj2 { background:url(../pingmiantu/p105/pfj.gif) no-repeat; position:absolute;left:1228px;top:99px; width:66px; height:32px; display:block;}
+/*墙面*/
+.tb_qm { background:url(../pingmiantu/p105/qm.png) no-repeat;left:580px;top:556px; width:680px; height:97px;}

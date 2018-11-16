@@ -1,0 +1,54 @@
+﻿/*#region 福州二医院运维项目 1号楼变压器及低压配电房平面图 */
+.plancontent { background:url(../pingmiantu/p137/bg_fzyy01.png) no-repeat; position:relative;}
+
+/*TM1_2000kVA变*/
+.fzyy01_TM1{ background:url(../pingmiantu/p137/897.png) no-repeat;left:405px; top:46px; width:124px; height:183px;}
+/*柜体1AA~11AA 左~右 11p*/
+.fzyy01_1AA{ background:url(../pingmiantu/p137/1016.png) no-repeat;left:525px; top:68px; width:59px; height:150px;}
+.fzyy01_2AA{ background:url(../pingmiantu/p137/1AA_2AA_11AA.png) no-repeat;left:580px; top:68px; width:59px; height:150px;}
+.fzyy01_3AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:635px; top:68px; width:59px; height:150px;}
+.fzyy01_4AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:690px; top:68px; width:59px; height:150px;}
+.fzyy01_5AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:745px; top:68px; width:59px; height:150px;}
+.fzyy01_6AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:800px; top:68px; width:59px; height:150px;}
+.fzyy01_7AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:855px; top:68px; width:59px; height:150px;}
+.fzyy01_8AA{ background:url(../pingmiantu/p137/dy.png) no-repeat;left:910px; top:68px; width:59px; height:150px;}
+.fzyy01_9AA{ background:url(../pingmiantu/p137/9AA_10AA.png) no-repeat;left:965px; top:68px; width:59px; height:150px;}
+.fzyy01_10AA{ background:url(../pingmiantu/p137/9AA_10AA.png) no-repeat;left:1020px; top:68px; width:59px; height:150px;}
+.fzyy01_11AA{ background:url(../pingmiantu/p137/1AA_2AA_11AA.png) no-repeat;left:1075px; top:68px; width:59px; height:150px;}
+/*TM2_2000kVA变*/
+.fzyy01_TM2{ background:url(../pingmiantu/p137/898.png) no-repeat;left:370px; top:147px; width:135px; height:198px;}
+/*柜体21AA~32AA 左~右 12p*/
+.fzyy01_21AA{ background:url(../pingmiantu/p137/1017.png) no-repeat;left:501px; top:190px; width:60px; height:152px;}
+.fzyy01_22AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:557px; top:190px; width:60px; height:152px;}
+.fzyy01_23AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:613px; top:190px; width:60px; height:152px;}
+.fzyy01_24AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:669px; top:190px; width:60px; height:152px;}
+.fzyy01_25AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:725px; top:190px; width:60px; height:152px;}
+.fzyy01_26AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:781px; top:190px; width:60px; height:152px;}
+.fzyy01_27AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:837px; top:190px; width:60px; height:152px;}
+.fzyy01_28AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:893px; top:190px; width:60px; height:152px;}
+.fzyy01_29AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:949px; top:190px; width:60px; height:152px;}
+.fzyy01_30AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:1005px; top:190px; width:60px; height:152px;}
+.fzyy01_31AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:1061px; top:190px; width:60px; height:152px;}
+.fzyy01_32AA{ background:url(../pingmiantu/p137/21_32AA.png) no-repeat;left:1117px; top:190px; width:60px; height:152px;}
+/*1号楼高压配电房 背景*/
+.fzyy02_bg{ background:url(../pingmiantu/p137/bg_2.png) no-repeat;left:32px; top:254px; width:1371px; height:429px; position:absolute;}
+/*柜体6AH~26AH 左~右 14p*/
+.fzyy02_6AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:196px; top:319px; width:70px; height:187px;}
+.fzyy02_5AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:258px; top:319px; width:70px; height:187px;}
+.fzyy02_4AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:320px; top:319px; width:70px; height:187px;}
+.fzyy02_3AH{ background:url(../pingmiantu/p137/pt_bl.png) no-repeat; left:382px; top:319px; width:70px; height:187px;}
+.fzyy02_2AH{ background:url(../pingmiantu/p137/jl.png) no-repeat; left:444px; top:319px; width:70px; height:187px;}
+.fzyy02_1AH{ background:url(../pingmiantu/p137/1018.png) no-repeat; left:506px; top:319px; width:70px; height:187px;}
+.fzyy02_01AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:568px; top:319px; width:70px; height:187px;}
+.fzyy02_02AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:630px; top:319px; width:70px; height:187px;}
+.fzyy02_21AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:692px; top:319px; width:70px; height:187px;}
+.fzyy02_22AH{ background:url(../pingmiantu/p137/jl.png) no-repeat; left:754px; top:319px; width:70px; height:187px;}
+.fzyy02_23AH{ background:url(../pingmiantu/p137/pt_bl.png) no-repeat; left:816px; top:319px; width:70px; height:187px;}
+.fzyy02_24AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:878px; top:319px; width:70px; height:187px;}
+.fzyy02_25AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:940px; top:319px; width:70px; height:187px;}
+.fzyy02_26AH{ background:url(../pingmiantu/p137/gy.png) no-repeat; left:1002px; top:319px; width:70px; height:187px;}
+/*计量柜 蓄电池柜 左~右 2p*/
+.fzyy02_jl{ background:url(../pingmiantu/p137/jl_dc.png) no-repeat; left:748px; top:543px; width:51px; height:132px;}
+.fzyy02_dc{ background:url(../pingmiantu/p137/jl_dc.png) no-repeat; left:795px; top:543px; width:51px; height:132px;}
+/*墙面*/
+.fzyy02_qm{ background:url(../pingmiantu/p137/qm.png) no-repeat; left:319px; top:568px; width:572px; height:112px;}

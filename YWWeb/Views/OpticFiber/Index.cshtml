@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>点表</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" class="easyui-datagrid" style="width: auto;" pagination="true"
+        data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='tagid'>
+                    测点ID
+                </th>
+                <th field='tagname' width="50px">
+                    测点名称
+                </th>
+                @* <th field='Remarks' width="30px">
+                    监测位置
+                </th>*@
+                <th field='dname' width="30px">
+                    光纤设备
+                </th>
+                <th field='cname' width="30px">
+                    光纤通道
+                </th>
+                <th field='zonename' width="30px">
+                    光纤分区
+                </th>
+                @*  <th field='报警上限' width="30px">
+                    关注值
+                </th>
+                <th field='报警上限2' width="60px">
+                    预警值
+                </th>
+                <th field='报警上限3' width="60px">
+                    报警值
+                </th>*@
+            </tr>
+        </thead>
+    </table>
+    <form method="post" action="" id="searchform">
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            站室：<select id="SPID" style="width: 150px; height: 26px;">
+            </select>
+            设备：
+            <select id="selDID" style="width: 150px; height: 26px;">
+            </select>
+            测点名称：
+            <input id="tagname" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript">
+        $("#currPosition", window.top.document).html("当前位置：设置 > 光纤测温分区对应 ");
+        var pid = 0, did = 0, tagname = '', docount = 0;
+        $("#SPID").combobox({
+            url: "/BaseInfo/BindPDRInfo?showall=7",
+            valueField: 'PID',
+            textField: 'Name',
+            editable: false,
+            onLoadSuccess: function (data) { //数据加载完毕事件
+                if (data.length > 0) {
+                    pid = data[0].PID;
+                }
+                $("#SPID").combobox('select', pid);
+                if (docount == 0)
+                    loadDeviceList(pid);
+                docount == 0;
+            },
+            onSelect: function (data) {
+                pid = data.PID;
+                loadDeviceList(pid);
+                docount++;
+            }
+        });
+        function loadDeviceList(pid) {
+            $("#selDID").combobox({
+                url: "/BaseInfo/BindDeviceInfo?pid=" + pid + "&dtid=" + 6,
+                valueField: 'DID',
+                textField: 'DeviceName',
+                editable: false,
+                onLoadSuccess: function (data) { //数据加载完毕事件
+                    if (data.length > 0) {
+                        $("#selDID").combobox('select', data[0].DID);
+                        did = data[0].DID;
+                        dosearch();
+                    }
+                },
+                onSelect: function (data) {
+                    did = 0;
+                }
+            });
+        }
+        $('#list_data').datagrid({
+            url: 'empty.json',
+            singleSelect: true
+        });
+        function add() {
+            OpenFrame();
+        }
+        function edit() {
+            var row = $('#list_data').datagrid('getSelected');
+            if (row) {
+                OpenFrame(row.tagid);
+            }
+            else {
+                $.messager.alert("提示", "请选择要编辑的行！", "info");
+            }
+        }
+        function OpenFrame(id) {
+            $('#editwin').window({
+                modal: true,
+                top: ($(window).height() - 600) * 0.5,
+                left: ($(window).width() - 800) * 0.5,
+                href: '/OpticFiber/Edit?id=' + id,
+                onClose: function () { dosearch(); }
+            });
+            $('#editwin').window('open');
+        }
+        function dosearch() {
+            var did = $("#selDID").combobox('getValue');
+            var tagname = $("#tagname").val();
+            pid = $("#SPID").combobox('getValue');
+            $('#list_data').datagrid({
+                url: '/OpticFiber/ListData?rom=' + Math.random(),
+                queryParams: { "pid": pid, "did": did, "tagname": tagname }
+            });
+        }
+    </script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="光纤测温分区对应" class="easyui-window" closed="true" style="width: 600px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

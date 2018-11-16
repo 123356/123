@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>实时监测平面图</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body style="background-color: #555555; padding: 0; margin: 0; overflow:hidden;">
+    <div>
+        <iframe src="" id="MediaWin" marginwidth="0" scrolling="no" style="width: 100%; height: 740px"
+            marginheight="0" frameborder="0" vspace="0" border="0" framespacing="0" noresize="noResize">
+        </iframe>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var PID, DRV;
+    var Request = new Object();
+    Request = GetRequest();
+    PID = Request['pid'];
+    DRV = Request['drv'];
+
+    $.post("/PDRInfo/GetMediaInfo", { "pid": PID }, function (data) {
+        if (data != "null") {
+            var row = eval("(" + data + ")");
+            var srcString;
+            if (row.Brand == "dh") {
+                srcString = "/Media/login.html?OpenPreView=" + row.OpenPreView + "&user=" + row.UserName + "&passwd=" + row.passwd + "&mediaport=" + row.mediaport + "&StreamType=" + row.nStreamType + "&IP=" + row.ip + "&Jump2Drv=" + DRV
+                document.getElementById("MediaWin").src = srcString;
+            }
+            else {
+                srcString = "../../HaiKang/cn/video.html?OpenPreView=" + row.OpenPreView + "&user=" + row.UserName + "&passwd=" + row.passwd + "&mediaport=" + row.mediaport + "&StreamType=" + row.nStreamType + "&IP=" + row.ip + "&Jump2Drv=" + DRV
+                document.getElementById("MediaWin").src = srcString;
+            }
+        }
+        else
+            alert("没有视频设备");
+    });    
+</script>
