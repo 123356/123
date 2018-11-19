@@ -2026,5 +2026,12 @@ namespace S5001Web.Controllers
             return Content(result);
         }
         #endregion
+
+#region  一次图编辑工具
+        public ActionResult OneGraphEdit()
+        {
+            return View();
+        }
+#endregion
     }
 }

@@ -2468,6 +2468,7 @@
     <Content Include="Views\PDRInfo\OneGraph177_86.cshtml" />
     <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
     <Content Include="Views\DeviceManage\VideoTest.cshtml" />
+    <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
