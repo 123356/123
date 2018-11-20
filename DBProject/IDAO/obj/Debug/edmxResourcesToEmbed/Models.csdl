@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="yw_db_sdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="t_SM_HisData_00001">
+    <Key>
+      <PropertyRef Name="RecTime" />
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="PV" Type="Double" />
+    <Property Name="AlarmStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AlarmLimits" Type="Double" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="t_SM_HisData_00001" EntityType="Self.t_SM_HisData_00001" />
+    <EntitySet Name="配电房_00001_历史数据表" EntityType="yw_db_sdModel.配电房_00001_历史数据表" />
+  </EntityContainer>
+  <EntityType Name="配电房_00001_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+</Schema>

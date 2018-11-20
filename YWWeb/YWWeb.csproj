@@ -392,10 +392,13 @@
     <Content Include="Content\css\pingmiantu8.css" />
     <Content Include="Content\css\pingmiantu9.css" />
     <Content Include="Content\css\planpub.css" />
+    <Content Include="Content\css\rescss.css" />
     <Content Include="Content\css\SHyicitu.css" />
     <Content Include="Content\css\swiper.min.css" />
+    <Content Include="Content\css\topo.css" />
     <Content Include="Content\css\userView2.css" />
     <Content Include="Content\css\Vertical.css" />
+    <Content Include="Content\css\wiring.css" />
     <Content Include="Content\css\yicitu.css" />
     <Content Include="Content\css\yicitu1.css" />
     <Content Include="Content\css\yicitu10.css" />
@@ -920,8 +923,11 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
+    <Content Include="Content\js\editor.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\gettemp.js" />
+    <Content Include="Content\js\jtopo-src.js" />
+    <Content Include="Content\js\jtopo.js" />
     <Content Include="Content\js\lbyw-base.zc.js" />
     <Content Include="Content\js\lbywfw._zc.js" />
     <Content Include="Content\js\lbywlfmu._zc.js" />
@@ -942,14 +948,50 @@
     <Content Include="Content\js\menucontrol._zc.js" />
     <Content Include="Content\js\menulast._zc.js" />
     <Content Include="Content\js\online._zc.js" />
+    <Content Include="Content\js\palette_config.js" />
     <Content Include="Content\js\ResizeList._zc.js" />
     <Content Include="Content\js\respond.src.js" />
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="Content\js\tab._zc..js" />
+    <Content Include="Content\js\topo.js" />
     <Content Include="Content\js\userView2.js" />
     <Content Include="Content\js\weather.js" />
     <Content Include="Content\timeline\vis-timeline-graph2d.min.css" />
     <Content Include="Content\timeline\vis.js" />
+    <Content Include="Content\topo\css\rescss.css" />
+    <Content Include="Content\topo\css\topo.css" />
+    <Content Include="Content\topo\css\wiring.css" />
+    <Content Include="Content\topo\img\cur\openhand.cur" />
+    <Content Include="Content\topo\img\edit\align-down.png" />
+    <Content Include="Content\topo\img\edit\align-left.png" />
+    <Content Include="Content\topo\img\edit\align-right.png" />
+    <Content Include="Content\topo\img\edit\align-top.png" />
+    <Content Include="Content\topo\img\edit\contour.png" />
+    <Content Include="Content\topo\img\edit\editSize.png" />
+    <Content Include="Content\topo\img\edit\horizontalSpacing.png" />
+    <Content Include="Content\topo\img\edit\level.png" />
+    <Content Include="Content\topo\img\edit\line.png" />
+    <Content Include="Content\topo\img\edit\link.png" />
+    <Content Include="Content\topo\img\edit\monospace.png" />
+    <Content Include="Content\topo\img\edit\sameWidth.png" />
+    <Content Include="Content\topo\img\edit\save.png" />
+    <Content Include="Content\topo\img\edit\switch.png" />
+    <Content Include="Content\topo\img\edit\vertical.png" />
+    <Content Include="Content\topo\img\edit\verticalSpacing.png" />
+    <Content Include="Content\topo\img\symbols\10.png" />
+    <Content Include="Content\topo\img\symbols\9.png" />
+    <Content Include="Content\topo\img\symbols\arrow.png" />
+    <Content Include="Content\topo\img\symbols\breaker.png" />
+    <Content Include="Content\topo\img\symbols\doubleBreaker.png" />
+    <Content Include="Content\topo\img\symbols\electricMeter.png" />
+    <Content Include="Content\topo\img\symbols\ground.png" />
+    <Content Include="Content\topo\img\symbols\switch.png" />
+    <Content Include="Content\topo\img\symbols\text.png" />
+    <Content Include="Content\topo\js\editor.js" />
+    <Content Include="Content\topo\js\jtopo-src.js" />
+    <Content Include="Content\topo\js\jtopo.js" />
+    <Content Include="Content\topo\js\palette_config.js" />
+    <Content Include="Content\topo\js\topo.js" />
     <Content Include="Content\UserJS\appliction.js" />
     <Content Include="Content\UserJS\CategoryView._jm.js" />
     <Content Include="Content\UserJS\CategoryView._zc.js" />
@@ -2503,7 +2545,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>48556</DevelopmentServerPort>
+          <DevelopmentServerPort>47242</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

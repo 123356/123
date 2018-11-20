@@ -1,0 +1,2702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="YWModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="pdermsWebEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+    <EntitySet Name="t_AlarmTable_en" EntityType="YWModel.t_AlarmTable_en" />
+    <EntitySet Name="t_AlarmTable_ErrorData" EntityType="YWModel.t_AlarmTable_ErrorData" />
+    <EntitySet Name="t_CM_Button" EntityType="YWModel.t_CM_Button" />
+    <EntitySet Name="t_CM_CameraInfo" EntityType="YWModel.t_CM_CameraInfo" />
+    <EntitySet Name="t_CM_DeviceStructureType" EntityType="YWModel.t_CM_DeviceStructureType" />
+    <EntitySet Name="t_CM_DeviceType" EntityType="YWModel.t_CM_DeviceType" />
+    <EntitySet Name="t_CM_Log" EntityType="YWModel.t_CM_Log" />
+    <EntitySet Name="t_CM_MajorLevel" EntityType="YWModel.t_CM_MajorLevel" />
+    <EntitySet Name="t_CM_Module" EntityType="YWModel.t_CM_Module" />
+    <EntitySet Name="t_CM_RoleInfo" EntityType="YWModel.t_CM_RoleInfo" />
+    <EntitySet Name="t_CM_RoleRight" EntityType="YWModel.t_CM_RoleRight" />
+    <EntitySet Name="t_CM_UserRoles" EntityType="YWModel.t_CM_UserRoles" />
+    <EntitySet Name="t_CM_ValueType" EntityType="YWModel.t_CM_ValueType" />
+    <EntitySet Name="t_DE_DiagnoseCondition" EntityType="YWModel.t_DE_DiagnoseCondition" />
+    <EntitySet Name="t_DE_FaultType" EntityType="YWModel.t_DE_FaultType" />
+    <EntitySet Name="t_DE_MonitorType" EntityType="YWModel.t_DE_MonitorType" />
+    <EntitySet Name="t_DE_Report" EntityType="YWModel.t_DE_Report" />
+    <EntitySet Name="t_DE_SwitchGear" EntityType="YWModel.t_DE_SwitchGear" />
+    <EntitySet Name="t_DE_SwitchGearNew" EntityType="YWModel.t_DE_SwitchGearNew" />
+    <EntitySet Name="t_DE_TongxDB" EntityType="YWModel.t_DE_TongxDB" />
+    <EntitySet Name="t_DM_DevicesFiles" EntityType="YWModel.t_DM_DevicesFiles" />
+    <EntitySet Name="t_PM_Order_Photo" EntityType="YWModel.t_PM_Order_Photo" />
+    <EntitySet Name="t_SM_EnvironmentData" EntityType="YWModel.t_SM_EnvironmentData" />
+    <EntitySet Name="V_AlarmSetting" EntityType="YWModel.V_AlarmSetting" />
+    <EntitySet Name="V_PointsInfo" EntityType="YWModel.V_PointsInfo" />
+    <EntitySet Name="V_RealTimeData_All" EntityType="YWModel.V_RealTimeData_All" />
+    <EntitySet Name="配电房_00001_历史数据表" EntityType="YWModel.配电房_00001_历史数据表" />
+    <EntitySet Name="t_CM_Area" EntityType="YWModel.t_CM_Area" />
+    <FunctionImport Name="P_HisData" EntitySet="配电房_00001_历史数据表" ReturnType="Collection(YWModel.配电房_00001_历史数据表)">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="StrGetFields" Mode="In" Type="String" />
+      <Parameter Name="OrderField" Mode="In" Type="String" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="OrderType" Mode="In" Type="Boolean" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="P_HisDataCount" ReturnType="Collection(Int32)">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_AlarmSet" EntitySet="V_AlarmSetting" ReturnType="Collection(YWModel.V_AlarmSetting)">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="StrGetFields" Mode="In" Type="String" />
+      <Parameter Name="OrderField" Mode="In" Type="String" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="OrderType" Mode="In" Type="Boolean" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="t_CM_AlarmSet" EntityType="YWModel.t_CM_AlarmSet" />
+    <EntitySet Name="t_CM_PDRType" EntityType="YWModel.t_CM_PDRType" />
+    <EntitySet Name="t_CM_UserLogin" EntityType="YWModel.t_CM_UserLogin" />
+    <EntitySet Name="V_DeviceDetail" EntityType="YWModel.V_DeviceDetail" />
+    <EntitySet Name="t_SM_HisData_00001" EntityType="YWModel.t_SM_HisData_00001" />
+    <EntitySet Name="t_SM_RealTimeData_00001" EntityType="YWModel.t_SM_RealTimeData_00001" />
+    <EntitySet Name="t_CM_Locate" EntityType="YWModel.t_CM_Locate" />
+    <EntitySet Name="t_CM_AlternateSet" EntityType="YWModel.t_CM_AlternateSet" />
+    <FunctionImport Name="P_PointsInfo" EntitySet="t_CM_PointsInfo" ReturnType="Collection(YWModel.t_CM_PointsInfo)">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="StrGetFields" Mode="In" Type="String" />
+      <Parameter Name="OrderField" Mode="In" Type="String" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="OrderType" Mode="In" Type="Boolean" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="t_CM_WarmSet" EntityType="YWModel.t_CM_WarmSet" />
+    <EntitySet Name="V_WarmSetting" EntityType="YWModel.V_WarmSetting" />
+    <FunctionImport Name="PROC_WarmSet" EntitySet="V_WarmSetting" ReturnType="Collection(YWModel.V_WarmSetting)">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+      <Parameter Name="StrGetFields" Mode="In" Type="String" />
+      <Parameter Name="OrderField" Mode="In" Type="String" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="OrderType" Mode="In" Type="Boolean" />
+      <Parameter Name="StrWhere" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="DDLValue" EntityType="YWModel.DDLValue" />
+    <EntitySet Name="V_Points_Contrast" EntityType="YWModel.V_Points_Contrast" />
+    <EntitySet Name="t_AlarmSysTable_en" EntityType="YWModel.t_AlarmSysTable_en" />
+    <EntitySet Name="t_SM_StationStatusRealTime" EntityType="YWModel.t_SM_StationStatusRealTime" />
+    <EntitySet Name="V_PointClassify" EntityType="YWModel.V_PointClassify" />
+    <EntitySet Name="t_cm_pointmapdts" EntityType="YWModel.t_cm_pointmapdts" />
+    <EntitySet Name="V_RealTimeData_dts" EntityType="YWModel.V_RealTimeData_dts" />
+    <EntitySet Name="t_Sys_Promary" EntityType="YWModel.t_Sys_Promary" />
+    <EntitySet Name="t_DM_ElectricMeterInfo" EntityType="YWModel.t_DM_ElectricMeterInfo" />
+    <EntitySet Name="t_CM_SupplierInfo" EntityType="YWModel.t_CM_SupplierInfo" />
+    <EntitySet Name="t_CM_SparePartInfo" EntityType="YWModel.t_CM_SparePartInfo" />
+    <EntitySet Name="t_PM_EmergencyPlan" EntityType="YWModel.t_PM_EmergencyPlan" />
+    <EntitySet Name="t_CM_SOEInfo" EntityType="YWModel.t_CM_SOEInfo" />
+    <EntitySet Name="t_CM_PDRInfo" EntityType="YWModel.t_CM_PDRInfo" />
+    <EntitySet Name="t_CM_BugInfo" EntityType="YWModel.t_CM_BugInfo" />
+    <EntitySet Name="t_CM_OffPeakPlan" EntityType="YWModel.t_CM_OffPeakPlan" />
+    <EntitySet Name="t_CM_OffPeakConfig" EntityType="YWModel.t_CM_OffPeakConfig" />
+    <EntitySet Name="t_EE_JGPF" EntityType="YWModel.t_EE_JGPF" />
+    <EntitySet Name="t_SM_InfraredPic" EntityType="YWModel.t_SM_InfraredPic" />
+    <EntitySet Name="t_DM_MechanicalProperties" EntityType="YWModel.t_DM_MechanicalProperties" />
+    <EntitySet Name="t_CM_SubSysPDRInfo" EntityType="YWModel.t_CM_SubSysPDRInfo" />
+    <EntitySet Name="t_CM_IODiffSet" EntityType="YWModel.t_CM_IODiffSet" />
+    <EntitySet Name="t_PM_ReportInfo" EntityType="YWModel.t_PM_ReportInfo" />
+    <EntitySet Name="t_CM_ABCPhase" EntityType="YWModel.t_CM_ABCPhase" />
+    <EntitySet Name="t_CM_MonitorPosition" EntityType="YWModel.t_CM_MonitorPosition" />
+    <EntitySet Name="t_CM_PointIO" EntityType="YWModel.t_CM_PointIO" />
+    <EntitySet Name="t_CM_PointsInfo" EntityType="YWModel.t_CM_PointsInfo" />
+    <EntitySet Name="t_CM_UserInfo" EntityType="YWModel.t_CM_UserInfo" />
+    <EntitySet Name="V_PointsAllInfo" EntityType="YWModel.V_PointsAllInfo" />
+    <EntitySet Name="V_Alarm_PDRInfo" EntityType="YWModel.V_Alarm_PDRInfo" />
+    <EntitySet Name="t_CM_DataTransfer" EntityType="YWModel.t_CM_DataTransfer" />
+    <EntitySet Name="t_Sys_EquipmentCode" EntityType="YWModel.t_Sys_EquipmentCode" />
+    <EntitySet Name="t_PM_Order_DressCode" EntityType="YWModel.t_PM_Order_DressCode" />
+    <EntitySet Name="t_DM_DeviceInfo" EntityType="YWModel.t_DM_DeviceInfo" />
+    <EntitySet Name="V_Order_PdrInfo" EntityType="YWModel.V_Order_PdrInfo" />
+    <EntitySet Name="t_cm_files" EntityType="YWModel.t_cm_files" />
+    <EntitySet Name="t_CM_Cotrt_Msg" EntityType="YWModel.t_CM_Cotrt_Msg" />
+    <EntitySet Name="t_PM_Order_Template" EntityType="YWModel.t_PM_Order_Template" />
+    <EntitySet Name="t_CM_ConstractInfo" EntityType="YWModel.t_CM_ConstractInfo" />
+    <EntitySet Name="t_PM_Order_InfoRecord" EntityType="YWModel.t_PM_Order_InfoRecord" />
+    <EntitySet Name="t_PM_Order_Info" EntityType="YWModel.t_PM_Order_Info" />
+    <EntitySet Name="t_PM_Order" EntityType="YWModel.t_PM_Order" />
+    <EntitySet Name="t_SM_AlarmMsg_BadOutBox" EntityType="YWModel.t_SM_AlarmMsg_BadOutBox" />
+    <EntitySet Name="t_SM_AlarmMsg_OutBox" EntityType="YWModel.t_SM_AlarmMsg_OutBox" />
+    <EntitySet Name="t_SM_AlarmMsg_SendedOutBox" EntityType="YWModel.t_SM_AlarmMsg_SendedOutBox" />
+    <EntitySet Name="t_Alarm_SMS" EntityType="YWModel.t_Alarm_SMS" />
+    <EntitySet Name="t_CM_Door" EntityType="YWModel.t_CM_Door" />
+    <EntitySet Name="t_CM_Door_His" EntityType="YWModel.t_CM_Door_His" />
+    <EntitySet Name="t_DM_CircuitType" EntityType="YWModel.t_DM_CircuitType" />
+    <EntitySet Name="t_DM_CircuitAnalysis" EntityType="YWModel.t_DM_CircuitAnalysis" />
+    <EntitySet Name="t_DM_CircuitGradeType" EntityType="YWModel.t_DM_CircuitGradeType" />
+    <EntitySet Name="V_DeviceInfoState_PDR1" EntityType="YWModel.V_DeviceInfoState_PDR1" />
+    <EntitySet Name="t_CM_InstallRecord" EntityType="YWModel.t_CM_InstallRecord" />
+    <EntitySet Name="t_CM_InstallType" EntityType="YWModel.t_CM_InstallType" />
+    <EntitySet Name="t_ES_Industry" EntityType="YWModel.t_ES_Industry" />
+    <EntitySet Name="t_ES_Category" EntityType="YWModel.t_ES_Category" />
+    <EntitySet Name="t_ES_Purchase" EntityType="YWModel.t_ES_Purchase" />
+    <EntitySet Name="配电房_00002_历史数据表" EntityType="YWModel.配电房_00002_历史数据表" />
+    <EntitySet Name="配电房_00003_历史数据表" EntityType="YWModel.配电房_00003_历史数据表" />
+    <EntitySet Name="配电房_00004_历史数据表" EntityType="YWModel.配电房_00004_历史数据表" />
+    <EntitySet Name="配电房_00005_历史数据表" EntityType="YWModel.配电房_00005_历史数据表" />
+    <EntitySet Name="配电房_00006_历史数据表" EntityType="YWModel.配电房_00006_历史数据表" />
+    <EntitySet Name="配电房_00007_历史数据表" EntityType="YWModel.配电房_00007_历史数据表" />
+    <EntitySet Name="配电房_00008_历史数据表" EntityType="YWModel.配电房_00008_历史数据表" />
+    <EntitySet Name="配电房_00009_历史数据表" EntityType="YWModel.配电房_00009_历史数据表" />
+    <EntitySet Name="配电房_00010_历史数据表" EntityType="YWModel.配电房_00010_历史数据表" />
+    <EntitySet Name="配电房_00011_历史数据表" EntityType="YWModel.配电房_00011_历史数据表" />
+    <EntitySet Name="t_ES_TradePrice" EntityType="YWModel.t_ES_TradePrice" />
+    <EntitySet Name="t_ES_ElecBigIndustryType" EntityType="YWModel.t_ES_ElecBigIndustryType" />
+    <EntitySet Name="t_ES_ElecFlatDryRich" EntityType="YWModel.t_ES_ElecFlatDryRich" />
+    <EntitySet Name="t_ES_ElecIndustry" EntityType="YWModel.t_ES_ElecIndustry" />
+    <EntitySet Name="t_ES_ElecPeakValleyFlat" EntityType="YWModel.t_ES_ElecPeakValleyFlat" />
+    <EntitySet Name="t_ES_ElecPrice" EntityType="YWModel.t_ES_ElecPrice" />
+    <EntitySet Name="t_ES_ElecVoltage" EntityType="YWModel.t_ES_ElecVoltage" />
+    <EntitySet Name="t_EE_PowerReportConfig" EntityType="YWModel.t_EE_PowerReportConfig" />
+    <EntitySet Name="t_ES_PowerUseCategory" EntityType="YWModel.t_ES_PowerUseCategory" />
+    <EntitySet Name="t_CM_Constract" EntityType="YWModel.t_CM_Constract" />
+    <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
+    <EntitySet Name="t_ES_ContractTemplet" EntityType="YWModel.t_ES_ContractTemplet" />
+    <EntitySet Name="t_EE_PowerConfigInfo" EntityType="YWModel.t_EE_PowerConfigInfo" />
+    <EntitySet Name="t_CM_Unit" EntityType="YWModel.t_CM_Unit" />
+    <EntitySet Name="t_ES_UsePlanChange" EntityType="YWModel.t_ES_UsePlanChange" />
+    <EntitySet Name="t_ES_UsePlan" EntityType="YWModel.t_ES_UsePlan" />
+    <EntitySet Name="t_EE_PowerQualityDaily" EntityType="YWModel.t_EE_PowerQualityDaily" />
+    <EntitySet Name="t_EE_PowerQualityMonthly" EntityType="YWModel.t_EE_PowerQualityMonthly" />
+    <EntitySet Name="t_EE_PowerQualityRealTime" EntityType="YWModel.t_EE_PowerQualityRealTime" />
+    <EntitySet Name="t_EE_PowerQualityYearly" EntityType="YWModel.t_EE_PowerQualityYearly" />
+    <EntitySet Name="t_ES_UserUsePowerDaily" EntityType="YWModel.t_ES_UserUsePowerDaily" />
+    <EntitySet Name="t_ES_UserUsePowerMonthly" EntityType="YWModel.t_ES_UserUsePowerMonthly" />
+    <EntitySet Name="t_ES_UserUsePowerYearly" EntityType="YWModel.t_ES_UserUsePowerYearly" />
+    <EntitySet Name="t_CM_Constract_File" EntityType="YWModel.t_CM_Constract_File" />
+    <EntitySet Name="t_ES_DefaultTemplet" EntityType="YWModel.t_ES_DefaultTemplet" />
+    <EntitySet Name="t_Sys_City" EntityType="YWModel.t_Sys_City" />
+    <EntitySet Name="t_ES_ContractPurchase" EntityType="YWModel.t_ES_ContractPurchase" />
+    <EntitySet Name="t_ES_ContractUsePlan" EntityType="YWModel.t_ES_ContractUsePlan" />
+    <EntitySet Name="t_ES_UsePlanLog" EntityType="YWModel.t_ES_UsePlanLog" />
+    <EntitySet Name="t_ES_ElecVoltages" EntityType="YWModel.t_ES_ElecVoltages" />
+    <EntitySet Name="t_CM_PDRPointStatu" EntityType="YWModel.t_CM_PDRPointStatu" />
+    <EntitySet Name="t_CM_UnitProjectType" EntityType="YWModel.t_CM_UnitProjectType" />
+    <EntitySet Name="t_CM_OneGraph" EntityType="YWModel.t_CM_OneGraph" />
+    <EntitySet Name="t_CM_BigScoringType" EntityType="YWModel.t_CM_BigScoringType" />
+    <EntitySet Name="t_CM_Score" EntityType="YWModel.t_CM_Score" />
+    <EntitySet Name="t_CM_UnitScore" EntityType="YWModel.t_CM_UnitScore" />
+  </EntityContainer>
+  <EntityType Name="t_AlarmTable_en">
+    <Key>
+      <PropertyRef Name="AlarmID" />
+    </Key>
+    <Property Name="AlarmID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="ALarmType" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmDate" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmTime" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmAddress" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmValue" Type="Double" />
+    <Property Name="AlarmMaxValue" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmConfirm" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="UserName" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="Company" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmArea" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmCate" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="AlarmState" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="ConfirmDate" Type="DateTime" Precision="3" />
+    <Property Name="TagID" Type="Int32" />
+    <Property Type="DateTime" Name="AlarmDateTime" Precision="3" />
+    <Property Name="AlarmTreatment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_AlarmTable_ErrorData">
+    <Key>
+      <PropertyRef Name="AlarmID" />
+    </Key>
+    <Property Name="AlarmID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="ALarmType" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmDate" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmTime" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmValue" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmMaxValue" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmConfirm" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="UserName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Company" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmArea" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmCate" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AlarmState" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Type="DateTime" Name="AlarmDateTime" Precision="3" />
+    <Property Type="Int32" Name="TagID" />
+  </EntityType>
+  <EntityType Name="t_CM_Button">
+    <Key>
+      <PropertyRef Name="ButtonID" />
+    </Key>
+    <Property Name="ButtonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="ButtonName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ButtonIcon" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ButtonCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="SortCode" Type="Int32" />
+    <Property Name="ButtonType" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_CameraInfo">
+    <Key>
+      <PropertyRef Name="CID" />
+    </Key>
+    <Property Name="CID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="OpenPreView" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="passwd" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="mediaport" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="nStreamType" Type="Int32" Nullable="false" />
+    <Property Name="ip" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Type="String" Name="Brand" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_DeviceStructureType">
+    <Key>
+      <PropertyRef Name="DSTID" />
+    </Key>
+    <Property Name="DSTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_DeviceType">
+    <Key>
+      <PropertyRef Name="DTID" />
+    </Key>
+    <Property Name="DTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Log">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="LogType" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Contents" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="LogDate" Type="DateTime" Precision="3" />
+    <Property Name="IPAddress" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_MajorLevel">
+    <Key>
+      <PropertyRef Name="MLID" />
+    </Key>
+    <Property Name="MLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Module">
+    <Key>
+      <PropertyRef Name="ModuleID" />
+    </Key>
+    <Property Name="ModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="ModuleName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="Icon" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Target" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ModuleType" Type="Int32" />
+    <Property Name="Location" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="SN" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_CM_RoleInfo">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UserState" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_CM_RoleRight">
+    <Key>
+      <PropertyRef Name="RoleRightID" />
+    </Key>
+    <Property Name="RoleRightID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="ModuleID" Type="Int32" />
+    <Property Type="Boolean" Name="Disenable" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_CM_UserRoles">
+    <Key>
+      <PropertyRef Name="userroleid" />
+    </Key>
+    <Property Name="userroleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_CM_ValueType">
+    <Key>
+      <PropertyRef Name="DataTypeID" />
+    </Key>
+    <Property Name="DataTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="CateName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Units" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_DE_DiagnoseCondition">
+    <Key>
+      <PropertyRef Name="ConditionID" />
+    </Key>
+    <Property Name="ConditionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="ConditionName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="IsUse" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_DE_FaultType">
+    <Key>
+      <PropertyRef Name="FaultID" />
+    </Key>
+    <Property Name="FaultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="FaultName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="IsUse" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_DE_MonitorType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="TypeName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="IsUse" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_DE_Report">
+    <Key>
+      <PropertyRef Name="Xuhao" />
+    </Key>
+    <Property Name="Xuhao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="Place" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DeviceCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Result" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="ReportTime" Type="DateTime" Precision="3" />
+    <Property Name="Operation" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="DetailedMethod" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp1" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp2" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp3" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp4" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp5" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="temp6" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current1" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current2" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current3" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current4" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current5" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="current6" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="t_DE_SwitchGear">
+    <Key>
+      <PropertyRef Name="cewendian" />
+    </Key>
+    <Property Name="cewendian" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="cewendianwensheng" Type="Double" />
+    <Property Name="xiangfuzaidianliu" Type="Double" />
+    <Property Name="fuzaiwenshengxishu" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="xishubianbi" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="yunxingzhuangtaizhenduan" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="shebeizailiuguzhang" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_DE_SwitchGearNew">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="cewendian" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="huanjingwendu" Type="Double" />
+    <Property Name="cewendianwendu" Type="Double" />
+    <Property Name="cewendianwensheng" Type="Double" />
+    <Property Name="xiangfuzaidianliu" Type="Double" />
+    <Property Name="fuzaiwenshengxishu" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="xishubianbi" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="yunxingzhuangtaizhenduan" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="shebeizailiuguzhang" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="getvaluetime" Type="DateTime" Precision="3" />
+    <Property Name="number" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_DE_TongxDB">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="cewendian" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="huanjingwendu" Type="Double" />
+    <Property Name="cewendianwendu" Type="Double" />
+    <Property Name="cewendianwensheng" Type="Double" />
+    <Property Name="xiangfuzaidianliu" Type="Double" />
+    <Property Name="fuzaiwenshengxishu" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="xishubianbi" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="yunxingzhuangtaizhenduan" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="shebeizailiuguzhang" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="number" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_DM_DevicesFiles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="FileName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="FilePath" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="FileType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CommitTime" Type="DateTime" Precision="3" />
+    <Property Name="FileSize" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CommitUser" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UserRemark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="fk_DID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_PM_Order_Photo">
+    <Key>
+      <PropertyRef Name="PhotoID" />
+    </Key>
+    <Property Name="PhotoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="OrderID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PhotoUrl" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="UploadDate" Type="DateTime" Precision="3" />
+    <Property Name="Reamarks" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="t_SM_EnvironmentData">
+    <Key>
+      <PropertyRef Name="PID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="RecTime" />
+    </Key>
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="DID" Type="Int32" Nullable="false" />
+    <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Temp" Type="Double" />
+    <Property Name="Humidity" Type="Double" />
+    <Property Name="DewPoint" Type="Double" />
+    <Property Name="Pressure" Type="Double" />
+    <Property Name="WindDirection" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Wind" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Field1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Field2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Field3" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Field4" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Field5" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="V_AlarmSetting">
+    <Key>
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="DataTypeName" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="TagName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DID" Type="Int32" Nullable="false" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Position" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DataTypeID" Type="Int32" />
+    <Property Name="DataTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AlarmVal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="WarningVal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IntersetVal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsUpdate" Type="Int32" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="Updater" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="V_PointsInfo">
+    <Key>
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="UseState" />
+      <PropertyRef Name="TypeName" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="TagName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DID" Type="Int32" Nullable="false" />
+    <Property Name="DataTypeID" Type="Int32" />
+    <Property Name="Position" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MPID" Type="Int32" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="PIOID" Type="Int32" />
+    <Property Name="ABCID" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="Units" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="V_RealTimeData_All">
+    <Key>
+      <PropertyRef Name="RecTime" />
+      <PropertyRef Name="PID" />
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="PV" Type="Double" />
+    <Property Name="AlarmStatus" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AlarmLimits" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00001_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="测点位置" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="监测位置" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="设备名称" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="设备编码" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="单位名称" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="报警状态" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="报警限值" Type="Double" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Area">
+    <Key>
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Type="Int32" Name="AreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="AreaName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ParentID" />
+    <Property Type="Int32" Name="Sort" />
+  </EntityType>
+  <EntityType Name="t_CM_AlarmSet">
+    <Key>
+      <PropertyRef Name="AlaramSetID" />
+    </Key>
+    <Property Type="Int32" Name="AlaramSetID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="TagID" />
+    <Property Type="Decimal" Name="AlarmVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="WarningVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IntersetVal" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="String" Name="Updater" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="IsUpdate" />
+  </EntityType>
+  <EntityType Name="t_CM_PDRType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Type="Int32" Name="TypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="TypeName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="RID" />
+    <Property Type="Int32" Name="Sort" />
+  </EntityType>
+  <EntityType Name="t_CM_UserLogin">
+    <Key>
+      <PropertyRef Name="LoginID" />
+    </Key>
+    <Property Type="Int32" Name="LoginID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="LoginDate" Precision="3" />
+    <Property Type="String" Name="SessionID" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="V_DeviceDetail">
+    <Key>
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="DeviceCode" />
+      <PropertyRef Name="EntityClass" />
+      <PropertyRef Name="UseState" />
+      <PropertyRef Name="DeviceType" />
+      <PropertyRef Name="DeviceStructureType" />
+      <PropertyRef Name="MajorLevel" />
+    </Key>
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="PName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DeviceCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeviceName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeviceModel" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="DTID" />
+    <Property Type="Int32" Name="DSTID" />
+    <Property Type="Int32" Name="MLID" />
+    <Property Type="Int32" Name="EntityClass" Nullable="false" />
+    <Property Type="String" Name="MFactory" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FactoryNumber" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="BuyTime" Precision="3" />
+    <Property Type="DateTime" Name="UseDate" Precision="3" />
+    <Property Type="String" Name="InstallAddr" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" Nullable="false" />
+    <Property Type="DateTime" Name="LastMtcDate" Precision="3" />
+    <Property Type="String" Name="Company" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="BuildDate" Precision="3" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="VideoID" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="BID" />
+    <Property Type="String" Name="B" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="C" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="D" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="E" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="F" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="G" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="H" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="I" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="J" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="K" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="L" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="M" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="N" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="O" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="P" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Q" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="R" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="S" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="T" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="U" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="V" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="W" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="X" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Y" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Z" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AA" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AB" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AC" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AD" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AE" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AF" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AG" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AH" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AI" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AJ" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AK" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AL" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AM" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AN" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="OrderBy" />
+    <Property Type="String" Name="DeviceType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeviceStructureType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MajorLevel" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_SM_HisData_00001">
+    <Key>
+      <PropertyRef Name="RecTime" />
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Type="DateTime" Name="RecTime" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="Double" Name="PV" />
+    <Property Type="String" Name="AlarmStatus" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Double" Name="AlarmLimits" />
+  </EntityType>
+  <EntityType Name="t_SM_RealTimeData_00001">
+    <Key>
+      <PropertyRef Name="RecTime" />
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Type="DateTime" Name="RecTime" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="Double" Name="PV" />
+    <Property Type="String" Name="AlarmStatus" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Double" Name="AlarmLimits" />
+  </EntityType>
+  <EntityType Name="t_CM_Locate">
+    <Key>
+      <PropertyRef Name="LocateID" />
+    </Key>
+    <Property Type="Int32" Name="LocateID" Nullable="false" />
+    <Property Type="String" Name="LocateName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="LocateStart" />
+    <Property Type="Int32" Name="LocateEnd" />
+    <Property Type="Int32" Name="TagID" />
+    <Property Type="String" Name="TagName" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="UpdateUser" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="Int32" Name="PID" />
+  </EntityType>
+  <EntityType Name="t_CM_AlternateSet">
+    <Key>
+      <PropertyRef Name="AlternateID" />
+    </Key>
+    <Property Type="Int32" Name="AlternateID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="String" Name="PName" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="String" Name="DName" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="MPID" />
+    <Property Type="Int32" Name="TagID" />
+    <Property Type="Int32" Name="TagID_A" />
+    <Property Type="Int32" Name="TagID_B" />
+    <Property Type="Int32" Name="TagID_C" />
+    <Property Type="String" Name="Position" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="AlarmVal" />
+    <Property Type="Double" Name="WarningVal" />
+    <Property Type="Double" Name="IntersetVal" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="String" Name="Updater" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DTID" />
+    <Property Type="Int16" Name="Exceed_A" />
+    <Property Type="Int16" Name="Exceed_B" />
+    <Property Type="Int16" Name="Exceed_C" />
+    <Property Type="Int16" Name="Exceed_T" />
+  </EntityType>
+  <EntityType Name="t_CM_WarmSet">
+    <Key>
+      <PropertyRef Name="WaramSetID" />
+    </Key>
+    <Property Type="Int32" Name="WaramSetID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="TagID" />
+    <Property Type="Decimal" Name="AlarmVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="WarningVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IntersetVal" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="String" Name="Updater" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="IsUpdate" />
+  </EntityType>
+  <EntityType Name="V_WarmSetting">
+    <Key>
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="DataTypeName" />
+    </Key>
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="String" Name="TagName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="PName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="String" Name="DeviceName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Position" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="DataTypeID" />
+    <Property Type="String" Name="DataTypeName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Decimal" Name="AlarmVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="WarningVal" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IntersetVal" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="IsUpdate" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="String" Name="Updater" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DDLValue">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="text" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="V_Points_Contrast">
+    <Key>
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="String" Name="TagName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="Int32" Name="DataTypeID" />
+    <Property Type="String" Name="Position" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="MPID" />
+    <Property Type="Int32" Name="UseState" />
+    <Property Type="Int32" Name="PIOID" />
+    <Property Type="Int32" Name="ABCID" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="数据类型" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="设备点名" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="中文描述" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="站内点号" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="实时库索引" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="Int32" Name="通信地址" />
+    <Property Type="Double" Name="例外报告死区" />
+    <Property Type="Double" Name="工程下限" />
+    <Property Type="Double" Name="工程上限" />
+    <Property Type="Int32" Name="码值下限" />
+    <Property Type="Int32" Name="码值上限" />
+    <Property Type="String" Name="远动数据类型" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="Double" Name="报警下限1" />
+    <Property Type="Double" Name="报警上限1" />
+    <Property Type="Int32" Name="报警定义" />
+    <Property Type="String" Name="置0说明" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="置1说明" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="单位" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Type="Int32" Name="分组" />
+    <Property Type="Int32" Name="最大间隔时间" />
+    <Property Type="Double" Name="小信号切除值" />
+    <Property Type="Double" Name="报警下限2" />
+    <Property Type="Double" Name="报警上限2" />
+    <Property Type="Double" Name="报警下限3" />
+    <Property Type="Double" Name="报警上限3" />
+    <Property Type="Double" Name="报警死区" />
+    <Property Type="Int32" Name="报警级别" />
+    <Property Type="Int32" Name="报警方式" />
+    <Property Type="Double" Name="速率报警限制" />
+    <Property Type="Int32" Name="初始值" />
+    <Property Type="Int32" Name="channelsinfoid" />
+    <Property Type="Int32" Name="zoneno" />
+    <Property Type="String" Name="dname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="zonename" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_AlarmSysTable_en">
+    <Key>
+      <PropertyRef Name="AlarmID" />
+    </Key>
+    <Property Type="Int32" Name="AlarmID" Nullable="false" />
+    <Property Type="String" Name="ALarmType" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="AlarmDateTime" Precision="3" />
+    <Property Type="String" Name="PDRName" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DevicesName" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TagName" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AlarmCate" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="Int32" Name="TagID" />
+    <Property Type="Int32" Name="AlarmState" />
+    <Property Type="String" Name="AlarmConfirm" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UserName" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="ConfirmDate" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_SM_StationStatusRealTime">
+    <Key>
+      <PropertyRef Name="RTID" />
+    </Key>
+    <Property Type="Int32" Name="RTID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="PDRName" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="Int32" Name="State" />
+    <Property Type="DateTime" Name="UpDateTime" Precision="3" />
+    <Property Type="String" Name="DeviceName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="StatusCate" />
+  </EntityType>
+  <EntityType Name="V_PointClassify">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="CID" Nullable="false" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="Double" Name="Power" />
+    <Property Type="DateTime" Name="RecordTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_cm_pointmapdts">
+    <Key>
+      <PropertyRef Name="tagid" />
+    </Key>
+    <Property Type="Int32" Name="tagid" Nullable="false" />
+    <Property Type="String" Name="tagname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="pid" Nullable="false" />
+    <Property Type="Int32" Name="did" />
+    <Property Type="Int32" Name="startPt" />
+    <Property Type="Int32" Name="endPt" />
+    <Property Type="Int32" Name="devicesinfoid" />
+    <Property Type="String" Name="dname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="channelsinfoid" />
+    <Property Type="String" Name="cname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="zoneno" />
+    <Property Type="String" Name="zonename" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="parentid" />
+    <Property Type="String" Name="PStyle" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="V_RealTimeData_dts">
+    <Key>
+      <PropertyRef Name="tagid" />
+      <PropertyRef Name="pid" />
+    </Key>
+    <Property Type="String" Name="rectime" MaxLength="23" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="tagid" Nullable="false" />
+    <Property Type="Int32" Name="devicesinfoid" />
+    <Property Type="Int32" Name="channelsinfoid" />
+    <Property Type="Int32" Name="zoneno" />
+    <Property Type="Double" Name="vmax" />
+    <Property Type="Int32" Name="vaindex" />
+    <Property Type="Int32" Name="vrindex" />
+    <Property Type="String" Name="tagname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="pid" Nullable="false" />
+    <Property Type="Int32" Name="did" />
+    <Property Type="Int32" Name="startPt" />
+    <Property Type="Int32" Name="endPt" />
+    <Property Type="String" Name="dname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cname" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="zonename" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="parentid" />
+    <Property Type="String" Name="PStyle" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_Sys_Promary">
+    <Key>
+      <PropertyRef Name="proID" />
+    </Key>
+    <Property Type="Int32" Name="proID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="proCode" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="proName" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_DM_ElectricMeterInfo">
+    <Key>
+      <PropertyRef Name="EID" />
+    </Key>
+    <Property Type="Int32" Name="EID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="EName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Etype" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="IO" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="Int32" Name="CID" />
+    <Property Type="String" Name="TagIDs" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_SupplierInfo">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Type="Int32" Name="SupplierID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="SupplierCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Contacter" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Telephone" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MobilePhone" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SupplierAddress" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" />
+    <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_SparePartInfo">
+    <Key>
+      <PropertyRef Name="SparePartID" />
+    </Key>
+    <Property Type="Int32" Name="SparePartID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="SparePartCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="SparePartName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="SupplierID" />
+    <Property Type="String" Name="EadoCode" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" />
+    <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="StockCount" />
+  </EntityType>
+  <EntityType Name="t_PM_EmergencyPlan">
+    <Key>
+      <PropertyRef Name="EPID" />
+    </Key>
+    <Property Type="Int32" Name="EPID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Remarks" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_SOEInfo">
+    <Key>
+      <PropertyRef Name="SoeID" />
+    </Key>
+    <Property Type="Int32" Name="SoeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="PName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="String" Name="DeviceName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PointValue" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SoeDesc" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="HappenDate" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_CM_PDRInfo">
+    <Key>
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Type="Int32" Name="PID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="EadoCode" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Position" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="CompanyName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LinkMan" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Mobile" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Coordination" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AppCoordination" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="AlarmState" />
+    <Property Type="String" Name="PIP" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Type="Int32" Name="PPort" />
+    <Property Type="String" Name="Desp" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Type="Int32" Name="ParentID" />
+    <Property Type="Int32" Name="DataRate" Nullable="false" />
+    <Property Type="Int32" Name="AreaID" />
+    <Property Type="Int32" Name="TypeID" />
+    <Property Type="Int32" Name="IsLast" />
+    <Property Type="String" Name="Vlevel" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Transformers" />
+    <Property Type="Int32" Name="CapTotal" />
+    <Property Name="OperationDate" Type="DateTime" Precision="3" />
+    <Property Type="Int32" Name="IndustryID" />
+    <Property Type="String" Name="FamilyID" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="InstalledCapacity" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="CBPeriodBegin" />
+    <Property Type="String" Name="EleCalWay" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="GovEleLevel" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeviationMode" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="IndID" Type="Int32" />
+    <Property Name="BigIndTypeID" Type="Int32" />
+    <Property Name="VID" Type="Int32" />
+    <Property Name="VoltageID" Type="Int32" />
+    <Property Name="OperationMan" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OperationTel" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ApplcationTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_CM_BugInfo">
+    <Key>
+      <PropertyRef Name="BugID" />
+    </Key>
+    <Property Type="Int32" Name="BugID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="PName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="String" Name="DeviceName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="AlarmID" />
+    <Property Type="String" Name="BugLocation" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="BugDesc" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="BugLevel" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ReportWay" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="ReportDate" Precision="3" />
+    <Property Type="String" Name="UserName" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HandeSituation" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="HandleDate" Precision="3" />
+    <Property Type="String" Name="ReportUser" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_OffPeakPlan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="StageName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="DateStart" Precision="3" />
+    <Property Type="DateTime" Name="DateEnd" Precision="3" />
+    <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CreateDate" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_CM_OffPeakConfig">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PlanID" />
+    <Property Type="String" Name="StageType" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Time" Name="TimeStart" Precision="7" />
+    <Property Type="Time" Name="TimeEnd" Precision="7" />
+    <Property Type="Decimal" Name="ElePrice" Precision="8" Scale="2" />
+  </EntityType>
+  <EntityType Name="t_EE_JGPF">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="Int32" Name="TagID" Nullable="false" />
+    <Property Type="Double" Name="Jian" />
+    <Property Type="Double" Name="Gu" />
+    <Property Type="Double" Name="Ping" />
+    <Property Type="Double" Name="Feng" />
+    <Property Type="DateTime" Name="RecordDate" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_SM_InfraredPic">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="PID" />
+      <PropertyRef Name="ChannelID" />
+      <PropertyRef Name="ImgPath" />
+      <PropertyRef Name="ImgNameOld" />
+      <PropertyRef Name="MaxTemp" />
+      <PropertyRef Name="MinTemp" />
+      <PropertyRef Name="ReportPath" />
+      <PropertyRef Name="CommitTime" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" Nullable="false" />
+    <Property Type="Int32" Name="ChannelID" Nullable="false" />
+    <Property Type="String" Name="ChannelName" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PositionName" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ImgPath" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ImgNameOld" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FileSize" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Decimal" Name="MaxTemp" Nullable="false" Precision="18" Scale="1" />
+    <Property Type="Decimal" Name="MinTemp" Nullable="false" Precision="18" Scale="1" />
+    <Property Type="String" Name="ReportPath" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CommitTime" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="NewnCCDW" />
+    <Property Type="Int32" Name="NewnIRW" />
+    <Property Type="Int32" Name="NewnIRH" />
+  </EntityType>
+  <EntityType Name="t_DM_MechanicalProperties">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="Double" Name="displaceAOn" />
+    <Property Type="Double" Name="displaceBOn" />
+    <Property Type="Double" Name="displaceCOn" />
+    <Property Type="Double" Name="storedCurrentOn" />
+    <Property Type="Double" Name="coilCurrentOn" />
+    <Property Type="Double" Name="displaceAOff" />
+    <Property Type="Double" Name="displaceBOff" />
+    <Property Type="Double" Name="displaceCOff" />
+    <Property Type="Double" Name="storedCurrentOff" />
+    <Property Type="Double" Name="coilCurrentOff" />
+    <Property Type="DateTime" Name="recTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_CM_SubSysPDRInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="SysCode" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="RemotePID" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CenterPID" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_IODiffSet">
+    <Key>
+      <PropertyRef Name="AlternateID" />
+    </Key>
+    <Property Type="Int32" Name="AlternateID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="PName" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DID" />
+    <Property Type="String" Name="DName" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="MPID" />
+    <Property Type="Int32" Name="CID" />
+    <Property Type="String" Name="CName" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="TagID_I" />
+    <Property Type="Int32" Name="TagID_O" />
+    <Property Type="String" Name="Position" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="AlarmVal" />
+    <Property Type="Double" Name="WarningVal" />
+    <Property Type="Double" Name="IntersetVal" />
+    <Property Type="Int32" Name="IsUpdate" />
+    <Property Type="DateTime" Name="UpdateDate" Precision="3" />
+    <Property Type="String" Name="Updater" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="DTID" />
+  </EntityType>
+  <EntityType Name="t_PM_ReportInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="RName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="RType" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="String" Name="FType" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="RSize" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="RPath" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Creater" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="CreatDate" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_CM_ABCPhase">
+    <Key>
+      <PropertyRef Name="ABCID" />
+    </Key>
+    <Property Type="Int32" Name="ABCID" Nullable="false" />
+    <Property Type="String" Name="ABCName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" Nullable="false" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_MonitorPosition">
+    <Key>
+      <PropertyRef Name="MPID" />
+    </Key>
+    <Property Type="Int32" Name="MPID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" Nullable="false" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_PointIO">
+    <Key>
+      <PropertyRef Name="PIOID" />
+    </Key>
+    <Property Type="Int32" Name="PIOID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="UseState" Nullable="false" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_PointsInfo">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Type="Int32" Name="TagID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="TagName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="DID" Nullable="false" />
+    <Property Type="Int32" Name="DataTypeID" />
+    <Property Type="String" Name="Position" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="MPID" />
+    <Property Type="Int32" Name="UseState" Nullable="false" />
+    <Property Type="Int32" Name="PIOID" />
+    <Property Type="Int32" Name="ABCID" />
+    <Property Type="String" Name="Remarks" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="数据类型" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="设备点名" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="中文描述" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="站内点号" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="实时库索引" />
+    <Property Type="Int32" Name="PID" />
+    <Property Type="Int32" Name="通信地址" />
+    <Property Type="Double" Name="例外报告死区" />
+    <Property Type="Double" Name="工程下限" />
+    <Property Type="Double" Name="工程上限" />
+    <Property Type="Int32" Name="码值下限" />
+    <Property Type="Int32" Name="码值上限" />
+    <Property Type="String" Name="远动数据类型" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="报警下限1" />
+    <Property Type="Double" Name="报警上限1" />
+    <Property Type="Int32" Name="报警定义" />
+    <Property Type="String" Name="置0说明" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="置1说明" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="单位" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="分组" />
+    <Property Type="Int32" Name="最大间隔时间" />
+    <Property Type="Double" Name="小信号切除值" />
+    <Property Type="Double" Name="报警下限2" />
+    <Property Type="Double" Name="报警上限2" />
+    <Property Type="Double" Name="报警下限3" />
+    <Property Type="Double" Name="报警上限3" />
+    <Property Type="Double" Name="报警死区" />
+    <Property Type="Int32" Name="报警级别" />
+    <Property Type="Int32" Name="报警方式" />
+    <Property Type="Double" Name="速率报警限制" />
+    <Property Type="Int32" Name="初始值" />
+    <Property Type="String" Name="传感器SN编码" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="变比" Type="Double" />
+    <Property Name="系数" Type="Double" />
+    <Property Name="equ_cf_id" Type="Int32" />
+    <Property Name="dev_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_CM_UserInfo">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Post" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Mobilephone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OpenAlarmMsg" Type="Int32" />
+    <Property Name="IsScreen" Type="Int32" />
+    <Property Name="OpenAlarmEmail" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="LogUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="openid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="openid2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="openid_bg" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="openid_bg2" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UNITList" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="IsAdmin" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="V_PointsAllInfo">
+    <Key>
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="UseState" />
+      <PropertyRef Name="Expr1" />
+      <PropertyRef Name="PDRName" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DID" Type="Int32" Nullable="false" />
+    <Property Name="DataTypeID" Type="Int32" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MPID" Type="Int32" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="PIOID" Type="Int32" />
+    <Property Name="ABCID" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="实时库索引" Type="Int32" />
+    <Property Name="Expr2" Type="Int32" />
+    <Property Name="通信地址" Type="Int32" />
+    <Property Name="例外报告死区" Type="Double" />
+    <Property Name="工程下限" Type="Double" />
+    <Property Name="工程上限" Type="Double" />
+    <Property Name="码值下限" Type="Int32" />
+    <Property Name="码值上限" Type="Int32" />
+    <Property Name="远动数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="报警下限1" Type="Double" />
+    <Property Name="报警上限1" Type="Double" />
+    <Property Name="报警定义" Type="Int32" />
+    <Property Name="置0说明" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="置1说明" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="分组" Type="Int32" />
+    <Property Name="最大间隔时间" Type="Int32" />
+    <Property Name="小信号切除值" Type="Double" />
+    <Property Name="报警下限2" Type="Double" />
+    <Property Name="报警上限2" Type="Double" />
+    <Property Name="报警下限3" Type="Double" />
+    <Property Name="报警上限3" Type="Double" />
+    <Property Name="报警死区" Type="Double" />
+    <Property Name="报警级别" Type="Int32" />
+    <Property Name="报警方式" Type="Int32" />
+    <Property Name="速率报警限制" Type="Double" />
+    <Property Name="初始值" Type="Int32" />
+    <Property Name="传感器SN编码" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Expr1" Type="Int32" Nullable="false" />
+    <Property Name="PDRName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceName1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceCode1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="V_Alarm_PDRInfo">
+    <Key>
+      <PropertyRef Name="AlarmID" />
+    </Key>
+    <Property Name="AlarmID" Type="Int32" Nullable="false" />
+    <Property Name="ALarmType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmDate" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmTime" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmValue" Type="Double" />
+    <Property Name="AlarmMaxValue" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmConfirm" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Company" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmArea" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmCate" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmState" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="ConfirmDate" Type="DateTime" Precision="3" />
+    <Property Name="TagID" Type="Int32" />
+    <Property Name="AlarmDateTime" Type="DateTime" Precision="3" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LinkMan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LinkMobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_DataTransfer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="SysCode" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="SysName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SetupDate" Type="DateTime" Precision="0" />
+    <Property Name="CommStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UploadDate" Type="DateTime" Precision="0" />
+    <Property Name="SysVersion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SysUpdateDate" Type="DateTime" Precision="0" />
+    <Property Name="pointLimit" Type="Int32" />
+    <Property Name="timeLimit" Type="String" MaxLength="23" FixedLength="false" Unicode="false" />
+    <Property Name="CenterIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CenterPort" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Pwd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DBType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DBName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ConnectString" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="UseState" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_Sys_EquipmentCode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="EquipmentCode" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_PM_Order_DressCode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="DressCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_DM_DeviceInfo">
+    <Key>
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Name="DID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EadoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DeviceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DTID" Type="Int32" />
+    <Property Name="DSTID" Type="Int32" />
+    <Property Name="MLID" Type="Int32" />
+    <Property Name="EntityClass" Type="Int32" Nullable="false" />
+    <Property Name="MFactory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FactoryNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BuyTime" Type="DateTime" Precision="3" />
+    <Property Name="UseDate" Type="DateTime" Precision="3" />
+    <Property Name="InstallAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UseState" Type="Int32" Nullable="false" />
+    <Property Name="LastMtcDate" Type="DateTime" Precision="3" />
+    <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BuildDate" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="VideoID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BID" Type="Int32" />
+    <Property Name="B" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="C" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="E" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="F" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="G" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="H" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="I" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="J" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="K" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="L" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="M" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="N" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="O" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="P" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="R" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="S" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="T" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="U" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="V" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="W" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="X" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Y" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Z" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AF" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AJ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="V_Order_PdrInfo">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="OrderNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OrderContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlanDate" Type="DateTime" Precision="3" />
+    <Property Name="CheckDate" Type="DateTime" Precision="3" />
+    <Property Name="Priority" Type="Int32" />
+    <Property Name="OrderState" Type="Int32" />
+    <Property Name="IsQualified" Type="Int32" />
+    <Property Name="CheckInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Rectification" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Creater" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Longtitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Currentplace" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FistDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BugID" Type="Int32" />
+    <Property Name="BugInfo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AcceptedDate" Type="DateTime" Precision="3" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LinkMan" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Vlevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Transformers" Type="Int32" />
+    <Property Name="CapTotal" Type="Int32" />
+    <Property Name="ReportDate" Type="DateTime" Precision="3" />
+    <Property Name="ReportUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BugDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_cm_files">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FileType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FileSize" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Modules" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fk_ID" Type="Int32" />
+    <Property Name="FSource" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="MaxTemp" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="MinTemp" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CommitUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CommitTime" Type="DateTime" Precision="3" />
+    <Property Type="Int32" Name="VerifyOk" />
+  </EntityType>
+  <EntityType Name="t_CM_Cotrt_Msg">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ordertypeid" Type="Int32" />
+    <Property Name="info" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="typeid" Type="Int32" />
+    <Property Name="dids" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_PM_Order_Template">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="templateId" Type="Int32" />
+    <Property Name="templateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="templateInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="infoType" Type="Int32" />
+    <Property Name="InfoOrder" Type="Int32" />
+    <Property Name="templateBlock" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="templateBlock2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_ConstractInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="constractId" Type="Int32" />
+    <Property Name="constractInfo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="orderType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TemplateIds" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="orderTimes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_PM_Order_InfoRecord">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orderId" Type="Int32" />
+    <Property Name="templateId" Type="Int32" />
+    <Property Name="tInfoId" Type="Int32" />
+    <Property Name="infoValue" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_PM_Order_Info">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orderId" Type="Int32" />
+    <Property Name="templateId" Type="Int32" />
+    <Property Name="deviceCount" Type="Int32" />
+    <Property Name="unCount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_PM_Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OrderContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlanDate" Type="DateTime" Precision="3" />
+    <Property Name="CheckDate" Type="DateTime" Precision="3" />
+    <Property Name="Priority" Type="Int32" />
+    <Property Name="OrderState" Type="Int32" />
+    <Property Name="IsQualified" Type="Int32" />
+    <Property Name="CheckInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Rectification" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Creater" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Longtitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Currentplace" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FistDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BugID" Type="Int32" />
+    <Property Name="BugInfo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AcceptedDate" Type="DateTime" Precision="3" />
+    <Property Name="RepairDID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ReceiveDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderTypeId" Type="Int32" />
+    <Property Name="DressCodeID" Type="Int32" />
+    <Property Name="ApplyDate" Type="DateTime" Precision="3" />
+    <Property Name="ApplyInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="PermitDate" Type="DateTime" Precision="3" />
+    <Property Name="DstsInfo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RejectReason" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="sTemplateIDs" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="sTemplateCount" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="CtrPlanDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_SM_AlarmMsg_BadOutBox">
+    <Key>
+      <PropertyRef Name="MsgID" />
+    </Key>
+    <Property Name="MsgID" Type="Int32" Nullable="false" />
+    <Property Name="Mbno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SendTime" Type="DateTime" Precision="3" />
+    <Property Name="Msg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ADTID" Type="Int32" />
+    <Property Name="ALID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="MLID" Type="Int32" />
+    <Property Name="IsReport" Type="Int32" />
+    <Property Name="ArrivedTime" Type="DateTime" Precision="3" />
+    <Property Name="Field1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MsgType" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_SM_AlarmMsg_OutBox">
+    <Key>
+      <PropertyRef Name="MsgID" />
+    </Key>
+    <Property Name="MsgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mbno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SendTime" Type="DateTime" Precision="3" />
+    <Property Name="Msg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ADTID" Type="Int32" />
+    <Property Name="ALID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="MLID" Type="Int32" />
+    <Property Name="IsReport" Type="Int32" />
+    <Property Name="ArrivedTime" Type="DateTime" Precision="3" />
+    <Property Name="Field1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MsgType" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_SM_AlarmMsg_SendedOutBox">
+    <Key>
+      <PropertyRef Name="MsgID" />
+    </Key>
+    <Property Name="MsgID" Type="Int32" Nullable="false" />
+    <Property Name="Mbno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SendTime" Type="DateTime" Precision="3" />
+    <Property Name="Msg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ADTID" Type="Int32" />
+    <Property Name="ALID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="MLID" Type="Int32" />
+    <Property Name="IsReport" Type="Int32" />
+    <Property Name="ArrivedTime" Type="DateTime" Precision="3" />
+    <Property Name="Field1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Field3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MsgType" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_Alarm_SMS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="alarmTime" Type="DateTime" Precision="3" />
+    <Property Name="alarmId" Type="Int32" />
+    <Property Name="sendTime" Type="DateTime" Precision="3" />
+    <Property Name="mobilephone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Door">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DoorStatus" Type="Int32" Nullable="false" />
+    <Property Name="DoorId" Type="Int32" Nullable="false" />
+    <Property Name="GoToStatus" Type="Int32" Nullable="false" />
+    <Property Name="IP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SnCode" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Door_His">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Time" Type="DateTime" Precision="3" />
+    <Property Name="IP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SnCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DoorId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_DM_CircuitType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CDimension" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_DM_CircuitAnalysis">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CAName" />
+      <PropertyRef Name="PID" />
+      <PropertyRef Name="CIDs" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CAName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="SubtractionCIDs" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CIDs" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="tagid" />
+  </EntityType>
+  <EntityType Name="t_DM_CircuitGradeType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="V_DeviceInfoState_PDR1">
+    <Key>
+      <PropertyRef Name="DID" />
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="TypeName" />
+      <PropertyRef Name="DeviceTypeName" />
+      <PropertyRef Name="RecTime" />
+    </Key>
+    <Property Name="DID" Type="Int32" Nullable="false" />
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="PName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DTID" Type="Int32" />
+    <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PV" Type="Double" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DataTypeID" Type="Int32" />
+    <Property Name="AlarmStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Units" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceTypeName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ABCID" Type="Int32" />
+    <Property Name="OrderBy" Type="Int32" />
+    <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="中文描述" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_InstallRecord">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pid" Type="Int32" />
+    <Property Name="contentId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_CM_InstallType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="score" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_ES_Industry">
+    <Key>
+      <PropertyRef Name="IndustryID" />
+    </Key>
+    <Property Type="Int32" Name="IndustryID" Nullable="false" />
+    <Property Type="String" Name="IndustryName" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_ES_Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="category_name" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="orderNumber" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_ES_Purchase">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Decimal" Name="quantity" Precision="18" Scale="3" />
+    <Property Type="String" Name="company" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="categoryID" />
+    <Property Type="DateTime" Name="CreateTime" Precision="3" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="trade_price" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="Indexweek" Type="Int32" />
+    <Property Name="TradeTime" Type="DateTime" Precision="3" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="TradeSourceID" Type="Int16" />
+  </EntityType>
+  <EntityType Name="配电房_00002_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00003_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00004_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00005_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00006_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00007_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00008_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00009_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00010_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="配电房_00011_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="配电房编号" Type="Int32" Nullable="false" />
+    <Property Name="测点编号" Type="Int32" Nullable="false" />
+    <Property Name="测点名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测量值" Type="Double" />
+    <Property Name="安装地点" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="数据类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="测点位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="监测位置" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="设备编码" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="单位名称" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警状态" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="报警限值" Type="Double" />
+  </EntityType>
+  <EntityType Name="t_ES_TradePrice">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="unid" Type="Int32" />
+    <Property Name="trade_time" Type="DateTime" Precision="3" />
+    <Property Name="trade_price" Type="Decimal" Precision="10" Scale="1" />
+    <Property Name="trade_num" Type="Decimal" Precision="10" Scale="3" />
+    <Property Name="catalog_price" Type="Decimal" Precision="10" Scale="1" />
+    <Property Name="save_cost" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="pid" Type="Int32" />
+    <Property Name="pc_save_cost" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="All_cost" Type="Decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecBigIndustryType">
+    <Key>
+      <PropertyRef Name="BigIndTypeID" />
+    </Key>
+    <Property Name="BigIndTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BigIndTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecFlatDryRich">
+    <Key>
+      <PropertyRef Name="FDRID" />
+    </Key>
+    <Property Name="FDRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FDRName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="month" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecIndustry">
+    <Key>
+      <PropertyRef Name="IndID" />
+    </Key>
+    <Property Name="IndID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IndName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecPeakValleyFlat">
+    <Key>
+      <PropertyRef Name="PVFID" />
+    </Key>
+    <Property Name="PVFID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PVFName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="hour" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecPrice">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IndID" Type="Int32" />
+    <Property Name="BigIndTypeID" Type="Int32" />
+    <Property Name="VID" Type="Int32" />
+    <Property Name="FDRID" Type="Int32" />
+    <Property Name="PVFID" Type="Int32" />
+    <Property Name="ElecPrice" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="WaterConstr" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="FarmNet" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="renewable" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="reservoir" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="Demand" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="capacity" Type="Decimal" Precision="10" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecVoltage">
+    <Key>
+      <PropertyRef Name="VID" />
+    </Key>
+    <Property Name="VID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerReportConfig">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pid" Type="Int32" />
+    <Property Name="did" Type="Int32" />
+    <Property Name="cid" Type="String" MaxLength="1255" FixedLength="false" Unicode="true" />
+    <Property Name="subtractCid" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="cid_type_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_ES_PowerUseCategory">
+    <Key>
+      <PropertyRef Name="PCatID" />
+    </Key>
+    <Property Name="PCatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PCatName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_Constract">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CtrName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CtrCom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CtrAdmin" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CtrPid" Type="Int32" />
+    <Property Name="start_time" Type="DateTime" Precision="3" />
+    <Property Name="end_time" Type="DateTime" Precision="3" />
+    <Property Name="person" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="msgids" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="dateFixCount" Type="Int32" />
+    <Property Name="testFixCount" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="CtrInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="UID" Type="Int32" />
+    <Property Type="Int32" Name="ConType" />
+    <Property Name="LinkMan" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="ConNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="ProjectName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UnitProvince" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UnitCity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="personid" Type="Int32" />
+    <Property Name="personids" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_DM_CircuitInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CID" Type="Int32" Nullable="false" />
+    <Property Name="CName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="TID" Type="Int32" />
+    <Property Name="TagIDs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="AreaType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ItemType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="GradeType" Type="Int32" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="MetersID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LineNumber" Type="Int32" />
+    <Property Name="MultipleRate" Type="Int32" />
+    <Property Name="ElecIndustryID" Type="Int32" />
+    <Property Name="device_type" Type="Int32" />
+    <Property Name="collect_port" Type="Int32" />
+    <Property Name="collect_jzqno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="collect_gy" Type="Int32" />
+    <Property Name="collect_baud" Type="Int32" />
+    <Property Name="collect_cjq" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="collect_period" Type="Int32" />
+    <Property Name="collect_cld" Type="Int32" />
+    <Property Name="collect_lastTime" Type="DateTime" Precision="3" />
+    <Property Name="RatedCapacity" Type="Decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="t_ES_ContractTemplet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="BeforDay" Type="Int32" />
+    <Property Name="CreatTime" Type="DateTime" Precision="3" />
+    <Property Name="CompleTime" Type="DateTime" Precision="3" />
+    <Property Name="PersonID" Type="Int32" />
+    <Property Name="IsOk" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="AlarmTime" Type="DateTime" Precision="3" />
+    <Property Name="DefTempID" Type="Int32" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="ConTempNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerConfigInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cid_type_id" Type="Int32" />
+    <Property Name="cid_type_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_Unit">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Type="Int32" Name="UnitID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="UnitName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UnitLogo" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UnitProvince" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UnitCity" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LinkAddress" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LinkMan" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LinkPhone" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LinkMobile" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="AreaID" />
+    <Property Type="Int32" Name="IndustryID" />
+    <Property Type="String" Name="InstalledCapacity" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="EleCalWay" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="GovEleLevel" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeviationMode" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Type="Double" Name="Loss" />
+    <Property Type="Double" Name="LossAdd" />
+    <Property Type="Int32" Name="IndID" />
+    <Property Type="Int32" Name="BigIndTypeID" />
+    <Property Type="Int32" Name="VID" />
+    <Property Name="SpareBase" Type="Double" />
+    <Property Name="Coordination" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PDRList" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="companyName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Nature" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="InstalledCapacitys" Type="Int32" />
+    <Property Name="CSMMan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CSMPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectType" Type="Int32" />
+    <Property Name="LastYearPower" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="t_ES_UsePlanChange">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="first_week" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="second_week" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="third_week" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="fourth_week" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="change_remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="change_time" Type="DateTime" Precision="3" />
+    <Property Name="change_plan" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="confirm_wx" Type="Int32" />
+    <Property Name="confirm_web" Type="Int32" />
+    <Property Name="web_remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="web_time" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_ES_UsePlan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="plan" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="create_time" Type="DateTime" Precision="3" />
+    <Property Name="remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="daily_average" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="unid" Type="Int32" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="trade_price" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="readed" Type="Int32" />
+    <Property Name="extraTradePrice" Type="Decimal" Precision="18" Scale="1" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerQualityDaily">
+    <Key>
+      <PropertyRef Name="QID" />
+    </Key>
+    <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="Power" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="MaxTemperature" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="ACurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Factor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="EnergyLoss" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Harmonic" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPowerTime" Type="DateTime" Precision="3" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerQualityMonthly">
+    <Key>
+      <PropertyRef Name="QID" />
+    </Key>
+    <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="Power" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="MaxTemperature" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="ACurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Factor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="EnergyLoss" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Harmonic" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPowerTime" Type="DateTime" Precision="3" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerQualityRealTime">
+    <Key>
+      <PropertyRef Name="QID" />
+    </Key>
+    <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="Power" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="MaxTemperature" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="ACurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Factor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="EnergyLoss" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Harmonic" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPowerTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_EE_PowerQualityYearly">
+    <Key>
+      <PropertyRef Name="QID" />
+    </Key>
+    <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="PID" Type="Int32" />
+    <Property Name="DID" Type="Int32" />
+    <Property Name="CID" Type="Int32" />
+    <Property Name="Power" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="MaxTemperature" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="ACurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CCurrent" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CVoltage" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="BFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CFactor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Factor" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceIc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUa" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUb" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnBalanceUc" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="EnergyLoss" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Harmonic" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="NeedPowerTime" Type="DateTime" Precision="3" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_ES_UserUsePowerDaily">
+    <Key>
+      <PropertyRef Name="UUPID" />
+    </Key>
+    <Property Name="UUPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="DeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AllDeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CompletionRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumPlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_ES_UserUsePowerMonthly">
+    <Key>
+      <PropertyRef Name="UUPID" />
+    </Key>
+    <Property Name="UUPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="DeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AllDeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CompletionRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumPlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_ES_UserUsePowerYearly">
+    <Key>
+      <PropertyRef Name="UUPID" />
+    </Key>
+    <Property Name="UUPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecordTime" Type="DateTime" Precision="3" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="DeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="AllDeviationRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CompletionRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumPlanUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SumUsePower" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="UserPowerRatePeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRateFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerRatePeakPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeak" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerValley" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerFlat" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UserPowerPeakPeak" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="t_CM_Constract_File">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SaveName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConTempID" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="CreatTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="t_ES_DefaultTemplet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_Sys_City">
+    <Key>
+      <PropertyRef Name="cityID" />
+    </Key>
+    <Property Name="cityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="proID" Type="Double" />
+  </EntityType>
+  <EntityType Name="t_ES_ContractPurchase">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateTime" Type="DateTime" Precision="3" />
+    <Property Name="quantity" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="trade_price" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="Indexweek" Type="Int32" />
+    <Property Name="TradeTime" Type="DateTime" Precision="3" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="TradeSourceID" Type="Int16" />
+  </EntityType>
+  <EntityType Name="t_ES_ContractUsePlan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="plan" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="create_time" Type="DateTime" Precision="3" />
+    <Property Name="remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="daily_average" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="unid" Type="Int32" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="trade_price" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="extraTradePrice" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="readed" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_ES_UsePlanLog">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="plan" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="categoryID" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="create_time" Type="DateTime" Precision="3" />
+    <Property Name="remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="daily_average" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="unid" Type="Int32" />
+    <Property Name="conid" Type="Int32" />
+    <Property Name="trade_price" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="extraTradePrice" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="readed" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_ES_ElecVoltages">
+    <Key>
+      <PropertyRef Name="VoltageID" />
+    </Key>
+    <Property Name="VoltageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VoltageName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_CM_PDRPointStatu">
+    <Key>
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="statu" Type="Int16" Nullable="false" />
+    <Property Name="changedTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_UnitProjectType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitProjectTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="t_CM_OneGraph">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="OrderNo" Type="Int32" />
+    <Property Name="PID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_CM_BigScoringType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Score" Type="Decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="t_CM_Score">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Fullmarks" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Remarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="BigTypeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="t_CM_UnitScore">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Score" Type="Decimal" Precision="18" Scale="0" />
+  </EntityType>
+</Schema>

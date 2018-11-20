@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="yw_db_sdModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="t_SM_HisData_00001">
+      <EntityTypeMapping TypeName="yw_db_sdModel.t_SM_HisData_00001">
+        <MappingFragment StoreEntitySet="t_SM_HisData_00001">
+          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+          <ScalarProperty Name="TagID" ColumnName="TagID" />
+          <ScalarProperty Name="PID" ColumnName="PID" />
+          <ScalarProperty Name="PV" ColumnName="PV" />
+          <ScalarProperty Name="AlarmStatus" ColumnName="AlarmStatus" />
+          <ScalarProperty Name="AlarmLimits" ColumnName="AlarmLimits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="配电房_00001_历史数据表">
+      <EntityTypeMapping TypeName="yw_db_sdModel.配电房_00001_历史数据表">
+        <MappingFragment StoreEntitySet="配电房_00001_历史数据表">
+          <ScalarProperty Name="报警限值" ColumnName="报警限值" />
+          <ScalarProperty Name="报警状态" ColumnName="报警状态" />
+          <ScalarProperty Name="单位名称" ColumnName="单位名称" />
+          <ScalarProperty Name="设备编码" ColumnName="设备编码" />
+          <ScalarProperty Name="设备名称" ColumnName="设备名称" />
+          <ScalarProperty Name="监测位置" ColumnName="监测位置" />
+          <ScalarProperty Name="测点位置" ColumnName="测点位置" />
+          <ScalarProperty Name="数据类型" ColumnName="数据类型" />
+          <ScalarProperty Name="单位" ColumnName="单位" />
+          <ScalarProperty Name="安装地点" ColumnName="安装地点" />
+          <ScalarProperty Name="测量值" ColumnName="测量值" />
+          <ScalarProperty Name="测点名称" ColumnName="测点名称" />
+          <ScalarProperty Name="测点编号" ColumnName="测点编号" />
+          <ScalarProperty Name="配电房编号" ColumnName="配电房编号" />
+          <ScalarProperty Name="记录时间" ColumnName="记录时间" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

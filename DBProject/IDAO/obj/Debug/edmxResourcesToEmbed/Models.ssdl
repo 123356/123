@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="yw_db_sdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“yw_db_sd.dbo.t_SM_HisData_00001”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="t_SM_HisData_00001">
+    <Key>
+      <PropertyRef Name="RecTime" />
+      <PropertyRef Name="TagID" />
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Name="RecTime" Type="datetime" Nullable="false" />
+    <Property Name="TagID" Type="int" Nullable="false" />
+    <Property Name="PID" Type="int" Nullable="false" />
+    <Property Name="PV" Type="float" />
+    <Property Name="AlarmStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="AlarmLimits" Type="float" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“yw_db_sd.dbo.配电房_00001_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="配电房_00001_历史数据表">
+    <Key>
+      <PropertyRef Name="记录时间" />
+      <PropertyRef Name="配电房编号" />
+      <PropertyRef Name="测点编号" />
+    </Key>
+    <Property Name="记录时间" Type="datetime" Nullable="false" />
+    <Property Name="配电房编号" Type="int" Nullable="false" />
+    <Property Name="测点编号" Type="int" Nullable="false" />
+    <Property Name="测点名称" Type="nvarchar" MaxLength="50" />
+    <Property Name="测量值" Type="float" />
+    <Property Name="安装地点" Type="nvarchar" MaxLength="50" />
+    <Property Name="单位" Type="varchar" MaxLength="50" />
+    <Property Name="数据类型" Type="nvarchar" MaxLength="50" />
+    <Property Name="测点位置" Type="nvarchar" MaxLength="50" />
+    <Property Name="监测位置" Type="nvarchar" MaxLength="50" />
+    <Property Name="设备名称" Type="nvarchar" MaxLength="50" />
+    <Property Name="设备编码" Type="nvarchar" MaxLength="50" />
+    <Property Name="单位名称" Type="nvarchar" MaxLength="50" />
+    <Property Name="报警状态" Type="nvarchar" MaxLength="50" />
+    <Property Name="报警限值" Type="float" />
+  </EntityType>
+  <EntityContainer Name="yw_db_sdModelStoreContainer">
+    <EntitySet Name="t_SM_HisData_00001" EntityType="Self.t_SM_HisData_00001" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [t_SM_HisData_00001].[RecTime] AS [RecTime], 
+    [t_SM_HisData_00001].[TagID] AS [TagID], 
+    [t_SM_HisData_00001].[PID] AS [PID], 
+    [t_SM_HisData_00001].[PV] AS [PV], 
+    [t_SM_HisData_00001].[AlarmStatus] AS [AlarmStatus], 
+    [t_SM_HisData_00001].[AlarmLimits] AS [AlarmLimits]
+    FROM [dbo].[t_SM_HisData_00001] AS [t_SM_HisData_00001]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="配电房_00001_历史数据表" EntityType="Self.配电房_00001_历史数据表" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [配电房_00001_历史数据表].[记录时间] AS [记录时间], 
+    [配电房_00001_历史数据表].[配电房编号] AS [配电房编号], 
+    [配电房_00001_历史数据表].[测点编号] AS [测点编号], 
+    [配电房_00001_历史数据表].[测点名称] AS [测点名称], 
+    [配电房_00001_历史数据表].[测量值] AS [测量值], 
+    [配电房_00001_历史数据表].[安装地点] AS [安装地点], 
+    [配电房_00001_历史数据表].[单位] AS [单位], 
+    [配电房_00001_历史数据表].[数据类型] AS [数据类型], 
+    [配电房_00001_历史数据表].[测点位置] AS [测点位置], 
+    [配电房_00001_历史数据表].[监测位置] AS [监测位置], 
+    [配电房_00001_历史数据表].[设备名称] AS [设备名称], 
+    [配电房_00001_历史数据表].[设备编码] AS [设备编码], 
+    [配电房_00001_历史数据表].[单位名称] AS [单位名称], 
+    [配电房_00001_历史数据表].[报警状态] AS [报警状态], 
+    [配电房_00001_历史数据表].[报警限值] AS [报警限值]
+    FROM [dbo].[配电房_00001_历史数据表] AS [配电房_00001_历史数据表]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
