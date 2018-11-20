@@ -2028,6 +2028,7 @@ namespace S5001Web.Controllers
         #endregion
 
 #region  一次图编辑工具
+        [Login]
         public ActionResult OneGraphEdit()
         {
             return View();
