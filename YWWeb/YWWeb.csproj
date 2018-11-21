@@ -937,11 +937,8 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
-    <Content Include="Content\js\editor.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\gettemp.js" />
-    <Content Include="Content\js\jtopo-src.js" />
-    <Content Include="Content\js\jtopo.js" />
     <Content Include="Content\js\lbyw-base.zc.js" />
     <Content Include="Content\js\lbywfw._zc.js" />
     <Content Include="Content\js\lbywlfmu._zc.js" />
@@ -1002,6 +999,7 @@
     <Content Include="Content\topo\img\symbols\switch.png" />
     <Content Include="Content\topo\img\symbols\text.png" />
     <Content Include="Content\topo\js\editor.js" />
+    <Content Include="Content\topo\js\jtopo-0.4.8-min.js" />
     <Content Include="Content\topo\js\jtopo-src.js" />
     <Content Include="Content\topo\js\jtopo.js" />
     <Content Include="Content\topo\js\palette_config.js" />
@@ -1481,7 +1479,6 @@
     <Content Include="HaiKang\cn\video.html" />
     <Content Include="HaiKang\cn\video.js" />
     <Content Include="HaiKang\cn\download.html" />
-    <Content Include="HaiKang\codebase\WebComponentsKit.exe" />
     <Content Include="HaiKang\codebase\webVideoCtrl.js" />
     <Content Include="HaiKang\video.css" />
     <Content Include="HaiKang\jquery-1.7.1.min.js" />
@@ -2046,7 +2043,6 @@
     <Content Include="Media\ligerUI\skins\Aqua\images\win\box-icons.gif" />
     <Content Include="Media\ligerUI\skins\Aqua\images\win\box-titie.png" />
     <Content Include="Media\login.html" />
-    <Content Include="Media\NVR2_Web_plugin.exe" />
     <Content Include="Media\readme.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2303,6 +2299,7 @@
     <Content Include="Views\State\DeviceState.cshtml" />
     <Content Include="Views\State\FaceRecognition.cshtml" />
     <Content Include="Views\State\TouchScreen.cshtml" />
+    <None Include="Properties\PublishProfiles\loc_nengyuniis.pubxml" />
     <None Include="Properties\PublishProfiles\配置文件1.pubxml" />
     <Content Include="Views\Home\AccordionMenu.cshtml" />
     <Content Include="Views\Share\_Header_File.cshtml" />
@@ -2525,6 +2522,9 @@
     <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
     <Content Include="Views\DeviceManage\VideoTest.cshtml" />
     <Content Include="Views\Es\Score.cshtml" />
+    <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraphTopo.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo177.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

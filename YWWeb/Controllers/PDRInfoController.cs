@@ -55,11 +55,27 @@ namespace S5001Web.Controllers
             if (id.Contains('_'))
             {
                 string[] ids = id.Split('_');
-                return View("OneGraph" + ids[0]+"_"+ids[1]);
+                ViewData["pid"] = ids[0];
+                ViewData["orderNo"] = ids[1];
+                if (id != "12")
+                {
+                    return View("OneGraph" + ids[0] + "_" + ids[1]);
+                }else
+                {
+                    return View("OneGraphTopo");
+                }
             }
             else
             {
-                return View("OneGraph" + id);
+                string[] ids = id.Split('_');
+                ViewData["pid"] = ids[0];
+                if (id != "12")
+                {
+                    return View("OneGraph" + id);
+                }else
+                {
+                    return View("OneGraphTopo");
+                }
             }
         }
         [Login]
