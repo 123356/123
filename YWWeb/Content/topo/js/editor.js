@@ -9,7 +9,8 @@ function Layout() {
     this.boxright = document.createElement("div");
 };
 Layout.prototype = {
-    init:function() {
+    init: function() {
+       
         this.creatBox();
         this.adaptive();
         $("body").prepend(this.main);
@@ -49,6 +50,7 @@ Layout.prototype = {
             t = dv.offset().top;
             //开关打开
             isDown = true;
+            return false;
         });
         //鼠标移动
         window.addEventListener('mousemove', function(e) {
@@ -72,11 +74,13 @@ Layout.prototype = {
                     that.lineright.style.left = nl + "px";
                     that.adaptive()
                 }
+                return false;
             })
             //鼠标抬起事件
-        $(dv).on('mouseup', function() {
+        $(dv).on('mouseup', function(e) {
             //开关关闭
             isDown = false;
+            return false;
         })
     },
     // 屏幕尺寸监听
@@ -126,11 +130,11 @@ NodeList.prototype = {
             var content = document.createElement("div");
             content.className = 'palette-content'
                 //创建头 和itme
-            $('.boxLeft').append(`  <div class="palette-header"><i class="caret"></i>
+            $('.boxLeft').append(`<div class="palette-header"><i class="caret"></i>
                 <span class="palette-title-text">${palette_config[key].name}</span></div>`)
                 .append(content);
             // 遍历节点
-            var path = "../img/symbols/"
+                var path = "../../Content/topo/img/symbols/";
             var items = palette_config[key].items;
             for (var a = 0; a < items.length; a++) {
                 var item = document.createElement("div");
@@ -166,6 +170,7 @@ NodeList.prototype = {
         })
         $('.boxLeft').on('mousedown', '.palette-item-img', function(e) {
             that.selectCanvas = $(e.target).attr('data-canvas');
+            return false;
         })
     }
 };
@@ -286,7 +291,7 @@ Topo.prototype = {
         var menu = document.createElement('div');
         menu.className = "menuBar";
         // menu
-        var path = "../img/edit/"
+        var path = "../../Content/topo/img/edit/"
         for (let a = 0; a < palette_MenuBar.length; a++) {
             let img = document.createElement("img");
             img.className = "menu " + palette_MenuBar[a].name;
@@ -354,7 +359,7 @@ Topo.prototype = {
     // 拖拽节点
     dragNode: function() {
         var that = this;
-        this.scene.mousemove(function(event) {
+        this.scene.mouseup(function(event) {
             if (nodeList.selectCanvas) {
                 var canvas = nodeList.selectCanvas;
                 nodeList.selectCanvas = null;
@@ -375,6 +380,7 @@ Topo.prototype = {
                 obj.center = true;
                 that.setNode(obj);
             }
+            return false;
         })
     },
     // 顶部编辑行

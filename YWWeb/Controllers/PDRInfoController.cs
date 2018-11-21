@@ -52,15 +52,43 @@ namespace S5001Web.Controllers
         [Login]
         public ActionResult OneGraph(string id)
         {
-            if (id.Contains('_'))
-            {
-                string[] ids = id.Split('_');
-                return View("OneGraph" + ids[0]+"_"+ids[1]);
-            }
-            else
-            {
-                return View("OneGraph" + id);
-            }
+           
+            
+                if (id.Contains('_'))
+                {
+                    string[] ids = id.Split('_');
+                    ViewData["pid"] = ids[0];
+                    ViewData["orderNo"] = ids[1];
+
+                    if (id != "12")
+                    {
+                        return View("OneGraph" + ids[0] + "_" + ids[1]);
+                    }
+                    else {
+                        return View("OneGraphTopo");
+                    }
+                    
+                }
+                else
+                {
+                    string[] ids = id.Split('_');
+                    ViewData["pid"] = ids[0];
+                  
+                    if (id != "12")
+                    {
+                        return View("OneGraph" + id);
+                    }
+                    else
+                    {
+                        return View("OneGraphTopo");
+                       
+                    }
+                    
+                }
+           
+
+            
+            
         }
         [Login]
         public ActionResult RealTimePage()

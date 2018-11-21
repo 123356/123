@@ -3,9 +3,8 @@
 function Topo() {};
 Topo.prototype = {
     init: function() {
-
-        this.pid = prompt("输入pic") || 1;
-        this.orderNo = prompt("输入编号") || 1
+        this.pid = $("#pid").html();
+        this.orderNo = $("#orderNo").html() || 1;
 
         this.createTopo();
         this.viewTopo();

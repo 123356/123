@@ -2511,6 +2511,8 @@
     <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
     <Content Include="Views\DeviceManage\VideoTest.cshtml" />
     <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
+    <Content Include="Views\PDRInfo\副本 OneGraph10_74.cshtml" />
+    <None Include="Views\PDRInfo\OneGraphTopo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

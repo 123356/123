@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新版本一次图</title>
+   
+
+
+
+    <link  href="~/Content/topo/css/rescss.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/topo/css/topo.css" rel="stylesheet" type="text/css" />
+  
+</head>
+<body>
+    <div id="pid">@ViewData["pid"]</div>
+    <div id="orderNo">@ViewData["orderNo"]</div>
+     <div id="topo"></div>
+    <table id="electricMeterBounced"></table>
+    <div class="switchBtn"></div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="http://180.76.135.17/demo/js/jtopo-min.js"></script>
+    <script src="~/Content/topo/js/topo.js"></script>
+
+
+</body>
+</html>
