@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Score";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>综合评分</title>
+    <link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/score.css" />
+</head>
+<body>
+    <div  id="scoreModel">
+        <div class="header">
+            <div class="row">
+                <div class="col col-lg-2">
+                    <div class="scoreView">
+                        <p class="score"><span class="scoreVal">{{score}}</span><span class="dw">分</span></p>
+                    </div>
+                </div>
+                <div class="col col-lg-8">
+                    <div class="line">
+                        <div class="row lineRow">
+                            <div class="col col-lg-3 col01">电气设备</div>
+                            <div class="col col-lg-3 col02">电力监控</div>
+                            <div class="col col-lg-3 col03">运维状态</div>
+                            <div class="col col-lg-3 col04">运维维护</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-2"><button class="relCheck" onclick="reCheck()">重新检测</button></div>
+
+            </div>
+
+        </div>
+
+        <div class="main">
+            <div class="left">
+                <div class="con">
+                    <h5 class="checkTitle">{{checkCon}}</h5>
+                   
+                    <div class="module" v-for="item in list">
+                        <dl>
+                            <dt v-on:click = "item.childShow = !item.childShow">
+                                <div class="row">
+                                    <div class="col col-lg-9"><img v-bind:src="item.logoSrc" class="typeIcon" /><span class="typeAnddec">{{item.keyName}}(共{{item.optionCount}}项，{{item.okCount}}项满分，满分{{item.score}}分)</span></div>
+                                    <div class="col col-lg-2 checkState">{{checkState}}</div>
+                                    <div class="col col-lg-1">
+                                        <!--<img src="~/Content/images/score/refresh.png" v-if="refresh" class="showIcon refresh" />-->
+                                        <img src="~/Content/images/score/down.png" class="showIcon" v-if="item.childShow "/>
+                                        <img src="~/Content/images/score/down.png" class="showIcon" v-if="!item.childShow  " style="transform: rotate(-95deg);"/>
+                                    </div>
+                                </div>
+                            </dt>
+                            <transition name="fade">
+                                <dd v-show="item.childShow">
+
+                                    <div class="row" v-for="i in item.Ldata">
+
+
+                                        <div class="col col-lg-2 typename">{{i.Name}}</div>
+                                        <div class="col col-lg-9 dec">{{i.Remarks}}</div>
+                                        <div class="col col-lg-1 stateIcon">
+                                            <img src="~/Content/images/score/refresh.png" v-if="refresh" class="refresh" />
+                                            <img src="~/Content/images/score/s1.png" v-if="i.Score===i.Fullmarks&& refresh==false " />
+                                            <img src="~/Content/images/score/s2.png" v-if="i.Score!=i.Fullmarks && i.isHave !=false&& refresh==false" />
+                                            <img src="~/Content/images/score/noCheck.png" v-if="i.isHave === false&& refresh==false" />
+                                        </div>
+                                    </div>
+
+                                </dd>
+                                </transition>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="module listModule">
+                    <div class="title">
+                        <img src="~/Content/images/score/advice.png" />
+                        5条隐患建议
+                    </div>
+                    <div class="con">
+                        <ol>
+                            <li>1. 变压器非知名品牌</li>
+                            <li>2. 低压设备费进口三大品牌</li>
+                            <li>3. 未监测高压全数据</li>
+                            <li>4. 低压设备费进口三大品牌</li>
+                            <li>5. 变压器非知名品牌</li>
+                        </ol>
+
+                    </div>
+
+                </div>
+
+                <div class="module">
+                    <div class="title" style="color:#333">
+                        <img src="~/Content/images/score/aqzs.png" style="width:18px" />
+                        机房小知识
+                    </div>
+                    <div class="con">
+
+                        变压器非知名品牌低压设备费进口三大品牌未监测高压全数据变压器非知名品牌低压设备费进口三大品牌未监测高压全数据变压器非知名品牌低压设备费进口三大品牌未监测高压全数据
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Content/js/jquery-1.12.2.min.js" ></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+<script src="~/Content/js/jquery.cookie.js" type="text/javascript" ></script>
+<script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="~/Content/js/score.js"></script>
+
+
+
+
+

@@ -31,7 +31,7 @@ function onclick_year() {
 $(function () {
     //查询站室名称
     $('#StationName').combotree({
-        url: '/Home/ComboTreeMenu',
+        url: '/Home/ComboTreeMenu?type=1',
         multiple: false,
         onBeforeSelect: function (node) {
             if (!$(this).tree('isLeaf', node.target)) {

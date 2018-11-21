@@ -392,13 +392,11 @@
     <Content Include="Content\css\pingmiantu8.css" />
     <Content Include="Content\css\pingmiantu9.css" />
     <Content Include="Content\css\planpub.css" />
-    <Content Include="Content\css\rescss.css" />
+    <Content Include="Content\css\score.css" />
     <Content Include="Content\css\SHyicitu.css" />
     <Content Include="Content\css\swiper.min.css" />
-    <Content Include="Content\css\topo.css" />
     <Content Include="Content\css\userView2.css" />
     <Content Include="Content\css\Vertical.css" />
-    <Content Include="Content\css\wiring.css" />
     <Content Include="Content\css\yicitu.css" />
     <Content Include="Content\css\yicitu1.css" />
     <Content Include="Content\css\yicitu10.css" />
@@ -862,6 +860,22 @@
     <Content Include="Content\images\r_wd1.png" />
     <Content Include="Content\images\r_wd2.png" />
     <Content Include="Content\images\sbglbottom.png" />
+    <Content Include="Content\images\score\advice.png" />
+    <Content Include="Content\images\score\aqzs.png" />
+    <Content Include="Content\images\score\borderBk.png" />
+    <Content Include="Content\images\score\checking.png" />
+    <Content Include="Content\images\score\down.png" />
+    <Content Include="Content\images\score\refresh.png" />
+    <Content Include="Content\images\score\s1.png" />
+    <Content Include="Content\images\score\s2.png" />
+    <Content Include="Content\images\score\score1.png" />
+    <Content Include="Content\images\score\score2.png" />
+    <Content Include="Content\images\score\score3.png" />
+    <Content Include="Content\images\score\score4.png" />
+    <Content Include="Content\images\score\scoreBk.png" />
+    <Content Include="Content\images\score\success.png" />
+    <Content Include="Content\images\score\waitCheck.png" />
+    <Content Include="Content\images\score\noCheck.png" />
     <Content Include="Content\images\searchico.png" />
     <Content Include="Content\images\showleftmenuicon.png" />
     <Content Include="Content\images\sjgbico.png" />
@@ -948,13 +962,13 @@
     <Content Include="Content\js\menucontrol._zc.js" />
     <Content Include="Content\js\menulast._zc.js" />
     <Content Include="Content\js\online._zc.js" />
-    <Content Include="Content\js\palette_config.js" />
     <Content Include="Content\js\ResizeList._zc.js" />
     <Content Include="Content\js\respond.src.js" />
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="Content\js\tab._zc..js" />
-    <Content Include="Content\js\topo.js" />
+    <Content Include="Content\js\score.js" />
     <Content Include="Content\js\userView2.js" />
+    <Content Include="Content\js\vue.js" />
     <Content Include="Content\js\weather.js" />
     <Content Include="Content\timeline\vis-timeline-graph2d.min.css" />
     <Content Include="Content\timeline\vis.js" />
@@ -2051,7 +2065,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap-3.3.7-dist\fonts\" />
     <Folder Include="Content\css_app\" />
-    <Folder Include="Content\images\statusico\" />
+    <Folder Include="Content\images\borderBk.png\" />
     <Folder Include="Content\pingmiantu\P10\" />
     <Folder Include="Content\pingmiantu\P11\" />
     <Folder Include="Content\pingmiantu\P2\" />
@@ -2510,9 +2524,7 @@
     <Content Include="Views\PDRInfo\OneGraph177_86.cshtml" />
     <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
     <Content Include="Views\DeviceManage\VideoTest.cshtml" />
-    <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
-    <Content Include="Views\PDRInfo\副本 OneGraph10_74.cshtml" />
-    <None Include="Views\PDRInfo\OneGraphTopo.cshtml" />
+    <Content Include="Views\Es\Score.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -2547,7 +2559,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>47242</DevelopmentServerPort>
+          <DevelopmentServerPort>48556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

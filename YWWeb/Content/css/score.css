@@ -1,0 +1,266 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+dl,ol,ul{
+	list-style: none;
+}
+.row{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+.col{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+.header{
+	width: 100%;
+	height: 150px;
+	border-bottom: 0.5px solid #d9d9d9;
+	background: #f7f7f7;
+	overflow: hidden;
+}
+.main{
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+	position: relative;
+}
+.main .left{
+	/*width: 81%;*/
+	background: #fff;
+	position: absolute;
+	height: 100%;
+	overflow-x: hidden;
+	z-index: 1;
+	top: 0;
+	left: 0;
+}
+.main .right{
+	width: 20%;
+	background: #F7F7F7;
+	position: absolute;
+	top: 0;
+	right: -12px;
+	height: 100%;
+	overflow-y: auto;
+	z-index: 1500;
+}
+.scoreView{
+	width: 100px;
+	height: 100px;
+	border:7px solid #46ae97;
+	border-radius: 50%;
+	margin: 0 auto;
+	overflow: hidden;
+	margin-top: 25px;
+	
+	
+}
+.score{
+	line-height: 86px;
+	text-align: center;
+	font-size: 2.5rem;
+	color: #46ae97;
+	
+}
+.score .dw{
+	font-size: 1rem;
+}
+@keyframes lineBk {
+	0%   { background: #d7a157; }
+	25%  { background: linear-gradient(to right,#55c1aa,#d7a157,#d7a157,#d7a157); }
+	50%  { background: linear-gradient(to right,#55c1aa,#55c1aa,#d7a157,#d7a157);}
+	75%  { background: linear-gradient(to right,#55c1aa,#55c1aa,#55c1aa,#d7a157); }
+	100% { background: linear-gradient(to right,#55c1aa,#55c1aa,#55c1aa,#55c1aa); }
+}
+.line{
+	height: 10px;
+	width: 95%;
+	background: #55c1aa;
+	animation:lineBk 3.5s ;
+	-moz-animation:lineBk 3.5s ; /* Firefox */
+	border-radius: 3px;
+	margin-top: 70px;
+	
+}
+.lineRow{
+	text-align: center;
+	font-size: 12px;
+	color: #666;
+	top:-20px;
+	position: relative;
+	
+}
+.lineRow img{
+	width: 30px;
+	
+}
+.col01,.col02,.col03,.col04{
+	top: -10px;
+	background: url(/Content/images/score/checking.png) no-repeat center;
+	background-size: 30px;
+	padding-top: 55px;
+}
+.col01{
+	animation:col01Bk 3.5s ;
+	-moz-animation:col01Bk 3.5s ; /* Firefox */
+}
+.col02{
+	animation:col02Bk 3.5s ;
+	-moz-animation:col02Bk 3.5s ; /* Firefox */
+}
+.col03{
+	animation:col03Bk 3.5s ;
+	-moz-animation:col03Bk 3.5s ; /* Firefox */
+}
+.col04{
+	animation:col04Bk 3.5s ;
+	-moz-animation:col04Bk 3.5s ; /* Firefox */
+}
+@keyframes col01Bk{
+	0%   { background: url(/Content/images/score/waitCheck.png) no-repeat center;background-size: 30px;}
+	25%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px; }
+	50%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px;}
+	75%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px; }
+	100% { background: url(/Content/images/score/checking.png) no-repeat center;background-size: 30px;}
+}
+@keyframes col02Bk{
+	0%   { background: url(/Content/images/score/waitCheck.png) no-repeat center ;background-size: 30px; }
+	25%  { background: url(/Content/images/score/waitCheck.png) no-repeat center;background-size: 30px; }
+	50%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px;}
+	75%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px; }
+	100% { background: url(/Content/images/score/checking.png) no-repeat center;background-size: 30px;}
+}
+@keyframes col03Bk{
+	0%   { background: url(/Content/images/score/waitCheck.png) no-repeat center ;background-size: 30px; }
+	25%  { background: url(/Content/images/score/waitCheck.png) no-repeat center ;background-size: 30px; }
+	50%  { background: url(/Content/images/score/waitCheck.png) no-repeat center ;background-size: 30px;}
+	75%  { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px; }
+	100% { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px;}
+}
+@keyframes col04Bk{
+	0%   { background: url(/Content/images/score/waitCheck.png) no-repeat center;background-size: 30px; }
+	25%  { background: url(/Content/images/score/waitCheck.png) no-repeat center;background-size: 30px;}
+	50%  { background: url(/Content/images/score/waitCheck.png) no-repeat center;background-size: 30px;}
+	75%  { background: url(/Content/images/score/waitCheck.png) no-repeat center  ;background-size: 30px;}
+	100% { background: url(/Content/images/score/checking.png) no-repeat center ;background-size: 30px;}
+}
+.relCheck{
+	border: 1px solid #55c0ac;
+	color: #55c0ac;
+	font-size: 14px;
+	padding: 0px 12px;
+	background: transparent;
+	height: 25px;
+	margin-top: 62.5px;
+	border-radius: 12.5px;
+	line-height: 14px;
+	outline: none !important;
+	cursor: pointer;
+}
+.main{
+	overflow-y: auto;
+}
+.main .left .con{
+	margin: 20px 50px;
+}
+.main .left .con .checkTitle{
+	font-size: 16px;
+	color: #55c1aa;
+}
+.main .left .con .module{
+	width: 100%;
+	
+	background: url(/Content/images/score/borderBk.png) repeat-y;
+	
+	background-position: 16px 9px;
+}
+.main .left .con .module dt{
+	cursor: pointer;
+}
+.main .left .con .module .showIcon{
+	width: 25px;
+	cursor: pointer;
+	margin-top:8px
+    
+}
+.main .left .con .module .typeIcon{
+	width: 40px;
+}
+.main .left .con .module .typeAnddec{
+	margin-left: 10px;
+	color: #4d4d4d;
+	font-weight: 500;
+	font-size: 15px;
+	line-height: 40px;
+	
+}
+.main .left .con .module .checkState{
+	color: #666;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 40px;
+}
+.main .left .con .module dt{
+	height: 40px;
+	
+}
+.main .left .con .module dd .row{
+	margin-left: 50px;
+	line-height: 26px;
+}
+.main .left .con .module dd .typename{
+	font-size: 12px;
+	color: #666;
+}
+.main .left .con .module dd .dec{
+	font-size: 12px;
+	color: #666;
+}
+.main .left .con .module dd .stateIcon img{
+	width: 15px;	
+}
+.right .module{
+	margin: 20px 25px;
+}
+.right .module .title{
+	/*text-align: center;*/
+	color: #d7a157;
+	padding: 10px 0px;
+	margin-bottom: 10px;
+}
+.right .module .title img{
+	width: 20px;
+}
+.right .module .con{
+	font-size: 12px;
+	color: #4d4d4d;
+	line-height: 22px;
+}
+.listModule{
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s ease
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 ╟Ф╠╬ртоб */ {
+    opacity: 0
+}
+.refresh{
+    width:15px;
+    height:15px;
+    animation:refresh 0.5s infinite;
+	-moz-animation:refresh 0.5s infinite; /* Firefox */
+}
+@keyframes refresh{
+   0%   { transform: rotate(0deg); }
+	25%   { transform: rotate(90deg); }
+	50%   { transform: rotate(180deg); }
+	75%   { transform: rotate(270deg); }
+	100% { transform: rotate(360deg); }
+}
+

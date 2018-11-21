@@ -452,7 +452,7 @@ function edit() {
 }
 function save() {
     
-    if ($("#Name").val() == "" || $("#CompanyName").combotree("getText") == "" || $("#CBPeriodBegin").combobox("getValue") == "" || $("#FamilyID").val() == "" || $("#IndID").combotree("getText") == "" || $("#VID").combotree("getText") == "" || $("#VoltageID").combotree("getText") == "" || $("#LinkMan").val() == "" || $("#Mobile").val() == "" || $("#OperationMan").val() == "" || $("#OperationTel").val() == "" || $("#Position").val() == "" || $("#Coordination").val() == "" || $("#AreaID").combotree("getValue") == "0" || $("#TypeID").combobox("getValue") == "0" || $("#AreaID").combobox("getValue") == "0") {
+    if ($("#Name").val() == "" || $("#CompanyName").combotree("getText") == "" || $("#VoltageID").combotree("getText") == "" || $("#LinkMan").val() == "" || $("#Mobile").val() == "" || $("#OperationMan").val() == "" || $("#OperationTel").val() == "" || $("#Position").val() == "" || $("#Coordination").val() == "" || $("#AreaID").combotree("getValue") == "0" || $("#TypeID").combobox("getValue") == "0" || $("#AreaID").combobox("getValue") == "0") {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }

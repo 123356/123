@@ -476,7 +476,7 @@ namespace S5001Web.Controllers
         //}
         //站室列表 combotree
         [Login]
-        public ActionResult ComboTreeMenu()
+        public ActionResult ComboTreeMenu(int type = 0)
         {
             string strjson = "";
             if (CurrentUser != null)
@@ -494,6 +494,10 @@ namespace S5001Web.Controllers
                 int acount = 0, tcount = 0, count = 0;
                 //sbMenu.Append("[{\"id\":0,\"text\":\"北京市\",\"children\":[");
                 sbMenu.Append("[");
+                if (type == 1)
+                {
+                    sbMenu.Append("{\"id\": -1,\"text\": \"全部\"},");
+                }
                 foreach (AccordionInfo model in list)
                 {
                     areaname = model.Areaname;
@@ -1424,6 +1428,18 @@ namespace S5001Web.Controllers
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
                 var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
+                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
+                List<int?> cidlist = new List<int?>();
+                string s = "";
+                foreach(var xssss in cidsss)
+                {
+                    s += xssss.cid + ",";
+                }
+                if (s != "")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                }
                 if (list.Count() > 0)
                 {
                     model.Name = "严重";
@@ -1495,7 +1511,7 @@ namespace S5001Web.Controllers
 
                 DateTime d = DateTime.Now.Date;
                 DateTime xd = DateTime.Now;
-                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (xzzz != null)
                 {
                     model.thisDayPower = Math.Round(xzzz.Value, 2);
@@ -1508,14 +1524,14 @@ namespace S5001Web.Controllers
                     model.thisDayPower = 0;
                 DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
-                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (lastDayPower != 0)
                 {
                     model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
                 }
 
                 DateTime dd = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
-                var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (xsss != null)
                 {
                     model.thisMonthPower = Math.Round(xsss.Value, 2);
@@ -1526,7 +1542,7 @@ namespace S5001Web.Controllers
                 }
                 DateTime lastssd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
 
-                var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (lastMonthPower != 0)
                 {
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
@@ -1562,7 +1578,7 @@ namespace S5001Web.Controllers
                                 int cid = dbb.CID;
                                 if (cid != 0)
                                 {
-                                    var ss = bll.t_EE_PowerQualityDaily.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                                    var ss = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
                                     if (ss != null)
                                     {
                                         if (ss.Power != null)
@@ -1601,7 +1617,7 @@ namespace S5001Web.Controllers
                         if (fuzai[i].Sum(p => p.Power) > maxfuzai)
                         {
                             maxfuzai = fuzai[i].Sum(p => p.Power);
-                            maxT = fuzai[i].Key.ToString();
+                            maxT = fuzai[i].FirstOrDefault().NeedPowerTime.ToString();
                         }
                     }
                 }
@@ -1690,6 +1706,109 @@ namespace S5001Web.Controllers
             return Json(model);
         }
 
+
+        public JsonResult ViewLoop(int uid)
+        {
+            PdfState model = new PdfState();
+            try
+            {
+                //string uids = GetAllUnit();
+                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+               
+           
+                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
+                List<int?> cidlist = new List<int?>();
+                string s = "";
+                foreach (var xssss in cidsss)
+                {
+                    s += xssss.cid + ",";
+                }
+                if (s != "")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                }
+                
+               
+
+                DateTime d = DateTime.Now.Date;
+                DateTime xd = DateTime.Now;
+                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (xzzz != null)
+                {
+                    model.thisDayPower = Math.Round(xzzz.Value, 2);
+                }
+                else
+                {
+                    model.thisDayPower = 0;
+                }
+                if (model.thisDayPower == null)
+                    model.thisDayPower = 0;
+                DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
+                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (lastDayPower != 0)
+                {
+                    model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
+                }
+                var cids = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.C != null && p.C != "").Select(p => p.C).ToList().ConvertAll<int?>(i => int.Parse(i));
+                var dbbb = bll.t_DM_CircuitInfo.Where(p => pidlist.Contains(p.PID)).Select(p => p.CID).ToList();
+                //总负载   
+                //model.Sumload = bll.t_EE_PowerQualityRealTime.Where(p => pidlist.Contains(p.PID) && cids.Contains(p.CID)).Sum(p => p.Power);
+                var z = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
+                model.RongL = z;
+                decimal? suml = 0;
+                foreach (var item in pidlist)
+                {
+                    var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == item && p.DTID == 3).ToList();
+                    foreach (var by in bianyaqilist)
+                    {
+                        if (!string.IsNullOrEmpty(by.C))
+                        {
+                            int ciddd = Convert.ToInt32(by.C);
+                            var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == item).FirstOrDefault();
+                            if (dbb != null)
+                            {
+                                int cid = dbb.CID;
+                                if (cid != 0)
+                                {
+                                    var ss = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                                    if (ss != null)
+                                    {
+                                        if (ss.Power != null)
+                                        {
+                                            suml += ss.Power;
+                                            anwyis m = new anwyis();
+
+                                            m.zhanbiEvery = ss.Power / z * 100;
+                                            if (Convert.ToDecimal(by.Z) != 0 && !string.IsNullOrEmpty(by.Z))
+                                                m.viewEvery = ss.Power / Convert.ToDecimal(by.Z) * 100;
+                                            m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault().Name + "_" + by.DeviceName;
+                                            model.fuzaiView.Add(m);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                model.Sumload = suml;
+                //总负载率
+                if (z != 0 && z != null)
+                {
+                    model.RatedCapacity = Math.Round((model.Sumload / z * 100).Value, 2);
+                } 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(model);
+        }
 
         public ActionResult GetAlarmAndOrderCount(int uid)
         {
@@ -1976,7 +2095,7 @@ namespace S5001Web.Controllers
                 List<int> cis = bll.t_DM_CircuitInfo.Where(p => device.Contains(p.DID) && p.PID == pid).OrderBy(p => p.CID).Select(p => p.CID).ToList();
                 if (cis.Count() > 0)
                 {
-                    var mmm = bll.t_EE_PowerQualityDaily.Where(p => p.PID == pid && cis.Contains(p.CID.Value)).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                    var mmm = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && cis.Contains(p.CID.Value)).OrderByDescending(p => p.RecordTime).FirstOrDefault();
                     if (mmm != null)
                         model.gonglv = mmm.Power;
                     else
@@ -1991,7 +2110,7 @@ namespace S5001Web.Controllers
 
 
 
-                string strsql = "select a.RecordTime,a.Power Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from  t_EE_PowerQualityDaily a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a.Power is not null";
+                string strsql = "select a.RecordTime,a.Power Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from  t_EE_PowerQualityRealTime a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a.Power is not null";
                 string strsqlm = "", strsqly = "";
                 if (!pid.Equals(""))
                 {

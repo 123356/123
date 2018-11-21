@@ -1,6 +1,9 @@
 var leftbottomHeight = null
 var id = null
+var xpid = 0;
+var xdid = 0;
 $(function () {
+   
     console.log($(window).width())
     console.log($(window).height())
     var noPid = $.cookie("noPid")
@@ -266,7 +269,7 @@ function GetStationStateByPid() {
                     $(".slide1-1").append('<p class="normal">' + data.Name + '</p><span class="littltInfo">正常' + normalDays + '天</span>')
                 }
                 $(".slide2").append('<p class="normal">' + checkDay + '天</p><span class="littltInfo">距离下次检修</span>')
-                $(".slide3").append('<p class="normal">' + score + '</p><span class="littltInfo">配电室平均评分</span>')
+                $(".slide3").append('<p class="normal" onclick="score()" style="cursor: pointer;"> ' + score + '</p><span class="littltInfo">配电室平均评分</span>')
                 //当日累计电量
 
                 
@@ -328,6 +331,11 @@ function GetStationStateByPid() {
     })
 }
 
+//弹出评分页面
+function score() {
+    window.open("/Es/Score", "_blank",
+				"left=100px,top=50px,resizable=no, toolbar=no, location=no,fullscreen=no,channelmode=no, directories=no, status=no, menubar=no, scrollbars=yes, copyhistory=no, width=1000, height=500")
+}
 
 
 //变压器数据显示
@@ -359,6 +367,8 @@ function byqInfo(data) {
                         did: res[0].C,
                         cid: null
                     }
+                    xpid = data;
+                    xdid = res[0].C;
                 } else {
                     var par = {
                         pid: data,
@@ -658,10 +668,81 @@ $(".tranList ul").on("click","li",function () {
         did: did,
         cid: null
     }
+    xpid = pid;
+    xdid = did;
     loadCurve(data, 0)
 })
 function pdsDetail() {
     var pid = parseInt($(".roomBtnActive").attr("id"))
     $.cookie('cookiepid', pid, { expires: 7, path: '/' });
     $("#main_frame", parent.document.body).attr("src", "/PowerQuality/Index?mid=21");
+}
+
+var timeset;
+clearInterval(timeset);
+timeset = setInterval(function () {
+    if (xdid != 0 && xpid != 0) {
+        var data = {
+            pid: xpid,
+            did: xdid,
+            cid: null
+        }
+        loadCurve(data, 0);
+        Getxunhuan();
+    }
+}, 60000)
+
+
+
+function Getxunhuan() {
+
+    $.post({
+        url: '/Home/ViewLoop',
+        data: {
+            uid: id
+        },
+        success: function (data) {
+            if (data != null) {
+                //当日累计电量
+
+
+                isEmpty(data.thisDayPower, ".thisDayPower")
+                $(".yearTQ").Empty();
+                if (data.thisDayOccupation != null && data.thisDayOccupation != "" && data.thisDayOccupation != 0) {
+
+                    if ((data.thisDayOccupation * 100) > 1) {
+                        $(".yearTQ").append('<span>上年同期对比 <span class="num thisDayOccupation">' + thisDayOccupation + '%</span><img src="~/Content/images/icon4/up.png" /></span>')
+                    } else {
+                        $(".yearTQ").append('<span>上年同期对比 <span class="num thisDayOccupation">' + thisDayOccupation + '%</span><img src="~/Content/images/icon4/down.png" /></span>')
+                    }
+
+                } else {
+
+                    $(".yearTQ").append('<span>上年同期对比 <span class="num thisDayOccupation">--%</span></span>')
+                }
+                //用电概况
+                isEmpty(data.Sumload, ".Sumload")
+
+                if (data.RatedCapacity != null) {
+                    $(".RatedCapacity").text(data.RatedCapacity + "%");
+                    $(".RatedCapacity").attr("title", data.RatedCapacity + "%")
+                }
+
+                //负载率比例图表
+                if (data.fuzaiView.length > 0) {
+                    var par = {
+                        fuzaiView: data.fuzaiView,
+                        RatedCapacity: data.RatedCapacity
+                    }
+                    $(".noElecUsageChart").hide()
+                    createelecUsageChart(par)
+                } else {
+                    $(".noElecUsageChart").show()
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error.getMessage())
+        }
+    })
 }

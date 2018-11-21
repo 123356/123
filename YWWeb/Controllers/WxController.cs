@@ -70,27 +70,29 @@ namespace S5001Web.Controllers
                 return Content(ex.ToString());
             }
         }
-        public ActionResult wxLogin2(string code)
+        public ActionResult wxLogin2(string openid)
         {
             try
             {
-                OpenIdResult openIdResult = getOpenIdBean2(code);
-                List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid && u.IsScreen == 0).ToList();
-                if (list.Count > 0)
+                //OpenIdResult openIdResult = getOpenIdBean2(code);
+                t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openid).FirstOrDefault();
+                if (model!=null)
                 {
-                    Session["Huerinfo"] = list[0];
-                    string sID = Session.SessionID;
-                    Session[sID] = list[0];
-                    Common.InsertLog("App用户登录", list.First().UserName, "App用户登录[" + list.First().UserName + "]");
-                    return Content(sID);
+                    if (model.IsScreen == 0)
+                    {
+                        Session["Huerinfo"] = model;
+                        string sID = Session.SessionID;
+                        Session[sID] = model;
+                        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                        return Content(sID);
+                    }else
+                    {
+                        return Content("1");
+                    }
                 }
                 else
                 {
-                    List<t_CM_UserInfo> list22 = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid).ToList();//注册且未通过
-                    if (list22 != null && list22.Count > 0)
-                    {
-                        return Content("微信号未通过审核");
-                    } return Content("微信号未注册");
+                       return Content("0");
                 }
             }
             catch (Exception ex)
@@ -167,7 +169,7 @@ namespace S5001Web.Controllers
         private OpenIdResult getOpenIdBean2(string code)
         {
             //https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
-            string result = HttpUtils.Post("https://api.weixin.qq.com/sns/jscode2session", new Dictionary<string, string>() { { "appid", "wx8a7ccbb7dcb0a798" }, { "secret", "ac48244d2ff323c4c37470e90447a841" }, { "js_code", code }, { "grant_type", "authorization_code" } });
+            string result = HttpUtils.Post("https://api.weixin.qq.com/sns/jscode2session", new Dictionary<string, string>() { { "appid", "wx8a7ccbb7dcb0a798" }, { "secret", "dfcb20b70da1057eea91850e2d03c9f8" }, { "js_code", code }, { "grant_type", "authorization_code" } });
             return JsonConvert.DeserializeObject<OpenIdResult>(result);
         }
         //博高运维 小程序
@@ -2196,42 +2198,136 @@ namespace S5001Web.Controllers
 
 
         //短信验证码发送
-        public ActionResult singleSm(String mobile)
+        public ActionResult singleSm(String mobile,int type=0)
         {
             string verificationText = "";
             int hasInfo = 0;
             try
             {
-                List<t_CM_UserInfo> list = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE Mobilephone='" + mobile + "'").ToList();
-                if (list != null && list.Count > 0) hasInfo = 1;
-                verificationText = CreateVerificationText(4);
-                //设置apikey
-                Config config = new Config(UtilsSms.key);
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                Result result = null;
+                if (type == 0)
+                {
+                    t_CM_UserInfo list = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE Mobilephone='" + mobile + "'").FirstOrDefault();
+                    if (list != null)
+                    {
+                        if (list.IsScreen == 0)
+                        {
 
-                //// 获取用户信息
-                //UserOperator user = new UserOperator(config);
-                //result = user.get(data);
-                //Console.WriteLine(result);
+                            hasInfo = 1;
+                            verificationText = CreateVerificationText(4);
+                            //设置apikey
+                            Config config = new Config(UtilsSms.key);
+                            Dictionary<string, string> data = new Dictionary<string, string>();
+                            Result result = null;
 
-                //// 获取模板信息
-                //TplOperator tpl = new TplOperator(config);
-                //data.Clear();
-                //data.Add("tpl_id", "1");
-                //result = tpl.getDefault(data);
-                //Console.WriteLine(result);
+                            //// 获取用户信息
+                            //UserOperator user = new UserOperator(config);
+                            //result = user.get(data);
+                            //Console.WriteLine(result);
 
-                // 发送单条短信
-                SmsOperator sms = new SmsOperator(config);
-                data.Clear();
-                data.Add("mobile", mobile);
-                Session["ver"] = verificationText;
-                string xxx = Session["ver"] as string;
-                data.Add("text", "【"+UtilsSms.company+"】您的验证码是" + verificationText + "。如非本人操作，请忽略本短信");
-                result = sms.singleSend(data);
-                Console.WriteLine(result);
-                return Content("{\"resultCode\": 0,\"hasInfo\": " + hasInfo + ",\"results\": \"" + verificationText + "\"}");
+                            //// 获取模板信息
+                            //TplOperator tpl = new TplOperator(config);
+                            //data.Clear();
+                            //data.Add("tpl_id", "1");
+                            //result = tpl.getDefault(data);
+                            //Console.WriteLine(result);
+
+                            // 发送单条短信
+                            SmsOperator sms = new SmsOperator(config);
+                            data.Clear();
+                            data.Add("mobile", mobile);
+                            Session["ver"] = verificationText;
+                            string xxx = Session["ver"] as string;
+                            data.Add("text", "【" + UtilsSms.company + "】您的验证码是" + verificationText + "。如非本人操作，请忽略本短信");
+                            result = sms.singleSend(data);
+                            Console.WriteLine(result);
+                        }
+                        else
+                        {
+                            hasInfo = 2;
+                            verificationText = "手机号未通过审核";
+                        }
+                    }
+                    else
+                    {
+                        hasInfo = 0;
+                        verificationText = "手机号未注册";
+                    }
+                    return Content("{\"resultCode\": 0,\"hasInfo\": " + hasInfo + ",\"results\": \"" + verificationText + "\"}");
+                }else
+                {
+                    t_CM_UserInfo list = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE Mobilephone='" + mobile + "'").FirstOrDefault();
+                    if (list != null)
+                    {
+                        if (list.IsScreen == 0)
+                        {
+
+                            hasInfo = 1;
+                            verificationText = CreateVerificationText(4);
+                            //设置apikey
+                            Config config = new Config(UtilsSms.key);
+                            Dictionary<string, string> data = new Dictionary<string, string>();
+                            Result result = null;
+
+                            //// 获取用户信息
+                            //UserOperator user = new UserOperator(config);
+                            //result = user.get(data);
+                            //Console.WriteLine(result);
+
+                            //// 获取模板信息
+                            //TplOperator tpl = new TplOperator(config);
+                            //data.Clear();
+                            //data.Add("tpl_id", "1");
+                            //result = tpl.getDefault(data);
+                            //Console.WriteLine(result);
+
+                            // 发送单条短信
+                            SmsOperator sms = new SmsOperator(config);
+                            data.Clear();
+                            data.Add("mobile", mobile);
+                            Session["ver"] = verificationText;
+                            string xxx = Session["ver"] as string;
+                            data.Add("text", "【" + UtilsSms.company + "】您的验证码是" + verificationText + "。如非本人操作，请忽略本短信");
+                            result = sms.singleSend(data);
+                            Console.WriteLine(result);
+                        }
+                        else
+                        {
+                            hasInfo = 2;
+                            verificationText = "已注册，未通过审核";
+                        }
+                    }
+                    else
+                    {
+                        hasInfo = 3;
+                        verificationText = CreateVerificationText(4);
+                        //设置apikey
+                        Config config = new Config(UtilsSms.key);
+                        Dictionary<string, string> data = new Dictionary<string, string>();
+                        Result result = null;
+
+                        //// 获取用户信息
+                        //UserOperator user = new UserOperator(config);
+                        //result = user.get(data);
+                        //Console.WriteLine(result);
+
+                        //// 获取模板信息
+                        //TplOperator tpl = new TplOperator(config);
+                        //data.Clear();
+                        //data.Add("tpl_id", "1");
+                        //result = tpl.getDefault(data);
+                        //Console.WriteLine(result);
+
+                        // 发送单条短信
+                        SmsOperator sms = new SmsOperator(config);
+                        data.Clear();
+                        data.Add("mobile", mobile);
+                        Session["ver"] = verificationText;
+                        string xxx = Session["ver"] as string;
+                        data.Add("text", "【" + UtilsSms.company + "】您的验证码是" + verificationText + "。如非本人操作，请忽略本短信");
+                        result = sms.singleSend(data);
+                    }
+                    return Content("{\"resultCode\": 0,\"hasInfo\": " + hasInfo + ",\"results\": \"" + verificationText + "\"}");
+                }
             }
             catch (Exception e)
             {
@@ -3116,7 +3212,31 @@ namespace S5001Web.Controllers
             }
             return Content(JsonConvert.SerializeObject(new ReturnBean<t_CM_Unit>(Cons.CODE_SUCCESS, Cons.MSG_SUCCESS, null))); ;
         }
-
+        public ActionResult getUserInfoByOpenid(string openid)
+        {
+            //bool flag= false;
+            try
+            {
+                var m = bll.t_CM_UserInfo.Where(p => p.openid2 == openid).FirstOrDefault();
+                if (m != null)
+                {
+                    Session["Huerinfo"] = m;
+                    string sID = Session.SessionID;
+                    Session[sID] = m;
+                    //log
+                    Common.InsertLog("App用户登录", m.UserName, "App用户登录[" + m.UserName + "]");
+                    return Content(sID);
+                }
+                else
+                {
+                    return Content("该微信未绑定小程序");
+                }
+            }
+            catch(Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
 
     }
     public class OpenIdResult

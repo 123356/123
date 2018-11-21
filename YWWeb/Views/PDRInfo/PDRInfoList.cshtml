@@ -162,31 +162,6 @@
                 <td class="d_l_d">
                     <select id="TypeID" class="easyui-combobox" itemindex="0" style="width: 120px; height: 26px;"></select><b class="RStar">&nbsp*</b>
                 </td>
-
-
-                <td class="d_l_t">
-                    户号：
-                </td>
-                <td class="d_l_d">
-                    <input id="FamilyID" runat="server" name="FamilyID" missingmessage="户号必填项！" class="easyui-validatebox"
-                           style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    电价行业类型：
-                </td>
-                <td class="d_l_d">
-                    <input class="easyui-combotree" style="width:160px; height:26px;" missingmessage="电价行业类型必填项！" id="IndID" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr id="two">
-                <td class="d_l_t">
-                    电价电压等级：
-                </td>
-                <td class="d_l_d">
-                    <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电价电压等级必填项！" id="VID" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
                 <td class="d_l_t">
                     电压等级：
                 </td>
@@ -194,13 +169,11 @@
                     <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电压等级必填项！" id="VoltageID" />
                     <b class="RStar">&nbsp*</b>
                 </td>
-
                 <td class="d_l_t">
-                    抄表日：
+                    投运时间：
                 </td>
                 <td class="d_l_d">
-                    @*<input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-datebox" style="width:180px;" /><b class="RStar">&nbsp*</b>*@
-                    <select id="CBPeriodBegin" class="easyui-combobox" missingmessage="抄表日必填项！" style="width:160px;"></select>
+                    <input class="easyui-datebox" style="width: 160px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
                     <b class="RStar">&nbsp*</b>
                 </td>
             </tr>
@@ -248,14 +221,37 @@
                     </select>
                 </td>
             </tr>
-
-            <tr id="two">
+            <tr>
+                <td class="d_l_t" rowspan="2" colspan="2">
+                    <p style="text-align:center;font-size:22px;">售电所需信息：</p>
+                </td>
                 <td class="d_l_t">
-                    投运时间：
+                    户号：
                 </td>
                 <td class="d_l_d">
-                    <input class="easyui-datebox" style="width: 160px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
-                    <b class="RStar">&nbsp*</b>
+                    <input id="FamilyID" runat="server" name="FamilyID" missingmessage="户号必填项！" class="easyui-validatebox"
+                           style="width: 160px;" data-options="required:true" />
+                </td>
+                <td class="d_l_t">
+                    电价行业类型：
+                </td>
+                <td class="d_l_d">
+                    <input class="easyui-combotree" style="width:160px; height:26px;" missingmessage="电价行业类型必填项！" id="IndID" />
+                </td>
+            </tr>
+            <tr id="two">
+                <td class="d_l_t">
+                    电价电压等级：
+                </td>
+                <td class="d_l_d">
+                    <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电价电压等级必填项！" id="VID" />
+                </td>
+                <td class="d_l_t">
+                    抄表日：
+                </td>
+                <td class="d_l_d">
+                    @*<input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-datebox" style="width:180px;" /><b class="RStar">&nbsp*</b>*@
+                    <select id="CBPeriodBegin" class="easyui-combobox" missingmessage="抄表日必填项！" style="width:160px;"></select>
                 </td>
             </tr>
             <tr>

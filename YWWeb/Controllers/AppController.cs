@@ -803,6 +803,31 @@ namespace S5001Web.Controllers
                 return Content(ex.ToString());
             }
         }
+        public ActionResult AppLoginUserInfo(string mobile)
+        {
+            try
+            {
+
+                var model = bll.t_CM_UserInfo.Where(u => u.Mobilephone == mobile).FirstOrDefault();
+                if (model != null)
+                {
+                    Session["Huerinfo"] = model;
+                    string sID = Session.SessionID;
+                    Session[sID] = model;
+                    //log
+                    Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                    return Content(sID);
+                }
+                else
+                {
+                    return Content("用户名密码错误");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
         //App密码修改  创建于 20160509
         public ActionResult AppChangePW(string username, string oldPassword, string newPassword)
         {
