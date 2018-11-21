@@ -219,7 +219,7 @@ function edit() {
 function save() {
     var reg = /^1\d{10}$/;
     var regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
-    if ($("#UnitName").val() == "" || $("#LinkMan").val() == "" || $("#CSMMan").val() == "" || $("#GovEleLevel").val() == "" || $("#DeviationMode").val() == "" || $("#InstalledCapacity").val() == "" || $("#InstalledCapacitys").val() == "" || $("#IndustryID").combotree("getText") == "" || $("#LinkPhone").val() == "" || $("#EleCalWay").val() == "" || $("#LinkAddress").val() == "" || $("#UnitProvince").combobox("getValue") == "0" || $("#UnitCity").combobox("getValue") == "0" || $("#Coordination").val() == "") {
+    if ($("#UnitName").val() == "" || $("#LinkMan").val() == "" || $("#CSMMan").val() == "" || $("#InstalledCapacitys").val() == "" || $("#IndustryID").combotree("getText") == "" || $("#LinkPhone").val() == "" || $("#LinkAddress").val() == "" || $("#UnitProvince").combobox("getValue") == "0" || $("#UnitCity").combobox("getValue") == "0" || $("#Coordination").val() == "") {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }

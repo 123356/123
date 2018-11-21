@@ -144,6 +144,10 @@ namespace S5001Web.Controllers
         {
             return View();
         }
+        public ActionResult Score()//用户总览
+        {
+            return View();
+        }
         public ActionResult PowerPurchaseContract()
         {
             return View();
