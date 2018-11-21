@@ -70,12 +70,12 @@ namespace S5001Web.Controllers
                 return Content(ex.ToString());
             }
         }
-        public ActionResult wxLogin2(string code)
+        public ActionResult wxLogin2(string openid)
         {
             try
             {
-                OpenIdResult openIdResult = getOpenIdBean2(code);
-                t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid).FirstOrDefault();
+                //OpenIdResult openIdResult = getOpenIdBean2(code);
+                t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openid).FirstOrDefault();
                 if (model!=null)
                 {
                     if (model.IsScreen == 0)
