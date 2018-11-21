@@ -363,9 +363,6 @@ Topo.prototype = {
             if (nodeList.selectCanvas) {
                 var canvas = nodeList.selectCanvas;
                 nodeList.selectCanvas = null;
-
-
-
                 var x = event.x;
                 var y = event.y;
                 var obj = canvas == 'text' ? {
