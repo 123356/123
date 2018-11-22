@@ -2140,6 +2140,24 @@ namespace S5001Web.Controllers
                 return Content("{\"resultCode\": 2,\"results\": {}}");
             }
         }
+        public ActionResult GetVideoByPID(int pid)
+        {
+            try
+            {
+                var m = bll.t_CM_CameraInfo.Where(p => p.PID == pid).ToList();
+                var result = from n in m
+                             select new
+                             {
+                                 link = n.ip,
+                                 VideoName = n.Remarks
+                             };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("暂无数据");
+            }
+        }
 
         public ActionResult searchRoom(string pname)
         {
