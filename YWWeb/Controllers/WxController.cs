@@ -1992,11 +1992,13 @@ namespace S5001Web.Controllers
                             t_PM_Order order = list.First();
                             string sqlPDRinfo = "SELECT * FROM [t_CM_PDRInfo] WHERE PID=" + order.PID;
                             List<t_CM_PDRInfo> listPDRinfo = bll.ExecuteStoreQuery<t_CM_PDRInfo>(sqlPDRinfo).ToList();
-
+                            
+                            string sqlUnit = "SELECT LinkMan,LinkMobile FROM [t_CM_Unit] WHERE like '%," + order.PID + ",%' or PDRList like '%," + order.PID + "' or PDRList like '" + order.PID + ",%' or PDRList= '" + order.PID + "' ";
+                            List<t_CM_Unit> listUnit = bll.ExecuteStoreQuery<t_CM_Unit>(sqlUnit).ToList();
 
                             List<t_cm_files> listFiles = bll.ExecuteStoreQuery<t_cm_files>("SELECT * FROM t_cm_files WHERE  Fk_ID="+OrderID+" AND Modules='report'").ToList();
 
-                            OrderDetail orderDetail = new OrderDetail(order, listPDRinfo.First(), user, listFiles);
+                            OrderDetail orderDetail = new OrderDetail(order, listPDRinfo.First(), listUnit.First(), user, listFiles);
                             return Content("{\"resultCode\": 0,\"results\": " + JsonConvert.SerializeObject(orderDetail) + "}");
                         }
                         return Content("{\"resultCode\": 0,\"results\": {}}");

@@ -106,13 +106,13 @@
                 </td>
             </tr>
             <tr>
-                <td class="d_l_t">
+                @*<td class="d_l_t">
                     联系人：
                 </td>
                 <td class="d_l_d">
                     <input id="LinkMan" runat="server" name="LinkMan" missingmessage="联系人必填项！" class="easyui-validatebox"
                            style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                </td>
+                </td>*@
                 <td class="d_l_t">
                     公司名称：
                 </td>
@@ -120,17 +120,14 @@
                     <input class="easyui-combotree" style="width: 180px; height: 26px;" id="CompanyName" />
                     <b class="RStar">&nbsp*</b>
                 </td>
-                <td class="d_l_t">
+                @*<td class="d_l_t">
                     手机号码：
                 </td>
                 <td class="d_l_d">
                     <input id="Mobile" runat="server" name="Mobile" missingmessage="手机号码必填项！" class="easyui-validatebox"
                            style="width: 160px;" data-options="required:true" onkeyup='this.value=this.value.replace(/\D/gi,"")' />
                     <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-
-            <tr>
+                </td>*@
                 <td class="d_l_t">
                     运维联系人：
                 </td>
@@ -146,6 +143,10 @@
                            style="width: 160px;" data-options="required:true" onkeyup='this.value=this.value.replace(/\D/gi,"")' />
                     <b class="RStar">&nbsp*</b>
                 </td>
+            </tr>
+
+            <tr>
+
                 <td class="d_l_t">
                     位置：
                 </td>
@@ -153,9 +154,6 @@
                     <input id="Position" runat="server" name="Position" missingmessage="位置必填项！" class="easyui-validatebox"
                            style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
-            </tr>
-
-            <tr id="one">
                 <td class="d_l_t">
                     站室分类：
                 </td>
@@ -169,6 +167,12 @@
                     <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电压等级必填项！" id="VoltageID" />
                     <b class="RStar">&nbsp*</b>
                 </td>
+
+
+            </tr>
+
+            <tr id="one">
+
                 <td class="d_l_t">
                     投运时间：
                 </td>
@@ -176,8 +180,6 @@
                     <input class="easyui-datebox" style="width: 160px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
                     <b class="RStar">&nbsp*</b>
                 </td>
-            </tr>
-            <tr>
                 <td class="d_l_t">
                     地图坐标：
                 </td>
