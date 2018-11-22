@@ -52,12 +52,16 @@ namespace S5001Web.Controllers
         [Login]
         public ActionResult OneGraph(string id)
         {
+
+            int[] pids = new int[] { 178,12 };
+
+
             if (id.Contains('_'))
             {
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
                 ViewData["orderNo"] = ids[1];
-                if (id != "12")
+                if (Array.IndexOf(pids, 1) != -1)
                 {
                     return View("OneGraph" + ids[0] + "_" + ids[1]);
                 }else
@@ -69,7 +73,7 @@ namespace S5001Web.Controllers
             {
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
-                if (id != "12")
+                if (Array.IndexOf(pids, 1) != -1)
                 {
                     return View("OneGraph" + id);
                 }else

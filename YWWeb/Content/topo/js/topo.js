@@ -165,6 +165,14 @@ Topo.prototype = {
     //轮询请求节点状态
     getNodeState: function() {
         var that = this;
+
+
+
+
+
+
+
+
         setInterval(function() {
             $.ajax({
                 type: 'POST',
