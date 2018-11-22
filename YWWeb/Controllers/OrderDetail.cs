@@ -31,9 +31,10 @@ namespace S5001Web.Controllers
         public string title;
         private t_PM_Order order;
         private t_CM_PDRInfo t_CM_PDRInfo;
+        private t_CM_Unit t_CM_Unit;
         private t_CM_UserInfo user;
         public List<t_cm_files> listFiles;
-        public OrderDetail(t_PM_Order order, t_CM_PDRInfo t_CM_PDRInfo, t_CM_UserInfo user, List<t_cm_files> listFiles)
+        public OrderDetail(t_PM_Order order, t_CM_PDRInfo t_CM_PDRInfo, t_CM_Unit t_CM_Unit, t_CM_UserInfo user, List<t_cm_files> listFiles)
         {
             // TODO: Complete member initialization
             addr=t_CM_PDRInfo.Position;
@@ -44,8 +45,8 @@ namespace S5001Web.Controllers
             order_id=order.OrderID.ToString();
 
             company = t_CM_PDRInfo.CompanyName;
-            connect_man = t_CM_PDRInfo.LinkMan;
-            tel = t_CM_PDRInfo.Mobile;
+            connect_man = t_CM_Unit.LinkMan;
+            tel = t_CM_Unit.LinkMobile;
             count=t_CM_PDRInfo.Transformers.ToString();
             finish_time=order.CheckDate.ToString();   
             first_arrived=order.FistDate.ToString();

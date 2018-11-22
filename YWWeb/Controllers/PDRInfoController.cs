@@ -2678,8 +2678,8 @@ namespace S5001Web.Controllers
                         pdrinfo.Name = info.Name;
                         pdrinfo.Position = info.Position;
                         pdrinfo.CompanyName = info.CompanyName;
-                        pdrinfo.LinkMan = info.LinkMan;
-                        pdrinfo.Mobile = info.Mobile;
+                        //pdrinfo.LinkMan = info.LinkMan;
+                        //pdrinfo.Mobile = info.Mobile;
                         pdrinfo.OperationMan = info.OperationMan;
                         pdrinfo.OperationTel = info.OperationTel;
                         if (info.Remarks != null)

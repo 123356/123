@@ -410,9 +410,9 @@ function edit() {
             $("#EadoCode").html(row.EadoCode);
             $("#Name").val(row.Name);
             $("#CompanyName").combobox("setValue", row.UnitID);
-            $("#LinkMan").val(row.LinkMan);
+            //$("#LinkMan").val(row.LinkMan);
             $("#FamilyID").val(row.FamilyID);
-            $("#Mobile").val(row.Mobile);
+            //$("#Mobile").val(row.Mobile);
             $("#OperationMan").val(row.OperationMan);
             $("#OperationTel").val(row.OperationTel);
             $("#Position").val(row.Position);
@@ -452,20 +452,20 @@ function edit() {
 }
 function save() {
     
-    if ($("#Name").val() == "" || $("#CompanyName").combotree("getText") == "" || $("#VoltageID").combotree("getText") == "" || $("#LinkMan").val() == "" || $("#Mobile").val() == "" || $("#OperationMan").val() == "" || $("#OperationTel").val() == "" || $("#Position").val() == "" || $("#Coordination").val() == "" || $("#AreaID").combotree("getValue") == "0" || $("#TypeID").combobox("getValue") == "0" || $("#AreaID").combobox("getValue") == "0") {
+    if ($("#Name").val() == "" || $("#CompanyName").combotree("getText") == "" || $("#VoltageID").combotree("getText") == "" || $("#OperationMan").val() == "" || $("#OperationTel").val() == "" || $("#Position").val() == "" || $("#Coordination").val() == "" || $("#AreaID").combotree("getValue") == "0" || $("#TypeID").combobox("getValue") == "0" || $("#AreaID").combobox("getValue") == "0") {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }
     var postData = {
         Name: $("#Name").val(),
         CompanyName: $("#CompanyName").combotree("getText"),
-        LinkMan: $("#LinkMan").val(),
+        //LinkMan: $("#LinkMan").val(),
         FamilyID: $("#FamilyID").val(),
         InstalledCapacity: $("#InstalledCapacity").val(),
         EleCalWay: $("#EleCalWay").val(),
         GovEleLevel: $("#GovEleLevel").val(),
         DeviationMode: $("#DeviationMode").val(),
-        Mobile: $("#Mobile").val(),
+        //Mobile: $("#Mobile").val(),
         OperationMan: $("#OperationMan").val(),
         OperationTel: $("#OperationTel").val(),
         Position: $("#Position").val(),
