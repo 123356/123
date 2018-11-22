@@ -838,31 +838,59 @@ namespace S5001Web.Controllers
                 }
                 else//修改
                 {
-                    list = list.Where(s => s.UserName.ToLower() == userInfo.UserName.ToLower() && s.UserID != userInfo.UserID).ToList();
-                    if (list.Count > 0)
+                    var m = list.Where(s => s.UserID == userInfo.UserID).FirstOrDefault();
+                    if (m != null)
                     {
-                        result = "此用户已存在，请重新输入！";
+                        if (m.UserName != null)
+                        {
+                            var model = list.Where(s => s.UserID != userInfo.UserID && s.UserName == userInfo.UserName).FirstOrDefault();
+                            if (model != null)
+                            {
+                                result = "此用户已存在，请重新输入！";
+                            }
+                            else
+                            {
+                                t_CM_UserInfo user = bll.t_CM_UserInfo.Where(c => c.UserID == userid).First();
+                                user.Company = userInfo.Company;
+                                user.Mobilephone = userInfo.Mobilephone;
+                                user.Post = userInfo.Post;
+                                user.GroupName = userInfo.GroupName;
+                                user.Telephone = userInfo.Telephone;
+                                user.UserName = userInfo.UserName;
+                                user.UNITList = userInfo.UNITList;
+                                user.Email = userInfo.Email;
+                                user.OpenAlarmEmail = userInfo.OpenAlarmEmail;
+                                user.OpenAlarmMsg = userInfo.OpenAlarmMsg;
+                                user.LogUrl = userInfo.LogUrl;
+                                user.UID = userInfo.UID;
+                                //user.LastYearPower = userInfo.LastYearPower;
+                                bll.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+                                bll.SaveChanges();
+                                Common.InsertLog("用户管理", CurrentUser.UserName, "修改用户[用户ID:" + userid + "_" + userInfo.UserName + "]");
+                            }
+
+                        }else
+                        {
+                            t_CM_UserInfo user = bll.t_CM_UserInfo.Where(c => c.UserID == userid).First();
+                            user.Company = userInfo.Company;
+                            user.Mobilephone = userInfo.Mobilephone;
+                            user.Post = userInfo.Post;
+                            user.GroupName = userInfo.GroupName;
+                            user.Telephone = userInfo.Telephone;
+                            user.UserName = userInfo.UserName;
+                            user.UNITList = userInfo.UNITList;
+                            user.Email = userInfo.Email;
+                            user.OpenAlarmEmail = userInfo.OpenAlarmEmail;
+                            user.OpenAlarmMsg = userInfo.OpenAlarmMsg;
+                            user.LogUrl = userInfo.LogUrl;
+                            user.UID = userInfo.UID;
+                            //user.LastYearPower = userInfo.LastYearPower;
+                            bll.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+                            bll.SaveChanges();
+                            Common.InsertLog("用户管理", CurrentUser.UserName, "修改用户[用户ID:" + userid + "_" + userInfo.UserName + "]");
+                        }
                     }
-                    else
-                    {
-                        t_CM_UserInfo user = bll.t_CM_UserInfo.Where(c => c.UserID == userid).First();
-                        user.Company = userInfo.Company;
-                        user.Mobilephone = userInfo.Mobilephone;
-                        user.Post = userInfo.Post;
-                        user.GroupName = userInfo.GroupName;
-                        user.Telephone = userInfo.Telephone;
-                        user.UserName = userInfo.UserName;
-                        user.UNITList = userInfo.UNITList;
-                        user.Email = userInfo.Email;
-                        user.OpenAlarmEmail = userInfo.OpenAlarmEmail;
-                        user.OpenAlarmMsg = userInfo.OpenAlarmMsg;
-                        user.LogUrl = userInfo.LogUrl;
-                        user.UID = userInfo.UID;
-                        //user.LastYearPower = userInfo.LastYearPower;
-                        bll.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
-                        bll.SaveChanges();
-                        Common.InsertLog("用户管理", CurrentUser.UserName, "修改用户[用户ID:" + userid + "_" + userInfo.UserName + "]");
-                    }
+                   
                 }
                 if (userInfo.UserName != "admin")
                 {
