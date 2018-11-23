@@ -15,6 +15,7 @@ $(function () {
     } else {
         id = noPid
     }
+    $.cookie('unitId', id, { expires: 7, path: '/' });
     $.post("/Home/UnitListData", function (data) {
         var selectOption = null;
         for (var i = 0; i < data.length; i++) {
