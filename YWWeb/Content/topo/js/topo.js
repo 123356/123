@@ -163,17 +163,15 @@ Topo.prototype = {
         this.electricMeter = electricMeter;
     },
     //轮询请求节点状态
-    getNodeState: function() {
-        var that = this;
+getNodeState: function() {
+    var that = this;
 
 
 
 
-
-
-
-
-        setInterval(function() {
+    var timer1 = setInterval(function() {
+        if (that.specialNode) {
+            clearInterval(timer1)
             $.ajax({
                 type: 'POST',
                 url: "https://yw.ife360.com/PDRInfo/GetOneGraph_kg",
@@ -182,11 +180,11 @@ Topo.prototype = {
                 },
                 success: function(res) {
                     var data = JSON.parse(res);
-
                     var nodes = that.specialNode;
                     if (!nodes) {
                         return
                     }
+
                     for (var a = 0; a < nodes.length; a++) {
                         if (nodes[a].__type == "text") {
                             that.nodeText(nodes[a], data);
@@ -198,21 +196,121 @@ Topo.prototype = {
                     }
                 },
             })
-
-            $.ajax({
-                type: 'POST',
-                url: "https://yw.ife360.com/PDRInfo/GetOneGraph_value",
-                data: {
-                    "pid": that.pid,
-                },
-                success: function(res) {
-                    that.meterData = res;
-                },
-            })
-        }, 3000)
+        }
+    }, 150)
 
 
-    },
+
+
+    //初始化表数据
+    $.ajax({
+        type: 'POST',
+        url: "https://yw.ife360.com/PDRInfo/GetOneGraph_value",
+        data: {
+            "pid": that.pid,
+        },
+        async: false,
+        success: function(res) {
+            that.meterData = res;
+        },
+    })
+
+
+    //长连接
+    function mqtt() {
+        var wsbroker = "59.110.153.200";
+        location.hostname; //mqtt websocket enabled broker ip
+        var wsport = 15675; // 端口号
+        //连接选项
+        var client;
+        var options = {
+            timeout: 30,
+            userName: "webguest",
+            password: "!@#23&Qbn",
+            keepAliveInterval: 10,
+            onSuccess: function(e) {
+                console.log(("连接成功"))
+                client.subscribe('/ny/12', {
+                    qos: 2
+                });
+            },
+            onFailure: function(message) {
+                console.log("连接失败 " + message.errorMessage);
+                setTimeout(() => {
+                    mqtt();
+            }, 10000);
+    }
+};
+if (location.protocol == "https:") {
+    options.useSSL = true;
+}
+client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid());
+//创建连接
+client.connect(options);
+client.onConnectionLost = function(responseObject) {
+    if (responseObject.errorCode !== 0) {
+        console.error("异常掉线，掉线信息为:" + responseObject.errorMessage);
+    }
+    setTimeout(() => {
+        mqtt();
+}, 10000);
+};
+client.onMessageArrived = function(res) {
+    var payload = JSON.parse(res.payloadString);
+    console.log(payload)
+    if (!payload.type) {
+        return;
+    }
+    if (payload.type == 6) {
+        var changeData = payload.content;
+        for (var key in changeData) {
+            for (var a = 0; a < that.meterData.length; a++) {
+                if (key == that.meterData[a].TagID) {
+                    that.meterData[a].DValue = changeData[key].PV;
+                    break;
+                }
+            }
+        }
+        return
+    }
+    var content = payload.content;
+    var nodes = that.specialNode;
+    if (!nodes) {
+        return
+    }
+    for (var a = 0; a < nodes.length; a++) {
+        if (nodes[a].__type == "text") {
+            that.nodeText(nodes[a], content);
+        } else if (nodes[a].__type == "node") {
+            that.nodeShape(nodes[a], content);
+        } else if (nodes[a].__type == "line") {
+            that.nodeLine(nodes[a], content);
+        }
+    }
+
+
+};
+}
+
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+mqtt();
+
+
+
+
+
+
+
+
+
+},
     // 文字类型改变
     nodeText: function(node, data) {
         var pv = data[node.id].PV;
