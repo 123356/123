@@ -2919,10 +2919,16 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 ControllerContext.HttpContext.Response.Charset = "UTF-8";
                 string path = Server.MapPath("/DownLoad/OneGraph/");
                 string saveName = pid + "_" + orderNo + "_" + "OneGraph.json";
+               
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
                 if (System.IO.File.Exists(path+saveName))
                 {
                     System.IO.File.Delete(path+saveName);
                 }
+
                 StreamWriter sr = System.IO.File.CreateText(path + saveName);
 
 
@@ -2939,7 +2945,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             }
             catch(Exception e)
             {
-                result = "出现异常，请联系管理员";
+                result = "出现异常，请联系管理员"+e.Message;
             }
             return Json(result,JsonRequestBehavior.AllowGet);
         }
