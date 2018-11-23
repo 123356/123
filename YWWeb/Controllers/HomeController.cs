@@ -1133,7 +1133,7 @@ namespace S5001Web.Controllers
                 if (type != "")
                     type = type.Substring(0, type.Length - 1);
                 item.DType = type;
-               
+
                 item.dianya = dianya;
             }
             //string strJson = Common.ComboboxToJson(list);
@@ -1431,7 +1431,7 @@ namespace S5001Web.Controllers
                 var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
                 List<int?> cidlist = new List<int?>();
                 string s = "";
-                foreach(var xssss in cidsss)
+                foreach (var xssss in cidsss)
                 {
                     s += xssss.cid + ",";
                 }
@@ -1587,8 +1587,8 @@ namespace S5001Web.Controllers
                                             anwyis m = new anwyis();
 
                                             m.zhanbiEvery = ss.Power / z * 100;
-                                            if (Convert.ToDecimal(by.Z) != 0&&!string.IsNullOrEmpty(by.Z))
-                                                  m.viewEvery = ss.Power / Convert.ToDecimal(by.Z) * 100;
+                                            if (Convert.ToDecimal(by.Z) != 0 && !string.IsNullOrEmpty(by.Z))
+                                                m.viewEvery = ss.Power / Convert.ToDecimal(by.Z) * 100;
                                             m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault().Name + "_" + by.DeviceName;
                                             model.fuzaiView.Add(m);
 
@@ -1631,11 +1631,11 @@ namespace S5001Web.Controllers
                     model.RatedCapacity = Math.Round((model.Sumload / z * 100).Value, 2);
                 }
 
-              
+
                 model.BianYacount = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).Count();
 
                 model.Diancount = bll.t_CM_PointsInfo.Where(p => pidlist.Contains(p.PID)).Count();
-              
+
                 //var xss = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
                 //var sss = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).GroupBy(p => p.PID);
                 //foreach (var it in sss)
@@ -1654,7 +1654,7 @@ namespace S5001Web.Controllers
                 //    }
 
                 //}
-              
+
                 foreach (var iii in pidlist)
                 {
                     decimal? sum2 = 0;
@@ -1682,7 +1682,7 @@ namespace S5001Web.Controllers
                                             anwyis v = new anwyis();
                                             if (pdf.zhaungji != 0)
                                                 v.zhanbiEvery = Math.Round((ss.Power / pdf.zhaungji * 100).Value, 2);
-                                            v.CName =  by.DeviceName;
+                                            v.CName = by.DeviceName;
                                             pdf.fuzaiView.Add(v);
 
                                         }
@@ -1716,8 +1716,8 @@ namespace S5001Web.Controllers
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-               
-           
+
+
                 var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
                 List<int?> cidlist = new List<int?>();
                 string s = "";
@@ -1730,8 +1730,8 @@ namespace S5001Web.Controllers
                     s = s.Substring(0, s.Length - 1);
                     cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
                 }
-                
-               
+
+
 
                 DateTime d = DateTime.Now.Date;
                 DateTime xd = DateTime.Now;
@@ -1801,7 +1801,7 @@ namespace S5001Web.Controllers
                 if (z != 0 && z != null)
                 {
                     model.RatedCapacity = Math.Round((model.Sumload / z * 100).Value, 2);
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -1925,7 +1925,7 @@ namespace S5001Web.Controllers
             public decimal? Sumload { get; set; }
             public decimal? RatedCapacity { get; set; }
             public List<anwyis> fuzaiView { get; set; }
-           // public decimal? AlarmCount { get; set; }
+            // public decimal? AlarmCount { get; set; }
             public decimal? MaxLoad { get; set; }
             public string maxTime { get; set; }
             public decimal? RongL { get; set; }
@@ -2384,7 +2384,7 @@ namespace S5001Web.Controllers
                 if (dianya != "")
                     dianya = dianya.Substring(0, dianya.Length - 1);
                 dianya += "kV";
-              
+
             }
 
             List<int?> xx = bll.t_CM_PDRInfo.Where(p => p.UnitID == item.UnitID).Select(p => p.IndID).Distinct().ToList();
@@ -2398,7 +2398,7 @@ namespace S5001Web.Controllers
             }
             if (type != "")
                 type = type.Substring(0, type.Length - 1);
-           
+
             item.DType = type;
             item.dianya = dianya;
             return Json(item);
@@ -2464,9 +2464,9 @@ namespace S5001Web.Controllers
             string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
             var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 
-            var cids = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 1 && pidlist.Contains(p.pid)).Select(p=>p.cid);
+            var cids = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 1 && pidlist.Contains(p.pid)).Select(p => p.cid);
             string sxx = "";
-            foreach(var c in cids)
+            foreach (var c in cids)
             {
                 sxx += c + ",";
             }
@@ -2475,22 +2475,22 @@ namespace S5001Web.Controllers
             var cidlist = sxx.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
             DateTime now = DateTime.Now;
             DateTime start = TimeUtils.getThisMonthFirstDay(now);
-            var list = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= start && p.RecordTime <= now && pidlist.Contains(p.PID)&&cidlist.Contains(p.CID)).GroupBy(p => p.RecordTime).ToList();
-            foreach(var item in list)
+            var list = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= start && p.RecordTime <= now && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).GroupBy(p => p.RecordTime).ToList();
+            foreach (var item in list)
             {
                 xy m = new xy();
                 if (item.Key != null)
                 {
                     m.x = item.Key.ToString();
                 }
-                if(item.Sum(p => p.Power) != null)
+                if (item.Sum(p => p.Power) != null)
                 {
                     m.y = item.Sum(p => p.Power).ToString();
                 }
                 result.Add(m);
             }
-           // List<t_ES_UserUsePowerMonthly> thisD = bll.ExecuteStoreQuery<t_ES_UserUsePowerMonthly>(thisMonth).ToList();
-            return Json(result,JsonRequestBehavior.AllowGet);
+            // List<t_ES_UserUsePowerMonthly> thisD = bll.ExecuteStoreQuery<t_ES_UserUsePowerMonthly>(thisMonth).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         public class xy
         {
@@ -2889,8 +2889,12 @@ namespace S5001Web.Controllers
                 string sql = @"select c.*,d.Score as HScore,d.UID,d.ID as zid from( select a.ID,a.Name,a.Score,b.ID as LTypeID,b.Fullmarks,b.Name as LName,b.Remarks from t_CM_BigScoringType a join t_CM_Score b on a.ID=b.BigTypeID) c 
                        left join t_CM_UnitScore d on c.LTypeID = d.TypeID";
 
-
-                var list = bll.t_CM_BigScoringType.ToList();
+                List<int?> li = new List<int?>();
+                li.Add(18);
+                li.Add(19);
+                li.Add(20);
+                li.Add(21);
+                var list = bll.t_CM_BigScoringType.Where(p => p.ID != 4).ToList();
                 foreach (var item in list)
                 {
                     ScoreP so = new ScoreP();
@@ -2908,9 +2912,12 @@ namespace S5001Web.Controllers
                         var s = bll.t_CM_UnitScore.Where(p => p.TypeID == sl.ID && p.UID == uid).FirstOrDefault();
                         if (s != null)
                         {
-                            sv.Score = s.Score;
-                            sv.UID = s.UID;
-                            sv.zid = s.ID;
+                            if (!li.Contains(sl.ID))
+                            {
+                                sv.Score = s.Score;
+                                sv.UID = s.UID;
+                                sv.zid = s.ID;
+                            }
                             if (s.Score != null)
                                 sv.isHave = true;
                             else
@@ -2920,6 +2927,36 @@ namespace S5001Web.Controllers
                     }
                     soure.Add(so);
                 }
+                var m = bll.t_CM_BigScoringType.Where(p => p.ID == 4).FirstOrDefault();
+
+                ScoreP soo = new ScoreP();
+                soo.key = m.ID;
+                soo.keyName = m.Name;
+                soo.score = m.Score;
+                var ll = bll.t_CM_Score.Where(p => p.BigTypeID == m.ID).ToList();
+                foreach (var sl in ll)
+                {
+                    ScoreView sv = new ScoreView();
+                    sv.ID = sl.ID;
+                    sv.Name = sl.Name;
+                    sv.Fullmarks = sl.Fullmarks;
+                    sv.Remarks = sl.Remarks;
+                    //var s = bll.t_CM_UnitScore.Where(p => p.TypeID == sl.ID && p.UID == uid).FirstOrDefault();
+                    //if (s != null)
+                    //{
+
+                    sv.Score = GetUnitScoreByJiSuanUID(uid, sl.ID);
+                    sv.UID = uid;
+                    //sv.zid = s.ID;
+
+                    if (sv.Score != null && sv.Score.Value > 0)
+                        sv.isHave = true;
+                    else
+                        sv.isHave = false;
+                    //}
+                    soo.Ldata.Add(sv);
+                }
+                soure.Add(soo);
 
                 //var result = bll.ExecuteStoreQuery<ScoreView>(sql).ToList();
                 //var re = result.GroupBy(p => p.ID);
@@ -2930,7 +2967,97 @@ namespace S5001Web.Controllers
                 return Json("出现异常");
             }
         }
+        public decimal GetUnitScoreByJiSuanUID(int uid, int typeid)
+        {
+            decimal score = 0;
+            string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+            var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+            var z = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
 
+            switch (typeid)
+            {
+                case 18:
+                    decimal s2 = 0;
+                    decimal? suml = 0;
+                    foreach (var item in pidlist)
+                    {
+                        var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == item && p.DTID == 3).ToList();
+                        foreach (var by in bianyaqilist)
+                        {
+                            if (!string.IsNullOrEmpty(by.C))
+                            {
+                                int ciddd = Convert.ToInt32(by.C);
+                                var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == item).FirstOrDefault();
+                                if (dbb != null)
+                                {
+                                    int cid = dbb.CID;
+                                    if (cid != 0)
+                                    {
+                                        var ss = bll.t_EE_PowerQualityDaily.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                                        if (ss != null)
+                                        {
+                                            if (ss.Power != null)
+                                            {
+                                                suml += ss.Power;
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    if (z != 0 && z != null)
+                    {
+                        s2 = Math.Round((suml / z * 100).Value, 2);
+                    }
+                    s2 = UnitScore.checkLoadRateScore(s2);
+                    score = s2;
+                    break;
+                case 19:
+                    decimal s3 = 0;
+                    var x = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID)).Count();
+                    s3 = UnitScore.checkAlarmScore(x);
+                    score = s3;
+                    break;
+                case 20:
+                    decimal? s4 = 0;
+                    var x1 = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID)).Sum(p => p.AFactor);
+                    if (x1 != null && pidlist.Count() != 0)
+                        s4 = x1 / pidlist.Count();
+                    s4 = UnitScore.checkPowerfactor(s4.Value);
+                    decimal? s5 = 0;
+                    var x2 = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID)).Sum(p => p.UnBalanceUa);
+                    if (x2 != null && pidlist.Count() != 0)
+                        s5 = x2 / pidlist.Count();
+                    s5 = UnitScore.checkTripartiteimbalance(s5.Value);
+                    decimal? s6 = 0;
+                    var x3 = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID)).Sum(p => p.UnBalanceUa);
+                    if (x3 != null && pidlist.Count() != 0)
+                        s6 = x3 / pidlist.Count();
+                    s6 = UnitScore.checkFrequency(s6.Value);
+                    score = s4.Value + s5.Value + s6.Value;
+                    break;
+                case 21:
+                    decimal? s7 = 0;
+                    var x4 = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID)).Max(p => p.MaxTemperature);
+                    if (x4 != null && pidlist.Count() != 0)
+                        s7 = x4 / pidlist.Count();
+                    s7 = UnitScore.checkTemperature(s7.Value);
+
+                    decimal? s8 = 0;
+                    var x5 = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID)).Max(p => p.MaxTemperature);
+                    if (x5 != null && pidlist.Count() != 0)
+                        s8 = x5 / pidlist.Count();
+                    s8 = UnitScore.checkHumidity(s8.Value);
+                    score = s7.Value + s8.Value;
+                    break;
+                default:
+                    break;
+            }
+            return score;
+        }
 
         public class ScoreP
         {
