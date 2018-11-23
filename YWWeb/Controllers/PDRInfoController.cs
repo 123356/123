@@ -61,7 +61,7 @@ namespace S5001Web.Controllers
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
                 ViewData["orderNo"] = ids[1];
-                if (Array.IndexOf(pids, 1) != -1)
+                if (Array.IndexOf(pids, Convert.ToInt32(ids[0])) == -1)
                 {
                     return View("OneGraph" + ids[0] + "_" + ids[1]);
                 }else
@@ -73,7 +73,7 @@ namespace S5001Web.Controllers
             {
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
-                if (Array.IndexOf(pids, 1) != -1)
+                if (Array.IndexOf(pids,Convert.ToInt32( ids[0])) == -1)
                 {
                     return View("OneGraph" + id);
                 }else
