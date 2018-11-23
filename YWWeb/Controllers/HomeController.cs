@@ -1812,10 +1812,13 @@ namespace S5001Web.Controllers
 
         public ActionResult GetAlarmAndOrderCount(int uid)
         {
-            string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
-            var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+            //string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+            //var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+            string unstr = HomeController.GetUID();
+            string pidstr = HomeController.GetPID(unstr);
+            var pidlist = pidstr.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
             int AlarmCount = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).Count();
-            int orderCount = bll.t_PM_Order.Where(p => pidlist.Contains(p.PID) && p.OrderState != 0).Count();
+            int orderCount = bll.t_PM_Order.Where(p => pidlist.Contains(p.PID) && p.OrderState != 4).Count();
             var result = new { AlarmCount = AlarmCount, orderCount = orderCount };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -2787,10 +2790,15 @@ namespace S5001Web.Controllers
             List<AralmView> list = new List<AralmView>();
             try
             {
-                if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                    return Json("暂无数据");
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
-                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                //if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
+                //    return Json("暂无数据");
+                //string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                //var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+
+                string unstr = HomeController.GetUID();
+                string pids = HomeController.GetPID(unstr);
+                var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+
                 string strquery = " 1=1";
 
 
@@ -2831,10 +2839,15 @@ namespace S5001Web.Controllers
         {
             try
             {
-                if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                    return Json("暂无数据");
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
-                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                //if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
+                //    return Json("暂无数据");
+                //string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                //var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                string unstr = HomeController.GetUID();
+                if (string.IsNullOrEmpty(unstr))
+                    return Content("暂无数据");
+                string pids = HomeController.GetPID(unstr);
+                var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //string pdrlist = CurrentUser.PDRList;
                 string strsql = "select * from t_PM_Order where 1=1";
                 string strquery = "";
