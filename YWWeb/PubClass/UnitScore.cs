@@ -57,9 +57,9 @@ namespace S5001Web.PubClass
             if (v == 1)
                 val = 2;
             else if (v >= Convert.ToDecimal(0.91) && v < 1)
-                val = 3;
+                val = 1;
             else if (v <= Convert.ToDecimal(0.9))
-                val = 5;
+                val = 0;
             else
                 val = 0;
 

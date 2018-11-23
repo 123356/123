@@ -1,7 +1,7 @@
 var unitId = $.cookie("unitId")
 
 $(function () {
-   
+
     console.log(unitId + "...")
     setInterval(function () {
         setHeight()
@@ -17,38 +17,39 @@ function setHeight() {
     $(".left").width((w * 0.8) + 24)
     $(".right").height(h - headerH - 1)
 }
-function  reCheck () {
-        console.log("重新刷新")
-        window.location.reload()
-    }
+function reCheck() {
+    console.log("重新刷新")
+    window.location.reload()
+}
 
 var vm = new Vue({
     el: '#scoreModel',
     data: {
         score: 0,
         checkCon: '--',
-        refresh:true,
+        refresh: true,
         list: [],
-        checkState:'检测中...'
+        checkState: '检测中...',
+        unitId:0
     },
     methods: {
-       
+
         getScore: function () {
-          
+
             var that = this
             this.$http({
                 url: '/Home/GetScoreByUID',
                 method: 'post',
                 params: {
-                    uid: unitId
+                    uid: this.unitId
                 }
             })
             .then(function (res) {
                 console.log(res.data[0])
-                var data  = res.data
+                var data = res.data
                 var options = new Array()
                 var relScore = 0
-               
+
                 for (var i = 0; i < data.length; i++) {
                     var score = 0
                     var okCount = 0
@@ -58,10 +59,10 @@ var vm = new Vue({
                         score += data[i].Ldata[j].Score
                         options.push(data[i].Ldata[j].Name)
                         if (data[i].Ldata[j].Score == data[i].Ldata[j].Fullmarks) {
-                            okCount+=1
+                            okCount += 1
                         }
                         if (data[i].Ldata[i].isHave) {
-                            check+=1
+                            check += 1
                         }
                     }
                     data[i].relScore = score
@@ -72,12 +73,12 @@ var vm = new Vue({
                     data[i].childShow = true
                 }
                 //总实际分数
-                
+
                 that.score = relScore
                 var ldataINdex = 0
                 that.list = data
-               
-              var timer = setInterval(function () {
+
+                var timer = setInterval(function () {
                     that.checkCon = "正在检测：" + options[ldataINdex]
                     if (ldataINdex == options.length - 1) {
                         that.checkCon = "检测完毕"
@@ -90,17 +91,17 @@ var vm = new Vue({
                     }
                     ldataINdex++
                 }, 100)
-                
+
             })
             .catch(function (e) {
                 console.log(e)
             })
         },
-       
-        
+
+
     },
     beforeMount: function () {
-        
+        this.unitId = $.cookie("unitId")
         this.getScore()
     }
 })

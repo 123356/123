@@ -210,6 +210,7 @@ function GetUnit() {
 
 function dosearch() {
     $.post("/Home/GetScoreByUID", { uid: $("#unit").combobox("getValue") }, function (data) {
+        console.log(data);
         var html = "";
         var inn = 1;
         $.each(data, function (index, val) {
@@ -224,7 +225,10 @@ function dosearch() {
                 html += "<td>" + v.Name + "</td>"
                 html += "<td>" + v.Remarks + "</td>"
                 html += "<td>" + v.Fullmarks + "</td>"
-                html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
+                if (val.key!=4)
+                    html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
+                else
+                    html += "<td data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
                 html += "</tr>"
                 ind++;
                 inn++
