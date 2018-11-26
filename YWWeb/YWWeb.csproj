@@ -990,6 +990,10 @@
     <Content Include="Content\topo\img\edit\vertical.png" />
     <Content Include="Content\topo\img\edit\verticalSpacing.png" />
     <Content Include="Content\topo\img\symbols\10.png" />
+    <Content Include="Content\topo\img\symbols\12.png" />
+    <Content Include="Content\topo\img\symbols\13.png" />
+    <Content Include="Content\topo\img\symbols\13s.png" />
+    <Content Include="Content\topo\img\symbols\14.png" />
     <Content Include="Content\topo\img\symbols\9.png" />
     <Content Include="Content\topo\img\symbols\arrow.png" />
     <Content Include="Content\topo\img\symbols\breaker.png" />
@@ -1000,7 +1004,6 @@
     <Content Include="Content\topo\img\symbols\text.png" />
     <Content Include="Content\topo\js\editor.js" />
     <Content Include="Content\topo\js\jtopo-0.4.8-min.js" />
-    <Content Include="Content\topo\js\jtopo-src.js" />
     <Content Include="Content\topo\js\jtopo.js" />
     <Content Include="Content\topo\js\palette_config.js" />
     <Content Include="Content\topo\js\topo.js" />

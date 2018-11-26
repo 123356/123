@@ -36,24 +36,29 @@ var palette_config = {
             `
         }, {
             name: '电表',
-            type: "electricMeter.png",
-            canvas: `g.beginPath();g.fillStyle="#999";g.fillRect(-node.width/2,-node.height/2,node.width,node.height);g.moveTo(this.width/2,-this.height/2);g.lineTo(-this.width/2,0);g.lineTo(-this.width/10,0);g.lineTo(-this.width/2,this.height/2);g.lineTo(this.width/2,0);g.lineTo(this.width/10,0);g.lineTo(this.width/2,-this.height/2);g.fillStyle="#FFFF00";g.fill();this.paintText(g);`
+            type: "electricMeter.png",               
+            canvas: `var img=new Image();img.src="../../Content/topo/img/symbols/electricMeter.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
         },
       {
           name: '12',
           type: "12.png",
           canvas: `g.beginPath();g.strokeStyle="#f00";g.arc(0,-node.height/4,node.height/4,0,2*Math.PI,true);g.lineWidth=2;g.stroke();g.beginPath();g.arc(0,node.height/4,node.height/4,0,2*Math.PI,true);g.moveTo(0,-node.height/5*2);g.lineTo(-node.width/8,-node.height/6);g.lineTo(node.width/8,-node.height/6);g.lineTo(0,-node.height/5*2);g.moveTo(node.width/8,node.height/9);g.lineTo(0,node.height/4);g.lineTo(-node.width/8,node.height/9);g.moveTo(0,node.height/4);g.lineTo(0,node.height/5*2);g.stroke();`
       },
-            {
-                name: '13',
-                type: "13.png",
-                canvas: `g.beginPath();g.strokeStyle="#f00";g.lineWidth=3;g.strokeRect(-node.width/3,-node.height/6,node.width/2,node.height/3);g.moveTo(-node.width/2,0);g.lineTo(-node.width/3,0);g.moveTo(node.width/6,0);g.lineTo(node.width/3,0);g.lineTo(node.width/3,node.height/7);g.lineTo(node.width/2,0);g.lineTo(node.width/3,-node.height/7);g.lineTo(node.width/3,0);g.stroke();this.paintText(g);`
-            },
-            {
-                name: '14',
-                type: "14.png",
-                canvas: `var img=new Image();img.src="../../Content/topo/img/symbols/14.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
-            },
+        {
+            name: '13',
+            type: "13.png",
+            canvas: `g.beginPath();g.strokeStyle="#f00";g.lineWidth=3;g.strokeRect(-node.width/3,-node.height/6,node.width/2,node.height/3);g.moveTo(-node.width/2,0);g.lineTo(-node.width/3,0);g.moveTo(node.width/6,0);g.lineTo(node.width/3,0);g.lineTo(node.width/3,node.height/7);g.lineTo(node.width/2,0);g.lineTo(node.width/3,-node.height/7);g.lineTo(node.width/3,0);g.stroke();this.paintText(g);`
+          },
+        {
+        name: '13实心',
+            type: "13s.png",
+        canvas: `g.beginPath();g.strokeStyle="#f00";g.lineWidth=3;g.strokeRect(-node.width/3,-node.height/6,node.width/2,node.height/3);g.moveTo(-node.width/2,0);g.lineTo(-node.width/3,0);g.stroke();g.closePath();g.beginPath();g.moveTo(node.width/6,0);g.lineTo(node.width/3,0);g.stroke();g.closePath();g.beginPath();g.moveTo(node.width/3,0);g.lineTo(node.width/3,node.height/7);g.lineTo(node.width/2,0);g.lineTo(node.width/3,-node.height/7);g.lineTo(node.width/3,0);g.fillStyle="#f00";g.fill();this.paintText(g);`
+        },
+        {
+            name: '14',
+            type: "14.png",
+            canvas: `var img=new Image();img.src="../../Content/topo/img/symbols/14.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
+        },
         ]
     },
 };
