@@ -618,6 +618,7 @@
           <Property Name="系数" Type="float" />
           <Property Name="equ_cf_id" Type="int" />
           <Property Name="dev_id" Type="int" />
+          <Property Name="PV_base" Type="float" />
         </EntityType>
         <EntityType Name="t_CM_RoleInfo">
           <Key>
@@ -4644,6 +4645,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="系数" Type="Double" />
           <Property Name="equ_cf_id" Type="Int32" />
           <Property Name="dev_id" Type="Int32" />
+          <Property Name="PV_base" Type="Double" />
         </EntityType>
         <EntityType Name="t_CM_UserInfo">
           <Key>
@@ -7102,6 +7104,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_PointsInfo">
             <EntityTypeMapping TypeName="YWModel.t_CM_PointsInfo">
               <MappingFragment StoreEntitySet="t_CM_PointsInfo">
+                <ScalarProperty Name="PV_base" ColumnName="PV_base" />
                 <ScalarProperty Name="dev_id" ColumnName="dev_id" />
                 <ScalarProperty Name="equ_cf_id" ColumnName="equ_cf_id" />
                 <ScalarProperty Name="系数" ColumnName="系数" />
