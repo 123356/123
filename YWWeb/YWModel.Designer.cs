@@ -15456,6 +15456,30 @@ namespace S5001Web
         private Nullable<global::System.Int32> _dev_id;
         partial void Ondev_idChanging(Nullable<global::System.Int32> value);
         partial void Ondev_idChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> PV_base
+        {
+            get
+            {
+                return _PV_base;
+            }
+            set
+            {
+                OnPV_baseChanging(value);
+                ReportPropertyChanging("PV_base");
+                _PV_base = StructuralObject.SetValidValue(value, "PV_base");
+                ReportPropertyChanged("PV_base");
+                OnPV_baseChanged();
+            }
+        }
+        private Nullable<global::System.Double> _PV_base;
+        partial void OnPV_baseChanging(Nullable<global::System.Double> value);
+        partial void OnPV_baseChanged();
 
         #endregion
 
