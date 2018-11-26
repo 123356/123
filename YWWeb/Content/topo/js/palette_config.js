@@ -36,8 +36,8 @@ var palette_config = {
             `
         }, {
             name: '电表',
-            type: "electricMeter.png",
-            canvas: `g.beginPath();g.fillStyle="#999";g.fillRect(-node.width/2,-node.height/2,node.width,node.height);g.moveTo(this.width/2,-this.height/2);g.lineTo(-this.width/2,0);g.lineTo(-this.width/10,0);g.lineTo(-this.width/2,this.height/2);g.lineTo(this.width/2,0);g.lineTo(this.width/10,0);g.lineTo(this.width/2,-this.height/2);g.fillStyle="#FFFF00";g.fill();this.paintText(g);`
+            type: "electricMeter.png",               
+            canvas: `var img=new Image();img.src="../../Content/topo/img/symbols/electricMeter.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
         },
       {
           name: '12',
