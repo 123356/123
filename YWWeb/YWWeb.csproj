@@ -993,6 +993,7 @@
     <Content Include="Content\topo\img\symbols\12.png" />
     <Content Include="Content\topo\img\symbols\13.png" />
     <Content Include="Content\topo\img\symbols\13s.png" />
+    <Content Include="Content\topo\img\symbols\13ss.png" />
     <Content Include="Content\topo\img\symbols\14.png" />
     <Content Include="Content\topo\img\symbols\9.png" />
     <Content Include="Content\topo\img\symbols\arrow.png" />
@@ -1003,7 +1004,6 @@
     <Content Include="Content\topo\img\symbols\switch.png" />
     <Content Include="Content\topo\img\symbols\text.png" />
     <Content Include="Content\topo\js\editor.js" />
-    <Content Include="Content\topo\js\jtopo-0.4.8-min.js" />
     <Content Include="Content\topo\js\jtopo.js" />
     <Content Include="Content\topo\js\palette_config.js" />
     <Content Include="Content\topo\js\topo.js" />
@@ -2163,6 +2163,7 @@
     <Content Include="Content\iconfont\iconfont.woff" />
     <Content Include="Content\font\UnidreamLED.ttf" />
     <Content Include="Content\font\Farrington7B_Qiqi.ttf" />
+    <Content Include="DownLoad\OneGraph\178_1_OneGraph.json" />
     <None Include="jquery-easyui-1.4.5\themes\material\images\Thumbs.db" />
     <Content Include="Views\SysInfo\ModuleList.cshtml" />
     <Content Include="Views\SysInfo\LogList.cshtml" />

@@ -57,8 +57,8 @@ canvas: `g.beginPath();g.strokeStyle="#f00";g.lineWidth=3;g.strokeRect(-node.wid
     canvas: `g.beginPath();g.strokeStyle=node.color;g.fillStyle=node.color;g.lineWidth=3;g.fillRect(-node.width/3,-node.height/6,node.width/2,node.height/3);g.fill();g.closePath();g.beginPath();g.moveTo(-node.width/2,0);g.lineTo(-node.width/3,0);g.stroke();g.closePath();g.beginPath();g.moveTo(node.width/6,0);g.lineTo(node.width/3,0);g.stroke();g.closePath();g.beginPath();g.moveTo(node.width/3,0);g.lineTo(node.width/3,node.height/7);g.lineTo(node.width/2,0);g.lineTo(node.width/3,-node.height/7);g.lineTo(node.width/3,0);g.fillStyle=node.color;g.fill();this.paintText(g);`
 }, {
 name: '14',
-    type: "14.png",
-canvas: `var img=new Image();img.src="../../Content/topo/img/symbols/14.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
+type: "14.png",
+canvas: `var img=new Image();img.src="../../../Content/topo/img/symbols/14.png";g.drawImage(img,-node.width/2,-node.height/2,node.width,node.height);this.paintText(g);`
 },
 ]
 },
