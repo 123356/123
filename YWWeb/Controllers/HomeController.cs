@@ -1484,22 +1484,26 @@ namespace S5001Web.Controllers
                     else
                     {
 
-                        if (Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6) < DateTime.Now)
-                            start = DateTime.Now.AddMonths(6);
+                        //if (Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6) < DateTime.Now)
+                        //    start = DateTime.Now.AddMonths(6);
+                        //else
+                        //    start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6).ToShortDateString());
+                        if (pdflist.FirstOrDefault().ApplcationTime == null)
+                        {
+                            model.CheckDays = checkDays;
+                        }
                         else
-                            start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6).ToShortDateString());
-                        end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                        {
+                            start = GetDatime(pdflist.FirstOrDefault().ApplcationTime.Value);
+                            end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                            TimeSpan sp = start.Subtract(end);
+                            checkDays = sp.Days.ToString();
+                            model.CheckDays = checkDays;
+                        }
+                        
+                     
                     }
-                    if (pdflist.FirstOrDefault().ApplcationTime == null)
-                    {
-                        model.CheckDays = checkDays;
-                    }
-                    else
-                    {
-                        TimeSpan sp = start.Subtract(end);
-                        checkDays = sp.Days.ToString();
-                        model.CheckDays = checkDays;
-                    }
+                   
                 }
                 decimal SumScore = 0;
                 foreach (var item in pidlist)
@@ -1706,6 +1710,15 @@ namespace S5001Web.Controllers
             return Json(model);
         }
 
+        public DateTime GetDatime(DateTime d)
+        {
+            DateTime dt = d.AddMonths(6);
+            while (dt<DateTime.Now) {
+                dt = dt.AddMonths(6);
+            };
+            DateTime start = Convert.ToDateTime(Convert.ToDateTime(dt.ToShortDateString()));
+            return start;
+        }
 
         public JsonResult ViewLoop(int uid)
         {

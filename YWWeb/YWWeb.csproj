@@ -1000,7 +1000,6 @@
     <Content Include="Content\topo\img\symbols\text.png" />
     <Content Include="Content\topo\js\editor.js" />
     <Content Include="Content\topo\js\jtopo-0.4.8-min.js" />
-    <Content Include="Content\topo\js\jtopo-src.js" />
     <Content Include="Content\topo\js\jtopo.js" />
     <Content Include="Content\topo\js\palette_config.js" />
     <Content Include="Content\topo\js\topo.js" />
