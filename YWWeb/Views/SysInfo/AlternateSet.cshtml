@@ -198,7 +198,7 @@
                     //双击开启编辑行
                     $('#editwin').window({
                         modal: true,
-                        draggable: false, //可拖动，默认false  
+                        draggable: true, //可拖动，默认false  
                         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false    
                         href: '/SysInfo/AlternateSetEdit?asid=' + row.AlternateID + "&pid=" + row.PID,
                         onClose: function () {

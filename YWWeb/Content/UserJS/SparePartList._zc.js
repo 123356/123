@@ -48,7 +48,7 @@ function edit() {
 function editFrame(sparepartid) {
     $('#editwin').window({
         modal: true,
-        draggable: false, //可拖动，默认false  
+        draggable: true, //可拖动，默认false  
         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false 
         href: '/SparePartManage/SparePartEdits?sparepartid=' + sparepartid,
         onClose: function () {

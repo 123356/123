@@ -35,7 +35,7 @@ $('#list_data').treegrid({
 function OpenFrame(moduleid) {
     $('#editwin').window({
         modal: true,
-        draggable: false, //可拖动，默认false  
+        draggable: true, //可拖动，默认false  
         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false  
         href: '/SysInfo/ModuleEdit?moduleid=' + moduleid
     });
@@ -53,7 +53,7 @@ function allotButton() {
             closed: false,
             top: ($(window).height() - 400) * 0.5,
             left: ($(window).width() - 700) * 0.5,
-            draggable: false, //可拖动，默认false  
+            draggable: true, //可拖动，默认false  
             minimizable: false, //最小化，默认false  
             maximizable: false, //最大化，默认false  
             collapsible: false, //可折叠，默认false  

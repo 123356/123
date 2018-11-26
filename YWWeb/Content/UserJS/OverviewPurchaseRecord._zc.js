@@ -327,7 +327,7 @@ function add() {
         minimizable: false, //最小化，默认false
         maximizable: false, //最大化，默认false
         collapsible: false, //可折叠，默认false
-        draggable: false, //可拖动，默认false
+        draggable: true, //可拖动，默认false
         resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
     });
     //添加时默认选择配电室
@@ -369,7 +369,7 @@ function edit() {
                 minimizable: false, //最小化，默认false
                 maximizable: false, //最大化，默认false
                 collapsible: false, //可折叠，默认false
-                draggable: false, //可拖动，默认false
+                draggable: true, //可拖动，默认false
                 resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
             });
             $('#list_data').datagrid('uncheckAll');

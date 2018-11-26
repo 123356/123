@@ -5,7 +5,7 @@ function OpenFrame(userid) {
         top: ($(window).height() - 450) * 0.5,
         left: ($(window).width() - 800) * 0.5,
         height: ($(window).height() - 0) * 0.7,
-        draggable: false, //可拖动，默认false  
+        draggable: true, //可拖动，默认false  
         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false    
         href: '/UserInfo/UserEdit?userid=' + userid,
         onClose: function () { dosearch(); }
@@ -149,7 +149,7 @@ function send() {
             top: ($(window).height() - 450) * 0.5,
             left: ($(window).width() - 800) * 0.5,
             height: 400,
-            draggable: false, //可拖动，默认false  
+            draggable: true, //可拖动，默认false  
             resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false    
             href: '/PerationMaintenance/StaffManage?userid=' + userMob
         });

@@ -203,7 +203,7 @@ function addjihua() {
                     minimizable: false, //最小化，默认false  
                     maximizable: false, //最大化，默认false  
                     collapsible: false, //可折叠，默认false  
-                    draggable: false, //可拖动，默认false  
+                    draggable: true, //可拖动，默认false  
                     resizable: false//可缩放，即可以通脱拖拉改变大小，默认false 
                 });
                 loadSelectUnit(row.UID);
@@ -216,7 +216,7 @@ function addjihua() {
             //        minimizable: false, //最小化，默认false  
             //        maximizable: false, //最大化，默认false  
             //        collapsible: false, //可折叠，默认false  
-            //        draggable: false, //可拖动，默认false  
+            //        draggable: true, //可拖动，默认false  
             //        resizable: false//可缩放，即可以通脱拖拉改变大小，默认false 
             //    });
                        
