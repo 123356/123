@@ -233,8 +233,8 @@ function dosearch() {
                 html += "<td>" + v.Remarks + "</td>"
                 html += "<td>" + v.Fullmarks + "</td>"
                 if (val.key != 4) {
-                    html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
-                    html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + " data-r="+result+">" + result + "</td>"
+                    html += "<td  data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
+                    html += "<td  data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + " data-r="+result+">" + result + "</td>"
                 }
                 else {
                     html += "<td data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
@@ -294,34 +294,69 @@ function ClickTr(obj) {
 //    $("#" + u + t).focus();
 //}
 function SaveForm() {
-    var u = $("#unit").combobox("getValue")
-    var t = $(".bgcolor").attr("data-typeid");
+    var obj = $("#lst").find("tr");
+    //console.log(obj);
+    var da = [];
+    $.each(obj, function (index, val) {
+        var t = $(val).attr("data-typeid");
+        var u = $("#unit").combobox("getValue");
+        var val = $("#" + u + t + "5").val();
+        var result = $("#" + u + t + "6").val();
+        if (typeof( val) == "undefined") {
+          var  val = 0;
+        } if (typeof(result) == "undefined") {
+          var  result = "--";
+        }
+        //console.log(val);
+        //console.log(result);
+        if (val != 0 && result != "--") {
+            var objform = {
+                typeid: t,
+                val: val,
+                remarks: result
+            };
+            da.push(objform);
+        }
+     
+    })
+    
+    //console.log(da);
 
-    var val=$("#"+u+t+"5").val();
-    var result=$("#"+u+t+"6").val();
-    var z = $(".bgcolor").find("td").eq(4).html();
-    if (val <= z) {
+    var u = $("#unit").combobox("getValue")
+    //var t = $(".bgcolor").attr("data-typeid");
+
+    //var val=$("#"+u+t+"5").val();
+    //var result=$("#"+u+t+"6").val();
+    //var z = $(".bgcolor").find("td").eq(4).html();
+    //if (val <= z) {
+    if (da.length!=0) {
         $.messager.confirm('提示', '你确定要保存吗？', function (r) {
             if (r) {
                 //$(obj).parent().attr("data-val", $(obj).val());
                 //$(obj).parent().html("<td>" + $(obj).val() + "</td>")
                 var data = {
-                    'val': val,
-                    'uid':  u,
-                    'typeid': t,
-                    'remarks': result
+                    'uid': u,
+                    //'val': val,
+                    //'typeid': t,
+                    //'remarks': result
+                    'str': JSON.stringify(da)
                 }
                 $.post('/Home/SaveUnitScore', data, function (mes) {
                     $.messager.alert("提示", mes, "info");
-                    $("#" + u + t + "5").parent().html(val);
-                    $("#" + u + t + "6").parent().html(result);
+                    //$("#" + u + t + "5").parent().html(val);
+                    //$("#" + u + t + "6").parent().html(result);
+                    $("#lst").html("正在刷新.....")
+                    dosearch();
                 })
             } else {
                 //$(obj).parent().html("<td>" + $(obj).val() + "</td>")
             }
         })
     } else {
-        $.messager.alert("提示", "该项最多" + z + "分！", "info");
-        $("#" + u + t).focus();
+        $.messager.alert("提示", "请输入数据", "info");
     }
+    //} else {
+    //    $.messager.alert("提示", "该项最多" + z + "分！", "info");
+    //    $("#" + u + t).focus();
+    //}
 }
