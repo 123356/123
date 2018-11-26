@@ -64,9 +64,9 @@
         </div>
 
         <div class="alarm_popups_btn">
-            <form target="main_frame" action="/AlarmManage/Index?pid=0">
-                <a href="" id="alarmDetail" target="main_frame">立即查看</a>
-            </form>
+           
+                <!--<a href="/AlarmManage/Index?pid=0" id="alarmDetail"  target="main_frame" >立即查看</a>-->
+            
         </div>
     </div>
    
@@ -78,10 +78,14 @@
        
         $("#alarm_popups").fadeOut("slow")
     })
-    var obj = document.getElementById("alarm_popups")
+    $(".alarm_popups_btn").click(function () {
+
+        $("#alarm_popups").hide()
+    })
+    /*var obj = document.getElementById("alarm_popups")
     obj.addEventListener("click", function () {
         $("#alarm_popups").fadeOut()
-    })
+    })*/
     $(function () {
        
     })

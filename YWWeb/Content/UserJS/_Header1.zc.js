@@ -67,7 +67,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem  + alarmInf;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/alarm.mp3")//报警
-        $("#alarmDetail").attr("onclick","location.href='/AlarmManage/Index?pid=0'")
+        $(".alarm_popups_btn").html('<a href="/AlarmManage/Index?pid=0" id="alarmDetail"  target="main_frame" >立即查看</a>')
+      /* $("#alarmDetail").attr("onclick","location.href='/AlarmManage/Index?pid=0'")*/
     } else {
         sArarmMp3Name += "0";
     }
@@ -75,7 +76,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem + alarmInfOrder;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/apply.mp3")//工单
-        $("#alarmDetail").attr("onclick", "location.href='/Orderinfo/OrderList'")
+        $(".alarm_popups_btn").html('<a href="/Orderinfo/OrderList" id="alarmDetail"  target="main_frame" >立即查看</a>')
+        /*  $("#alarmDetail").attr("onclick", "location.href='/Orderinfo/OrderList'")*/
     } else {
         sArarmMp3Name += "0";
     }
@@ -83,7 +85,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem  + alarmInfBug;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/bug.mp3")//隐患
-        $("#alarmDetail").attr("onclick", "location.href='/PerationMaintenance/HazardMan'")
+        $(".alarm_popups_btn").html('<a href="/PerationMaintenance/HazardMan" id="alarmDetail"  target="main_frame" >立即查看</a>')
+        /* $("#alarmDetail").attr("onclick", "location.href='/PerationMaintenance/HazardMan'")*/
     } else {
         sArarmMp3Name += "0";
     }
