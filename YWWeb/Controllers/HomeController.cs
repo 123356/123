@@ -2949,6 +2949,7 @@ namespace S5001Web.Controllers
                             else
                                 sv.isHave = false;
                         }
+                        sv.Result = s.Remarks;
                         so.Ldata.Add(sv);
                     }
                     soure.Add(so);
@@ -2980,6 +2981,7 @@ namespace S5001Web.Controllers
                     else
                         sv.isHave = false;
                     //}
+                    sv.Result = sl.Remarks;
                     soo.Ldata.Add(sv);
                 }
                 soure.Add(soo);
@@ -3115,9 +3117,10 @@ namespace S5001Web.Controllers
             public int? UID { get; set; }
             public int? zid { get; set; }
             public bool isHave { get; set; }
+            public string Result { get; set; }
         }
 
-        public ActionResult SaveUnitScore(int uid, int typeid, int val)
+        public ActionResult SaveUnitScore(int uid, int typeid, int val,string remarks)
         {
             string result = "";
             try
@@ -3129,11 +3132,13 @@ namespace S5001Web.Controllers
                     model.UID = uid;
                     model.Score = val;
                     model.TypeID = typeid;
+                    model.Remarks = remarks;
                     bll.t_CM_UnitScore.AddObject(model);
                 }
                 else
                 {
                     m.Score = val;
+                    m.Remarks = remarks;
                     bll.ObjectStateManager.ChangeObjectState(m, EntityState.Modified);
                 }
                 int n = bll.SaveChanges();

@@ -197,7 +197,7 @@
           <Property Name="passwd" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="mediaport" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="nStreamType" Type="int" Nullable="false" />
-          <Property Name="ip" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ip" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
           <Property Name="Brand" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -748,6 +748,7 @@
           <Property Name="UID" Type="int" />
           <Property Name="TypeID" Type="int" />
           <Property Name="Score" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Remarks" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="t_CM_UserInfo">
           <Key>
@@ -803,6 +804,7 @@
           <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
           <Property Name="CateName" Type="varchar" MaxLength="50" />
           <Property Name="Units" Type="varchar" MaxLength="50" />
+          <Property Name="OrderNo" Type="decimal" Precision="18" Scale="1" />
         </EntityType>
         <EntityType Name="t_CM_WarmSet">
           <Key>
@@ -2043,6 +2045,7 @@
           <Property Name="TagName" Type="nvarchar" MaxLength="50" />
           <Property Name="CateName" Type="varchar" MaxLength="50" />
           <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderNo" Type="decimal" Precision="18" Scale="1" />
           <Property Name="PID" Type="int" />
           <Property Name="PName" Type="varchar" MaxLength="50" />
           <Property Name="DTID" Type="int" />
@@ -2916,6 +2919,7 @@ FROM [dbo].[V_DeviceDetail] AS [V_DeviceDetail]</DefiningQuery>
 [V_DeviceInfoState_PDR1].[TagName] AS [TagName], 
 [V_DeviceInfoState_PDR1].[CateName] AS [CateName], 
 [V_DeviceInfoState_PDR1].[TypeName] AS [TypeName], 
+[V_DeviceInfoState_PDR1].[OrderNo] AS [OrderNo], 
 [V_DeviceInfoState_PDR1].[PID] AS [PID], 
 [V_DeviceInfoState_PDR1].[PName] AS [PName], 
 [V_DeviceInfoState_PDR1].[DTID] AS [DTID], 
@@ -3620,7 +3624,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="passwd" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="mediaport" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="nStreamType" Type="Int32" Nullable="false" />
-          <Property Name="ip" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ip" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Brand" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -3712,6 +3716,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="Remarks" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
           <Property Name="CateName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Units" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="OrderNo" Type="Decimal" Precision="18" Scale="1" />
         </EntityType>
         <EntityType Name="t_DE_DiagnoseCondition">
           <Key>
@@ -5164,6 +5169,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="RecTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="中文描述" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderNo" Type="Decimal" Precision="18" Scale="1" />
         </EntityType>
         <EntityType Name="t_CM_InstallRecord">
           <Key>
@@ -6064,6 +6070,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="UID" Type="Int32" />
           <Property Name="TypeID" Type="Int32" />
           <Property Name="Score" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6238,6 +6245,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_ValueType">
             <EntityTypeMapping TypeName="YWModel.t_CM_ValueType">
               <MappingFragment StoreEntitySet="t_CM_ValueType">
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="DataTypeID" ColumnName="DataTypeID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NameEn" ColumnName="NameEn" />
@@ -7712,6 +7720,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="V_DeviceInfoState_PDR1">
             <EntityTypeMapping TypeName="YWModel.V_DeviceInfoState_PDR1">
               <MappingFragment StoreEntitySet="V_DeviceInfoState_PDR1">
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="CName" ColumnName="CName" />
                 <ScalarProperty Name="中文描述" ColumnName="中文描述" />
                 <ScalarProperty Name="RecTime" ColumnName="RecTime" />
@@ -8661,6 +8670,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_UnitScore">
             <EntityTypeMapping TypeName="YWModel.t_CM_UnitScore">
               <MappingFragment StoreEntitySet="t_CM_UnitScore">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />

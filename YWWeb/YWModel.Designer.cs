@@ -17712,6 +17712,30 @@ namespace S5001Web
         private Nullable<global::System.Decimal> _Score;
         partial void OnScoreChanging(Nullable<global::System.Decimal> value);
         partial void OnScoreChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Remarks
+        {
+            get
+            {
+                return _Remarks;
+            }
+            set
+            {
+                OnRemarksChanging(value);
+                ReportPropertyChanging("Remarks");
+                _Remarks = StructuralObject.SetValidValue(value, true, "Remarks");
+                ReportPropertyChanged("Remarks");
+                OnRemarksChanged();
+            }
+        }
+        private global::System.String _Remarks;
+        partial void OnRemarksChanging(global::System.String value);
+        partial void OnRemarksChanged();
 
         #endregion
 
@@ -18692,6 +18716,30 @@ namespace S5001Web
         private global::System.String _Units;
         partial void OnUnitsChanging(global::System.String value);
         partial void OnUnitsChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> OrderNo
+        {
+            get
+            {
+                return _OrderNo;
+            }
+            set
+            {
+                OnOrderNoChanging(value);
+                ReportPropertyChanging("OrderNo");
+                _OrderNo = StructuralObject.SetValidValue(value, "OrderNo");
+                ReportPropertyChanged("OrderNo");
+                OnOrderNoChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _OrderNo;
+        partial void OnOrderNoChanging(Nullable<global::System.Decimal> value);
+        partial void OnOrderNoChanged();
 
         #endregion
 
@@ -41791,6 +41839,30 @@ namespace S5001Web
         private global::System.String _CName;
         partial void OnCNameChanging(global::System.String value);
         partial void OnCNameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> OrderNo
+        {
+            get
+            {
+                return _OrderNo;
+            }
+            set
+            {
+                OnOrderNoChanging(value);
+                ReportPropertyChanging("OrderNo");
+                _OrderNo = StructuralObject.SetValidValue(value, "OrderNo");
+                ReportPropertyChanged("OrderNo");
+                OnOrderNoChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _OrderNo;
+        partial void OnOrderNoChanging(Nullable<global::System.Decimal> value);
+        partial void OnOrderNoChanged();
 
         #endregion
 

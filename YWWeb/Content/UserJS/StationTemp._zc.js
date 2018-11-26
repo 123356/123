@@ -215,20 +215,31 @@ function dosearch() {
         var inn = 1;
         $.each(data, function (index, val) {
             var ind = 0;
-            html += "<tr>"
+         
             $.each(val.Ldata, function (i, v) {
+                if(val.key!=4){
+                    html += "<tr onClick='ClickTr(this)' data-typeid=" + v.ID + ">"}
+                else
+                    html += "<tr data-typeid=" + v.ID + ">"
                 html += "<td>" + inn + "</td>";
                 if (ind == 0) {
                     html += "<td rowspan=" + val.Ldata.length + ">" + val.keyName + "</td>"
+                } else {
+                    html += "<td style='display:none;'></td>"
                 }
                 var vv = (v.Score == null || v.Score == "") ? 0 : v.Score;
+                var result = (v.Result == null || v.Result == "") ? "无" : v.Result;
                 html += "<td>" + v.Name + "</td>"
                 html += "<td>" + v.Remarks + "</td>"
                 html += "<td>" + v.Fullmarks + "</td>"
-                if (val.key!=4)
+                if (val.key != 4) {
                     html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
-                else
+                    html += "<td onClick='Add(this)' data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + " data-r="+result+">" + result + "</td>"
+                }
+                else {
                     html += "<td data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + vv + "</td>"
+                    html += "<td data-typeid=" + v.ID + " data-val=" + vv + " data-zongfen=" + v.Fullmarks + ">" + result + "</td>"
+                }
                 html += "</tr>"
                 ind++;
                 inn++
@@ -239,42 +250,74 @@ function dosearch() {
 }
 
 
-function Add(obj) {
-    var u = $("#unit").combobox("getValue")
-    var t = $(obj).attr("data-typeid");
-    var v = $(obj).attr("data-val");
-    var z = $(obj).attr("data-zongfen");
-    //alert(u);
-    //alert(t);
-    //var v = $(obj).attr("data-val");
-    //$("#uid").val(u);
-    //$("#pzid").val(p);
-    $(obj).html("<input type='text' id=" + u + t + " data-uid=" + u + " data-typeid=" + t + " data-zongfen=" + z + " onBlur='tijiao(this);' />");
-    $("#" + u + t).val(v);
-  
-    //alert($("#" + u + t).val());
-    $("#" + u + t).focus();
+
+function ClickTr(obj) {
+
+    var val5 = $(obj).find("td").eq(5).attr("data-val");
+    var val6 = $(obj).find("td").eq(6).attr("data-r");
+   
+    $(obj).siblings().removeClass("bgcolor");
+    if ($(obj).hasClass("bgcolor")) {
+        $(obj).removeClass("bgcolor");
+        $(obj).find("td").eq(5).html(val5);
+        $(obj).find("td").eq(6).html(val6);
+    } else {
+        var u = $("#unit").combobox("getValue")
+        var t = $(obj).attr("data-typeid");
+        $(obj).addClass("bgcolor");
+        $(obj).find("td").eq(5).html("<input type='text' id=" + u + t + '5' + " value=" + val5 + " />");
+        $(obj).find("td").eq(6).html("<input type='text' id=" + u + t + '6' + " value=" + val6 + " />");
+        $("#"+u+t+"5").click(function (event) {
+            event.stopPropagation();
+
+        });
+        $("#" + u + t + "6").click(function (event) {
+            event.stopPropagation();
+
+        });
+    }
 }
-function tijiao(obj) {
-    var z = $(obj).attr("data-zongfen");
-    var s = $(obj).val();
-    var u = $(obj).attr("data-uid")
-    var t = $(obj).attr("data-typeid");
-    if (s <= z) {
+
+//function Add(obj) {
+   
+//    var v = $(obj).attr("data-val");
+//    var z = $(obj).attr("data-zongfen");
+//    //alert(u);
+//    //alert(t);
+//    //var v = $(obj).attr("data-val");
+//    //$("#uid").val(u);
+//    //$("#pzid").val(p);
+//    $(obj).html("<input type='text' id=" + u + t + " data-uid=" + u + " data-typeid=" + t + " data-zongfen=" + z + " onBlur='tijiao(this);' />");
+//    $("#" + u + t).val(v);
+  
+//    //alert($("#" + u + t).val());
+//    $("#" + u + t).focus();
+//}
+function SaveForm() {
+    var u = $("#unit").combobox("getValue")
+    var t = $(".bgcolor").attr("data-typeid");
+
+    var val=$("#"+u+t+"5").val();
+    var result=$("#"+u+t+"6").val();
+    var z = $(".bgcolor").find("td").eq(4).html();
+    if (val <= z) {
         $.messager.confirm('提示', '你确定要保存吗？', function (r) {
             if (r) {
-                $(obj).parent().attr("data-val", $(obj).val());
-                $(obj).parent().html("<td>" + $(obj).val() + "</td>")
+                //$(obj).parent().attr("data-val", $(obj).val());
+                //$(obj).parent().html("<td>" + $(obj).val() + "</td>")
                 var data = {
-                    'val': $(obj).val(),
-                    'uid': $(obj).attr("data-uid"),
-                    'typeid': $(obj).attr("data-typeid")
+                    'val': val,
+                    'uid':  u,
+                    'typeid': t,
+                    'remarks': result
                 }
                 $.post('/Home/SaveUnitScore', data, function (mes) {
                     $.messager.alert("提示", mes, "info");
+                    $("#" + u + t + "5").parent().html(val);
+                    $("#" + u + t + "6").parent().html(result);
                 })
             } else {
-                $(obj).parent().html("<td>" + $(obj).val() + "</td>")
+                //$(obj).parent().html("<td>" + $(obj).val() + "</td>")
             }
         })
     } else {
@@ -282,5 +325,3 @@ function tijiao(obj) {
         $("#" + u + t).focus();
     }
 }
-
-
