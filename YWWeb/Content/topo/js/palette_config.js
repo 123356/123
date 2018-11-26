@@ -42,7 +42,7 @@ var palette_config = {
       {
           name: '12',
           type: "12.png",
-          canvas: `g.beginPath();g.strokeStyle="#f00";g.arc(0,-node.height/4,node.height/4,0,2*Math.PI,true);g.lineWidth=2;g.stroke();g.beginPath();g.arc(0,node.height/4,node.height/4,0,2*Math.PI,true);g.moveTo(0,-node.height/5*2);g.lineTo(-node.width/8,-node.height/6);g.lineTo(node.width/8,-node.height/6);g.lineTo(0,-node.height/5*2);g.moveTo(node.width/8,node.height/9);g.lineTo(0,node.height/4);g.lineTo(-node.width/8,node.height/9);g.moveTo(0,node.height/4);g.lineTo(0,node.height/5*2);g.stroke();`
+          canvas: `g.beginPath();g.strokeStyle="#f00";g.arc(0,-node.height/4,node.height/3,0,2*Math.PI,true);g.lineWidth=2;g.stroke();g.beginPath();g.arc(0,node.height/4,node.height/3,0,2*Math.PI,true);g.moveTo(0,-node.height/5*2);g.lineTo(-node.width/8,-node.height/6);g.lineTo(node.width/8,-node.height/6);g.lineTo(0,-node.height/5*2);g.moveTo(node.width/8,node.height/9);g.lineTo(0,node.height/4);g.lineTo(-node.width/8,node.height/9);g.moveTo(0,node.height/4);g.lineTo(0,node.height/5*2);g.stroke();`
       },
         {
             name: '13',
