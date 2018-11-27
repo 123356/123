@@ -2457,9 +2457,9 @@ namespace S5001Web.Controllers
                 {
                     m.x = item.Key.ToString();
                 }
-                if (item.Sum(p => p.Power) != null)
+                if (item.Sum(p => p.UsePower) != null)
                 {
-                    m.y = item.Sum(p => p.Power).ToString();
+                    m.y = item.Sum(p => p.UsePower).ToString();
                 }
                 result.Add(m);
             }
@@ -2499,9 +2499,9 @@ namespace S5001Web.Controllers
                 {
                     m.x = item.Key.ToString();
                 }
-                if (item.Sum(p => p.Power) != null)
+                if (item.Sum(p => p.UsePower) != null)
                 {
-                    m.y = item.Sum(p => p.Power).ToString();
+                    m.y = item.Sum(p => p.UsePower).ToString();
                 }
                 result.Add(m);
             }
