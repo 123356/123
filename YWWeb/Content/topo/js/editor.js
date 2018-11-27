@@ -275,8 +275,9 @@ Topo.prototype = {
                         $.ajax({
                             type: "get",
                             url: res + "?date" + new Date().valueOf(),
-                            success: function(res) {
-                                that.history(JSON.parse(res))
+                            success: function (res) {
+                                //console.log(res);
+                                that.history(res)
                             }
                         })
                     },
