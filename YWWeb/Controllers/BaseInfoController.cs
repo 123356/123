@@ -173,7 +173,7 @@ namespace S5001Web.Controllers
             //+"DataTypeID,AlarmStatus,Units,Remarks,DeviceTypeName,ABCID,OrderBy,RecTime,中文描述 from V_DeviceInfoState_PDR1 where pid=" + pid + " and did=" + did + sqlstr + "  and DataTypeID!=23  order by DataTypeID";
 
             string strsql = string.Format("select  TagID,TagName,PName,a.CID,b.CName,c.DID,c.PID,c.PName,c.DeviceName,a.DataTypeID,CateName"
-            + ",c.OrderBy,ABCID,a.Remarks,a.Position,d.Name as TypeName,c.DTID,e.Name AS DeviceTypeName"
+            + ",c.OrderBy,ABCID,a.Remarks,a.Position,d.Name as TypeName, d.OrderNo,c.DTID,e.Name AS DeviceTypeName"
             + ",CAST(-9999.0 as float) as PV,'固定描述' as 中文描述,'--' as Units,'正常' as AlarmStatus,cast('1999-01-01' as datetime) as RecTime from ("
 + "(select tagID,TagName,CID,PID,cast(REPLACE(DataTypeID,24,1) as int) DataTypeID,ABCID,Remarks,Position from t_CM_PointsInfo where PID={0} and DataTypeID!=23 {1} ) a "
 + " left join t_DM_CircuitInfo b on a.PID=b.PID and a.CID=b.CID"

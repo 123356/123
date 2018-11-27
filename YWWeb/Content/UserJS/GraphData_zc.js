@@ -298,6 +298,7 @@ function GetGraphData() {
 
 }
 function SetGraphOption() {
+   // console.log(Json);
     var Xarr = Json.xAxis.split(',');
 
     for (i = 0; i < Xarr.length; i++) {
@@ -427,7 +428,9 @@ function SetGraphOption() {
     //Colors = ["#cd5c5c", "#ffa500", "#40e0d0", "#ee90ff", "#ff6347", "#7b68ee", "#7b68ee", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
     Colors[Json.Count] = "rgb(255,0,0)";
     ajaxbg.hide();
+    //console.log(SeriesData);
     BuildGraphVeiw();
+
 }
 function BuildGraphVeiw() {
     var currSeriesData = "";

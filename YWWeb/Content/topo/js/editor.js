@@ -263,7 +263,7 @@ Topo.prototype = {
                 that.scene.clear();
                 $.ajax({
                     type: "post",
-                    url: "https://yw.ife360.com/PDRInfo/GetOneView",
+                    url: "/PDRInfo/GetOneView",
                     // dataType: "json",
                     // headers: { 'Content-Type': 'application/json;charset=utf8' },
                     data: {
@@ -271,11 +271,13 @@ Topo.prototype = {
                         orderNo: $("[data-type=orderNo]").val()
                     },
                     success: function(res) {
+                        console.log(res)
                         $.ajax({
                             type: "get",
                             url: res + "?date" + new Date().valueOf(),
-                            success: function(res) {
-                                that.history(JSON.parse(res))
+                            success: function (res) {
+                                //console.log(res);
+                                that.history(res)
                             }
                         })
                     },
@@ -446,7 +448,7 @@ Topo.prototype = {
         ojbect.nodes = nodes;
         $.ajax({
             type: 'POST',
-            url: "https://yw.ife360.com/PDRInfo/SaveOneView?pid=" + that.__pid + "&orderNo=" + that.__orderNo,
+            url: "/PDRInfo/SaveOneView?pid=" + that.__pid + "&orderNo=" + that.__orderNo,
             data: {
                 data: JSON.stringify(ojbect)
             },
@@ -838,7 +840,7 @@ AttributesTab.prototype = {
                     topo.__pid = value;
                     $.ajax({
                         type: "post",
-                        url: "https://yw.ife360.com/PDRInfo/GetDeviceByPID",
+                        url: "/PDRInfo/GetDeviceByPID",
                         data: {
                             pid: value,
                         },
@@ -865,7 +867,7 @@ AttributesTab.prototype = {
                 case "DID":
                     $.ajax({
                         type: "post",
-                        url: "https://yw.ife360.com/PDRInfo/GetCirByDID",
+                        url: "/PDRInfo/GetCirByDID",
                         data: {
                             pid: topo.__pid,
                             did: value,

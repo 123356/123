@@ -2457,9 +2457,9 @@ namespace S5001Web.Controllers
                 {
                     m.x = item.Key.ToString();
                 }
-                if (item.Sum(p => p.Power) != null)
+                if (item.Sum(p => p.UsePower) != null)
                 {
-                    m.y = item.Sum(p => p.Power).ToString();
+                    m.y = item.Sum(p => p.UsePower).ToString();
                 }
                 result.Add(m);
             }
@@ -2499,9 +2499,9 @@ namespace S5001Web.Controllers
                 {
                     m.x = item.Key.ToString();
                 }
-                if (item.Sum(p => p.Power) != null)
+                if (item.Sum(p => p.UsePower) != null)
                 {
-                    m.y = item.Sum(p => p.Power).ToString();
+                    m.y = item.Sum(p => p.UsePower).ToString();
                 }
                 result.Add(m);
             }
@@ -2948,8 +2948,9 @@ namespace S5001Web.Controllers
                                 sv.isHave = true;
                             else
                                 sv.isHave = false;
+
+                            sv.Result = s.Remarks;
                         }
-                        sv.Result = s.Remarks;
                         so.Ldata.Add(sv);
                     }
                     soure.Add(so);
@@ -3120,26 +3121,31 @@ namespace S5001Web.Controllers
             public string Result { get; set; }
         }
 
-        public ActionResult SaveUnitScore(int uid, int typeid, int val,string remarks)
+        public ActionResult SaveUnitScore(int uid, string str)
         {
             string result = "";
             try
             {
-                var m = bll.t_CM_UnitScore.Where(p => p.UID == uid && p.TypeID == typeid).FirstOrDefault();
-                if (m == null)
+                List<sco> list = JsonConvert.DeserializeObject<List<sco>>(str);
+
+                foreach (var item in list)
                 {
-                    t_CM_UnitScore model = new t_CM_UnitScore();
-                    model.UID = uid;
-                    model.Score = val;
-                    model.TypeID = typeid;
-                    model.Remarks = remarks;
-                    bll.t_CM_UnitScore.AddObject(model);
-                }
-                else
-                {
-                    m.Score = val;
-                    m.Remarks = remarks;
-                    bll.ObjectStateManager.ChangeObjectState(m, EntityState.Modified);
+                    var m = bll.t_CM_UnitScore.Where(p => p.UID == uid && p.TypeID == item.typeid).FirstOrDefault();
+                    if (m == null)
+                    {
+                        t_CM_UnitScore model = new t_CM_UnitScore();
+                        model.UID = uid;
+                        model.Score = item.val;
+                        model.TypeID = item.typeid;
+                        model.Remarks = item.remarks;
+                        bll.t_CM_UnitScore.AddObject(model);
+                    }
+                    else
+                    {
+                        m.Score = item.val;
+                        m.Remarks = item.remarks;
+                        bll.ObjectStateManager.ChangeObjectState(m, EntityState.Modified);
+                    }
                 }
                 int n = bll.SaveChanges();
                 if (n > 0)
@@ -3158,7 +3164,12 @@ namespace S5001Web.Controllers
             }
             return Content(result);
         }
-
+        private class sco
+        {
+            public int typeid { get; set; }
+            public decimal val { get; set; }
+            public string remarks { get; set; }
+        }
 
     }
 }
