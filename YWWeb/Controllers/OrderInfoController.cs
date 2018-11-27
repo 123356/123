@@ -567,61 +567,61 @@ namespace S5000Web.Controllers
                 if (list.Count > 0)
                 {
                     t_PM_Order order = list[0];
-                    sbOrder.Append("<table cellpadding=\"\" cellspacing=\"\" border=\"0\" class=\"d_list\" style=\"font-size: 13px;\">");
-                    sbOrder.Append("<tr><td class=\"d_l_t\" style=\"width: 80px;\">工单名称：</td><td class=\"d_l_d\">");
-                    sbOrder.Append(order.OrderName + "</td><td class=\"d_l_t\" style=\"width: 100px;\">站室：</td><td class=\"d_l_d\">");
-                    sbOrder.Append(order.PName + "</td><td class=\"d_l_t\" style=\"width: 100px;\">优先级：</td><td class=\"d_l_d\" >");
+                    sbOrder.Append("<table cellpadding=\"\" cellspacing=\"\" border=\"0\" class=\"d_list\" style=\"font-size: 12px;\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\"=>工单名称</td><td class=\"d_l_d\">");
+                    sbOrder.Append(order.OrderName + "</td><td class=\"d_l_t\">站室</td><td class=\"d_l_d\">");
+                    sbOrder.Append(order.PName + "</td><td class=\"d_l_t\" >优先级</td><td class=\"d_l_d\" >");
                     sbOrder.Append(getPriority((int)order.Priority));
                     sbOrder.Append("</td></tr>");
-                    sbOrder.Append("<tr><td class=\"d_l_t\">关联隐患：</td><td class=\"d_l_d\">" + order.BugInfo + "</td><td class=\"d_l_t\">工单类型：</td><td class=\"d_l_d\">" + order.OrderType + "</td><td class=\"d_l_t\">派单人：</td><td class=\"d_l_d\">" + order.Creater + "</td></tr>");
-                    sbOrder.Append("<tr><td class=\"d_l_t\">派单时间：</td><td class=\"d_l_d\">" + order.CreateDate + "</td><td class=\"d_l_t\">接收时间：</td><td class=\"d_l_d\">" + order.AcceptedDate + "</td><td class=\"d_l_t\">到达现场时间：</td><td class=\"d_l_d\">" + order.FistDate + "</td></tr>");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">关联隐患</td><td class=\"d_l_d\">" + order.BugInfo + "</td><td class=\"d_l_t\">工单类型</td><td class=\"d_l_d\">" + order.OrderType + "</td><td class=\"d_l_t\">派单人</td><td class=\"d_l_d\">" + order.Creater + "</td></tr>");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">派单时间</td><td class=\"d_l_d\">" + order.CreateDate + "</td><td class=\"d_l_t\">接收时间</td><td class=\"d_l_d\">" + order.AcceptedDate + "</td><td class=\"d_l_t\">到场时间</td><td class=\"d_l_d\">" + order.FistDate + "</td></tr>");
 
-                    sbOrder.Append("<tr><td class=\"d_l_t\">检查人：</td><td class=\"d_l_d\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">检查人</td><td class=\"d_l_d\">");
                     sbOrder.Append(order.UserName);
-                    sbOrder.Append("</td><td class=\"d_l_t\">执行日期：</td><td class=\"d_l_d\">");
+                    sbOrder.Append("</td><td class=\"d_l_t\">执行日期</td><td class=\"d_l_d\">");
                     sbOrder.Append(order.PlanDate == null ? "" : Convert.ToDateTime(order.PlanDate).ToString("yyyy-MM-dd"));
-                    sbOrder.Append(" </td><td class=\"d_l_t\">完成日期：</td><td class=\"d_l_d\">");
+                    sbOrder.Append(" </td><td class=\"d_l_t\">完成日期</td><td class=\"d_l_d\">");
                     sbOrder.Append(order.CheckDate == null ? "" : Convert.ToDateTime(order.CheckDate).ToString("yyyy-MM-dd"));
-                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">工单内容：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">工单内容</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(order.OrderContent);
                     if (order.RejectReason != null && order.OrderState == 5)
                     {
-                        sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">工单状态：</td><td class=\"d_l_d\" colspan=\"5\">");
+                        sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">工单状态</td><td class=\"d_l_d\" colspan=\"5\">");
                         sbOrder.Append("<b style='color:red;'>已被拒绝，请及时处理！" + "</b>" + " 拒绝理由：" + order.RejectReason);
                     }
 
-                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">进场申请：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">进场申请</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append("申请图片：" + getOrderFile(orderid, "image", "Apply"));
                     sbOrder.Append("<br>申请说明：" + order.ApplyInfo);
                     sbOrder.Append("<br>申请时间：" + order.ApplyDate);
 
                     sbOrder.Append(order.OrderState != 2 ? "" : "<br><div style=\"height:10px\"></div><a href=\"#\" class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-cancel'\" onclick=\"ApplyEnter('" + orderid.ToString() + "');\">点击这里【批准进场】</a><br><div style=\"height:10px\"></div><a href=\"#\" class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-cancel'\" onclick=\"rejectEnter('" + orderid.ToString() + "');\">点击这里【不准进场】</a><input id=\"reason\" style=\"width: 98%\" type=\"text\" placeholder=\"请输入拒绝原因\"><div id=\"ApplyEnterInfo\"></div><div id=\"rejectEnterInfo\"></div>");
-                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">完成情况：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">完成情况</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(order.CheckInfo);
-                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">图像列表：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("</td></tr><tr><td class=\"d_l_t\">图像列表</td><td class=\"d_l_d\" colspan=\"5\">");
                     //图片列表
                     sbOrder.Append(getOrderFile(orderid, "image", "order"));
                     sbOrder.Append("</td></tr>");
                     //音频
-                    sbOrder.Append("<tr><td class=\"d_l_t\">音频列表：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">音频列表</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(getOrderFile(orderid, "voice", "order"));
                     sbOrder.Append("</td></tr>");
                     //视频
-                    sbOrder.Append("<tr><td class=\"d_l_t\">视频列表：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">视频列表</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(getOrderFile(orderid, "infrared", "order"));
                     sbOrder.Append("</td></tr>");
                     if (order.CheckDate != null)
                     {
-                        sbOrder.Append("<tr><td class=\"d_l_t\">处理结果：</td>");
+                        sbOrder.Append("<tr><td class=\"d_l_t\">处理结果</td>");
                         sbOrder.Append(isQualified(order.IsQualified, order.Rectification));
                     }
-                    sbOrder.Append("<tr><td class=\"d_l_t\">备注：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">备注</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(order.Remarks + "</td></tr>");
 
-                    sbOrder.Append("<tr><td class=\"d_l_t\">工单处理报告：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">工单报告</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(getOrderFile(orderid, "doc", "order") + "</td></tr>");
 
-                    sbOrder.Append("<tr><td class=\"d_l_t\">格式报告：</td><td class=\"d_l_d\" colspan=\"5\">");
+                    sbOrder.Append("<tr><td class=\"d_l_t\">格式报告</td><td class=\"d_l_d\" colspan=\"5\">");
                     sbOrder.Append(getOrderFile(orderid, "doc", "report") + "</td></tr></table>");
 
 

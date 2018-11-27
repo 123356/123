@@ -92,8 +92,8 @@
                 <select id="cmbTemplateNameList" class="easyui-combobox" style="width: 350px;"></select>
                 数量：<input id="numTemplate" class="easyui-numberspinner" style="width:80px;"
                           required="required" data-options="min:0,max:100,editable:true">
-                <a id="btnAddTemplate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
-                <a id="btnDelTemplate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>
+                <a id="btnAddTemplate" href="#" class="easyui-linkbutton" style="color:#fff">添加</a>
+                <a id="btnDelTemplate" href="#" class="easyui-linkbutton" style="color:#fff">删除</a>
                 <br><br>
                 <table id="dgTemplateNameList" class="easyui-datagrid" style="height: 222px; width: 97%;" data-options="
                        method:'get',
@@ -128,10 +128,10 @@
             </td>
         </tr>
     </table>
-    <div style="text-align: center; padding-top: 5px;">
-        <a href="#" id="btnSave" onclick="save()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+    <div style="text-align: center; padding-top: 5px;padding-bottom:5px">
+        <a href="#" id="btnSave" onclick="save()" class="easyui-linkbutton">
             下发工单
-        </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+        </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="easyui-linkbutton" 
                                                                             onclick="$('#editwin').window('close');">关闭</a>
     </div>
     <script type="text/javascript">

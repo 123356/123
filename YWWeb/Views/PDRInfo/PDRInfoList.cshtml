@@ -10,6 +10,40 @@
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
     <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .d_l_t {
+            height: 20px;
+            text-align: right;
+            background-color: #f0f6f4;
+            padding: 3px 15px;
+            padding-bottom: 0;
+            border: solid 1px #ebebeb;
+            font-size: 11px;
+            width: 80px;
+            text-align: justify;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            line-height: 0px;
+        }
+
+        .d_l_t:after {
+                width: 80px;
+                height: 0px;
+                display: inline-block;
+                content: '';
+        }
+        .CBPeriodBegin .textbox {
+            width:160px !important
+        }
+      .uploadBtnView #uploadifive-file_upload{
+            height:25px !important;
+            line-height:25px !important;
+            width:80px !important
+        }
+      .easyui-combobox{
+          font-size:12px !important
+      }
+    </style>
 </head>
 <body>
     <table id="list_data" style="width: auto; height: 780px; width: 100%"
@@ -81,25 +115,25 @@
         </div>
     </div>
     <div id="editwin" title="编辑站室信息" class="easyui-dialog" closed="true" style="width: 980px;
-        height: 600px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
-        <table cellpadding="" cellspacing="" border="0" class="d_list">
+        height: 550px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <table cellpadding="0" cellspacing="0" border="0" class="d_list">
             <tr>
-                <td class="d_l_t">
-                    站室名称：
+                <td class="d_l_t text-justify">
+                    站室名称
                 </td>
                 <td class="d_l_d">
                     <input id="Name" runat="server" name="Name" missingmessage="站室名称必填项！" class="easyui-validatebox"
-                           style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                           style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                     <input id="PID" type="hidden" />
                 </td>
-                <td class="d_l_t">
-                    站室编码：
+                <td class="d_l_t text-justify">
+                    站室编码
                 </td>
                 <td class="d_l_d">
                     <span id="EadoCode"></span>
                 </td>
                 <td class="d_l_t">
-                    所属区域：
+                    所属区域
                 </td>
                 <td class="d_l_d">
                     <input class="easyui-combotree" style="width: 160px; height: 26px;" id="AreaID" /><b class="RStar">&nbsp*</b>
@@ -113,8 +147,8 @@
                     <input id="LinkMan" runat="server" name="LinkMan" missingmessage="联系人必填项！" class="easyui-validatebox"
                            style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>*@
-                <td class="d_l_t">
-                    公司名称：
+                <td class="d_l_t text-justify">
+                    公司名称
                 </td>
                 <td class="d_l_d">
                     <input class="easyui-combotree" style="width: 180px; height: 26px;" id="CompanyName" />
@@ -129,18 +163,18 @@
                     <b class="RStar">&nbsp*</b>
                 </td>*@
                 <td class="d_l_t">
-                    运维联系人：
+                    运维联系人
                 </td>
                 <td class="d_l_d">
                     <input id="OperationMan" runat="server" name="LinkMan" missingmessage="联系人必填项！" class="easyui-validatebox"
-                           style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                           style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
-                    运维联系电话：
+                    运维联系电话
                 </td>
                 <td class="d_l_d">
                     <input id="OperationTel" runat="server" name="Mobile" missingmessage="手机号码必填项！" class="easyui-validatebox"
-                           style="width: 160px;" data-options="required:true" onkeyup='this.value=this.value.replace(/\D/gi,"")' />
+                           style="width: 150px;" data-options="required:true" onkeyup='this.value=this.value.replace(/\D/gi,"")' />
                     <b class="RStar">&nbsp*</b>
                 </td>
             </tr>
@@ -148,20 +182,20 @@
             <tr>
 
                 <td class="d_l_t">
-                    位置：
+                    位置
                 </td>
                 <td class="d_l_d">
                     <input id="Position" runat="server" name="Position" missingmessage="位置必填项！" class="easyui-validatebox"
-                           style="width: 160px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                           style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
-                    站室分类：
+                    站室分类
                 </td>
                 <td class="d_l_d">
-                    <select id="TypeID" class="easyui-combobox" itemindex="0" style="width: 120px; height: 26px;"></select><b class="RStar">&nbsp*</b>
+                    <select id="TypeID" class="easyui-combobox" itemindex="0" style="width: 180px; height: 26px;"></select><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
-                    电压等级：
+                    电压等级
                 </td>
                 <td class="d_l_d">
                     <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电压等级必填项！" id="VoltageID" />
@@ -174,18 +208,18 @@
             <tr id="one">
 
                 <td class="d_l_t">
-                    投运时间：
+                    投运时间
                 </td>
                 <td class="d_l_d">
-                    <input class="easyui-datebox" style="width: 160px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
+                    <input class="easyui-datebox" style="width: 180px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
                     <b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
-                    地图坐标：
+                    地图坐标
                 </td>
                 <td class="d_l_d" colspan="5">
                     <input id="Coordination" runat="server" name="Coordination" missingmessage="地图坐标必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                           class="easyui-validatebox" style="width: 170px;" data-options="required:true" />
                     <a href="~/Content/GetMap/getMapPointXY.html" target="_blank" class="table_btn1 btn_style radius5">
                         &nbsp;取坐标&nbsp;
                     </a> <b class="RStar">&nbsp*</b>（如：113.191932|22.232813）
@@ -203,10 +237,10 @@
             </tr>
             <tr>
                 <td class="d_l_t">
-                    上传站室图片：
+                    上传站室图片
                 </td>
-                <td class="d_l_d" colspan="5">
-                    <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple" /><b>最多上传3张,上传图片不能超过1M。</b>
+                <td class="d_l_d uploadBtnView" colspan="5">
+                    <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple"  /><b style="color:#666;line-height:24px">最多上传3张,上传图片不能超过1M。</b>
                     <div id="fileQueue" class="fileQueue">
                     </div>
 
@@ -214,54 +248,60 @@
             </tr>
             <tr>
                 <td class="d_l_t">
-                    使用状态：
+                    使用状态
                 </td>
                 <td class="d_l_d" colspan="5">
-                    <select id="UseState">
+                    <select id="UseState"  class="easyui-combobox">
                         <option value="0">正常使用</option>
                         <option value="1">暂停使用</option>
                     </select>
                 </td>
             </tr>
             <tr>
-                <td class="d_l_t" rowspan="2" colspan="2">
-                    <p style="text-align:center;font-size:22px;">售电所需信息：</p>
+                <td class="d_l_t" rowspan="2" >
+                    <p style="text-align:center;font-size:12px;">售电所需信息</p>
                 </td>
-                <td class="d_l_t">
-                    户号：
+                <td class="d_l_d" colspan="2">
+                    <label class="d_l_d_label">户号</label>
+                    <input id="FamilyID" runat="server" name="FamilyID" missingmessage="户号必填项！" class="easyui-validatebox"
+                           style="width: 148px;" data-options="required:true" />
                 </td>
-                <td class="d_l_d">
+              <!-- <td class="d_l_d">
                     <input id="FamilyID" runat="server" name="FamilyID" missingmessage="户号必填项！" class="easyui-validatebox"
                            style="width: 160px;" data-options="required:true" />
-                </td>
-                <td class="d_l_t">
-                    电价行业类型：
-                </td>
-                <td class="d_l_d">
+                </td>--> 
+                <td class="d_l_d" colspan="3">
+                    <label class="d_l_d_label">电价行业类型</label>
                     <input class="easyui-combotree" style="width:160px; height:26px;" missingmessage="电价行业类型必填项！" id="IndID" />
                 </td>
+                <!--<td class="d_l_d">
+                    <input class="easyui-combotree" style="width:160px; height:26px;" missingmessage="电价行业类型必填项！" id="IndID" />
+                </td>-->
             </tr>
             <tr id="two">
-                <td class="d_l_t">
-                    电价电压等级：
-                </td>
-                <td class="d_l_d">
+                <td class="d_l_d" colspan="2">
+                    <label class="d_l_d_label">电价电压等级</label>
                     <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电价电压等级必填项！" id="VID" />
                 </td>
-                <td class="d_l_t">
-                    抄表日：
+                <!--<td class="d_l_d">
+                    <input class="easyui-combotree" style="width: 160px; height: 26px;" missingmessage="电价电压等级必填项！" id="VID" />
+                </td>-->
+                <td class="d_l_d CBPeriodBegin" colspan="3">
+                    <label class="d_l_d_label">抄表日</label>
+                    <input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-combobox" style="width:160px;" />
                 </td>
-                <td class="d_l_d">
-                    @*<input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-datebox" style="width:180px;" /><b class="RStar">&nbsp*</b>*@
-                    <select id="CBPeriodBegin" class="easyui-combobox" missingmessage="抄表日必填项！" style="width:160px;"></select>
-                </td>
+               <!-- <td class="d_l_d CBPeriodBegin">
+                   <!-- <input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-datebox" style="width:180px;" /><b class="RStar">&nbsp*</b>-->
+                    <!--<select id="CBPeriodBegin" class="easyui-combobox" missingmessage="抄表日必填项！" style="width:160px;"></select>-->
+                   <!-- <input id="CBPeriodBegin" name="CBPeriodBegin" class="easyui-combobox" style="width:160px;" />
+                </td>-->
             </tr>
             <tr>
                 <td class="d_l_t">
-                    备注：
+                    备注
                 </td>
                 <td class="d_l_d" colspan="5">
-                    <textarea id="Remarks" class="easyui-validatebox" style="height: 100px; width: 90%;"></textarea>
+                    <textarea id="Remarks" class="easyui-validatebox textarea" style="height: 100px; width: 90%;"></textarea>
                 </td>
             </tr>
         </table>
@@ -271,7 +311,7 @@
                                                           data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
         </div>
     </div>
-    <script src="~/Content/UserJS/PDRInfoList_jm.js"></script>
+    <script src="~/Content/UserJS/PDRInfoList_jm.js?v=0.2"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 </body>
 </html>

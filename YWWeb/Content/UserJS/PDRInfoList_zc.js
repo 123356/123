@@ -381,9 +381,9 @@ function add() {
 
     $("#editwin").dialog({
         closed: false,
-        top: ($(window).height() - 400) * 0.5,
-        left: ($(window).width() - 600) * 0.5,
-        height: ($(window).height() - 0) * 0.7,
+        top: ($(window).height() - 600) * 0.5,
+        left: ($(window).width() - 900) * 0.5,
+        //height: ($(window).height() - 0) * 0.7,
         minimizable: false, //最小化，默认false  
         maximizable: false, //最大化，默认false  
         collapsible: false, //可折叠，默认false  
@@ -433,9 +433,9 @@ function edit() {
             $("#ApplcationTime").datebox("setValue",DD);
             $("#editwin").dialog({
                 closed: false,
-                top: ($(window).height() - 400) * 0.5,
-                left: ($(window).width() - 600) * 0.5,
-                height: ($(window).height() - 0) * 0.7,
+                top: ($(window).height() - 600) * 0.5,
+                left: ($(window).width() - 900) * 0.5,
+                //height: ($(window).height() - 0) * 0.7,
                 minimizable: false, //最小化，默认false  
                 maximizable: false, //最大化，默认false  
                 collapsible: false, //可折叠，默认false  

@@ -50,6 +50,7 @@ function ConTep() {
         //console.log(objs);
         if (objs) {
             var sTemBug = "<a href=\"/Es/EnergyContract\" target=\"main_frame\" >有能源合同项即将到期，请立即处理...</a>";
+            $("#alarmDetail").attr("href", "/PerationMaintenance/Index?mid=437")
             if (contep == sTemBug)
                 return;
             contep = sTemBug;
@@ -67,8 +68,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem  + alarmInf;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/alarm.mp3")//报警
-        $(".alarm_popups_btn").html('<a href="/AlarmManage/Index?pid=0" id="alarmDetail"  target="main_frame" >立即查看</a>')
-      /* $("#alarmDetail").attr("onclick","location.href='/AlarmManage/Index?pid=0'")*/
+        
+      $("#alarmDetail").attr("href","/AlarmManage/Index?pid=0")
     } else {
         sArarmMp3Name += "0";
     }
@@ -76,8 +77,7 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem + alarmInfOrder;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/apply.mp3")//工单
-        $(".alarm_popups_btn").html('<a href="/Orderinfo/OrderList" id="alarmDetail"  target="main_frame" >立即查看</a>')
-        /*  $("#alarmDetail").attr("onclick", "location.href='/Orderinfo/OrderList'")*/
+        $("#alarmDetail").attr("href", "/Orderinfo/OrderList")
     } else {
         sArarmMp3Name += "0";
     }
@@ -85,8 +85,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem  + alarmInfBug;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/bug.mp3")//隐患
-        $(".alarm_popups_btn").html('<a href="/PerationMaintenance/HazardMan" id="alarmDetail"  target="main_frame" >立即查看</a>')
-        /* $("#alarmDetail").attr("onclick", "location.href='/PerationMaintenance/HazardMan'")*/
+       
+         $("#alarmDetail").attr("href", "/PerationMaintenance/HazardMan")
     } else {
         sArarmMp3Name += "0";
     }
@@ -94,7 +94,8 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem  + timesInfos;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/constract.mp3")//合同
-        $("#alarmDetail").attr("onclick", "location.href='/PerationMaintenance/Index?mid=437'")
+       
+        $("#alarmDetail").attr("href", "/PerationMaintenance/Index?mid=437")
     } else {
         sArarmMp3Name += "0";
     }
@@ -107,6 +108,7 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem + contep;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/nengyuan.mp3")//合同
+        $("#alarmDetail").attr("href", "/PerationMaintenance/Index?mid=437")
     } else {
         sArarmMp3Name += "0";
     }

@@ -148,7 +148,7 @@ function add() {
     loadSelectPDR("");
     $("#editwin").dialog({
         closed: false,
-        top: ($(window).height() - 400) * 0.5,
+        top: ($(window).height() - 600) * 0.5,
         left: ($(window).width() - 600) * 0.5,
         minimizable: false, //最小化，默认false  
         maximizable: false, //最大化，默认false  
@@ -200,7 +200,7 @@ function edit() {
             $("#ProjectType").combobox("setValue", row.ProjectType);
             $("#editwin").dialog({
                 closed: false,
-                top: ($(window).height() - 400) * 0.5,
+                top: ($(window).height() - 600) * 0.5,
                 left: ($(window).width() - 600) * 0.5,
                 minimizable: false, //最小化，默认false  
                 maximizable: false, //最大化，默认false  
