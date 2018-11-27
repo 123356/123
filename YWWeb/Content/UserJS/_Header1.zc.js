@@ -104,6 +104,7 @@ function showAlarmWindow() {
         sArarmTem = sArarmTem + contep;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/nengyuan.mp3")//合同
+        $("#alarmDetail").attr("onclick", "location.href='/Es/EnergyContract'")
     } else {
         sArarmMp3Name += "0";
     }

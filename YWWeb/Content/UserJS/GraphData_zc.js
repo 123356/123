@@ -302,7 +302,7 @@ function SetGraphOption() {
     var Xarr = Json.xAxis.split(',');
 
     for (i = 0; i < Xarr.length; i++) {
-        var ym = Xarr[i].split(' ')[0].split('-');
+        var ym = Xarr[i].split(' ')[0].split('/');
         var hm = Xarr[i].split(' ')[1].split(':');
         if (hm[0].length == 1 && graphtype == 6)
             xAxisFormat.push('0' + hm[0] + ':' + hm[1]);
