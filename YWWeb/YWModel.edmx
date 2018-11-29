@@ -1293,6 +1293,7 @@
           <Property Name="cid" Type="nvarchar" MaxLength="1255" />
           <Property Name="cid_type_id" Type="int" />
           <Property Name="subtractCid" Type="nvarchar" MaxLength="255" />
+          <Property Name="isUpload" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="t_ES_Category">
           <Key>
@@ -5522,6 +5523,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="cid" Type="String" MaxLength="1255" FixedLength="false" Unicode="true" />
           <Property Name="subtractCid" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="cid_type_id" Type="Int32" />
+          <Property Name="isUpload" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="t_ES_PowerUseCategory">
           <Key>
@@ -8093,6 +8095,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_EE_PowerReportConfig">
             <EntityTypeMapping TypeName="YWModel.t_EE_PowerReportConfig">
               <MappingFragment StoreEntitySet="t_EE_PowerReportConfig">
+                <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="cid_type_id" ColumnName="cid_type_id" />
                 <ScalarProperty Name="subtractCid" ColumnName="subtractCid" />
                 <ScalarProperty Name="cid" ColumnName="cid" />

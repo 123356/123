@@ -189,7 +189,9 @@ function edit() {
             loadSelectPDF(row.pid, row.cid, row.subtractCid);
             $("#pdf").val(row.pid);
             $("#Name").combobox("setValue", row.cid_type_id);
-            $("#id").val(row.id)
+            $("#id").val(row.id);
+            if (row.remarks == "是")
+                $("#cbkJiSuan").attr("checked", "checked");
             $("#editwin").dialog({
                 closed: false,
                 top: ($(window).height() - 300) * 0.5,
@@ -218,12 +220,16 @@ function save() {
     }
     var jiashu = $("#jiashu").combobox("getValues");
     var jianshu = $("#jianshu").combobox("getValues");
+    var openMsg=0;
+    if ($('#cbkJiSuan').is(':checked'))
+        openMsg = 1;       
     var postData = {
         pid: $("#pdf").combobox("getValue"),
         cid: jiashu.join(','),
         cid_type_id: $("#Name").combobox("getValue"),
         subtractCid: jianshu.join(','),
-        id: $("#id").val()
+        id: $("#id").val(),
+        isUpload:openMsg
     };
     console.log(postData);
     $.post("/ES/SaveGs", postData, function (data) {

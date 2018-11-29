@@ -28040,10 +28040,12 @@ namespace S5001Web
         /// 创建新的 t_EE_PowerReportConfig 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id)
+        /// <param name="isUpload">isUpload 属性的初始值。</param>
+        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id, global::System.Int32 isUpload)
         {
             t_EE_PowerReportConfig t_EE_PowerReportConfig = new t_EE_PowerReportConfig();
             t_EE_PowerReportConfig.id = id;
+            t_EE_PowerReportConfig.isUpload = isUpload;
             return t_EE_PowerReportConfig;
         }
 
@@ -28197,6 +28199,30 @@ namespace S5001Web
         private Nullable<global::System.Int32> _cid_type_id;
         partial void Oncid_type_idChanging(Nullable<global::System.Int32> value);
         partial void Oncid_type_idChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 isUpload
+        {
+            get
+            {
+                return _isUpload;
+            }
+            set
+            {
+                OnisUploadChanging(value);
+                ReportPropertyChanging("isUpload");
+                _isUpload = StructuralObject.SetValidValue(value, "isUpload");
+                ReportPropertyChanged("isUpload");
+                OnisUploadChanged();
+            }
+        }
+        private global::System.Int32 _isUpload;
+        partial void OnisUploadChanging(global::System.Int32 value);
+        partial void OnisUploadChanged();
 
         #endregion
 
