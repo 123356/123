@@ -32,7 +32,7 @@
                 <th field='jianshu' width="100px">
                     减数(表名)
                 </th>
-                <th  field='remarks' width="100px">是否计算</th>
+                @*<th  field='remarks' width="100px">是否计算</th>*@
             </tr>
         </thead>
     </table>
@@ -50,9 +50,10 @@
             <input id="yearselect" />
         </div>*@
         <div id="userbutton" class="searchbutton">
+          
         </div>
+        <div><span  style="margin-left:20px;">是否计算：<input type="checkbox" name="cbkJiSuan" id="cbkJiSuan" onclick="IsSave()" /></span></div>
     </div>
-
     <div id="editwin" title="编辑公式信息" class="easyui-dialog" closed="true" style="width: 800px; height: 350px; padding: 5px;"
          minimizable="false" maximizable="false" collapsible="false">
         <table cellpadding="" cellspacing="" border="0" class="d_list">
@@ -99,14 +100,14 @@
                            style="width: 210px;" id="jianshu" />
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <td class="d_l_t">
                     是否计算：
                 </td>
                 <td class="d_l_d">
                     <input type="checkbox" name="cbkJiSuan" id="cbkJiSuan" />
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <td colspan="4" style="color:red;">
                     注意:大工业电量=（表名1*倍率+表名2*倍率+表名3*倍率+表名4*倍率）-（表名5*倍率+表名6*倍率+表名7*倍率+表名8*倍率+表名9*倍率）
