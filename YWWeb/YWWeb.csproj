@@ -366,7 +366,6 @@
     <Content Include="Content\css\bootstrap.min14ed.css" />
     <Content Include="Content\css\common.css" />
     <Content Include="Content\css\dataTables.bootstrap.css" />
-    <Content Include="Content\css\iview.css" />
     <Content Include="Content\css\LBYWBase.css" />
     <Content Include="Content\css\ImageShow.css" />
     <Content Include="Content\css\lightslider.css" />
@@ -940,7 +939,6 @@
     <Content Include="Content\js\echarts.min3.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\gettemp.js" />
-    <Content Include="Content\js\iview.min.js" />
     <Content Include="Content\js\lbyw-base.zc.js" />
     <Content Include="Content\js\lbywfw._zc.js" />
     <Content Include="Content\js\lbywlfmu._zc.js" />
@@ -967,9 +965,7 @@
     <Content Include="Content\js\tab._zc..js" />
     <Content Include="Content\js\score.js" />
     <Content Include="Content\js\userView2.js" />
-    <Content Include="Content\js\vue-resource.min.js" />
     <Content Include="Content\js\vue.js" />
-    <Content Include="Content\js\vue.min.js" />
     <Content Include="Content\js\weather.js" />
     <Content Include="Content\timeline\vis-timeline-graph2d.min.css" />
     <Content Include="Content\timeline\vis.js" />
