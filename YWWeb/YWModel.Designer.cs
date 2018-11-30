@@ -13530,6 +13530,30 @@ namespace S5001Web
         private Nullable<global::System.DateTime> _ApplcationTime;
         partial void OnApplcationTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnApplcationTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> isUpload
+        {
+            get
+            {
+                return _isUpload;
+            }
+            set
+            {
+                OnisUploadChanging(value);
+                ReportPropertyChanging("isUpload");
+                _isUpload = StructuralObject.SetValidValue(value, "isUpload");
+                ReportPropertyChanged("isUpload");
+                OnisUploadChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _isUpload;
+        partial void OnisUploadChanging(Nullable<global::System.Int32> value);
+        partial void OnisUploadChanged();
 
         #endregion
 
@@ -34777,6 +34801,30 @@ namespace S5001Web
         private Nullable<global::System.DateTime> _CtrPlanDate;
         partial void OnCtrPlanDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCtrPlanDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Subcontract
+        {
+            get
+            {
+                return _Subcontract;
+            }
+            set
+            {
+                OnSubcontractChanging(value);
+                ReportPropertyChanging("Subcontract");
+                _Subcontract = StructuralObject.SetValidValue(value, true, "Subcontract");
+                ReportPropertyChanged("Subcontract");
+                OnSubcontractChanged();
+            }
+        }
+        private global::System.String _Subcontract;
+        partial void OnSubcontractChanging(global::System.String value);
+        partial void OnSubcontractChanged();
 
         #endregion
 

@@ -9,8 +9,7 @@ function Layout() {
     this.boxright = document.createElement("div");
 };
 Layout.prototype = {
-    init: function() {
-       
+    init() {
         this.creatBox();
         this.adaptive();
         $("body").prepend(this.main);
@@ -21,7 +20,7 @@ Layout.prototype = {
             .append(this.boxright);
         this.dragline($(this.lineleft), 'left');
         this.dragline($(this.lineright), 'right');
-        this.resize()
+        this.resize();
     },
     //加载class 添加节点  class 给定默认样式
     creatBox: function() {
@@ -50,7 +49,6 @@ Layout.prototype = {
             t = dv.offset().top;
             //开关打开
             isDown = true;
-            return false;
         });
         //鼠标移动
         window.addEventListener('mousemove', function(e) {
@@ -74,13 +72,11 @@ Layout.prototype = {
                     that.lineright.style.left = nl + "px";
                     that.adaptive()
                 }
-                return false;
             })
             //鼠标抬起事件
         $(dv).on('mouseup', function(e) {
             //开关关闭
             isDown = false;
-            return false;
         })
     },
     // 屏幕尺寸监听
@@ -130,11 +126,12 @@ NodeList.prototype = {
             var content = document.createElement("div");
             content.className = 'palette-content'
                 //创建头 和itme
-            $('.boxLeft').append(`<div class="palette-header"><i class="caret"></i>
+            $('.boxLeft').append(`  <div class="palette-header"><i class="caret"></i>
                 <span class="palette-title-text">${palette_config[key].name}</span></div>`)
                 .append(content);
             // 遍历节点
-                var path = "../../Content/topo/img/symbols/";
+            var path = '../../../Content/topo/img/symbols/'
+
             var items = palette_config[key].items;
             for (var a = 0; a < items.length; a++) {
                 var item = document.createElement("div");
@@ -168,10 +165,6 @@ NodeList.prototype = {
             deg = (deg == 'none' ? 'rotate(-90deg)' : 'none');
             detriangle.css("transform", deg)
         })
-        $('.boxLeft').on('mousedown', '.palette-item-img', function(e) {
-            that.selectCanvas = $(e.target).attr('data-canvas');
-            return false;
-        })
     }
 };
 var nodeList = new NodeList();
@@ -184,9 +177,9 @@ function Topo() {
 };
 Topo.prototype = {
     init: function() {
-        this.menuBar();
         this.createTopo();
         this.dragNode();
+        this.menuBar();
         this.editRow();
         this.keyEvent();
     },
@@ -195,8 +188,25 @@ Topo.prototype = {
         $('[data-type=pid]').val(obj.config.pid);
         $('[data-type=orderNo]').val(obj.config.orderNo);
         $("[data-type=bgcolor]").val(obj.config.bgColor);
-        this.scene.backgroundColor = obj.config.bgColor
+        this.scene.backgroundColor = obj.config.bgColor;
+
+
+        var IP = this.uncompileStr(obj.config.IP);
+        var account = this.uncompileStr(obj.config.account);
+        var password = this.uncompileStr(obj.config.password);
+        var port = this.uncompileStr(obj.config.port);
+
+        $('[data-type=IP]').val(IP);
+        $('[data-type=account]').val(account);
+        $('[data-type=password]').val(password);
+        $('[data-type=port]').val(port);
+
+        this.__IP = IP;
+        this.__account = account;
+        this.__password = password;
+        this.__port = port|| 15675;
         this.copyNode(obj.nodes);
+
     },
     //复制节点
     copyNode: function(list) {
@@ -263,7 +273,7 @@ Topo.prototype = {
                 that.scene.clear();
                 $.ajax({
                     type: "post",
-                    url: "/PDRInfo/GetOneView",
+                    url: "https://yw.ife360.com/PDRInfo/GetOneView",
                     // dataType: "json",
                     // headers: { 'Content-Type': 'application/json;charset=utf8' },
                     data: {
@@ -271,13 +281,12 @@ Topo.prototype = {
                         orderNo: $("[data-type=orderNo]").val()
                     },
                     success: function(res) {
-                        console.log(res)
                         $.ajax({
                             type: "get",
                             url: res + "?date" + new Date().valueOf(),
-                            success: function (res) {
-                                //console.log(res);
-                                that.history(res)
+                            success: function(res) {
+                                res = JSON.parse(res);
+                                that.history(res);
                             }
                         })
                     },
@@ -292,8 +301,7 @@ Topo.prototype = {
     menuBar: function() {
         var menu = document.createElement('div');
         menu.className = "menuBar";
-        // menu
-        var path = "../../Content/topo/img/edit/"
+        var path = '../../../Content/topo/img/edit/'
         for (let a = 0; a < palette_MenuBar.length; a++) {
             let img = document.createElement("img");
             img.className = "menu " + palette_MenuBar[a].name;
@@ -355,16 +363,27 @@ Topo.prototype = {
                 $("[data-type=bgcolor]").attr('value', that.rgb2hex(scene.backgroundColor));
                 $("[data-type=pid]").val(that.__pid);
                 $("[data-type=orderNo]").val(that.__orderNo);
+
+                $("[data-type=IP]").val(that.__IP);
+                $("[data-type=port]").val(that.__port);
+                $("[data-type=account]").val(that.__account);
+                $("[data-type=password]").val(that.__password);
             }
         })
     },
     // 拖拽节点
     dragNode: function() {
         var that = this;
+        $('body').on('mousedown', '.palette-item-img', function(e) {
+            nodeList.selectCanvas = $(e.target).attr('data-canvas');
+            return false
+        })
+
         this.scene.mouseup(function(event) {
             if (nodeList.selectCanvas) {
                 var canvas = nodeList.selectCanvas;
                 nodeList.selectCanvas = null;
+
                 var x = event.x;
                 var y = event.y;
                 var obj = canvas == 'text' ? {
@@ -379,8 +398,9 @@ Topo.prototype = {
                 obj.center = true;
                 that.setNode(obj);
             }
-            return false;
+            return false
         })
+
     },
     // 顶部编辑行
     editRow: function() {
@@ -438,7 +458,11 @@ Topo.prototype = {
             config: {
                 pid: that.__pid,
                 orderNo: that.__orderNo,
-                bgColor: attributesTab.hexToRgba($('[data-type=bgcolor]').val())
+                bgColor: attributesTab.hexToRgba($('[data-type=bgcolor]').val()),
+                IP: that.compileStr(that.__IP),
+                port: that.compileStr(that.__port),
+                account: that.compileStr(that.__account),
+                password: that.compileStr(that.__password),
             }
         }
         var nodes = [];
@@ -446,22 +470,49 @@ Topo.prototype = {
             nodes.push(e)
         })
         ojbect.nodes = nodes;
+        var saveData = document.createElement("input");
+        $(saveData).val(JSON.stringify(ojbect));
+        $(saveData).css('display', "none")
+        $("body").append(saveData);
         $.ajax({
             type: 'POST',
-            url: "/PDRInfo/SaveOneView?pid=" + that.__pid + "&orderNo=" + that.__orderNo,
+            url: "https://yw.ife360.com/PDRInfo/SaveOneView?pid=" + that.__pid + "&orderNo=" + that.__orderNo,
             data: {
                 data: JSON.stringify(ojbect)
             },
             success: function(res) {
-
-                const element = document.createElement('a');
-                const file = new Blob([JSON.stringify(ojbect)]);
-                element.href = URL.createObjectURL(file);
-                element.download = new Date().toLocaleString() + '.json';
-                element.click();
+                var filename = `${that.__pid}__${that.__orderNo||1}__${new Date().toLocaleString()}`
+                that.saveAs(saveData, filename)
+                $(saveData).remove();
                 alert('保存成功');
             },
         })
+    },
+
+    //保存文件
+    saveAs: function(obj, filename) {
+        var a = document.createElement('a');
+        a.setAttribute('href', 'data:text/html;gb2312,' + obj.value);
+        a.setAttribute('download', filename);
+        a.setAttribute('target', '_blank');
+        a.style.display = "none";
+        obj.parentNode.appendChild(a);
+        a.click();
+    },
+    compileStr: function(code) {
+        var c = String.fromCharCode(code.charCodeAt(0) + code.length); 
+        for (var i = 1; i < code.length; i++) {
+            c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1)); 
+        }
+        return escape(c);
+    },
+    uncompileStr: function(code) {
+        code = unescape(code);
+        var c = String.fromCharCode(code.charCodeAt(0) - code.length);
+        for (var i = 1; i < code.length; i++) {
+            c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));
+        }
+        return c;
     },
     //编辑大小
     editSize: function() {
@@ -544,9 +595,9 @@ Topo.prototype = {
             node.zIndex = obj.zIndex || 3;
             node.setBound(obj.x, obj.y, obj.width || 50, obj.height || 35);
             node.__type = 'node';
-            node.__statusvalue = obj.__statusvalue || 0;
-            node.state0 = obj.state0 || "#ff0000";
-            node.state1 = obj.state1 || "#00ff00";
+            node.__statusvalue = obj.__statusvalue || 1;
+            node.state0 = obj.state0 || "#00ff00";
+            node.state1 = obj.state1 || "#ff0000";
             node.state2 = obj.state2 || "#ffff00";
 
 
@@ -563,9 +614,9 @@ Topo.prototype = {
             node.setBound(obj.x, obj.y, obj.width, obj.height);
             node.__type = 'line';
             //状态赋值
-            node.__statusvalue = obj.__statusvalue || 0;
-            node.state0 = obj.state0 || "255,0,0";
-            node.state1 = obj.state1 || "193,193,193";
+            node.__statusvalue = obj.__statusvalue || 1;
+            node.state0 = obj.state0 || "193,193,193";
+            node.state1 = obj.state1 || "255,0,0";
             node.fillColor = node["state" + node.__statusvalue];
         }
         if (obj.center) {
@@ -591,6 +642,7 @@ Topo.prototype = {
             }
         })
         node.click(function() {
+            console.log(node)
             that.nodeClick(node);
         })
         this.scene.add(node);
@@ -644,7 +696,13 @@ Topo.prototype = {
         $("[data-type=copyOffset]").val(this.copyOffset);
         $("[data-type=failureState]").val(node._failureState || null);
         $("[data-type=statusvalue]").val(node.__statusvalue);
-        $("[data-type=CID]").html(`<option>${node._cid || "无"}</option>`);
+
+        $("[data-type=CIDValue]").val(node._cid);
+        console.log(node._cid)
+        console.log(node)
+
+
+
 
         if (node.image) {
             var path = node.image.currentSrc;
@@ -840,7 +898,7 @@ AttributesTab.prototype = {
                     topo.__pid = value;
                     $.ajax({
                         type: "post",
-                        url: "/PDRInfo/GetDeviceByPID",
+                        url: "https://yw.ife360.com/PDRInfo/GetDeviceByPID",
                         data: {
                             pid: value,
                         },
@@ -856,9 +914,21 @@ AttributesTab.prototype = {
                 case "orderNo":
                     topo.__orderNo = value;
                     break;
+                case "IP":
+                    topo.__IP = value;
+                    break;
+                case "port":
+                    topo.__port = value;
+                    break;
+                case "account":
+                    topo.__account = value;
+                    break;
+                case "password":
+                    topo.__password = value;
+                    break;
+
             }
         })
-
         $("select").on('change', function() {
             var key = $(this).attr("data-type");
             var value = $(this).val();
@@ -867,7 +937,7 @@ AttributesTab.prototype = {
                 case "DID":
                     $.ajax({
                         type: "post",
-                        url: "/PDRInfo/GetCirByDID",
+                        url: "https://yw.ife360.com/PDRInfo/GetCirByDID",
                         data: {
                             pid: topo.__pid,
                             did: value,
@@ -883,7 +953,8 @@ AttributesTab.prototype = {
                     break;
                 case "CID":
                     for (let a = 0; a < selectedElements.length; a++) {
-                        selectedElements[a]._cid = value
+                        selectedElements[a]._cid = value;
+                        $("[data-type=CIDValue]").val(value);
                     }
                     break;
             }

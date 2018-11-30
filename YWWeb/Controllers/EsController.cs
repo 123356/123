@@ -2436,7 +2436,7 @@ namespace S5001Web.Controllers
         public ActionResult GetGs(int rows, int page, int pdf)
         {
 
-            string strsql = @"SELECT a.id,a.pid,a.cid,a.cid_type_id,c.cid_type_name,a.subtractCid,b.Name from t_EE_PowerReportConfig a INNER JOIN t_CM_PDRInfo b on a.pid=b.PID
+            string strsql = @"SELECT a.id,a.pid,a.cid,a.cid_type_id,c.cid_type_name,a.subtractCid, b.Name from t_EE_PowerReportConfig a INNER JOIN t_CM_PDRInfo b on a.pid=b.PID
                              inner join t_EE_PowerConfigInfo c on a.cid_type_id=c.cid_type_id where 1=1";
 
             if (pdf != 0)
@@ -2476,7 +2476,13 @@ namespace S5001Web.Controllers
                     item.jianshu = item.jianshu.Substring(0, item.jianshu.Length - 1);
                 }
 
-
+                if (item.isUpload == 1)
+                {
+                    item.remarks = "是";
+                }else
+                {
+                    item.remarks = "否";
+                }
                 list.Add(item);
             }
 
@@ -2511,6 +2517,8 @@ namespace S5001Web.Controllers
             public string name { get; set; }
             public string jiashu { get; set; }
             public string jianshu { get; set; }
+            public int? isUpload { get; set; }
+            public string remarks { get; set; }
         }
         [Login]
         public ActionResult SaveGs(t_EE_PowerReportConfig model)
@@ -2532,6 +2540,7 @@ namespace S5001Web.Controllers
                     //info.cid_type_name = model.cid_type_name;
                     info.did = model.did;
                     info.cid_type_id = model.cid_type_id;
+                    //info.isUpload = model.isUpload;
                     //info.cid_type = model.cid_type;
                     bll.ObjectStateManager.ChangeObjectState(info, EntityState.Modified);
                     bll.SaveChanges();
@@ -2540,6 +2549,37 @@ namespace S5001Web.Controllers
 
                 return Content(result);
             }
+        }
+        public ActionResult  SaveisJisuan(int pid,int isUpload)
+        {
+            string result = "保存成功";
+            try
+            {
+                var re = bll.t_CM_PDRInfo.Where(p => p.PID == pid).FirstOrDefault();
+                re.isUpload = isUpload;
+                bll.SaveChanges();
+            }catch(Exception e)
+            {
+                result = "保存失败，请联系管理员";
+            }
+            return Content(result);
+        }
+        public ActionResult GetJisuan(int pid)
+        {
+            int? result =0;
+            try
+            {
+                var re = bll.t_CM_PDRInfo.Where(p => p.PID == pid).FirstOrDefault();
+                if (re != null)
+                {
+                    result = re.isUpload;
+                }
+            }
+            catch (Exception e)
+            {
+                result = 0;
+            }
+            return Content(result.ToString());
         }
         //删除
         [Login]
