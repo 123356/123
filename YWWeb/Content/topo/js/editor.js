@@ -204,7 +204,7 @@ Topo.prototype = {
         this.__IP = IP;
         this.__account = account;
         this.__password = password;
-        this.__port = port;
+        this.__port = port|| 15675;
         this.copyNode(obj.nodes);
 
     },

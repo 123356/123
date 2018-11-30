@@ -249,7 +249,7 @@ Topo.prototype = {
             keepAliveInterval: 10,
             onSuccess: function(e) {
                 console.log(("连接成功"))
-                client.subscribe('/ny/12', {
+                client.subscribe('/ny/' + that.pid, {
                     qos: 2
                 });
             },
