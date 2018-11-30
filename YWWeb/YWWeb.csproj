@@ -360,6 +360,8 @@
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\jquery-2.1.1.min.js" />
+    <Content Include="Content\css\modalForm.css" />
+    <Content Include="Content\css\projectOverview.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -854,6 +856,14 @@
     <Content Include="Content\images\pj.png" />
     <Content Include="Content\images\popclosebtn-.png" />
     <Content Include="Content\images\popclosebtn.png" />
+    <Content Include="Content\images\project\bk.png" />
+    <Content Include="Content\images\project\money.png" />
+    <Content Include="Content\images\project\name.png" />
+    <Content Include="Content\images\project\noclick.png" />
+    <Content Include="Content\images\project\proinfo.png" />
+    <Content Include="Content\images\project\project.png" />
+    <Content Include="Content\images\project\sggl.png" />
+    <Content Include="Content\images\project\sxjl.png" />
     <Content Include="Content\images\qx_bj.png" />
     <Content Include="Content\images\qx_xq.png" />
     <Content Include="Content\images\raricon.png" />
@@ -1031,6 +1041,7 @@
     <Content Include="Content\UserJS\PowerPlant._zc.js" />
     <Content Include="Content\UserJS\PowerPurchaseContract._jm.js" />
     <Content Include="Content\UserJS\PowerPurchaseContract._zc.js" />
+    <Content Include="Content\UserJS\ProjectOverview._jm .js" />
     <Content Include="Content\UserJS\UserPlanLog._jm.js" />
     <Content Include="Content\UserJS\UserPlanLog._zc.js" />
     <Content Include="Content\UserJS\YunYingConstract._jm.js" />
@@ -1391,6 +1402,7 @@
     <Content Include="Content\UserJS\YwConstractView._zc.js" />
     <Content Include="Content\UserJS\PowerInfoMap.jm.js" />
     <Content Include="Content\UserJS\_Header1.jm.js" />
+    <Content Include="Content\UserJS\ProjectOverview._zc.js" />
     <Content Include="Content\UserJS\_Header1.zc.js" />
     <Content Include="Content\UserJS\_Header2.jm.js" />
     <Content Include="Content\UserJS\_Header2.zc.js" />
@@ -2067,8 +2079,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap-3.3.7-dist\fonts\" />
+    <Folder Include="Content\calendar\" />
     <Folder Include="Content\css_app\" />
     <Folder Include="Content\images\borderBk.png\" />
+    <Folder Include="Content\iview\dist\" />
     <Folder Include="Content\pingmiantu\P10\" />
     <Folder Include="Content\pingmiantu\P11\" />
     <Folder Include="Content\pingmiantu\P2\" />
@@ -2533,6 +2547,8 @@
     <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
     <Content Include="Views\PDRInfo\OneGraphTopo.cshtml" />
     <Content Include="Views\PDRInfo\PlanInfo177.cshtml" />
+    <Content Include="Views\Constract\ProjectOverview.cshtml" />
+    <Content Include="Views\Constract\AddMatter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
