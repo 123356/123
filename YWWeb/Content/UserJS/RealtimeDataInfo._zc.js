@@ -15,8 +15,8 @@ $("#DTID").combobox({
     onLoadSuccess: function () {
         var data = $('#DTID').combobox('getData');
         if (data.length > 0) {
-            $("#DTID").combobox('setValue', data[1].DTID);
-            initDevice(data[1].DTID);
+            $("#DTID").combobox('setValue', data[0].DTID);
+            initDevice(data[0].DTID);
         }
     }, onSelect: function (n) {
         //var table = $('#datalist').DataTable();
