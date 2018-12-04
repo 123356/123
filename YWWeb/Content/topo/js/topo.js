@@ -357,19 +357,17 @@ Topo.prototype = {
 
                 if (meter.DataTypeID == '2') { //电流
                     $('.I' + meter.ABCID).html(meter.DValue);
-                } else if (meter.DataTypeID == '3') { //电压
+                } else if (meter.DataTypeID == '3' || meter.DataTypeID == "56") { //电压
                     $('.UA' + meter.ABCID).html(meter.DValue);
-                } else if (meter.DataTypeID == '6') { //功率因数
+                } else if (meter.DataTypeID == '6' || meter.DataTypeID == '51') { //功率因数
                     $('.F').html(meter.DValue);
-                } else if (meter.DataTypeID == '45') { //总有功
+                } else if (meter.DataTypeID == '46' || meter.DataTypeID == '7') { //总有功
                     $('.P').html(meter.DValue);
-                } else if (meter.DataTypeID == '47') { //总无功功率
+                } else if (meter.DataTypeID == '47' || meter.DataTypeID == '5') { //总无功功率
                     $('.Q').html(meter.DValue);
                 } else if (meter.DataTypeID == '52') { //总有功电度
                     $('.K').html(meter.DValue);
-
                 }
-
             }
         }
     },
