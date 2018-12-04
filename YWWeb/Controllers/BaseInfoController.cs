@@ -8,7 +8,7 @@ using System.Text;
 using DAL;
 using IDAO.Models;
 using Newtonsoft.Json;
-
+using Loger;
 
 namespace S5001Web.Controllers
 {
@@ -105,17 +105,26 @@ namespace S5001Web.Controllers
             //    strsql = strsql + " where did=" + did;
             //else if (pid > 0)
             //    strsql = strsql + " where pid=" + pid;
-            //List<ComboboxInfo> list = bll.ExecuteStoreQuery<ComboboxInfo>(strsql).ToList();
+            // List<ComboboxInfo> list = bll.ExecuteStoreQuery<ComboboxInfo>(strsql).ToList();
             //string strJson = Common.ComboboxToJson(list);
-            List<t_CM_DeviceTypeComBox> list = DeviceTypeDAL.getInstance().GetRealTimeComboxData(pid, did).ToList();
-            string strJson = JsonConvert.SerializeObject(list);
-            if (showall > 0)
+            LogHelper.Info("BindValueType");
+            string strJson = "null";
+            try
             {
-                strJson = AddShowAll(list.Count, strJson, "DataTypeID", "Name");
+                List<t_CM_DeviceTypeComBox> list = DeviceTypeDAL.getInstance().GetRealTimeComboxData(pid, did).ToList();
+                 strJson = JsonConvert.SerializeObject(list);
             }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+            //if (showall > 0)
+            //{
+            //    strJson = AddShowAll(list.Count, strJson, "DataTypeID", "Name");
+            //}
 
-            list.Clear();
-            list = null;
+            //list.Clear();
+            //list = null;
             return Content(strJson);
         }
         //配电房设备列表
