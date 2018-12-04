@@ -343,6 +343,7 @@ Topo.prototype = {
             node.fillColor = node.state0
         }
     },
+    // 匹配表
     matchElectricMeter: function (cid) {
         var component = [];
         var datatypeid = -1;
@@ -351,18 +352,28 @@ Topo.prototype = {
             if (meter.CID == cid) {
                 if (b == 0) {
                     $('.title').html(meter.CName);
-                    b++
+                    b++;
                 }
-                if (meter.CtypeName == '电流') {
-                    $('.I' + meter.TagName[meter.TagName.length - 1]).html(meter.DValue)
-                } else if (meter.CtypeName == '电压') {
-                    $('.UA' + meter.TagName[meter.TagName.length - 1]).html(meter.DValue)
-                } else {
-                    $('.' + meter.TagName[meter.TagName.length - 1]).html(meter.DValue)
+
+                if (meter.DataTypeID == '2') { //电流
+                    $('.I' + meter.ABCID).html(meter.DValue);
+                } else if (meter.DataTypeID == '3') { //电压
+                    $('.UA' + meter.ABCID).html(meter.DValue);
+                } else if (meter.DataTypeID == '6') { //功率因数
+                    $('.F').html(meter.DValue);
+                } else if (meter.DataTypeID == '45') { //总有功
+                    $('.P').html(meter.DValue);
+                } else if (meter.DataTypeID == '47') { //总无功功率
+                    $('.Q').html(meter.DValue);
+                } else if (meter.DataTypeID == '52') { //总有功电度
+                    $('.K').html(meter.DValue);
+
                 }
+
             }
         }
-    }
+    },
+
 };
 var topo = new Topo();
 topo.init();
