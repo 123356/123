@@ -3119,6 +3119,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 view.Units = DataUnitsReplace(model.Units);
                 view.DataTypeID = model.DataTypeID;
                 view.PID = model.PID;
+                view.ABCID = model.ABCID;
                 re.Add(view);
             }
             return Json(re,JsonRequestBehavior.AllowGet);
@@ -3143,7 +3144,9 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             public int TagID { get; set; }
             public string TagName { get; set; }
             public int? PID { get; set; }
-            
+            public int? ABCID { get; set; }
+
+
         }
         /// <summary>
         /// 获取did
