@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 using System.Text;
 using System.IO;
 using System.Net;
-using S5001Web;
-using S5001Web.Controllers;
-using S5001Web.PubClass;
+
+using YWWeb.Controllers;
+using YWWeb.PubClass;
 
 
-namespace S5000Web.Controllers
+namespace YWWeb.Controllers
 {
     public class OrderInfoController : Controller
     {

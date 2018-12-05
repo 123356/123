@@ -6,7 +6,7 @@ using Yunpian.conf;
 using Yunpian.lib;
 using Yunpian.model;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class UtilsSms
     {
@@ -165,7 +165,7 @@ namespace S5001Web.PubClass
         private static string gy = "【"+company+"】您有{0}级过压警报，电压：{1}，位置：{2}";
         private static string glv = "【"+company+"】您有{0}级功率因素警报，值：{1}，位置：{2}";
         private static string kg = "【"+company+"】您有{0}级开关变位警报，值：{1}，位置：{2}";
-        internal static Result smsAlarm(string Mobilephone, t_AlarmTable_en alarm)
+        internal static Result smsAlarm(string Mobilephone, IDAO.Models.t_AlarmTable_en alarm)
         {
             Config config = new Config(key);
             Dictionary<string, string> data = new Dictionary<string, string>();
@@ -176,7 +176,7 @@ namespace S5001Web.PubClass
             return sms.singleSend(data);
         }
 
-        private static string getText(t_AlarmTable_en alarm)
+        private static string getText(IDAO.Models.t_AlarmTable_en alarm)
         {
             string result = "";
             if (alarm.AlarmCate.Contains("水"))

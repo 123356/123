@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,23 +9,23 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{93DDF04C-22DF-4344-BC1D-27256650F79E}</ProjectGuid>
-    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectGuid>{A36E96BB-9BBB-4DFD-A095-1C07A6F398F1}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>S5001Web</RootNamespace>
+    <RootNamespace>YWWeb</RootNamespace>
     <AssemblyName>YWWeb</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,58 +35,74 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.UMHCONTROLLib, Version=1.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>DLL\Interop.UMHCONTROLLib.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Log4net4.0\log4net.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Office.Interop.Word">
-      <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>DLL\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.8\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\NPOI.dll</HintPath>
+    <Reference Include="NPOI, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -96,53 +114,84 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="WebGrease">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Yunpian, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Yunpian">
       <HintPath>DLL\Yunpian.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AddAll.cs" />
     <Compile Include="Controllers\AlarmBean.cs" />
     <Compile Include="Controllers\AlarmInfo.cs" />
@@ -164,6 +213,7 @@
     <Compile Include="Controllers\CstrOrder.cs" />
     <Compile Include="Controllers\CstrtOrderInfo.cs" />
     <Compile Include="Controllers\DataInfo.cs" />
+    <Compile Include="Controllers\DataInfoController.cs" />
     <Compile Include="Controllers\DataProcessController.cs" />
     <Compile Include="Controllers\DataReportController.cs" />
     <Compile Include="Controllers\DeviceInfo.cs" />
@@ -223,7 +273,6 @@
     <Compile Include="Controllers\UnOrderDetail3.cs" />
     <Compile Include="Controllers\UsePower.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
-    <Compile Include="Controllers\DataInfoController.cs" />
     <Compile Include="Controllers\WebController.cs" />
     <Compile Include="Controllers\WxController.cs" />
     <Compile Include="Global.asax.cs">
@@ -237,6 +286,7 @@
     <Compile Include="PubClass\Cons.cs" />
     <Compile Include="PubClass\DirectoryUtil.cs" />
     <Compile Include="PubClass\Encrypt.cs" />
+    <Compile Include="PubClass\EquipmentCode.cs" />
     <Compile Include="PubClass\Exportdoc.cs" />
     <Compile Include="PubClass\ExportExcel.cs" />
     <Compile Include="PubClass\HttpUtils.cs" />
@@ -247,7 +297,6 @@
     <Compile Include="PubClass\RowCount.cs" />
     <Compile Include="PubClass\SQLHelper.cs" />
     <Compile Include="PubClass\SQLtoDataSet.cs" />
-    <Compile Include="PubClass\EquipmentCode.cs" />
     <Compile Include="PubClass\TimeUtils.cs" />
     <Compile Include="PubClass\UnitScore.cs" />
     <Compile Include="PubClass\UtilsSms.cs" />
@@ -258,9 +307,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="AmazeUI-2.7.2\404.html" />
     <Content Include="AmazeUI-2.7.2\assets\css\admin.css" />
     <Content Include="AmazeUI-2.7.2\assets\css\amazeui.css" />
@@ -275,6 +321,7 @@
     <Content Include="AmazeUI-2.7.2\assets\img\logo1.png" />
     <Content Include="AmazeUI-2.7.2\assets\img\logoa.png" />
     <Content Include="AmazeUI-2.7.2\assets\img\logoa.src.png" />
+    <Content Include="AmazeUI-2.7.2\assets\img\logoa1.png" />
     <Content Include="AmazeUI-2.7.2\assets\img\logob.png" />
     <Content Include="AmazeUI-2.7.2\assets\img\logob.src.png" />
     <Content Include="AmazeUI-2.7.2\assets\img\user01.png" />
@@ -354,22 +401,31 @@
     <Content Include="Content\baiduMap\script\TrafficControl_min.css" />
     <Content Include="Content\baiduMap\script\TrafficControl_min.js" />
     <Content Include="Content\baiduMap\script\UserInfoMap._zc.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.bundle.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\jquery-2.1.1.min.js" />
-    <Content Include="Content\css\modalForm.css" />
-    <Content Include="Content\css\projectOverview.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min14ed.css" />
     <Content Include="Content\css\common.css" />
     <Content Include="Content\css\dataTables.bootstrap.css" />
-    <Content Include="Content\css\LBYWBase.css" />
     <Content Include="Content\css\ImageShow.css" />
+    <Content Include="Content\css\LBYWBase.css" />
     <Content Include="Content\css\lightslider.css" />
     <Content Include="Content\css\login.css" />
     <Content Include="Content\css\loginpub.css" />
@@ -481,6 +537,16 @@
     <Content Include="Content\images\bgwx.png" />
     <Content Include="Content\images\bhiddenleftmenuico.png" />
     <Content Include="Content\images\bjzd.png" />
+    <Content Include="Content\images\borderBk.png\borderBk.png" />
+    <Content Include="Content\images\borderBk.png\checking.png" />
+    <Content Include="Content\images\borderBk.png\down.png" />
+    <Content Include="Content\images\borderBk.png\s1.png" />
+    <Content Include="Content\images\borderBk.png\s2.png" />
+    <Content Include="Content\images\borderBk.png\score2.png" />
+    <Content Include="Content\images\borderBk.png\score3.png" />
+    <Content Include="Content\images\borderBk.png\score4.png" />
+    <Content Include="Content\images\borderBk.png\success.png" />
+    <Content Include="Content\images\borderBk.png\waitCheck.png" />
     <Content Include="Content\images\bshowleftmenuicon.png" />
     <Content Include="Content\images\button.png" />
     <Content Include="Content\images\checkAllOff.gif" />
@@ -621,6 +687,7 @@
     <Content Include="Content\images\Icon32\volume.png" />
     <Content Include="Content\images\Icon32\workorder.png" />
     <Content Include="Content\images\Icon32\workordericon.png" />
+    <Content Include="Content\images\icon4\down.png" />
     <Content Include="Content\images\icon4\elec.png" />
     <Content Include="Content\images\icon4\elecLoad.png" />
     <Content Include="Content\images\icon4\info.png" />
@@ -708,6 +775,7 @@
     <Content Include="Content\images\Login\login_icon.png" />
     <Content Include="Content\images\Login\login_line.png" />
     <Content Include="Content\images\Login\login_logo.png" />
+    <Content Include="Content\images\Login\login_logo1.png" />
     <Content Include="Content\images\Login\login_submit.png" />
     <Content Include="Content\images\Login\login_table0.png" />
     <Content Include="Content\images\Login\login_table1.png" />
@@ -825,6 +893,9 @@
     <Content Include="Content\images\PDRPhoto\PDR163_1.jpg" />
     <Content Include="Content\images\PDRPhoto\PDR163_2.jpg" />
     <Content Include="Content\images\PDRPhoto\PDR163_3.jpg" />
+    <Content Include="Content\images\PDRPhoto\pdr177_1.jpg" />
+    <Content Include="Content\images\PDRPhoto\pdr177_2.jpg" />
+    <Content Include="Content\images\PDRPhoto\pdr177_3.jpg" />
     <Content Include="Content\images\PDRPhoto\PDR1_1.jpg" />
     <Content Include="Content\images\PDRPhoto\PDR1_2.jpg" />
     <Content Include="Content\images\PDRPhoto\PDR1_3.jpg" />
@@ -855,14 +926,6 @@
     <Content Include="Content\images\pj.png" />
     <Content Include="Content\images\popclosebtn-.png" />
     <Content Include="Content\images\popclosebtn.png" />
-    <Content Include="Content\images\project\bk.png" />
-    <Content Include="Content\images\project\money.png" />
-    <Content Include="Content\images\project\name.png" />
-    <Content Include="Content\images\project\noclick.png" />
-    <Content Include="Content\images\project\proinfo.png" />
-    <Content Include="Content\images\project\project.png" />
-    <Content Include="Content\images\project\sggl.png" />
-    <Content Include="Content\images\project\sxjl.png" />
     <Content Include="Content\images\qx_bj.png" />
     <Content Include="Content\images\qx_xq.png" />
     <Content Include="Content\images\raricon.png" />
@@ -875,6 +938,7 @@
     <Content Include="Content\images\score\borderBk.png" />
     <Content Include="Content\images\score\checking.png" />
     <Content Include="Content\images\score\down.png" />
+    <Content Include="Content\images\score\noCheck.png" />
     <Content Include="Content\images\score\refresh.png" />
     <Content Include="Content\images\score\s1.png" />
     <Content Include="Content\images\score\s2.png" />
@@ -885,7 +949,6 @@
     <Content Include="Content\images\score\scoreBk.png" />
     <Content Include="Content\images\score\success.png" />
     <Content Include="Content\images\score\waitCheck.png" />
-    <Content Include="Content\images\score\noCheck.png" />
     <Content Include="Content\images\searchico.png" />
     <Content Include="Content\images\showleftmenuicon.png" />
     <Content Include="Content\images\sjgbico.png" />
@@ -947,13 +1010,8 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
-    <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\gettemp.js" />
-    <Content Include="Content\js\lbyw-base.zc.js" />
-    <Content Include="Content\js\lbywfw._zc.js" />
-    <Content Include="Content\js\lbywlfmu._zc.js" />
-    <Content Include="Content\js\lbywpln._zc.js" />
-    <Content Include="Content\js\lfywufl._zc.js" />
+    <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\iepng.js" />
     <Content Include="Content\js\jquery-1.12.2.min.js" />
     <Content Include="Content\js\jquery-1.7.2.min.js" />
@@ -966,88 +1024,26 @@
     <Content Include="Content\js\jquery.min.js" />
     <Content Include="Content\js\jquery.tabs.js" />
     <Content Include="Content\js\jquery.timepicker.js" />
+    <Content Include="Content\js\lbyw-base.zc.js" />
+    <Content Include="Content\js\lbywfw._zc.js" />
+    <Content Include="Content\js\lbywlfmu._zc.js" />
+    <Content Include="Content\js\lbywpln._zc.js" />
+    <Content Include="Content\js\lfywufl._zc.js" />
+    <Content Include="Content\js\lightslider2.js" />
     <Content Include="Content\js\menucontrol._zc.js" />
     <Content Include="Content\js\menulast._zc.js" />
     <Content Include="Content\js\online._zc.js" />
     <Content Include="Content\js\ResizeList._zc.js" />
     <Content Include="Content\js\respond.src.js" />
+    <Content Include="Content\js\score.js" />
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="Content\js\tab._zc..js" />
-    <Content Include="Content\js\score.js" />
     <Content Include="Content\js\userView2.js" />
     <Content Include="Content\js\vue.js" />
     <Content Include="Content\js\weather.js" />
-    <Content Include="Content\timeline\vis-timeline-graph2d.min.css" />
-    <Content Include="Content\timeline\vis.js" />
-    <Content Include="Content\topo\css\rescss.css" />
-    <Content Include="Content\topo\css\topo.css" />
-    <Content Include="Content\topo\css\wiring.css" />
-    <Content Include="Content\topo\img\cur\openhand.cur" />
-    <Content Include="Content\topo\img\edit\align-down.png" />
-    <Content Include="Content\topo\img\edit\align-left.png" />
-    <Content Include="Content\topo\img\edit\align-right.png" />
-    <Content Include="Content\topo\img\edit\align-top.png" />
-    <Content Include="Content\topo\img\edit\contour.png" />
-    <Content Include="Content\topo\img\edit\editSize.png" />
-    <Content Include="Content\topo\img\edit\horizontalSpacing.png" />
-    <Content Include="Content\topo\img\edit\level.png" />
-    <Content Include="Content\topo\img\edit\line.png" />
-    <Content Include="Content\topo\img\edit\link.png" />
-    <Content Include="Content\topo\img\edit\monospace.png" />
-    <Content Include="Content\topo\img\edit\sameWidth.png" />
-    <Content Include="Content\topo\img\edit\save.png" />
-    <Content Include="Content\topo\img\edit\switch.png" />
-    <Content Include="Content\topo\img\edit\vertical.png" />
-    <Content Include="Content\topo\img\edit\verticalSpacing.png" />
-    <Content Include="Content\topo\img\symbols\10.png" />
-    <Content Include="Content\topo\img\symbols\12.png" />
-    <Content Include="Content\topo\img\symbols\13.png" />
-    <Content Include="Content\topo\img\symbols\13s.png" />
-    <Content Include="Content\topo\img\symbols\13ss.png" />
-    <Content Include="Content\topo\img\symbols\14.png" />
-    <Content Include="Content\topo\img\symbols\9.png" />
-    <Content Include="Content\topo\img\symbols\arrow.png" />
-    <Content Include="Content\topo\img\symbols\breaker.png" />
-    <Content Include="Content\topo\img\symbols\doubleBreaker.png" />
-    <Content Include="Content\topo\img\symbols\electricMeter.png" />
-    <Content Include="Content\topo\img\symbols\ground.png" />
-    <Content Include="Content\topo\img\symbols\switch.png" />
-    <Content Include="Content\topo\img\symbols\text.png" />
-    <Content Include="Content\topo\js\editor.js" />
-    <Content Include="Content\topo\js\jquery.js" />
-    <Content Include="Content\topo\js\jtopo.js" />
-    <Content Include="Content\topo\js\mqtt.js" />
-    <Content Include="Content\topo\js\palette_config.js" />
-    <Content Include="Content\topo\js\topo.js" />
-    <Content Include="Content\UserJS\appliction.js" />
-    <Content Include="Content\UserJS\CategoryView._jm.js" />
-    <Content Include="Content\UserJS\CategoryView._zc.js" />
-    <Content Include="Content\UserJS\CommonUnit._jm.js" />
-    <Content Include="Content\UserJS\CommonUnit._zc.js" />
-    <Content Include="Content\UserJS\EsDecisionPianCha._jm.js" />
-    <Content Include="Content\UserJS\EsDecisionPianCha._zc.js" />
-    <Content Include="Content\UserJS\EsDecisionView._jm.js" />
-    <Content Include="Content\UserJS\EsDecisionView._zc.js" />
-    <Content Include="Content\UserJS\Industry._jm.js" />
-    <Content Include="Content\UserJS\Industry._zc.js" />
-    <Content Include="Content\UserJS\OverviewInput1._jm.js" />
-    <Content Include="Content\UserJS\OverviewInput1._zc.js" />
-    <Content Include="Content\UserJS\OverviewList._jm.js" />
-    <Content Include="Content\UserJS\OverviewList._zc.js" />
-    <Content Include="Content\UserJS\PowerMapDetail._zc.js" />
-    <Content Include="Content\UserJS\PowerPlant._jm.js" />
-    <Content Include="Content\UserJS\PowerPlant._zc.js" />
-    <Content Include="Content\UserJS\PowerPurchaseContract._jm.js" />
-    <Content Include="Content\UserJS\PowerPurchaseContract._zc.js" />
-    <Content Include="Content\UserJS\ProjectOverview._jm .js" />
-    <Content Include="Content\UserJS\UserPlanLog._jm.js" />
-    <Content Include="Content\UserJS\UserPlanLog._zc.js" />
-    <Content Include="Content\UserJS\YunYingConstract._jm.js" />
-    <Content Include="Content\UserJS\YunYingConstract._zc.js" />
     <Content Include="Content\js\zrender\esl.js" />
     <Content Include="Content\js\zrender\zrender-original.js" />
     <Content Include="Content\js\zrender\zrender.js" />
-    <Content Include="Content\js\lightslider2.js" />
     <Content Include="Content\pingmiantu\.png" />
     <Content Include="Content\pingmiantu\1001.png" />
     <Content Include="Content\pingmiantu\bak-水浸_ 1.png" />
@@ -1063,6 +1059,7 @@
     <Content Include="Content\pingmiantu\byq_3.png" />
     <Content Include="Content\pingmiantu\dt.png" />
     <Content Include="Content\pingmiantu\dt1.png" />
+    <Content Include="Content\pingmiantu\dt2.png" />
     <Content Include="Content\pingmiantu\dyg.png" />
     <Content Include="Content\pingmiantu\dyg_.png" />
     <Content Include="Content\pingmiantu\dyg_1.png" />
@@ -1177,11 +1174,14 @@
     <Content Include="Content\pingmiantu\P1\dt.png" />
     <Content Include="Content\pingmiantu\titlebg.png" />
     <Content Include="Content\pingmiantu\tmax_location.gif" />
+    <Content Include="Content\pingmiantu\低压柜右.png" />
+    <Content Include="Content\pingmiantu\低压柜右2.png" />
     <Content Include="Content\pingmiantu\低压柜左.png" />
     <Content Include="Content\pingmiantu\低压柜左_.png" />
     <Content Include="Content\pingmiantu\低压柜左_1.png" />
     <Content Include="Content\pingmiantu\低压柜左_2.png" />
     <Content Include="Content\pingmiantu\低压柜左_3.png" />
+    <Content Include="Content\pingmiantu\低压柜左背面.png" />
     <Content Include="Content\pingmiantu\低压柜正.png" />
     <Content Include="Content\pingmiantu\低压柜正_.png" />
     <Content Include="Content\pingmiantu\低压柜正_1.png" />
@@ -1197,9 +1197,11 @@
     <Content Include="Content\pingmiantu\变压器_2.png" />
     <Content Include="Content\pingmiantu\变压器_3.png" />
     <Content Include="Content\pingmiantu\四川博高.png" />
+    <Content Include="Content\pingmiantu\开门1_.png" />
     <Content Include="Content\pingmiantu\开门_.png" />
     <Content Include="Content\pingmiantu\恒扉地板.png" />
     <Content Include="Content\pingmiantu\恒扉平面图.png" />
+    <Content Include="Content\pingmiantu\恒扉平面图1.png" />
     <Content Include="Content\pingmiantu\恒扉绿色门.png" />
     <Content Include="Content\pingmiantu\恒扉绿色门_.png" />
     <Content Include="Content\pingmiantu\按钮.png" />
@@ -1226,6 +1228,7 @@
     <Content Include="Content\pingmiantu\烟感_.png" />
     <Content Include="Content\pingmiantu\烟感_0.png" />
     <Content Include="Content\pingmiantu\烟感_1.png" />
+    <Content Include="Content\pingmiantu\舞蹈学院.png" />
     <Content Include="Content\pingmiantu\高压柜右.png" />
     <Content Include="Content\pingmiantu\高压柜右_.png" />
     <Content Include="Content\pingmiantu\高压柜右_1.png" />
@@ -1241,6 +1244,46 @@
     <Content Include="Content\pingmiantu\高压柜正_1.png" />
     <Content Include="Content\pingmiantu\高压柜正_2.png" />
     <Content Include="Content\pingmiantu\高压柜正_3.png" />
+    <Content Include="Content\timeline\vis-timeline-graph2d.min.css" />
+    <Content Include="Content\timeline\vis.js" />
+    <Content Include="Content\topo\css\rescss.css" />
+    <Content Include="Content\topo\css\topo.css" />
+    <Content Include="Content\topo\css\wiring.css" />
+    <Content Include="Content\topo\img\cur\openhand.cur" />
+    <Content Include="Content\topo\img\edit\align-down.png" />
+    <Content Include="Content\topo\img\edit\align-left.png" />
+    <Content Include="Content\topo\img\edit\align-right.png" />
+    <Content Include="Content\topo\img\edit\align-top.png" />
+    <Content Include="Content\topo\img\edit\contour.png" />
+    <Content Include="Content\topo\img\edit\editSize.png" />
+    <Content Include="Content\topo\img\edit\horizontalSpacing.png" />
+    <Content Include="Content\topo\img\edit\level.png" />
+    <Content Include="Content\topo\img\edit\line.png" />
+    <Content Include="Content\topo\img\edit\link.png" />
+    <Content Include="Content\topo\img\edit\monospace.png" />
+    <Content Include="Content\topo\img\edit\sameWidth.png" />
+    <Content Include="Content\topo\img\edit\save.png" />
+    <Content Include="Content\topo\img\edit\switch.png" />
+    <Content Include="Content\topo\img\edit\vertical.png" />
+    <Content Include="Content\topo\img\edit\verticalSpacing.png" />
+    <Content Include="Content\topo\img\symbols\10.png" />
+    <Content Include="Content\topo\img\symbols\12.png" />
+    <Content Include="Content\topo\img\symbols\13.png" />
+    <Content Include="Content\topo\img\symbols\13s.png" />
+    <Content Include="Content\topo\img\symbols\13ss.png" />
+    <Content Include="Content\topo\img\symbols\14.png" />
+    <Content Include="Content\topo\img\symbols\9.png" />
+    <Content Include="Content\topo\img\symbols\arrow.png" />
+    <Content Include="Content\topo\img\symbols\breaker.png" />
+    <Content Include="Content\topo\img\symbols\doubleBreaker.png" />
+    <Content Include="Content\topo\img\symbols\electricMeter.png" />
+    <Content Include="Content\topo\img\symbols\ground.png" />
+    <Content Include="Content\topo\img\symbols\switch.png" />
+    <Content Include="Content\topo\img\symbols\text.png" />
+    <Content Include="Content\topo\js\editor.js" />
+    <Content Include="Content\topo\js\jtopo.js" />
+    <Content Include="Content\topo\js\palette_config.js" />
+    <Content Include="Content\topo\js\topo.js" />
     <Content Include="Content\TreeTable\css\images\file.gif" />
     <Content Include="Content\TreeTable\css\images\folder.png" />
     <Content Include="Content\TreeTable\css\images\minus.gif" />
@@ -1270,11 +1313,17 @@
     <Content Include="Content\UserJS\AlarmSysTableList._zc.js" />
     <Content Include="Content\UserJS\AlarmSysTableList_jm.js" />
     <Content Include="Content\UserJS\AlarmSysTableList_zc.js" />
+    <Content Include="Content\UserJS\appliction.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._jm.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._zc.js" />
+    <Content Include="Content\UserJS\CategoryView._jm.js" />
+    <Content Include="Content\UserJS\CategoryView._zc.js" />
+    <Content Include="Content\UserJS\CommonUnit._jm.js" />
+    <Content Include="Content\UserJS\CommonUnit._zc.js" />
+    <Content Include="Content\UserJS\ConstractEdit._jm.js" />
     <Content Include="Content\UserJS\ConstractEdit._zc.js" />
-    <Content Include="Content\UserJS\ConstractView._zc.js" />
     <Content Include="Content\UserJS\ConstractView._jm.js" />
+    <Content Include="Content\UserJS\ConstractView._zc.js" />
     <Content Include="Content\UserJS\ContractMag._jm.js" />
     <Content Include="Content\UserJS\ContractMag._zc.js" />
     <Content Include="Content\UserJS\CurrenVoltage._jm.js" />
@@ -1301,6 +1350,10 @@
     <Content Include="Content\UserJS\EquipmentLedger_zc.js" />
     <Content Include="Content\UserJS\EsDecisionMaking._jm.js" />
     <Content Include="Content\UserJS\EsDecisionMaking._zc.js" />
+    <Content Include="Content\UserJS\EsDecisionPianCha._jm.js" />
+    <Content Include="Content\UserJS\EsDecisionPianCha._zc.js" />
+    <Content Include="Content\UserJS\EsDecisionView._jm.js" />
+    <Content Include="Content\UserJS\EsDecisionView._zc.js" />
     <Content Include="Content\UserJS\FormulaEdit._jm.js" />
     <Content Include="Content\UserJS\FormulaEdit._zc.js" />
     <Content Include="Content\UserJS\GraphData_jm.js" />
@@ -1311,6 +1364,8 @@
     <Content Include="Content\UserJS\HazardManDetail._zc.js" />
     <Content Include="Content\UserJS\HistoryData._jm.js" />
     <Content Include="Content\UserJS\HistoryData._zc.js" />
+    <Content Include="Content\UserJS\Industry._jm.js" />
+    <Content Include="Content\UserJS\Industry._zc.js" />
     <Content Include="Content\UserJS\JianguPingfeng._jm.js" />
     <Content Include="Content\UserJS\JianguPingfeng._zc.js" />
     <Content Include="Content\UserJS\JianguPingfengEdit._jm.js" />
@@ -1342,6 +1397,10 @@
     <Content Include="Content\UserJS\Overview._zc.js" />
     <Content Include="Content\UserJS\OverviewInput._jm.js" />
     <Content Include="Content\UserJS\OverviewInput._zc.js" />
+    <Content Include="Content\UserJS\OverviewInput1._jm.js" />
+    <Content Include="Content\UserJS\OverviewInput1._zc.js" />
+    <Content Include="Content\UserJS\OverviewList._jm.js" />
+    <Content Include="Content\UserJS\OverviewList._zc.js" />
     <Content Include="Content\UserJS\OverviewPurchaseRecord._jm.js" />
     <Content Include="Content\UserJS\OverviewPurchaseRecord._zc.js" />
     <Content Include="Content\UserJS\PDRInfoList_jm.js" />
@@ -1352,6 +1411,12 @@
     <Content Include="Content\UserJS\PointsList_zc.js" />
     <Content Include="Content\UserJS\PowerFactor._jm.js" />
     <Content Include="Content\UserJS\PowerFactor._zc.js" />
+    <Content Include="Content\UserJS\PowerInfoMap.jm.js" />
+    <Content Include="Content\UserJS\PowerMapDetail._zc.js" />
+    <Content Include="Content\UserJS\PowerPlant._jm.js" />
+    <Content Include="Content\UserJS\PowerPlant._zc.js" />
+    <Content Include="Content\UserJS\PowerPurchaseContract._jm.js" />
+    <Content Include="Content\UserJS\PowerPurchaseContract._zc.js" />
     <Content Include="Content\UserJS\PurchasingCharts._jm.js" />
     <Content Include="Content\UserJS\PurchasingCharts._zc.js" />
     <Content Include="Content\UserJS\RealtimeDataInfo._jm.js" />
@@ -1389,18 +1454,21 @@
     <Content Include="Content\UserJS\UserInfoMap._jm.js" />
     <Content Include="Content\UserJS\UserList._jm.js" />
     <Content Include="Content\UserJS\UserList._zc.js" />
-    <Content Include="Content\UserJS\UserView._zc.js" />
+    <Content Include="Content\UserJS\UserPlanLog._jm.js" />
+    <Content Include="Content\UserJS\UserPlanLog._zc.js" />
     <Content Include="Content\UserJS\UserView._jm.js" />
+    <Content Include="Content\UserJS\UserView._zc.js" />
+    <Content Include="Content\UserJS\YunYingConstract._jm.js" />
+    <Content Include="Content\UserJS\YunYingConstract._zc.js" />
     <Content Include="Content\UserJS\YunYingConstractEdit._jm.js" />
     <Content Include="Content\UserJS\YunYingConstractEdit._zc.js" />
     <Content Include="Content\UserJS\YunYingConstractView._jm.js" />
     <Content Include="Content\UserJS\YunYingConstractView._zc.js" />
     <Content Include="Content\UserJS\YwConstractEdit._jm.js" />
     <Content Include="Content\UserJS\YwConstractEdit._zc.js" />
+    <Content Include="Content\UserJS\YwConstractView._jm.js" />
     <Content Include="Content\UserJS\YwConstractView._zc.js" />
-    <Content Include="Content\UserJS\PowerInfoMap.jm.js" />
     <Content Include="Content\UserJS\_Header1.jm.js" />
-    <Content Include="Content\UserJS\ProjectOverview._zc.js" />
     <Content Include="Content\UserJS\_Header1.zc.js" />
     <Content Include="Content\UserJS\_Header2.jm.js" />
     <Content Include="Content\UserJS\_Header2.zc.js" />
@@ -1427,13 +1495,17 @@
     <Content Include="Content\yicitu\alarmico_1.png" />
     <Content Include="Content\yicitu\alarmico_2.png" />
     <Content Include="Content\yicitu\alarmico_3.png" />
+    <Content Include="Content\yicitu\alarmico_4.png" />
     <Content Include="Content\yicitu\p1.png" />
     <Content Include="Content\yicitu\p10.png" />
     <Content Include="Content\yicitu\p105.png" />
     <Content Include="Content\yicitu\p105_1.png" />
     <Content Include="Content\yicitu\p105_2.png" />
     <Content Include="Content\yicitu\p105_3.png" />
+    <Content Include="Content\yicitu\p10_74.png" />
     <Content Include="Content\yicitu\p11.png" />
+    <Content Include="Content\yicitu\p11_75.png" />
+    <Content Include="Content\yicitu\p12 - 副本.png" />
     <Content Include="Content\yicitu\p12.png" />
     <Content Include="Content\yicitu\p137.png" />
     <Content Include="Content\yicitu\p138.png" />
@@ -1445,13 +1517,30 @@
     <Content Include="Content\yicitu\p1_1.png" />
     <Content Include="Content\yicitu\p1_2.png" />
     <Content Include="Content\yicitu\p2.png" />
+    <Content Include="Content\yicitu\p2_58.png" />
+    <Content Include="Content\yicitu\p2_59.png" />
     <Content Include="Content\yicitu\p3.png" />
+    <Content Include="Content\yicitu\p3_61.png" />
+    <Content Include="Content\yicitu\p3_62.png" />
+    <Content Include="Content\yicitu\p3_63.png" />
+    <Content Include="Content\yicitu\p3_64.png" />
     <Content Include="Content\yicitu\p4.png" />
+    <Content Include="Content\yicitu\p4_60.png" />
+    <Content Include="Content\yicitu\p4_65.png" />
     <Content Include="Content\yicitu\p5.png" />
+    <Content Include="Content\yicitu\p5_66.png" />
+    <Content Include="Content\yicitu\p5_67.png" />
     <Content Include="Content\yicitu\p6.png" />
+    <Content Include="Content\yicitu\p6_68.png" />
+    <Content Include="Content\yicitu\p6_69.png" />
     <Content Include="Content\yicitu\p7.png" />
+    <Content Include="Content\yicitu\p7_70.png" />
+    <Content Include="Content\yicitu\p7_71.png" />
     <Content Include="Content\yicitu\p8.png" />
+    <Content Include="Content\yicitu\p8_57.png" />
+    <Content Include="Content\yicitu\p8_72.png" />
     <Content Include="Content\yicitu\p9.png" />
+    <Content Include="Content\yicitu\p9_73.png" />
     <Content Include="Content\yicitu\skip_but.png" />
     <Content Include="Content\yicitu\skip_but_no.png" />
     <Content Include="Content\yicitu\switch_off_1.png" />
@@ -1491,576 +1580,65 @@
     <Content Include="Content\yicitu_app\switch_off_2.png" />
     <Content Include="Content\yicitu_app\switch_on_1.png" />
     <Content Include="Content\yicitu_app\switch_on_2.png" />
-    <Content Include="Download.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="HaiKang\cn\video.html" />
-    <Content Include="HaiKang\cn\video.js" />
-    <Content Include="HaiKang\cn\download.html" />
-    <Content Include="HaiKang\codebase\webVideoCtrl.js" />
-    <Content Include="HaiKang\video.css" />
-    <Content Include="HaiKang\jquery-1.7.1.min.js" />
-    <Content Include="jquery-easyui-1.4.5\easyloader.js" />
-    <Content Include="jquery-easyui-1.4.5\easyui-lang-zh_CN.js" />
-    <Content Include="jquery-easyui-1.4.5\jquery.easyui.min.js" />
-    <Content Include="jquery-easyui-1.4.5\jquery.easyui.mobile.js" />
-    <Content Include="jquery-easyui-1.4.5\jquery.min.js" />
-    <Content Include="jquery-easyui-1.4.5\macarons.js" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\black\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\bootstrap\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\color.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\default\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\gray\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\icon.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\back.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\cancel.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\clear.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\cut.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\edit_add.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\edit_remove.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\filesave.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\filter.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\help.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\large_chart.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\large_clipart.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\large_picture.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\large_shapes.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\large_smartart.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\lock.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\man.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\mini_add.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\mini_edit.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\mini_refresh.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\more.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\no.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\ok.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\pencil.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\print.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\redo.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\reload.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\search.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\sum.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\tip.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\icons\undo.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\material\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\accordion.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\calendar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\combo.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\combobox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\datagrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\datalist.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\datebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\dialog.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\easyui.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\filebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\accordion_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\blank.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\calendar_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\combo_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\datagrid_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\datebox_arrow.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\layout_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\linkbutton_bg.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\loading.gif" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\menu_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\messager_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\pagination_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\panel_tools.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\searchbox_button.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\slider_handle.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\spinner_arrows.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\tabs_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\tree_icons.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\images\validatebox_warning.png" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\layout.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\linkbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\menu.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\menubutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\messager.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\numberbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\pagination.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\panel.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\progressbar.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\propertygrid.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\searchbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\slider.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\spinner.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\splitbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\switchbutton.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\tabs.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\textbox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\tooltip.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\tree.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\validatebox.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\metro\window.css" />
-    <Content Include="jquery-easyui-1.4.5\themes\mobile.css" />
-    <Content Include="json\search.js" />
-    <Content Include="Media\css\left.css" />
-    <Content Include="Media\css\login.css" />
-    <Content Include="Media\css\main.css" />
-    <Content Include="Media\css\right.css" />
-    <Content Include="Media\html\cfg\alarm_io.html" />
-    <Content Include="Media\html\cfg\alarm_io.js" />
-    <Content Include="Media\html\cfg\alarm_mv.html" />
-    <Content Include="Media\html\cfg\alarm_mv.js" />
-    <Content Include="Media\html\cfg\alarm_yc.html" />
-    <Content Include="Media\html\cfg\alarm_yc.js" />
-    <Content Include="Media\html\cfg\Analog_Ch.html" />
-    <Content Include="Media\html\cfg\Analog_Ch.js" />
-    <Content Include="Media\html\cfg\auto_upgrade.html" />
-    <Content Include="Media\html\cfg\auto_upgrade.js" />
-    <Content Include="Media\html\cfg\auto_wh.html" />
-    <Content Include="Media\html\cfg\auto_wh.js" />
-    <Content Include="Media\html\cfg\Capture_Jh.html" />
-    <Content Include="Media\html\cfg\Capture_Jh.js" />
-    <Content Include="Media\html\cfg\Capture_Set.html" />
-    <Content Include="Media\html\cfg\Capture_Set.js" />
-    <Content Include="Media\html\cfg\Chn_Info.html" />
-    <Content Include="Media\html\cfg\Chn_Info.js" />
-    <Content Include="Media\html\cfg\chn_live.html" />
-    <Content Include="Media\html\cfg\chn_live.js" />
-    <Content Include="Media\html\cfg\chn_sp.html" />
-    <Content Include="Media\html\cfg\chn_sp.js" />
-    <Content Include="Media\html\cfg\chn_yt.html" />
-    <Content Include="Media\html\cfg\chn_yt.js" />
-    <Content Include="Media\html\cfg\Cloud_email.html" />
-    <Content Include="Media\html\cfg\Cloud_email.js" />
-    <Content Include="Media\html\cfg\css.css" />
-    <Content Include="Media\html\cfg\email_jh.html" />
-    <Content Include="Media\html\cfg\email_jh.js" />
-    <Content Include="Media\html\cfg\FTP_Set.html" />
-    <Content Include="Media\html\cfg\FTP_Set.js" />
-    <Content Include="Media\html\cfg\Img_Ctrl.html" />
-    <Content Include="Media\html\cfg\Img_Ctrl.js" />
-    <Content Include="Media\html\cfg\IPCan_set.html" />
-    <Content Include="Media\html\cfg\IPCan_set.js" />
-    <Content Include="Media\html\cfg\kb_set.html" />
-    <Content Include="Media\html\cfg\kb_set.js" />
-    <Content Include="Media\html\cfg\main_stream_set.html" />
-    <Content Include="Media\html\cfg\main_stream_set.js" />
-    <Content Include="Media\html\cfg\mobile_stream_set.html" />
-    <Content Include="Media\html\cfg\mobile_stream_set.js" />
-    <Content Include="Media\html\cfg\net_base.html" />
-    <Content Include="Media\html\cfg\net_base.js" />
-    <Content Include="Media\html\cfg\net_ddns.html" />
-    <Content Include="Media\html\cfg\net_ddns.js" />
-    <Content Include="Media\html\cfg\net_email.html" />
-    <Content Include="Media\html\cfg\net_email.js" />
-    <Content Include="Media\html\cfg\NewCloud_Storage.html" />
-    <Content Include="Media\html\cfg\NewCloud_Storage.js" />
-    <Content Include="Media\html\cfg\NormalClo_Sto.html" />
-    <Content Include="Media\html\cfg\NormalClo_Sto.js" />
-    <Content Include="Media\html\cfg\NormalClo_StoEm.html" />
-    <Content Include="Media\html\cfg\NormalClo_StoEm.js" />
-    <Content Include="Media\html\cfg\NormalClo_StoFtp.html" />
-    <Content Include="Media\html\cfg\NormalClo_StoFtp.js" />
-    <Content Include="Media\html\cfg\plat_set.html" />
-    <Content Include="Media\html\cfg\plat_set.js" />
-    <Content Include="Media\html\cfg\ProManage.html" />
-    <Content Include="Media\html\cfg\ProManage.js" />
-    <Content Include="Media\html\cfg\record_jh.html" />
-    <Content Include="Media\html\cfg\record_jh.js" />
-    <Content Include="Media\html\cfg\record_pz.html" />
-    <Content Include="Media\html\cfg\record_pz.js" />
-    <Content Include="Media\html\cfg\Rec_Info.html" />
-    <Content Include="Media\html\cfg\Rec_Info.js" />
-    <Content Include="Media\html\cfg\RTSP_Set.html" />
-    <Content Include="Media\html\cfg\RTSP_Set.js" />
-    <Content Include="Media\html\cfg\SG_platform.html" />
-    <Content Include="Media\html\cfg\SG_platform.js" />
-    <Content Include="Media\html\cfg\streamset_advanced.html" />
-    <Content Include="Media\html\cfg\streamset_advanced.js" />
-    <Content Include="Media\html\cfg\sub_stream_set.html" />
-    <Content Include="Media\html\cfg\sub_stream_set.js" />
-    <Content Include="Media\html\cfg\sysinf_base.html" />
-    <Content Include="Media\html\cfg\sysinf_base.js" />
-    <Content Include="Media\html\cfg\sysinf_hdd.html" />
-    <Content Include="Media\html\cfg\sysinf_hdd.js" />
-    <Content Include="Media\html\cfg\syspm_dst.html" />
-    <Content Include="Media\html\cfg\syspm_dst.js" />
-    <Content Include="Media\html\cfg\syspm_io.html" />
-    <Content Include="Media\html\cfg\syspm_io.js" />
-    <Content Include="Media\html\cfg\syspm_user.html" />
-    <Content Include="Media\html\cfg\syspm_user.js" />
-    <Content Include="Media\html\cfg\syspm_user_owl.html" />
-    <Content Include="Media\html\cfg\syspm_user_owl.js" />
-    <Content Include="Media\html\cfg\syswh_mr.html" />
-    <Content Include="Media\html\cfg\syswh_mr.js" />
-    <Content Include="Media\html\cfg\syswh_sj.html" />
-    <Content Include="Media\html\cfg\syswh_sj.js" />
-    <Content Include="Media\html\cfg\Upload_Photo.html" />
-    <Content Include="Media\html\cfg\Upload_Photo.js" />
-    <Content Include="Media\html\cfg\Upload_Video.html" />
-    <Content Include="Media\html\cfg\Upload_Video.js" />
-    <Content Include="Media\html\left.html" />
-    <Content Include="Media\html\login.html" />
-    <Content Include="Media\html\pathConfig.html" />
-    <Content Include="Media\html\right.html" />
-    <Content Include="Media\html\webplugin.html" />
-    <Content Include="Media\images\add.png" />
-    <Content Include="Media\images\bar_bg.png" />
-    <Content Include="Media\images\bar_cell.png" />
-    <Content Include="Media\images\bar_icons.png" />
-    <Content Include="Media\images\bgactive0_1_2.gif" />
-    <Content Include="Media\images\bgCenter.gif" />
-    <Content Include="Media\images\bgr_l.gif" />
-    <Content Include="Media\images\bigbtn_bg.png" />
-    <Content Include="Media\images\calendar_bg.png" />
-    <Content Include="Media\images\cbox.png" />
-    <Content Include="Media\images\cbox_on.png" />
-    <Content Include="Media\images\chanel_icon.png" />
-    <Content Include="Media\images\close.png" />
-    <Content Include="Media\images\content_bg.png" />
-    <Content Include="Media\images\cruise.png" />
-    <Content Include="Media\images\delete.png" />
-    <Content Include="Media\images\dsmid_up.gif" />
-    <Content Include="Media\images\edit.png" />
-    <Content Include="Media\images\EmailTestButton_Bg.png" />
-    <Content Include="Media\images\fillShading.jpg" />
-    <Content Include="Media\images\head_bg.png" />
-    <Content Include="Media\images\live_icons.png" />
-    <Content Include="Media\images\live_scrollBar.png" />
-    <Content Include="Media\images\live_scrollBar_bg.png" />
-    <Content Include="Media\images\live_scrollBar_btn.png" />
-    <Content Include="Media\images\loading.gif" />
-    <Content Include="Media\images\loginButton.gif" />
-    <Content Include="Media\images\logo_link.gif" />
-    <Content Include="Media\images\more_btn.png" />
-    <Content Include="Media\images\more_btn_on.png" />
-    <Content Include="Media\images\nav.png" />
-    <Content Include="Media\images\off.png" />
-    <Content Include="Media\images\on.png" />
-    <Content Include="Media\images\paopaotitie.gif" />
-    <Content Include="Media\images\paopaotitie.png" />
-    <Content Include="Media\images\rll.gif" />
-    <Content Include="Media\images\rlr.gif" />
-    <Content Include="Media\images\scroll23.gif" />
-    <Content Include="Media\images\scrollBarBg1.gif" />
-    <Content Include="Media\images\scrollbtn.gif" />
-    <Content Include="Media\images\sep.gif" />
-    <Content Include="Media\images\settings_btn_bg.png" />
-    <Content Include="Media\images\settings_btn_bg2.png" />
-    <Content Include="Media\images\settings_menu_bg1.png" />
-    <Content Include="Media\images\settings_menu_bg2.png" />
-    <Content Include="Media\images\settings_menu_bg3.png" />
-    <Content Include="Media\images\sound.png" />
-    <Content Include="Media\images\style.png" />
-    <Content Include="Media\images\sysSjPathBtn.png" />
-    <Content Include="Media\images\vernier.gif" />
-    <Content Include="Media\images\yt.png" />
-    <Content Include="Media\images\yt_set_bg.png" />
-    <Content Include="Media\images\zoom.png" />
-    <Content Include="Media\js\cal.js" />
-    <Content Include="Media\js\class.js" />
-    <Content Include="Media\js\common.js" />
-    <Content Include="Media\js\CProgress.js" />
-    <Content Include="Media\js\divBox.js" />
-    <Content Include="Media\js\jcookie.js" />
-    <Content Include="Media\js\jquery-1.11.1.min.js" />
-    <Content Include="Media\js\jquery.qrcode.min.js" />
-    <Content Include="Media\js\json.js" />
-    <Content Include="Media\js\language.js" />
-    <Content Include="Media\js\left.js" />
-    <Content Include="Media\js\main.js" />
-    <Content Include="Media\js\pathConfig.js" />
-    <Content Include="Media\js\qrcode.js" />
-    <Content Include="Media\lg\CHS.xml" />
-    <Content Include="Media\lg\ENU.xml" />
-    <Content Include="Media\ligerUI\js\ligerui.min.js" />
-    <Content Include="Media\ligerUI\skins\Aqua\css\ligerui-all.css" />
-    <Content Include="Media\ligerUI\skins\Aqua\css\ligerui-common.css" />
-    <Content Include="Media\ligerUI\skins\Aqua\css\ligerui-dialog.css" />
-    <Content Include="Media\ligerUI\skins\Aqua\css\ligerui-grid.css" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-panel-title-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-panel-title-pressed.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-panel-title.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-tab-title-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-tab-title-pressed.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-tab-title.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-text.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-trigger-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-trigger-pressed.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\bg-trigger.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\btn-l.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\btn-r.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\btn.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\button-bg-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\button-bg.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\checkbox.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\dateeditor-bar-bg.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\dateeditor-header-bg.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\controls\radio.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\bar-button-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\checkbox-checked.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\checkbox.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\cross.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-close-over.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-close.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-down.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-drop.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-edited.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-first.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-last.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-line.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-load.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-next.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-prev.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-select.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-sort-asc.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-sort-desc.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-unselect.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\icon\icon-up.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\win\box-button.png" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\win\box-close.png" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\win\box-icons.gif" />
-    <Content Include="Media\ligerUI\skins\Aqua\images\win\box-titie.png" />
-    <Content Include="Media\login.html" />
-    <Content Include="Media\readme.txt" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js.map" />
+    <Content Include="Content\doc\10kV微机型保护装置试验报告.DOC" />
+    <Content Include="Content\doc\10kv断路器试验报告.doc" />
+    <Content Include="Content\doc\10KV母线试验报告.doc" />
+    <Content Include="Content\doc\10kv电力电缆试验报告.doc" />
+    <Content Include="Content\doc\10kv隔离开关.doc" />
+    <Content Include="Content\doc\10kv高压接地线试验报告.doc" />
+    <Content Include="Content\doc\代维护配电室设备巡视检查记录.doc" />
+    <Content Include="Content\doc\函件模板.doc" />
+    <Content Include="Content\doc\变压器试验报告.doc" />
+    <Content Include="Content\doc\建设工程承包合同.doc" />
+    <Content Include="Content\doc\报警报告模板.doc" />
+    <Content Include="Content\doc\物资采购合同.doc" />
+    <Content Include="Content\doc\电压互感器试验报告.doc" />
+    <Content Include="Content\doc\电流互感器试验报告.doc" />
+    <Content Include="Content\doc\维护检修报告.doc" />
+    <Content Include="Content\doc\运维检修报告.doc" />
+    <Content Include="Content\doc\运行监测报告.doc" />
+    <Content Include="Content\doc\配电清扫报告.doc" />
+    <Content Include="Content\font\Farrington7B_Qiqi.ttf" />
+    <Content Include="Content\font\UnidreamLED.ttf" />
+    <Content Include="Content\iconfont\iconfont.eot" />
+    <Content Include="Content\iconfont\iconfont.ttf" />
+    <Content Include="Content\iconfont\iconfont.woff" />
+    <Content Include="AmazeUI-2.7.2\assets\css\app.less" />
+    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="AmazeUI-2.7.2\assets\fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2070,17 +1648,350 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config">
-      <SubType>Designer</SubType>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart--.cshtml" />
+    <Content Include="Views\Shared---\Error.cshtml" />
+    <Content Include="Views\Shared---\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\AlarmManage\AlarmMain.cshtml" />
+    <Content Include="Views\AlarmManage\AlarmSysTableList.cshtml" />
+    <Content Include="Views\AlarmManage\Index.cshtml" />
+    <Content Include="Views\AlarmManage\SOEevent.cshtml" />
+    <Content Include="Views\AlarmManage\Treatment.cshtml" />
+    <Content Include="Views\AppPlan\OneGraph1.cshtml" />
+    <Content Include="Views\AppPlan\OneGraph12.cshtml" />
+    <Content Include="Views\AutoReport\Index.cshtml" />
+    <Content Include="Views\ChargingPile\Index.cshtml" />
+    <Content Include="Views\Constract\YunYingConstract.cshtml" />
+    <Content Include="Views\Constract\YunYingConstractEdit.cshtml" />
+    <Content Include="Views\Constract\YunYingConstractView.cshtml" />
+    <Content Include="Views\Constract\YunYingDetaliView.cshtml" />
+    <Content Include="Views\Constract\YunYingImagesView.cshtml" />
+    <Content Include="Views\DataInfo\DataTransferEdit.cshtml" />
+    <Content Include="Views\DataInfo\DataTransferList.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo1-.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo1.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo2.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo3.cshtml" />
+    <Content Include="Views\DataInfo\RealtimeDataInfo4.cshtml" />
+    <Content Include="Views\DataInfo\SubSysPDRInfoList.cshtml" />
+    <Content Include="Views\DataReport\DiffGraph.cshtml" />
+    <Content Include="Views\DataReport\empty.json" />
+    <Content Include="Views\DataReport\GraphData.cshtml" />
+    <Content Include="Views\DataReport\GraphWindow.cshtml" />
+    <Content Include="Views\DataReport\GraphWindowDetail.cshtml" />
+    <Content Include="Views\DataReport\HistoryData - 副本 %282%29.cshtml" />
+    <Content Include="Views\DataReport\HistoryData - 副本.cshtml" />
+    <Content Include="Views\DataReport\HistoryData.cshtml" />
+    <Content Include="Views\DataReport\Index.cshtml" />
+    <Content Include="Views\DataReport\Transient.cshtml" />
+    <Content Include="Views\DeviceManage\ArchivesManage.cshtml" />
+    <Content Include="Views\DeviceManage\CircuitEdit.cshtml" />
+    <Content Include="Views\DeviceManage\CircuitManage.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceAccount.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceEdit.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceEdits.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceHistoryGraph.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceInfo.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceList.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceManage.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceRealTimeGraph.cshtml" />
+    <Content Include="Views\DeviceManage\DeviceState.cshtml" />
+    <Content Include="Views\DeviceManage\ElectricMeterEdit.cshtml" />
+    <Content Include="Views\DeviceManage\Index.cshtml" />
+    <Content Include="Views\DeviceManage\IndexRealTime.cshtml" />
+    <Content Include="Views\DeviceManage\Video.cshtml" />
+    <Content Include="Views\DeviceManage\VideoTest.cshtml" />
+    <Content Include="Views\EmergencyRepair\EmergencyPlan.cshtml" />
+    <Content Include="Views\EmergencyRepair\EmergencyRepairReport.cshtml" />
+    <Content Include="Views\EmergencyRepair\OrderRepair.cshtml" />
+    <Content Include="Views\EmergencyRepair\OrderRepairEdit.cshtml" />
+    <Content Include="Views\EmergencyRepair\UploadPage.cshtml" />
+    <Content Include="Views\EnergyEfficiency\AlarmProcessing.cshtml" />
+    <Content Include="Views\EnergyEfficiency\ElectricityAnalysis.cshtml" />
+    <Content Include="Views\EnergyEfficiency\JianguPingfeng.cshtml" />
+    <Content Include="Views\EnergyEfficiency\JianguPingfengEdit.cshtml" />
+    <Content Include="Views\EnergyEfficiency\JianguPingfengSet.cshtml" />
+    <Content Include="Views\EnergyEfficiency\LineLossStatistics.cshtml" />
+    <Content Include="Views\EnergyEfficiency\LoadAnalysis.cshtml" />
+    <Content Include="Views\EnergyEfficiency\Overview.cshtml" />
+    <Content Include="Views\EnergyEfficiency\OverviewList.cshtml" />
+    <Content Include="Views\EnergyEfficiency\PowerUseReport.cshtml" />
+    <Content Include="Views\EnergyEfficiency\RequirementAnalysis.cshtml" />
+    <Content Include="Views\Energy\Index.cshtml" />
+    <Content Include="Views\Es\CategoryView.cshtml" />
+    <Content Include="Views\Es\ConstractEdit.cshtml" />
+    <Content Include="Views\Es\ConstractView.cshtml" />
+    <Content Include="Views\Es\ElectricityPriceAnalysis.cshtml" />
+    <Content Include="Views\Es\ElectricityPriceInput.cshtml" />
+    <Content Include="Views\Es\ElectricMeter.cshtml" />
+    <Content Include="Views\Es\ElectricQuantityAnalysis.cshtml" />
+    <Content Include="Views\Es\EnergyContract.cshtml" />
+    <Content Include="Views\Es\EsDecisionMaking.cshtml" />
+    <Content Include="Views\Es\EsDecisionPianCha.cshtml" />
+    <Content Include="Views\Es\EsDecisionView.cshtml" />
+    <Content Include="Views\Es\FormulaEdit.cshtml" />
+    <Content Include="Views\Es\NeedAnalysis.cshtml" />
+    <Content Include="Views\Es\Overview.cshtml" />
+    <Content Include="Views\Es\OverviewInput.cshtml" />
+    <Content Include="Views\Es\OverviewPurchaseRecord.cshtml" />
+    <Content Include="Views\Es\PowerPurchaseContract.cshtml" />
+    <Content Include="Views\Es\PurchasingCharts.cshtml" />
+    <Content Include="Views\Es\RecordingWave.cshtml" />
+    <Content Include="Views\Es\Score.cshtml" />
+    <Content Include="Views\Es\StationTemp.cshtml" />
+    <Content Include="Views\Es\TransferTransactionView.cshtml" />
+    <Content Include="Views\Es\UpPlan.cshtml" />
+    <Content Include="Views\Es\UserPlanLog.cshtml" />
+    <Content Include="Views\Es\UserView.cshtml" />
+    <Content Include="Views\Es\UserView2.cshtml" />
+    <Content Include="Views\SparePartManage\SparePartEdits.cshtml" />
+    <Content Include="Views\SparePartManage\SparePartList.cshtml" />
+    <Content Include="Views\State\AccessControl.cshtml" />
+    <Content Include="Views\State\DeviceState.cshtml" />
+    <Content Include="Views\State\DeviceStateRealTime.cshtml" />
+    <Content Include="Views\State\EnergyTrend.cshtml" />
+    <Content Include="Views\State\EquipmentLedger.cshtml" />
+    <Content Include="Views\State\FaceRecognition.cshtml" />
+    <Content Include="Views\State\InfraredMonitor.cshtml" />
+    <Content Include="Views\State\InfraredMonitorDetail.cshtml" />
+    <Content Include="Views\State\MechanicsCharacteristic.cshtml" />
+    <Content Include="Views\State\Overview.cshtml" />
+    <Content Include="Views\State\Robot.cshtml" />
+    <Content Include="Views\State\RunningState.cshtml" />
+    <Content Include="Views\State\TouchScreen.cshtml" />
+    <Content Include="Views\SupplierManage\AccountCancellation.cshtml" />
+    <Content Include="Views\SupplierManage\Archives.cshtml" />
+    <Content Include="Views\SupplierManage\AssistantCharge.cshtml" />
+    <Content Include="Views\SupplierManage\ChangeLog.cshtml" />
+    <Content Include="Views\SupplierManage\ChartStatistic.cshtml" />
+    <Content Include="Views\SupplierManage\CostClose.cshtml" />
+    <Content Include="Views\SupplierManage\DailyBusiness.cshtml" />
+    <Content Include="Views\SupplierManage\DataCollection.cshtml" />
+    <Content Include="Views\SupplierManage\DistanceMeterReading.cshtml" />
+    <Content Include="Views\SupplierManage\EarlyWarningLog.cshtml" />
+    <Content Include="Views\SupplierManage\EleMake.cshtml" />
+    <Content Include="Views\SupplierManage\HandTerminalUpload.cshtml" />
+    <Content Include="Views\SupplierManage\IncomeExpenses.cshtml" />
+    <Content Include="Views\SupplierManage\LogOutPower.cshtml" />
+    <Content Include="Views\SupplierManage\MakeUpPower.cshtml" />
+    <Content Include="Views\SupplierManage\MeterFile.cshtml" />
+    <Content Include="Views\SupplierManage\MeterReading.cshtml" />
+    <Content Include="Views\SupplierManage\MeterReadingData.cshtml" />
+    <Content Include="Views\SupplierManage\MeterReadings.cshtml" />
+    <Content Include="Views\SupplierManage\PayTheFees.cshtml" />
+    <Content Include="Views\SupplierManage\StatisticAnalysis.cshtml" />
+    <Content Include="Views\SupplierManage\SupplierEdits.cshtml" />
+    <Content Include="Views\SupplierManage\SupplierList.cshtml" />
+    <Content Include="Views\SupplierManage\TerminalFile.cshtml" />
+    <Content Include="Views\SupplierManage\UserArrearage.cshtml" />
+    <Content Include="Views\SupplierManage\UserEleInfo.cshtml" />
+    <Content Include="Views\SupplierManage\UserFile.cshtml" />
+    <Content Include="Views\SupplierManage\UserPayTheFees.cshtml" />
+    <Content Include="Views\SysInfo\AlarmList.cshtml" />
+    <Content Include="Views\SysInfo\AlarmSetEdit.cshtml" />
+    <Content Include="Views\SysInfo\AlternateSet.cshtml" />
+    <Content Include="Views\SysInfo\AlternateSetEdit.cshtml" />
+    <Content Include="Views\SysInfo\ChangePassword.cshtml" />
+    <Content Include="Views\SysInfo\Index.cshtml" />
+    <Content Include="Views\SysInfo\Industry.cshtml" />
+    <Content Include="Views\SysInfo\IODiffSet.cshtml" />
+    <Content Include="Views\SysInfo\IODiffSetEdit.cshtml" />
+    <Content Include="Views\SysInfo\LogList.cshtml" />
+    <Content Include="Views\SysInfo\ModuleEdit.cshtml" />
+    <Content Include="Views\SysInfo\ModuleList.cshtml" />
+    <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
+    <Content Include="Views\SysInfo\PowerPlant.cshtml" />
+    <Content Include="Views\SysInfo\UnitList.cshtml" />
+    <Content Include="Views\SysInfo\UserButton.cshtml" />
+    <Content Include="Views\SysInfo\WarmList.cshtml" />
+    <Content Include="Views\SysInfo\WarmSetEdit.cshtml" />
+    <Content Include="Views\UserInfo\AllotPurview.cshtml" />
+    <Content Include="Views\UserInfo\ChangePwd.cshtml" />
+    <Content Include="Views\UserInfo\ConstractEdit.cshtml" />
+    <Content Include="Views\UserInfo\ConstractView.cshtml" />
+    <Content Include="Views\UserInfo\CtrContAdd.cshtml" />
+    <Content Include="Views\UserInfo\CtrContEdit.cshtml" />
+    <Content Include="Views\UserInfo\RoleList.cshtml" />
+    <Content Include="Views\UserInfo\UserEdit.cshtml" />
+    <Content Include="Views\UserInfo\UserList.cshtml" />
+    <Content Include="Views\Web\DataTransferEdit.cshtml" />
+    <Content Include="Views\Web\DataTransferList.cshtml" />
+    <Content Include="Views\Web\SubSysPDRInfoList.cshtml" />
+    <Content Include="Views\Home\AccordionMenu.cshtml" />
+    <Content Include="Views\Home\AnalysisReport.cshtml" />
+    <Content Include="Views\Home\BaseHTML.cshtml" />
+    <Content Include="Views\Home\ChargingPile.cshtml" />
+    <Content Include="Views\Home\ChargingPileData.cshtml" />
+    <Content Include="Views\Home\ExitSystem.cshtml" />
+    <Content Include="Views\Home\FTJBaseHTML.cshtml" />
+    <Content Include="Views\Home\GetMenuInfoNew.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\LeftMenu.cshtml" />
+    <Content Include="Views\Home\LeftPdrList.cshtml" />
+    <Content Include="Views\Home\LeftPointsMenu.cshtml" />
+    <Content Include="Views\Home\Login -维护.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\MapPage.cshtml" />
+    <Content Include="Views\Home\MapPageBaidu.cshtml" />
+    <Content Include="Views\Home\MapPageStatic.cshtml" />
+    <Content Include="Views\Home\MapPageStaticSingle.cshtml" />
+    <Content Include="Views\Home\PermissionError.cshtml" />
+    <Content Include="Views\Home\powerInfoMap.cshtml" />
+    <Content Include="Views\Home\PowerMapDetail.cshtml" />
+    <Content Include="Views\Home\ReFlash.cshtml" />
+    <Content Include="Views\Home\Tips.cshtml" />
+    <Content Include="Views\Home\UserInfoMap.cshtml" />
+    <Content Include="Views\OpticFiber\Edit.cshtml" />
+    <Content Include="Views\OpticFiber\Index.cshtml" />
+    <Content Include="Views\OpticFiber\LocateEdit.cshtml" />
+    <Content Include="Views\OpticFiber\LocateList.cshtml" />
+    <Content Include="Views\OpticFiber\Transient.cshtml" />
+    <Content Include="Views\OrderInfo\OrderCheckInfo.cshtml" />
+    <Content Include="Views\OrderInfo\OrderDetail.cshtml" />
+    <Content Include="Views\OrderInfo\OrderEdit.cshtml" />
+    <Content Include="Views\OrderInfo\OrderEditByConstract.cshtml" />
+    <Content Include="Views\OrderInfo\OrderImage.cshtml" />
+    <Content Include="Views\OrderInfo\OrderList.cshtml" />
+    <Content Include="Views\PDRInfo\ConnectVideo.cshtml" />
+    <Content Include="Views\PDRInfo\InfraredInfo.cshtml" />
+    <Content Include="Views\PDRInfo\LDPlanInfo.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph10.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph105.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph105_1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph105_2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph105_3.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph10_32.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph10_74.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph11.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph11_34.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph11_75.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph12.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph137.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph138.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph163.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph177.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph177_85.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph177_86.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph1_1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph1_2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph1_55.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph1_56.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph2_1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph2_2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph2_58.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph2_59.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_3.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_4.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_5.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_61.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_62.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_63.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph3_64.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph4.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph4_16.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph4_60.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph4_65.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph5.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph5_22.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph5_66.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph5_67.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph6.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph6_19.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph6_68.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph6_69.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph7.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph7_21.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph7_70.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph7_71.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph8.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph8_28.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph8_57.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph8_72.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph9.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph9_30.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraph9_73.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraphLow138.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraphLow1_1.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraphLow1_2.cshtml" />
+    <Content Include="Views\PDRInfo\OneGraphTopo.cshtml" />
+    <Content Include="Views\PDRInfo\PDRInfoList.cshtml" />
+    <Content Include="Views\PDRInfo\PDROrderHistory.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo1.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo10.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo105.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo11.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo12.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo137.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo138.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo163.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo177.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo2.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo3.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo4.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo5.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo6.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo8.cshtml" />
+    <Content Include="Views\PDRInfo\PlanInfo9.cshtml" />
+    <Content Include="Views\PDRInfo\RealTempMap.cshtml" />
+    <Content Include="Views\PDRInfo\RealTimePage.cshtml" />
+    <Content Include="Views\PDRInfo\RealTimeVideo.cshtml" />
+    <Content Include="Views\PDRInfo\SHOneGraph.cshtml" />
+    <Content Include="Views\PDRInfo\StationInfo.cshtml" />
+    <Content Include="Views\PDRInfo\StationRoom.cshtml" />
+    <Content Include="Views\PerationMaintenance\ContractMag.cshtml" />
+    <Content Include="Views\PerationMaintenance\CtrContMag.cshtml" />
+    <Content Include="Views\PerationMaintenance\EquipmentLedger.cshtml" />
+    <Content Include="Views\PerationMaintenance\HazardMan.cshtml" />
+    <Content Include="Views\PerationMaintenance\HazardManDetail.cshtml" />
+    <Content Include="Views\PerationMaintenance\Index.cshtml" />
+    <Content Include="Views\PerationMaintenance\PersonnelMag.cshtml" />
+    <Content Include="Views\PerationMaintenance\StaffManage.cshtml" />
+    <Content Include="Views\PerationMaintenance\StandingFile.cshtml" />
+    <Content Include="Views\PointsInfo\Edit.cshtml" />
+    <Content Include="Views\PointsInfo\Index.cshtml" />
+    <Content Include="Views\PointsInfo\PointsList.cshtml" />
+    <Content Include="Views\PointsInfo\SensorList.cshtml" />
+    <Content Include="Views\PointsInfo\Transient.cshtml" />
+    <Content Include="Views\PowerQuality\CurrenVoltage.cshtml" />
+    <Content Include="Views\PowerQuality\HarmonicAnalysis.cshtml" />
+    <Content Include="Views\PowerQuality\Index.cshtml" />
+    <Content Include="Views\PowerQuality\PowerFactor.cshtml" />
+    <Content Include="Views\PowerQuality\ThreeUnbalance.cshtml" />
+    <Content Include="Views\PowerQuality\Universal.cshtml" />
+    <Content Include="Views\ReportForms\ElectricityConsumptionRepor.cshtml" />
+    <Content Include="Views\ReportForms\ElectricityMonthConsumptionRepor.cshtml" />
+    <Content Include="Views\ReportForms\ElectricityYearConsumptionRepor.cshtml" />
+    <Content Include="Views\ReportForms\HighVoltageDataRepor.cshtml" />
+    <Content Include="Views\ReportForms\LowVoltageDataRepor.cshtml" />
+    <Content Include="Views\RunManage\BugList.cshtml" />
+    <Content Include="Views\RunManage\Index.cshtml" />
+    <Content Include="Views\Share\_Header.cshtml" />
+    <Content Include="Views\Share\_Header_File.cshtml" />
+    <Content Include="Views\Share\_Layout.cshtml" />
+    <Content Include="Views\Share\_LeftMenu.cshtml" />
+    <EntityDeploy Include="YWModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>YWModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="YWModel.edmx.diagram">
+      <DependentUpon>YWModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap-3.3.7-dist\fonts\" />
-    <Folder Include="Content\calendar\" />
     <Folder Include="Content\css_app\" />
-    <Folder Include="Content\images\borderBk.png\" />
-    <Folder Include="Content\iview\dist\" />
+    <Folder Include="Content\images\statusico\" />
     <Folder Include="Content\pingmiantu\P10\" />
     <Folder Include="Content\pingmiantu\P11\" />
     <Folder Include="Content\pingmiantu\P2\" />
@@ -2091,469 +2002,24 @@
     <Folder Include="Content\pingmiantu\P8\" />
     <Folder Include="Content\pingmiantu\P9\" />
     <Folder Include="Content\pingmiantu_app\" />
-    <Folder Include="DownLoad\alarm\" />
-    <Folder Include="DownLoad\ConDoc\" />
-    <Folder Include="DownLoad\ConTempDoc\" />
-    <Folder Include="DownLoad\order\" />
-    <Folder Include="DownLoad\repair\" />
-    <Folder Include="DownLoad\run\" />
-    <Folder Include="echarts\" />
-    <Folder Include="Media\images\LOGO\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="YWModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>YWModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PDRInfo\PDRInfoList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\GetMenuInfoNew.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo2.cshtml" />
-    <Content Include="AmazeUI-2.7.2\assets\css\app.less" />
-    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="AmazeUI-2.7.2\assets\fonts\FontAwesome.otf" />
-    <Content Include="Views\Share\_Header.cshtml" />
-    <Content Include="Views\Share\_LeftMenu.cshtml" />
-    <Content Include="Views\Home\MapPageStatic.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\LeftPdrList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\MapPage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PDRInfo\StationRoom.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PDRInfo\OneGraph.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AlarmManage\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\DataReport\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\DeviceManage\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\BaseHTML.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\doc\报警报告模板.doc" />
-    <Content Include="Content\doc\维护检修报告.doc" />
-    <Content Include="Content\doc\运维检修报告.doc" />
-    <Content Include="Content\doc\10kV微机型保护装置试验报告.DOC" />
-    <Content Include="Content\doc\变压器试验报告.doc" />
-    <Content Include="Content\doc\电流互感器试验报告.doc" />
-    <Content Include="Content\doc\10kv断路器试验报告.doc" />
-    <Content Include="Content\doc\10kv高压接地线试验报告.doc" />
-    <Content Include="Content\doc\10kv隔离开关.doc" />
-    <Content Include="Content\doc\电压互感器试验报告.doc" />
-    <Content Include="Content\doc\代维护配电室设备巡视检查记录.doc" />
-    <Content Include="Content\doc\物资采购合同.doc" />
-    <Content Include="Content\doc\10KV母线试验报告.doc" />
-    <Content Include="Content\doc\10kv电力电缆试验报告.doc" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
-    <None Include="Content\doc\运行监测报告.doc" />
-    <Content Include="Content\doc\配电清扫报告.doc" />
-    <Content Include="Content\UserJS\ConstractEdit._jm.js" />
-    <Content Include="Content\UserJS\YwConstractView._jm.js" />
-    <Content Include="Content\iconfont\iconfont.eot" />
-    <Content Include="Content\iconfont\iconfont.ttf" />
-    <Content Include="Content\iconfont\iconfont.woff" />
-    <Content Include="Content\font\UnidreamLED.ttf" />
-    <Content Include="Content\font\Farrington7B_Qiqi.ttf" />
-    <Content Include="DownLoad\OneGraph\178_1_OneGraph.json" />
-    <None Include="jquery-easyui-1.4.5\themes\material\images\Thumbs.db" />
-    <Content Include="Views\SysInfo\ModuleList.cshtml" />
-    <Content Include="Views\SysInfo\LogList.cshtml" />
-    <Content Include="Views\SysInfo\AlarmList.cshtml" />
-    <Content Include="Views\Home\LeftMenu.cshtml" />
-    <Content Include="Views\DataReport\GraphData.cshtml" />
-    <Content Include="Views\DataReport\HistoryData.cshtml" />
-    <Content Include="Views\SysInfo\ChangePassword.cshtml" />
-    <Content Include="Views\UserInfo\AllotPurview.cshtml" />
-    <Content Include="Views\UserInfo\ChangePwd.cshtml" />
-    <Content Include="Views\UserInfo\RoleList.cshtml" />
-    <Content Include="Views\UserInfo\UserEdit.cshtml" />
-    <Content Include="Views\UserInfo\UserList.cshtml" />
-    <Content Include="Views\SysInfo\Index.cshtml" />
-    <Content Include="Views\Home\ExitSystem.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceList.cshtml" />
-    <Content Include="Views\SysInfo\ModuleEdit.cshtml" />
-    <Content Include="Views\SysInfo\UserButton.cshtml" />
-    <Content Include="Views\SysInfo\AlarmSetEdit.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceInfo.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceEdits.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceAccount.cshtml" />
-    <Content Include="Views\PDRInfo\RealTimePage.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceHistoryGraph.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceRealTimeGraph.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceState.cshtml" />
-    <Content Include="Views\DataInfo\SubSysPDRInfoList.cshtml" />
-    <Content Include="Views\DataInfo\DataTransferEdit.cshtml" />
-    <Content Include="Views\DataInfo\DataTransferList.cshtml" />
-    <Content Include="Views\SysInfo\AlternateSet.cshtml" />
-    <Content Include="Views\SysInfo\AlternateSetEdit.cshtml" />
-    <Content Include="Views\Home\LeftPointsMenu.cshtml" />
-    <Content Include="Views\PDRInfo\LDPlanInfo.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph4.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph6.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Home\FTJBaseHTML.cshtml" />
-    <Content Include="Views\PDRInfo\InfraredInfo.cshtml" />
-    <Content Include="Views\PDRInfo\RealTempMap.cshtml" />
-    <Content Include="Views\PDRInfo\RealTimeVideo.cshtml" />
-    <None Include="Media\cgi-bin\mediaport.cgi" />
-    <None Include="Media\SurveillanceClient.dmg" />
-    <Content Include="Views\Home\Login.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Energy\Index.cshtml" />
-    <Content Include="Views\RunManage\Index.cshtml" />
-    <Content Include="Views\PDRInfo\ConnectVideo.cshtml" />
-    <Content Include="Views\DeviceManage\ArchivesManage.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\DeviceManage\DeviceManage.cshtml" />
-    <Content Include="Views\OrderInfo\OrderCheckInfo.cshtml" />
-    <Content Include="Views\OrderInfo\OrderDetail.cshtml" />
-    <Content Include="Views\OrderInfo\OrderImage.cshtml" />
-    <Content Include="Views\OrderInfo\OrderList.cshtml" />
-    <Content Include="Views\RunManage\BugList.cshtml" />
-    <Content Include="Views\Home\Tips.cshtml" />
-    <Content Include="Views\DataReport\Transient.cshtml" />
-    <Content Include="Views\OpticFiber\LocateEdit.cshtml" />
-    <Content Include="Views\OpticFiber\LocateList.cshtml" />
-    <Content Include="Views\PointsInfo\Index.cshtml" />
-    <Content Include="Views\PointsInfo\Edit.cshtml" />
-    <Content Include="Views\SysInfo\WarmSetEdit.cshtml" />
-    <Content Include="Views\SysInfo\WarmList.cshtml" />
-    <Content Include="Views\PointsInfo\Transient.cshtml" />
-    <Content Include="Views\PowerQuality\Index.cshtml" />
-    <Content Include="Views\Web\DataTransferEdit.cshtml" />
-    <Content Include="Views\Web\DataTransferList.cshtml" />
-    <Content Include="Views\Web\SubSysPDRInfoList.cshtml" />
-    <Content Include="Views\PowerQuality\CurrenVoltage.cshtml" />
-    <Content Include="Views\EnergyEfficiency\LineLossStatistics.cshtml" />
-    <Content Include="Views\EnergyEfficiency\LoadAnalysis.cshtml" />
-    <Content Include="Views\PowerQuality\PowerFactor.cshtml" />
-    <Content Include="Views\PowerQuality\ThreeUnbalance.cshtml" />
-    <Content Include="Views\PowerQuality\Universal.cshtml" />
-    <Content Include="Views\State\EnergyTrend.cshtml" />
-    <Content Include="Views\State\RunningState.cshtml" />
-    <Content Include="Views\State\EquipmentLedger.cshtml" />
-    <Content Include="Views\AlarmManage\SOEevent.cshtml" />
-    <Content Include="Views\EnergyEfficiency\Overview.cshtml" />
-    <Content Include="Views\State\Overview.cshtml" />
-    <Content Include="Views\AlarmManage\AlarmSysTableList.cshtml" />
-    <Content Include="Views\EnergyEfficiency\JianguPingfeng.cshtml" />
-    <Content Include="Views\EnergyEfficiency\AlarmProcessing.cshtml" />
-    <Content Include="Views\PerationMaintenance\EquipmentLedger.cshtml" />
-    <Content Include="Views\Home\PermissionError.cshtml" />
-    <Content Include="Views\PerationMaintenance\StandingFile.cshtml" />
-    <Content Include="Views\PerationMaintenance\HazardMan.cshtml" />
-    <Content Include="Views\AlarmManage\AlarmMain.cshtml" />
-    <Content Include="Views\SysInfo\UnitList.cshtml" />
-    <Content Include="Views\PowerQuality\HarmonicAnalysis.cshtml" />
-    <Content Include="Views\EnergyEfficiency\ElectricityAnalysis.cshtml" />
-    <Content Include="Views\EnergyEfficiency\RequirementAnalysis.cshtml" />
-    <Content Include="Views\EnergyEfficiency\JianguPingfengSet.cshtml" />
-    <Content Include="Views\EmergencyRepair\EmergencyPlan.cshtml" />
-    <Content Include="Views\PerationMaintenance\StaffManage.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PerationMaintenance\PersonnelMag.cshtml" />
-    <Content Include="Views\OrderInfo\OrderEdit.cshtml" />
-    <Content Include="Views\EmergencyRepair\OrderRepair.cshtml" />
-    <Content Include="Views\EmergencyRepair\EmergencyRepairReport.cshtml" />
-    <Content Include="Views\PerationMaintenance\HazardManDetail.cshtml" />
-    <Content Include="Views\DeviceManage\CircuitEdit.cshtml" />
-    <Content Include="Views\DeviceManage\CircuitManage.cshtml" />
-    <Content Include="Views\DeviceManage\ElectricMeterEdit.cshtml" />
-    <Content Include="Views\SparePartManage\SparePartEdits.cshtml" />
-    <Content Include="Views\SparePartManage\SparePartList.cshtml" />
-    <Content Include="Views\SupplierManage\SupplierEdits.cshtml" />
-    <Content Include="Views\SupplierManage\SupplierList.cshtml" />
-    <Content Include="Views\PerationMaintenance\Index.cshtml" />
-    <Content Include="Views\EmergencyRepair\UploadPage.cshtml" />
-    <Content Include="Views\PointsInfo\SensorList.cshtml" />
-    <Content Include="Views\EmergencyRepair\OrderRepairEdit.cshtml" />
-    <Content Include="Views\State\InfraredMonitor.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\State\InfraredMonitorDetail.cshtml" />
-    <Content Include="Views\State\MechanicsCharacteristic.cshtml" />
-    <Content Include="Views\Home\AnalysisReport.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\SHOneGraph.cshtml" />
-    <Content Include="Views\OpticFiber\Transient.cshtml" />
-    <Content Include="Views\SysInfo\IODiffSet.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\SysInfo\IODiffSetEdit.cshtml" />
-    <Content Include="Views\EnergyEfficiency\JianguPingfengEdit.cshtml" />
-    <Content Include="Views\PointsInfo\PointsList.cshtml" />
-    <Content Include="Views\State\Robot.cshtml" />
-    <Content Include="Views\State\AccessControl.cshtml" />
-    <Content Include="Views\State\DeviceState.cshtml" />
-    <Content Include="Views\State\FaceRecognition.cshtml" />
-    <Content Include="Views\State\TouchScreen.cshtml" />
-    <None Include="Properties\PublishProfiles\loc_nengyuniis.pubxml" />
-    <None Include="Properties\PublishProfiles\配置文件1.pubxml" />
-    <Content Include="Views\Home\AccordionMenu.cshtml" />
-    <Content Include="Views\Share\_Header_File.cshtml" />
-    <Content Include="Views\Share\_Layout.cshtml" />
-    <Content Include="Views\Home\MapPageBaidu.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph105.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph105_1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph105_2.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph105_3.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph137.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo105.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo137.cshtml" />
-    <Content Include="Views\DataReport\DiffGraph.cshtml" />
-    <Content Include="Views\DataReport\empty.json" />
-    <Content Include="Views\DataReport\GraphWindow.cshtml" />
-    <Content Include="Views\DataReport\GraphWindowDetail.cshtml" />
-    <Content Include="Views\DeviceManage\DeviceEdit.cshtml" />
-    <Content Include="Views\OpticFiber\Edit.cshtml" />
-    <Content Include="Views\OpticFiber\Index.cshtml" />
-    <Content Include="Views\Home\Login -维护.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph2.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph5.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph7.cshtml" />
-    <Content Include="Views\Home\ReFlash.cshtml" />
-    <Content Include="Views\AppPlan\OneGraph1.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\AppPlan\OneGraph12.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph12.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo12.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph138.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo138.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph10.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph11.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph8.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph9.cshtml" />
-    <Content Include="Views\PerationMaintenance\ContractMag.cshtml" />
-    <Content Include="Views\UserInfo\ConstractEdit.cshtml" />
-    <Content Include="Views\PerationMaintenance\CtrContMag.cshtml" />
-    <Content Include="Views\UserInfo\CtrContEdit.cshtml" />
-    <Content Include="Views\UserInfo\CtrContAdd.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo1.cshtml" />
-    <Content Include="Views\PDRInfo\StationInfo.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\PDROrderHistory.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\PlanInfo10.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\PlanInfo11.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo2.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo3.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo4.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo5.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo6.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo8.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo9.cshtml" />
-    <Content Include="Views\DeviceManage\Video.cshtml" />
-    <Content Include="Views\AlarmManage\Treatment.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo3.cshtml" />
-    <Content Include="Views\UserInfo\ConstractView.cshtml" />
-    <Content Include="Views\OrderInfo\OrderEditByConstract.cshtml" />
-    <Content Include="Views\Home\MapPageStaticSingle.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo4.cshtml" />
-    <Content Include="Views\ChargingPile\Index.cshtml" />
-    <Content Include="Views\Home\ChargingPile.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Home\ChargingPileData.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\AutoReport\Index.cshtml" />
-    <Content Include="Views\State\DeviceStateRealTime.cshtml" />
-    <Content Include="Views\Es\Overview.cshtml" />
-    <Content Include="Views\Es\ElectricityPriceAnalysis.cshtml" />
-    <Content Include="Views\Es\ElectricityPriceInput.cshtml" />
-    <Content Include="Views\Es\ElectricMeter.cshtml" />
-    <Content Include="Views\Es\ElectricQuantityAnalysis.cshtml" />
-    <Content Include="Views\Es\EnergyContract.cshtml" />
-    <Content Include="Views\Es\EsDecisionMaking.cshtml" />
-    <Content Include="Views\Es\FormulaEdit.cshtml" />
-    <Content Include="Views\Es\NeedAnalysis.cshtml" />
-    <Content Include="Views\Es\OverviewInput.cshtml" />
-    <Content Include="Views\Es\RecordingWave.cshtml" />
-    <Content Include="Views\Es\OverviewPurchaseRecord.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph1_55.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph1_56.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph2_58.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph2_59.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph3_61.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph3_62.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph3_63.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph3_64.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph4_60.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph4_65.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph5_66.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph5_67.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\PDRInfo\OneGraph6_68.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph6_69.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph7_71.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph7_70.cshtml" />
-    <Content Include="Views\Es\ConstractEdit.cshtml" />
-    <Content Include="Views\Es\ConstractView.cshtml" />
-    <Content Include="Views\Es\UpPlan.cshtml" />
-    <Content Include="Views\Es\PurchasingCharts.cshtml" />
-    <Content Include="Views\Es\StationTemp.cshtml" />
-    <Content Include="YWModel.edmx.diagram">
-      <DependentUpon>YWModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Views\PDRInfo\PlanInfo163.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph163.cshtml" />
-    <Content Include="Views\Es\UserView.cshtml" />
-    <Content Include="Views\Home\UserInfoMap.cshtml" />
-    <Content Include="Views\Constract\YunYingConstract.cshtml" />
-    <Content Include="Views\Constract\YunYingConstractEdit.cshtml" />
-    <Content Include="Views\Constract\YunYingConstractView.cshtml" />
-    <Content Include="Views\Constract\YunYingDetaliView.cshtml" />
-    <Content Include="Views\Constract\YunYingImagesView.cshtml" />
-    <Content Include="Views\SysInfo\PowerPlant.cshtml" />
-    <Content Include="Views\DataInfo\RealtimeDataInfo1-.cshtml" />
-    <Content Include="Views\Es\CategoryView.cshtml" />
-    <Content Include="Views\EnergyEfficiency\PowerUseReport.cshtml" />
-    <Content Include="Views\EnergyEfficiency\OverviewList.cshtml" />
-    <Content Include="Views\Es\EsDecisionPianCha.cshtml" />
-    <Content Include="Views\Es\EsDecisionView.cshtml" />
-    <Content Include="Views\Es\PowerPurchaseContract.cshtml" />
-    <Content Include="Views\Es\TransferTransactionView.cshtml" />
-    <Content Include="Views\Es\UserPlanLog.cshtml" />
-    <Content Include="Views\DeviceManage\IndexRealTime.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph1_1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph1_2.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph10_32.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph10_74.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph11_34.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph11_75.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph2_1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph2_2.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3_1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3_2.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3_3.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3_4.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph3_5.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph4_16.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph5_22.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph6_19.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph7_21.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph8_28.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph8_57.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph8_72.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph9_30.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph9_73.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraphLow138.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraphLow1_1.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraphLow1_2.cshtml" />
-    <Content Include="Views\SupplierManage\DailyBusiness.cshtml" />
-    <Content Include="Views\SupplierManage\PayTheFees.cshtml" />
-    <Content Include="Views\ReportForms\ElectricityConsumptionRepor.cshtml" />
-    <Content Include="Views\SupplierManage\MakeUpPower.cshtml" />
-    <Content Include="Views\SupplierManage\LogOutPower.cshtml" />
-    <Content Include="Views\SupplierManage\EleMake.cshtml" />
-    <Content Include="Views\SupplierManage\AccountCancellation.cshtml" />
-    <Content Include="Views\SupplierManage\CostClose.cshtml" />
-    <Content Include="Views\SupplierManage\StatisticAnalysis.cshtml" />
-    <Content Include="Views\SupplierManage\UserEleInfo.cshtml" />
-    <Content Include="Views\SupplierManage\UserPayTheFees.cshtml" />
-    <Content Include="Views\SupplierManage\Archives.cshtml" />
-    <Content Include="Views\SupplierManage\DataCollection.cshtml" />
-    <Content Include="Views\SupplierManage\MeterReading.cshtml" />
-    <Content Include="Views\SupplierManage\UserArrearage.cshtml" />
-    <Content Include="Views\SupplierManage\IncomeExpenses.cshtml" />
-    <Content Include="Views\SupplierManage\ChartStatistic.cshtml" />
-    <Content Include="Views\SupplierManage\ChangeLog.cshtml" />
-    <Content Include="Views\SupplierManage\EarlyWarningLog.cshtml" />
-    <Content Include="Views\SupplierManage\AssistantCharge.cshtml" />
-    <Content Include="Views\SupplierManage\TerminalFile.cshtml" />
-    <Content Include="Views\SupplierManage\MeterFile.cshtml" />
-    <Content Include="Views\SupplierManage\UserFile.cshtml" />
-    <Content Include="Views\SupplierManage\DistanceMeterReading.cshtml" />
-    <Content Include="Views\SupplierManage\MeterReadingData.cshtml" />
-    <Content Include="Views\SupplierManage\MeterReadings.cshtml" />
-    <Content Include="Views\SupplierManage\HandTerminalUpload.cshtml" />
-    <Content Include="Views\ReportForms\ElectricityMonthConsumptionRepor.cshtml" />
-    <Content Include="Views\ReportForms\ElectricityYearConsumptionRepor.cshtml" />
-    <Content Include="Views\ReportForms\LowVoltageDataRepor.cshtml" />
-    <Content Include="Views\ReportForms\HighVoltageDataRepor.cshtml" />
-    <Content Include="Views\SysInfo\Industry.cshtml" />
-    <Content Include="Views\Es\UserView2.cshtml" />
-    <Content Include="Views\Home\PowerInfoMap.cshtml" />
-    <Content Include="Views\Home\PowerMapDetail.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph177.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph177_85.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph177_86.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraph177_87.cshtml" />
-    <Content Include="Views\DeviceManage\VideoTest.cshtml" />
-    <Content Include="Views\Es\Score.cshtml" />
-    <Content Include="Views\SysInfo\OneGraphEdit.cshtml" />
-    <Content Include="Views\PDRInfo\OneGraphTopo.cshtml" />
-    <Content Include="Views\PDRInfo\PlanInfo177.cshtml" />
-    <Content Include="Views\Constract\ProjectOverview.cshtml" />
-    <Content Include="Views\Constract\AddMatter.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBProject\DAL\DAL.csproj">
-      <Project>{aed05950-f7d9-4d5d-9641-ec5377b58726}</Project>
+      <Project>{00fcb9f4-fe2b-4c6a-bbb5-05767ffa4f24}</Project>
       <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBProject\IDAO\IDAO.csproj">
@@ -2565,10 +2031,6 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -2579,12 +2041,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>48556</DevelopmentServerPort>
+          <DevelopmentServerPort>10588</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:48556/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -2594,11 +2055,14 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <PropertyGroup>
-    <PostBuildEvent>xcopy $(ProjectDir)DLL\LibLicenseEx.dll $(TargetDir) /d /y</PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

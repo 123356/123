@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Text;
 using DAL;
 using IDAO.Models;
 using Newtonsoft.Json;
 using Loger;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class BaseInfoController : Controller
     {
@@ -107,7 +107,6 @@ namespace S5001Web.Controllers
             //    strsql = strsql + " where pid=" + pid;
             // List<ComboboxInfo> list = bll.ExecuteStoreQuery<ComboboxInfo>(strsql).ToList();
             //string strJson = Common.ComboboxToJson(list);
-            LogHelper.Info("BindValueType");
             string strJson = "null";
             try
             {
@@ -464,7 +463,7 @@ namespace S5001Web.Controllers
                 + " left join t_DM_CircuitInfo b on a.PID=b.PID and a.CID=b.CID "
                 + " left join t_DM_DeviceInfo c on b.DID=c.DID and c.PID=b.PID ) as t"
                 + " where t.rownum=1", pid);
-                List<S5001Web.PubClass.ComboTree.V_DeviceInfoState> list = bll.ExecuteStoreQuery<S5001Web.PubClass.ComboTree.V_DeviceInfoState>(strsql).ToList();
+                List<YWWeb.PubClass.ComboTree.V_DeviceInfoState> list = bll.ExecuteStoreQuery<YWWeb.PubClass.ComboTree.V_DeviceInfoState>(strsql).ToList();
                 if (list.Count > 0)
                 {
                     strJson = ComboTree.GetPdrDevComboTree(list);

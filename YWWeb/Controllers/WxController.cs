@@ -7,18 +7,13 @@ using System.Data;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using System.Data.Objects;
-using System.Data.Objects.SqlClient;
-using System.Data.SqlClient;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Collections.Specialized;
-using System.Net;
 using Yunpian.conf;
 using Yunpian.lib;
 using Yunpian.model;
-using System.Web.Script.Serialization;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class WxController : Controller
     {

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Data;
 using System.Collections;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class Common
     {

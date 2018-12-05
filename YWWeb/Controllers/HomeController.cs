@@ -4,10 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Data;
 using System.Collections.Specialized;
-using S5001Web.PubClass;
 using System.IO;
 using System.Web.Hosting;
 using Loger;
@@ -15,8 +14,9 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Collections;
 using Newtonsoft.Json.Converters;
+using DAL;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class HomeController : Controller
     {
@@ -711,10 +711,28 @@ namespace S5001Web.Controllers
             return strnav;
         }
         //获取报警信息
-        //[Login]
+        [Login]
         public ActionResult getPtAlarmInfo()
         {
+            
             string strAlarmInfo = "null";//返回值不能为空
+            string format = " <p class=\"content_size\"> <a href=\"/AlarmManage/Index?pid=0\" target=\"main_frame\">有<span class=\"am-badge am-badge-warning am-round item-feed-badge\" id=\"alarmNum\">{0}</span>条【监测报警】，请立即处理...</a></p>";
+            if (null == CurrentUser)
+                return Content(string.Format(format,0));
+            try
+            {
+                int rowcount = AlarmTable_enDAL.getInstance().GetAlarmCount(HomeController.GetPID(CurrentUser.UNITList));
+                if (rowcount > 0)
+                    strAlarmInfo = string.Format(format, rowcount);
+                else
+                    strAlarmInfo = "null";
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+            return Content(strAlarmInfo);
+#if N_Redis
             try
             {
                 //string strPlist = CurrentUser.PDRList;
@@ -761,6 +779,7 @@ namespace S5001Web.Controllers
                 strAlarmInfo = ex.Message;
             }
             return Content(strAlarmInfo);
+#endif
         }
         //获取通讯报警信息
         [Login]
@@ -877,6 +896,17 @@ namespace S5001Web.Controllers
         [Login]
         public ActionResult GetMenuInfoJson()
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            if (null == CurrentUser)
+            {
+                return Content("{}");
+            }
+            string json = ModuleDAL.getInstance().GetMenuInfoJson(CurrentUser.UserID);
+            sw.Stop();
+            Debug.WriteLine("GetMenuInfoJson time:" + sw.Elapsed.ToString());
+            return Content(json);
+#if N_Redis
             //StringBuilder sbMenu = new StringBuilder();
             List<menuInf> listMenu = new List<menuInf>();
             if (CurrentUser != null)
@@ -919,7 +949,7 @@ namespace S5001Web.Controllers
             listMenu.Clear();
             listMenu = null;
             return Content(json);
-
+#endif
         }
         [Login]
         public ActionResult ReFlash()

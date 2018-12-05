@@ -10,14 +10,14 @@ using System.Text;
 using System.Data.Objects;
 using System.Data.Objects.SqlClient;
 using System.Data.SqlClient;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Diagnostics;
 using Hyman.DataUtility;
 using Yunpian.conf;
 using Yunpian.lib;
 using Yunpian.model;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class AlarmManageController : Controller
     {

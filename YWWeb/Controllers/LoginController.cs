@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using Loger;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class LoginController : Controller
     {

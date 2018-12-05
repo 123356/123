@@ -5,7 +5,7 @@ using System.Web;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class LibLicenseEx
     {
