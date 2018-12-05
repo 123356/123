@@ -7,12 +7,12 @@ using System.Data;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using System.Data.Objects;
-using System.Data.Objects.SqlClient;
+//using System.Data.Objects;
+//using System.Data.Objects.SqlClient;
 using System.Data.SqlClient;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class DeviceManageController : Controller
     {

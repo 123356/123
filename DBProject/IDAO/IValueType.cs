@@ -9,6 +9,6 @@ namespace IDAO
 {
     public interface IValueType : IDAOBase, IDisposable
     {
-        
+        IList<t_CM_ValueTypeComBox> GetRealTimeComboxData(int pid, int DID = -1);
     }
 }

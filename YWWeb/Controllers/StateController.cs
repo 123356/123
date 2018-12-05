@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using Newtonsoft.Json;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class StateController : Controller
     {

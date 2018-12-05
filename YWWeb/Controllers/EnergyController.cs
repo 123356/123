@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
+using YWWeb;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class EnergyController : Controller
     {

@@ -12,6 +12,7 @@ namespace DAL
     public class DeviceTypeDAL
     {
 
+        IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         static DeviceTypeDAL _DataDal;
         public static DeviceTypeDAL getInstance(string json = null)
         {
@@ -42,17 +43,18 @@ namespace DAL
             try
             {
                 //方案二  从录入的设备中直接提取
-                //string tablename = "t_SM_HisData_" + pid.ToString("00000");
-                string query = "select  DTID,Name  from t_CM_DeviceType where DTID in (select distinct DTID from t_DM_DeviceInfo where PID=" + pid;
-                if (DID>0)
-                {
-                    query += " and DID=" + DID;
-                }
-                query += " )";
-                using (IDeviceType _hisDataDao = new DeviceTypeDBContext())
-                {
-                    data = (_hisDataDao as IDAOBase).SQLQuery<t_CM_DeviceTypeComBox>(query);
-                }
+
+                //string query = "select  DTID,Name  from t_CM_DeviceType where DTID in (select distinct DTID from t_DM_DeviceInfo where PID=" + pid;
+                //if (DID>0)
+                //{
+                //    query += " and DID=" + DID;
+                //}
+                //query += " )";
+                //using (IDeviceType _hisDataDao = new DeviceTypeDBContext())
+                //{
+                //    data = (_hisDataDao as IDAOBase).SQLQuery<t_CM_DeviceTypeComBox>(query);
+                //}
+                data = _dbFactory.deviceType.GetRealTimeComboxData(pid, DID);
             }
             catch (Exception ex)
             {

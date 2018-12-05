@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace S5001Web
+namespace YWWeb
 {
     public class FilterConfig
     {

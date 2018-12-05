@@ -1,4 +1,4 @@
-﻿using S5001Web.PubClass;
+﻿using YWWeb.PubClass;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class PowerQualityController : Controller
     {

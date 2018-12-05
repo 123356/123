@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,7 +16,7 @@ using System.Net;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class PerationMaintenanceController : Controller
     {

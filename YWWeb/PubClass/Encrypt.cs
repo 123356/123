@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class Encrypt
     {

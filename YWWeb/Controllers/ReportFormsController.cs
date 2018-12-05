@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class ReportFormsController : Controller
     {

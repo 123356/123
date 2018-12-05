@@ -4,17 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Data;
 using System.Collections.Specialized;
-using S5001Web.PubClass;
 using System.IO;
 using System.Web.Hosting;
 using Loger;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class AutoReportController : Controller
     {

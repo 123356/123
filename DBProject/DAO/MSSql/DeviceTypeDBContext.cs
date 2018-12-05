@@ -23,6 +23,19 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
+        public IList<t_CM_DeviceTypeComBox> GetRealTimeComboxData(int pid, int DID = -1)
+        {
+            string query = "select  DTID,Name  from t_CM_DeviceType where DTID in (select distinct DTID from t_DM_DeviceInfo where PID=" + pid;
+            if (DID > 0)
+            {
+                query += " and DID=" + DID;
+            }
+            query += " )";
+
+            return SQLQuery<t_CM_DeviceTypeComBox>(query);
+
+        }
+
         public DbSet<t_CM_DeviceTypeComBox> ComboxDatas { get; set; }
     }
 }

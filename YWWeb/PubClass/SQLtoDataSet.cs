@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 using System.Configuration;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class SQLtoDataSet
     {

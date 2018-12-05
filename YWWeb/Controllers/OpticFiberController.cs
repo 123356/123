@@ -5,11 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Text;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Data;
 
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class OpticFiberController : Controller
     {

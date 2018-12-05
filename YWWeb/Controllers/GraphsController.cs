@@ -9,7 +9,7 @@ using Hyman.DataUtility;
 using System.Data;
 using IDAO.Models;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class GraphsController : Controller
     {

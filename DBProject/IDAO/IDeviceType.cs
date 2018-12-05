@@ -9,6 +9,6 @@ namespace IDAO
 {
     public interface IDeviceType : IDAOBase, IDisposable
     {
-        
+        IList<t_CM_DeviceTypeComBox> GetRealTimeComboxData(int pid, int DID = -1);
     }
 }

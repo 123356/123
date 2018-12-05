@@ -5,7 +5,7 @@ using System.Web;
 using System.Net;
 using System.IO;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class DirectoryUtil
     {

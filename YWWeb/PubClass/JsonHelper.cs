@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Text;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public static class JsonHelper
     {

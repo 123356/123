@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Data;
 using Newtonsoft.Json;
+using YWWeb;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class EnergyEfficiencyController : Controller
     {

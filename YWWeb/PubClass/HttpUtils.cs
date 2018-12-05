@@ -7,7 +7,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class HttpUtils
     {

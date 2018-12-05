@@ -1,4 +1,4 @@
-﻿using S5001Web.PubClass;
+﻿using YWWeb.PubClass;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,8 +8,9 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using YWWeb;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class ConstractController : Controller
     {

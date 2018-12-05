@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     class OrderRecord
     {

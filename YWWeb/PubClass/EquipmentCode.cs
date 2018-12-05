@@ -5,7 +5,7 @@ using System.Web;
 using System.Text;
 using System.Reflection;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class EquipmentCode
     {

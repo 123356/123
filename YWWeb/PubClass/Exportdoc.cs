@@ -7,8 +7,8 @@ using Word = Microsoft.Office.Interop.Word;
 using System.IO;
 using System.Data;
 using Microsoft.Office.Interop.Word;
-using S5001Web.Controllers;
-namespace S5001Web.PubClass
+using YWWeb.Controllers;
+namespace YWWeb.PubClass
 {
     public class Exportdoc
     {

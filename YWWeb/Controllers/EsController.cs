@@ -6,20 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using Newtonsoft.Json;
-using System.IO;
 using System.Text;
-using System.Data.Objects;
-using System.Data.Objects.SqlClient;
-using System.Data.SqlClient;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 using System.Collections.Specialized;
-using System.Net;
-using Yunpian.conf;
-using Yunpian.lib;
-using Yunpian.model;
-using System.Web.Script.Serialization;
+using YWWeb;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     //售电模块Controller
     public class EsController : Controller

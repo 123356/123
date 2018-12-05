@@ -1,17 +1,20 @@
-﻿using S5001Web.PubClass;
+﻿using DAL;
+using DAL.Models;
+using IDAO.Models;
+using Loger;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
+using YWWeb.PubClass;
 
-namespace S5001Web
+namespace YWWeb
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -47,7 +50,12 @@ namespace S5001Web
         {
             try
             {
-                List<t_AlarmTable_en> alarmList = bll.ExecuteStoreQuery<t_AlarmTable_en>("SELECT * FROM t_AlarmTable_en WHERE t_AlarmTable_en.Alarmstate>0 AND AlarmDateTime>'" + DateTime.Now.AddDays(-1).ToString() + "' ORDER BY  AlarmDateTime desc,PID").ToList();
+                //List<t_AlarmTable_en> alarmList = bll.ExecuteStoreQuery<t_AlarmTable_en>("SELECT * FROM t_AlarmTable_en WHERE t_AlarmTable_en.Alarmstate>0 AND AlarmDateTime>'" + DateTime.Now.AddDays(-1).ToString() + "' ORDER BY  AlarmDateTime desc,PID").ToList();
+                List<OrderByCondtion> orderby = new List<OrderByCondtion>();
+                orderby.Add(new OrderByCondtion{ ColumnName= "AlarmDateTime", orderType=OrderByType.DESC });
+                orderby.Add(new OrderByCondtion{ ColumnName= "PID", orderType=OrderByType.ASC });
+                IList<IDAO.Models.t_AlarmTable_en> alarmList = DAL.AlarmTable_enDAL.getInstance().GetAlarm_enInf(1,DateTime.Now.AddDays(-1),null, orderby);
+
                 if (alarmList != null && alarmList.Count > 0)
                 {
                     int pid = (int)alarmList[0].PID;
@@ -69,14 +77,16 @@ namespace S5001Web
             catch (Exception ex)
             {
                 string error = ex.ToString();
+                LogHelper.Error(ex);
                 return;
             }
         }
 
-        private void sendAlarm(t_AlarmTable_en alarm)
+        private void sendAlarm(IDAO.Models.t_AlarmTable_en alarm)
         {
             int pid = (int)alarm.PID;
-            List<t_CM_UserInfo> userList = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE (PDRList LIKE '" + pid + ",%' OR PDRList = '%," + pid + "' OR PDRList LIKE '%," + pid + ",%' OR PDRList = '" + pid + "')").ToList();
+            //List<t_CM_UserInfo> userList = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE (PDRList LIKE '" + pid + ",%' OR PDRList = '%," + pid + "' OR PDRList LIKE '%," + pid + ",%' OR PDRList = '" + pid + "')").ToList();
+            IList<IDAO.Models.t_CM_UserInfo> userList = UserInfoDAL.getInstance().GetUsers(pid);
             if (userList == null || userList.Count <= 0) return;
             for (int i = 0; i < userList.Count; i++)
             {
@@ -93,7 +103,7 @@ namespace S5001Web
                     }
                 }
             }
-            Debug.WriteLine(DateTime.Now.ToString() + ",alarm.PID=" + alarm.PID);//c#打印输出信息
+            //Debug.WriteLine(DateTime.Now.ToString() + ",alarm.PID=" + alarm.PID);//c#打印输出信息
         }
         private void getContempInfo()
         {

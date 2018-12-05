@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class SearchController : Controller
     {

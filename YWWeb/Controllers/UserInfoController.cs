@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using System.Data;
 using Newtonsoft.Json;
 using System.Text;
-using S5001Web.PubClass;
+using YWWeb.PubClass;
 
-namespace S5001Web.Controllers
+namespace YWWeb.Controllers
 {
     public class UserInfoController : Controller
     {

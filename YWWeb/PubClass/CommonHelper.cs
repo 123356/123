@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Diagnostics;
 
-namespace S5001Web.PubClass
+namespace YWWeb.PubClass
 {
     public class CommonHelper
     {
