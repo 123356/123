@@ -44,6 +44,10 @@ namespace DAOCache
             return redis.HashGet<T>(key, dataKey);
         }
 
+        public IList<T> HashGet<T>(string key, List<string> listKey)
+        {
+            return redis.HashGet<T>(key, listKey);
+        }
         public double HashIncrement(string key, string dataKey, double val = 1)
         {
             return redis.HashIncrement(key, dataKey, val);
@@ -126,5 +130,7 @@ namespace DAOCache
         {
             return redis.StringSet<T>(key,obj,expiry);
         }
+
+        
     }
 }

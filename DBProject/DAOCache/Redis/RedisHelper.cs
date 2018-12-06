@@ -318,7 +318,12 @@ namespace RedisHelp
                 return ConvertObj<T>(value);
             });
         }
-
+        public IList<T> HashGet<T>(string key, List<string> listKey)
+        {
+            List<string> newKeys = listKey.Select(AddSysCustomKey).ToList();
+            RedisValue[] val = Do(db => db.HashGet(key, ConvertRedisValues(newKeys)));
+            return val.Select(t => ConvertObj<T>(t)).ToList();
+        }
         /// <summary>
         /// 为数字增长val
         /// </summary>
@@ -961,7 +966,10 @@ namespace RedisHelp
         {
             return redisKeys.Select(redisKey => (RedisKey)redisKey).ToArray();
         }
-
+        private RedisValue[] ConvertRedisValues(List<string> redisFields)
+        {
+            return redisFields.Select(redisKey => (RedisValue)redisKey).ToArray();
+        }
         #endregion 辅助方法
     }
 }

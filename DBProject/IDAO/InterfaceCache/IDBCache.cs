@@ -168,7 +168,7 @@ namespace IDAO.InterfaceCache
         /// <param name="dataKey"></param>
         /// <returns></returns>
         T HashGet<T>(string key, string dataKey);
-
+        IList<T> HashGet<T>(string key, List<string> listKey);
         /// <summary>
         /// 为数字增长val
         /// </summary>

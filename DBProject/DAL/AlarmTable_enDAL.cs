@@ -117,11 +117,15 @@ namespace DAL
                 if (dbCache.KeyExists(FirstKey))
                 {
                     string[] pids = pdrList.Split(',');
-                    foreach (var v in pids)
-                    {
-                        if (dbCache.HashExists(FirstKey, v))
-                            total += dbCache.HashGet<int>(FirstKey, v);
-                    }
+                    IList<string> fields = dbCache.HashKeys<string>(FirstKey);
+                    var fks = fields.Where(t => pids.Contains(t));
+                    IList<int> alarmCount = dbCache.HashGet<int>(FirstKey, fks.ToList<string>());
+                    total=alarmCount.Sum();
+                    //foreach (var v in pids)
+                    //{
+                    //    if (dbCache.HashExists(FirstKey, v))
+                    //        total += dbCache.HashGet<int>(FirstKey, v);
+                    //}
                 }
                 userQueryAlarmCountInf.BeginInvoke( null, null);
 
