@@ -238,8 +238,11 @@ Topo.prototype = {
                         type: "get",
                         url: res + "?date" + new Date().valueOf(),
                         success: function (res) {
-                            res = JSON.parse(res);
-                            that.history(res)
+                            try {
+                                that.history(JSON.parse(res))
+                            } catch (e) {
+                                that.history(res)
+                            }
                         }
                     })
                 },
