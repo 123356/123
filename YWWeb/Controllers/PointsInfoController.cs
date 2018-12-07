@@ -11,12 +11,12 @@ using System.Text;
 
 namespace YWWeb.Controllers
 {
-    public class PointsInfoController : Controller
+    public class PointsInfoController : UserControllerBaseEx
     {
         //
         // GET: /PointsInfo/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -194,10 +194,10 @@ namespace YWWeb.Controllers
                 strJson = strJson.Replace("[", "[{\"" + dkey + "\":\"0\",\"" + dvalue + "\":\"==请选择==\"}");
             return strJson;
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
 
         #region "传感器信息模块"
         /// <summary>

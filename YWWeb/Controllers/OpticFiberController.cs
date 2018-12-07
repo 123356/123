@@ -11,12 +11,12 @@ using System.Data;
 
 namespace YWWeb.Controllers
 {
-    public class OpticFiberController : Controller
+    public class OpticFiberController : UserControllerBaseEx
     {
         //
         // GET: /OpticFiber/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -329,10 +329,10 @@ namespace YWWeb.Controllers
             }
             return Content(result);
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         [Login]
         //获取光纤通道 （定位点管理）
         public ActionResult GetOpticFiberinfo()

@@ -12,12 +12,12 @@ using YWWeb;
 
 namespace YWWeb.Controllers
 {
-    public class ConstractController : Controller
+    public class ConstractController : UserControllerBaseEx
     {
         //
         // GET: /合同管理/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         public ActionResult Index()
         {
             return View();
@@ -801,10 +801,10 @@ namespace YWWeb.Controllers
             }
             return flag;
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
 
         /// <summary>
         /// 判断当前文件是否存在

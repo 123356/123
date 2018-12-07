@@ -19,7 +19,7 @@ using Yunpian.model;
 
 namespace YWWeb.Controllers
 {
-    public class AlarmManageController : Controller
+    public class AlarmManageController :UserControllerBaseEx// Controller
     {
         //报警管理
         // GET: /AlarmManage/
@@ -27,7 +27,7 @@ namespace YWWeb.Controllers
         //
         // GET: /AlarmInfo/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult AlarmMain()
         {
@@ -378,7 +378,7 @@ namespace YWWeb.Controllers
         {
             try
             {
-                PubClass.Exportdoc.ExportWordFromAlarm(AlarmID);
+                PubClass.Exportdoc.ExportWordFromAlarm(AlarmID,CurrentUser);
                 string fileName = "/DownLoad/alarm/alarm" + AlarmID + ".doc";
 
                 return Content(fileName);
@@ -439,10 +439,10 @@ namespace YWWeb.Controllers
             return Content(result);
         }
 
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         /// <summary>
         /// 配电房报警状态实体
         /// </summary>

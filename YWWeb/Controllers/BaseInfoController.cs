@@ -12,12 +12,12 @@ using Loger;
 
 namespace YWWeb.Controllers
 {
-    public class BaseInfoController : Controller
+    public class BaseInfoController : UserControllerBaseEx
     {
         //
         // GET: /BaseInfo/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         public ActionResult Index()
         {
             return View();
@@ -753,10 +753,10 @@ namespace YWWeb.Controllers
                 strJson = JsonHelper.ToJson(list);
             return Content(strJson);
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         //回路列表
         public ActionResult BindCircuit(int pid = 8, int did = 0, int showall = 0)
         {

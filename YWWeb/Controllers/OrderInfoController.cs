@@ -15,12 +15,12 @@ using YWWeb.PubClass;
 
 namespace YWWeb.Controllers
 {
-    public class OrderInfoController : Controller
+    public class OrderInfoController : UserControllerBaseEx
     {
         //
         // GET: /OrderInfo/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         FileManageController fm = new FileManageController();
 
         [Login]
@@ -770,10 +770,10 @@ namespace YWWeb.Controllers
             fileExtension = fileExtension.Replace("jpg", "jpeg");
             return "<img src=\"/Content/Images/fileType/" + fileExtension + "_24.png\" />";
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
 
 
         public class OrderSelTemplateCls

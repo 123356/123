@@ -17,22 +17,22 @@ namespace YWWeb.Controllers
     /// <summary>
     /// 备件管理
     /// </summary>
-    public class SparePartManageController : Controller
+    public class SparePartManageController : UserControllerBaseEx
     {
         pdermsWebEntities bll = new pdermsWebEntities();
 
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         /// <summary>
         /// 当前用户
         /// </summary>
-        private t_CM_UserInfo CurrentUser
-        {
-            get
-            {
-                return loginbll.CurrentUser;
-            }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get
+        //    {
+        //        return loginbll.CurrentUser;
+        //    }
+        //}
 
         /// <summary>
         /// 备件列表

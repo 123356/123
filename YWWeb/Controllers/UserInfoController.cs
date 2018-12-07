@@ -10,12 +10,12 @@ using YWWeb.PubClass;
 
 namespace YWWeb.Controllers
 {
-    public class UserInfoController : Controller
+    public class UserInfoController : UserControllerBaseEx
     {
         //
         // GET: /UserList/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult UserList()
         {
@@ -1403,10 +1403,10 @@ namespace YWWeb.Controllers
                 result = "checked=\"checked\"";
             return result;
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
 
         public ActionResult SetAdmin(int id)
         {

@@ -14,10 +14,10 @@ using YWWeb;
 namespace YWWeb.Controllers
 {
     //售电模块Controller
-    public class EsController : Controller
+    public class EsController : UserControllerBaseEx
     {
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         private string getSessionID()
         {
 
@@ -418,10 +418,10 @@ namespace YWWeb.Controllers
             return strJson;
         }
 
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         public class UserPlanView
         {
             public int id { get; set; }

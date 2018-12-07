@@ -15,10 +15,10 @@ using Newtonsoft.Json;
 
 namespace YWWeb.Controllers
 {
-    public class AutoReportController : Controller
+    public class AutoReportController : UserControllerBaseEx
     {
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -99,9 +99,9 @@ namespace YWWeb.Controllers
             return dname;
         }
 
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }    
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}    
     }
 }

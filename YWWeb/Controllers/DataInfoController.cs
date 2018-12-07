@@ -16,12 +16,12 @@ using IDAO.Models;
 
 namespace YWWeb.Controllers
 {
-    public class DataInfoController : Controller
+    public class DataInfoController : UserControllerBaseEx
     {
 
         // GET: /Web/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         [Login]
         public ActionResult DataTransferList()
@@ -573,10 +573,10 @@ namespace YWWeb.Controllers
             else
                 return pv + "";
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         //获取当前测点的状态
         private string loadAlarmStatus(int tagid, string realstatus)
         {

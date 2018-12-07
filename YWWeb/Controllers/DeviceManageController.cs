@@ -14,12 +14,12 @@ using YWWeb.PubClass;
 
 namespace YWWeb.Controllers
 {
-    public class DeviceManageController : Controller
+    public class DeviceManageController : UserControllerBaseEx
     {
         //设备管理
         // GET: /DeviceManage/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -634,9 +634,9 @@ namespace YWWeb.Controllers
             return Content(result);
         }
         #endregion
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

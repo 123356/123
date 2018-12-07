@@ -17,12 +17,12 @@ using System.Reflection;
 
 namespace YWWeb.Controllers
 {
-    public class DataReportController : Controller
+    public class DataReportController : UserControllerBaseEx
     {
         //数据报表
         // GET: /DataReport/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -374,7 +374,7 @@ namespace YWWeb.Controllers
                     SaveImage(PID, 5, Img5);
                 if (Img6 != "")
                     SaveImage(PID, 6, Img6);
-                PubClass.Exportdoc.ExportWordFromRun(Img2, Img3, Img4, Img5, Img6, PID, ReportStartDate, ReportEndDate);
+                PubClass.Exportdoc.ExportWordFromRun(CurrentUser,Img2, Img3, Img4, Img5, Img6, PID, ReportStartDate, ReportEndDate);
                 string fileName = "/DownLoad/run/run" + PID + ".doc";
 
                 return Content(fileName);
@@ -407,15 +407,15 @@ namespace YWWeb.Controllers
         //维护检修报告
         public ActionResult ExportRepairDoc(int pid, string ReportStartDate, string ReportEndDate)
         {
-            PubClass.Exportdoc.ExportWordFromBO(pid, ReportStartDate, ReportEndDate);
+            PubClass.Exportdoc.ExportWordFromBO(CurrentUser,pid, ReportStartDate, ReportEndDate);
             string fileName = "/DownLoad/repair/repair" + pid + ".doc";
 
             return Content(fileName);
         }
 
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

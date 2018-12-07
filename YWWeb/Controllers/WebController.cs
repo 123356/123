@@ -14,12 +14,12 @@ using YWWeb.PubClass;
 
 namespace YWWeb.Controllers
 {
-    public class WebController : Controller
+    public class WebController : UserControllerBaseEx
     {
 
         // GET: /Web/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         [Login]
         public ActionResult DataTransferList()
@@ -349,9 +349,9 @@ namespace YWWeb.Controllers
         #endregion
 
 
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

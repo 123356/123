@@ -15,13 +15,13 @@ using Newtonsoft;
 
 namespace YWWeb.Controllers
 {
-    public class SysInfoController : Controller
+    public class SysInfoController :UserControllerBaseEx// Controller
     {
         //系统管理
         // GET: /SysInfo/
 
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -274,10 +274,10 @@ namespace YWWeb.Controllers
         [Login]
         public ActionResult UserButtonList(string CurrUrl)
         {
-            t_CM_UserInfo user = loginbll.CurrentUser;
+            //t_CM_UserInfo user = loginbll.CurrentUser;
             int UserID = 0;
-            if (user != null)
-                UserID = user.UserID;
+            if (CurrentUser != null)
+                UserID = CurrentUser.UserID;
             StringBuilder sb_Button = new StringBuilder();
             //获取模块
             List<t_CM_Module> thislist = bll.t_CM_Module.Where(m => m.Location == CurrUrl && m.ParentID > 0).ToList();
@@ -368,10 +368,10 @@ namespace YWWeb.Controllers
             }
             return Content(result);
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         [Login]
         public ActionResult SaveModule(t_CM_Module module)
         {

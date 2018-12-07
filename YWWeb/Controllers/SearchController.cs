@@ -4,15 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using YWWeb.PubClass;
 
 namespace YWWeb.Controllers
 {
-    public class SearchController : Controller
+    public class SearchController : UserControllerBaseEx
     {
         //网站查询
         // GET: /Search/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -52,9 +53,9 @@ namespace YWWeb.Controllers
             return Content("JS已经成功生成！");
         }
         //获取
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

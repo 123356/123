@@ -12,12 +12,12 @@ using System.IO;
 
 namespace YWWeb.Controllers
 {
-    public class PDRInfoController : Controller
+    public class PDRInfoController : UserControllerBaseEx
     {
         //
         // GET: /PDRInfo/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -2491,10 +2491,10 @@ namespace YWWeb.Controllers
             public string BigIndTypeName { get; set; }
             public string InstalledCapacity { get; set; }
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         #endregion
 
         #region 显示地图上面站点信息

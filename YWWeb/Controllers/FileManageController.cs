@@ -8,12 +8,12 @@ using YWWeb;
 
 namespace YWWeb.Controllers
 {
-    public class FileManageController : Controller
+    public class FileManageController : UserControllerBaseEx
     {
         //
         // GET: /FileManage/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         public ActionResult Index()
         {
             return View();
@@ -59,9 +59,9 @@ namespace YWWeb.Controllers
             string strsql = "delete from t_cm_files where ID in (" + id + ")";
             int docount = bll.ExecuteStoreCommand(strsql, null);
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

@@ -18,12 +18,12 @@ using System.Text.RegularExpressions;
 
 namespace YWWeb.Controllers
 {
-    public class PerationMaintenanceController : Controller
+    public class PerationMaintenanceController : UserControllerBaseEx
     {
         //
         // GET: /PerationMaintenance/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         public ActionResult Index()//运维
         {
@@ -648,9 +648,9 @@ namespace YWWeb.Controllers
 
         #endregion
 
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
     }
 }

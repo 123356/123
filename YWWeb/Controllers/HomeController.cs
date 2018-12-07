@@ -15,15 +15,16 @@ using Newtonsoft.Json;
 using System.Collections;
 using Newtonsoft.Json.Converters;
 using DAL;
+using YWWeb.Lib.Base;
 
 namespace YWWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController :UserControllerBaseEx //Controller
     {
         //
         // GET: /Home/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {
@@ -48,6 +49,7 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        [AuthorizeIgnore]
         public ActionResult Login()
         {
             return View();
@@ -129,6 +131,7 @@ namespace YWWeb.Controllers
         static DateTime m_dtLicense = DateTime.Now.AddHours(-1);//check license 时间
         //登录
         [HttpPost]
+        [AuthorizeIgnore]
         public ActionResult CheckUserInfo(string username, string UserPassWord)
         {
             try
@@ -170,8 +173,9 @@ namespace YWWeb.Controllers
                 int retCode = b ? 0 : -1;// dog.OperateDog();
                 if (retCode == 0)
                 {
-                    string MD5password = Encrypt.MD5Encrypt(UserPassWord);
-                    List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.UserName == username && u.UserPassWord == MD5password).ToList();
+                    string MD5password = Lib.Base.Encrypt.MD5Encrypt(UserPassWord);
+                    //List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.UserName == username && u.UserPassWord == MD5password).ToList();
+                    IList<IDAO.Models.t_CM_UserInfo> list = UserInfoDAL.getInstance().GetUsers(username,MD5password);
 
                     if (list.Count > 0)
                     {
@@ -180,7 +184,7 @@ namespace YWWeb.Controllers
                             Session["Huerinfo"] = list[0];
                             //string sID = list[0].UserID + "hy" + Session.SessionID;
                             string sID = Session.SessionID;
-                            t_CM_UserInfo userinfo = list[0];
+                            IDAO.Models.t_CM_UserInfo userinfo = list[0];
                             if (userinfo.RoleID == 1)
                                 userinfo.UNITList = GetAllUnit();
                             Session[sID] = userinfo;
@@ -205,8 +209,8 @@ namespace YWWeb.Controllers
                             {
                                 HttpCookie cookie = new HttpCookie("myYWAppInf");
                                 //cookie.Expires = DateTime.Now.AddYears(20);
-                                cookie.Values.Set("appkey", Encrypt.MD5Encrypt2(username));
-                                cookie.Values.Add("appu", Encrypt.MD5Encrypt2(MD5password));
+                                cookie.Values.Set("appkey", Lib.Base.Encrypt.MD5Encrypt2(username));
+                                cookie.Values.Add("appu", Lib.Base.Encrypt.MD5Encrypt2(MD5password));
                                 Response.SetCookie(cookie);
                                 Response.Cookies.Add(cookie);
                             }
@@ -241,9 +245,9 @@ namespace YWWeb.Controllers
             string IsReusable = "false";
             HttpApplicationStateBase applicationState = HttpContext.Application;
             //获取session里面的用户id
-            if (Session["Huerinfo"] != null)
+            if (CurrentUser != null)
             {
-                string Uid = (Session["Huerinfo"] as t_CM_UserInfo).UserID.ToString();
+                string Uid = CurrentUser.UserID.ToString();
                 if (Request.Cookies["GUID"] != null && applicationState[Uid + "_GUID"] != null)
                 {
                     //判断用户是否重复登陆
@@ -887,12 +891,12 @@ namespace YWWeb.Controllers
             return View();
 
         }
-        class menuInf
-        {
-            public t_CM_Module moduleParent;
-            public List<t_CM_Module> childern;
-            public List<t_CM_RoleRight> disenableModule;
-        }
+        //class menuInf
+        //{
+        //    public t_CM_Module moduleParent;
+        //    public List<t_CM_Module> childern;
+        //    public List<t_CM_RoleRight> disenableModule;
+        //}
         [Login]
         public ActionResult GetMenuInfoJson()
         {
@@ -958,30 +962,30 @@ namespace YWWeb.Controllers
 
         }
         //根据权限获取下一级功能模块
-        [Login]
-        public string GetThirdMenuInfo(int mid)
-        {
-            StringBuilder sbMenu = new StringBuilder();
-            if (CurrentUser != null)
-            {
+        //[Login]
+        //public string GetThirdMenuInfo(int mid)
+        //{
+        //    StringBuilder sbMenu = new StringBuilder();
+        //    if (CurrentUser != null)
+        //    {
 
-                int UserID = CurrentUser.UserID;
-                string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
-                //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
-                List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
-                int count = 0;
-                foreach (t_CM_Module model in list)
-                {
-                    count++;
-                    sbMenu.Append("<li id=\"m" + model.ModuleID + "\"  onclick=\"setIframeUrl('" + model.Location + "'," + model.ModuleID + ");\" ");
-                    if (count == 1)
-                        sbMenu.Append(" class=\"current\" ");
-                    sbMenu.Append(">" + model.ModuleName + "</li>");
-                }
-                return sbMenu.ToString();
-            }
-            return "";
-        }
+        //        int UserID = CurrentUser.UserID;
+        //        string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
+        //        //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
+        //        List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
+        //        int count = 0;
+        //        foreach (t_CM_Module model in list)
+        //        {
+        //            count++;
+        //            sbMenu.Append("<li id=\"m" + model.ModuleID + "\"  onclick=\"setIframeUrl('" + model.Location + "'," + model.ModuleID + ");\" ");
+        //            if (count == 1)
+        //                sbMenu.Append(" class=\"current\" ");
+        //            sbMenu.Append(">" + model.ModuleName + "</li>");
+        //        }
+        //        return sbMenu.ToString();
+        //    }
+        //    return "";
+        //}
         [Login]
         public string CurrentUserName()
         {
@@ -1014,10 +1018,10 @@ namespace YWWeb.Controllers
             public string Coordination { get; set; }
         }
 
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         public class MenuFormatInfo1
         {
             public string Areaname { get; set; }

@@ -9,6 +9,24 @@ namespace YWWeb.Lib.Base
 {
     public class UserControllerBase : Controller
     {
+        public t_CM_UserInfo CurrentUser
+        {
+            get { return (t_CM_UserInfo)System.Web.HttpContext.Current.Session["Huerinfo"]; }
+            //set { System.Web.HttpContext.Current.Session["Huerinfo"] = value; }
+        }
+        public virtual void LogDebug(string msg)
+        {
+            System.Diagnostics.Debug.WriteLine(msg);
+        }
+        public virtual void LogException(Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+        }
+        public virtual void LogInfo(string msg)
+        {
+            System.Diagnostics.Debug.WriteLine(msg);
+
+        }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var noAuthorizeAttributes = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AuthorizeIgnoreAttribute), false);
@@ -40,6 +58,7 @@ namespace YWWeb.Lib.Base
                         {
                             filterContext.HttpContext.Session["Huerinfo"] = list[0];
                             //LogHelper.Debug(username + "--auto login");
+                            LogDebug(username + "--auto login");
                             return;
                         }
                     }
@@ -47,6 +66,7 @@ namespace YWWeb.Lib.Base
                 catch (Exception ex)
                 {
                     //LogHelper.Warn(ex);
+                    LogInfo(ex.ToString());
                 }
                 filterContext.HttpContext.Session.RemoveAll();
                 //filterContext.HttpContext.Response.Write("<script language=javascript>top.location.href='/Home/Login';</script>");

@@ -10,13 +10,13 @@ using YWWeb;
 
 namespace YWWeb.Controllers
 {
-    public class EmergencyRepairController : Controller
+    public class EmergencyRepairController : UserControllerBaseEx
     {
         //
         // GET: /EmergencyPlan/
         pdermsWebEntities bll = new pdermsWebEntities();
 
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         FileManageController fm = new FileManageController();
 
@@ -30,6 +30,7 @@ namespace YWWeb.Controllers
         }
         public ActionResult EmergencyPlan()//应急抢修-应急预案
         {
+            ViewData["userid"] = CurrentUser.UserID;
             return View();
         }
         public ActionResult EmergencyRepairReport()//应急抢修-应急抢修报告
@@ -134,10 +135,10 @@ namespace YWWeb.Controllers
         /// <summary>
         /// 获取用户信息
         /// </summary>
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         /// <summary>
         ///  获取应急预案列表名称
         /// </summary>

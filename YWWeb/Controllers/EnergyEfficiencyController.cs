@@ -10,12 +10,12 @@ using YWWeb;
 
 namespace YWWeb.Controllers
 {
-    public class EnergyEfficiencyController : Controller
+    public class EnergyEfficiencyController : UserControllerBaseEx
     {
         //
         // GET: /EnergyEfficiency/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         public ActionResult Overview()//电能-能效总览
         {
             return View();
@@ -783,10 +783,10 @@ namespace YWWeb.Controllers
                 return Content("");
             }
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
 
         /// <summary>
         /// 状态总览

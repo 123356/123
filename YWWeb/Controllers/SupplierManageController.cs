@@ -17,22 +17,22 @@ namespace YWWeb.Controllers
     /// <summary>
     /// 供应商管理
     /// </summary>
-    public class SupplierManageController : Controller
+    public class SupplierManageController : UserControllerBaseEx
     {
         pdermsWebEntities bll = new pdermsWebEntities();
 
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
 
         /// <summary>
         /// 当前属性
         /// </summary>
-        private t_CM_UserInfo CurrentUser
-        {
-            get
-            {
-                return loginbll.CurrentUser;
-            }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get
+        //    {
+        //        return loginbll.CurrentUser;
+        //    }
+        //}
 
         /// <summary>
         /// 供应商列表

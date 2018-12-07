@@ -15,12 +15,12 @@ using System.Configuration;
 
 namespace YWWeb.Controllers
 {
-    public class FileUploadController : Controller
+    public class FileUploadController : UserControllerBaseEx
     {
         //
         // GET: /FileUpload/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         public ActionResult Index()
         {
             return View();
@@ -385,10 +385,10 @@ namespace YWWeb.Controllers
             }
             return data;
         }
-        private t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //private t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         public string SaveImage(int did,int index,string IS)
         {
             string ImageSend = Server.UrlDecode(IS);

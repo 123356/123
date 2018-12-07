@@ -504,11 +504,11 @@ namespace YWWeb.PubClass
         /// </summary>
         /// <param name="templateFile">模板文件</param>
         /// <param name="fileName">生成的具有模板样式的新文件</param>
-        public static void ExportWordFromAlarm(int AlarmID)
+        public static void ExportWordFromAlarm(int AlarmID,IDAO.Models.t_CM_UserInfo user)
         {
             try
             {
-                LoginAttribute loginbll = new LoginAttribute();
+                //LoginAttribute loginbll = new LoginAttribute();
                 pdermsWebEntities bll = new pdermsWebEntities();
                 string strsql = "select * from V_Alarm_PDRInfo where AlarmID=" + AlarmID;
                 List<V_Alarm_PDRInfo> list = bll.ExecuteStoreQuery<V_Alarm_PDRInfo>(strsql).ToList();
@@ -675,7 +675,7 @@ namespace YWWeb.PubClass
                         obj.Remark = "报警报告生成";
                         obj.Modules = "alarm";
                         obj.CommitTime = DateTime.Now;
-                        obj.CommitUser = loginbll.CurrentUser.UserName;
+                        obj.CommitUser = user.UserName;// loginbll.CurrentUser.UserName;
                         bll.t_cm_files.AddObject(obj);
                         bll.SaveChanges();
                     }
@@ -698,7 +698,7 @@ namespace YWWeb.PubClass
                         obj.RType = "监测报警";
                         obj.PID = alarm.PID;
                         obj.CreatDate = DateTime.Now;
-                        obj.Creater = loginbll.CurrentUser.UserName;
+                        obj.Creater = user.UserName;// loginbll.CurrentUser.UserName;
                         bll.t_PM_ReportInfo.AddObject(obj);
                         bll.SaveChanges();
                     }
@@ -721,11 +721,11 @@ namespace YWWeb.PubClass
         /// </summary>
         /// <param name="templateFile">模板文件</param>
         /// <param name="fileName">生成的具有模板样式的新文件</param>
-        public static void ExportWordFromRun(string Img2, string Img3, string Img4, string Img5, string Img6, int PID, string ReportStartDate, string ReportEndDate)
+        public static void ExportWordFromRun(IDAO.Models.t_CM_UserInfo user,string Img2, string Img3, string Img4, string Img5, string Img6, int PID, string ReportStartDate, string ReportEndDate)
         {
             try
             {
-                LoginAttribute loginbll = new LoginAttribute();
+                //LoginAttribute loginbll = new LoginAttribute();
                 pdermsWebEntities bll = new pdermsWebEntities();
                 string strsql = "select * from t_CM_PDRInfo where PID=" + PID;
                 List<t_CM_PDRInfo> list = bll.ExecuteStoreQuery<t_CM_PDRInfo>(strsql).ToList();
@@ -918,7 +918,7 @@ namespace YWWeb.PubClass
 
                     if (Img2 != "")
                     {
-                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + loginbll.CurrentUser.UserID + "_" + PID + "_" + 2 + ".png");
+                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + user.UserID + "_" + PID + "_" + 2 + ".png");
                         WordMarkName = "用电情况";//word模板中的书签名称
                         doc.ActiveWindow.Selection.GoTo(ref what, ref missing, ref missing, ref WordMarkName);//光标转到书签的位置
                         object range = app.Selection.Range;
@@ -926,7 +926,7 @@ namespace YWWeb.PubClass
                     }
                     if (Img3 != "")
                     {
-                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + loginbll.CurrentUser.UserID + "_" + PID + "_" + 3 + ".png");
+                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + user.UserID + "_" + PID + "_" + 3 + ".png");
                         WordMarkName = "温升情况";//word模板中的书签名称
                         doc.ActiveWindow.Selection.GoTo(ref what, ref missing, ref missing, ref WordMarkName);//光标转到书签的位置
                         object range = app.Selection.Range;
@@ -934,7 +934,7 @@ namespace YWWeb.PubClass
                     }
                     if (Img4 != "")
                     {
-                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + loginbll.CurrentUser.UserID + "_" + PID + "_" + 4 + ".png");
+                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + user.UserID + "_" + PID + "_" + 4 + ".png");
                         WordMarkName = "电压合格率";//word模板中的书签名称
                         doc.ActiveWindow.Selection.GoTo(ref what, ref missing, ref missing, ref WordMarkName);//光标转到书签的位置
                         object range = app.Selection.Range;
@@ -942,7 +942,7 @@ namespace YWWeb.PubClass
                     }
                     if (Img5 != "")
                     {
-                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + loginbll.CurrentUser.UserID + "_" + PID + "_" + 5 + ".png");
+                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + user.UserID + "_" + PID + "_" + 5 + ".png");
                         WordMarkName = "电流合格率";//word模板中的书签名称
                         doc.ActiveWindow.Selection.GoTo(ref what, ref missing, ref missing, ref WordMarkName);//光标转到书签的位置
                         object range = app.Selection.Range;
@@ -950,7 +950,7 @@ namespace YWWeb.PubClass
                     }
                     if (Img6 != "")
                     {
-                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + loginbll.CurrentUser.UserID + "_" + PID + "_" + 6 + ".png");
+                        string imgName = HttpContext.Current.Server.MapPath("~/UploadFiles/temp/" + user.UserID + "_" + PID + "_" + 6 + ".png");
                         WordMarkName = "功率因数";//word模板中的书签名称
                         doc.ActiveWindow.Selection.GoTo(ref what, ref missing, ref missing, ref WordMarkName);//光标转到书签的位置
                         object range = app.Selection.Range;
@@ -1010,7 +1010,7 @@ namespace YWWeb.PubClass
                         obj.RType = "运行监测";
                         obj.PID = PID;
                         obj.CreatDate = DateTime.Now;
-                        obj.Creater = loginbll.CurrentUser.UserName;
+                        obj.Creater = user.UserName;
                         bll.t_PM_ReportInfo.AddObject(obj);
                         bll.SaveChanges();
                     }
@@ -1032,11 +1032,11 @@ namespace YWWeb.PubClass
         /// </summary>
         /// <param name="templateFile">模板文件</param>
         /// <param name="fileName">生成的具有模板样式的新文件</param>
-        public static void ExportWordFromBO(int PID, string StartDate, string EndDate)
+        public static void ExportWordFromBO(IDAO.Models.t_CM_UserInfo user,int PID, string StartDate, string EndDate)
         {
             try
             {
-                LoginAttribute loginbll = new LoginAttribute();
+                //LoginAttribute loginbll = new LoginAttribute();
                 pdermsWebEntities bll = new pdermsWebEntities();
                 object linkToFile = false;
                 object saveWithDocument = true;
@@ -1236,7 +1236,7 @@ namespace YWWeb.PubClass
                     obj.RType = "维护检修";
                     obj.PID = PID;
                     obj.CreatDate = DateTime.Now;
-                    obj.Creater = loginbll.CurrentUser.UserName;
+                    obj.Creater = user.UserName;
                     bll.t_PM_ReportInfo.AddObject(obj);
                     bll.SaveChanges();
                 }
