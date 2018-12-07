@@ -12,6 +12,7 @@ YWWeb/obj
 YWWeb/logs
 .nuget
 .vs
+.user
 DBProject/DAL/bin
 DBProject/DAL/obj
 DBProject/DAO/bin
