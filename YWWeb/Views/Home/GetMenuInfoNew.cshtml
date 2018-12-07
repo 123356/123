@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@using S5001Web;
+@using YWWeb;
 
 
 
@@ -11,7 +11,7 @@
     </a>
     </li>
 
-@foreach (S5001Web.t_CM_Module item in ViewData["list"] as List<S5001Web.t_CM_Module>)
+@foreach (YWWeb.t_CM_Module item in ViewData["list"] as List<YWWeb.t_CM_Module>)
 {
     string sTarget = "main_frame";
     if (item.Target.Equals("IFrame"))
