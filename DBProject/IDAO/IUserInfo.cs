@@ -15,5 +15,6 @@ namespace IDAO
         /// <param name="moduleIDS">1,2,3,4...</param>
         /// <returns></returns>
         IList<t_CM_UserInfo> GetUsers(int pid);
+        IList<t_CM_UserInfo> GetUsers(string userName, string password);
     }
 }

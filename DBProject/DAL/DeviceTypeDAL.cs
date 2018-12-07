@@ -14,13 +14,19 @@ namespace DAL
 
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         static DeviceTypeDAL _DataDal;
+        static readonly object _loker = new object();
         public static DeviceTypeDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new DeviceTypeDAL();
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                    {
+                        _DataDal = new DeviceTypeDAL();
+                    }
+                }
             }
-
             return _DataDal;
         }
 

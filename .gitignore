@@ -5,11 +5,13 @@
 # Re-instate the build folder that is excluded in the default .gitignore
 # This folder is used by Microsoft.Bcl.Build.* package
 !YWWeb\DLL
+!YWWeb.Lib
 packages
 YWWeb/bin
 YWWeb/obj
 YWWeb/logs
 .nuget
+.vs
 DBProject/DAL/bin
 DBProject/DAL/obj
 DBProject/DAO/bin
@@ -18,3 +20,7 @@ DBProject/IDAO/bin
 DBProject/IDAO/obj
 DBProject/DAOCache/bin
 DBProject/DAOCache/obj
+YWWeb.Lib/EnergyManage/bin
+YWWeb.Lib/EnergyManage/obj
+YWWeb.Lib/YWWeb.Lib.Base/bin
+YWWeb.Lib/YWWeb.Lib.Base/obj

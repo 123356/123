@@ -17,13 +17,20 @@ namespace DAL
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
         static readonly string MenuKey = "user_left_menu";
+        static readonly object _loker = new object();
         static ModuleDAL _DataDal;
         public static ModuleDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new ModuleDAL();
-                _DataDal.userQueryMenuInf = new QueryMenuInf(_DataDal.queryMenuInf);
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                    {
+                        _DataDal = new ModuleDAL();
+                        _DataDal.userQueryMenuInf = new QueryMenuInf(_DataDal.queryMenuInf);
+                    }
+                }
             }
 
             return _DataDal;

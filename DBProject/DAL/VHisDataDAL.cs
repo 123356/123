@@ -13,12 +13,19 @@ namespace DAL
     {
         
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
+        static readonly object _loker = new object();
         static VHisDataDAL _DataDal;
         public static VHisDataDAL getInstance(string json=null)
         {
             if (null == _DataDal)
             {
-                _DataDal=new VHisDataDAL();
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                    {
+                        _DataDal = new VHisDataDAL();
+                    }
+                }
             }
 
             return _DataDal;

@@ -17,15 +17,21 @@ namespace DAL
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
         static readonly string FirstKey = "alarm_en_count";
+        static readonly object _loker = new object();
         static AlarmTable_enDAL _DataDal;
         public static AlarmTable_enDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new AlarmTable_enDAL();
-                _DataDal.userQueryAlarmCountInf = new QueryAlarmCount(_DataDal.queryAlarmCountInf);
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                    {
+                        _DataDal = new AlarmTable_enDAL();
+                        _DataDal.userQueryAlarmCountInf = new QueryAlarmCount(_DataDal.queryAlarmCountInf);
+                    }
+                }
             }
-
             return _DataDal;
         }
 

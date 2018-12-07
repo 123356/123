@@ -29,6 +29,12 @@ namespace DAO
             return SQLQuery<t_CM_UserInfo>(sql);
         }
 
+        public IList<t_CM_UserInfo> GetUsers(string userName, string password)
+        {
+            //this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
+            return Datas.Where(u => u.UserName == userName && u.UserPassWord == password).ToList();
+        }
+
         public DbSet<t_CM_UserInfo> Datas { get; set; }
     }
 }

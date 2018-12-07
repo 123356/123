@@ -18,12 +18,16 @@ namespace DAL
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
       
         static UserInfoDAL _DataDal;
+        static readonly object _loker = new object();
         public static UserInfoDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new UserInfoDAL();
-               
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                        _DataDal = new UserInfoDAL();
+                }
             }
 
             return _DataDal;
@@ -52,6 +56,22 @@ namespace DAL
             return data;
            
         }
-       
+        public IList<t_CM_UserInfo> GetUsers(string userName,string password)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+
+                data = _dbFactory.userInf.GetUsers(userName,password);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+
     }
 }

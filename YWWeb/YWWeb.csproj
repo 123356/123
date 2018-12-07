@@ -17,7 +17,7 @@
     <AssemblyName>YWWeb</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -299,6 +299,7 @@
     <Compile Include="PubClass\SQLtoDataSet.cs" />
     <Compile Include="PubClass\TimeUtils.cs" />
     <Compile Include="PubClass\UnitScore.cs" />
+    <Compile Include="PubClass\UserControllerBaseEx.cs" />
     <Compile Include="PubClass\UtilsSms.cs" />
     <Compile Include="YWModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -364,6 +365,7 @@
     <Content Include="AmazeUI-2.7.2\table-list-img.html" />
     <Content Include="AmazeUI-2.7.2\table-list.html" />
     <Content Include="AmazeUI-2.7.2\tables.html" />
+    <Content Include="Areas\EnergyManage\Controllers\ReadMe.txt" />
     <Content Include="Content\baiduMap\css\home.css" />
     <Content Include="Content\baiduMap\css\main.css" />
     <Content Include="Content\baiduMap\css\main_edit.css" />
@@ -1584,8 +1586,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.css.map" />
@@ -1627,18 +1627,9 @@
     <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="AmazeUI-2.7.2\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="AmazeUI-2.7.2\assets\fonts\FontAwesome.otf" />
+    <Content Include="Areas\EnergyManage\Views\EMHome\Index.cshtml" />
+    <Content Include="Areas\EnergyManage\Views\web.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1989,6 +1980,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\EnergyManage\Views\Default\" />
+    <Folder Include="Areas\EnergyManage\Views\Shared\" />
     <Folder Include="Content\bootstrap-3.3.7-dist\fonts\" />
     <Folder Include="Content\css_app\" />
     <Folder Include="Content\images\statusico\" />
@@ -2003,6 +1996,7 @@
     <Folder Include="Content\pingmiantu\P9\" />
     <Folder Include="Content\pingmiantu_app\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2014,8 +2008,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBProject\DAL\DAL.csproj">
@@ -2025,6 +2017,14 @@
     <ProjectReference Include="..\DBProject\IDAO\IDAO.csproj">
       <Project>{ba224f68-664a-4222-b812-6735c9c565fa}</Project>
       <Name>IDAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YWWeb.Lib\EnergyManage\EnergyManage.csproj">
+      <Project>{2c9bb83a-7610-4381-9734-a45877e03a47}</Project>
+      <Name>EnergyManage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YWWeb.Lib\YWWeb.Lib.Base\YWWeb.Lib.Base.csproj">
+      <Project>{e93a1cac-e91c-4c76-b56b-dcfbbafffb50}</Project>
+      <Name>YWWeb.Lib.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

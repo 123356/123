@@ -14,13 +14,19 @@ namespace DAL
 
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         static VRealTimeDataDAL _DataDal;
+        static readonly object _loker = new object();
         public static VRealTimeDataDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new VRealTimeDataDAL();
+                lock (_DataDal)
+                {
+                    if (null == _DataDal)
+                    {
+                        _DataDal = new VRealTimeDataDAL();
+                    }
+                }
             }
-
             return _DataDal;
         }
 

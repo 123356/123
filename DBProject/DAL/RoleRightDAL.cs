@@ -12,12 +12,17 @@ namespace DAL
     public class RoleRightDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
+        static readonly object _loker = new object();
         static RoleRightDAL _DataDal;
         public static RoleRightDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
-                _DataDal = new RoleRightDAL();
+                lock (_loker)
+                {
+                    if (null == _DataDal)
+                        _DataDal = new RoleRightDAL();
+                }
             }
 
             return _DataDal;
