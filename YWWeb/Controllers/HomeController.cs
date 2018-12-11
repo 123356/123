@@ -136,6 +136,56 @@ namespace YWWeb.Controllers
         {
             try
             {
+                int errCode;
+                IDAO.Models.t_CM_UserInfo userinfo = LoginManager.Login(username, UserPassWord,this.ControllerContext, out errCode);
+                if (null != userinfo)
+                {
+                    if (userinfo.IsScreen == 0)//启用
+                    {
+                        //string sID = list[0].UserID + "hy" + Session.SessionID;
+                        string sID = Session.SessionID;
+                        //IDAO.Models.t_CM_UserInfo userinfo = list[0];
+                        if (userinfo.RoleID == 1)
+                            userinfo.UNITList = GetAllUnit();
+                        Session[sID] = userinfo;
+                        //添加登录信息
+                        string strsql = "delete from t_CM_UserLogin where username='" + username + "';insert into t_CM_UserLogin values ('" + username + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + sID + "');";
+                        bll.ExecuteStoreCommand(strsql, null);
+                        //log
+                        Common.InsertLog("用户登录", username, "用户登录[" + username + "]");
+
+
+                        //保存登陆成功的令牌
+                        string Guid_str = "";
+                        //分配一个唯一标识符
+                        Guid_str = Guid.NewGuid().ToString();
+                        Response.Cookies["GUID"].Value = Guid_str;
+                        HttpContext.Application[userinfo.UserID + "_GUID"] = Guid_str;
+
+                        return Content(sID);
+                    }
+                    else
+                    {
+                        return Content("此用户已屏蔽请联系管理！");
+                    }
+                }
+                else
+                {
+                    if (-1 == errCode)
+                        return Content("系统正在维护，暂时不能访问！(code:000074)"); // Content("未检测到加密狗，请联系系统管理员！");
+                    return Content("用户名密码错误！");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.makeLog(ex, "LoginError");
+                return Content(ex.ToString());
+            }
+            #region 稍后删除
+#if false
+            try
+            {
 
                 //判断用户是否登录
                 List<t_CM_UserLogin> listLogin = bll.t_CM_UserLogin.Where(l => l.UserName.ToLower() == username.ToLower()).ToList();
@@ -238,6 +288,8 @@ namespace YWWeb.Controllers
                 LogHelper.makeLog(ex, "LoginError");
                 return Content(ex.ToString());
             }
+#endif
+            #endregion
         }
 
         public ActionResult IsLogin()
@@ -963,29 +1015,29 @@ namespace YWWeb.Controllers
         }
         //根据权限获取下一级功能模块
         //[Login]
-        //public string GetThirdMenuInfo(int mid)
-        //{
-        //    StringBuilder sbMenu = new StringBuilder();
-        //    if (CurrentUser != null)
-        //    {
+        public string GetThirdMenuInfo(int mid)
+        {
+            StringBuilder sbMenu = new StringBuilder();
+            if (CurrentUser != null)
+            {
 
-        //        int UserID = CurrentUser.UserID;
-        //        string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
-        //        //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
-        //        List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
-        //        int count = 0;
-        //        foreach (t_CM_Module model in list)
-        //        {
-        //            count++;
-        //            sbMenu.Append("<li id=\"m" + model.ModuleID + "\"  onclick=\"setIframeUrl('" + model.Location + "'," + model.ModuleID + ");\" ");
-        //            if (count == 1)
-        //                sbMenu.Append(" class=\"current\" ");
-        //            sbMenu.Append(">" + model.ModuleName + "</li>");
-        //        }
-        //        return sbMenu.ToString();
-        //    }
-        //    return "";
-        //}
+                int UserID = CurrentUser.UserID;
+                string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
+                //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
+                List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
+                int count = 0;
+                foreach (t_CM_Module model in list)
+                {
+                    count++;
+                    sbMenu.Append("<li id=\"m" + model.ModuleID + "\"  onclick=\"setIframeUrl('" + model.Location + "'," + model.ModuleID + ");\" ");
+                    if (count == 1)
+                        sbMenu.Append(" class=\"current\" ");
+                    sbMenu.Append(">" + model.ModuleName + "</li>");
+                }
+                return sbMenu.ToString();
+            }
+            return "";
+        }
         [Login]
         public string CurrentUserName()
         {
@@ -1078,7 +1130,7 @@ namespace YWWeb.Controllers
             var reslut = bll.ExecuteStoreQuery<pdfcharts>(sql);
             return Json(reslut);
         }
-        #region 用户地图
+#region 用户地图
         [Login]
         public ActionResult UnitListData()
         {
@@ -1296,7 +1348,7 @@ namespace YWWeb.Controllers
             return Json(unit);
         }
 
-        #endregion
+#endregion
 
         //根据权限获取站室
         public static string GetPID(string UNITList)
@@ -1445,7 +1497,7 @@ namespace YWWeb.Controllers
             }
             return str;
         }
-        #region 前台接口
+#region 前台接口
         /// <summary>
         /// 获取站状态
         /// </summary>
@@ -2939,7 +2991,7 @@ namespace YWWeb.Controllers
             var result = bll.t_DM_DeviceInfo.Where(p => p.PID == pid && p.DTID == dtid).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        #endregion
+#endregion
 
         public ActionResult GetScoreByUID(int uid)
         {

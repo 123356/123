@@ -34,7 +34,7 @@ namespace YWWeb.Lib.Base
                 return;
             base.OnActionExecuting(filterContext);
             //LogHelper.Debug(filterContext.HttpContext.Timestamp.ToString());
-            if (filterContext.HttpContext.Session["Huerinfo"] == null)
+            if (CurrentUser == null)
             {
                 //获取页面设置的单点登录页面
                 //if (ConfigurationManager.AppSettings["SSO"] != null)
@@ -52,11 +52,11 @@ namespace YWWeb.Lib.Base
                         string username = Encrypt.MD5Decrypt2(cookie["appkey"]);
                         string MD5password = Encrypt.MD5Decrypt2(cookie["appu"]);
                         //List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.UserName == username && u.UserPassWord == MD5password).ToList();
-                        List<t_CM_UserInfo> list = UserInfoDAL.getInstance().GetUsers(username, MD5password) as List<t_CM_UserInfo>;
-
-                        if (list.Count > 0)
+                        //List<t_CM_UserInfo> list = UserInfoDAL.getInstance().GetUsers(username, MD5password) as List<t_CM_UserInfo>;
+                        t_CM_UserInfo userInf = LoginManager.Login(username, MD5password, this.ControllerContext, out int errCode);
+                        if (null!= userInf)//(list.Count > 0)
                         {
-                            filterContext.HttpContext.Session["Huerinfo"] = list[0];
+                           // filterContext.HttpContext.Session["Huerinfo"] = list[0];
                             //LogHelper.Debug(username + "--auto login");
                             LogDebug(username + "--auto login");
                             return;
@@ -69,9 +69,9 @@ namespace YWWeb.Lib.Base
                     LogInfo(ex.ToString());
                 }
                 filterContext.HttpContext.Session.RemoveAll();
-                //filterContext.HttpContext.Response.Write("<script language=javascript>top.location.href='/Home/Login';</script>");
+                filterContext.HttpContext.Response.Write("<script language=javascript>top.location.href='/Home/Login';</script>");
                 //filterContext.HttpContext.Response.Redirect("~/Home/Login");
-                filterContext.Result = RedirectToAction("Login","Home",new { area = "" } );
+                //filterContext.Result = RedirectToAction("Login", "Home", new { area = "" });
             }
             else
             {

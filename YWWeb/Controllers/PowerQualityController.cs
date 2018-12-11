@@ -8,12 +8,12 @@ using System.Web.Mvc;
 
 namespace YWWeb.Controllers
 {
-    public class PowerQualityController : Controller
+    public class PowerQualityController : UserControllerBaseEx
     {
         //
         // GET: /PowerQuality/
         pdermsWebEntities bll = new pdermsWebEntities();
-        LoginAttribute loginbll = new LoginAttribute();
+        //LoginAttribute loginbll = new LoginAttribute();
         [Login]
         public ActionResult Index()
         {

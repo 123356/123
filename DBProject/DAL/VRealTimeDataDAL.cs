@@ -19,7 +19,7 @@ namespace DAL
         {
             if (null == _DataDal)
             {
-                lock (_DataDal)
+                lock (_loker)
                 {
                     if (null == _DataDal)
                     {

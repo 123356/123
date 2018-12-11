@@ -38,6 +38,7 @@ namespace YWWeb.Controllers
         [Login]
         public ActionResult DeviceList()
         {
+            ViewData["userid"] = CurrentUser.UserID;
             return View();
         }
         [Login]

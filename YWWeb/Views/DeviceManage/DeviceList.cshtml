@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "设备列表";
-    YWWeb.Controllers.LoginAttribute loginbll = new YWWeb.Controllers.LoginAttribute();
 }
 <!DOCTYPE html>
 <html>
@@ -74,7 +73,7 @@
     </div>
     <script type="text/javascript">
 
-        var uid = @loginbll.CurrentUser.UserID;
+        var uid = @ViewData["userid"];
 
     </script>
     <script src="~/Content/UserJS/DeviceList._jm.js"></script>

@@ -297,8 +297,6 @@
     <Compile Include="PubClass\ExportExcel.cs" />
     <Compile Include="PubClass\HttpUtils.cs" />
     <Compile Include="PubClass\JsonHelper.cs" />
-    <Compile Include="PubClass\LibLicenseEx.cs" />
-    <Compile Include="PubClass\LogHelper.cs" />
     <Compile Include="PubClass\OrderRecord.cs" />
     <Compile Include="PubClass\RowCount.cs" />
     <Compile Include="PubClass\SQLHelper.cs" />

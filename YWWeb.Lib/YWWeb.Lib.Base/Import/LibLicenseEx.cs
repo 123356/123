@@ -5,7 +5,7 @@ using System.Web;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace YWWeb.PubClass
+namespace YWWeb.Import
 {
     public class LibLicenseEx
     {
