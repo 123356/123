@@ -45,6 +45,19 @@ namespace DAL
             }
             return data;
         }
-        
+        public IList<t_V_RealTimeData> GetRealTimeData_linq(int pageSize, int nPage, int pid, int cid, int tdid, int did)
+        {
+            IList<t_V_RealTimeData> data = new List<t_V_RealTimeData>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
+            try
+            {
+                data = _dbFactory.vRealTimeData.GetRealTimeData_linq(pageSize, nPage, pid, cid, tdid, did);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
     }
 }
