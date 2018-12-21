@@ -140,7 +140,7 @@
 
         <div id="w" class="easyui-window" title="提示" collapsible="false" minimizable="false" maximizable="false" closable="false" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:400px;height:100px;padding:10px;">
             <div class="tips_content" style="position: absolute;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);">
-                暂不支持此浏览器,请使用Firefox浏览器登录！
+                暂不支持此浏览器,请使用Firefox或chrome浏览器登录！
             </div>
         </div>
     </body>
@@ -148,7 +148,7 @@
         //获取当前的浏览器信息
         var sys = getBrowserInfo();
         //sys.browser得到浏览器的类型，sys.ver得到浏览器的版本
-        if (sys.browser != 'firefox' && sys.browser != 'msie') {
+        if (sys.browser != 'firefox'&& sys.browser != 'chrome') {
             //alert("当前浏览器不支持，当前浏览器为：" + sys.browser + "，版本：" + sys.ver)
             //$('#editwin').window({
             //    modal: true,
