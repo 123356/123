@@ -25,7 +25,12 @@ namespace DAO
 
         public IList<t_CM_DeviceTypeComBox> GetRealTimeComboxData(int pid, int DID = -1)
         {
-            string query = "select  DTID,Name  from t_CM_DeviceType where DTID in (select distinct DTID from t_DM_DeviceInfo where PID=" + pid;
+            string query = "select  DTID,Name  from t_CM_DeviceType where DTID in (select distinct DTID from t_DM_DeviceInfo WHERE 1=1" ;
+            if (pid>0)
+            {
+                query += " and PID=" + pid;
+            }
+           
             if (DID > 0)
             {
                 query += " and DID=" + DID;

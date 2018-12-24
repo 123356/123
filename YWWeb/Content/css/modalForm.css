@@ -1,0 +1,340 @@
+﻿.iviewModal form{
+    padding:10px
+}
+.iviewModal .ivu-modal-body{
+	
+}
+.iviewModal form .ivu-input{
+    height:30px !important;
+    width:160px !important
+}
+.iviewModal form .moneyInput input{
+     width:140px !important
+}
+.iviewModal form table{
+    width:100%
+}
+.iviewModal form .ivu-select{
+    width:160px !important
+}
+.iviewModal form .ivu-select-single .ivu-select-selection{
+    height:30px !important
+}
+
+
+
+.iviewModal form td{
+    padding:15px 0px;
+    border-bottom:1px solid #f1f2f4
+}
+
+.iviewModal .ivu-select-multiple .ivu-tag {
+
+    height: 22px;
+    line-height: 22px;
+    margin: 2px 2px 2px 0;
+
+}
+.iviewModal .ivu-input-number-input{
+    height:30px !important;
+    line-height:30px !important
+}
+.iviewModal .btnTd{
+    border-bottom:none;
+    text-align:center
+}
+.iviewModal .btnTd .btn{
+    padding:4px 25px;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-size:12px;
+    border-radius: 1px;
+    box-shadow: 1px 2px 2px #ccc;
+    margin-right:10px
+}
+.iviewModal .btnTd .okBtn{
+    background:#5bb09d;
+}
+.iviewModal .btnTd .cancelBtn{
+    background:#c0c0c0;
+}
+.iviewModal .ivu-form-item{
+    margin-bottom:0
+}
+.iviewModal .ivu-form .ivu-form-item-label{
+    color:#666;
+    font-weight:500
+}
+.iviewModal .rightDatePicker .ivu-select-dropdown{
+    left:-60px !important
+}
+.iviewModal .daterange  .ivu-input{
+    width:232px !important
+}
+.satrtAndEndLable .ivu-form-item-label{
+    width:160px !important
+}
+.noBottomBorder td{
+    border-bottom:none !important
+}
+.nopaddingTop td{
+    padding-top:0 !important
+}
+.iviewModal .ivu-table th{
+    height:30px;
+    text-align:center
+}
+.iviewModal .module{
+    padding:10px
+}
+.iviewModal .module .title{
+    color: #4d4d4d;
+    font-size: 15px;
+    font-weight: 600;
+    padding-bottom:10px;
+   
+}
+.iviewModal .module .ivu-table-wrapper{
+    margin-bottom:10px
+}
+.iviewModal .module .ivu-btn{
+    border:none;
+   
+}
+.iviewModal .ivu-upload-list{
+    float: left;
+    margin-top: -2px;
+}
+.iviewModal .ivu-upload-list-file > span{
+    color: #666 !important;
+    font-size: 12px;
+
+}
+.iviewModal .ivu-upload-list .ivu-upload-list-file{
+    display:none
+}
+.iviewModal .ivu-upload-list .ivu-upload-list-file:last-child{
+    display:inline-block
+}
+.showList{
+    overflow:hidden
+}
+.showList .ivu-upload-list .ivu-upload-list-file{
+    display:block
+}
+.showList .ivu-upload-list{
+    float:none;
+    margin-top:10px;
+    height:120px;
+    width:108%;
+    overflow-y:auto;
+    text-align:left;
+    margin-left:5px
+}
+.iviewModal .uploadBtn{
+    background: #5ab19e;
+    color: #fff;
+    border-radius: 14px;
+    
+    padding:4px 12px;
+    border:none
+}
+.iviewModal .ivu-upload-list-file > span i{
+    margin-top:-4px
+}
+.iviewModal .moduleFooter,.hintModal .moduleFooter{
+    padding:10px 0px 30px 0px;
+    text-align:center
+}
+.iviewModal .moduleFooter .btn,.hintModal .moduleFooter .btn{
+    padding:4px 25px;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-size:12px;
+    border-radius: 1px;
+    box-shadow: 1px 2px 2px #ccc;
+    margin-right:10px
+}
+
+.iviewModal .moduleFooter .okBtn,.hintModal .moduleFooter .okBtn{
+    background:#5bb09d;
+}
+.iviewModal .moduleFooter .cancelBtn,.hintModal .moduleFooter .cancelBtn{
+    background:#c0c0c0;
+}
+.iviewModal .moduleFooter .delBtn{
+    background:#9f8a7f
+}
+.iviewModal .moduleFooter .approveBtn{
+    background:#eb6f4d
+}
+
+iviewModal .ivu-btn, .ivu-btn:active, .ivu-btn:focus{
+    outline:none !important
+}
+
+.editMatterModal .ivu-modal-body{
+    
+    height:780px;
+    
+}
+@media screen and (max-width: 1500px) {
+   .editMatterModal .ivu-modal-body{
+        max-height:450px !important
+    }
+}
+.iviewModal .longForm  .ivu-input{
+    width:445px !important
+}
+ .longForm .ivu-select{
+    width:445px !important
+}
+ .lastOperation{
+     text-align:right;
+     font-size:1rem
+ }
+.iviewModal .resonText textarea{
+    width:470px !important;
+    background:#f5f5f5;
+    border:none;
+    color:#333;
+    font-size:1.2rem
+}
+.iviewModal .historyInfo{
+    padding:10px;
+    text-align:left;
+    line-height:24px;
+    font-size:1.2rem;
+    margin-top:5px;
+    color:#908e8e
+}
+.hintModal .ivu-modal-header{
+    background:#fff;
+    text-align:center;
+    color:#333
+}
+.hintModal .ivu-modal-header p,.hintModal .ivu-modal-header-inner{
+    color:#666
+}
+.hintModal .ivu-modal-body{
+    color:#666;
+    text-align:center;
+    margin-top:10px
+}
+.hintModal .ivu-modal{
+    top:250px
+}
+.hintModal .borderBtn .btn{
+    background:#fff;
+    font-size:1.2rem
+}
+.hintModal .borderBtn{
+    padding:10px 0px;
+}
+.hintModal .stateImg{
+    margin-bottom:10px;
+    width:30px;
+    margin-top:10px
+}
+.hintModal .borderBtn .searchInfo{
+    border:1px solid #5bb09d;
+    padding:3px 15px;
+    color:#5bb09d;
+    border-radius:2px;
+    margin-right:10px
+}
+.hintModal .borderBtn .conApproval{
+    border:1px solid #ff6515;
+    padding:3px 15px;
+    color:#ff6515;
+    border-radius:2px
+}
+.hintModal .moduleFooter{
+    padding:0px 0px 10px 0px
+}
+.hintModal .form{
+    margin-top:10px;
+    padding:0px 15px
+}
+.successMOdal .hintInfo{
+    margin-left:5px;
+    line-height:30px
+}
+.successMOdal .moduleFooter{
+    margin-top:5px
+}
+.successMOdal .hintCon{
+    padding-top:10px
+}
+.successMOdal .moduleFooter .btn{
+    padding:3px 10px;
+    font-size:1.1rem
+}
+.successMOdal .moduleFooter .searchDatailBtn{
+    background:#5bb09b
+}
+.successMOdal .moduleFooter .backMatterBtn{
+    background:#e59c69 
+}
+.iviewModal table .title td{
+    padding:0px 0px 12px 0px;
+    font-size:1.3rem;
+    font-weight:bold
+}
+.iviewModal table .title td .titleIcon{
+    width:15px;
+    margin-right:5px;
+    margin-top:-2px
+}
+.iviewModal table td .dec{
+    color:#999 !important;
+    margin-left:5px;
+    font-size:1.2rem;
+    font-weight:normal
+}
+.iviewModal form  .col2Select .ivu-select{
+    width:500px !important
+}
+.iviewModal form .textareaWidth100 .ivu-input{
+    width:100% !important
+}
+.editProjectModal .ivu-modal{
+    top:20px !important
+}
+.editProjectModal .ivu-modal-body{
+    height:790px
+
+}
+.getLocationBtn{
+    background:#4ab89b;
+    color:#fff;
+    padding:4px 10px;
+    border-radius:14px;
+    font-size:1.2rem
+}
+.getLocationBtn:hover{
+    color:#fff
+}
+.getLocationBtn:active{
+    text-decoration:none
+}
+.ivu-table-cell{
+    padding-left:0px !important;
+    padding-right:0px !important
+}
+.ivu-table td{
+    cursor:pointer
+} 
+
+.ivu-table td, .ivu-table th{
+    height:auto;
+    padding:6px 2px;
+    font-size:1.2rem !important
+    
+}
+.iviewModal .ivu-table td, .ivu-table th{
+    height:auto;
+    padding:6px 5px
+}

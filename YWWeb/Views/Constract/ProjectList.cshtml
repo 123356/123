@@ -1,0 +1,282 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>项目列表</title>
+    
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.0">
+    <link rel="stylesheet" href="~/Content/css/projectOverview.css?v=1.02" />
+    <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.05" />
+    <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
+    
+</head>
+<body>
+   <div id="projectList">
+       <div class="searchForm">
+          
+                   <i-form ref="searchForm" model="searchForm" label-width="80" >
+                       <table>
+                           <tr>
+                               <td>
+                                   <form-item label="合同名称">
+                                       <i-input type="text" v-model="searchForm.proNam" class=""></i-input>
+                                   </form-item>
+                               </td>
+                               <td>
+                                   <form-item label="项目类型">
+                                       <i-select v-model="searchForm.type">
+                                           <i-option value="">全部</i-option>
+                                           <i-option v-for="item in proType" :value="item.id" :key="item.id">{{item.Type}}</i-option>
+                                       </i-select>
+                                   </form-item>
+                               </td>
+                               <td>
+                                   <form-item label="项目区域" >
+                                       <i-select v-model="searchForm.areaid">
+                                           <i-option value="">全部</i-option>
+                                           <i-option v-for="item in proRegionData" :value="item.cityID" :key="item.cityID">{{item.cityName}}</i-option>
+                                           
+                                       </i-select>
+                                   </form-item>
+                               </td>
+                               <td>
+                                   <form-item label="创建时间" >
+                                       <date-picker type="date" class="rightDatePicker" v-model="searchForm.creatTime "></date-picker>
+                                   </form-item>
+                               </td>
+                           </tr>
+                       </table>
+                   </i-form>
+              
+               
+                   <div class="btnView">
+                       <i-button  v-for="item in userButton" class="btn" v-on:click="handleClick(item.event)">
+                           <img v-bind:src="item.icon" />
+                           {{item.title}}
+                       </i-button>
+                   </div>
+                   <div id="tempUserBtn"  style="display:none"></div>
+                   
+          
+           
+       </div>
+       <div class="tableView" style="clear:both">
+
+           <!--<i-table border  :columns="projectCol" :data="projectData" style="width:100%;"></i-table>-->
+           <i-table  ref="selection" :columns="projectCol" :data="projectData" style="width:100%;" :height="tableHeihgt" 
+                    :loading="tableLoading"
+                    v-on:on-select="onSelect"
+                    v-on:on-select-cancel="selectCancel"
+                    v-on:on-select-all="selectAll"
+                    v-on:on-select-all-cancel="selectAllCancel"
+                    v-on:on-row-click="rowClick">
+
+           </i-table>
+       </div>
+       <div class="pageView">
+           <Page :total="page.total" show-elevator show-sizer show-total
+                 :page-size="page.size"
+                 :page-size-opts="[20,50,80,100]"
+                 :current="page.curPage"
+                 v-on:on-page-size-change="sizeChange"
+                 v-on:on-change="pageChange"
+                 />
+       </div>
+       <!--新增-->
+       <Modal v-model="editVisible" class="iviewModal editMatterModal editProjectModal" title="新增项目" mask="true" width="800" inline
+              :scrollable="true"
+              :footer-hide="true"
+              :mask-closable="false"
+              v-on:on-visible-change="editVisibleChange"
+            
+              :draggable="false">
+               <i-form ref="editForm" :model="editForm" :rules="rules" label-width="90">
+                   <table>
+                       <tr class="title">
+                           <td colspan="3"><img src="~/Content/images/project/projectInfo.png" class="titleIcon" />项目信息</td>
+                       </tr>
+                       <tr class="noBottomBorder">
+                           <td>
+                               <form-item prop="ProjectName" label="项目名称">
+                                   <i-input typeof="text" placeholder="请输入信息" v-model="editForm.ProjectName" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="Type" label="项目类型">
+                                   <i-select v-model="editForm.Type" :disabled="isCheck">
+                                       <i-option v-for="item in proType" :value="item.id" :key="item.id" >{{item.Type}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="ConNo" label="项目编号">
+                                   <i-input typeof="text" placeholder="请输入信息" v-model="editForm.ConNo" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                       </tr>
+                       <tr class="noBottomBorder nopaddingTop">
+
+                           <td>
+                               <form-item prop="ConMoneys" label="合同金额" class="moneyView">
+                                   <i-input typeof="text" placeholder="请输入金额" v-model="editForm.ConMoneys" :disabled="isCheck"></i-input>
+                                   <label class="dw">万元</label>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item label="结算金额" class="moneyView">
+                                   <i-input typeof="text" placeholder="请输入金额" v-model="editForm.AmountMoney" :disabled="isCheck"></i-input>
+                                   <label class="dw">万元</label>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="end_time" label="竣工日期">
+                                   <date-picker type="date" class="rightDatePicker" v-model="editForm.end_time" :disabled="isCheck"></date-picker>
+                               </form-item>
+                           </td>
+                           
+                       </tr>
+                       <tr class="noBottomBorder nopaddingTop">
+                           <td>
+                               <form-item prop="CtrName" label="合同名称">
+                                   <i-input typeof="text" placeholder="请输入合同名称" v-model="editForm.CtrName" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="Adress" label="项目地址">
+                                   <i-input typeof="text" placeholder="请输入地址" v-model="editForm.Adress" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                           <td valign="middle" >
+
+                               <form-item prop="Coordination">
+                                   <a slot="label" href="~/Content/GetMap/getMapPointXY.html" target="_blank" class="getLocationBtn">获取坐标</a>
+                                   <i-input typeof="text" placeholder="如(113.19|22.23)" v-model="editForm.Coordination" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                           
+                       </tr>
+                       <tr class="noBottomBorder nopaddingTop">
+                           <td>
+                               <form-item prop="UnitCity" label="项目区域">
+                                   <i-select v-model="editForm.UnitCity" :disabled="isCheck">
+                                       <i-option v-for="item in proRegionData" :value="item.cityID" :key="item.cityID">{{item.cityName}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="Personid" label="客户经理">
+                                   <i-select v-model="editForm.Personid" v-on:on-change="selectChange" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="BudgetUser" label="预算专员">
+                                   <i-select v-model="editForm.BudgetUser" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                           
+                       </tr>
+                       <tr  class="noBottomBorder nopaddingTop">
+                           <td>
+                               <form-item prop="ProjectManager" label="工程经理">
+                                   <i-select v-model="editForm.ProjectManager" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                       </tr>
+                       <tr class="title">
+                           <td colspan="3"><img src="~/Content/images/project/peopleInfo.png" class="titleIcon" />人员信息</td>
+                       </tr>
+                       <tr class="noBottomBorder">
+                           <td>
+                               <form-item prop="UID" label="客户名称">
+                                   <i-select v-model="editForm.UID" v-on:on-change="selectChange" :disabled="isCheck">
+                                       <i-option v-for="item in ctrList" :value="item.UnitID" :key="item.UnitID" >{{item.UnitName}}</i-option>
+                                   </i-select>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="LinkMan" label="客户联系人">
+                                   <i-input typeof="text" placeholder="请输入联系人" v-model="editForm.LinkMan" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                           <td>
+                               <form-item prop="Tel" label="联系电话">
+                                   <i-input typeof="text" placeholder="请输入联系电话" v-model="editForm.Tel" :disabled="isCheck"></i-input>
+                               </form-item>
+                           </td>
+                       </tr>
+                       
+                       <tr class="title">
+                           <td colspan="2"><img src="~/Content/images/project/peopleInfo.png" class="titleIcon" />权限设置</td>
+                       </tr>
+                       <tr class="noBottomBorder col2Select">
+                           <td colspan="3">
+                               <form-item prop="ItemUsers" label="事项管理人">
+                                   <i-select multiple="true" v-model="editForm.ItemUsers" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                                   <label class="dec">可添加编辑删除权限</label>
+                               </form-item>
+                           </td>
+                       </tr>
+                       <tr class="noBottomBorder nopaddingTop col2Select">
+                           <td colspan="3">
+                               <form-item prop="Personids" multiple label="事项抄送人">
+                                   <i-select multiple="true" v-model="editForm.Personids" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                                   <label class="dec">默认的领导</label>
+                               </form-item>
+                           </td>
+                       </tr>
+                       <tr class="noBottomBorder nopaddingTop col2Select">
+                           <td colspan="3">
+                               <form-item prop="Approvers" label="事项审批人">
+                                   <i-select multiple="true" v-model="editForm.Approvers" :disabled="isCheck" filterable>
+                                       <i-option v-for="item in userInfo" :value="item.UserID" :key="item.UserID">{{item.UserName}}</i-option>
+                                   </i-select>
+                                   <label class="dec">确认订单完成的权限</label>
+                               </form-item>
+                           </td>
+                       </tr>
+                       <tr class="title">
+                           <td colspan="3"><img src="~/Content/images/project/conDec.png" class="titleIcon" />合同备注</td>
+                       </tr>
+
+                       <tr class="noBottomBorder ">
+                           <td colspan="3">
+                               <i-input type="textarea" v-model="editForm.CtrInfo" autosize="{minRows:3,maxRows: 5}" placeholder="请输入合同备注信息内容" class="textareaWidth100" :disabled="isCheck"></i-input>
+                           </td>
+                       </tr>
+                       <tr class="moduleFooter  noBottomBorder" style="padding-bottom:0">
+                           <td colspan="3" style="padding-bottom:0">
+                                <button type="button" class="btn okBtn" v-if="!isCheck&&state!='1'&&type!=0" v-on:click="queRenProject">确认完成</button>
+                               <button type="button" class="btn okBtn" v-on:click="editSave()" v-if="!isCheck&&state!='1'">保存</button>
+                               <button type="button" class="btn cancelBtn" v-on:click="shutDown">关闭</button>
+                           </td>
+
+                       </tr>
+                   </table>
+               </i-form>
+               
+        </Modal>
+   
+    <script type="text/javascript" src="~/Content/js/lbyw-base.zc.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ProjectList._zc.js?v=1.02"></script>
+    <script type="text/javascript">
+       
+    </script>
+</body>
+</html>

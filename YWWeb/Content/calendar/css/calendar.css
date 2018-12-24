@@ -1,0 +1,150 @@
+* { margin: 0; padding: 0; }
+body { font-family: "Microsoft Yahei"; font-size: 12px; color: #888; }
+a, a:hover { color: #888; text-decoration: none; }
+ul, li { list-style: none; margin-bottom:0 !important}
+
+.calendar {
+  display: none;
+  width: 100%;
+  padding: 10px;
+  margin: 0px auto 0;
+  background-color: #fff;
+  border-radius: 6px;
+  border:0px !important
+}
+.calendar-title {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  text-align:left;
+ 
+}
+.calendar-title a.title {
+  display: inline-block;
+  font-size: 1.6rem;
+  text-indent: 10px;
+}
+#backToday {
+  position: absolute;
+  margin-left:10px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+  background-color: #31b495;
+  font-size: 1.2rem;
+}
+.calendar-title .arrow {
+  width: 30px;
+  position:absolute;
+  display:inline-block;
+  margin-top:-2px;
+  margin-left:40px;
+  
+}
+.calendar-title .arrow span {
+  color: #ddd;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.calendar-title .arrow span:hover {
+  color: #888;
+}
+.calendar-title .arrow-prev {
+  float: left;
+}
+.calendar-title .arrow-next {
+  float: right;
+}
+.calendar-week,
+.calendar-date {
+  overflow: hidden;
+}
+.calendar-week .item,
+.calendar-date .item {
+  float: left;
+  width: 50px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 1500px) {
+    .calendar-week .item,
+    .calendar-date .item {
+      float: left;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+    }
+
+}
+
+
+
+
+.calendar-week {
+ 
+
+  font-size: 1.2rem;
+}
+.calendar-date {}
+.calendar-date .item {
+  
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.calendar-date .item:hover,
+.calendar-date .item-curMonth:hover {
+  background-color: #f0f0f0;
+}
+.calendar-date .item-curMonth {
+  color: #333;
+  
+}
+.calendar-date .item-curDay,
+.calendar-date .item-curDay:hover {
+  color: #fff;
+  background-color: #31b495;
+}
+.calendar-date .item-selected,
+.calendar-date .item-selected:hover {
+  color: #31b495;
+  background: #cde9d9;
+}
+.calendar-today {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 90px;
+  height: 48px;
+  padding: 6px 10px;
+  background-color: #31b495;
+  border-radius: 5px;
+}
+.calendar-today .triangle {
+  position: absolute;
+  top: 50%;
+  left: -16px;
+  margin-top: -8px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent #38b097 transparent transparent;
+}
+.calendar-today p {
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 24px;
+}
