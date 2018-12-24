@@ -230,7 +230,6 @@
           <Property Name="UnitCity" Type="varchar" MaxLength="20" />
           <Property Name="personid" Type="int" />
           <Property Name="personids" Type="nvarchar" MaxLength="255" />
-          <Property Name="Isaccomplish" Type="int" />
           <Property Name="Coordination" Type="nvarchar" MaxLength="255" />
           <Property Name="Approvers" Type="nvarchar" MaxLength="255" />
           <Property Name="ItemUsers" Type="nvarchar" MaxLength="255" />
@@ -239,7 +238,8 @@
           <Property Name="ConMoneys" Type="numeric" Precision="18" Scale="1" />
           <Property Name="Adress" Type="nvarchar" MaxLength="255" />
           <Property Name="ReturnedMoney" Type="numeric" Precision="18" Scale="1" />
-          <Property Name="AmountMoney" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="AmountMoney" Type="numeric" Precision="18" Scale="1" />
+          <Property Name="Isaccomplish" Type="int" />
         </EntityType>
         <EntityType Name="t_CM_Constract_File">
           <Key>
@@ -511,6 +511,7 @@
           <Property Name="UseState" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
           <Property Name="Coordination" Type="varchar" MaxLength="50" />
+          <Property Name="CoordinationTime" Type="datetime" />
           <Property Name="AppCoordination" Type="nvarchar" MaxLength="50" />
           <Property Name="AlarmState" Type="int" />
           <Property Name="PIP" Type="nchar" MaxLength="20" />
@@ -541,7 +542,6 @@
           <Property Name="OperationTel" Type="varchar" MaxLength="255" />
           <Property Name="ApplcationTime" Type="datetime" />
           <Property Name="isUpload" Type="int" />
-          <Property Name="CoordinationTime" Type="datetime" />
           <Property Name="building_type" Type="int" />
           <Property Name="build_year" Type="datetime" />
           <Property Name="build_floor" Type="smallint" />
@@ -894,7 +894,7 @@
           <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_DE_Report”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_DE_Report”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_DE_Report">
           <Key>
             <PropertyRef Name="Xuhao" />
@@ -965,7 +965,7 @@
           <Property Name="number" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_DM_CircuitAnalysis”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_DM_CircuitAnalysis”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_DM_CircuitAnalysis">
           <Key>
             <PropertyRef Name="ID" />
@@ -981,7 +981,7 @@
           <Property Name="tagid" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_DM_CircuitGradeType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_DM_CircuitGradeType”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_DM_CircuitGradeType">
           <Key>
             <PropertyRef Name="ID" />
@@ -1019,9 +1019,9 @@
           <Property Name="collect_cld" Type="int" />
           <Property Name="collect_lastTime" Type="datetime" />
           <Property Name="RatedCapacity" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="State" Type="int" />
           <Property Name="UpDateTime" Type="datetime" />
           <Property Name="ener_use_type" Type="int" />
+          <Property Name="State" Type="int" />
         </EntityType>
         <EntityType Name="t_DM_CircuitType">
           <Key>
@@ -1158,7 +1158,7 @@
           <Property Name="RecordDate" Type="datetime" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_EE_PowerConfigInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_EE_PowerConfigInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_EE_PowerConfigInfo">
           <Key>
             <PropertyRef Name="id" />
@@ -1340,6 +1340,7 @@
           <Property Name="cid" Type="nvarchar" MaxLength="1255" />
           <Property Name="cid_type_id" Type="int" />
           <Property Name="subtractCid" Type="nvarchar" MaxLength="255" />
+          <Property Name="isUpload" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="t_ES_Category">
           <Key>
@@ -1391,13 +1392,13 @@
           <Property Name="Subcontractors" Type="varchar" MaxLength="255" />
           <Property Name="Isemphasis" Type="int" />
           <Property Name="emphasisName" Type="varchar" MaxLength="255" />
-          <Property Name="PeopleCopied" Type="varchar" MaxLength="255" />
-          <Property Name="Reason" Type="varchar" MaxLength="255" />
           <Property Name="numberConstruction" Type="int" />
+          <Property Name="TomorrowWork" Type="nvarchar" MaxLength="255" />
           <Property Name="FistDate" Type="datetime" />
-          <Property Name="TomorrowWork" Type="varchar" MaxLength="255" />
           <Property Name="ConstructionContent" Type="varchar" MaxLength="255" />
           <Property Name="IsiNvoice" Type="int" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+          <Property Name="PeopleCopied" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="t_ES_ContractUsePlan">
           <Key>
@@ -1674,6 +1675,20 @@
           <Property Name="PID" Type="int" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="t_PM_OneGraph">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PID" Type="int" />
+          <Property Name="OrderNo" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="Path" Type="nvarchar" MaxLength="255" />
+          <Property Name="IP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Port" Type="nvarchar" MaxLength="255" />
+          <Property Name="Account" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="t_PM_Order">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -1716,9 +1731,10 @@
           <Property Name="RejectReason" Type="varchar" MaxLength="255" />
           <Property Name="sTemplateIDs" Type="varchar" MaxLength="1000" />
           <Property Name="sTemplateCount" Type="varchar" MaxLength="1000" />
+          <Property Name="Subcontract" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_PM_Order_DressCode”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_PM_Order_DressCode”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_PM_Order_DressCode">
           <Key>
             <PropertyRef Name="ID" />
@@ -1866,7 +1882,7 @@
           <Property Name="Field5" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_SM_HisData_00001”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_SM_HisData_00001”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_SM_HisData_00001">
           <Key>
             <PropertyRef Name="RecTime" />
@@ -1881,7 +1897,7 @@
           <Property Name="AlarmLimits" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_SM_InfraredPic”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.t_SM_InfraredPic”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_SM_InfraredPic">
           <Key>
             <PropertyRef Name="ID" />
@@ -1959,7 +1975,7 @@
           <Property Name="proName" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_Alarm_PDRInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_Alarm_PDRInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_Alarm_PDRInfo">
           <Key>
             <PropertyRef Name="AlarmID" />
@@ -1990,7 +2006,7 @@
           <Property Name="LinkMobile" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_AlarmSetting”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_AlarmSetting”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_AlarmSetting">
           <Key>
             <PropertyRef Name="TagID" />
@@ -2014,7 +2030,7 @@
           <Property Name="Updater" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_DeviceDetail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_DeviceDetail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_DeviceDetail">
           <Key>
             <PropertyRef Name="DID" />
@@ -2092,7 +2108,7 @@
           <Property Name="MajorLevel" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_DeviceInfoState_PDR1”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_DeviceInfoState_PDR1”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_DeviceInfoState_PDR1">
           <Key>
             <PropertyRef Name="DID" />
@@ -2126,7 +2142,7 @@
           <Property Name="中文描述" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_Order_PdrInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_Order_PdrInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_Order_PdrInfo">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -2169,7 +2185,7 @@
           <Property Name="BugDesc" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_PointClassify”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_PointClassify”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_PointClassify">
           <Key>
             <PropertyRef Name="ID" />
@@ -2185,7 +2201,7 @@
           <Property Name="RecordTime" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_Points_Contrast”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_Points_Contrast”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_Points_Contrast">
           <Key>
             <PropertyRef Name="TagID" />
@@ -2239,7 +2255,7 @@
           <Property Name="zonename" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_PointsAllInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_PointsAllInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_PointsAllInfo">
           <Key>
             <PropertyRef Name="TagID" />
@@ -2296,7 +2312,7 @@
           <Property Name="DeviceCode1" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_PointsInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_PointsInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_PointsInfo">
           <Key>
             <PropertyRef Name="TagID" />
@@ -2320,7 +2336,7 @@
           <Property Name="Units" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_RealTimeData_All”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_RealTimeData_All”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_RealTimeData_All">
           <Key>
             <PropertyRef Name="RecTime" />
@@ -2335,7 +2351,7 @@
           <Property Name="AlarmLimits" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_RealTimeData_dts”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_RealTimeData_dts”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_RealTimeData_dts">
           <Key>
             <PropertyRef Name="tagid" />
@@ -2361,7 +2377,7 @@
           <Property Name="PStyle" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.V_WarmSetting”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.V_WarmSetting”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_WarmSetting">
           <Key>
             <PropertyRef Name="TagID" />
@@ -2385,7 +2401,7 @@
           <Property Name="Updater" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00001_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00001_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00001_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2409,7 +2425,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00002_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00002_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00002_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2433,7 +2449,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00003_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00003_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00003_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2457,7 +2473,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00004_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00004_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00004_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2481,7 +2497,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00005_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00005_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00005_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2505,7 +2521,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00006_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00006_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00006_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2529,7 +2545,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00007_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00007_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00007_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2553,7 +2569,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00008_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00008_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00008_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2577,7 +2593,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00009_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00009_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00009_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2601,7 +2617,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00010_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00010_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00010_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2625,7 +2641,7 @@
           <Property Name="报警限值" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.配电房_00011_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“yw_db_order.dbo.配电房_00011_历史数据表”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="配电房_00011_历史数据表">
           <Key>
             <PropertyRef Name="记录时间" />
@@ -2760,6 +2776,7 @@
           <EntitySet Name="t_ES_UserUsePowerMonthly" EntityType="Self.t_ES_UserUsePowerMonthly" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_ES_UserUsePowerYearly" EntityType="Self.t_ES_UserUsePowerYearly" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_PM_EmergencyPlan" EntityType="Self.t_PM_EmergencyPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_PM_OneGraph" EntityType="Self.t_PM_OneGraph" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_PM_Order" EntityType="Self.t_PM_Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_PM_Order_Info" EntityType="Self.t_PM_Order_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_PM_Order_InfoRecord" EntityType="Self.t_PM_Order_InfoRecord" Schema="dbo" store:Type="Tables" />
@@ -3591,7 +3608,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_EE_PowerReportConfig" EntityType="YWModel.t_EE_PowerReportConfig" />
           <EntitySet Name="t_ES_PowerUseCategory" EntityType="YWModel.t_ES_PowerUseCategory" />
           <EntitySet Name="t_CM_Constract" EntityType="YWModel.t_CM_Constract" />
-          <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
           <EntitySet Name="t_ES_ContractTemplet" EntityType="YWModel.t_ES_ContractTemplet" />
           <EntitySet Name="t_EE_PowerConfigInfo" EntityType="YWModel.t_EE_PowerConfigInfo" />
           <EntitySet Name="t_CM_Unit" EntityType="YWModel.t_CM_Unit" />
@@ -3619,6 +3635,8 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_CM_UnitScore" EntityType="YWModel.t_CM_UnitScore" />
           <EntitySet Name="t_CM_ItemOperationLog" EntityType="YWModel.t_CM_ItemOperationLog" />
           <EntitySet Name="t_CM_ShopTruck" EntityType="YWModel.t_CM_ShopTruck" />
+          <EntitySet Name="t_PM_OneGraph" EntityType="YWModel.t_PM_OneGraph" />
+          <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
         </EntityContainer>
         <EntityType Name="t_AlarmTable_en">
           <Key>
@@ -4485,15 +4503,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="ApplcationTime" Type="DateTime" Precision="3" />
           <Property Name="isUpload" Type="Int32" />
           <Property Name="CoordinationTime" Type="DateTime" Precision="3" />
-          <Property Name="building_type" Type="Int32" />
-          <Property Name="build_year" Type="DateTime" Precision="3" />
-          <Property Name="build_floor" Type="Int16" />
-          <Property Name="build_func" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="build_area" Type="Double" />
-          <Property Name="heating_area" Type="Double" />
-          <Property Name="cool_area" Type="Double" />
-          <Property Name="build_cool_type" Type="Int32" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="t_CM_BugInfo">
           <Key>
             <PropertyRef Name="BugID" />
@@ -5099,6 +5109,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="sTemplateIDs" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="sTemplateCount" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="CtrPlanDate" Type="DateTime" Precision="3" />
+          <Property Name="Subcontract" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="t_SM_AlarmMsg_BadOutBox">
           <Key>
@@ -5598,6 +5609,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="cid" Type="String" MaxLength="1255" FixedLength="false" Unicode="true" />
           <Property Name="subtractCid" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="cid_type_id" Type="Int32" />
+          <Property Name="isUpload" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="t_ES_PowerUseCategory">
           <Key>
@@ -5635,7 +5647,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="UnitCity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="personid" Type="Int32" />
           <Property Name="personids" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Isaccomplish" Type="Int32" />
           <Property Name="Coordination" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Approvers" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ItemUsers" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -5644,41 +5655,8 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="ConMoneys" Type="Decimal" Precision="18" Scale="1" />
           <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ReturnedMoney" Type="Decimal" Precision="18" Scale="1" />
-          <Property Name="AmountMoney" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="t_DM_CircuitInfo">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CID" Type="Int32" Nullable="false" />
-          <Property Name="CName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PID" Type="Int32" Nullable="false" />
-          <Property Name="DID" Type="Int32" />
-          <Property Name="TID" Type="Int32" />
-          <Property Name="TagIDs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="AreaType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ItemType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="GradeType" Type="Int32" />
-          <Property Name="ParentID" Type="Int32" />
-          <Property Name="MetersID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LineNumber" Type="Int32" />
-          <Property Name="MultipleRate" Type="Int32" />
-          <Property Name="ElecIndustryID" Type="Int32" />
-          <Property Name="device_type" Type="Int32" />
-          <Property Name="collect_port" Type="Int32" />
-          <Property Name="collect_jzqno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="collect_gy" Type="Int32" />
-          <Property Name="collect_baud" Type="Int32" />
-          <Property Name="collect_cjq" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="collect_period" Type="Int32" />
-          <Property Name="collect_cld" Type="Int32" />
-          <Property Name="collect_lastTime" Type="DateTime" Precision="3" />
-          <Property Name="RatedCapacity" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="State" Type="Int32" />
-          <Property Name="UpDateTime" Type="DateTime" Precision="3" />
-          <Property Name="ener_use_type" Type="Int32" />
+          <Property Name="AmountMoney" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Isaccomplish" Type="Int32" />
         </EntityType>
         <EntityType Name="t_ES_ContractTemplet">
           <Key>
@@ -5704,13 +5682,13 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="Subcontractors" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Isemphasis" Type="Int32" />
           <Property Name="emphasisName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="PeopleCopied" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="numberConstruction" Type="Int32" />
           <Property Name="FistDate" Type="DateTime" Precision="3" />
-          <Property Name="TomorrowWork" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TomorrowWork" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ConstructionContent" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IsiNvoice" Type="Int32" />
+          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PeopleCopied" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="t_EE_PowerConfigInfo">
           <Key>
@@ -6201,6 +6179,54 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="UID" Type="Int32" />
           <Property Name="Coordination" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="DriverTel" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="t_PM_OneGraph">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="OrderNo" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Port" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Account" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="t_DM_CircuitInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CID" Type="Int32" Nullable="false" />
+          <Property Name="CName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="DID" Type="Int32" />
+          <Property Name="TID" Type="Int32" />
+          <Property Name="TagIDs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AreaType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GradeType" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="MetersID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LineNumber" Type="Int32" />
+          <Property Name="MultipleRate" Type="Int32" />
+          <Property Name="ElecIndustryID" Type="Int32" />
+          <Property Name="device_type" Type="Int32" />
+          <Property Name="collect_port" Type="Int32" />
+          <Property Name="collect_jzqno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="collect_gy" Type="Int32" />
+          <Property Name="collect_baud" Type="Int32" />
+          <Property Name="collect_cjq" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="collect_period" Type="Int32" />
+          <Property Name="collect_cld" Type="Int32" />
+          <Property Name="collect_lastTime" Type="DateTime" Precision="3" />
+          <Property Name="RatedCapacity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UpDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ener_use_type" Type="Int32" />
+          <Property Name="State" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -7007,14 +7033,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_PDRInfo">
             <EntityTypeMapping TypeName="YWModel.t_CM_PDRInfo">
               <MappingFragment StoreEntitySet="t_CM_PDRInfo">
-                <ScalarProperty Name="build_cool_type" ColumnName="build_cool_type" />
-                <ScalarProperty Name="cool_area" ColumnName="cool_area" />
-                <ScalarProperty Name="heating_area" ColumnName="heating_area" />
-                <ScalarProperty Name="build_area" ColumnName="build_area" />
-                <ScalarProperty Name="build_func" ColumnName="build_func" />
-                <ScalarProperty Name="build_floor" ColumnName="build_floor" />
-                <ScalarProperty Name="build_year" ColumnName="build_year" />
-                <ScalarProperty Name="building_type" ColumnName="building_type" />
                 <ScalarProperty Name="CoordinationTime" ColumnName="CoordinationTime" />
                 <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="ApplcationTime" ColumnName="ApplcationTime" />
@@ -7694,6 +7712,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_PM_Order">
             <EntityTypeMapping TypeName="YWModel.t_PM_Order">
               <MappingFragment StoreEntitySet="t_PM_Order">
+                <ScalarProperty Name="Subcontract" ColumnName="Subcontract" />
                 <ScalarProperty Name="CtrPlanDate" ColumnName="CtrPlanDate" />
                 <ScalarProperty Name="sTemplateCount" ColumnName="sTemplateCount" />
                 <ScalarProperty Name="sTemplateIDs" ColumnName="sTemplateIDs" />
@@ -8231,6 +8250,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_EE_PowerReportConfig">
             <EntityTypeMapping TypeName="YWModel.t_EE_PowerReportConfig">
               <MappingFragment StoreEntitySet="t_EE_PowerReportConfig">
+                <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="cid_type_id" ColumnName="cid_type_id" />
                 <ScalarProperty Name="subtractCid" ColumnName="subtractCid" />
                 <ScalarProperty Name="cid" ColumnName="cid" />
@@ -8251,6 +8271,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_Constract">
             <EntityTypeMapping TypeName="YWModel.t_CM_Constract">
               <MappingFragment StoreEntitySet="t_CM_Constract">
+                <ScalarProperty Name="Isaccomplish" ColumnName="Isaccomplish" />
                 <ScalarProperty Name="AmountMoney" ColumnName="AmountMoney" />
                 <ScalarProperty Name="ReturnedMoney" ColumnName="ReturnedMoney" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
@@ -8260,7 +8281,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="ItemUsers" ColumnName="ItemUsers" />
                 <ScalarProperty Name="Approvers" ColumnName="Approvers" />
                 <ScalarProperty Name="Coordination" ColumnName="Coordination" />
-                <ScalarProperty Name="Isaccomplish" ColumnName="Isaccomplish" />
                 <ScalarProperty Name="personids" ColumnName="personids" />
                 <ScalarProperty Name="personid" ColumnName="personid" />
                 <ScalarProperty Name="UnitCity" ColumnName="UnitCity" />
@@ -8289,51 +8309,16 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="t_DM_CircuitInfo">
-            <EntityTypeMapping TypeName="YWModel.t_DM_CircuitInfo">
-              <MappingFragment StoreEntitySet="t_DM_CircuitInfo">
-                <ScalarProperty Name="ener_use_type" ColumnName="ener_use_type" />
-                <ScalarProperty Name="UpDateTime" ColumnName="UpDateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="RatedCapacity" ColumnName="RatedCapacity" />
-                <ScalarProperty Name="collect_lastTime" ColumnName="collect_lastTime" />
-                <ScalarProperty Name="collect_cld" ColumnName="collect_cld" />
-                <ScalarProperty Name="collect_period" ColumnName="collect_period" />
-                <ScalarProperty Name="collect_cjq" ColumnName="collect_cjq" />
-                <ScalarProperty Name="collect_baud" ColumnName="collect_baud" />
-                <ScalarProperty Name="collect_gy" ColumnName="collect_gy" />
-                <ScalarProperty Name="collect_jzqno" ColumnName="collect_jzqno" />
-                <ScalarProperty Name="collect_port" ColumnName="collect_port" />
-                <ScalarProperty Name="device_type" ColumnName="device_type" />
-                <ScalarProperty Name="ElecIndustryID" ColumnName="ElecIndustryID" />
-                <ScalarProperty Name="MultipleRate" ColumnName="MultipleRate" />
-                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
-                <ScalarProperty Name="MetersID" ColumnName="MetersID" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="GradeType" ColumnName="GradeType" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="AreaType" ColumnName="AreaType" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="TagIDs" ColumnName="TagIDs" />
-                <ScalarProperty Name="TID" ColumnName="TID" />
-                <ScalarProperty Name="DID" ColumnName="DID" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="CName" ColumnName="CName" />
-                <ScalarProperty Name="CID" ColumnName="CID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="t_ES_ContractTemplet">
             <EntityTypeMapping TypeName="YWModel.t_ES_ContractTemplet">
               <MappingFragment StoreEntitySet="t_ES_ContractTemplet">
+                <ScalarProperty Name="PeopleCopied" ColumnName="PeopleCopied" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="IsiNvoice" ColumnName="IsiNvoice" />
                 <ScalarProperty Name="ConstructionContent" ColumnName="ConstructionContent" />
                 <ScalarProperty Name="TomorrowWork" ColumnName="TomorrowWork" />
                 <ScalarProperty Name="FistDate" ColumnName="FistDate" />
                 <ScalarProperty Name="numberConstruction" ColumnName="numberConstruction" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="PeopleCopied" ColumnName="PeopleCopied" />
                 <ScalarProperty Name="emphasisName" ColumnName="emphasisName" />
                 <ScalarProperty Name="Isemphasis" ColumnName="Isemphasis" />
                 <ScalarProperty Name="Subcontractors" ColumnName="Subcontractors" />
@@ -8869,6 +8854,56 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="Driver" ColumnName="Driver" />
                 <ScalarProperty Name="NumberPlate" ColumnName="NumberPlate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_PM_OneGraph">
+            <EntityTypeMapping TypeName="YWModel.t_PM_OneGraph">
+              <MappingFragment StoreEntitySet="t_PM_OneGraph">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_DM_CircuitInfo">
+            <EntityTypeMapping TypeName="YWModel.t_DM_CircuitInfo">
+              <MappingFragment StoreEntitySet="t_DM_CircuitInfo">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ener_use_type" ColumnName="ener_use_type" />
+                <ScalarProperty Name="UpDateTime" ColumnName="UpDateTime" />
+                <ScalarProperty Name="RatedCapacity" ColumnName="RatedCapacity" />
+                <ScalarProperty Name="collect_lastTime" ColumnName="collect_lastTime" />
+                <ScalarProperty Name="collect_cld" ColumnName="collect_cld" />
+                <ScalarProperty Name="collect_period" ColumnName="collect_period" />
+                <ScalarProperty Name="collect_cjq" ColumnName="collect_cjq" />
+                <ScalarProperty Name="collect_baud" ColumnName="collect_baud" />
+                <ScalarProperty Name="collect_gy" ColumnName="collect_gy" />
+                <ScalarProperty Name="collect_jzqno" ColumnName="collect_jzqno" />
+                <ScalarProperty Name="collect_port" ColumnName="collect_port" />
+                <ScalarProperty Name="device_type" ColumnName="device_type" />
+                <ScalarProperty Name="ElecIndustryID" ColumnName="ElecIndustryID" />
+                <ScalarProperty Name="MultipleRate" ColumnName="MultipleRate" />
+                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+                <ScalarProperty Name="MetersID" ColumnName="MetersID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="GradeType" ColumnName="GradeType" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="AreaType" ColumnName="AreaType" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="TagIDs" ColumnName="TagIDs" />
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="CName" ColumnName="CName" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

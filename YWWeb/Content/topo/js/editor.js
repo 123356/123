@@ -1,4 +1,4 @@
-"use strict"
+﻿"use strict"
 
 function Layout() {
     this.boxleft = document.createElement("div");
@@ -9,7 +9,7 @@ function Layout() {
     this.boxright = document.createElement("div")
 };
 Layout.prototype = {
-    init: function () {
+    init: function() {
         this.creatBox();
         this.adaptive();
         $("body").prepend(this.main);
@@ -18,7 +18,7 @@ Layout.prototype = {
         this.dragline($(this.lineright), 'right');
         this.resize()
     },
-    creatBox: function () {
+    creatBox: function() {
         this.boxleft.className = "boxLeft";
         this.lineleft.className = "lineLeft";
         this.boxcenter.className = "boxCenter";
@@ -26,21 +26,21 @@ Layout.prototype = {
         this.boxright.className = "boxRight";
         this.main.className = "main"
     },
-    dragline: function (dv, box) {
+    dragline: function(dv, box) {
         var that = this;
         var x = 0;
         var y = 0;
         var l = 0;
         var t = 0;
         var isDown = false;
-        $(dv).on('mousedown', function (e) {
+        $(dv).on('mousedown', function(e) {
             x = e.clientX;
             y = e.clientY;
             l = dv.offset().left;
             t = dv.offset().top;
             isDown = true
         });
-        window.addEventListener('mousemove', function (e) {
+        window.addEventListener('mousemove', function(e) {
             if (isDown == false) {
                 return
             }
@@ -60,18 +60,18 @@ Layout.prototype = {
                 that.adaptive()
             }
         });
-        $(dv).on('mouseup', function (e) {
+        $(dv).on('mouseup', function(e) {
             isDown = false
         })
     },
-    resize: function () {
+    resize: function() {
         var that = this;
-        $(window).resize(function () {
+        $(window).resize(function() {
             that.globalwdith = parseInt($(window).width());
             that.adaptive()
         })
     },
-    adaptive: function () {
+    adaptive: function() {
         var main = this.globalwdith || parseInt($(window).width());
         var lineleft = this.lineleft;
         var lineright = this.lineright;
@@ -94,11 +94,11 @@ function NodeList() {
     this.selectCanvas = null
 };
 NodeList.prototype = {
-    init: function () {
+    init: function() {
         this.createList();
         this.clickBad()
     },
-    createList: function () {
+    createList: function() {
         for (var key in palette_config) {
             var content = document.createElement("div");
             content.className = 'palette-content'
@@ -121,9 +121,9 @@ NodeList.prototype = {
             }
         }
     },
-    clickBad: function () {
+    clickBad: function() {
         var that = this;
-        $('.boxLeft').on('click', '.palette-header', function (e) {
+        $('.boxLeft').on('click', '.palette-header', function(e) {
             var header = $(e.target);
             var palette_content = $(header).next(".palette-content"),
                 max_height = palette_content.css("max-height"),
@@ -143,14 +143,14 @@ function Topo() {
     this.selectedElements = []
 };
 Topo.prototype = {
-    init: function () {
+    init: function() {
         this.createTopo();
         this.dragNode();
         this.menuBar();
         this.editRow();
         this.keyEvent()
     },
-    history: function (obj) {
+    history: function(obj) {
         $('[data-type=pid]').val(obj.config.pid);
         $('[data-type=orderNo]').val(obj.config.orderNo);
         $("[data-type=bgcolor]").val(obj.config.bgColor);
@@ -169,7 +169,7 @@ Topo.prototype = {
         this.__port = port || 15675;
         this.copyNode(obj.nodes)
     },
-    copyNode: function (list) {
+    copyNode: function(list) {
         if (!list) {
             return
         }
@@ -178,17 +178,17 @@ Topo.prototype = {
             this.setNode(node)
         }
     },
-    keyEvent: function () {
+    keyEvent: function() {
         this.copyOffset = 50;
         var that = this;
         this.spacing = 0;
-        this.scene.mouseover(function () {
+        this.scene.mouseover(function() {
             that.isDelNode = true
         });
-        this.scene.mouseout(function () {
+        this.scene.mouseout(function() {
             that.isDelNode = false
         });
-        $(document).keydown(function (event) {
+        $(document).keydown(function(event) {
             if (!that.isDelNode) {
                 return
             }
@@ -224,7 +224,7 @@ Topo.prototype = {
                 }
             }
         });
-        $(".boxRight").on("click", "[data-type=checkMap]", function (event) {
+        $(".boxRight").on("click", "[data-type=checkMap]", function(event) {
             that.scene.clear();
             $.ajax({
                 type: "post",
@@ -233,26 +233,27 @@ Topo.prototype = {
                     pid: $("[data-type=pid]").val(),
                     orderNo: $("[data-type=orderNo]").val()
                 },
-                success: function (res) {
+                success: function(res) {
                     $.ajax({
                         type: "get",
                         url: res + "?date" + new Date().valueOf(),
-                        success: function (res) {
+                        success: function(res) {
                             try {
-                                that.history(JSON.parse(res))
-                            } catch (e) {
-                                that.history(res)
+                                res = JSON.parse(res);
+                                that.history(res);
+                            } catch (error) {
+                                that.history(res);
                             }
                         }
                     })
                 },
             })
         });
-        $(".boxRight").on("click", "[data-type=deleteMap]", function (event) {
+        $(".boxRight").on("click", "[data-type=deleteMap]", function(event) {
             topo.scene.background = null
         })
     },
-    menuBar: function () {
+    menuBar: function() {
         var menu = document.createElement('div');
         menu.className = "menuBar";
         var path = '../../../Content/topo/img/edit/'
@@ -265,7 +266,7 @@ Topo.prototype = {
         }
         $('.boxCenter').append(menu)
     },
-    createTopo: function () {
+    createTopo: function() {
         var that = this;
         var canvas = document.createElement('canvas');
         var box = document.getElementsByClassName('boxCenter')[0];
@@ -283,7 +284,7 @@ Topo.prototype = {
         scene.background = null;
         scene.backgroundColor = "0,0,0";
         this.scene = scene;
-        scene.click(function (e) {
+        scene.click(function(e) {
             if (that.isline && !that.islineNodeA && scene.selectedElements.length == 0) {
                 that.islineNodeA = [parseInt(e.x), parseInt(e.y)]
             } else if (that.isline && that.islineNodeA && scene.selectedElements.length == 0) {
@@ -314,13 +315,13 @@ Topo.prototype = {
             }
         })
     },
-    dragNode: function () {
+    dragNode: function() {
         var that = this;
-        $('body').on('mousedown', '.palette-item-img', function (e) {
+        $('body').on('mousedown', '.palette-item-img', function(e) {
             nodeList.selectCanvas = $(e.target).attr('data-canvas');
             return false
         });
-        this.scene.mouseup(function (event) {
+        this.scene.mouseup(function(event) {
             if (nodeList.selectCanvas) {
                 var canvas = nodeList.selectCanvas;
                 nodeList.selectCanvas = null;
@@ -341,9 +342,9 @@ Topo.prototype = {
             return false
         })
     },
-    editRow: function () {
+    editRow: function() {
         var that = this;
-        document.getElementsByClassName("menuBar")[0].addEventListener("click", function (e) {
+        document.getElementsByClassName("menuBar")[0].addEventListener("click", function(e) {
             if (!e.target) {
                 return
             }
@@ -385,7 +386,7 @@ Topo.prototype = {
             }
         })
     },
-    saveNodes: function () {
+    saveNodes: function() {
         var that = this;
         if (!that.__pid || !that.__orderNo) {
             alert('配电室ID和编号不能为空');
@@ -403,7 +404,7 @@ Topo.prototype = {
             }
         }
         var nodes = [];
-        topo.scene.findElements(function (e) {
+        topo.scene.findElements(function(e) {
             nodes.push(e)
         });
         ojbect.nodes = nodes;
@@ -417,7 +418,7 @@ Topo.prototype = {
             data: {
                 data: JSON.stringify(ojbect)
             },
-            success: function (res) {
+            success: function(res) {
                 var filename = that.__pid + '__' + that.__orderNo || 1 + '__' + new Date().toLocaleString();
                 that.saveAs(saveData, filename);
                 $(saveData).remove();
@@ -425,7 +426,7 @@ Topo.prototype = {
             },
         })
     },
-    saveAs: function (obj, filename) {
+    saveAs: function(obj, filename) {
         var a = document.createElement('a');
         a.setAttribute('href', 'data:text/html;gb2312,' + obj.value);
         a.setAttribute('download', filename);
@@ -434,14 +435,14 @@ Topo.prototype = {
         obj.parentNode.appendChild(a);
         a.click()
     },
-    compileStr: function (code) {
+    compileStr: function(code) {
         var c = String.fromCharCode(code.charCodeAt(0) + code.length);
         for (var i = 1; i < code.length; i++) {
             c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1))
         }
         return escape(c)
     },
-    uncompileStr: function (code) {
+    uncompileStr: function(code) {
         code = unescape(code);
         var c = String.fromCharCode(code.charCodeAt(0) - code.length);
         for (var i = 1; i < code.length; i++) {
@@ -449,11 +450,11 @@ Topo.prototype = {
         }
         return c
     },
-    editSize: function () {
+    editSize: function() {
         this.isedit = true
     },
-    link: function () { },
-    setAlign: function (type) {
+    link: function() {},
+    setAlign: function(type) {
         if (this.scene.selectedElements.length == 0) {
             return
         }
@@ -466,7 +467,7 @@ Topo.prototype = {
             }
         }
     },
-    setNodeContours: function (type) {
+    setNodeContours: function(type) {
         if (this.scene.selectedElements.length == 0 || !this.templateNode) {
             return
         }
@@ -484,7 +485,7 @@ Topo.prototype = {
             }
         }
     },
-    setNodeSpacing: function (type, distance) {
+    setNodeSpacing: function(type, distance) {
         if (!this.templateNode) {
             return
         }
@@ -503,7 +504,7 @@ Topo.prototype = {
             }
         }
     },
-    setNode: function (obj) {
+    setNode: function(obj) {
         var that = this;
         if (obj.__type == "text") {
             var node = new JTopo.TextNode();
@@ -528,7 +529,7 @@ Topo.prototype = {
             node.state1 = obj.state1 || "#ff0000";
             node.state2 = obj.state2 || "#ffff00";
             node.color = node["state" + node.__statusvalue];
-            node.paint = function (g) {
+            node.paint = function(g) {
                 eval(obj.canvas)
             };
             node.canvas = obj.canvas
@@ -555,7 +556,7 @@ Topo.prototype = {
         node._cid = obj._cid;
         node._parentID = obj._parentID;
         node._failureState = obj._failureState;
-        node.dbclick(function () {
+        node.dbclick(function() {
             if (that.templateNode) {
                 that.templateNode.borderWidth = 0;
                 that.templateNode = null
@@ -564,13 +565,13 @@ Topo.prototype = {
                 node.borderWidth = 4
             }
         });
-        node.click(function () {
+        node.click(function() {
             console.log(node);
             that.nodeClick(node)
         });
         this.scene.add(node)
     },
-    nodeClick: function (node) {
+    nodeClick: function(node) {
         if (this.isedit) {
             node.editAble = true;
             this.isedit = false
@@ -616,7 +617,7 @@ Topo.prototype = {
             var path = node.image.currentSrc
         }
     },
-    rgb2hex: function (rgb) {
+    rgb2hex: function(rgb) {
         if (!rgb) {
             return
         }
@@ -632,13 +633,13 @@ Topo.prototype = {
 };
 var topo = new Topo();
 topo.init();
-var AttributesTab = function () { }
+var AttributesTab = function() {}
 AttributesTab.prototype = {
-    init: function () {
+    init: function() {
         this.createTable();
         this.setNodeStyle()
     },
-    createTable: function () {
+    createTable: function() {
         $(".boxRight").html("<table class='table'><thead><tr><th>属性</th><th>值</th></tr></thead><tbody></tbody></table>");
         for (var a = 0, str = ""; a < palette_Attributes.length; a++) {
             var tr = document.createElement("tr");
@@ -663,9 +664,9 @@ AttributesTab.prototype = {
             $('tbody').append(tr)
         }
     },
-    setNodeStyle: function () {
+    setNodeStyle: function() {
         var that = this;
-        $("input").on('input', function () {
+        $("input").on('input', function() {
             var key = $(this).attr("data-type");
             var value = $(this).val();
             var selectedElements = topo.scene.selectedElements;
@@ -791,7 +792,7 @@ AttributesTab.prototype = {
                     if (window.FileReader) {
                         var reader = new FileReader();
                         reader.readAsDataURL(file);
-                        reader.onloadend = function (e) {
+                        reader.onloadend = function(e) {
                             topo.scene.background = e.target.result
                         }
                     }
@@ -804,7 +805,7 @@ AttributesTab.prototype = {
                         data: {
                             pid: value,
                         },
-                        success: function (res) {
+                        success: function(res) {
                             var qwe = [];
                             for (var a = 0; a < res.length; a++) {
                                 qwe.push('<option value="' + res[a].ID + '">' + res[a].Name + '</option>')
@@ -830,7 +831,7 @@ AttributesTab.prototype = {
                     break
             }
         });
-        $("select").on('change', function () {
+        $("select").on('change', function() {
             var key = $(this).attr("data-type");
             var value = $(this).val();
             var selectedElements = topo.scene.selectedElements;
@@ -843,7 +844,7 @@ AttributesTab.prototype = {
                             pid: topo.__pid,
                             did: value,
                         },
-                        success: function (res) {
+                        success: function(res) {
                             var qwe = ['<option value="0 ">请选择</option>'];
                             for (var a = 0; a < res.length; a++) {
                                 qwe.push('<option value="' + res[a].ID + '">' + res[a].Name + '</option>')
@@ -861,7 +862,7 @@ AttributesTab.prototype = {
             }
         })
     },
-    textColor: function (node, type, value) {
+    textColor: function(node, type, value) {
         if (node.__statusvalue == type) {
             if (node.__type == 'text') {
                 node.fontColor = value
@@ -872,7 +873,7 @@ AttributesTab.prototype = {
             }
         }
     },
-    hexToRgba: function (hex, opacity) {
+    hexToRgba: function(hex, opacity) {
         return parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7))
     },
 }

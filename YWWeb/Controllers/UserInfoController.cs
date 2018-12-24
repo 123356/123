@@ -820,6 +820,7 @@ namespace YWWeb.Controllers
             {
                 if (userid < 1)
                 {
+                    list = list.Where(p => p.UserName != null).ToList();
                     list = list.Where(s => s.UserName.ToLower() == userInfo.UserName.ToLower()).ToList();
 
                     if (list.Count > 0)
@@ -869,7 +870,8 @@ namespace YWWeb.Controllers
                                 Common.InsertLog("用户管理", CurrentUser.UserName, "修改用户[用户ID:" + userid + "_" + userInfo.UserName + "]");
                             }
 
-                        }else
+                        }
+                        else
                         {
                             t_CM_UserInfo user = bll.t_CM_UserInfo.Where(c => c.UserID == userid).First();
                             user.Company = userInfo.Company;
@@ -890,7 +892,7 @@ namespace YWWeb.Controllers
                             Common.InsertLog("用户管理", CurrentUser.UserName, "修改用户[用户ID:" + userid + "_" + userInfo.UserName + "]");
                         }
                     }
-                   
+
                 }
                 if (userInfo.UserName != "admin")
                 {

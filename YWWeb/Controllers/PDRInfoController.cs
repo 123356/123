@@ -2908,25 +2908,25 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
         /// <param name="orderby"></param>
         /// <param name="str"></param>
         /// <returns></returns>
-        public ActionResult SaveOneView(int pid,int orderNo)
+        public ActionResult SaveOneView(int pid, int orderNo)
         {
             string result = "保存成功";
             try
             {
-            //    HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+                //    HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 ControllerContext.HttpContext.Request.ContentEncoding = Encoding.GetEncoding("UTF-8");
                 ControllerContext.HttpContext.Response.ContentEncoding = Encoding.GetEncoding("UTF-8");
                 ControllerContext.HttpContext.Response.Charset = "UTF-8";
                 string path = Server.MapPath("/DownLoad/OneGraph/");
                 string saveName = pid + "_" + orderNo + "_" + "OneGraph.json";
-               
+
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-                if (System.IO.File.Exists(path+saveName))
+                if (System.IO.File.Exists(path + saveName))
                 {
-                    System.IO.File.Delete(path+saveName);
+                    System.IO.File.Delete(path + saveName);
                 }
 
                 StreamWriter sr = System.IO.File.CreateText(path + saveName);
@@ -2943,11 +2943,11 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 //string saveName = pid + "_" + orderNo + "_" + "OneGraph.json";
                 //data.SaveAs(filePath + saveName);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                result = "出现异常，请联系管理员"+e.Message;
+                result = "出现异常，请联系管理员" + e.Message;
             }
-            return Json(result,JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 获取一次图
@@ -2966,16 +2966,16 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
 
                 string secure = HttpContext.Request.ServerVariables["HTTPS"];
-                 string httpProtocol = (secure == "on" ? "https://" : "http://");
-                            // 服务器名称
-               string serverName = HttpContext.Request.ServerVariables["Server_Name"];
-                           string port = HttpContext.Request.ServerVariables["SERVER_PORT"];
+                string httpProtocol = (secure == "on" ? "https://" : "http://");
+                // 服务器名称
+                string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+                string port = HttpContext.Request.ServerVariables["SERVER_PORT"];
                 string url = HttpContext.Request.Url.Host;
                 //string serverName = HttpContext.Request.ServerVariables["Server_Name"];
                 // 应用服务名称
                 string applicationName = HttpContext.Request.ApplicationPath;
                 path = httpProtocol + serverName + (port.Length > 0 ? ":" + port : string.Empty) + applicationName;
-                path += "DownLoad/OneGraph/" + pid + "_" + orderNo +"_"+ "OneGraph.json";
+                path += "DownLoad/OneGraph/" + pid + "_" + orderNo + "_" + "OneGraph.json";
             }
             catch (Exception ex)
             {
@@ -2997,7 +2997,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
 
 
             Dictionary<int, sj> obj = new Dictionary<int, sj>();
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 sj b = new sj();
                 b.PV = Convert.ToDecimal(item.PV);
@@ -3067,7 +3067,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                     double strCashAmt = System.Math.Abs((double)model.PV);//取绝对值
                     strCashAmt = Math.Round(strCashAmt, 3);//保留三位小数
                     InputValue = strCashAmt + "";
-                   
+
                 }
                 else
                     InputValue = model.PV.ToString();
@@ -3122,7 +3122,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 view.ABCID = model.ABCID;
                 re.Add(view);
             }
-            return Json(re,JsonRequestBehavior.AllowGet);
+            return Json(re, JsonRequestBehavior.AllowGet);
         }
         public class OneGraphView
         {
@@ -3177,7 +3177,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
         /// <param name="did"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public JsonResult GetCirByDID(int did,int pid)
+        public JsonResult GetCirByDID(int did, int pid)
         {
             try
             {
@@ -3195,6 +3195,200 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 return Json(ex.Message);
             }
         }
+
+
+
+
+
+        // 通讯
+
+
+
+
+
+
+
+        //改保存一次图接口
+        public ActionResult SaveAttribute(int pid, int orderNo, string type, string IP, string port, string account, string password)
+        {
+            string result = "保存成功";
+            try
+            {
+                // HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+                ControllerContext.HttpContext.Request.ContentEncoding = Encoding.GetEncoding("UTF-8");
+                ControllerContext.HttpContext.Response.ContentEncoding = Encoding.GetEncoding("UTF-8");
+                ControllerContext.HttpContext.Response.Charset = "UTF-8";
+                string road = "", fileName = "";
+                if (type == "1")
+                {
+                    road = "/DownLoad/OneGraph/";
+                    fileName = "OneGraph.json";
+
+                }
+                else if (type == "2")
+                {
+                    road = "/DownLoad/Communication/";
+                    fileName = "Communication.json";
+                }
+                else { return Json("缺少文件类型"); }
+
+                string filePath = Server.MapPath(road);
+                string saveName = pid + "_" + orderNo + "_" + fileName;
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                if (System.IO.File.Exists(filePath + saveName))
+                {
+
+                    string date = DateTime.Now.Year.ToString() + "__" + DateTime.Now.Month.ToString() + "__" + DateTime.Now.Day.ToString() + "__" + DateTime.Now.Hour.ToString() + "__" + DateTime.Now.Minute.ToString() + "__" + DateTime.Now.Second.ToString();
+                    var path1 = filePath + date + "__" + +pid + "_" + orderNo + ".json";
+                    System.IO.File.Move(filePath + saveName, path1);
+                }
+                StreamWriter sr = System.IO.File.CreateText(filePath + saveName);
+                sr.WriteLine(Request["data"]);
+                sr.Dispose();
+                sr.Close();
+
+                t_PM_OneGraph sql = new t_PM_OneGraph();
+                sql.PID = pid;
+                sql.OrderNo = orderNo;
+                sql.Type = type;
+                sql.Path = saveName;
+                sql.IP = IP;
+                sql.Port = port;
+                sql.Account = account;
+                sql.Password = password;
+                bll.t_PM_OneGraph.AddObject(sql);
+
+                t_PM_OneGraph m = bll.t_PM_OneGraph.Where(p => p.PID == pid && p.OrderNo == orderNo && p.Type == type).FirstOrDefault();
+                if (m != null)
+                {
+                    bll.t_PM_OneGraph.DeleteObject(m);
+                }
+                bll.t_PM_OneGraph.AddObject(sql);
+                bll.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                result = "出现异常，请联系管理员" + e.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        //获取数据
+        public ActionResult GetAttribute(int pid, int orderNo, string type)
+        {
+
+            try
+            {
+
+                //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+                var path = "";
+                string secure = HttpContext.Request.ServerVariables["HTTPS"];
+                string httpProtocol = (secure == "on" ? "https://" : "http://");
+                // 服务器名称
+                string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+                string port = HttpContext.Request.ServerVariables["SERVER_PORT"];
+                string url = HttpContext.Request.Url.Host;
+                //string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+                // 应用服务名称
+                string applicationName = HttpContext.Request.ApplicationPath;
+                path = httpProtocol + serverName + (port.Length > 0 ? ":" + port : string.Empty) + applicationName;
+                if (type == "1")
+                {
+                    path += "DownLoad/OneGraph/";
+                }
+                else
+                {
+                    path += "DownLoad/Communication/";
+                }
+
+                List<t_PM_OneGraph> list = bll.t_PM_OneGraph.Where(d => d.PID == pid && d.OrderNo == orderNo && d.Type == type).ToList();
+
+
+                var result = from s in list
+                             select new
+                             {
+                                 OrderNo = s.OrderNo,
+                                 url = path,
+                                 Path = s.Path,
+                                 IP = s.IP,
+                                 Port = s.Port,
+                                 Account = s.Account,
+                                 Password = s.Password,
+                             };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("出现异常，请联系管理员");
+            }
+
+        }
+
+
+        // 查站室通讯状态
+        public ActionResult GetExceptionStatus(int pid)
+        {
+            try
+            {
+
+                List<t_DM_CircuitInfo> clist = bll.t_DM_CircuitInfo.Where(d => d.PID == pid).ToList();
+                List<t_SM_StationStatusRealTime> plist = bll.t_SM_StationStatusRealTime.Where(p => p.PID == pid).ToList();
+
+                Dictionary<int, txsj> cobj = new Dictionary<int, txsj>(), pobj = new Dictionary<int, txsj>();
+
+                foreach (var item in clist)
+                {
+                    txsj b = new txsj();
+                    b.State = item.State;
+                    if (b.State != null)
+                    {
+                        cobj.Add(item.CID, b);
+                    }
+                }
+
+
+
+                txsj psj = new txsj();
+                psj.State = plist[0].State;
+                if (psj.State != null)
+                {
+                    pobj.Add((int)plist[0].PID, psj);
+                }
+
+                tsj data = new tsj();
+                data.PID = pobj;
+                data.CID = cobj;
+                return Json(JsonConvert.SerializeObject(data));
+            }
+            catch (Exception ex)
+            {
+                return Content("出现异常，请联系管理员");
+            }
+        }
+
+
+
+        public class txsj
+        {
+            public int? State { get; set; }
+        }
+
+
+        public class tsj
+        {
+            public Object PID { get; set; }
+            public Object CID { get; set; }
+            public Object DID { get; set; }
+        }
+
         #endregion
     }
 }
