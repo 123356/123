@@ -244,7 +244,7 @@ function showinfomessage(marker, point, data) {
             break;
     }
     
-        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.ProjectName + '</span><a href="JavaScript:toDetail(' + data.ID + ')">详情</td></tr>'
+    html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.ProjectName + '</span><a href="JavaScript:toDetail(' + data.ID + ')">详情</a><a href="/Content/baiduMap/hawkEye/manager.html">轨迹查询</a></td></tr>'
         html += '<tr style="font-size:11px"><td ><i class="iconfont icon-location"></i>' + data.Adress + '</td></tr>'
         html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
         html += '<tr style="font-size:11px"><td >项目类型：' + proType + '</td></tr>'
