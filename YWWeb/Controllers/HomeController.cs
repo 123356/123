@@ -3257,5 +3257,1483 @@ namespace YWWeb.Controllers
             public string remarks { get; set; }
         }
 
+        #region 项目管理
+        //获取未完成的项目
+        public ActionResult GetUnfinishedPrject()
+        {
+            List<t_CM_Constract> list = new List<t_CM_Constract>();
+            try
+            {
+                //int userid = CurrentUser.UserID;
+                //string str = HomeController.GetUserID();
+                string str = "";
+
+                var userlist = bll.t_CM_UserInfo.Where(p => p.UID == CurrentUser.UID).Select(p => p.UserID).ToList().Distinct();
+                foreach (var item in userlist)
+                {
+                    str += item + ",";
+                }
+                if (string.IsNullOrEmpty(str))
+                {
+                    return Content("");
+                }
+                str = str.Substring(0, str.Length - 1);
+                if (!string.IsNullOrEmpty(str))
+                {
+
+                    string sql = "select * from t_CM_Constract where AddUserID in (" + str + ") and Isaccomplish=0";
+                    list = bll.ExecuteStoreQuery<t_CM_Constract>(sql).ToList();
+                    var result = from n in list
+                                 select new
+                                 {
+                                     id = n.id,
+                                     ProjectName = n.ProjectName,
+                                     ConNo = n.ConNo
+                                 };
+                    return Json(result);
+                }
+                else
+                {
+                    return Json("No Data");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return Json("Error" + ex.Message);
+            }
+
+        }
+        /// <summary>
+        /// 项目信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetProjectByID(int id)
+        {
+
+            try
+            {
+                t_CM_Constract model = bll.t_CM_Constract.Where(p => p.id == id).FirstOrDefault();
+                int ok = bll.t_ES_ContractTemplet.Where(p => p.conid == id && p.IsOk == 4).Count();
+                int Nok = bll.t_ES_ContractTemplet.Where(p => p.conid == id && p.IsOk != 4).Count();
+                int Feedback = bll.t_ES_ContractTemplet.Where(p => p.conid == id && p.IsOk == 2).Count();
+                int Pending = bll.t_ES_ContractTemplet.Where(p => p.conid == id && p.IsOk == 1).Count();
+                int s = 0;
+                string area = "";
+                string UnitName = "";
+                string BudgetUser = "";
+                string ProjectManager = "";
+                string[] sss = new string[] { };
+                if (model != null)
+                {
+                    s = Convert.ToInt32(model.UnitCity);
+                    if (s != 0)
+                    {
+                        area = bll.t_Sys_City.Where(p => p.cityID == s).FirstOrDefault().cityName;
+                    }
+                    if (bll.t_CM_Unit.Where(p => p.UnitID == model.UID).FirstOrDefault() != null)
+                    {
+                        UnitName = bll.t_CM_Unit.Where(p => p.UnitID == model.UID).FirstOrDefault().UnitName;
+                    }
+                    if (bll.t_CM_UserInfo.Where(p => p.UserID == model.BudgetUser.Value).FirstOrDefault() != null)
+                    {
+                        BudgetUser = bll.t_CM_UserInfo.Where(p => p.UserID == model.BudgetUser.Value).FirstOrDefault().UserName;
+                    }
+                    if (bll.t_CM_UserInfo.Where(p => p.UserID == model.ProjectManager.Value).FirstOrDefault() != null)
+                    {
+                        ProjectManager = bll.t_CM_UserInfo.Where(p => p.UserID == model.ProjectManager.Value).FirstOrDefault().UserName;
+                    }
+                    if (model.personids != null)
+                    {
+                        sss = model.personids.Split(',');
+                    }
+                }
+
+                var result = new
+                {
+                    id = model.id,
+                    ConNo = model.ConNo,
+                    CtrAdmin = UnitName,
+                    ProjectName = model.ProjectName,
+                    Nok = Nok,
+                    ok = ok,
+                    LinkMan = model.LinkMan,
+                    end_time = model.end_time.ToString(),
+                    Tel = model.Tel,
+                    UnitCity = area,
+                    TypeName = GetConNo(model.ConType),
+                    person = model.person,
+                    conName = model.CtrName,
+                    BudgetUser = BudgetUser,
+                    ProjectManager = ProjectManager,
+                    conMoney = model.ConMoneys,
+                    ReturnedMoney = model.ReturnedMoney,
+                    personids = sss,
+                    Feedback = Feedback,
+                    Pending = Pending
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        private string GetConNo(int? data)
+        {
+            string type = "";
+            switch (data)
+            {
+                case 1:
+                    type = "工程施工";
+                    break;
+                case 2:
+                    type = "电力设计";
+                    break;
+                case 3:
+                    type = "设备产品";
+                    break;
+                case 4:
+                    type = "运维实验";
+                    break;
+                case 5:
+                    type = "管理";
+                    break;
+                case 6:
+                    type = "系统开发";
+                    break;
+                case 7:
+                    type = "设计管理";
+                    break;
+                case 8:
+                    type = "测绘";
+                    break;
+            }
+            return type;
+        }
+
+        /// <summary>
+        /// 备忘提醒
+        /// </summary>
+        /// <param name="conid"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public ActionResult GetConTemp(int conid, string time = "")
+        {
+            List<t_ES_ContractTemplet> list = new List<t_ES_ContractTemplet>();
+            try
+            {
+                if (string.IsNullOrEmpty(time))
+                {
+                    list = bll.t_ES_ContractTemplet.Where(p => p.conid == conid).ToList();
+                }
+                else
+                {
+                    DateTime d = Convert.ToDateTime(time);
+                    string sql = "select * from t_ES_ContractTemplet where conid=" + conid + "and convert(char(10),EndTime,120)='" + time + "'";
+                    //list = bll.t_ES_ContractTemplet.Where(p => p.conid == conid && p.EndTime == d).ToList();
+                    list = bll.ExecuteStoreQuery<t_ES_ContractTemplet>(sql).ToList();
+                }
+                var result = from n in list
+                             select new
+                             {
+                                 id = n.ID,
+                                 Name = n.Name,
+                                 StartTime = n.Type == 3 ? n.StartTime.ToString() : n.EndTime.ToString(),
+                                 Type = n.Type,
+                                 isOk = n.IsOk
+                             };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+
+        public ActionResult GetTemLog(int conid, int type, int isok = 0)
+        {
+            try
+            {
+                if (isok == 0)
+                {
+                    var rr = bll.t_ES_ContractTemplet.Where(p => p.Type == type).ToList();
+
+                    var list = rr.Where(p => p.conid == conid && (p.IsOk < 4 || p.IsOk == 5)).ToList();
+                    var result = from n in list
+                                 select new
+                                 {
+                                     id = n.ID,
+                                     Name = n.Name,
+                                     EndTime = n.EndTime.ToString(),
+                                     Type = GetStateName(n.IsOk.Value),
+                                     person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                 };
+                    return Json(result);
+                }
+                else
+                {
+                    var rr = bll.t_ES_ContractTemplet.Where(p => p.Type == type).ToList();
+
+                    var list = rr.Where(p => p.conid == conid && p.IsOk == 4).ToList();
+                    var result = from n in list
+                                 select new
+                                 {
+                                     id = n.ID,
+                                     Name = n.Name,
+                                     EndTime = n.EndTime.ToString(),
+                                     Type = GetStateName(n.IsOk.Value),
+                                     person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                 };
+                    return Json(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult addConTemp(t_ES_ContractTemplet info)
+        {
+            if (info.ID > 0)
+            {
+                t_ES_ContractTemplet model = bll.t_ES_ContractTemplet.Where(p => p.ID == info.ID).FirstOrDefault();
+                model.Name = info.Name;
+                model.StartTime = info.StartTime;
+                model.IsOk = info.IsOk;
+                model.PersonID = info.PersonID;
+                model.BeforDay = info.BeforDay;
+                model.EndTime = info.EndTime;
+                model.DefTempID = info.DefTempID;
+                model.conid = info.conid;
+                model.Isemphasis = info.Isemphasis;
+                model.Type = info.Type;
+                model.Moneys = info.Moneys;
+                model.period = info.period;
+                model.emphasisName = info.emphasisName;
+                model.Subcontractors = info.Subcontractors;
+                model.PeopleCopied = info.PeopleCopied;
+                model.Reason = info.Reason;
+                model.TomorrowWork = info.TomorrowWork;
+                if (info.Type == 2)
+                {
+                    model.IsiNvoice = info.IsiNvoice;
+                }
+                bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                bll.SaveChanges();
+                t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+                mo.UserID = CurrentUser.UserID;
+                mo.CreatTime = DateTime.Now;
+                mo.ItemID = info.ID;
+                mo.Remarks = mo.CreatTime + "編輯_" + info.ID + "_" + info.Name + "_事項";
+                AddOlog(mo);
+            }
+            else
+            {
+                if (info.Type == 3)
+                {
+                    for (var i = 0; i < info.period; i++)
+                    {
+                        t_ES_ContractTemplet model = new t_ES_ContractTemplet();
+                        model.Name = info.Name;
+                        model.StartTime = info.StartTime.Value.AddDays(i);
+                        model.IsOk = info.IsOk;
+                        model.PersonID = info.PersonID;
+                        model.BeforDay = info.BeforDay;
+                        model.EndTime = info.StartTime.Value.AddDays(i);
+                        model.DefTempID = info.DefTempID;
+                        model.CreatTime = DateTime.Now;
+                        model.conid = info.conid;
+                        model.Isemphasis = info.Isemphasis;
+                        model.Type = info.Type;
+                        model.Moneys = info.Moneys;
+                        model.period = info.period;
+                        model.emphasisName = info.emphasisName;
+                        model.Subcontractors = info.Subcontractors;
+                        model.PeopleCopied = info.PeopleCopied;
+                        model.Reason = info.Reason;
+                        model.TomorrowWork = info.TomorrowWork;
+                        bll.t_ES_ContractTemplet.AddObject(model);
+                        bll.SaveChanges();
+                        t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+                        mo.UserID = CurrentUser.UserID;
+                        mo.CreatTime = DateTime.Now;
+                        mo.ItemID = info.ID;
+                        mo.Remarks = mo.CreatTime.ToString() + "添加_" + model.ID + "_" + model.Name + "_事項";
+                    }
+                }
+                else
+                {
+                    t_ES_ContractTemplet model = new t_ES_ContractTemplet();
+                    model.Name = info.Name;
+                    model.StartTime = info.StartTime;
+                    model.IsOk = info.IsOk;
+                    model.PersonID = info.PersonID;
+                    model.BeforDay = info.BeforDay;
+                    model.EndTime = info.EndTime;
+                    model.DefTempID = info.DefTempID;
+                    model.CreatTime = DateTime.Now;
+                    model.conid = info.conid;
+                    model.Isemphasis = info.Isemphasis;
+                    model.Type = info.Type;
+                    model.Moneys = info.Moneys;
+                    model.period = info.period;
+                    model.emphasisName = info.emphasisName;
+                    model.Subcontractors = info.Subcontractors;
+                    model.PeopleCopied = info.PeopleCopied;
+                    model.Reason = info.Reason;
+                    model.TomorrowWork = info.TomorrowWork;
+                    if (info.Type == 2)
+                    {
+                        model.IsiNvoice = info.IsiNvoice;
+                    }
+                    model.IsiNvoice = info.IsiNvoice;
+                    bll.t_ES_ContractTemplet.AddObject(model);
+                    bll.SaveChanges();
+                    t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+                    mo.UserID = CurrentUser.UserID;
+                    mo.CreatTime = DateTime.Now;
+                    mo.ItemID = info.ID;
+                    mo.Remarks = mo.CreatTime.ToString() + "添加_" + model.ID + "_" + model.Name + "_事項";
+                    AddOlog(mo);
+                }
+            }
+            return Json("ok");
+        }
+
+
+
+        public ActionResult UpdateConTemp(t_ES_ContractTemplet info, string StartTime, string EndTime)
+        {
+            if (info.ID > 0)
+            {
+                try
+                {
+                    t_ES_ContractTemplet model = bll.t_ES_ContractTemplet.Where(p => p.ID == info.ID).FirstOrDefault();
+                    model.StartTime = Convert.ToDateTime(StartTime);
+                    model.EndTime = Convert.ToDateTime(EndTime);
+                    model.numberConstruction = info.numberConstruction;
+                    //model.TomorrowWork = info.TomorrowWork;
+                    model.ConstructionContent = info.ConstructionContent;
+                    bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                    bll.SaveChanges();
+                    //t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+                    //mo.UserID = CurrentUser.UserID;
+                    //mo.CreatTime = DateTime.Now;
+                    //mo.ItemID = info.ID;
+                    //mo.Remarks = mo.CreatTime + "編輯_" + info.ID + "_" + info.Name + "_事項";
+                    //AddOlog(mo);
+                    return Json("ok", JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("error" + ex.Message);
+                }
+
+            }
+            else
+            {
+                return Json("No ID", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult UpdateEveningConTemp(t_ES_ContractTemplet info)
+        {
+            if (info.ID > 0)
+            {
+                t_ES_ContractTemplet model = bll.t_ES_ContractTemplet.Where(p => p.ID == info.ID).FirstOrDefault();
+
+                model.TomorrowWork = info.TomorrowWork;
+                model.IsOk = info.IsOk;
+                if (model.IsOk != 4)
+                {
+                    model.Reason = info.Reason;
+                }
+                bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                bll.SaveChanges(); ;
+
+                return Json("ok", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("No ID", JsonRequestBehavior.AllowGet);
+            }
+        }
+        [Login]
+        public ActionResult getTempDetail(int id)
+        {
+            string strJson = "";
+            try
+            {
+                t_ES_ContractTemplet temp = bll.t_ES_ContractTemplet.Where(o => o.ID == id).FirstOrDefault();
+                if (temp != null)
+                {
+
+                    t_CM_UserInfo user = bll.t_CM_UserInfo.Where(o => o.UserID == temp.PersonID).FirstOrDefault();
+
+
+                    string secure = HttpContext.Request.ServerVariables["HTTPS"];
+                    string httpProtocol = (secure == "on" ? "https://" : "http://");
+                    // 服务器名称
+                    string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+                    string port = HttpContext.Request.ServerVariables["SERVER_PORT"];
+                    string url = HttpContext.Request.Url.Host;
+                    //string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+                    // 应用服务名称
+                    string applicationName = HttpContext.Request.ApplicationPath;
+                    string path = httpProtocol + serverName + (port.Length > 0 ? ":" + port : string.Empty) + applicationName;
+
+
+                    var filelist = bll.t_cm_files.Where(p => p.Fk_ID == id && p.Modules == "matter" && p.FSource == "web").ToList();
+                    var filel = from i in filelist
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var imglist = bll.t_cm_files.Where(f => f.Modules == "matter" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file2 = from i in imglist
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var shiftMeetingList = bll.t_cm_files.Where(f => f.Modules == "PreshiftMeeting" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file3 = from i in shiftMeetingList
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var SceneList = bll.t_cm_files.Where(f => f.Modules == "Scene" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file4 = from i in SceneList
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var ToolList = bll.t_cm_files.Where(f => f.Modules == "Tool" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file5 = from i in ToolList
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var EveningList = bll.t_cm_files.Where(f => f.Modules == "Evening" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file6 = from i in EveningList
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var EveningScene = bll.t_cm_files.Where(f => f.Modules == "EveningScene" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file7 = from i in EveningScene
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var CourseList = bll.t_cm_files.Where(f => f.Modules == "Course" && f.Fk_ID == id && f.FSource == "wx").ToList();
+                    var file8 = from i in CourseList
+                                select new
+                                {
+                                    ID = i.ID,
+                                    FileName = i.FileName,
+                                    FilePath = i.FilePath,
+                                    FileType = i.FileType,
+                                    FileSize = i.FileSize,
+                                    FileExtension = i.FileExtension,
+                                    Modules = i.Modules,
+                                    Fk_ID = i.Fk_ID,
+                                    FSource = i.FSource,
+                                    CommitTime = i.CommitTime,
+                                    Remark = i.Remark,
+                                    CommitUser = i.CommitUser,
+                                    absolutePath = path + i.FilePath.Replace("~/", "").Trim()
+                                };
+                    var result = new
+                    {
+                        Name = temp.Name,
+                        UserName = user.UserName,
+                        StartTime = temp.StartTime.ToString(),
+                        EndTime = temp.EndTime.ToString(),
+                        Type = temp.Type,
+                        CompleTime = temp.CompleTime.ToString(),
+                        numberConstruction = temp.numberConstruction,
+                        Reason = temp.Reason,
+                        TomorrowWork = temp.TomorrowWork,
+                        FistDate = temp.FistDate.ToString(),
+                        ConstructionContent = temp.ConstructionContent,
+                        Remark = temp.Remark,
+                        ProjectName = bll.t_CM_Constract.Where(p => p.id == temp.conid).FirstOrDefault().ProjectName,
+                        filelist = filel,
+                        imglist = file2,
+                        shiftMeetingList = file3,
+                        SceneList = file4,
+                        ToolList = file5,
+                        EveningList = file6,
+                        EveningScene = file7,
+                        CourseList = file8
+                    };
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                strJson = "";
+            }
+
+            return Content(strJson);
+        }
+        //上传事项文件；
+        public ActionResult UploadFile(HttpPostedFileBase fileData, string Remark, int fk_id, string ctype = "file", string modules = "matter", string FSource = "web")
+        {
+            if (fileData != null)
+            {
+                try
+                {
+                    //备注
+                    // string Remark = string.Empty;
+                    //上传用户
+                    string CommitUser = string.Empty;
+                    //资料类型（图片，视频,文档）
+                    string FileType = string.Empty;
+                    //来源(web,app)
+
+                    ControllerContext.HttpContext.Request.ContentEncoding = Encoding.GetEncoding("UTF-8");
+                    ControllerContext.HttpContext.Response.ContentEncoding = Encoding.GetEncoding("UTF-8");
+                    ControllerContext.HttpContext.Response.Charset = "UTF-8";
+
+                    // 文件上传后的保存路径
+                    string url = "~/UploadFiles/YunYingConstract/";
+                    string filePath = Server.MapPath(url);
+
+                    DirectoryUtil.CreateDirectory(filePath);
+
+                    string fileName = Path.GetFileName(fileData.FileName);      //原始文件名称
+                    string fileExtension = Path.GetExtension(fileName);         //文件扩展名
+                    //string saveName = Guid.NewGuid().ToString() + fileExtension; //保存文件名称
+                    string saveName = DateTime.Now.Ticks + fileExtension;
+                    fileData.SaveAs(filePath + saveName);
+                    byte[] FileData = ReadFileBytes(fileData);
+                    double fileSize = FileData.Length;
+                    double fileSizeKB = fileSize / 1024;
+                    fileSizeKB = Math.Round(fileSizeKB, 2);
+                    string fSize = fileSizeKB + "KB";
+                    //获取上传人
+                    CommitUser = CurrentUser.UserName;
+                    //资料类型（图片，视频,文档）
+                    FileType = getFileType(fileExtension);
+
+                    //所属模块:事项；
+                    //保存到t_PM_EmergencyPlan表
+
+                    //保存到资料库t_cm_files表
+                    t_cm_files obj = new t_cm_files();
+                    obj.CommitTime = DateTime.Now;
+                    obj.CommitUser = CurrentUser.UserName;
+                    obj.FileName = fileName;
+                    obj.FilePath = url + saveName;
+                    obj.FileExtension = fileExtension;
+                    obj.FileSize = fSize;
+                    obj.FileType = FileType;
+                    obj.Fk_ID = fk_id;
+                    obj.FSource = FSource;
+                    obj.MaxTemp = 0;
+                    obj.MinTemp = 0;
+                    obj.Remark = Remark;
+                    obj.Modules = modules;
+                    bll.t_cm_files.AddObject(obj);
+                    bll.SaveChanges();
+                    if (FSource == "web")
+                    {
+                        return Json(obj, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Content("ok");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Content(ex.ToString());
+                }
+            }
+            else
+            {
+                return Content("false");
+            }
+        }
+
+        private static string getFileType(string fileExtension)
+        {
+            string FileType = "file";
+            string LFE = fileExtension.ToLower();
+            string[] wic = { ".doc", ".xls" };
+            string[] pic = { ".jpg", ".jpeg", ".bmp", ".png", ".gif" };
+            string[] ved = { ".avi", ".rmvb", ".mp4", ".flv", ".wmv", ".mkv", ".mpeg" };
+            string[] voi = { ".wav", ".mp3", ".wma", ".ogg", ".ape", ".acc", ".3gp" };
+            if (pic.Contains(LFE))
+            {
+                FileType = "image";
+            }
+            else if (ved.Contains(LFE))
+            {
+                FileType = "video";
+            }
+            else if (voi.Contains(LFE))
+            {
+                FileType = "voice";
+            }
+            else if (wic.Contains(LFE))
+            {
+                FileType = "doc";
+            }
+            return FileType;
+        }
+        /// <summary>
+        /// 读文件字节流
+        /// </summary>
+        /// <param name="fileData"></param>
+        /// <returns></returns>
+        private byte[] ReadFileBytes(HttpPostedFileBase fileData)
+        {
+            byte[] data;
+            using (Stream inputStream = fileData.InputStream)
+            {
+                MemoryStream memoryStream = inputStream as MemoryStream;
+                if (memoryStream == null)
+                {
+                    memoryStream = new MemoryStream();
+                    inputStream.CopyTo(memoryStream);
+                }
+                data = memoryStream.ToArray();
+            }
+            return data;
+        }
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeleteFileByID(int id)
+        {
+            t_cm_files m = bll.t_cm_files.Where(p => p.ID == id).FirstOrDefault();
+            string path = Server.MapPath(m.FilePath);
+            bll.t_cm_files.DeleteObject(m);
+            bll.SaveChanges();
+            return Json("ok");
+        }
+        /// <summary>
+        /// 获取事项
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetTempByID(int id)
+        {
+            t_ES_ContractTemplet m = bll.t_ES_ContractTemplet.Where(p => p.ID == id).FirstOrDefault();
+            return Json(m, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult saveConstract(t_CM_Constract info)
+        {
+            List<string> ids = new List<string>();
+            if (info.personid > 0)
+            {
+                ids.Add(info.personid + "");
+            }
+            if (!string.IsNullOrEmpty(info.personids))
+            {
+                string[] iii = info.personids.Split(',');
+                for (int i = 0; i < iii.Length; i++)
+                {
+                    if (!ids.Contains(iii[i]))
+                    {
+                        ids.Add(iii[i]);
+                    }
+                }
+            }
+            string strJson = "OK";
+            try
+            {
+                t_CM_Constract constract;
+                if (info.id > 0)
+                {
+                    constract = bll.t_CM_Constract.Where(c => c.id == info.id).First();
+                    if (constract != null)
+                    {
+                        constract.id = info.id;
+                        constract.CtrName = info.CtrName;
+                        constract.CtrCom = CurrentUser.Company;
+                        constract.CtrAdmin = info.CtrAdmin;
+                        constract.CtrInfo = info.CtrInfo;
+                        constract.start_time = info.start_time;
+                        constract.end_time = info.end_time;
+                        constract.personid = info.personid;
+                        var user = bll.t_CM_UserInfo.Where(p => p.UserID == info.personid).FirstOrDefault();
+                        if (user != null)
+                            constract.person = user.UserName;
+                        constract.personids = info.personids;
+                        constract.dateFixCount = info.dateFixCount;
+                        constract.testFixCount = info.testFixCount;
+                        constract.UID = info.UID;
+                        constract.Type = info.Type;
+                        constract.ConType = 3;
+                        constract.LinkMan = info.LinkMan;
+                        constract.Tel = info.Tel;
+                        constract.AddUserID = CurrentUser.UserID;
+                        constract.UnitCity = info.UnitCity;
+                        constract.UnitProvince = info.UnitProvince;
+
+                        constract.ProjectName = info.ProjectName;
+                        constract.Coordination = info.Coordination;
+                        constract.Approvers = info.Approvers;
+                        constract.ItemUsers = info.ItemUsers;
+                        constract.ProjectManager = info.ProjectManager;
+                        constract.BudgetUser = info.BudgetUser;
+
+                        constract.ConMoneys = info.ConMoneys;
+
+                        constract.ConNo = info.ConNo;
+                        constract.Adress = info.Adress;
+                        constract.Isaccomplish = info.Isaccomplish;
+                        constract.AmountMoney = info.AmountMoney;
+                        bll.ObjectStateManager.ChangeObjectState(constract, EntityState.Modified);
+                        bll.SaveChanges();
+
+                        strJson = "修改完成！";
+                    }
+                    else
+                    {
+                        constract = new t_CM_Constract();
+                        constract.createDate = DateTime.Now;
+                        constract.CtrName = info.CtrName;
+                        constract.CtrCom = CurrentUser.Company;
+                        constract.CtrAdmin = info.CtrAdmin;
+                        constract.CtrInfo = info.CtrInfo;
+                        constract.CtrPid = info.CtrPid;
+                        constract.start_time = info.start_time;
+                        constract.end_time = info.end_time;
+                        constract.personid = info.personid;
+                        var user = bll.t_CM_UserInfo.Where(p => p.UserID == info.personid).FirstOrDefault();
+                        if (user != null)
+                            constract.person = user.UserName;
+                        constract.personids = info.personids;
+                        constract.dateFixCount = info.dateFixCount;
+                        constract.testFixCount = info.testFixCount;
+                        constract.ConType = 3;
+                        constract.LinkMan = info.LinkMan;
+
+                        constract.Type = info.Type;
+                        constract.Tel = info.Tel;
+
+                        constract.AddUserID = CurrentUser.UserID;
+
+                        constract.UnitCity = info.UnitCity;
+                        constract.UnitProvince = info.UnitProvince;
+
+                        constract.ProjectName = info.ProjectName;
+                        constract.Coordination = info.Coordination;
+                        constract.Approvers = info.Approvers;
+                        constract.ItemUsers = info.ItemUsers;
+                        constract.ProjectManager = info.ProjectManager;
+                        constract.BudgetUser = info.BudgetUser;
+                        constract.ConMoneys = info.ConMoneys;
+                        constract.Adress = info.Adress;
+                        constract.Isaccomplish = 0;
+
+                        constract.ConNo = info.ConNo;
+
+                        constract.AmountMoney = info.AmountMoney;
+                        bll.t_CM_Constract.AddObject(constract);
+                        bll.SaveChanges();
+                        //t_CM_Constract con = bll.t_CM_Constract.Where(p => p.id == constract.id).FirstOrDefault();
+                        //con.ConNo = GetConNo(con.Type, con.id.ToString());
+                        //bll.ObjectStateManager.ChangeObjectState(con, EntityState.Modified);
+                        //bll.SaveChanges();
+                        strJson = "添加成功！";
+                    }
+                }
+                else
+                {
+                    constract = new t_CM_Constract();
+                    constract.createDate = DateTime.Now;
+                    constract.CtrName = info.CtrName;
+                    constract.CtrCom = CurrentUser.Company;
+                    constract.CtrAdmin = info.CtrAdmin;
+                    constract.CtrInfo = info.CtrInfo;
+                    constract.CtrPid = info.CtrPid;
+                    constract.start_time = info.start_time;
+                    constract.end_time = info.end_time;
+                    constract.personid = info.personid;
+                    var user = bll.t_CM_UserInfo.Where(p => p.UserID == info.personid).FirstOrDefault();
+                    if (user != null)
+                        constract.person = user.UserName;
+                    constract.personids = info.personids;
+                    constract.dateFixCount = info.dateFixCount;
+                    constract.testFixCount = info.testFixCount;
+                    constract.UID = info.UID;
+                    constract.ConType = 3;
+                    constract.LinkMan = info.LinkMan;
+                    constract.Tel = info.Tel;
+                    constract.Type = info.Type;
+                    constract.AddUserID = CurrentUser.UserID;
+                    constract.UnitCity = info.UnitCity;
+                    constract.UnitProvince = info.UnitProvince;
+                    constract.ProjectName = info.ProjectName;
+                    constract.Coordination = info.Coordination;
+                    constract.Approvers = info.Approvers;
+                    constract.ItemUsers = info.ItemUsers;
+                    constract.ProjectManager = info.ProjectManager;
+                    constract.BudgetUser = info.BudgetUser;
+
+                    constract.ConMoneys = info.ConMoneys;
+                    constract.ConNo = info.ConNo;
+                    constract.Adress = info.Adress;
+                    constract.Isaccomplish = 0;
+
+                    constract.AmountMoney = info.AmountMoney;
+                    bll.t_CM_Constract.AddObject(constract);
+
+                    bll.SaveChanges();
+                    //t_CM_Constract con = bll.t_CM_Constract.Where(p => p.id == constract.id).FirstOrDefault();
+                    //con.ConNo = GetConNo(con.Type, con.id.ToString());
+                    //bll.ObjectStateManager.ChangeObjectState(con, EntityState.Modified);
+                    //bll.SaveChanges();
+                    strJson = "添加成功！";
+                }
+                sendMsg(ids);
+                return Content(strJson);
+            }
+            catch (Exception e)
+            {
+                return Content("处理失败！");
+            }
+
+        }
+        private string GetConNo(int? type, string conid)
+        {
+            string res = string.Empty;
+            string Contype;
+            switch (type)
+            {
+                case 1:
+                    Contype = "CB";
+                    break;
+                case 2:
+                    Contype = "SJ";
+                    break;
+                case 3:
+                    Contype = "CP";
+                    break;
+                case 4:
+                    Contype = "YW";
+                    break;
+                case 5:
+                    Contype = "GL";
+                    break;
+                case 6:
+                    Contype = "SLGL";
+                    break;
+                default:
+                    Contype = "YW";
+                    break;
+
+            }
+            res = Contype + "-" + DateTime.Now.ToString("yy") + "-" + conid;
+            return res;
+
+        }
+        //批量发送短信;
+        public void sendMsg(List<string> personids)
+        {
+            string ids = "0";
+            for (int i = 0; i < personids.Count; i++)
+            {
+                ids += ("," + personids[i]);
+            }
+            string sql = "SELECT * FROM t_CM_UserInfo WHERE UserID IN (" + ids + ")";
+            List<t_CM_UserInfo> listPDRinfo = bll.ExecuteStoreQuery<t_CM_UserInfo>(sql).ToList();
+            for (int i = 0; i < listPDRinfo.Count; i++)
+            {
+                UtilsSms.smsContractTemp(listPDRinfo[i].Mobilephone, "有合同事项");
+            }
+        }
+
+
+
+        //加载合同信息；
+        public ActionResult LoadConstractInfo(int id)
+        {
+            string sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID =t_CM_Unit.UnitID where t_CM_Constract.id=" + id;
+            Constract listPDRinfo = bll.ExecuteStoreQuery<Constract>(sql).FirstOrDefault();
+            return Json(listPDRinfo, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult LoadConstract()
+        {
+
+
+            //string str = HomeController.GetUserID();
+            string str = "";
+
+            var userlist = bll.t_CM_UserInfo.Where(p => p.UID == CurrentUser.UID).Select(p => p.UserID).ToList().Distinct();
+            foreach (var item in userlist)
+            {
+                str += item + ",";
+            }
+            if (string.IsNullOrEmpty(str))
+            {
+                return Content("");
+            }
+            str = str.Substring(0, str.Length - 1);
+            string sql = "SELECT  a.ID,a.ProjectName,a.Type,a.Adress,a.Type,c.UserName as ProjectManager,a.Tel,b.UnitName as CtrPName,a.Coordination FROM  t_CM_Constract a inner join t_CM_Unit b on a.UID =b.UnitID inner join t_CM_UserInfo c on a.ProjectManager=c.UserID where a.AddUserID IN (" + str + ")";
+            List<ProJectMap> listPDRinfo = bll.ExecuteStoreQuery<ProJectMap>(sql).ToList();
+            return Json(listPDRinfo, JsonRequestBehavior.AllowGet);
+        }
+
+        public class ProJectMap
+        {
+            public int ID { get; set; }
+            public string ProjectName { get; set; }
+            public string Adress { get; set; }
+            public string ProjectManager { get; set; }
+            public string CtrPName { get; set; }
+            public string Tel { get; set; }
+            public string Coordination { get; set; }
+            public int? Type { get; set; }
+        }
+        public ActionResult GetIsExaminationUser(int conid, int itemid = 0)
+        {
+            bool isItemAdminUser = false;
+            bool isApproversUser = false;
+            bool isPersonid = false;
+            bool isCSPersonid = false;
+            bool isFuZeUser = false;
+            try
+            {
+                //var m = bll.t_ES_ContractTemplet.Where(p => p.ID == id).FirstOrDefault();
+                var model = bll.t_CM_Constract.Where(p => p.id == conid).FirstOrDefault();
+                if (model != null)
+                {
+                    //var model = bll.t_CM_Constract.Where(p => p.id == m.conid).FirstOrDefault();
+                    List<string> uids = model.ItemUsers.Split(',').ToList();
+                    if (uids.Contains(CurrentUser.UserID.ToString()))
+                    {
+                        isItemAdminUser = true;
+                    }
+                    List<string> Auids = model.Approvers.Split(',').ToList();
+                    if (Auids.Contains(CurrentUser.UserID.ToString()))
+                    {
+                        isApproversUser = true;
+                    }
+                    List<string> Puids = model.personid.ToString().Split(',').ToList();
+                    if (Puids.Contains(CurrentUser.UserID.ToString()))
+                    {
+                        isPersonid = true;
+                    }
+                    List<string> CSuids = model.personids.Split(',').ToList();
+                    if (CSuids.Contains(CurrentUser.UserID.ToString()))
+                    {
+                        isCSPersonid = true;
+                    }
+                    if (itemid != 0)
+                    {
+                        var m = bll.t_ES_ContractTemplet.Where(p => p.ID == itemid).FirstOrDefault();
+                        List<string> Fzuids = m.PersonID.ToString().Split(',').ToList();
+                        if (Fzuids.Contains(CurrentUser.UserID.ToString()))
+                        {
+                            isFuZeUser = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+            return Json(new { isItemAdminUser = isItemAdminUser, isApproversUser = isApproversUser, isPersonid = isPersonid, isCSPersonid = isCSPersonid, isFuZeUser = isFuZeUser });
+        }
+
+        public ActionResult UpdateState(int isok, string reason, int id)
+        {
+            try
+            {
+                var model = bll.t_ES_ContractTemplet.Where(p => p.ID == id).FirstOrDefault();
+                model.IsOk = isok;
+                if (isok == 5)
+                {
+                    model.Reason = reason;
+                }
+                if (model.Type == 2 && model.IsOk == 4)
+                {
+                    var conModel = bll.t_CM_Constract.Where(p => p.id == model.conid).FirstOrDefault();
+                    conModel.ReturnedMoney = Math.Round((model.Moneys.Value / conModel.ConMoneys.Value * 100), 2);
+                    bll.ObjectStateManager.ChangeObjectState(conModel, EntityState.Modified);
+                    bll.SaveChanges();
+                }
+                bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                bll.SaveChanges();
+                t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+                mo.UserID = CurrentUser.UserID;
+                mo.CreatTime = DateTime.Now;
+                mo.ItemID = id;
+                if (isok == 1)
+                    mo.Remarks = mo.CreatTime.ToString() + "待处理" + model.ID + "_" + model.Name + "_事項";
+                else if (isok == 2)
+                    mo.Remarks = mo.CreatTime.ToString() + "已反馈" + model.ID + "_" + model.Name + "_事項";
+                else if (isok == 3)
+                    mo.Remarks = mo.CreatTime.ToString() + "待进场" + model.ID + "_" + model.Name + "_事項";
+                else if (isok == 4)
+                    mo.Remarks = mo.CreatTime.ToString() + "已完成" + model.ID + "_" + model.Name + "_事項";
+                else if (isok == 5)
+                    mo.Remarks = mo.CreatTime.ToString() + "已拒接" + model.ID + "_" + model.Name + "_事項";
+                AddOlog(mo);
+                return Json("ok");
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        public ActionResult AddLog(int id, string rearmks)
+        {
+            t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
+            mo.UserID = CurrentUser.UserID;
+            mo.CreatTime = DateTime.Now;
+            mo.ItemID = id;
+            mo.Remarks = mo.CreatTime.ToString() + "：" + rearmks;
+            AddOlog(mo);
+            return Json("ok");
+        }
+
+        private void AddOlog(t_CM_ItemOperationLog model)
+        {
+            bll.t_CM_ItemOperationLog.AddObject(model);
+            bll.SaveChanges();
+        }
+
+        public ActionResult GetLog(string username, string content, string time, int id = 0, int rows = 10, int page = 1)
+        {
+            try
+            {
+
+                string sql = "select c.UserName,a.CreatTime,a.Remarks from t_CM_ItemOperationLog a inner join t_ES_ContractTemplet b on a.ItemID=b.ID inner join t_CM_UserInfo c on a.UserID=c.UserID where 1=1";
+                if (id != 0)
+                {
+                    sql += " and a.ItemID=" + id;
+                }
+                if (!string.IsNullOrEmpty(username))
+                {
+                    sql += " and c.UserName like '%" + username + "%'";
+                }
+                if (!string.IsNullOrEmpty(time))
+                {
+                    sql += " and  CONVERT(varchar(10),a.CreatTime, 120)='" + time + "'";
+                }
+                if (!string.IsNullOrEmpty(content))
+                {
+                    sql += " and a.Remarks like '%" + content + "%'";
+                }
+                sql += " order by CreatTime desc";
+                var result = bll.ExecuteStoreQuery<LogView>(sql).Skip((page - 1) * rows).Take(rows).ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        public class LogView
+        {
+            public string UserName { get; set; }
+            public DateTime? CreatTime { get; set; }
+            public string Remarks { get; set; }
+        }
+
+
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeleteItem(int id)
+        {
+            t_ES_ContractTemplet m = bll.t_ES_ContractTemplet.Where(p => p.ID == id).FirstOrDefault();
+
+            bll.t_ES_ContractTemplet.DeleteObject(m);
+            bll.SaveChanges();
+            return Json("ok");
+        }
+
+
+        //加载合同列表；
+        public ActionResult LoadConstractDatas(string creatTime, int rows, int page, string proName, int type = 0, int areaid = 0)
+        {
+            try
+            {
+                string sql = "";
+                if (CurrentUser.RoleID == 1)
+                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID ORDER BY createDate DESC,id DESC";
+                else
+                {
+                    string str = "";
+
+                    var userlist = bll.t_CM_UserInfo.Where(p => p.UID == CurrentUser.UID).Select(p => p.UserID).ToList().Distinct();
+                    foreach (var item in userlist)
+                    {
+                        str += item + ",";
+                    }
+                    //if (Convert.ToBoolean(CurrentUser.IsAdmin))
+                    //{
+                    //    var Ulist = bll.t_CM_UserInfo.Where(p => p.UID == CurrentUser.UID).ToList();
+                    //    foreach (var item in Ulist)
+                    //    {
+                    //        if (!string.IsNullOrEmpty(item.UNITList))
+                    //            str += item.UserID + ",";
+                    //    }
+                    //    if (!string.IsNullOrEmpty(str))
+                    //        str = str.Substring(0, str.Length - 1);
+
+                    //}
+                    //else
+                    //{
+                    //    str = CurrentUser.UserID.ToString();
+                    //}
+                    if (string.IsNullOrEmpty(str))
+                    {
+                        return Content("");
+                    }
+                    str = str.Substring(0, str.Length - 1);
+                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where t_CM_Constract.AddUserID IN(" + str + ")  ORDER BY createDate DESC,id DESC";
+                }
+                List<Constract> list = bll.ExecuteStoreQuery<Constract>(sql).ToList();
+                if (!string.IsNullOrEmpty(proName))
+                {
+                    list = list.Where(c => c.ProjectName.ToLower().Contains(proName.ToLower())).ToList();
+                }
+                if (type != 0)
+                {
+                    list = list.Where(c => c.Type == type).ToList();
+                }
+                if (areaid != 0)
+                {
+                    string a = areaid.ToString();
+                    list = list.Where(c => c.UnitCity == a).ToList();
+                }
+                if (!string.IsNullOrEmpty(creatTime))
+                {
+                    DateTime d = Convert.ToDateTime(creatTime);
+                    list = list.Where(c => c.createDate == d).ToList();
+                }
+                for (var i = 0; i < list.Count(); i++)
+                {
+                    if (IsAlarm(Convert.ToInt32(list[i].id)))
+                    {
+                        list[i].IsAlarm = "true";
+                    }
+                    else
+                    {
+                        list[i].IsAlarm = "false";
+                    }
+                }
+                return Content(Common.List2Json(list, rows, page));
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                return Content("");
+            }
+        }
+        public bool IsAlarm(int id)
+        {
+            bool flag = false;
+            List<t_ES_ContractTemplet> list = bll.t_ES_ContractTemplet.Where(p => p.conid == id && p.IsOk == 0).ToList();
+            foreach (var item in list)
+            {
+                if (item.StartTime <= DateTime.Now.AddDays(Convert.ToDouble(item.BeforDay)))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
+        }
+        public JsonResult GetShopTruck()
+        {
+            try
+            {
+                if (CurrentUser != null)
+                {
+                    string str = HomeController.GetUID();
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        string sql = "select a.*,b.UnitName,b.LinkAddress from t_CM_ShopTruck a inner join t_CM_Unit b on a.UID=b.UnitID Where UID IN (" + str + ")";
+                        var result = bll.ExecuteStoreQuery<TruckView>(sql);
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json("No Data", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json("Please Log In", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        public class TruckView : t_CM_ShopTruck
+        {
+            public string LinkAddress { get; set; }
+            public string UnitName { get; set; }
+        }
+
+
+        public JsonResult GetItemList()
+        {
+            try
+            {
+                //string str = HomeController.GetUserID();
+                //string sql = "select ID FROM t_CM_Constract WHERE AddUserID IN (" + str + ")";
+                //List<int> conids = bll.ExecuteStoreQuery<int>(sql).ToList();
+
+                // var rr = bll.t_ES_ContractTemplet.Where(p => p.Type == type).ToList();
+
+
+                // var listUSERid = bll.t_ES_ContractTemplet.Where(p => CurrentUser.UserID.Contains(p.conid.Value)).Select(p => p.PersonID).Distinct().ToList();
+                if (CurrentUser.RoleID == 1)
+                {
+                    var list = bll.t_ES_ContractTemplet.Where(p => p.IsOk < 4 || p.IsOk == 5).ToList();
+                    var result = from n in list
+                                 select new
+                                 {
+                                     id = n.ID,
+                                     ProID = n.conid,
+                                     Name = n.Name,
+                                     EndTime = n.EndTime.ToString(),
+                                     State = GetStateName(n.IsOk.Value),
+                                     Type = n.Type,
+                                     Adress = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                     Coordination = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                     person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                     FistDate = n.FistDate.ToString(),
+                                     ProjectName = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().ProjectName
+                                 };
+
+                    var list1 = bll.t_ES_ContractTemplet.Where(p => p.IsOk == 4).ToList();
+                    var result1 = from n in list1
+                                  select new
+                                  {
+                                      id = n.ID,
+                                      ProID = n.conid,
+                                      Name = n.Name,
+                                      EndTime = n.EndTime.ToString(),
+                                      State = GetStateName(n.IsOk.Value),
+                                      Type = n.Type,
+                                      Adress = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                      Coordination = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                      person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                      FistDate = n.FistDate.ToString(),
+                                      ProjectName = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().ProjectName
+                                  };
+                    return Json(new { fished_Item = result1, unfished_Item = result }, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    var list = bll.t_ES_ContractTemplet.Where(p => CurrentUser.UserID == p.PersonID && (p.IsOk < 4 || p.IsOk == 5)).ToList();
+                    var result = from n in list
+                                 select new
+                                 {
+                                     id = n.ID,
+                                     ProID = n.conid,
+                                     Name = n.Name,
+                                     EndTime = n.EndTime.ToString(),
+                                     State = GetStateName(n.IsOk.Value),
+                                     Type = n.Type,
+                                     Adress = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                     Coordination = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Coordination,
+                                     person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                     FistDate = n.FistDate.ToString(),
+                                     ProjectName = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().ProjectName
+                                 };
+
+                    var list1 = bll.t_ES_ContractTemplet.Where(p => CurrentUser.UserID == p.PersonID && p.IsOk == 4).ToList();
+                    var result1 = from n in list1
+                                  select new
+                                  {
+                                      id = n.ID,
+                                      ProID = n.conid,
+                                      Name = n.Name,
+                                      EndTime = n.EndTime.ToString(),
+                                      State = GetStateName(n.IsOk.Value),
+                                      Type = n.Type,
+                                      Adress = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Adress,
+                                      Coordination = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().Coordination,
+                                      person = bll.t_CM_UserInfo.Where(p => p.UserID == n.PersonID).FirstOrDefault().UserName,
+                                      FistDate = n.FistDate.ToString(),
+                                      ProjectName = bll.t_CM_Constract.Where(p => p.id == n.conid).FirstOrDefault().ProjectName
+                                  };
+                    return Json(new { fished_Item = result1, unfished_Item = result }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message);
+            }
+        }
+        public string GetStateName(int id)
+        {
+            string name = "待接收";
+            switch (id)
+            {
+                case 0:
+                    name = "待接收";
+                    break;
+                case 1:
+                    name = "待处理";
+                    break;
+                case 2:
+                    name = "已反馈";
+                    break;
+                case 3:
+                    name = "待审核";
+                    break;
+                case 4:
+                    name = "已完成";
+                    break;
+                case 5:
+                    name = "未通过";
+                    break;
+                case 6:
+                    name = "已逾期";
+                    break;
+
+            }
+            return name;
+        }
+
+        public ActionResult updateArrivedTime(int ItemID, float distance)
+        {
+
+            string time = DateTime.Now.ToString();
+            string DstsInfo;
+            if (distance < 300)
+                DstsInfo = "正常打卡，距离" + distance + "米";
+            else
+                DstsInfo = "异常打卡，距离" + distance + "米";
+            //UPDATE t_PM_Order SET FistDate='2018-02-03 17:40:15.097',DstsInfo='正常打卡，距离100米' WHERE OrderID=39
+            string sql = "UPDATE t_ES_ContractTemplet SET FistDate='" + time + "' WHERE ID=" + ItemID;
+            bll.ExecuteStoreCommand(sql);
+            return Content("{\"resultCode\": 0,\"results\":{\"FistDate\":\"" + time + "\"}}");
+
+        }
+
+        public ActionResult QueRenProject(int id)
+        {
+            try
+            {
+                var model = bll.t_CM_Constract.Where(p => p.id == id).FirstOrDefault();
+                model.Isaccomplish = 1;
+                bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                bll.SaveChanges();
+                return Json("ok", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("error" + ex.Message);
+            }
+        }
+        #endregion
+
     }
 }

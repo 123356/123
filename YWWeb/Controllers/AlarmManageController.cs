@@ -19,7 +19,7 @@ using Yunpian.model;
 
 namespace YWWeb.Controllers
 {
-    public class AlarmManageController :UserControllerBaseEx// Controller
+    public class AlarmManageController : UserControllerBaseEx// Controller
     {
         //报警管理
         // GET: /AlarmManage/
@@ -104,7 +104,7 @@ namespace YWWeb.Controllers
 
         //报警数据查询
         [Login]
-        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0, string startdate = "", string enddate = "", string typename = "")
+        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "")
         {
             try
             {
@@ -118,24 +118,39 @@ namespace YWWeb.Controllers
                 }
                 if (!enddate.Equals(""))
                     strquery = strquery + " and AlarmDateTime<='" + enddate + "'";
-                typename = typename.Replace("==全部==", "");
-                if (!typename.Equals(""))
-                    strquery = strquery + " and AlarmCate='" + typename + "'";
+                //typename = typename.Replace("==全部==", "");
+                //if (!typename.Equals(""))
+                //    strquery = strquery + " and AlarmCate='" + typename + "'";
                 if (pid > 0)
                     strquery = strquery + " and pid=" + pid;
                 else
                     strquery = strquery + " and pid in (" + PDRList + ")";
+               
                 //string strsql = "select a.*,b.Remarks as RArae from (select * from t_AlarmTable_en where " + strquery + " ) a left join t_CM_PointsInfo b on a.TagID=b.TagID   order by AlarmID desc";
                 string strsql = "select count(*) totalRows from t_AlarmTable_en  where " + strquery;
                 List<RowCount> rowcount = bll.ExecuteStoreQuery<RowCount>(strsql).ToList();
-                string strJson = "{}";
+                string strJson = "{\"total\":0,\"rows\":[]}";
                 if (rowcount.Count > 0 && rowcount[0].totalRows > 0)
                 {
-                    strsql = "select c.*,b.Remarks as RArae from (select top " + rows + " * from t_AlarmTable_en where " + strquery 
-                        + " and AlarmID not in(select alarmid from(select top "+rows*(page-1)+" alarmid from t_AlarmTable_en  where " + strquery
-                    +" order by AlarmID desc ) a) ) c left join t_CM_PointsInfo b on c.TagID=b.TagID   order by AlarmID desc";
+                  
+
+                    strsql = "select c.*,b.Remarks as RArae,b.单位 as Unit from (select top " + rows + " * from t_AlarmTable_en where " + strquery
+                        + " and AlarmID not in(select alarmid from(select top " + rows * (page - 1) + " alarmid from t_AlarmTable_en  where " + strquery
+                    + " order by AlarmID desc ) a) ) c left join t_CM_PointsInfo b on c.TagID=b.TagID  where 1=1";
+
+                    if (dtid > 0)
+                        strsql += " and b.DataTypeID=" + dtid;
+                    strsql += " order by AlarmID desc";
                     List<AralmView> list = bll.ExecuteStoreQuery<AralmView>(strsql).ToList();
-                    strJson = Common.List2Json(list,(int)rowcount[0].totalRows);
+
+                    foreach (var item in list)
+                    {
+                        if (!string.IsNullOrEmpty(item.Unit))
+                            item.AlarmCate = item.AlarmCate + "(" + item.Unit + ")";
+                        if (item.AlarmCate == "开关量")
+                            item.AlarmMaxValue = "";
+                    }
+                    strJson = Common.List2Json(list, (int)rowcount[0].totalRows);
                 }
                 //string strJson = Common.List2Json(list, rows, page);
                 return Content(strJson);
@@ -147,9 +162,10 @@ namespace YWWeb.Controllers
                 return Content("");
             }
         }
-        public class AralmView:t_AlarmTable_en
+        public class AralmView : t_AlarmTable_en
         {
             public string RArae { get; set; }
+            public string Unit { get; set; }
         }
 
         //确认所有配电房的报警
@@ -158,7 +174,7 @@ namespace YWWeb.Controllers
             try
             {
                 string PDRList = HomeController.GetPID(CurrentUser.UNITList);
-               // string PDRList = CurrentUser.PDRList;
+                // string PDRList = CurrentUser.PDRList;
                 if (!PDRList.Equals(""))
                 {
                     string sSql = "update [t_AlarmTable_en] set AlarmState = 0,AlarmConfirm='已确认',UserName='" + CurrentUser.UserName + "',ConfirmDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "' where PID in (" + PDRList + ") and AlarmConfirm='未确认' and AlarmState>0";
@@ -193,13 +209,15 @@ namespace YWWeb.Controllers
                         List<t_AlarmTable_en> list = bll.t_AlarmTable_en.Where(p => p.AlarmID == AlarmID).ToList();
                         if (list != null && list.Count > 0)
                         {
-                            try {
+                            try
+                            {
                                 t_AlarmTable_en alarm = list.First();
                                 t_PM_Order order = new t_PM_Order();
                                 order.PID = alarm.PID;
-                                t_CM_PDRInfo pdrinfo= bll.t_CM_PDRInfo.Where(p => p.PID == alarm.PID).ToList().First();
+                                t_CM_PDRInfo pdrinfo = bll.t_CM_PDRInfo.Where(p => p.PID == alarm.PID).ToList().First();
                                 order.PName = pdrinfo.Name;
-                                try {
+                                try
+                                {
                                     string c = pdrinfo.Coordination;
                                     string[] xx = c.Split('|');
                                     order.Latitude = decimal.Parse(xx[1]);
@@ -209,9 +227,10 @@ namespace YWWeb.Controllers
                                 {
 
                                 }
-                                order.OrderName = order.PName + "应急抢修" + DateTime.Now;    
-                                List<t_CM_Constract> ll= bll.t_CM_Constract.Where(p => p.CtrPid == alarm.PID).ToList();                          
-                                if(ll==null||ll.Count<=0){
+                                order.OrderName = order.PName + "应急抢修" + DateTime.Now;
+                                List<t_CM_Constract> ll = bll.t_CM_Constract.Where(p => p.CtrPid == alarm.PID).ToList();
+                                if (ll == null || ll.Count <= 0)
+                                {
                                     return Content("报警已确认！\n未找到合同中的负责人！\n自动下发工单失败，请手工处理！");
                                 }
                                 t_CM_Constract t = ll.First();
@@ -225,7 +244,7 @@ namespace YWWeb.Controllers
                                 order.PlanDate = DateTime.Now;
                                 order.UserID = listUsers.First().UserID;
                                 order.Priority = 1;
-                                order.OrderNO = DateTime.Now.Ticks+"";
+                                order.OrderNO = DateTime.Now.Ticks + "";
                                 order.OrderType = "应急抢修";
                                 order.DressCodeID = 2;
                                 order.OrderState = 0;//0待接收 1已受理 2已完成
@@ -246,7 +265,7 @@ namespace YWWeb.Controllers
                                 string error = ex.ToString();
                                 return Content("报警已确认！\n自动下发工单失败，请手工处理！");
                             }
-                        }   
+                        }
                     }
                     return Content("报警已确认！");
                 }
@@ -265,7 +284,7 @@ namespace YWWeb.Controllers
 
         public ActionResult getMan(int AlarmID)
         {
-            string result="";
+            string result = "";
             try
             {
                 t_AlarmTable_en alarm = bll.t_AlarmTable_en.Where(p => p.AlarmID == AlarmID).ToList().First();
@@ -279,19 +298,21 @@ namespace YWWeb.Controllers
                 List<t_CM_UserInfo> listUsers = bll.ExecuteStoreQuery<t_CM_UserInfo>(sql).ToList();
                 if (listUsers != null | listUsers.Count > 0)
                 {
-                    return Content("联系班长："+listUsers.First().UserName +"."+ listUsers.First().Mobilephone);
+                    return Content("联系班长：" + listUsers.First().UserName + "." + listUsers.First().Mobilephone);
                 }
                 return Content(listUsers.First().Mobilephone);
             }
             catch
             {
-                 return Content(result);
+                return Content(result);
             }
         }
 
-       private string ValueReset(double value, string AlarmCate) {
+        private string ValueReset(double value, string AlarmCate)
+        {
             string result = "";
-            if (AlarmCate == "开关量") {
+            if (AlarmCate == "开关量")
+            {
                 if (value == 0)
                     result = "关";
                 else
@@ -302,14 +323,14 @@ namespace YWWeb.Controllers
 
         private string parserContent(Result result)
         {
-            ResultT t=  JsonConvert.DeserializeObject<ResultT>(result.responseText);
+            ResultT t = JsonConvert.DeserializeObject<ResultT>(result.responseText);
             if (t.code == 0)
             {
                 return "发送工单短信成功！";
             }
             else
             {
-                return "发送工单短信失败！\n原因："+t.msg;
+                return "发送工单短信失败！\n原因：" + t.msg;
             }
             throw new NotImplementedException();
         }
@@ -378,7 +399,7 @@ namespace YWWeb.Controllers
         {
             try
             {
-                PubClass.Exportdoc.ExportWordFromAlarm(AlarmID,CurrentUser);
+                PubClass.Exportdoc.ExportWordFromAlarm(AlarmID, CurrentUser);
                 string fileName = "/DownLoad/alarm/alarm" + AlarmID + ".doc";
 
                 return Content(fileName);

@@ -831,7 +831,7 @@ namespace YWWeb.Controllers
             }
 
             //orderState = 2 有工单申请进场+拒绝,需要提示，报警            
-            strquery += " and (OrderState=2 or OrderState=5 )";
+            strquery += " and (OrderState=2 or OrderState=5 or OrderState=0)";
             //if (orderState > 0)
             //    strquery += " and OrderState=" + orderState;
 

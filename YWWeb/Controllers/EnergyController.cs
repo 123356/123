@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text;
 using YWWeb;
+using Newtonsoft.Json;
 
 namespace YWWeb.Controllers
 {
@@ -53,6 +54,22 @@ namespace YWWeb.Controllers
             }
             sblist.Append("</tr>");
             return sblist.ToString();
+        }
+        //获取事项列表
+        public ActionResult GetDefaultTemp(int type)
+        {
+            List<t_ES_DefaultTemplet> list = new List<t_ES_DefaultTemplet>();
+            using (var bll = new pdermsWebEntities())
+            {
+                list = bll.t_ES_DefaultTemplet.Where(p => p.Type == type).ToList();
+            }
+            return Json(list);
+        }
+        //获取负责人列表
+        public ActionResult getUserInfo()
+        {
+            List<t_CM_UserInfo> list = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo order by UserName asc").ToList();
+            return Json(JsonConvert.SerializeObject(list));
         }
     }
 }
