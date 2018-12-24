@@ -17,8 +17,10 @@ namespace DAO
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<HisDataDBContext>(null);
+            Database.SetInitializer<VRealTimeDataDBContext>(null);
             modelBuilder.Entity<t_V_RealTimeData>()
+              .HasKey(t => new { t.TagID });
+            modelBuilder.Entity<t_CM_PointsInfo>()
               .HasKey(t => new { t.TagID });
             base.OnModelCreating(modelBuilder);
         }
@@ -51,6 +53,15 @@ namespace DAO
         {
             return "t_SM_RealTimeData_" + pid.ToString("00000");
         }
+
+        public IList<t_V_RealTimeData> GetRealTimeData_linq(int pageSize, int nPage, int pid, int cid, int tdid, int did)
+        {
+            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
+            var data = PointDatas.Where(p=> p.PID==pid).Select(v=>new  {TagID=v.TagID}).Select(v=>new t_V_RealTimeData { TagID=v.TagID});
+            return data as IList<t_V_RealTimeData>;
+        }
+
         public DbSet<t_V_RealTimeData> Datas { get; set; }
+        public DbSet<t_CM_PointsInfo> PointDatas { get; set; }
     }
 }

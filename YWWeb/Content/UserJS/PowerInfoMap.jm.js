@@ -1,5 +1,15 @@
 ﻿var x, y;
 var polyline = null
+function createLine() {
+    polyline = new BMap.Polygon([
+        new BMap.Point(116.545649, 39.780209),//右上
+        new BMap.Point(116.546026, 39.77971),//右下
+        new BMap.Point(116.544167, 39.778873),//左下
+        new BMap.Point(116.543781, 39.779337)//左上
+
+    ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+    powerMap.addOverlay(polyline);
+}
 try {
     var geo = new jQuery.AMUI.Geolocation({
         enableHighAccuracy: true,
@@ -28,11 +38,22 @@ $.post("/PDRInfo/getStationInfo", function (data) {
     var arrdata = data.split('$');
     var arr = eval("(" + arrdata[0] + ")");
     for (var i = 0; i < arr.length; i++) {
+        
         if (arr[i].title == '1号_移动电源箱') {
             markerArr.push(arr[i])
         }
         if (arr[i].title == '1号_工程车') {
             markerArr.push(arr[i])
+
+            var lng = arr[i].point.split(",")[0]
+            var lat = arr[i].point.split(",")[1]
+
+            var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), polyline);
+                if (!re) {
+                    $("#hitnInfo").text("工程车超出范围")
+                    $("#alarmDyx").show()
+                }
+           
         }
     }
    
@@ -155,6 +176,7 @@ var changeMarkerArr = new Array()
 function addMarker() {
     console.log(markerArr)
     for (var i = 0; i < markerArr.length; i++) {
+        console.log(markerArr[i])
         var a = markerArr[i];
         //console.log(a);
         var b = a.point.split("|")[0];
@@ -194,7 +216,7 @@ function addMarker() {
     }, 1000)
     */
 
-    //console.log(changeMarkerArr)
+    console.log(changeMarkerArr)
 }
 
 
@@ -225,6 +247,10 @@ function showinfomessage(marker, point, data) {
             break
 
     }
+    var time = data.CoordinationTime 
+    if (time == null) {
+        time = "--"
+    }
     /*if (data.Type == 1) {*/
 
     if (data.title == '1号_移动电源箱') {
@@ -235,7 +261,7 @@ function showinfomessage(marker, point, data) {
         html += '<tr style="font-size:11px"><td >电压等级：' + data.VName + '</td></tr>'
 
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">联系人：张工<span style="margin-left:40px">电话：13681345687</span></td></tr>'
-        html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime1">定位时间：' + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + '</td></tr>'
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime1">定位时间：' + time + '</td></tr>'
     } else {
         html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.title + '</span><a href="JavaScript:toDetail(' + data.pid + ')"></a></td></tr>'
         html += '<tr style="font-size:11px"><td ><i class="iconfont icon-location"></i>' + data.adress + '</td></tr>'
@@ -243,20 +269,9 @@ function showinfomessage(marker, point, data) {
         html += '<tr style="font-size:11px"><td >车牌：京GH4348</td></tr>'
 
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白运光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
-        html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + '</td></tr>'
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
     }
-   /* html += '<tr style="font-size:11px"><td >联系电话：' + data.LinkMobile + '</td></tr>'
-        html += '<tr style="font-size:11px"><td style="padding-top:5px;">客户经理：' + data.CSMMan + '<span style="margin-left:40px">电话：</span>' + data.CSMPhone + '</td></tr>'
-      */
-    /* } else if (data.Type == 2) {
-        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i>' + data.UnitName + '<a href="JavaScript:toDetail(' + data.UnitID + ')">详情&gt;</a>' + isAlarm + '</td></tr>'
-        html += '<tr style=""><td style="padding-top:5px"><i class="iconfont icon-location"></i>' + data.LinkAddress + '</td></tr>'
-        html += '<tr style=""><td style="padding-top:12px"><hr></td></tr>'
-        html += '<tr ><td style="padding-top:5px;">所属公司名称：' + data.companyName + '</td></tr>'
-        html += '<tr ><td style="padding-top:5px;">装机容量：' + data.InstalledCapacity + '</td></tr>'
-        html += '<tr ><td style="padding-top:5px;">电厂性质：' + data.Nature + '</td></tr>'
-        html += '<tr style=""><td style="padding-top:12px;">联系人：' + data.LinkMan + '<span style="margin-left:40px">电话：</span>' + data.LinkMobile + '</td></tr>'
-    }*/
+   
     html += '</table>';
     var infoWindow = new BMap.InfoWindow(html, opts);  // 创建信息窗口对象
     var infoBox = new BMapLib.InfoBox(powerMap, html, {
@@ -416,16 +431,7 @@ function killErrors() { return true; } window.onerror = killErrors;
 
 //创建多边形区域
 
-function createLine() {
-    polyline = new BMap.Polygon([
-        new BMap.Point(116.545649, 39.780209),//右上
-		new BMap.Point(116.546026, 39.77971),//右下
-		new BMap.Point(116.544167, 39.778873),//左下
-		new BMap.Point(116.543781, 39.779337)//左上
 
-    ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
-    powerMap.addOverlay(polyline);
-}
 
 
 //生产随机坐标
@@ -450,14 +456,19 @@ function changeMarkerLocation(data) {
        // var lng = getRound(changeMarkerArr[i].point.lng);
         //var lat = getRound(changeMarkerArr[i].point.lat);
         //var point = new BMap.Point(lng, lat)
+       
         if (changeMarkerArr[i].pid == data.pid) {
             changeMarkerArr[i].setPosition(data.point);
-            if (data.pid == "167") {
+            markerArr[i].CoordinationTime = data.time
+            
+            if (data.pid == "169") {
                 var re = BMapLib.GeoUtils.isPointInPolygon(data.point, polyline);
                 if (!re) {
+                    $("#hitnInfo").text("工程车超出范围")
                     $("#alarmDyx").show()
                 }
             }
+            showinfomessage(changeMarkerArr[i], data.point, markerArr[i])
 
         }
     }
@@ -466,7 +477,7 @@ function changeMarkerLocation(data) {
 //连接mqtt
 function mqtt() {
     
-    var wsbroker = "59.110.153.200"; location.hostname;  //mqtt websocket enabled broker ip
+    var wsbroker = "59.110.153.200"; //location.hostname;  //mqtt websocket enabled broker ip
     var wsport = 15675; // 端口号
     //连接选项
     var options = {
@@ -494,6 +505,7 @@ function mqtt() {
         if (responseObject.errorCode !== 0) { console.log("异常掉线，掉线信息为:" + responseObject.errorMessage); client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid()); }
     };
     client.onMessageArrived = function (message) {
+        console.log(message)
         var msg = message.payloadString
         msg = JSON.parse(msg)
         var lng = msg.location.split("|")[0]
@@ -502,7 +514,8 @@ function mqtt() {
         
         var data = {
             pid: msg.pid,
-            point: point
+            point: point,
+            time:msg.time
         }
         changeMarkerLocation(data);
         $("#dwtime1").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");

@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "/script/modules/common/views/manager_content.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;;;qBAI+B,OAAO;;;;wBACjB,WAAW;;sBACb,QAAQ;;;;+CACD,yCAAyC;;;;6CAC1C,uCAAuC;;;;iCACxC,uBAAuB;;;;kCACxB,+BAA+B;;;;AAItD,IAAI,cAAc,GAAG,mBAAM,WAAW,CAAC;;;AACnC,UAAM,EAAA,kBAAG;AACL,eACI;;cAAK,SAAS,EAAC,MAAM;YACjB;;kBAAK,SAAS,EAAC,OAAO,EAAC,EAAE,EAAC,OAAO;gBAC7B,2DAAU;gBACV,kFAAgB;gBAChB,oFAAiB;aACf;YACN,0CAAK,SAAS,EAAC,QAAQ,EAAC,EAAE,EAAC,QAAQ,GAC7B;SACJ,CACR;KACL;CACJ,CAAC,CAAC;;AAEH,IAAI,QAAQ,CAAC,IAAI,CAAC,OAAO,CAAC,UAAU,CAAC,GAAG,CAAC,CAAC,EAAE;AACxC,0BACE,iCAAC,cAAc,OAAG,EAClB,CAAC,CAAC,kBAAkB,CAAC,CAAC,CAAC,CAAC,CACzB,CAAC;CACL",
+    "file": "/script/modules/common/views/manager_content.js",
+    "sourcesContent": [
+        "/**\r\n * @file 页面主 Reflux View\r\n * @author 崔健 cuijian03@baidu.com 2016.08.20\r\n */\r\nimport React, {Component} from 'react';\r\nimport {render} from 'react-dom';\r\nimport Header from 'header';\r\nimport EntityControl from '../../entitycontrol/views/entitycontrol';\r\nimport TrackControl from '../../trackcontrol/views/trackcontrol';\r\nimport CommonStore from '../stores/commonStore';\r\nimport Mapcontrol from '../../../common/mapControl.js';\r\n\r\n\r\n\r\nlet ManagerContent = React.createClass({\r\n    render() {\r\n        return (\r\n            <div className=\"main\">\r\n                <div className=\"trunk\" id=\"trunk\">\r\n                    <Header />\r\n                    <TrackControl />\r\n                    <EntityControl />\r\n                </div>\r\n                <div className=\"branch\" id=\"branch\">\r\n                </div>\r\n            </div>\r\n        );\r\n    }\r\n});\r\n\r\nif (location.href.indexOf('/manager') > -1) {\r\n    render(\r\n      <ManagerContent />,\r\n      $('#Manager_content')[0]\r\n    );\r\n}\r\n\r\n"
+    ]
+}
