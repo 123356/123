@@ -18,8 +18,9 @@
 	//设置延时，因为获得当前城市所在地是异步的
 	setTimeout(function(){
 		var urls = []; 
-	    urls[0] = 'https://sapi.k780.com/?app=weather.future&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=getWeather_week&weaid=' + encodeURI(cityName);
-	    urls[1] = 'https://www.sojson.com/open/api/weather/json.shtml?city=' + encodeURI(cityName);
+        urls[0] = 'https://sapi.k780.com/?app=weather.future&weaid=' + cityName + '&&appkey=39089&sign=6e957038e2c4e3836e9a2c5621e9361d&format=json&jsoncallback=getWeather_week&weaid=' + encodeURI(cityName);
+
+	    //urls[1] = 'https://www.sojson.com/open/api/weather/json.shtml?city=' + encodeURI(cityName);
 		jsonp(urls[0]);  //jsonp跨域请求
 		jsonp(urls[1]);
 	}, 1000);
