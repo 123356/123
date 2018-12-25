@@ -2,12 +2,16 @@
 var pid = 0;
 
 var Request = GetRequest();
-if (Request['pid'] != null)
-    pid = Request['pid'];
-else
-    pid = $.cookie('cookiepid');
+if (Request['type'] != "new") {
+    if (Request['pid'] != null)
+        pid = Request['pid'];
+    else
+        pid = $.cookie('cookiepid');
 
-if (pid == null || pid == "") {
+    if (pid == null || pid == "") {
+        pid = 0;
+    }
+} else {
     pid = 0;
 }
 $("#currPosition", window.top.document).html("当前位置：运维 > 工单管理 ");

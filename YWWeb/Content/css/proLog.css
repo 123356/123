@@ -1,0 +1,50 @@
+﻿#log{
+    padding:10px;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#fff;
+    overflow:hidden
+}
+
+.searchForm{
+    height:auto;
+    clear:both;
+    display:block
+}
+.searchForm form{
+    float:left;
+    margin-right:20px
+}
+.searchForm .btnView{
+    float:left;
+    padding-bottom:10px
+}
+.searchForm .btnView .btn{
+    color:#fff;
+    background:#41af94;
+    border:none;
+    border-radius:1px;
+    margin-top:8px;
+    letter-spacing:2px;
+    margin-right:10px
+}
+.searchForm .btnView .btn img{
+    width:12px;
+    margin-right:5px;
+    margin-top:-3px
+}
+.searchForm  form .ivu-select{
+    width:160px !important
+}
+.searchForm .ivu-form-item{
+    margin-bottom:5px
+}
+.table{
+    clear:both;
+    margin-top:20px
+}
+.pageView{
+    text-align:right;
+    margin:15px 15px 15px 0px
+}

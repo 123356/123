@@ -98,7 +98,7 @@ namespace YWWeb.Controllers
             return Content(strJson);
         }
         //测点类型列表
-        public ActionResult BindValueType(int did = 0, int showall = 0, int pid = 8)
+        public ActionResult BindValueType(int did = -1, int showall = 0, int pid = 8)
         {
             //string strsql = "select distinct DataTypeID,TypeName Name from V_DeviceInfoState_PDR1";
             //if (did > 0)
@@ -111,16 +111,17 @@ namespace YWWeb.Controllers
             try
             {
                 List<t_CM_DeviceTypeComBox> list = DeviceTypeDAL.getInstance().GetRealTimeComboxData(pid, did).ToList();
-                 strJson = JsonConvert.SerializeObject(list);
+                strJson = JsonConvert.SerializeObject(list);
+                if (showall > 0)
+                {
+                    strJson = AddShowAll(list.Count, strJson, "DTID", "Name");
+                }
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
             }
-            //if (showall > 0)
-            //{
-            //    strJson = AddShowAll(list.Count, strJson, "DataTypeID", "Name");
-            //}
+           
 
             //list.Clear();
             //list = null;
@@ -670,9 +671,13 @@ namespace YWWeb.Controllers
         }
         [Login]
         //获取城市列表
-        public ActionResult BindCity(int proID)
+        public ActionResult BindCity(int proID = 0)
         {
-            List<t_Sys_City> list = bll.t_Sys_City.Where(c => c.proID == proID).ToList();
+            List<t_Sys_City> list = bll.t_Sys_City.ToList();
+            if (proID != 0)
+                list = bll.t_Sys_City.Where(c => c.proID == proID).ToList();
+            else
+                list = bll.t_Sys_City.Where(c => c.IsAble == 1).ToList();
             string strJson = "";
             if (list.Count > 0)
                 strJson = JsonHelper.ToJson(list);

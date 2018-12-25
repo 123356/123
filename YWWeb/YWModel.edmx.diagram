@@ -3,7 +3,7 @@
   <edmx:Designer>
     <edmx:Diagrams>
  
-      <edmx:Diagram Name="S5001Model" ZoomLevel="72">
+      <edmx:Diagram Name="S5001Model" ZoomLevel="65">
  
         <edmx:EntityTypeShape EntityType="YWModel.t_AlarmTable_en" PointX="0.75" PointY="0.75" Width="1.5" Height="3.9529630533854156" IsExpanded="true" />
         <edmx:EntityTypeShape EntityType="YWModel.t_AlarmTable_ErrorData" Width="1.5" PointX="2.75" PointY="0.75" Height="4.0712491861979156" IsExpanded="true" />
@@ -120,7 +120,6 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerReportConfig" Width="1.5" PointX="29.375" PointY="34.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_ES_PowerUseCategory" Width="1.5" PointX="7.375" PointY="31.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_Constract" Width="1.5" PointX="21.375" PointY="12.75" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="23.375" PointY="35.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_ES_ContractTemplet" Width="1.5" PointX="25.375" PointY="36.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PowerConfigInfo" Width="1.5" PointX="31.375" PointY="36.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_Unit" Width="1.5" PointX="0.56112813416920981" PointY="24.2524372005148" />
@@ -146,6 +145,10 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_BigScoringType" Width="1.5" PointX="3.375" PointY="39.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_Score" Width="1.5" PointX="39.375" PointY="6.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_UnitScore" Width="1.5" PointX="39.375" PointY="9.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_ItemOperationLog" Width="1.5" PointX="39.375" PointY="12.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_ShopTruck" Width="1.5" PointX="39.375" PointY="15.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_PM_OneGraph" Width="1.5" PointX="39.375" PointY="19.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="21.375" PointY="35.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

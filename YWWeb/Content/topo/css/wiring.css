@@ -1,4 +1,5 @@
 .main,
+body,
 html {
     padding: 0;
     margin: 0
@@ -11,13 +12,14 @@ html {
 .lineRight,
 .main {
     position: absolute;
-    height: 100%;
+    height: 100%
 }
 
-
-.boxLeft, .boxRight {
-
-   background:#fff;}
+.boxLeft,
+.boxCenter,
+.boxRight {
+    background: #fff;
+}
 
 .label-box,
 .palette-item {
@@ -57,7 +59,6 @@ html {
     cursor: ew-resize;
     z-index: 10;
     padding: 10px
-
 }
 
 .caret,
@@ -104,7 +105,8 @@ input {
     border-top: 1px solid #f6f6f5;
     white-space: nowrap;
     overflow: hidden;
-    font: 12px/24px arial, sans-serif
+    font: 12px/24px arial, sans-serif;
+    height: 30px
 }
 
 .caret {
@@ -197,7 +199,7 @@ th {
 th {
     font-size: 14px;
     background-color: #F0EFEE;
-    padding: 15px
+    height: 30px;
 }
 
 td {
@@ -274,4 +276,47 @@ select {
     white-space: pre;
     -webkit-rtl-ordering: logical;
     width: 150px
+}
+
+#contextmenu {
+    border: 1px solid #aaa;
+    border-bottom: 0;
+    background: #eee;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    z-index: 100;
+}
+
+#contextmenu li a {
+    display: block;
+    padding: 10px;
+    border-bottom: 1px solid #aaa;
+    cursor: pointer;
+}
+
+#contextmenu li a:hover {
+    background: #ddd;
+}
+
+.panel-default {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    bottom: 0px;
+    right: 0px;
+    background: #fff;
+    border: 1px solid #ddd;
+    width: 232px;
+}
+
+.panel-default input {
+    border: 1px solid #ddd;
+}
+
+.childs {
+    height: 350px;
+    overflow-y: auto;
 }

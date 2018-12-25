@@ -9,7 +9,7 @@ else
 
 
 var Startdate = new Date();
-Startdate.setDate(Startdate.getDate() - 120);
+Startdate.setDate(Startdate.getDate() - 10);
 var DS = Startdate.getFullYear() + "-" + (Startdate.getMonth() + 1) + "-" + Startdate.getDate();
 $('#StartDate').datebox({
     value: DS,
@@ -146,14 +146,17 @@ $("#SPID").combobox({
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
         url: "/BaseInfo/BindValueType?showall=1&pid=" + pid,
-        valueField: 'DataTypeID',
+        valueField: 'DTID',
         textField: 'Name',
         editable: false,
         onLoadSuccess: function () { //数据加载完毕事件
             var data = $('#cbType').combobox('getData');
             if (data.length > 0) {
-                $("#cbType").combobox('select', data[0].DataTypeID);
+                $("#cbType").combobox('select', data[0].DTID);
             }
+        },
+        onSelect: function () {
+            dosearch();
         }
     });
 }
@@ -210,16 +213,17 @@ function dosearch() {
     var pid = $("#SPID").combobox('getValue');
     var startdate = $('#StartDate').datebox('getValue');
     var enddate = $('#EndDate').datebox('getValue') + ' 23:59:59';
-    var typename = $("#cbType").combobox('getText');
-    $('#list_data').datagrid({pageNumber:1});
-    $('#list_data').datagrid('reload', { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename });
-    $('#list_data').datagrid('uncheckAll');
-}
-$('#list_data').datagrid({
-    url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
-    pageList: [10, 20, 30, 50],
-    pageSize:30,
-    rowStyler: function (index, row) {
+    var dtid = $("#cbType").combobox('getValue');
+    console.log(dtid);
+    //$('#list_data').datagrid({pageNumber:1});
+    //$('#list_data').datagrid('reload', { "pid": pid,"dtid":dtid, "startdate": startdate, "enddate": enddate });
+    //$('#list_data').datagrid('uncheckAll');
+    $('#list_data').datagrid({
+        url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
+        pageList: [10, 20, 30, 50],
+        pageSize: 30,
+        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
+        rowStyler: function (index, row) {
         if (row.AlarmState == "1") {
             return 'background-color:Yellow;color:#333;font-weight:bold;';
         }
@@ -229,30 +233,66 @@ $('#list_data').datagrid({
         else if (row.AlarmState == "3") {
             return 'background-color:#b00000;color:#fff;font-weight:bold;';
         }
-    },
-    onDblClickRow: function (rowIndex, rowData) {
-        if (rowData) {
-            var str = JSON.stringify(rowData);
-            var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
-            console.log(str)
-            $('#editwin').window({
-                modal: true,
-                top: ($(window).height() - 600) * 0.5,
-                left: ($(window).width() - 800) * 0.5,
-                href: url,
-                onClose: function () { dosearch(); }
-            });
-            $('#editwin').window('open');
+        },
+        onDblClickRow: function (rowIndex, rowData) {
+            if (rowData) {
+                var str = JSON.stringify(rowData);
+                var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
+                console.log(str)
+                $('#editwin').window({
+                    modal: true,
+                    top: ($(window).height() - 600) * 0.5,
+                    left: ($(window).width() - 800) * 0.5,
+                    href: url,
+                    onClose: function () { dosearch(); }
+                });
+                $('#editwin').window('open');
+            }
         }
-    }
-    //,onLoadSuccess:function(data)
-    //{
-    //   
-    //}
-});
+    });
+    $('#list_data').datagrid('uncheckAll');
 
 
-if (pid != 0) {
-    $("#SPID").combobox('select', pid);
-    dosearch();
+
 }
+//$('#list_data').datagrid({
+//    url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
+//    pageList: [10, 20, 30, 50],
+//    pageSize:30,
+//    rowStyler: function (index, row) {
+//        if (row.AlarmState == "1") {
+//            return 'background-color:Yellow;color:#333;font-weight:bold;';
+//        }
+//        else if (row.AlarmState == "2") {
+//            return 'background-color:#ed9700;color:#fff;font-weight:bold;';
+//        }
+//        else if (row.AlarmState == "3") {
+//            return 'background-color:#b00000;color:#fff;font-weight:bold;';
+//        }
+//    },
+//    onDblClickRow: function (rowIndex, rowData) {
+//        if (rowData) {
+//            var str = JSON.stringify(rowData);
+//            var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
+//            console.log(str)
+//            $('#editwin').window({
+//                modal: true,
+//                top: ($(window).height() - 600) * 0.5,
+//                left: ($(window).width() - 800) * 0.5,
+//                href: url,
+//                onClose: function () { dosearch(); }
+//            });
+//            $('#editwin').window('open');
+//        }
+//    }
+//    //,onLoadSuccess:function(data)
+//    //{
+//    //   
+//    //}
+//});
+
+
+//if (pid != 0) {
+//    $("#SPID").combobox('select', pid);
+//    dosearch();
+//}

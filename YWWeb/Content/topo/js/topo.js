@@ -1,15 +1,15 @@
-"use strict"
+﻿"use strict"
 
-function Topo() { };
+function Topo() {};
 Topo.prototype = {
-    init: function () {
+    init: function() {
         this.pid = $("#pid").html();
         this.orderNo = $("#orderNo").html() || 1;
         this.createTopo();
         this.viewTopo();
-        this.getNodeState()
+        this.getNodeState();
     },
-    viewTopo: function () {
+    viewTopo: function() {
         var that = this;
         this.scene.clear();
         $.ajax({
@@ -19,50 +19,56 @@ Topo.prototype = {
                 pid: that.pid,
                 orderNo: that.orderNo,
             },
-            success: function (res) {
+            success: function(res) {
                 $.ajax({
                     type: "get",
                     url: res + "?date" + new Date().valueOf(),
-                    success: function (res) {
+                    success: function(res) {
                         try {
-                            that.history(JSON.parse(res))
-                        } catch (e) {
-                            that.history(res)
+                            res = JSON.parse(res);
+                            that.history(res);
+                        } catch (error) {
+                            that.history(res);
                         }
-                        
                     }
                 })
             },
+
         })
     },
-    uncompileStr: function (code) {
+    uncompileStr: function(code) {
         code = unescape(code);
         var c = String.fromCharCode(code.charCodeAt(0) - code.length);
         for (var i = 1; i < code.length; i++) {
-            c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1))
+            c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));
         }
-        return c
+        return c;
     },
-    history: function (obj) {
+    // 读取历史
+    history: function(obj) {
         this.scene.backgroundColor = obj.config.bgColor;
         this.__IP = this.uncompileStr(obj.config.IP);
         this.__account = this.uncompileStr(obj.config.account);
         this.__password = this.uncompileStr(obj.config.password);
         this.__port = this.uncompileStr(obj.config.port);
         this.copyNode(obj.nodes);
-        this.getBindData()
+        this.getBindData();
+
     },
-    copyNode: function (list) {
+    //复制节点
+    copyNode: function(list) {
         if (!list) {
             return
         }
         for (var a = 0; a < list.length; a++) {
             var node = list[a];
-            this.setNode(node)
+            this.setNode(node);
         }
     },
-    createTopo: function () {
+    //拓扑
+    createTopo: function() {
         var that = this;
+        //创建 canvas元素  定义宽高
         var canvas = document.createElement('canvas');
         var box = $('#topo')[0];
         canvas.width = parseInt($('#topo').css('width'));
@@ -70,15 +76,17 @@ Topo.prototype = {
         canvas.className = "topo"
         box.appendChild(canvas);
         var stage = new JTopo.Stage(canvas);
-        stage.frames = 24;
+        stage.frames = 24; //只有鼠标事件时 才重新绘制
         stage.wheelZoom = 1.1;
         this.stage = stage;
         var scene = new JTopo.Scene(stage);
         scene.alpha = 1;
         scene.background = null;
-        this.scene = scene
+        // scene.mode = "drag"
+        this.scene = scene;
     },
-    setNode: function (obj) {
+    //创建节点
+    setNode: function(obj) {
         var that = this;
         if (obj.__type == "text") {
             var node = new JTopo.TextNode();
@@ -87,9 +95,10 @@ Topo.prototype = {
             node.setLocation(obj.x, obj.y);
             node.zIndex = obj.zIndex || 4;
             node.__type = 'text';
+            //状态赋值
             node.__statusvalue = obj.__statusvalue || 4;
             node.state4 = obj.state4 || "255,255,255";
-            node.fontColor = node["state" + node.__statusvalue]
+            node.fontColor = node["state" + node.__statusvalue];
         } else if (obj.__type == "node") {
             var node = new JTopo.Node();
             node.percent = 0.8;
@@ -102,22 +111,23 @@ Topo.prototype = {
             node.state1 = obj.state1 || "#00ff00";
             node.state2 = obj.state2 || "#ffff00";
             node.color = node["state" + node.__statusvalue];
-            node.paint = function (g) {
-                eval(obj.canvas)
+            node.paint = function(g) {
+                eval(obj.canvas);
             };
-            node.canvas = obj.canvas
+            node.canvas = obj.canvas;
         } else if (obj.__type == "line") {
             var node = new JTopo.Node();
             node.zIndex = obj.zIndex || 3;
             node.setBound(obj.x, obj.y, obj.width, obj.height);
             node.__type = 'line';
+            //状态赋值
             node.__statusvalue = obj.__statusvalue || 0;
             node.state0 = obj.state0 || "255,0,0";
             node.state1 = obj.state1 || "193,193,193";
-            node.fillColor = node["state" + node.__statusvalue]
+            node.fillColor = node["state" + node.__statusvalue];
         }
         if (obj.center) {
-            node.setCenterLocation(obj.x, obj.y)
+            node.setCenterLocation(obj.x, obj.y);
         }
         node.alpha = 1;
         node.textPosition = 'Bottom_Center';
@@ -127,10 +137,10 @@ Topo.prototype = {
         node._failureState = obj._failureState;
         node._cid = obj._cid;
         if (node._cid) {
-            node.mouseover(function (e) {
+            node.mouseover(function(e) {
                 if (!that.meterData) {
                     $(this).attr("cursor", "wait");
-                    return
+                    return;
                 }
                 $('#electricMeterBounced').show();
                 $('#electricMeterBounced').css({
@@ -138,39 +148,49 @@ Topo.prototype = {
                     "left": e.clientX - 150 + 'px'
                 });
                 that.matchElectricMeter(node._cid);
-                that.timer = setInterval(function () {
-                    that.matchElectricMeter(node._cid)
-                }, 1000)
+                that.timer = setInterval(function() {
+                    that.matchElectricMeter(node._cid);
+                }, 2000)
             });
-            node.mouseout(function () {
+            node.mouseout(function() {
                 clearInterval(that.timer);
-                $('#electricMeterBounced').hide()
-            })
+                $('#electricMeterBounced').hide();
+            });
+        }
+        if (obj.id && obj.__type == "text") {
+            that.matchText(node);
         }
         node.selected = false;
         node.dragable = false;
         node.editAble = false;
         node.showSelected = false;
-        this.scene.add(node)
+        this.scene.add(node);
     },
-    getBindData: function () {
-        var attributeNode = [];
-        var electricMeter = [];
-        topo.scene.findElements(function (e) {
+    //获取绑定节点的数据
+    getBindData: function() {
+        var attributeNode = []; //带有属性的节点
+        var electricMeter = []; //带有cid的电表
+        var textDataNode = [];
+        topo.scene.findElements(function(e) {
             if (e._parentID || e._failureState || e.id) {
-                attributeNode.push(e)
+                attributeNode.push(e);
             }
             if (e._cid) {
-                electricMeter.push(e)
+                electricMeter.push(e);
+            }
+            if (e.__type == "text") {
+                textDataNode.push(e);
             }
         });
         this.specialNode = attributeNode;
-        this.electricMeter = electricMeter
+        this.electricMeter = electricMeter;
+        this.textDataNode = textDataNode;
     },
-    getNodeState: function () {
+    getNodeState: function() {
         var that = this;
-        var timer1 = setInterval(function () {
-            if (that.specialNode) {
+        //等节点加载成功
+        var timer1 = setInterval(function() {
+            if (that.specialNode != undefined && that.specialNode.length != 0) {
                 clearInterval(timer1);
                 $.ajax({
                     type: 'POST',
@@ -178,25 +198,25 @@ Topo.prototype = {
                     data: {
                         "pid": that.pid,
                     },
-                    success: function (res) {
+                    success: function(res) {
                         var data = JSON.parse(res);
                         var nodes = that.specialNode;
                         if (!nodes) {
                             return
                         }
                         for (var a = 0; a < nodes.length; a++) {
-                            if (nodes[a].__type == "text") {
-                                that.nodeText(nodes[a], data)
-                            } else if (nodes[a].__type == "node") {
-                                that.nodeShape(nodes[a], data)
+                            if (nodes[a].__type == "node") {
+                                that.nodeShape(nodes[a], data);
                             } else if (nodes[a].__type == "line") {
                                 that.nodeLine(nodes[a], data)
                             }
+                            ///!!!!
                         }
                     },
                 })
             }
         }, 150);
+        //第一次获取所有数据
         $.ajax({
             type: 'POST',
             url: "/PDRInfo/GetOneGraph_value",
@@ -204,63 +224,65 @@ Topo.prototype = {
                 "pid": that.pid,
             },
             async: false,
-            success: function (res) {
-                that.meterData = res
+            success: function(res) {
+                that.meterData = res;
             },
         });
-        setTimeout(function () {
-            that.mqtt()
-        }, 1000)
+        //连接mqtt获取变化量
+        setTimeout(function() {
+            that.mqtt();
+        }, 1000);
     },
-    guid: function () {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    guid: function() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16)
-        })
+            return v.toString(16);
+        });
     },
-    mqtt: function () {
+    mqtt: function() {
         var that = this;
-        console.log(that.__IP, that.__port)
         var wsbroker = that.__IP;
         location.hostname;
         var wsport = parseInt(that.__port);
+        //连接选项
         var client;
         var options = {
             timeout: 30,
             userName: that.__account,
             password: that.__password,
             keepAliveInterval: 10,
-            onSuccess: function (e) {
+            onSuccess: function(e) {
                 console.log(("连接成功"));
                 client.subscribe('/ny/' + that.pid, {
                     qos: 2
-                })
+                });
             },
-            onFailure: function (message) {
+            onFailure: function(message) {
                 console.log("连接失败 " + message.errorMessage);
-                setTimeout(function () {
-                    that.mqtt()
-                }, 10000)
+                setTimeout(function() {
+                    that.mqtt();
+                }, 10000);
             }
         };
         if (location.protocol == "https:") {
-            options.useSSL = true
+            options.useSSL = true;
         }
         client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
+        //创建连接
         client.connect(options);
-        client.onConnectionLost = function (responseObject) {
+        client.onConnectionLost = function(responseObject) {
             if (responseObject.errorCode !== 0) {
-                console.error("异常掉线，掉线信息为:" + responseObject.errorMessage)
+                console.error("异常掉线，掉线信息为:" + responseObject.errorMessage);
             }
-            setTimeout(function () {
-                that.mqtt()
-            }, 10000)
+            setTimeout(function() {
+                that.mqtt();
+            }, 10000);
         };
-        client.onMessageArrived = function (res) {
+        client.onMessageArrived = function(res) {
             var payload = JSON.parse(res.payloadString);
             if (!payload.type) {
-                return
+                return;
             }
             if (payload.type == 6) {
                 var changeData = payload.content;
@@ -268,7 +290,14 @@ Topo.prototype = {
                     for (var a = 0; a < that.meterData.length; a++) {
                         if (key == that.meterData[a].TagID) {
                             that.meterData[a].DValue = changeData[key].PV;
-                            break
+                            break;
+                        }
+                    }
+
+
+                    for (var b = 0; b < that.textDataNode.length; b++) {
+                        if (that.textDataNode[b].id == key) {
+                            that.textDataNode[b].text = changeData[key].PV;
                         }
                     }
                 }
@@ -280,76 +309,73 @@ Topo.prototype = {
                 return
             }
             for (var a = 0; a < nodes.length; a++) {
-                if (nodes[a].__type == "text") {
-                    that.nodeText(nodes[a], content)
-                } else if (nodes[a].__type == "node") {
-                    that.nodeShape(nodes[a], content)
+                if (nodes[a].__type == "node") {
+                    that.nodeShape(nodes[a], content);
                 } else if (nodes[a].__type == "line") {
-                    that.nodeLine(nodes[a], content)
+                    that.nodeLine(nodes[a], content);
                 }
+                ////!!!!
             }
-        }
+        };
     },
-    nodeText: function (node, data) {
-        if (data[node.id]) {
-            var pv = data[node.id].PV;
-            node.text = parseFloat(pv)
-        }
-    },
-    nodeShape: function (node, data) {
-        var pv1, pv2, pv3;
+    // 节点类型改变
+    nodeShape: function(node, data) {
+        var pv1, //故障
+            pv2, //parent
+            pv3; //自己ID
         if (node._failureState && data[node._failureState]) {
-            pv1 = data[node._failureState].PV
+            pv1 = data[node._failureState].PV;
         }
         if (node._parentID) {
             var arr = node._parentID.split(",");
             var num = 0;
             for (var a = 0; a < arr.length; a++) {
                 if (data[arr[a]]) {
-                    num += data[arr[a]].PV
+                    num += data[arr[a]].PV;
                 }
             }
             if (arr.length >= 3 && num >= 2) {
-                pv2 = 1
+                pv2 = 1;
             } else if (arr.length <= 2 && num >= 1) {
-                pv2 = 1
+                pv2 = 1;
             } else {
-                pv2 = 0
+                pv2 = 0;
             }
         }
         if (node.id && data[node.id]) {
-            pv3 = data[node.id].PV
+            pv3 = data[node.id].PV;
         }
         if (pv1 == 1) {
-            node.color = node.state2
+            node.color = node.state2;
         } else if (pv2 == 0) {
-            node.color = node.state0
+            node.color = node.state0;
         } else if (pv2 == 1 && pv3 == undefined) {
-            node.color = node.state1
+            node.color = node.state1;
         } else if ((pv3 == 1 && pv2 == 1) || (pv3 == 1 && pv2 == undefined)) {
-            node.color = node.state1
+            node.color = node.state1;
         } else {
-            node.color = node.state0
+            node.color = node.state0;
         }
     },
-    nodeLine: function (node, data) {
+    // 线类型改变
+    nodeLine: function(node, data) {
         var arr = node._parentID.split(",");
         var num = 0;
         for (var a = 0; a < arr.length; a++) {
             if (data[arr[a]]) {
-                num += data[arr[a]].PV
+                num += data[arr[a]].PV;
             }
         }
         if (arr.length >= 3 && num >= 2) {
-            node.fillColor = node.state1
+            node.fillColor = node.state1;
         } else if (arr.length <= 2 && num >= 1) {
-            node.fillColor = node.state1
+            node.fillColor = node.state1;
         } else {
-            node.fillColor = node.state0
+            node.fillColor = node.state0;
         }
     },
     // 匹配表
-    matchElectricMeter: function (cid) {
+    matchElectricMeter: function(cid) {
         var component = [];
         var datatypeid = -1;
         for (var a = 0, b = 0; a < this.meterData.length; a++) {
@@ -362,21 +388,40 @@ Topo.prototype = {
 
                 if (meter.DataTypeID == '2') { //电流
                     $('.I' + meter.ABCID).html(meter.DValue);
+                    $('.IA .unit').html(meter.Units);
                 } else if (meter.DataTypeID == '3' || meter.DataTypeID == "56") { //电压
                     $('.UA' + meter.ABCID).html(meter.DValue);
+                    $('.UAB .unit').html(meter.Units);
                 } else if (meter.DataTypeID == '6' || meter.DataTypeID == '51') { //功率因数
                     $('.F').html(meter.DValue);
+                    $('.PF .unit').html(meter.Units);
                 } else if (meter.DataTypeID == '46' || meter.DataTypeID == '7') { //总有功
                     $('.P').html(meter.DValue);
-                } else if (meter.DataTypeID == '47' || meter.DataTypeID == '5') { //总无功功率
+                    $('._P .unit').html(meter.Units);
+                } else if (meter.DataTypeID == '48' || meter.DataTypeID == '8') { //总无功功率
                     $('.Q').html(meter.DValue);
+                    $('._Q .unit').html(meter.Units);
                 } else if (meter.DataTypeID == '52') { //总有功电度
                     $('.K').html(meter.DValue);
                 }
+
             }
         }
     },
-
+    //匹配文字
+    matchText: function(node) {
+        var timer3 = setInterval(() => {
+            if (this.meterData != undefined && this.meterData.length != 0) {
+                clearInterval(timer3);
+                for (var a = 0; a < this.meterData.length; a++) {
+                    if (node.id == this.meterData[a].TagID) {
+                        node.text = this.meterData[a].DValue;
+                        return
+                    }
+                }
+            }
+        }, 500);
+    }
 };
 var topo = new Topo();
 topo.init();

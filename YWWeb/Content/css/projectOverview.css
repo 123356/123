@@ -1,0 +1,504 @@
+﻿*{
+    padding:0;
+    margin:0;
+    font-family:"Helvetica Neue"
+}
+ul,ol,dl{
+    list-style:none
+}
+p{
+    margin:0;
+    padding:0
+}
+.row,.col{
+    margin:0;
+    padding:0
+}
+#projectOverview{
+    background:#efefef;
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around
+}
+.flex-item{
+    
+    margin:10px
+}
+
+.left{
+    flex:1.1;
+    background:#fff;
+    margin-right:5px !important;
+    margin-bottom:10px;
+    box-shadow: 2px 2px 3px #e8e8e8;
+    border-radius:3px;
+    overflow:hidden;
+}
+.right{
+   
+    
+    flex:6;
+    margin-left:5px !important;
+    margin-bottom:10px
+   
+}
+.moduleTitle{
+    font-size:1.45rem;
+    height:40px;
+    border-bottom:1px solid #e2e2e2;
+    line-height:40px;
+    padding:0px 15px;
+    color:#4c4c4c
+}
+.moduleTitle img{
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    float: left;
+    margin-top: 12px;
+}
+.left .listView{
+    width:100%;
+    height:100%;
+    background:#fff;
+    overflow-y:auto;
+    
+}
+.left .listView .list-item{
+    padding:10px 0px 10px 0px
+}
+.left .listView .list-item .row{
+    cursor:pointer
+}
+
+.left .listView .icon{
+    width:15px;
+    height:18px;
+}
+.left .listView .iconView{
+    text-align:center;
+    padding-top:8px
+}
+.left .listView .conView{
+    color:#555555
+}
+.left .listView .conView p{
+    font-size:1.3rem;
+    margin:0;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+   
+}
+.left .listView .row{
+    border-right:3px solid #fff
+}
+.left .listView .conView span{
+    font-size:1.05rem;
+}
+.left .listView .list-item-active{
+    
+    border-right-color:#2eb29a !important
+}
+.left .listView .list-item-active p,.left .listView .list-item-active span{
+   color:#2eb29a !important;
+}
+
+
+.right{
+    display:flex;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around
+}
+
+.right-top .projecInfo{
+    flex:1;
+    height:100%;
+    background:#fff;
+    margin-right:10px;
+    border-radius:3px;
+    box-shadow: 2px 2px 3px #e8e8e8;
+}
+.projecInfo .moduleTitle .stateList{
+    float:right;
+    padding-top:12px
+}
+.projecInfo .moduleTitle .stateList li{
+    float:right;
+    padding:0px 8px;
+    text-align:center;
+    font-size:8px;
+}
+.projecInfo .moduleTitle .stateList li span{
+    display:block;
+    font-size:10px
+}
+.projecInfo .moduleTitle .stateList li p,.projecInfo .moduleTitle .stateList li span{
+    margin:0;
+    padding:0;
+    line-height:1.5
+}
+.state0{
+    color:#2097d9 
+}
+.state1{
+    color:#505050   
+}
+.state2{
+    color:#ff6515     
+}
+.state3{
+    color:#d12b1b      
+}
+.projecInfo .info{
+    padding:10px 0px 10px 10px;
+    color:#666;
+    font-size:1.2rem;
+    line-height:24px
+
+}
+.projecInfo .info .leftCol{
+    text-align:left
+}
+.projecInfo .info .rightCol{
+    padding-left:10px
+}
+
+
+
+.right-top .memo{
+    flex:1.2;
+    height:100%;
+    background:#fff;
+    border-radius:3px;
+    box-shadow: 2px 2px 3px #eee;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    overflow:hidden
+}
+
+.right-top .memo .memoList{
+    height:100%;
+    flex:1.3;
+    overflow:hidden
+}
+.right-top .memo .memoList .moduleTitle{
+    border-bottom:none
+}
+.right-top .memo .calendarView{
+    height:100%;
+    flex:1.4;
+    background:#fff;
+    overflow:hidden;
+    
+}
+.right-top .memo .memoList .list{
+    padding:0px 15px 10px 0px!important;
+    font-size:1.3rem;
+    color:#666 ;
+    line-height:24px;
+    overflow:hidden
+}
+.right-top .memo .memoList .list ul{
+    list-style:disc;
+   overflow:hidden;
+    padding-right:20px;
+    background: url(/Content/images/project/bk.png) no-repeat right;
+    background-size: 15px 100%;
+    padding-left:15px
+    
+}
+.right-top .memo .memoList .list li{
+     overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    
+    
+}
+.right-top .memo .memoList .list a{
+    color:#666;
+    font-size:1.2rem
+}
+
+.right-top{
+    width:100%;
+    height:240px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around
+}
+
+
+.right-bottom{
+    width:100%;
+  
+    margin-top:10px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around
+}
+.right-bottom .list{
+    flex:1;
+    margin-right:10px;
+    background:#fff;
+    border-radius:3px;
+    box-shadow: 2px 2px 3px #e8e8e8;
+    overflow:hidden
+}
+.right-bottom .list:last-child{
+    margin-right:0
+}
+ .moduleTitle{
+   height:50px;
+   line-height:50px
+}
+.right-bottom .list .moduleTitle .btn-group{
+    float:right;
+    margin-top:1.2rem;
+    border:1px solid #32b194;
+    border-radius:2px
+}
+.right-bottom .list .moduleTitle .btn-group .btn{
+   padding:0px 5px;
+   color:#fff;
+   font-size:1.2rem;
+   background:#fff;
+   color:#32b194;
+   border-radius:0px;
+   
+   
+}
+
+.right-bottom .list .moduleTitle .btn-group .active{
+    background:#32b194;
+    color:#fff
+}
+.right-bottom .list .moduleTitle .otherBtn{
+    float:right;
+    margin-top:2px;
+    margin-left:8px;
+    cursor:pointer
+}
+.right-bottom .list .moduleTitle .otherBtn .addBtn{
+    cursor:pointer;
+    font-size:26px;
+    line-height:0;
+    background:#fff;
+    border:none !important;
+    color:#32b194;
+    padding:10px 5px;
+    
+}
+ .moduleTitle img {
+    margin-top:17px
+ }
+.right-bottom .list .main{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    padding:10px;
+    font-size:1.2rem;
+    color:#666;
+    text-align:center;
+    background:#fff;
+    padding-bottom:10px;
+    padding-top:0
+    
+
+}
+.right-bottom .list .main .view .spin{
+   margin-top:10px;
+    margin:0 auto;
+    width:50px
+}
+.right-bottom .list .main .row{
+    border-bottom:1px solid #e8e8e8;
+    padding:8px 0px;
+    
+}
+.right-bottom .list .main .titleRow{
+    font-weight:bold;
+    
+
+}
+.right-bottom .list .main .view{
+    overflow-y:auto;
+    height:100%;
+}
+.right-bottom .list .main .view .row{
+    margin-right:34px;
+    cursor:pointer;
+
+}
+.right-bottom .list .main .view .row:hover{
+    background:#f4f7f6
+}
+
+.matterModal{
+    width: 600px !important; 
+    height: 300px !important; 
+    padding: 5px;
+}
+.easyui-window table,.easyui-window table td{
+    border:none !important;
+    background:#fff !important
+}
+.iviewModal .editButton{
+    color:#5bb09d;
+    font-size:14px
+}
+.searchForm .ivu-input{
+    width:180px !important
+}
+#projectList{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    padding:15px;
+    background:#f7f7f7
+
+}
+#projectList .ivu-table{
+    position:absolute !important
+}
+#projectList .ivu-table-wrapper{
+   
+}
+#projectList .ivu-table-header{
+    height:37px
+}
+#projectList .ivu-table-wrapper table {
+}
+#projectList .ivu-table th {
+    background:#e0e0e0
+}
+.searchForm{
+    height:auto;
+    clear:both;
+    display:block
+}
+.searchForm form{
+    float:left;
+    margin-right:20px
+}
+.searchForm .btnView{
+    float:left;
+    padding-bottom:10px
+}
+.searchForm .btnView .btn{
+    color:#fff;
+    background:#41af94;
+    border:none;
+    border-radius:1px;
+    font-size:1.2rem;
+    margin-top:3px;
+    letter-spacing:2px;
+    margin-right:10px
+}
+.searchForm .btnView .btn img{
+    width:12px;
+    margin-right:5px;
+    margin-top:-3px
+}
+.pageView{
+    text-align:right;
+    margin:15px 15px 15px 0px
+}
+.searchForm  form .ivu-select{
+    width:160px !important
+}
+.searchForm .ivu-form-item{
+    margin-bottom:5px
+}
+.tableView{
+    clear:both
+}
+.noData{
+    margin-right:10%;
+    text-align:center;
+    margin-top:10px
+
+}
+.mettingTable td{
+    padding:4px 10px;
+    border:1px solid #eee
+}
+.mettingTable td img{
+    width:50px;
+    margin:5px
+}
+.mettingTable th{
+    background :#f0f6f4;
+    padding:4px 10px;
+    border:1px solid #eee
+}
+.moneyView{
+    position:relative
+}
+.moneyView .dw{
+    position: absolute;
+    right: 12px;
+    top: 2px;
+    color: #ccc;
+    font-size: 1.1rem;
+    font-weight: normal;
+}
+
+
+.moneyInputEdit .bfb,.moneyView .bfb{
+    position:absolute;
+    left:125px;
+    top:2px
+}
+
+#userButtons{
+    float:right;
+    display:inline-block;
+    
+}
+#userButtons .btn{
+    color:#fff;
+    margin-right:5px
+}
+@media screen and (max-width: 1500px) {
+    .left {
+        flex: 1.5;
+    }
+
+    .left .listView {
+            width: 108%;
+     }
+
+    .right-top .memo {
+        flex: 1.3;
+    }
+    .right-bottom .list .main{
+        font-size:1.05rem
+    }
+    .projecInfo .info{
+        font-size:1.05rem
+    }
+    .right-top .memo .memoList .list a{
+        font-size:1.05rem
+    }
+    .left .listView .conView p{
+         font-size:1.2rem
+    }
+    .left .listView .conView span{
+     font-size:1rem;
+    }
+    .moduleTitle{
+        font-size:1.3rem;
+    }
+  
+    
+}

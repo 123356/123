@@ -42,6 +42,22 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult ProjectOverview()
+        {
+            return View();
+        }
+        public ActionResult ProjectList()
+        {
+            return View();
+        }
+        public ActionResult ProjectMap()
+        {
+            return View();
+        }
+        public ActionResult Log()
+        {
+            return View();
+        }
         #region 运营合同
 
         //加载合同列表；

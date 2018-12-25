@@ -220,11 +220,12 @@ function getOrderState() {
         var objs = JSON.parse(data);
         var text = "";
         $("#orderNum").remove();//移除历史
+        $("#orderIcon").parent().attr("href", "/Orderinfo/OrderList");
         if (objs.length > 0) {
             text = objs[0];
             $("#orderIcon").append(text);
-
-            var sTemOrder = "<a href=\"/Orderinfo/OrderList\" target=\"main_frame\" >有" + text + "条【工单申请】请立即处理...</a>";
+            $("#orderIcon").parent().attr("href", "/Orderinfo/OrderList?type=new");
+            var sTemOrder = "<a href=\"/Orderinfo/OrderList?type=new\" target=\"main_frame\" >有" + text + "条【工单申请】请立即处理...</a>";
             if (alarmInfOrder == sTemOrder)
                 return;
             alarmInfOrder = sTemOrder;
