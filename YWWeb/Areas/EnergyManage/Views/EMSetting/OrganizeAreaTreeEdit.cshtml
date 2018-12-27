@@ -1,0 +1,297 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/css/OrganizeAreaTreeEdit.css?date=124" rel="stylesheet" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ztree/css/zTreeStyle.css" rel="stylesheet" />
+
+   
+
+</head>
+<body>
+
+
+    <div class="title">
+
+        <div class="edit">
+            <input type="text" name="name" value="" placeholder="搜索" class="form-control" />
+            <select class="form-control" id="unitList"></select>
+            <button class="btn btn-default readt">查询</button>
+            <button class="btn btn-default createt">新增</button>
+            <button class="btn btn-default deletet">删除</button>
+            <button class="btn btn-default updatet">编辑</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="left">
+            <ul id="Organization"></ul>
+        </div>
+        <div class="right">
+            <div class="form-group">
+                <label for="name">名称</label>
+                <input type="text" class="form-control" id="name" placeholder="name">
+            </div>
+            <div class="form-group">
+                <label for="officer">信息负责人</label>
+                <input type="text" class="form-control" id="officer" placeholder="Information officer">
+            </div>
+            <div class="form-group">
+                <label for="note">备注</label>
+                <input type="text" class="form-control" id="note" placeholder="note">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">统计能耗仪表（加数）</label>
+                <div class="form-control addition">
+                    <span class="meter">123123</span>
+                </div>
+                <button class="more btn-default add" data-toggle="modal" data-target="#myModal">...</button>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">统计能耗仪表（减数）</label>
+                <div class="form-control  reduction">
+                    <span class="meter">123123</span>
+                </div>
+                <button class="more btn-default del" data-toggle="modal" data-target="#myModal">...</button>
+            </div>
+
+            <button type="button" class="btn btn-default saveupdate offOut">保存编辑</button>
+            <button type="button" class="btn btn-default offupdate offOut">取消编辑</button>
+
+
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <div style="height:450px;overflow-y:auto">
+                        <ul id="meterztree" class="ztree"></ul>
+                        <p style='color: #999;' class="nometer">暂无数据</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default getselect " data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-default " data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    <script src="~/Content/ztree/js/jquery.ztree.all.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.bundle.js"></script>
+
+
+    <script>
+        function Organization() {
+            this.PIDTree = {};
+        };
+        Organization.prototype = {
+            //加载单位列表
+            loadUnitList: function () {
+                var that = this;
+                $.ajax({
+                    type: "post",
+                    url: "/energyManage/EMSetting/GetUnitList",
+                    data: {},
+                    success: function (res) {
+                        var globalUnitID = JSON.parse($.cookie('unitID')).id || res[0].UnitID;
+                        for (var a = 0, arr = []; a < res.length; a++) {
+                            if (globalUnitID == res[a].UnitID) {
+                                arr.push(`<option value="${res[a].UnitID}" selected = "selected" data-pids="${res[a].PDRList}">${res[a].UnitName}</option>`);
+                            } else {
+                                arr.push(`<option value="${res[a].UnitID}" data-pids="${res[a].PDRList}">${res[a].UnitName}</option>`);
+                            }
+                        }
+                        $('#unitList').html(arr.join(''));
+                        var pids = $("#unitList").find("option:selected").attr('data-pids');
+                        if (pids) {
+                            that.loadModalTree(pids);
+                        } else {
+                            alert('该单位没有站室');
+                        }
+                    }
+                })
+            },
+            //加载模态框树
+            loadModalTree: function (unitID) {
+                var that = this;
+                $.ajax({
+                    type: "post",
+                    url: "/energyManage/EMSetting/getPDCTree",
+                    data: { unitID: unitID },
+                    success: function (res) {
+                        var treeList = [];
+                        that.remakeTree(res, treeList);
+
+                        if (treeList.length == 0) {
+                            $('.nometer').show();
+                            $('#meterztree').hide();
+                        } else {
+                            $('.nometer').hide();
+                            $('#meterztree').show();
+                            $('#meterztree').html("");
+                            that.allocationTreeData(treeList);
+                        }
+                        $('#myModalLabel ').html(JSON.parse($.cookie('unitID')).name);
+                    }
+                })
+            },
+            //改造树结构
+            remakeTree: function (arr, treeList) {
+                var pid = -1,
+                    cid = -1,
+                    did = -1;
+                var list = [];
+                for (var a = 0; a < arr.length; a++) {
+                    if (pid != arr[a].PID + '_p') {
+                        pid = arr[a].PID + '_p';
+                        treeList.push({ name: arr[a].Name, id: pid, type: 'pid', pId: 0, open: true });
+                    } else if (pid == arr[a].PID + '_p' && did != arr[a].DID + '_d') {
+                        did = arr[a].DID + '_d';
+                        treeList.push({ name: arr[a].DeviceName, id: did, type: 'did', pId: pid });
+                    } else if (pid == arr[a].PID + '_p' && did == arr[a].DID + '_d') {
+                        treeList.push({ name: arr[a].CName, id: arr[a].CID + '_c', type: 'cic', pId: did });
+                    }
+                }
+            },
+            //加载事件
+            loadEvents: function () {
+             
+                var morefun;
+                var that = this;
+                $("#unitList").on('change', function () {
+                    var pids = $("#unitList").find("option:selected").attr('data-pids');
+                    if (pids) {
+                        that.loadModalTree(pids);
+                        $.cookie('unitID', JSON.stringify({ id: $("#unitList").val(), name: $("#unitList").find("option:selected").text()}), { expires: 1 });
+                    } else {
+                        alert('该单位没有站室');
+                    }
+                })
+                //点击修改
+                $('.updatet').on('click', function () {
+                    $('.right').fadeToggle();
+                })
+                //点击确定编辑或取消编辑
+                $('.offOut').on('click', function () {
+                    console.log(1111)
+                    $('.right').fadeOut();
+                })
+                //点击模态框确定或取消
+                $('.getselect').on('click', function () {
+                    var arr = [];
+                    for (var a = 0; a < that.treelist.length; a++) {
+                        arr.push(that.treelist[a].getCheckedNodes())
+                    }
+                    var arr2 = [].concat.apply([], arr);
+                    console.log(arr2)
+                    if (morefun) {
+                        console.log('删除')
+                    } else {
+                        console.log('增加')
+                    }
+                })
+                $('.more').on('click', function () {
+                    morefun = $(this).attr('class').indexOf('add') == -1;
+                })
+            },
+            //配置ztree
+            allocationTreeData: function (data) {
+                var setting = {
+                    view: {
+                        // addHoverDom: addHoverDom,
+                        // removeHoverDom: removeHoverDom,
+                        selectedMulti: false
+                    },
+                    check: {
+                        enable: true,
+                        chkStyle: 'checkbox',
+                        radioType: "level",
+                        chkboxType: { "Y": "s", "N": "s" }
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    edit: {
+                    }
+                };
+                var zNodes = data
+                console.log(data)
+                function setCheck() {
+                    setting.check.chkStyle = $("#r1").attr("checked") ? "checkbox" : "checkbox";
+                    setting.check.enable = (!$("#disablechk").attr("checked"));
+                    $.fn.zTree.init($("#meterztree"), setting, zNodes);
+                }
+                $(document).ready(function () {
+                    $.fn.zTree.init($("#meterztree"), setting, zNodes);
+                    setCheck();
+                    $("#r1").bind("change", setCheck);
+                    $("#r2").bind("change", setCheck);
+                    $("#disablechk").bind("change", setCheck);
+                });
+
+
+
+            },
+            //初始化
+            init: function () {
+                this.loadUnitList();
+                this.loadEvents();
+            },
+
+
+
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(function () {
+            var organization = new Organization();
+            organization.init();
+        });
+                                        //$('.right input').attr('readonly','readonly');
+                                        //$('.right button').attr('disabled','disabled');
+
+
+                                //$('.right').fadeOut()
+
+    </script>
+</body>
+
+</html>
