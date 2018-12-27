@@ -16,6 +16,11 @@ using System.Collections;
 using Newtonsoft.Json.Converters;
 using YWWeb.Lib.Base;
 using DAL;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using System.Net;
+using System.Net.Http;
+using System.Reflection;
 
 namespace YWWeb.Controllers
 {
@@ -959,7 +964,7 @@ namespace YWWeb.Controllers
                 return Content("{}");
             }
             string json = ModuleDAL.getInstance().GetMenuInfoJson(CurrentUser.UserID);
-            sw.Stop();
+             sw.Stop();
             Debug.WriteLine("GetMenuInfoJson time:" + sw.Elapsed.ToString());
             return Content(json);
 #if N_Redis
@@ -4732,6 +4737,131 @@ namespace YWWeb.Controllers
             {
                 return Json("error" + ex.Message);
             }
+        }
+
+        //public ActionResult GetHisData(int rows=10, int page=1)
+        //{
+        //    try
+        //    {
+
+        //        MongoHelper mon = new MongoHelper();
+        //        FilterDefinitionBuilder<BsonDocument> builderFilter = Builders<BsonDocument>.Filter;
+        //        FilterDefinition<BsonDocument> filter = builderFilter.Eq("TagID", 358);
+        //        List<his> list= mon.Select<his>("t_SM_HisData_00001", filter, rows, page);
+        //        return Json(list, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //      string ss=  ex.Message;
+        //    }
+        //    return Json("ok",JsonRequestBehavior.AllowGet);
+        //}
+        public class his : BaseEntity
+        {
+
+        }
+
+
+        public string SentHttpRequest()
+        {
+            //请求路径
+            string url = "http://yingyan.baidu.com/api/v3/entity/add";
+
+            //定义request并设置request的路径
+            WebRequest request = WebRequest.Create(url);
+            //定义请求的方式
+            request.Method = "POST";
+
+            //初始化request参数
+            string postData = "service_id=207722&ak=Y&LVtQ1twauxoSCcFB4mqacBd3F1O6BnGg&entity_name=entity1";
+            //设置参数的编码格式，解决中文乱码
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            //设置request的MIME类型及内容长度
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = byteArray.Length;
+
+            //打开request字符流
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            //定义response为前面的request响应
+            WebResponse response = request.GetResponse();
+
+            //获取相应的状态代码
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            //定义response字符流
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();//读取所有
+            Console.WriteLine(responseFromServer);
+
+            //关闭资源
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return responseFromServer;
+        }
+
+
+        public string SendHttpRequest(string requestURI, string requestMethod, PostData data)
+        {
+            //json格式请求数据
+            string requestData = JsonConvert.SerializeObject(data);
+            //拼接URL
+            string serviceUrl = requestURI;//string.Format("{0}/{1}", requestURI, requestMethod);
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(serviceUrl);
+            //post请求
+            myRequest.Method = requestMethod;
+
+          
+
+            
+            Type type = data.GetType();
+            PropertyInfo[] pis = type.GetProperties();
+            StringBuilder builder = new StringBuilder();
+            int i = 0;
+            foreach (var item in pis)
+            {
+                if (i > 0)
+                    builder.Append("&");
+                builder.AppendFormat("{0}={1}", item.Name, item.GetValue(data) == null ? "no" : item.GetValue(data));
+                i++;
+            }
+            //utf-8编码
+            byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(builder.ToString());
+
+            myRequest.ContentLength = buf.Length;
+            myRequest.Timeout = 5000;
+            //指定为json否则会出错
+            myRequest.ContentType = "application/x-www-form-urlencoded";
+            myRequest.MaximumAutomaticRedirections = 1;
+            myRequest.AllowAutoRedirect = true;
+            Stream newStream = myRequest.GetRequestStream();
+            newStream.Write(buf, 0, buf.Length);
+            newStream.Close();
+
+            //获得接口返回值
+            HttpWebResponse myResponse = (HttpWebResponse)myRequest.GetResponse();
+            StreamReader reader = new StreamReader(myResponse.GetResponseStream(), Encoding.UTF8);
+            string ReqResult = reader.ReadToEnd();
+            reader.Close();
+            myResponse.Close();
+            return ReqResult;
+        }
+        public class PostData
+        {
+            public string ak { get; set; }
+            public int service_id { get; set; }
+            public string entity_name { get; set; }
+            public string entity_desc { get; set; }
+            public double latitude { get; set; }
+            public double longitude { get; set; }
+
+            public string loc_time { get; set; }
+            public string coord_type_input { get; set; }
         }
         #endregion
 
