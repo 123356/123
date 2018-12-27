@@ -75,6 +75,16 @@ namespace YWWeb.Controllers
             }
             return Content(strJson);
         }
+
+        //获取所有回路
+        public ActionResult BindCircuits()
+        {
+            string strsql = "select * from t_DM_CircuitInfo where PID=178 order by CID desc";
+            List<t_DM_CircuitInfo> list = bll.ExecuteStoreQuery<t_DM_CircuitInfo>(strsql).ToList();
+            string strJson = Common.ComboboxToJson(list);
+            return Content(strJson);
+        }
+
         //隐患列表BugInfo
         public ActionResult BindBugInfo(int showall = 0, int pid = 0)
         {

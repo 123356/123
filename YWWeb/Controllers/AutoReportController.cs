@@ -52,6 +52,28 @@ namespace YWWeb.Controllers
             {
                  sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID="+pid+" AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
             }
+            //if (cid == null)
+            //{
+            //    if (config != null && config.Count > 0 && config.First().cid != "")
+            //    {
+            //        sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID=" + pid + " AND a.CID IN (" + config.First().cid + ")  AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
+            //    }
+            //    else
+            //    {
+            //        sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID=" + pid + " AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
+            //    }
+            //}
+            //else
+            //{
+            //    if (config != null && config.Count > 0)
+            //    {
+            //        sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID=" + pid + " AND a.CID =" + cid + "  AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
+            //    }
+            //    else
+            //    {
+            //        sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID=" + pid + " AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
+            //    }
+            //}
             List<t_EE_PowerQualityDaily2> listPDRinfo = bll.ExecuteStoreQuery<t_EE_PowerQualityDaily2>(sql).ToList();
             List<ReportInfo2> list2 = new List<ReportInfo2>();
              if (listPDRinfo != null && listPDRinfo.Count > 0)

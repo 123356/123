@@ -45,6 +45,25 @@ $("#PDRName").combobox({
         getReport($("#PDRName").combobox('getValue'))
     }
 });
+
+
+
+//$("#CName").combobox({
+//    url: "/BaseInfo/BindCircuits",
+//    valueField: 'CID',
+//    textField: 'CName',
+//    onLoadSuccess: function () {
+//        var data = $('#CName').combobox('getData');
+//        if (data.length > 0 && cid > 0) {
+//            $("#CName").combobox('setValue', cid);
+//        }
+//        getReport($("#PDRName").combobox('getValue'), $("#CName").combobox('getValue'));
+//    },
+//    onSelect: function (data) {
+//        getReport($("#PDRName").combobox('getValue'), $("#CName").combobox('getValue'))
+//    }
+//});
+
 function openOrPrint() {
     console.log("p=" + p)
     if (p == 0 || p == undefined) {
@@ -129,9 +148,12 @@ function getReport(pid) {
            "            <td>C</td>\n" +
            "        </tr>";
             // result = result + title;
+
+            //var m = 0;
             for (var j = 0; j < list[i].list.length; j++) {
                 if (j % 2 == 1)
                     continue
+                //m += formatValue(list[i].list[j].PowerConsumption);
                 var item = "<tr>\n" +
                "            <td>" + formatTime(list[i].list[j].RecTime) + "</td>\n" +
                "            <td>" + formatValue(list[i].list[j].VoltageA) + "</td>\n" +
@@ -147,6 +169,7 @@ function getReport(pid) {
             }
             title += "</table></div>";
         }
+        //title += "<tr>\n" + "<td colspan='7' class=\"text-center\">总电量</td>\n" + "<td colspan='2'>" + m.toFixed(3) + "</td>\n" + "</tr>";
         title += "</div>";
         //console.log(title);
         //$("#reporttable").html(title)
