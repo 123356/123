@@ -26,5 +26,13 @@ namespace DAO
         public IAlarmTable_en alarmTable_en =>  new AlarmTable_enDBContext();
 
         public IUserInfo userInf =>  new UserInfoDBContext();
+
+        public IEnerUserProject enerUserProject =>  new EnerUserProjectDBContext();
+
+        public IUnit unit => new UnitDBContext();
+
+        public IVDeviceInfoState_PDR1 deviceInfoState_PDR1 => new VDeviceInfoState_PDR1DBContext();
+
+
     }
 }

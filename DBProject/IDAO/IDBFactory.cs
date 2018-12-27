@@ -17,5 +17,8 @@ namespace IDAO
         IModule module { get; }
         IAlarmTable_en alarmTable_en { get; }
         IUserInfo userInf { get; }
+        IEnerUserProject enerUserProject { get; }
+        IUnit unit { get; }
+        IVDeviceInfoState_PDR1 deviceInfoState_PDR1 { get; }
     }
 }

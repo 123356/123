@@ -1,0 +1,107 @@
+html {
+    background: #fff;
+    display: flex;
+    height: 100%;
+    overflow:hidden;
+}
+
+body {
+    padding: 20px 30px;
+    flex-grow: 1;
+}
+
+.title {
+    display: flex;
+    height: 60px;
+    padding-left: 30px;
+}
+
+.edit {
+    min-width: 48%;
+    display: flex;
+    align-items: center;
+}
+
+    .edit > * {
+        margin-right: 15px;
+    }
+
+.main {
+    height: 90%;
+    position: relative;
+    margin: 30px;
+}
+
+.right {
+    width: 40%;
+    min-width: 450px;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    top: 0px;
+    border: 1px solid #999;
+    height: 100%;
+}
+.left {
+    border: 1px solid #999;
+    height: 100%;
+    overflow: hidden;
+  
+}
+
+.right {
+    display: none;
+}
+
+.edit .form-control {
+    width: 150px;
+    display: inline-block;
+}
+
+.right {
+    padding: 20px 30px;
+}
+
+div.form-control{
+    min-height: 150px;
+    width: 92%;
+    display: inline-block;
+}
+
+.more {
+    display: inline-block !important;
+    position: relative;
+    right: 0px;
+    top: -5px;
+}
+
+.btn.btn-default {
+    background: #fff;
+    border-color:  #ced4da;
+}
+
+    .btn-default:hover {
+        background: #999;
+    }
+
+button.close {
+    position: absolute;
+    right: 10px;
+}
+
+.right .btn {
+    width: 130px;
+}
+
+.meter {
+    cursor: pointer;
+}
+
+    .meter:hover {
+        background: #999;
+    }
+
+
+.nometer{
+    display:none;
+}
