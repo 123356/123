@@ -58,6 +58,8 @@
     <Compile Include="DBCacheFactoryManager.cs" />
     <Compile Include="DBFactoryManager.cs" />
     <Compile Include="IAlarmTable_en.cs" />
+    <Compile Include="IEnerUserProject..cs" />
+    <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
     <Compile Include="InterfaceCache\IDBCache.cs" />
     <Compile Include="IDBCacheFactory.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="IRoleRight.cs" />
     <Compile Include="IHisData.cs" />
     <Compile Include="IModule.cs" />
+    <Compile Include="IVDeviceInfoState_PDR1.cs" />
     <Compile Include="Models.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,8 +83,12 @@
     <Compile Include="Models\t_AlarmTable_en.cs" />
     <Compile Include="Models\t_CM_Module.cs" />
     <Compile Include="Models\IntegerValue.cs" />
+    <Compile Include="Models\t_CM_Unit.cs" />
     <Compile Include="Models\t_CM_UserInfo.cs" />
+    <Compile Include="Models\t_EE_EnerUserProject.cs" />
+    <Compile Include="Models\t_EE_EnerUserType.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
+    <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_HisData.cs" />
     <Compile Include="Models\t_CM_ValueType.cs" />
     <Compile Include="Models\t_CM_PointsInfo.cs" />
