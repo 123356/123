@@ -4760,50 +4760,7 @@ namespace YWWeb.Controllers
         {
 
         }
-
-
-        public string SentHttpRequest()
-        {
-            //请求路径
-            string url = "http://yingyan.baidu.com/api/v3/entity/add";
-
-            //定义request并设置request的路径
-            WebRequest request = WebRequest.Create(url);
-            //定义请求的方式
-            request.Method = "POST";
-
-            //初始化request参数
-            string postData = "service_id=207722&ak=Y&LVtQ1twauxoSCcFB4mqacBd3F1O6BnGg&entity_name=entity1";
-            //设置参数的编码格式，解决中文乱码
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-            //设置request的MIME类型及内容长度
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = byteArray.Length;
-
-            //打开request字符流
-            Stream dataStream = request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-
-            //定义response为前面的request响应
-            WebResponse response = request.GetResponse();
-
-            //获取相应的状态代码
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-
-            //定义response字符流
-            dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();//读取所有
-            Console.WriteLine(responseFromServer);
-
-            //关闭资源
-            reader.Close();
-            dataStream.Close();
-            response.Close();
-            return responseFromServer;
-        }
+        
 
 
         public string SendHttpRequest(string requestURI, string requestMethod, PostData data)
@@ -4815,10 +4772,6 @@ namespace YWWeb.Controllers
             HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(serviceUrl);
             //post请求
             myRequest.Method = requestMethod;
-
-          
-
-            
             Type type = data.GetType();
             PropertyInfo[] pis = type.GetProperties();
             StringBuilder builder = new StringBuilder();
