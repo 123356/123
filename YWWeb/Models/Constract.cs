@@ -36,5 +36,13 @@ namespace YWWeb.Controllers
         public string UnitProvince { get; set; }
         public string UnitCity { get; set; }
         public string ProjectName { get; set; }
+        public int? Isaccomplish { get; set; }
+        public string Coordination { get; set; }
+        public string Approvers { get; set; }
+        public string ItemUsers { get; set; }
+        public int? BudgetUser { get; set; }
+        public int? ProjectManager { get; set; }
+        public decimal? ConMoneys { get; set; }
+        public string Adress { get; set; }
     }
 }

@@ -12,7 +12,8 @@ html {
 }
 
 #topo {
-    overflow: hidden
+    overflow: hidden;
+    background:#000;
 }
 
 .switchBtn {

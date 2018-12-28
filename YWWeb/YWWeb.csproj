@@ -735,10 +735,10 @@
     <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\js\jquery-2.1.1.min.js" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\calendar\css\calendar.css" />
+    <Content Include="Content\calendar\js\calendar.js" />
+    <Content Include="Content\calendar\js\calendar_core.js" />
+    <Content Include="Content\calendar\js\jquery.min.js" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -753,7 +753,9 @@
     <Content Include="Content\css\loginpub.css" />
     <Content Include="Content\css\master.css" />
     <Content Include="Content\css\master2.css" />
+    <Content Include="Content\css\modalForm.css" />
     <Content Include="Content\css\onepub.css" />
+    <Content Include="Content\css\OrganizeAreaTreeEdit.css" />
     <Content Include="Content\css\pingmiantu.css" />
     <Content Include="Content\css\pingmiantu1.css" />
     <Content Include="Content\css\pingmiantu10.css" />
@@ -772,6 +774,8 @@
     <Content Include="Content\css\pingmiantu8.css" />
     <Content Include="Content\css\pingmiantu9.css" />
     <Content Include="Content\css\planpub.css" />
+    <Content Include="Content\css\projectOverview.css" />
+    <Content Include="Content\css\proLog.css" />
     <Content Include="Content\css\score.css" />
     <Content Include="Content\css\SHyicitu.css" />
     <Content Include="Content\css\swiper.min.css" />
@@ -836,6 +840,7 @@
     <Content Include="Content\css\yicituLow1_1.css" />
     <Content Include="Content\css\yicituLow1_2.css" />
     <Content Include="Content\css\yw_table.css" />
+    <Content Include="Content\css\zoomify.css" />
     <Content Include="Content\GetMap\Css\public.css" />
     <Content Include="Content\GetMap\getMapPointXY.html" />
     <Content Include="Content\GetMap\Js\clipboard.min.js" />
@@ -1401,6 +1406,7 @@
     <Content Include="Content\js\vue.js" />
     <Content Include="Content\js\vue.min.js" />
     <Content Include="Content\js\weather.js" />
+    <Content Include="Content\js\zoomify.js" />
     <Content Include="Content\js\zrender\esl.js" />
     <Content Include="Content\js\zrender\zrender-original.js" />
     <Content Include="Content\js\zrender\zrender.js" />
@@ -1778,7 +1784,10 @@
     <Content Include="Content\UserJS\PowerPlant._zc.js" />
     <Content Include="Content\UserJS\PowerPurchaseContract._jm.js" />
     <Content Include="Content\UserJS\PowerPurchaseContract._zc.js" />
+    <Content Include="Content\UserJS\ProjectList._zc.js" />
     <Content Include="Content\UserJS\ProjectMap._zc.js" />
+    <Content Include="Content\UserJS\ProjectOverview._zc.js" />
+    <Content Include="Content\UserJS\ProLog._zc.js" />
     <Content Include="Content\UserJS\PurchasingCharts._jm.js" />
     <Content Include="Content\UserJS\PurchasingCharts._zc.js" />
     <Content Include="Content\UserJS\RealtimeDataInfo._jm.js" />
@@ -1839,6 +1848,10 @@
     <Content Include="Content\UserJS\_Header3.zc.js" />
     <Content Include="Content\UserJS\_LeftMenu._jm.js" />
     <Content Include="Content\UserJS\_LeftMenu._zc.js" />
+    <Content Include="Content\viewerJs\viewer.common.js" />
+    <Content Include="Content\viewerJs\viewer.css" />
+    <Content Include="Content\viewerJs\viewer.esm.js" />
+    <Content Include="Content\viewerJs\viewer.js" />
     <Content Include="Content\wav\alarm.mp3" />
     <Content Include="Content\wav\alarm_001.mp3" />
     <Content Include="Content\wav\alarm_010.mp3" />
@@ -1943,10 +1956,7 @@
     <Content Include="Content\yicitu_app\switch_off_2.png" />
     <Content Include="Content\yicitu_app\switch_on_1.png" />
     <Content Include="Content\yicitu_app\switch_on_2.png" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-reboot.css.map" />
@@ -2080,6 +2090,7 @@
     <Content Include="Content\iview\dist\styles\fonts\ionicons.ttf" />
     <Content Include="Content\iview\dist\styles\fonts\ionicons.woff" />
     <Content Include="Areas\EnergyManage\Views\EMSetting\OrganizeAreaTreeEdit.cshtml" />
+    <Content Include="Content\UserJS\RealtimeDataInfo._jm.js.rej" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2091,11 +2102,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart--.cshtml" />
-    <Content Include="Views\Shared---\Error.cshtml" />
-    <Content Include="Views\Shared---\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\AlarmManage\AlarmMain.cshtml" />
     <Content Include="Views\AlarmManage\AlarmSysTableList.cshtml" />
     <Content Include="Views\AlarmManage\Index.cshtml" />
@@ -2430,6 +2436,10 @@
     </Content>
     <Content Include="Views\EnergyEfficiency\Consume.cshtml" />
     <Content Include="Views\EnergyEfficiency\SubItem.cshtml" />
+    <Content Include="Views\Constract\Log.cshtml" />
+    <Content Include="Views\Constract\ProjectList.cshtml" />
+    <Content Include="Views\Constract\ProjectMap.cshtml" />
+    <Content Include="Views\Constract\ProjectOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2448,17 +2458,11 @@
     <Folder Include="Content\pingmiantu\P8\" />
     <Folder Include="Content\pingmiantu\P9\" />
     <Folder Include="Content\pingmiantu_app\" />
+    <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Views\Shared---\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
