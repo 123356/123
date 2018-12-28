@@ -294,11 +294,21 @@ function ShowPID(i) {
 
 //
 function createIcon(a, type) {
-  
-        aUrl = "../../Content/images/location_icon/2.png";
+    if (type == "car") {
+        aUrl = "https://lbsyun.baidu.com/jsdemo/img/car.png";
+        return new BMap.Icon(aUrl, new BMap.Size(52, 26),
+            {
+                anchor: new BMap.Size(27, 13)
+            }
+        );
+    } else{
         return new BMap.Icon(aUrl, new BMap.Size(22, 32), {
             anchor: new BMap.Size(22 / 2, 32)
         });
+        aUrl = "../../Content/images/location_icon/2.png";
+    }
+        
+        
     
 }
 
