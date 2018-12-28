@@ -45,7 +45,7 @@ Topo.prototype = {
         return c;
     },
     // 读取历史
-    history: function(obj) {
+    history: function (obj) {
         this.scene.backgroundColor = obj.config.bgColor;
         this.__IP = this.uncompileStr(obj.config.IP);
         this.__account = this.uncompileStr(obj.config.account);
@@ -198,8 +198,15 @@ Topo.prototype = {
                     data: {
                         "pid": that.pid,
                     },
-                    success: function(res) {
-                        var data = JSON.parse(res);
+                    success: function (res) {
+                        console.log(res)
+                        try {
+                            res = JSON.parse(res);
+                            that.history(res)
+                        } catch{
+                            res = res;
+                        }
+                        that.history(res)
                         var nodes = that.specialNode;
                         if (!nodes) {
                             return
