@@ -14,6 +14,9 @@ using YWWeb.PubClass;
 using DAL;
 using IDAO.Models;
 using System.Reflection;
+using MongoDB.Driver;
+using MongoDB;
+using MongoDB.Bson;
 
 namespace YWWeb.Controllers
 {
@@ -62,9 +65,22 @@ namespace YWWeb.Controllers
             int nDataType = ("" == typename) ? 0 : Convert.ToInt32(typename);
             //取tagid
             List<t_CM_PointsInfo> listPoint = bll.t_CM_PointsInfo.Where(o => o.CID == CID && o.PID == pid && !o.Position.Equals("备用01") && o.TagName.Contains(cname)).ToList();
+            //int[] tagIDS = listPoint.Select(c => c.TagID).ToArray();
             string tagIDS = string.Join(",", listPoint.Select(c => c.TagID).ToArray());
             List<t_SM_HisData> list = HisDataDAL.getInstance().GetHisData(out rowcount, rows, page, pid, tagIDS,
                 dname, cname, startdate, enddate, typename, sort, order).ToList();
+
+
+            //DateTime startTime = Convert.ToDateTime(startdate);
+            //DateTime endTime = Convert.ToDateTime(enddate);
+            //string tablename = "t_SM_HisData_" + pid.ToString("00000");
+            //MongoHelper mon = new MongoHelper();
+            //FilterDefinitionBuilder<BsonDocument> builderFilter = Builders<BsonDocument>.Filter;
+            //FilterDefinition<BsonDocument> filter = builderFilter.And(builderFilter.Gte("RecTime", startTime), builderFilter.Lte("RecTime", endTime), builderFilter.In("TagID", tagIDS));
+
+
+
+            //List<his> list = mon.Select<his>(tablename, filter, rows, page,out rowcount);
             strJson = List2Json(list, rowcount, listPoint);
             list.Clear();
             list = null;
@@ -91,6 +107,10 @@ namespace YWWeb.Controllers
             //    throw ex;
             //}
             //return Content(strJson);
+        }
+        public class his : BaseEntity
+        {
+
         }
         public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
         {
