@@ -150,7 +150,7 @@ Topo.prototype = {
                 that.matchElectricMeter(node._cid);
                 that.timer = setInterval(function() {
                     that.matchElectricMeter(node._cid);
-                }, 2000)
+                }, 1000)
             });
             node.mouseout(function() {
                 clearInterval(that.timer);
@@ -247,6 +247,7 @@ Topo.prototype = {
         var wsport = parseInt(that.__port);
         //连接选项
         var client;
+
         var options = {
             timeout: 30,
             userName: that.__account,
@@ -410,15 +411,16 @@ Topo.prototype = {
     },
     //匹配文字
     matchText: function(node) {
-        var timer3 = setInterval(() => {
-            if (this.meterData != undefined && this.meterData.length != 0) {
-                clearInterval(timer3);
-                for (var a = 0; a < this.meterData.length; a++) {
-                    if (node.id == this.meterData[a].TagID) {
-                        node.text = this.meterData[a].DValue;
+        var that = this;
+        window.timer3 = setInterval(function() {
+            if (that.meterData != undefined && that.meterData.length != 0) {
+                for (var a = 0; a < that.meterData.length; a++) {
+                    if (node.id == that.meterData[a].TagID) {
+                        node.text = that.meterData[a].DValue;
                         return
                     }
                 }
+                clearInterval(window.timer3);
             }
         }, 500);
     }
