@@ -1,6 +1,5 @@
 ﻿@{
     Layout = null;
-    YWWeb.Controllers.LoginAttribute loginbll = new YWWeb.Controllers.LoginAttribute();
 }
 <!DOCTYPE html>
 <html>
@@ -202,7 +201,7 @@
     </div>
     <script type="text/javascript">
         var did=@Html.Raw(Request.QueryString["did"]);
-        var uid = @loginbll.CurrentUser.UserID; 
+        var uid = @ViewData["userID"]; 
 
     </script>
     <script src="~/Content/UserJS/DeviceEdits._jm.js"></script>
