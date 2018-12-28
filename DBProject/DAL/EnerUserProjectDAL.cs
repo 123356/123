@@ -37,21 +37,18 @@ namespace DAL
         /// <param name="pid"></param>
         /// <param name="itemType"></param>
         /// <returns></returns>
-        public IList<t_EE_EnerUserProject> GetTree(int pid,int itemType)
+        public IList<t_EE_EnerUserProject> GetOrganizationTree(int unitID, int itemType)
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-
-                data = _dbFactory.enerUserProject.GetTree(pid, itemType);
+                data = _dbFactory.enerUserProject.GetOrganizationTree(unitID, itemType);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             return data;
-
         }
-
     }
 }

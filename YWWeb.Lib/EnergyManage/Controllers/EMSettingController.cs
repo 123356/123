@@ -27,7 +27,7 @@ namespace EnergyManage.Controllers
         //返回树
         public JsonResult GetTree(int pid, int itemType)
         {
-            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().GetTree(pid, itemType);
+            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().GetOrganizationTree(pid, itemType);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -46,6 +46,17 @@ namespace EnergyManage.Controllers
             IList<IDAO.Models.t_V_DeviceInfoState_PDR1> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().getPDCTree(unitID);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+        public JsonResult GetOrganizationList(int type)
+        {
+            IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetOrganizationList(type);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
 
 
 
