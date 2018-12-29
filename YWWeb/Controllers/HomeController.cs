@@ -3535,8 +3535,8 @@ namespace YWWeb.Controllers
                 t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
                 mo.UserID = CurrentUser.UserID;
                 mo.CreatTime = DateTime.Now;
-                mo.ItemID = info.ID;
-                mo.Remarks = mo.CreatTime + "編輯_" + info.ID + "_" + info.Name + "_事項";
+                mo.ItemID = model.ID;
+                mo.Remarks = mo.CreatTime + "編輯_" + model.ID + "_" + model.Name + "_事項";
                 AddOlog(mo);
             }
             else
@@ -3569,8 +3569,9 @@ namespace YWWeb.Controllers
                         t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
                         mo.UserID = CurrentUser.UserID;
                         mo.CreatTime = DateTime.Now;
-                        mo.ItemID = info.ID;
+                        mo.ItemID = model.ID;
                         mo.Remarks = mo.CreatTime.ToString() + "添加_" + model.ID + "_" + model.Name + "_事項";
+                        AddOlog(mo);
                     }
                 }
                 else
@@ -3604,7 +3605,7 @@ namespace YWWeb.Controllers
                     t_CM_ItemOperationLog mo = new t_CM_ItemOperationLog();
                     mo.UserID = CurrentUser.UserID;
                     mo.CreatTime = DateTime.Now;
-                    mo.ItemID = info.ID;
+                    mo.ItemID = model.ID;
                     mo.Remarks = mo.CreatTime.ToString() + "添加_" + model.ID + "_" + model.Name + "_事項";
                     AddOlog(mo);
                 }
