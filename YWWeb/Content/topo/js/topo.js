@@ -1,4 +1,4 @@
-﻿"use strict"
+"use strict"
 
 function Topo() {};
 Topo.prototype = {
@@ -45,8 +45,8 @@ Topo.prototype = {
         return c;
     },
     // 读取历史
-    history: function (obj) {
-        this.scene.backgroundColor = obj.config.bgColor;
+    history: function(obj) {
+        this.scene.backgroundColor = "0,0,0";
         this.__IP = this.uncompileStr(obj.config.IP);
         this.__account = this.uncompileStr(obj.config.account);
         this.__password = this.uncompileStr(obj.config.password);
@@ -198,15 +198,8 @@ Topo.prototype = {
                     data: {
                         "pid": that.pid,
                     },
-                    success: function (res) {
-                        console.log(res)
-                        try {
-                            res = JSON.parse(res);
-                            that.history(res)
-                        } catch{
-                            res = res;
-                        }
-                        that.history(res)
+                    success: function(res) {
+                        var data = JSON.parse(res);
                         var nodes = that.specialNode;
                         if (!nodes) {
                             return
