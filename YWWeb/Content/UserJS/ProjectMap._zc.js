@@ -22,13 +22,19 @@ $.ajaxSettings.async = false; //同步才能获取数据
 
 //获取站点数据
 var markerArr = new Array();
-/*$.post("/PDRInfo/getStationInfo", function(data) {
+$.post("/PDRInfo/getStationInfo", function(data) {
     var arrdata = data.split('$');
     var arr = eval("(" + arrdata[0] + ")");
-    markerArr = arr;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].title == '1号_工程车') {
+            arr[i].type="car"
+            markerArr.push(arr[i])
+        }
+    }
+
 });
 console.log(markerArr)
-$.post("/Home/GetShopTruck", function(data) {
+/*$.post("/Home/GetShopTruck", function(data) {
     console.log(data);
     for (var a = 0; a < data.length; a++) {
         data[a].type = 'car';
@@ -38,7 +44,7 @@ $.post("/Home/GetShopTruck", function(data) {
 $.post("/Home/LoadConstract", function (data) {
     console.log(data);
     for (var a = 0; a < data.length; a++) {
-        data[a].type = 'car';
+        data[a].type=""
         markerArr.push(data[a]);
     }
 });
@@ -160,15 +166,31 @@ var changeMarkerArr = new Array()
 function addMarker() {
     for (var i = 0; i < markerArr.length; i++) {
         var a = markerArr[i];
-      
-        var b = a.Coordination.split("|")[0];
-        var c = a.Coordination.split("|")[1];
+        var b,c;
+        if (a.type == "car") {
+            b = a.point.split("|")[0]
+            c = a.point.split("|")[1]
+        }
+        else {
+            b = a.Coordination.split("|")[0];
+            c = a.Coordination.split("|")[1];
+        }
+
+
        
         //var typeid = a.position;
         var point = new BMap.Point(b, c);
 
         //alert(a.content);		
-        showControl_ClickPDR(a.title);
+        var title =null
+        if (a.type == "car") {
+            showControl_ClickPDR(a.title);
+            title = a.title
+        } else {
+            showControl_ClickPDR(a.ProjectName);
+            title: a.ProjectName
+        }
+        
         if (g_showPDROk == 0) {
             typeid = 19; //限制点击
         }
@@ -178,9 +200,9 @@ function addMarker() {
         marker.pid = markerArr[i].pid
         changeMarkerArr.push(marker)
         
-        var f = new BMap.Label(a.ProjectName, { "offset": new BMap.Size(-10, 30) });
+        var f = new BMap.Label(title, { "offset": new BMap.Size(-10, 30) });
        
-        f.setTitle(a.ProjectName);
+        f.setTitle(title);
 
         marker.setLabel(f);
         marker.setZIndex(10);
@@ -243,12 +265,26 @@ function showinfomessage(marker, point, data) {
             proType = "测绘"
             break;
     }
-    
-    html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.ProjectName + '</span><a href="JavaScript:toDetail(' + data.ID + ')">详情</a><a href="/Content/baiduMap/hawkEye/manager.html">轨迹查询</a></td></tr>'
+    var time = data.CoordinationTime
+    if (time == null) {
+        time = "--"
+    }
+    if (data.type == "car") {
+        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.title + '</span><a href="/Content/baiduMap/hawkEye/manager.html">轨迹查询</a></td></tr>'
+        html += '<tr style="font-size:11px"><td ><i class="iconfont icon-location"></i>' + data.adress + '</td></tr>'
+        html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
+        html += '<tr style="font-size:11px"><td >车牌：京GH4348</td></tr>'
+
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白运光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
+    } else{
+        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.ProjectName + '</span><a href="JavaScript:toDetail(' + data.ID + ')">详情</a></td></tr>'
         html += '<tr style="font-size:11px"><td ><i class="iconfont icon-location"></i>' + data.Adress + '</td></tr>'
         html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
         html += '<tr style="font-size:11px"><td >项目类型：' + proType + '</td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">项目联系人：' + data.ProjectManager + '<span style="margin-left:40px">电话：' + data.Tel + '</span></td></tr>'
+    }
+    
     html += '</table>';
     var infoWindow = new BMap.InfoWindow(html, opts); // 创建信息窗口对象
     var infoBox = new BMapLib.InfoBox(powerMap, html, {
@@ -294,6 +330,7 @@ function ShowPID(i) {
 
 //
 function createIcon(a, type) {
+    console.log(type)
     if (type == "car") {
         aUrl = "https://lbsyun.baidu.com/jsdemo/img/car.png";
         return new BMap.Icon(aUrl, new BMap.Size(52, 26),
@@ -301,11 +338,12 @@ function createIcon(a, type) {
                 anchor: new BMap.Size(27, 13)
             }
         );
-    } else{
+    } else {
+        aUrl = "../../Content/images/location_icon/2.png";
         return new BMap.Icon(aUrl, new BMap.Size(22, 32), {
             anchor: new BMap.Size(22 / 2, 32)
         });
-        aUrl = "../../Content/images/location_icon/2.png";
+        
     }
         
         
