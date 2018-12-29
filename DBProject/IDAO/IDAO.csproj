@@ -67,6 +67,7 @@
     <Compile Include="IRoleRight.cs" />
     <Compile Include="IHisData.cs" />
     <Compile Include="IModule.cs" />
+    <Compile Include="IEnerUserType.cs" />
     <Compile Include="IVDeviceInfoState_PDR1.cs" />
     <Compile Include="Models.Context.cs">
       <AutoGen>True</AutoGen>

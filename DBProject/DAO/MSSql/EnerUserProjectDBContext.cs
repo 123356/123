@@ -24,7 +24,7 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_EE_EnerUserProject> GetTree(int pid, int itemType)
+        public IList<t_EE_EnerUserProject> GetOrganizationTree(int unitId, int itemType)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             //  string sql = "SELECT t_EE_EnerUserProject.parent_id,t_EE_EnerUserProject.child_id FROM t_EE_EnerUserType,t_EE_EnerUserProject WHERE t_EE_EnerUserType.item_type = 1 AND t_EE_EnerUserType.id =t_EE_EnerUserProject.parent_id";

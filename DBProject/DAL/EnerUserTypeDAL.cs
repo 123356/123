@@ -12,37 +12,55 @@ using IDAO.InterfaceCache;
 
 namespace DAL
 {
-    public class EnerUserProjectDAL
+    public class EnerUserTypeDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
-
-        static EnerUserProjectDAL _DataDal;
+      
+        static EnerUserTypeDAL _DataDal;
         static readonly object _loker = new object();
-        public static EnerUserProjectDAL getInstance(string json = null)
+        public static EnerUserTypeDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
                 lock (_loker)
                 {
                     if (null == _DataDal)
-                        _DataDal = new EnerUserProjectDAL();
+                        _DataDal = new EnerUserTypeDAL();
                 }
             }
+
             return _DataDal;
         }
-        /// <summary>
-        /// 获取树
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="itemType"></param>
-        /// <returns></returns>
-        public IList<t_EE_EnerUserProject> GetOrganizationTree(int unitID, int itemType)
+
+        
+      
+        
+        public IList<t_EE_EnerUserType> GetOrganizationList(int type)
         {
-            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserProject.GetOrganizationTree(unitID, itemType);
+                data = _dbFactory.enerUserType.GetOrganizationList(type);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+
+
+
+
+        public int unpDateproject(int item_type, string Name, string Remarks)
+        {
+            int data = new int();
+            try
+            {
+                data = _dbFactory.enerUserType.unpDateproject(item_type, Name, Remarks);
             }
             catch (Exception ex)
             {

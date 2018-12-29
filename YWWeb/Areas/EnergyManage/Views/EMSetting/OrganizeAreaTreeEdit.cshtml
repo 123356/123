@@ -15,12 +15,9 @@
 
 </head>
 <body>
-
-
     <div class="title">
-
         <div class="edit">
-            <input type="text" name="name" value="" placeholder="搜索" class="form-control" />
+            <input type="text" name="name" value="" placeholder="搜索" class="form-control" autocomplete="off" />
             <select class="form-control" id="unitList"></select>
             <button class="btn btn-default readt">查询</button>
             <button class="btn btn-default createt">新增</button>
@@ -30,12 +27,14 @@
     </div>
     <div class="main">
         <div class="left">
-            <ul id="Organization"></ul>
+            <ul id="Organization" class="ztree"></ul>
         </div>
         <div class="right">
+            <h4 style="text-align: right;" id="title"></h4>
             <div class="form-group">
                 <label for="name">名称</label>
-                <input type="text" class="form-control" id="name" placeholder="name">
+                <input type="text" class="form-control" id="name" placeholder="name" list="areaedList">
+                <datalist id="areaedList"> </datalist>
             </div>
             <div class="form-group">
                 <label for="officer">信息负责人</label>
@@ -59,16 +58,10 @@
                 </div>
                 <button class="more btn-default del" data-toggle="modal" data-target="#myModal">...</button>
             </div>
-
-            <button type="button" class="btn btn-default saveupdate offOut">保存编辑</button>
-            <button type="button" class="btn btn-default offupdate offOut">取消编辑</button>
-
-
+            <button type="button" class="btn btn-default saveupdate offOut">确 认</button>
+            <button type="button" class="btn btn-default offupdate offOut">取 消</button>
         </div>
     </div>
-
-
-
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -91,7 +84,6 @@
         </div>
     </div>
 
-
     <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.1.1.min.js"></script>
     <script src="~/Content/js/jquery.cookie.js"></script>
     <script src="~/Content/ztree/js/jquery.ztree.all.min.js"></script>
@@ -112,7 +104,13 @@
                     url: "/energyManage/EMSetting/GetUnitList",
                     data: {},
                     success: function (res) {
-                        var globalUnitID = JSON.parse($.cookie('unitID')).id || res[0].UnitID;
+                        try {
+                            var globalUnitID = JSON.parse($.cookie('unitID')).id || res[0].UnitID;
+                        } catch{
+                            var globalUnitID = res[0].UnitID;
+                            $.cookie('unitID', JSON.stringify({ id: res[0].UnitID, name: res[0].UnitName }), { expires: 1 });
+                            that.loadOrganizationTree();
+                        }
                         for (var a = 0, arr = []; a < res.length; a++) {
                             if (globalUnitID == res[a].UnitID) {
                                 arr.push(`<option value="${res[a].UnitID}" selected = "selected" data-pids="${res[a].PDRList}">${res[a].UnitName}</option>`);
@@ -123,12 +121,28 @@
                         $('#unitList').html(arr.join(''));
                         var pids = $("#unitList").find("option:selected").attr('data-pids');
                         if (pids) {
-                            that.loadModalTree(pids);
+                            that.loadModalTree(pids)
                         } else {
                             alert('该单位没有站室');
                         }
                     }
                 })
+            },
+            //加载已存在的组织列表
+            loadAreaed: function () {
+                $.ajax({
+                    type: "post",
+                    url: "/energyManage/EMSetting/GetOrganizationList",
+                    data: { type: 2 },
+                    success: function (res) {
+
+                        for (var a = 0, arr = []; a < res.length; a++) {
+                            arr.push(`<option value="${res[a].Name}" data-id="${res[a].id}">`);
+                        }
+                        $('#areaedList').html(arr.join(""));
+                    }
+                })
+
             },
             //加载模态框树
             loadModalTree: function (unitID) {
@@ -159,14 +173,18 @@
                 var pid = -1,
                     cid = -1,
                     did = -1;
-                var list = [];
                 for (var a = 0; a < arr.length; a++) {
                     if (pid != arr[a].PID + '_p') {
                         pid = arr[a].PID + '_p';
-                        treeList.push({ name: arr[a].Name, id: pid, type: 'pid', pId: 0, open: true });
+                        if (treeList.length == 0) {
+                            var pdr = { name: arr[a].Name, id: pid, type: 'pid', pId: 0, open: true, nocheck: true }
+                        } else {
+                            var pdr = { name: arr[a].Name, id: pid, type: 'pid', pId: treeList[0].id, nocheck: true }
+                        }
+                        treeList.push(pdr);
                     } else if (pid == arr[a].PID + '_p' && did != arr[a].DID + '_d') {
                         did = arr[a].DID + '_d';
-                        treeList.push({ name: arr[a].DeviceName, id: did, type: 'did', pId: pid });
+                        treeList.push({ name: arr[a].DeviceName, id: did, type: 'did', pId: pid, nocheck: true });
                     } else if (pid == arr[a].PID + '_p' && did == arr[a].DID + '_d') {
                         treeList.push({ name: arr[a].CName, id: arr[a].CID + '_c', type: 'cic', pId: did });
                     }
@@ -174,46 +192,117 @@
             },
             //加载事件
             loadEvents: function () {
-             
                 var morefun;
                 var that = this;
                 $("#unitList").on('change', function () {
-                    var pids = $("#unitList").find("option:selected").attr('data-pids');
-                    if (pids) {
-                        that.loadModalTree(pids);
-                        $.cookie('unitID', JSON.stringify({ id: $("#unitList").val(), name: $("#unitList").find("option:selected").text()}), { expires: 1 });
-                    } else {
-                        alert('该单位没有站室');
-                    }
+                    $.cookie('unitID', JSON.stringify({ id: $("#unitList").val(), name: $("#unitList").find("option:selected").text() }), { expires: 1 });
                 })
                 //点击修改
                 $('.updatet').on('click', function () {
-                    $('.right').fadeToggle();
+                    $('.right').fadeIn();
+                    that.editType = "upd";
+                    $('#title').html("修改");
                 })
                 //点击确定编辑或取消编辑
                 $('.offOut').on('click', function () {
-                    console.log(1111)
-                    $('.right').fadeOut();
+                    $('#check1').prop('checked', false);
                 })
                 //点击模态框确定或取消
                 $('.getselect').on('click', function () {
-                    var arr = [];
-                    for (var a = 0; a < that.treelist.length; a++) {
-                        arr.push(that.treelist[a].getCheckedNodes())
-                    }
-                    var arr2 = [].concat.apply([], arr);
-                    console.log(arr2)
+                    var arr;
+                    $('.checkbox_true_full').removeClass("chk");
+                    arr = $.fn.zTree.getZTreeObj("meterztree").getCheckedNodes();
                     if (morefun) {
                         console.log('删除')
                     } else {
                         console.log('增加')
                     }
+                    //加表
+                    //$.fn.zTree.getZTreeObj("meterztree").checkAllNodes(false);
                 })
+                //点击查看更多表
                 $('.more').on('click', function () {
                     morefun = $(this).attr('class').indexOf('add') == -1;
                 })
+                //点击查询
+                $('.readt').on('click', function () {
+                    var pids = $("#unitList").find("option:selected").attr('data-pids')
+                    that.loadOrganizationTree();
+                    that.loadModalTree(pids);
+                    $('#title').html("查看");
+                })
+                //点击删除
+                $('.deletet').on('click', function () {
+                    if ($.fn.zTree.getZTreeObj("Organization").getSelectedNodes().length != 0) {
+                        that.editType = 'del';
+                        $('#title').html("删除");
+                        that.editType = 'del';
+                    }
+                })
+                //点击新增
+                $('.createt').on('click', function () {
+                    if ($.fn.zTree.getZTreeObj("Organization").getSelectedNodes().length != 0) {
+                        $('.right').fadeIn();
+                        that.editType = 'add';
+                        $('#title').html("新建");
+                    }
+                })
+                //点击确定
+                $('.saveupdate').on('click', function () {
+                    if (that.editType == 'add') {//添加
+                        that.createNode();
+                    } else if (that.editType == 'del') { //删除
+                        that.deletetNode();
+                    } else if (that.editType == 'upd') {//修改
+                        that.updatetNode();
+                    }
+                })
             },
-            //配置ztree
+            //新增节点
+            createNode: function () {
+                var data = {
+                    name: $('#name').val() || null,
+                    id: $(`option[value='${name}']`).attr('data-id') || null,
+                    note: $('#note').val() || null,
+                    addCid: $('.addition').attr('data-meter') || null,
+                    delCid: $('.reduction').attr('data-meter') || null
+                }
+                if (!data.name) {
+                    alert("添加失败,名称不可为空。");
+                    return;
+                }
+                console.log(data)
+
+                console.log('新增')
+
+                return
+
+                var zreeobj = $.fn.zTree.getZTreeObj("Organization");
+                var select = zreeobj.getSelectedNodes();
+                if (select.length == 0) {
+                    alert('选中一个节点')
+                }
+                var newNodes = {
+                    id: 123,
+                    name: "新建节点"
+                };
+                var znodes = zreeobj.addNodes(select[0], newNodes, true);
+            },
+            //修改节点
+            updatetNode: function () {
+                console.log('修改')
+
+            },
+            //查看节点
+            readtNode: function () {
+                console.log('删除')
+            },
+            //删除节点
+            deletetNode: function () {
+                console.log('删除')
+                $('.right').fadeOut();
+            },
+            //配置站室内树
             allocationTreeData: function (data) {
                 var setting = {
                     view: {
@@ -224,7 +313,7 @@
                     check: {
                         enable: true,
                         chkStyle: 'checkbox',
-                        radioType: "level",
+                        radioType: "all",
                         chkboxType: { "Y": "s", "N": "s" }
                     },
                     data: {
@@ -239,7 +328,6 @@
                     }
                 };
                 var zNodes = data
-                console.log(data)
                 function setCheck() {
                     setting.check.chkStyle = $("#r1").attr("checked") ? "checkbox" : "checkbox";
                     setting.check.enable = (!$("#disablechk").attr("checked"));
@@ -252,18 +340,58 @@
                     $("#r2").bind("change", setCheck);
                     $("#disablechk").bind("change", setCheck);
                 });
-
-
-
+            },
+            //配置组织树
+            allocationOrganization: function (data) {
+                var setting = {
+                    view: {
+                        // addHoverDom: addHoverDom,
+                        // removeHoverDom: removeHoverDom,
+                        selectedMulti: false
+                    },
+                    check: {
+                        enable: false,
+                        chkStyle: 'checkbox',
+                        radioType: "all",
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    edit: {
+                    }
+                };
+                var zNodes = data;
+                $.fn.zTree.init($("#Organization"), setting, zNodes);
+            },
+            //加载组织树
+            loadOrganizationTree: function () {
+                var that = this;
+                $.ajax({
+                    type: "post",
+                    url: "/energyManage/EMSetting/GetOrganizationTree",
+                    data: { unitID: JSON.parse($.cookie('unitID')).id, itemType: 2 },
+                    success: function (res) {
+                        var znodes = [{ name: JSON.parse($.cookie('unitID')).name, id: "unit", type: "root", pId: 0, open: true }];
+                        that.remakeTree(res, znodes);
+                        that.allocationOrganization(znodes);
+                    }
+                })
             },
             //初始化
             init: function () {
+                if ($.cookie('unitID')) {
+                    this.loadOrganizationTree();
+                }
                 this.loadUnitList();
                 this.loadEvents();
+                this.loadAreaed();
+            
             },
-
-
-
         };
 
 
@@ -285,11 +413,11 @@
             var organization = new Organization();
             organization.init();
         });
-                                        //$('.right input').attr('readonly','readonly');
-                                        //$('.right button').attr('disabled','disabled');
+                                                    //$('.right input').attr('readonly','readonly');
+                                                    //$('.right button').attr('disabled','disabled');
 
 
-                                //$('.right').fadeOut()
+                                            //$('.right').fadeOut()
 
     </script>
 </body>
