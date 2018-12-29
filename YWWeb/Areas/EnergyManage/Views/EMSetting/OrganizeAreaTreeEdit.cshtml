@@ -128,7 +128,7 @@
                     }
                 })
             },
-            //加载已存在的组织列表
+            //加载已存在的区域列表
             loadAreaed: function () {
                 $.ajax({
                     type: "post",
@@ -376,6 +376,7 @@
                     url: "/energyManage/EMSetting/GetOrganizationTree",
                     data: { unitID: JSON.parse($.cookie('unitID')).id, itemType: 2 },
                     success: function (res) {
+                        console.log(res)
                         var znodes = [{ name: JSON.parse($.cookie('unitID')).name, id: "unit", type: "root", pId: 0, open: true }];
                         that.remakeTree(res, znodes);
                         that.allocationOrganization(znodes);
