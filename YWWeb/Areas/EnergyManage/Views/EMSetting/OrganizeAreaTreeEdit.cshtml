@@ -63,9 +63,6 @@
         </div>
     </div>
 
-
-
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -112,6 +109,7 @@
                         } catch{
                             var globalUnitID = res[0].UnitID;
                             $.cookie('unitID', JSON.stringify({ id: res[0].UnitID, name: res[0].UnitName }), { expires: 1 });
+                            that.loadOrganizationTree();
                         }
                         for (var a = 0, arr = []; a < res.length; a++) {
                             if (globalUnitID == res[a].UnitID) {
@@ -123,8 +121,7 @@
                         $('#unitList').html(arr.join(''));
                         var pids = $("#unitList").find("option:selected").attr('data-pids');
                         if (pids) {
-                            that.loadModalTree(pids);
-                            that.loadOrganizationTree();
+                            that.loadModalTree(pids)
                         } else {
                             alert('该单位没有站室');
                         }
@@ -299,7 +296,6 @@
             //查看节点
             readtNode: function () {
                 console.log('删除')
-
             },
             //删除节点
             deletetNode: function () {
@@ -388,9 +384,13 @@
             },
             //初始化
             init: function () {
+                if ($.cookie('unitID')) {
+                    this.loadOrganizationTree();
+                }
                 this.loadUnitList();
                 this.loadEvents();
                 this.loadAreaed();
+            
             },
         };
 

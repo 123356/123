@@ -56,8 +56,28 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item_type">类型</param>
+        /// <param name="Name">节点名称</param>
+        /// <param name="Remarks">描述</param>
+        /// <param name="parentID">父节点ID</param>
+        /// <param name="unit_note"></param>
+        /// <param name="parent_id"></param>
+        /// <returns></returns>
+        public JsonResult addTreeNode(int item_type, string Name, string Remarks, int parentID,int unit_note,int parent_id)
+        {
+            //查表中 是否有这段数据  如果有就修改  没有就添加  返回id
+            int id = DAL.EnerUserTypeDAL.getInstance().unpDateproject(item_type, Name, Remarks);
+            //通过id 去关系表中查  是否有 父级关系 如果parentID是null 则为新建根节点  childID  为添加的id
 
 
+            // child_id unit_head unit_note Name Remarksitem_type
+
+
+            return Json(id);
+        }
 
 
         #endregion
