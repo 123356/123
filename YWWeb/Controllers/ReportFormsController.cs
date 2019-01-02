@@ -68,7 +68,7 @@ namespace YWWeb.Controllers
                         tableName = "t_EE_PowerQualityYearly";
                     }
                     CIDS = GetcidByPID(type, pid);
-                    string strsql = "select a.RecordTime,a.Power Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from  " + tableName + "  a,t_DM_CircuitInfo b where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and a.Power is not null";
+                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from  " + tableName + "  a,t_DM_CircuitInfo b where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and a.UsePower is not null";
 
                     if (!pid.Equals(""))
                     {
