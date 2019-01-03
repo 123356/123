@@ -35,6 +35,16 @@ namespace DAO
             return Datas.Where(u => u.UserName == userName && u.UserPassWord == password).ToList();
         }
 
+        public IList<t_CM_UserInfo> GetUsers(string mobile)
+        {
+            return Datas.Where(u => u.Mobilephone == mobile).ToList();
+        }
+
+        public IList<t_CM_UserInfo> GetWxUsers(string openid)
+        {
+            return Datas.Where(u => u.openid2 == openid).ToList();
+        }
+
         public DbSet<t_CM_UserInfo> Datas { get; set; }
     }
 }

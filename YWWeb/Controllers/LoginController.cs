@@ -81,11 +81,11 @@ namespace YWWeb.Controllers
                 //}
             }
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return (t_CM_UserInfo)HttpContext.Current.Session["Huerinfo"]; }
-            set { HttpContext.Current.Session["Huerinfo"] = value; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return (t_CM_UserInfo)HttpContext.Current.Session["Huerinfo"]; }
+        //    set { HttpContext.Current.Session["Huerinfo"] = value; }
+        //}
         #endregion
     }
 }

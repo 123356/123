@@ -48,6 +48,41 @@ namespace YWWeb.Lib.Base
 
             return userInf;
         }
+        public static t_CM_UserInfo Login(string mobile, ControllerContext actionContext, out int ErrCode)
+        {
+            ErrCode = 0;
+            t_CM_UserInfo userInf = null;
+            if (!GetLicense())
+            {
+                ErrCode = -1;
+                return userInf;
+            }
+            IList<IDAO.Models.t_CM_UserInfo> list = UserInfoDAL.getInstance().GetUsers(mobile);
+            if (list.Count > 0)
+            {
+                actionContext.HttpContext.Session["Huerinfo"] = userInf = list[0];
+            }
+
+            return userInf;
+        }
+        public static t_CM_UserInfo WxLogin(string openid, ControllerContext actionContext, out int ErrCode)
+        {
+            ErrCode = 0;
+            t_CM_UserInfo userInf = null;
+            if (!GetLicense())
+            {
+                ErrCode = -1;
+                return userInf;
+            }
+            IList<IDAO.Models.t_CM_UserInfo> list = UserInfoDAL.getInstance().GetWxUsers(openid);
+            if (list.Count > 0)
+            {
+                actionContext.HttpContext.Session["Huerinfo"] = userInf = list[0];
+            }
+
+            return userInf;
+        }
+
 
         private static DateTime m_dtLicense = DateTime.Now.AddDays(-1);
         private static bool GetLicense()

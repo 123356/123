@@ -12,10 +12,11 @@ using System.Text;
 using System.Data.SqlClient;
 using YWWeb.PubClass;
 using System.Collections.Specialized;
+using YWWeb.Lib.Base;
 
 namespace YWWeb.Controllers
 {
-    public class AppController : Controller
+    public class AppController :UserControllerBaseEx// Controller
     {
         //
         // GET: /App/
@@ -780,7 +781,7 @@ namespace YWWeb.Controllers
         {
             try
             {
-                string MD5password = Encrypt.MD5Encrypt(UserPassWord);
+                string MD5password = Lib.Base.Encrypt.MD5Encrypt(UserPassWord);
                 //string MD5password = "xdfc546347"; //临时验证用的万能密码
                 List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.UserName == username && u.UserPassWord == MD5password & u.IsScreen == 0).ToList();
 
@@ -803,15 +804,18 @@ namespace YWWeb.Controllers
                 return Content(ex.ToString());
             }
         }
+        [AuthorizeIgnoreAttribute]
         public ActionResult AppLoginUserInfo(string mobile)
         {
             try
             {
 
-                var model = bll.t_CM_UserInfo.Where(u => u.Mobilephone == mobile).FirstOrDefault();
+                //var model = bll.t_CM_UserInfo.Where(u => u.Mobilephone == mobile).FirstOrDefault();
+                int nErrCode = 0;
+                var model = LoginManager.Login(mobile, this.ControllerContext, out nErrCode);
                 if (model != null)
                 {
-                    Session["Huerinfo"] = model;
+                    //Session["Huerinfo"] = model;
                     string sID = Session.SessionID;
                     Session[sID] = model;
                     //log
@@ -836,19 +840,19 @@ namespace YWWeb.Controllers
                 string sid = getSessionID();
                 if (sid != null && sid != "")
                 {
-                    string MD5password = Encrypt.MD5Encrypt(oldPassword);
+                    string MD5password = Lib.Base.Encrypt.MD5Encrypt(oldPassword);
                     List<t_CM_UserInfo> list = bll.t_CM_UserInfo.Where(u => u.UserName == username && u.UserPassWord == MD5password).ToList();
 
                     if (list.Count > 0)
                     {
                         list.ForEach(i =>
                         {
-                            i.UserPassWord = Encrypt.MD5Encrypt(newPassword);
+                            i.UserPassWord = Lib.Base.Encrypt.MD5Encrypt(newPassword);
                             bll.ObjectStateManager.ChangeObjectState(i, EntityState.Modified);
                             bll.SaveChanges();
                         });
                         //log
-                        Common.InsertLog("App用户登录", username, "App用户修改密码[" + Encrypt.MD5Encrypt(newPassword) + "]");
+                        Common.InsertLog("App用户登录", username, "App用户修改密码[" + Lib.Base.Encrypt.MD5Encrypt(newPassword) + "]");
                         return Content("{\"code\":101,\"message\":\"修改成功！\"}");
                     }
                     else

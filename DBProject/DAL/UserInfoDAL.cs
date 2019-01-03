@@ -72,6 +72,38 @@ namespace DAL
             return data;
 
         }
+        public IList<t_CM_UserInfo> GetUsers(string mobile)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+
+                data = _dbFactory.userInf.GetUsers(mobile);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+        public IList<t_CM_UserInfo> GetWxUsers(string openid)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+
+                data = _dbFactory.userInf.GetWxUsers(openid);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
 
     }
 }
