@@ -9,14 +9,14 @@
     <title>能源消耗</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.29"/>
+    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.30"/>
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="noPaddingBottom" >
         <div class="left flex-item">
             <div class="module-title">
                 <img src="~/Content/images/energyDifficiency/yc.png" class="icon"/>
-                <span>用电异常</span>
+                <span>用能异常</span>
                 <button class="btn">对比</button>
             </div>
             <dv class="list consumeList" style="overflow:hidden">
@@ -29,13 +29,17 @@
                 <div class="right-top-left">
                     <div class="module-title">
                         <img src="~/Content/images/energyDifficiency/barAndLine.png" class="icon" />
-                        <span>实时用电趋势</span>
+                        <span>实时用能趋势</span>
                     </div>
                     <div class="barAndLine">
-                        <p class="subTitle">电费趋势图(kW·h)</p>
                         <div class="datePicekerView">
-                            <date-picker type="date" size="small"></date-picker>
-                        </div>
+                        <radio-group v-model="dateType" type="button" size="small">
+                            <Radio label="0">日</Radio>
+                            <Radio label="1">周</Radio>
+                            <Radio label="2">月</Radio>
+                            <Radio label="3">年</Radio>
+                        </radio-group>
+                    </div>
                         <div id="barAndLine" class="chart" style="width:100%;height:100%"></div>
                     </div>
                 </div>
@@ -43,7 +47,7 @@
                 <div class="right-top-right">
                     <div class="module-title">
                         <img src="~/Content/images/energyDifficiency/qx.png" class="icon" />
-                        <span>实时能耗和预测曲线</span><span style="float:right;margin-right:15px">kW·h</span>
+                        <span>实际能耗和预测曲线</span></span>
                     </div>
                     <div class="barAndLine">
                         <div style="overflow:hidden;position:absolute;width:100%;height:100%">
@@ -73,7 +77,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.63"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.67"></script>
 </body>
 </html>
 

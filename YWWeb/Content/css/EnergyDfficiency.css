@@ -13,7 +13,7 @@ html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding: 12px;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     justify-content: space-around
@@ -29,19 +29,104 @@ html {
     background: #fff;
     box-shadow: 2px 2px 3px #e8e8e8;
     border-radius: 4px;
-    padding:15px;
-    overflow:hidden
+    padding: 15px;
+    overflow: hidden;
+    
 }
-    .left .treeList {
-        width: 100%;
-        height: 100%;
-        display: block;
-        overflow-y: auto;
-        overflow-x: hidden;
-        
+    .left .chartView {
+        width:100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
     }
+        .left .chartView .item {
+            flex: 2.8;
+            overflow: hidden;
+            
+        }
+        .left .chartView .lastItem {
+            flex: 1.8;
+        }
+        .left .chartView .item .main {
+            height: 65%;
+        }
+            .left .chartView .item .main p{
+                font-size:2.5rem;
+                margin-top:1rem
+            }
+                .left .chartView .item .main p .dw{
+                    font-size:1rem;
+                    margin-left:1rem
+                }
+           
+            .left .chartView .item .footer {
+                height: 20%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .left .chartView .item .footer .footer-item{
+                flex:1;
+                font-size:1.4rem;
+                text-align:left;
+                padding-top:1rem
+            }
+            .left .chartView .item .chartTitle {
+                font-size: 1.4rem;
+               
+            }
+                .left .chartView .item .chartTitle .proName {
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-left:5px
+
+                }
+            .left .chartView .item .chartTitle .ivu-date-picker-focused input {
+                -webkit-box-shadow: none;
+                box-shadow: none
+            }
+
+            .left .chartView .item .chartTitle .ivu-input {
+                border: none;
+                transition: none;
+                font-size:1.4rem
+            }
+            .left .chartView .item .chartTitle .ivu-date-picker {
+                width: 100% !important
+            }
+
+                .left .chartView .item .chartTitle .ivu-date-picker .ivu-input-icon {
+                    color: #57b9a3
+                }
+
+            .left .chartView .item .chartTitle .ivu-input:focus {
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+            .left .chartView .item .chartTitle .dropdownTitle {
+                cursor: pointer
+            }
+
+.module-title .icon {
+    width: 18px;
+    margin-right: 2px
+}
+        .left .treeList {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
         .left .treeList .tree{
-            margin-bottom:30px
+            margin-bottom:30px;
+            
         }
         .left .list {
             width: 100%;
@@ -78,19 +163,16 @@ html {
         position: absolute;
         background-color: #dcdee2;
     }
+    .left .left-item{
+
+    }
     .module-title {
         font-size: 1.6rem;
         color: #4c4c4c;
         letter-spacing: 0.1rem;
         padding-bottom: 1.5rem;
     }
-        .module-title .dropdownTitle {
-            cursor: pointer
-        }
-        .module-title .icon {
-            width: 18px;
-            margin-right: 2px
-        }
+       
     .module-title .btn {
         color: #fff;
         background: #54beaa;
@@ -140,7 +222,7 @@ html {
         .right .top .right-top-left .barAndLine .datePicekerView, .right .noChildTop .barAndLine .datePicekerView {
             position: absolute;
             height: 30px;
-            left: 135px
+            left:0px
         }
         .right .top .right-top-left .barAndLine .subTitle, .right .noChildTop .barAndLine .subTitle {
             font-size: 1.2rem;
@@ -175,17 +257,857 @@ html {
         padding: 15px;
         overflow: hidden
     }
-.left .consumeList .ivu-checkbox-wrapper {
-    margin-top: 5px
+.EnergyModule{
+    display:block !important;
+    overflow-x:hidden;
+    overflow-y:auto;
+    clear:both
+}
+    
+    .EnergyModule .right-module {
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        background: #fff;
+        padding: 10px 15px 15px 15px;
+        margin-bottom: 10px
+    }
+        .EnergyModule .right-module:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius:4px;
+        }
+        .EnergyModule .right-module:last-child {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        .EnergyModule .addOptionModule {
+            height: 100px
+        }
+        .EnergyModule .addOptionModule .addOptionBtn {
+            margin: 0 auto;
+            margin-top:25px;
+            display:block;
+            color:#ccc
+        }
+            .EnergyModule .addOptionModule .addOptionBtn:hover {
+                color: #57b9a3
+            }
+            .EnergyModule .right-module .header {
+                width: 100%;
+            }
+            .EnergyModule .right-module .header .closeIcon {
+                cursor: pointer;
+            }
+        .EnergyModule .right-module .main {
+            width:100%;
+            height:90%;
+            overflow:hidden;
+            display: flex;
+           
+        }
+            .EnergyModule .right-module .main .module-item {
+                height: 100%;
+                clear: both;
+                display: block
+            }
+            .EnergyModule .right-module .main .typeTitle {
+                flex: 0.5;
+                font-size: 1.5rem;
+                color: #47515a;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: justify;
+                
+            }
+                .EnergyModule .right-module .main .typeTitle .imgView img{
+                    width:25px;
+                    margin-bottom:2px
+                }
+            .EnergyModule .right-module .main .info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                text-align: justify;
+                color: #bbb;
+                font-size:1.2rem
+            }
+            .EnergyModule .right-module .main .info p{
+                padding:2px 0px
+            }
+                .EnergyModule .right-module .main .info .btn {
+                    font-size: 1.1rem;
+                    padding: 2px 8px;
+                    border-radius: 2px;
+                    background: #58b9a3;
+                    color:#fff;
+                    text-align:center;
+                    margin-top:2px;
+                    outline:none !important
+                }
+.lastItem .footerBtn{
+    text-align:center
+}
+.lastItem .footerBtn .btn {
+    height: 24px;
+    font-size: 1.1rem;
+    padding: 0px 30px;
+    border-radius: 2px;
+    background: #58b9a3;
+    color: #fff;
+    text-align: center;
+    outline: none !important;
+    margin-top: 15px;
+
+}
+                .EnergyModule .right-module .main .info span {
+                    color: #777;
+                    margin-left: 1rem
+                }
+                .EnergyModule .right-module .main .pieChart {
+                    
+                    flex: 1;
+                }
+            .EnergyModule .right-module .main .barChart {
+                flex: 5;
+            }
+        .left .consumeList .ivu-checkbox-wrapper {
+            margin-top: 5px;
+
+        }
+.chart{
+    width:100%;
+    height:100%
+}
+/*预算设置*/
+.BudgetSetting{
+    display:flex;
+    flex-direction:column !important;
+    justify-content:space-around
+}
+
+    .BudgetSetting .header{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+        position:relative;
+        color:#777;
+        background:#fff;
+        padding:5px 15px
+
+
+    }
+        .BudgetSetting .header .title{
+            text-align:center;
+            font-size:1.8rem
+        }
+            .BudgetSetting .header .title .icon {
+                cursor: pointer;
+            }
+            .BudgetSetting .header .title .previcon {
+                margin-right: 10px
+            }
+            .BudgetSetting .header .title .nexticon {
+                margin-left: 10px
+            }
+            .BudgetSetting .main {
+                flex: 8;
+                
+            }
+   
+
+    .BudgetSetting .header .ivu-date-picker-focused input {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .BudgetSetting .header .ivu-input {
+        border: none;
+        transition: none;
+        font-size: 1.6rem;
+        background: transparent
+    }
+    .BudgetSetting .header .ivu-picker-panel-body{
+        font-size:14px
+    }
+    .BudgetSetting .header.ivu-date-picker {
+        font-size: 1.6rem;
+        width: 100% !important;
+    }
+        .BudgetSetting .header .ivu-date-picker .ivu-input-icon {
+            color: #57b9a3
+        }
+
+
+
+
+
+    .BudgetSetting .header .btnView {
+        margin-left: 10px
+    }
+        .BudgetSetting .header .btnView .btn {
+            padding: 5px 10px;
+            border-radius: 2px;
+            color: #fff;
+            background: #40ae93;
+            font-size:1.1rem;
+            border:none !important;
+            margin-right:5px
+        }
+    .BudgetSetting .main {
+        display:flex;
+        flex-direction:row;
+        justify-content:space-around;
+        overflow:hidden
+    }
+        .BudgetSetting .main .main-item{
+            flex:1;
+            background:#fff;
+            border-right:1px dashed #eee;
+            padding:0px 15px;
+            overflow:hidden
+
+        }
+
+.BudgetSetting .main .main-item:last-child {
+    margin-left: 10px;
+    border: none
+}
+            .BudgetSetting .main .main-item:nth-child(5){
+                border:none
+            }
+            .BudgetSetting .main .main-item .item-title {
+                padding: 15px 0px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+                color: #777;
+                line-height: 1.6rem
+            }
+            .BudgetSetting .main .main-item .footer{
+                text-align:center;
+                color:#777;
+                font-size:1.2rem;
+                padding-top:5px
+            }
+
+            .BudgetSetting .main .main-item .item-title .icon {
+                margin-left: 10px
+            }
+            .BudgetSetting .main .main-item .con{
+                overflow:hidden;
+                
+            }
+            .BudgetSetting .main .main-item .con .conModule {
+                padding: 1rem 0px;
+                text-align:center;
+                margin-top: 15px
+            }
+            .BudgetSetting .main .main-item .con .conModule h4 {
+                font-size: 1.4rem;
+                color: #777;
+                line-height: 1.6rem
+            }
+                .BudgetSetting .main .main-item .con .conModule span {
+                    font-size: 1rem;
+                    color: #bebdbd
+                }
+                .BudgetSetting .main .main-item .con .conModule p {
+                    font-size: 2.2rem;
+                    color: #53bda9;
+                    margin-top:5px
+                }
+        .BudgetSetting .main .last-main-item {
+            padding: 15px;
+            color: #777;
+            overflow:hidden 
+        }
+            .BudgetSetting .main .last-main-item .module{
+                margin-bottom:15px
+            }
+            .BudgetSetting .main .last-main-item .module .title {
+                font-size: 1.4rem;
+                line-height: 20px;
+                padding: 10px 0px 0px 0px;
+            }
+            .BudgetSetting .main .last-main-item .module img{
+                width:18px;
+                margin-right:5px;
+                float:left
+            }
+            .BudgetSetting .main .last-main-item .module .dec {
+                font-size: 1.2rem;
+                padding-left: 10px;
+                margin-top: 15px;
+                display:block
+            }
+                .BudgetSetting .main .last-main-item .module .typeName {
+                    margin-top: 15px;
+                    display: block;
+                    font-size: 1.1rem;
+                    padding-left: 10px;
+                    color: #cfcdce
+                }
+            .BudgetSetting .main .last-main-item .module .numtext {
+                padding-left: 10px;
+                font-size: 2.2rem
+            }
+                .BudgetSetting .main .last-main-item .module .subdec {
+                    font-size: 1rem;
+                    display: block;
+                    color: #cfcdce;
+                    padding-left: 10px
+                }
+        .BudgetSetting .main .con .overflowCon {
+            overflow-x: auto;
+            overflow-y: auto;
+            height: 100%;
+        }
+        .BudgetSetting .main .con table {
+            width: 100%;
+        }
+            .BudgetSetting .main .con table th, .BudgetSetting .main .con table td{
+                
+                text-align:center;
+                color:#777;
+                font-weight:normal;
+                font-size:1.2rem;
+                padding:8px 0px
+            }
+            .BudgetSetting .main .con table th {
+                background: #cfcdce
+            }
+            .BudgetSetting .main .con table tbody tr:nth-child(even) {
+                background: #efefef;
+            }
+            .BudgetSetting .main .con table tbody tr:last-child td {
+                border-bottom:1px solid #eee
+            }
+            .BudgetSetting .main .con table tbody tr td:nth-child(1) {
+                border-right: 1px dashed #e4e4e4
+            }
+            .BudgetSetting .main .con table td .ivu-input-number-focused{
+                box-shadow:none !important
+            }
+            .BudgetSetting .main .con table td input{
+                text-align:center
+            }
+
+            .BudgetSetting .main .con table td .ivu-input-number-handler-wrap {
+                border-left: none !important;
+                background: transparent
+            }
+            .BudgetSetting .main .con table td .ivu-input-number-handler-down{
+                border-top:none
+            }
+            .BudgetSetting .main .con table td .ivu-input-number-disabled {
+                background: transparent;
+                color:#777
+            }
+                .BudgetSetting .main .con table td .ivu-input-number-disabled .ivu-input-number-input {
+                    background: transparent;
+                    color:#777
+                }
+            .BudgetSetting .main .con table td .ivu-input-number,.BudgetSetting .main .con table td .ivu-input-number-input {
+                background: transparent;
+                max-width:40px !important
+            }
+/*能源总览*/
+#EnergyControl{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:space-around;
+    flex-direction:column;
+    overflow:hidden
+}
+    #EnergyControl ul{
+        list-style:none
+    }
+    #EnergyControl .mapView {
+        flex: 2;
+        overflow: hidden;
+        position:relative;
+    }
+        #EnergyControl .mapView .map{
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:#ccc
+        }
+        #EnergyControl .statisticsView {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+            overflow: hidden;
+            position:relative
+        }
+            #EnergyControl .statisticsView .overviewBtn {
+                position: absolute;
+                z-index: 1500;
+                right: 15px;
+                top: 15px;
+                padding: 5px 15px;
+                background: #60b7a4;
+                color:#fff;
+                font-size:1.2rem;
+                cursor:pointer;
+                border-radius:2px;
+                letter-spacing:1px
+            }
+            #EnergyControl .staticTitle {
+                border-left: 4px solid #db3132;
+                padding-left: 5px;
+                font-size: 1.4rem;
+                color: #777;
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                align-items: center
+            }
+    #EnergyControl .statisticsView .EnergySavingView, #EnergyControl .statisticsView .achievementsView, #EnergyControl .statisticsView .chartView {
+        flex: 1;
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        background: #fff
+    }
+        #EnergyControl .statisticsView .EnergySavingView .con, #EnergyControl .statisticsView .achievementsView .con, #EnergyControl .statisticsView .chartView .con {
+            flex: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: justify;
+            justify-content: center
+        }
+            #EnergyControl .statisticsView .EnergySavingView .con h4{
+               font-size:1.4rem;
+               color:#777;
+            }
+                #EnergyControl .statisticsView .EnergySavingView .con .subDec{
+                    font-size:1.2rem;
+                    color:#999
+                }
+                    #EnergyControl .statisticsView .EnergySavingView .con h1{
+                        font-size:3rem;
+                        margin:2rem 0;
+                    }
+                #EnergyControl .statisticsView .EnergySavingView .con .resultText {
+                    font-size: 1.1rem;
+                    color: #777;
+                    display: inline-block;
+                    background: #eeeeee;
+                    padding: 1px 10px;
+                    border-radius: 10px;
+                }
+                    #EnergyControl .statisticsView .EnergySavingView .con .resultText b{
+                        font-size:1.4rem
+                    }
+            #EnergyControl .statisticsView .achievementsView .con{
+                flex:8 !important;
+                justify-content:flex-start !important;
+                align-items:flex-start !important;
+                padding-top:2rem;
+                padding-left:1.5rem;
+              
+                
+            }
+                #EnergyControl .statisticsView .achievementsView .con ul{
+                    display:flex;
+                    flex-direction:column;
+                    justify-content:center;
+                }
+                #EnergyControl .statisticsView .achievementsView .con li {
+                    font-size: 1.2rem;
+                    color: #777;
+                    line-height: 2.4rem
+                }
+                #EnergyControl .statisticsView .achievementsView .resultInfoView {
+                }
+            #EnergyControl .statisticsView .achievementsView .pageView{
+                flex:1;
+                text-align:center;
+                font-size:1.6rem;
+                display:flex;
+                align-items:center;
+                flex-direction:row;
+                justify-content:center
+
+            }
+            #EnergyControl .statisticsView .achievementsView .pageView span {
+                font-size: 2rem;
+                padding:2px 5px;
+                cursor:pointer;
+                color:#777
+            }
+           
+                
+                #EnergyControl .statisticsView .chartView {
+                    flex: 2;
+                    padding:15px 10px;
+                    background:#fff
+
+                }
+
+.mapView .loadListView {
+    position: absolute;
+    z-index: 1500;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+    background: #fff;
+    overflow:hidden
+
+}
+    .mapView .loadListView .header {
+        text-align: center;
+        color: #fff;
+        padding: 8px 0px;
+        background: #40ab97
+    }
+        .mapView .loadListView .header .visibleIcon{
+            float:right;
+            margin-right:10px;
+            cursor:pointer;
+            padding:3px
+        }
+    .mapView .loadListView .searchForm{
+        padding:15px
+    }
+
+    .mapView .loadListView .listView{
+       
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
+        .mapView .loadListView .listView .list-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            border-bottom: 1px solid #eee;
+            padding:5px 0px;
+            cursor:pointer
+
+        }
+            .mapView .loadListView .listView .list-item:hover{
+                background:#f9f9f9
+            }
+            .mapView .loadListView .listView .list-item .imgView {
+                flex: 1;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                text-align:justify
+            }
+            .mapView .loadListView .listView .list-item .imgView img{
+                width:30px;
+                height:30px;
+            }
+            .mapView .loadListView .listView .list-item .title {
+                flex: 5;
+                
+            }
+                .mapView .loadListView .listView .list-item .title .dec {
+                    color:#777;
+                    font-size:1.2rem
+                }
+                .mapView .loadListView .listView .list-item .title p {
+                    color: #777;
+                    font-size: 1rem
+                }
+                    .mapView .loadListView .listView .list-item .title p .numText {
+                        color: #444;
+                        font-size: 1.5rem;
+                        font-weight:bold;
+                        margin-right:2px
+                    }
+#app .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-nav-container{
+    height:28px !important;
+    font-size:1.2rem
+}
+.haveTab{
+    position:relative
+}
+.haveTab span{
+    margin-right:15px
+}
+    .haveTab .tabs {
+        display: inline-block;
+        position: absolute;
+        top: -3px
+    }
+.mapMsgBox{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    margin-right:15px
+}
+    .mapMsgBox .item {
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+    }
+    .mapMsgBox .imgView{
+        flex:1
+    }
+        .mapMsgBox .imgView img{
+            width:20px;
+            height:20px
+        }
+        .mapMsgBox  .nameView{
+            flex:3;
+            color:#777;
+            justify-content:flex-start;
+            align-items:flex-start
+        }
+            .mapMsgBox  .nameView .dec{
+                font-size:1.1rem
+            }
+            .mapMsgBox .nameView p {
+                font-size: 1rem
+            }
+                .mapMsgBox .nameView p .numText {
+                    font-size: 1.5rem
+                }
+            .mapMsgBox .typeView {
+                flex: 1.5;
+                font-size: 1.1rem;
+                color:#777;
+                align-items:flex-start
+            }
+                .mapMsgBox  .typeView .btn {
+                    background: #50bda0;
+                    color:#fff;
+                    border:none;
+                    outline:none;
+                    font-size:1rem;
+                    padding:3px 10px;
+                    text-align:center
+                }
+.addEnergyModal .ivu-modal{
+    width:600px !important
+}
+.addEnergyModal .ivu-modal-body {
+    height: 250px;
+}
+.setPriceModal .ivu-modal-body{
+    height:auto !important
+}
+/*分项页面*/
+.right .UserMenuView {
+    flex: 1;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 15px;
+}
+    .right .UserMenuView .menuList {
+        list-style:none;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+    }
+        .right .UserMenuView .menuList li {
+            cursor: pointer;
+            padding: 5px 12px;
+            color:#777;
+            font-size:1.2rem;
+            border-radius:2px;
+            height:100%;
+
+        }
+        .right .UserMenuView .menuList .active {
+            background: #50bda0;
+            color: #fff
+        }
+        .right .ifreamView {
+            flex: 12;
+            overflow: hidden;
+            display:flex;
+            flex-direction:column;
+            padding:0 !important;
+            margin-bottom:0 !important
+        }
+.right #energyFrame{
+    flex:1;
+    border:none
+}
+.right #departFrame {
+    flex: 1;
+    border: none
+}
+.noPaddingBottom{
+    padding-bottom:0 !important
+}
+/*能效公式*/
+.allMain{
+    flex:1;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    overflow:hidden;
+    
+}
+    .allMain .main-item {
+        flex: 1;
+       margin:15px;
+       overflow:hidden;
+       display:flex;
+       flex-direction:column;
+       justify-content:space-around
+
+
+    }
+        
+        .allMain .main-item  .con{
+            position:relative;
+            flex:14;
+            overflow:hidden
+        }
+        .allMain .main-item .module-title{
+            flex:1
+        }
+
+
+    .allMain .con .formTable{
+        width:100%;
+        
+    }
+        .allMain .con .formTable .ivu-form-item {
+            margin-bottom:15px
+        }
+    .allMain .searchView {
+        flex: 1;
+        overflow:initial
+    }
+        .allMain .searchView .con{
+            overflow:initial
+        }
+        .allMain .underFormView {
+            flex: 6
+        }
+    .allMain .searchView .ivu-form .ivu-form-item-label{
+        font-size:1.2rem;
+        font-weight:normal
+    }
+    .allMain .top{
+        overflow:hidden
+    }
+        .allMain .top .right-top-left,.departmentWatch .bottom {
+        box-shadow: none;
+        margin: 0;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-around;
+       
+    }
+    .departmentWatch{
+        flex:7
+    }
+    .departmentWatch .right-top-left .module-title, .allMain .departmentWatch .bottom .module-title {
+        flex: 1;
+    }
+.departmentWatch .right-top-left .con, .departmentWatch .bottom .con {
+    flex: 10;
+}
+
+     .departmentWatch .right-top-left {
+        overflow: hidden
+    }
+ .departmentWatch .bottom .con{
+     position:relative
+}
+        .departmentWatch .pieView {
+            display: flex;
+            justify-content: center;
+            overflow:hidden
+        }
+
+
+        .flex-1 {
+            flex: 1 !important;
+            overflow: hidden
+        }
+.flex-4 {
+    flex: 3 !important;
+    overflow:hidden
 }
 
 
 
 
-@media screen and (max-width: 1500px) {
-    .right {
-        flex: 3.5;
+
+
+
+
+
+
+
+
+
+
+.module-title .datePicekerView {
+    top:14px;
+    left:150px
+}
+
+.datePicekerView {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+            .datePicekerView .ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper{
+                height:22px;
+                font-size:1rem !important;
+                padding:0 10px;
+                font-weight:normal
+            }
+.setPriceModal .ivu-input-number {
+    width: 160px !important
+}
+.dropdownMenuChild{
+    max-height:250px;
+    overflow-y:auto
+}
+
+@media screen and (max-width: 1300px) {
+    .BudgetSetting .header .ivu-input{
+                    font-size:1.6rem
+                }
+                .allMain .searchView {
+                    flex: 2.5
+                }
+                    .allMain .searchView .ivu-form .ivu-form-item-label {
+                        font-size: 1rem;
+                        font-weight: normal
+                    }
+               
+                .right .ifreamView {
+        flex: 8;
+        background: #fff
     }
+    .right {
+        flex: 4;
+    }
+
     .module-title {
         font-size: 1.2rem;
         color: #4c4c4c;
@@ -206,34 +1128,249 @@ html {
             float: right;
             margin-top: 4px
         }
-    .left .consumeList table{
-        font-size:1rem
+
+    .left .consumeList table {
+        font-size: 1rem
     }
+
     .left .consumeList .ivu-table .iconImg {
         width: 12px !important;
         height: 14px !important
     }
+
     .left .consumeList .ivu-table .orderNum {
         width: 13px !important;
         height: 13px !important;
         line-height: 13px !important;
-        font-size:0.8rem
+        font-size: 0.8rem
     }
+
     .left .consumeList .ivu-table td, .left .consumeList .ivu-table th {
         padding: 2px 1px !important
     }
+
     .left .consumeList .ivu-checkbox-wrapper {
         margin-top: 7px
     }
-    .ivu-checkbox-inner{
-        width:12px;
-        height:12px
+
+    .ivu-checkbox-inner {
+        width: 12px;
+        height: 12px
     }
+
     .right .ivu-table td, .right .ivu-table th {
-        font-size:1rem;
-        padding: 5px 2px !important
+        font-size: 1.1rem;
+        padding: 6px 2px !important
     }
-    .treeList .ivu-checkbox-wrapper{
-        font-size:0.8rem !important
+
+    .treeList .ivu-checkbox-wrapper {
+        font-size: 0.8rem !important
     }
-}
+
+    .left .chartView .item {
+        flex: 2.5;
+    }
+
+    .left .chartView .lastItem {
+        flex: 1.3
+    }
+
+    .left .chartView .item .main p {
+        font-size: 2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0;
+        line-height: 0
+    }
+
+        .left .chartView .item .main p .dw {
+            font-size: 0.8rem;
+            margin-left: 1rem
+        }
+
+    .left .chartView .item .footer .footer-item, .left .chartView .item .chartTitle .ivu-input {
+        font-size: 1rem
+    }
+    .left .chartView .item .chartTitle {
+        font-size: 1rem
+    }
+        .left .chartView .item .chartTitle .proName {
+            font-size: 1.1rem
+        }
+    .left .chartView .item .main p {
+        font-size:2rem
+    }
+    .EnergyModule .addOptionModule .addOptionBtn {
+        font-size: 1rem
+    }
+    .EnergyModule .right-module .main .info {
+        flex:1.5
+    }
+        .EnergyModule .right-module .main .info, .EnergyModule .right-module .main .info .btn {
+            font-size: 1rem
+        }
+    .EnergyModule .right-module .main .typeTitle {
+        font-size:1.3rem
+    }
+        .EnergyModule .right-module .main .typeTitle .imgView img{
+            width:20px
+        }
+
+            .BudgetSetting .header .title {
+                font-size: 1.4rem
+            }       
+                .BudgetSetting .header .btnView .btn {
+                    padding: 2px 6px;
+                    font-size: 1.1rem;
+                    margin-right: 3px
+                }
+                    .BudgetSetting .main .main-item .item-title {
+                        font-size: 1.1rem;
+                        line-height: 1.6rem
+                    }
+                        .BudgetSetting .main .main-item .con .conModule {
+                            margin-top: 10px
+                        }
+
+                            .BudgetSetting .main .main-item .con .conModule h4 {
+                                font-size: 1.1rem;
+                                line-height: 1.6rem
+                            }
+
+                            .BudgetSetting .main .main-item .con .conModule span {
+                                font-size: 0.8rem;
+                            }
+
+                            .BudgetSetting .main .main-item .con .conModule p {
+                                font-size: 1.6rem;
+                            }
+    .BudgetSetting .main .last-main-item .module {
+        margin-bottom: 5px
+    }
+
+        .BudgetSetting .main .last-main-item .module .title {
+            font-size: 1.1rem;
+            line-height: 16px;
+            padding: 5px 0px 0px 0px;
+        }
+
+        .BudgetSetting .main .last-main-item .module img {
+            width: 14px;
+            margin-right: 5px
+        }
+
+        .BudgetSetting .main .last-main-item .module .dec {
+            font-size: 1rem;
+            padding-left: 10px;
+            margin-top: 10px;
+            display: block
+        }
+
+        .BudgetSetting .main .last-main-item .module .typeName {
+            margin-top: 8px;
+            display: block;
+            font-size: 1rem;
+            padding-left: 10px;
+            color: #cfcdce
+        }
+
+        .BudgetSetting .main .last-main-item .module .numtext {
+            padding-left: 10px;
+            font-size: 1.4rem
+        }
+
+        .BudgetSetting .main .last-main-item .module .subdec {
+            font-size: 0.8rem;
+            display: block;
+            color: #cfcdce;
+            padding-left: 10px
+        }
+                .BudgetSetting .main .con table th, .BudgetSetting .main .con table td{
+                    font-size:1rem;
+                    padding:5px 0px
+                    
+                }
+                    .BudgetSetting .main .con table td input{
+                        font-size:1.1rem !important
+                    }
+                    /*能源管控*/
+            #EnergyControl .statisticsView .EnergySavingView .con h4 {
+                font-size: 1.1rem;
+            }
+            #EnergyControl .statisticsView .EnergySavingView .con .subDec {
+                font-size: 0.8rem;
+            }
+            #EnergyControl .statisticsView .EnergySavingView .con h1 {
+                font-size: 2rem;
+                margin: 1.5rem 0;
+            }
+            #EnergyControl .statisticsView .EnergySavingView .con .resultText {
+                font-size: 0.8rem;
+            }
+                #EnergyControl .statisticsView .EnergySavingView .con .resultText b {
+                    font-size: 1rem
+                }
+            #EnergyControl .statisticsView .achievementsView .con li {
+                font-size: 1rem;
+                line-height: 1.8rem
+            }
+            #EnergyControl .statisticsView .achievementsView .pageView {
+                font-size: 1.2rem
+            }
+                #EnergyControl .statisticsView .achievementsView .pageView span {
+                    font-size: 1.6rem;
+                }
+                /*地图*/
+                .mapView .loadListView {
+                    width: 230px;
+                }
+
+                    .mapView .loadListView .header {
+                        padding: 6px 0px;
+                        font-size:1rem
+                    }
+
+                        .mapView .loadListView .header .visibleIcon {
+                            padding: 0px 3px 3px 3px
+
+                        }
+
+                    .mapView .loadListView .searchForm {
+                        padding: 15px
+                    }
+                        .mapView .loadListView .searchForm .ivu-input{
+                            height:26px
+                        }
+
+
+                        .mapView .loadListView .listView .list-item {
+                            padding: 3px 0px;
+                        }
+
+                                .mapView .loadListView .listView .list-item .imgView img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+
+
+                                .mapView .loadListView .listView .list-item .title .dec {
+                                    font-size: 1rem
+                                }
+
+                                .mapView .loadListView .listView .list-item .title p {
+                                    font-size: 0.8rem
+                                }
+
+                                    .mapView .loadListView .listView .list-item .title p .numText {
+                                        font-size: 1.3rem;
+                                    }
+    #EnergyControl .staticTitle {
+        border-left: 3px solid #db3132;
+        font-size: 1.2rem;
+    }
+    #EnergyControl .statisticsView .overviewBtn {
+        padding: 3px 15px;
+        font-size: 1rem;
+    }
+              
+ }
+

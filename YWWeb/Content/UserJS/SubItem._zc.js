@@ -11,9 +11,19 @@
                 key: 'time'
             },
             {
-                title: '电量(kW·h)',
+                title: '用水(m³)',
+                align: 'center',
+                key: 'water'
+            },
+            {
+                title: '用电(kW·h)',
                 align: 'center',
                 key: 'power'
+            },
+            {
+                title: '用热',
+                align: 'center',
+                key: 'heat'
             },
             {
                 title: '温度(°C)',
@@ -22,81 +32,71 @@
                 key: 'temperature'
             },
             {
-                title: '人流量',
+                title: '人流量(人)',
                 align: 'center',
                 width: 100,
                 key: 'visitorsFlowrate'
             },
             {
-                title: '建筑面积',
+                title: '建筑面积(㎡)',
                 align: 'center',
                 width: 100,
                 key: 'area'
             },
-            {
-                title: '用途',
-                align: 'center',
-                key: 'usage'
-            },
-            {
-                title: '结论',
-                align: 'center',
-                key: 'result'
-            },
+           
         ],
         analysisData: [
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-22 12:35:00', water:123,  power: 124, heat:344,  temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
         ],
         barAndLineChart: null,
+        dateType:0,
         treeData: [
             {
-                title: '医院总部楼',
-                expand: true,
+                title: '医院楼层结构',
+                id:0,
+                expand: true,//是否打开子节点
                 children: [
                     {
-                        title: '门诊部',
+                        title: '一楼',
                         expand: true,
+                        id:1,
                         children: [
                             {
                                 title: '内科',
                                 expand: true,
+                                id:2,
                                 children: [
                                     {
-                                        title:'内科诊室一'
+                                        title: '内科诊室一',
+                                        id:3
                                     },
                                     {
-                                        title: '内科诊室二'
+                                        title: '内科诊室二',
+                                        id:4
                                     }
                                 ]
                             }
-                            
                         ]
                     },
-                    {
-                        title: '急诊部',
-                    },
-                    {
-                        title: '收费室',
-                    },
-                    {
-                        title: '放射科',
-                    },
-                    {
-                        title: '后勤科',
-                    },
-                    {
-                        title: 'B超室',
-                    },
-                    {
-                        title: '住院部',
-                    }
                 ]
             }
-        ]
+        ],
+        userMneus: [
+            { name: '能源总览', url: '/EnergyEfficiency/EnergyOverview' },
+            { name: '科室数据监测', url: '/EnergyEfficiency/DepartDataMonitoring' },
+            { name: '能源查询', url: '/EnergyEfficiency/EnergyQuery' },
+            { name: '能源审计', url: '/EnergyEfficiency/EnergyAudit' },
+            { name: '能源公示', url: '/EnergyEfficiency/EnergyPublicity' },
+            { name: '能源报告', url: '/EnergyEfficiency/ElectricityReport' },
+            
+        ],
+        activeIndex: 5,
+        frameSrc:'/EnergyEfficiency/ElectricityReport'
     },
     methods: {
 
@@ -239,48 +239,31 @@
                         data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
                     },
                     {
-                        name: '作日',
+                        name: '昨日',
                         type: 'bar',
                         barMaxWidth: '10',
                         color: "#80c5e2",
                         data: [1.6, 5.0, 9.5, 20.4, 24.7, 60.7, 165.6, 132.2, 58.7, 28.8, 3.0, 3.3, 5.6, 8.9, 6.0, 36.4, 20.7, 50.7, 110.6, 152.2, 28.7, 58.8, 66.0, 55.3]
                     },
-                    {
-                        name: '近日',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        smooth: true,
-                        symbol: 'none',//节点样式
-                        lineStyle: {
-                            color: '#53bda9',
-                            width: 1,
-
-                        },
-                        data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2, 2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-                    },
-                    {
-                        name: '昨日',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        smooth: true,
-                        symbol: 'none',//节点样式
-                        lineStyle: {
-                            color: '#80c5e2',
-                            width: 1,
-
-                        },
-                        data: [1.0, 3.2, 3.1, 2.5, 3.3, 4.2, 10.3, 18.4, 13.0, 11.5, 22.0, 16.2, 12.0, 22.2, 23.3, 14.5, 16.3, 20.2, 10.3, 13.4, 16.0, 20.5, 22.0, 16.2]
-                    }
+                   
                 ]
             };
             barAndLineChart.setOption(option)
             
         },
-      
 
+        selectChange: function (res) {
+            console.log(res[0].id)
+        },
+        userBtnClick: function (e) {
+            if (this.activeIndex == e) {
+                $("#energyFrame").attr("src", this.userMneus[e].url)
+            }
+                this.activeIndex = e
+            console.log(this.userMneus[e].url)
+            this.frameSrc = this.userMneus[e].url
 
-
-
+        },
         setWidth: function () {
             var that = this
             var isScroll = $(".ivu-table-overflowY").length
@@ -315,10 +298,10 @@
        
     },
     mounted: function () {
-        this.createBarAndLine()
+        /*this.createBarAndLine()
         window.addEventListener("resize", () => {
             barAndLineChart.resize();
-        });
+        });*/
     }
 })
 

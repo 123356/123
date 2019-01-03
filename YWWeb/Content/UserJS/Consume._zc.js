@@ -3,11 +3,12 @@
     data: {
         listWidth: 0,
         listHeight: 0,
-        analysisTableHeight:0,
+        analysisTableHeight: 0,
+        dateType:0,
         listColumns: [
             {
                 type: 'selection',
-                width: 30,
+                width: 20,
                 align: 'center'
             },
             {
@@ -61,41 +62,46 @@
                 title: '总比例',
                 align: 'center',
                 key: 'proportion'
+            },
+            {
+                title: '类型',
+                align: 'center',
+                key: 'type'
             }
         ],
         listData: [
-            {order: 1,name: '内科室02',proportion: '20%'},
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 5, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 1, name: '内科室02', proportion: '20%' },
-            { order: 2, name: '内科室03', proportion: '30%' },
-            { order: 15, name: '内科室03', proportion: '30%' },
+            {order: 1,name: '内科室02',proportion: '20%',type:'电'},
+            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电'},
+            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
+            { order: 1, name: '内科室02', proportion: '20%', type: '电'},
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 5, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 15, name: '内科室03', proportion: '30%', type: '电' },
         ],
         analysisColumns: [
             {
@@ -177,8 +183,8 @@
                     
                 },
                 legend: {
-                    data: ['今日', '温度'],
-                    left: 0,
+                    data: ['能耗', '温度'],
+                    x: 'center',
                     textStyle: {
                         fontSize: 10,
                         color: '#666'
@@ -218,7 +224,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: '今日',
+                        name: 'kW·h',
                         min: 0,
                         max: 250,
                         interval: 50,
@@ -280,7 +286,7 @@
                 series: [
 
                     {
-                        name: '今日',
+                        name: '能耗',
                         type: 'bar',
                         barMaxWidth: '10',
                         color: "#53bda9",
@@ -312,8 +318,8 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['实时供能', '预测供能'],
-                    left: 0,
+                    data: ['实际供能', '预测供能'],
+                    x: 'center',
                     textStyle: {
                         fontSize: 10,
                         color: '#666'
@@ -361,7 +367,7 @@
                     data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
                 },
                 yAxis: {
-                   
+                    name:'kW·h',
                     type: 'value',
                     axisLine: {
                         lineStyle: {
@@ -388,7 +394,7 @@
                 series: [
 
                     {
-                        name: '实时供能',
+                        name: '实际供能',
                         type: 'line',
                         smooth: true,
                         symbol: 'none',//节点样式

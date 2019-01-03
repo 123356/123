@@ -1695,6 +1695,7 @@
     <Content Include="Content\UserJS\ContractMag._zc.js" />
     <Content Include="Content\UserJS\CurrenVoltage._jm.js" />
     <Content Include="Content\UserJS\CurrenVoltage._zc.js" />
+    <Content Include="Content\UserJS\DepartData._zc.js" />
     <Content Include="Content\UserJS\DeviceEdits._jm.js" />
     <Content Include="Content\UserJS\DeviceEdits._zc.js" />
     <Content Include="Content\UserJS\DeviceInfo._jm.js" />
@@ -1811,6 +1812,7 @@
     <Content Include="Content\UserJS\StationInfo._zc.js" />
     <Content Include="Content\UserJS\StationTemp._jm.js" />
     <Content Include="Content\UserJS\StationTemp._zc.js" />
+    <Content Include="Content\UserJS\DepartDataMonitoring._zc.js" />
     <Content Include="Content\UserJS\SubItem._zc.js" />
     <Content Include="Content\UserJS\SupplierEdits._jm.js" />
     <Content Include="Content\UserJS\SupplierEdits._zc.js" />

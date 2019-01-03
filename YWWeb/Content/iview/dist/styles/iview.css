@@ -6553,10 +6553,10 @@ code,kbd,pre,samp {
 	right:0;
 	background:0 0
 }
-.ivu-btn.active,.ivu-btn:active {
-	color:#2b85e4;
-	background-color:#fff;
-	border-color:#2b85e4
+.ivu-btn.active, .ivu-btn:active {
+    color: #5bb09d;
+    background-color: #fff;
+    border-color: #5bb09d
 }
 .ivu-btn.active>a:only-child,.ivu-btn:active>a:only-child {
 	color:currentColor
@@ -6614,11 +6614,11 @@ code,kbd,pre,samp {
 	right:0;
 	background:0 0
 }
-.ivu-btn-primary.active,.ivu-btn-primary:active {
-	color:#f2f2f2;
-	background-color:#2b85e4;
-	border-color:#2b85e4
-}
+    .ivu-btn-primary.active, .ivu-btn-primary:active {
+        color: #f2f2f2;
+        background-color: #5bb09d;
+        border-color: #5bb09d
+    }
 .ivu-btn-primary.active>a:only-child,.ivu-btn-primary:active>a:only-child {
 	color:currentColor
 }
@@ -10311,25 +10311,28 @@ textarea.ivu-page-options-elevator input {
 	margin-left:-10px
 }
 .ivu-modal {
-	width:auto;
-	margin:0 auto;
-	position:relative;
-	outline:0;
-	top:50px
+    width: auto;
+    margin: 0 auto;
+    position: relative;
+    outline: 0;
+    top:-20px
 }
 .ivu-modal-hidden {
 	display:none!important
 }
 .ivu-modal-wrap {
-	position:fixed;
-	overflow:auto;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
-	z-index:1000;
-	-webkit-overflow-scrolling:touch;
-	outline:0
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .ivu-modal-wrap * {
 	-webkit-box-sizing:border-box;

@@ -1136,25 +1136,8 @@ namespace YWWeb.Controllers
             return Json(reslut);
         }
         #region 用户地图
-
-        [Login]
-        public ActionResult UnitSelect()
-        {
-            string ustr = string.Empty;
-            ustr = GetUID();
-            if (string.IsNullOrEmpty(ustr))
-                return Content("");
-            string sql = "SELECT * FROM t_CM_Unit WHERE UnitID IN (" + ustr + ")";
-            List<t_CM_Unit> list = bll.ExecuteStoreQuery<t_CM_Unit>(sql).ToList();
-            var result = from r in list
-                         select new
-                         {
-                             r.UnitID,
-                             r.UnitName,
-                             r.LinkAddress
-                         };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        
+       
         [Login]
         public ActionResult UnitListData()
         {
@@ -1521,7 +1504,24 @@ namespace YWWeb.Controllers
             }
             return str;
         }
-#region 前台接口
+        public ActionResult UnitSelect()
+        {
+            string ustr = string.Empty;
+            ustr = GetUID();
+            if (string.IsNullOrEmpty(ustr))
+                return Content("");
+            string sql = "SELECT * FROM t_CM_Unit WHERE UnitID IN (" + ustr + ")";
+            List<t_CM_Unit> list = bll.ExecuteStoreQuery<t_CM_Unit>(sql).ToList();
+            var result = from r in list
+                         select new
+                         {
+                             r.UnitID,
+                             r.UnitName,
+                             r.LinkAddress
+                         };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #region 前台接口
         /// <summary>
         /// 获取站状态
         /// </summary>

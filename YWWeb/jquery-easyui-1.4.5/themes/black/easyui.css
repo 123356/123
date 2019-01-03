@@ -1345,8 +1345,7 @@
 .datagrid-toolbar {
   height: auto;
   padding: 5px;
-  border-width: 0 0 1px 0;
-  border-style: solid;
+ 
 }
 .datagrid-btn-separator {
   float: left;
@@ -1538,13 +1537,13 @@
 }
 .datagrid-toolbar,
 .datagrid-pager {
-  background: #18669D;
+  background: #4ab89b;
 }
 .datagrid-header,
 .datagrid-toolbar,
 .datagrid-pager,
 .datagrid-footer-inner {
-  border-color: #222;
+  /*border-color: #222;*/
 }
 .datagrid-header td,
 .datagrid-body td,
@@ -1768,7 +1767,7 @@
 }
 .pagination-page-list,
 .pagination .pagination-num {
-  border-color: #000;
+  border:none
 }
 .calendar {
   border-width: 1px;

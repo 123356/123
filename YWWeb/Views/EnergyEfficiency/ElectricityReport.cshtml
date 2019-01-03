@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "EnergyFormula";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>能源报告</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
+    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.01"/>
+</head>
+<body>
+    <div id="app" class="noPaddingBottom" style="background:#fff;padding:0;margin:0">
+        
+        <!--right s-->
+        <div class="right allMain">
+            <div class="bottomView main-item">
+                <div class="module-title">
+                    <img src="~/Content/images/energyDifficiency/fx.png" class="icon" />
+                    <Dropdown trigger="click"  style="margin-right:15px">
+                        <span>
+                            报表类型
+                            <Icon type="md-arrow-dropdown" size="25" />
+                        </span>
+                        <dropdown-menu slot="list" v-for="item in reportType">
+                            <dropdown-item  v-if="item.children==null">{{item.type}}</dropdown-item>
+                            <Dropdown placement="right-start" v-else>
+                                <dropdown-item>
+                                    {{item.type}}
+                                    <Icon type="ios-arrow-forward"></Icon>
+                                </dropdown-item>
+                                <dropdown-menu slot="list" class="dropdownMenuChild"   >
+                                    <dropdown-item v-for="child in item.children">{{child.type}}</dropdown-item>
+                                </dropdown-menu>
+                            </Dropdown>
+                           
+                        </dropdown-menu>
+                    </Dropdown>
+                    <Dropdown trigger="click"  >
+                        <span>
+                            日期
+                            <Icon type="md-arrow-dropdown" size="25" />
+                        </span>
+                        <dropdown-menu slot="list">
+                            <dropdown-item>驴打滚</dropdown-item>
+                            <dropdown-item>驴打滚</dropdown-item>
+                            <dropdown-item>驴打滚</dropdown-item>
+                        </dropdown-menu>
+                    </Dropdown>
+                    <i-button icon="ios-print-outline" class="btn">打印</i-button>
+                </div>
+                <div class="con">
+                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border></i-table>
+                </div>
+                
+            </div>
+        </div>
+        <!--right e-->
+    </div>
+
+    <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.01"></script>
+</body>
+</html>
+

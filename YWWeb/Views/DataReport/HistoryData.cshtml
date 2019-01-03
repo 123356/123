@@ -18,10 +18,11 @@
 	.homepage a { background-position:0 0;}
 	.previouspage a { background-position:-16px 0;}
 	.nextpage a { background-position:-32px 0;}
-	.lastpage a { background-position:-48px 0;} 
+	.lastpage a { background-position:-48px 0;}
+       
     </style>
 </head>
-<body>
+<body >
     <table id="list_data" style="width: auto;" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#Histb',method:'post',striped:true"
         fitcolumns="true">
         <thead>
@@ -65,7 +66,7 @@
 @*    <span class="lastpage"><a href=""></a></span>*@
 </div>
     <div id="Histb" class="searchbar">
-        <div class="searchrow history_search">
+        <div class="searchrow history_search" style="height:auto">
             <i>站室：
             <select id="SPID" style="width: 150px; height: 26px;">起始时间
             </select></i><i> 设备：
@@ -82,9 +83,14 @@
                         <input id="StartDate" style="width: 120px; height: 26px;" />
                     </i><i>结束时间：
                         <input id="EndDate" style="width: 120px; height: 26px;" /></i>
+
+                        <i>
+                            <div id="userbutton" class="searchbutton" style="float:none;display:inline-block">
+                            </div>
+                        </i>
+
         </div>
-        <div id="userbutton" class="searchbutton">
-        </div>
+        
     </div>
 
     <script src="~/Content/UserJS/HistoryData._jm.js"></script>
