@@ -12,6 +12,7 @@ using System.Data.Objects.SqlClient;
 using System.Data.SqlClient;
 using YWWeb.PubClass;
 using Newtonsoft;
+using DAL;
 
 namespace YWWeb.Controllers
 {
@@ -1790,7 +1791,7 @@ namespace YWWeb.Controllers
                         bll.t_CM_Unit.AddObject(info);
 
                         bll.SaveChanges();
-                        t_CM_UserInfo user = bll.t_CM_UserInfo.Where(p => p.UserID == CurrentUser.UserID).FirstOrDefault();
+                        var user = CurrentUser; //bll.t_CM_UserInfo.Where(p => p.UserID == CurrentUser.UserID).FirstOrDefault();
                         if (user != null)
                         {
                             if (!string.IsNullOrEmpty(user.UNITList))
@@ -1801,10 +1802,13 @@ namespace YWWeb.Controllers
                             {
                                 user.UNITList = info.UnitID.ToString();
                             }
-                            bll.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
-                            bll.SaveChanges();
+                            int n = UserInfoDAL.getInstance().UpdateUnitList(user.UserID, user.UNITList);
+                            if (n > 0)
+                            {
+                                result = "OKadd";
+                            }
                         }
-                        Session["Huerinfo"] = user;
+                        //Session["Huerinfo"] = user;
 
                         Common.InsertLog("单位管理", CurrentUser.UserName, "新增单位信息[" + info.UnitName + "]");
                         result = "OKadd";

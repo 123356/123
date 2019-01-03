@@ -34,7 +34,7 @@ namespace DAO
             //this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             return Datas.Where(u => u.UserName == userName && u.UserPassWord == password).ToList();
         }
-
+        
         public IList<t_CM_UserInfo> GetUsers(string mobile)
         {
             return Datas.Where(u => u.Mobilephone == mobile).ToList();
@@ -43,6 +43,11 @@ namespace DAO
         public IList<t_CM_UserInfo> GetWxUsers(string openid)
         {
             return Datas.Where(u => u.openid2 == openid).ToList();
+        }
+        public int UpdateUnitList(int userID, string unitList)
+        {
+            string sql = $"update t_CM_UserInfo set UNITList= '{unitList}' where UserID={userID}";
+            return ExecuteSqlCommand(sql);
         }
 
         public DbSet<t_CM_UserInfo> Datas { get; set; }
