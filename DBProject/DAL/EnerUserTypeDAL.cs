@@ -36,12 +36,12 @@ namespace DAL
         
       
         
-        public IList<t_EE_EnerUserType> GetOrganizationList(int type)
+        public IList<t_EE_EnerUserType> GetOrganizationList( int itemType)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.GetOrganizationList(type);
+                data = _dbFactory.enerUserType.GetOrganizationList(itemType);
             }
             catch (Exception ex)
             {

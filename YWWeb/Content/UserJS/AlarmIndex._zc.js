@@ -7,7 +7,6 @@ if (Request['pid'] != null)
 else
     pid = $.cookie('cookiepid');
 
-
 var Startdate = new Date();
 Startdate.setDate(Startdate.getDate() - 10);
 var DS = Startdate.getFullYear() + "-" + (Startdate.getMonth() + 1) + "-" + Startdate.getDate();
@@ -129,12 +128,12 @@ $("#SPID").combobox({
     editable: false,
     textField: 'Name',
     onLoadSuccess: function () { //数据加载完毕事件
+        
         var data = $('#SPID').combobox('getData');
-        if (data.length > 0 && pid == 0) {
-            $("#SPID").combobox('select', 0);
-        }
+
+        $("#SPID").combobox('setValue', pid);
     },
-    onSelect: function () {
+    onChange: function () {
         var selid = $("#SPID").combobox("getValue");
         loadDataTypeList(selid);
 

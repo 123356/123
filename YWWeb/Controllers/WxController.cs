@@ -12,10 +12,11 @@ using System.Collections.Specialized;
 using Yunpian.conf;
 using Yunpian.lib;
 using Yunpian.model;
+using YWWeb.Lib.Base;
 
 namespace YWWeb.Controllers
 {
-    public class WxController : Controller
+    public class WxController : UserControllerBaseEx//Controller
     {
         //
         // GET: /App/
@@ -65,30 +66,47 @@ namespace YWWeb.Controllers
                 return Content(ex.ToString());
             }
         }
+
+        [AuthorizeIgnoreAttribute]
         public ActionResult wxLogin2(string code)
         {
             try
             {
                 OpenIdResult openIdResult = getOpenIdBean2(code);
-                t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid).FirstOrDefault();
-                if (model!=null)
+                int nErrCode = 0;
+                var model = LoginManager.WxLogin(openIdResult.openid, this.ControllerContext, out nErrCode);
+                if (model != null)
                 {
-                    if (model.IsScreen == 0)
-                    {
-                        Session["Huerinfo"] = model;
-                        string sID = Session.SessionID;
-                        Session[sID] = model;
-                        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
-                        return Content(sID);
-                    }else
-                    {
-                        return Content("1");
-                    }
+                    //Session["Huerinfo"] = model;
+                    string sID = Session.SessionID;
+                    Session[sID] = model;
+                    //log
+                    Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                    return Content(sID);
                 }
                 else
                 {
-                       return Content("0");
+                    return Content("用户名密码错误");
                 }
+                //t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid).FirstOrDefault();
+                //if (model!=null)
+                //{
+                //    if (model.IsScreen == 0)
+                //    {
+                //        Session["Huerinfo"] = model;
+                //        string sID = Session.SessionID;
+                //        Session[sID] = model;
+                //        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                //        return Content(sID);
+                //    }else
+                //    {
+                //        return Content("1");
+                //    }
+                //}
+                //else
+                //{
+                //       return Content("0");
+                //}
             }
             catch (Exception ex)
             {
@@ -1001,10 +1019,10 @@ namespace YWWeb.Controllers
                 return Content("{\"resultCode\": 2,\"results\": {}}");
             }
         }
-        public t_CM_UserInfo CurrentUser
-        {
-            get { return loginbll.CurrentUser; }
-        }
+        //public t_CM_UserInfo CurrentUser
+        //{
+        //    get { return loginbll.CurrentUser; }
+        //}
         //列出合同列表；
         public ActionResult LoadConstractDatas(string CtrName="",int CType=-1,int isOK=-1)
         {
@@ -2214,6 +2232,7 @@ namespace YWWeb.Controllers
 
 
         //短信验证码发送
+        [AuthorizeIgnoreAttribute]
         public ActionResult singleSm(String mobile,int type=0)
         {
             string verificationText = "";

@@ -1135,7 +1135,9 @@ namespace YWWeb.Controllers
             var reslut = bll.ExecuteStoreQuery<pdfcharts>(sql);
             return Json(reslut);
         }
-#region 用户地图
+        #region 用户地图
+        
+       
         [Login]
         public ActionResult UnitListData()
         {
@@ -1228,7 +1230,7 @@ namespace YWWeb.Controllers
                 item.dianya = dianya;
             }
             //string strJson = Common.ComboboxToJson(list);
-            return Json(list);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
         public class m : t_CM_Unit
         {
@@ -1502,7 +1504,24 @@ namespace YWWeb.Controllers
             }
             return str;
         }
-#region 前台接口
+        public ActionResult UnitSelect()
+        {
+            string ustr = string.Empty;
+            ustr = GetUID();
+            if (string.IsNullOrEmpty(ustr))
+                return Content("");
+            string sql = "SELECT * FROM t_CM_Unit WHERE UnitID IN (" + ustr + ")";
+            List<t_CM_Unit> list = bll.ExecuteStoreQuery<t_CM_Unit>(sql).ToList();
+            var result = from r in list
+                         select new
+                         {
+                             r.UnitID,
+                             r.UnitName,
+                             r.LinkAddress
+                         };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #region 前台接口
         /// <summary>
         /// 获取站状态
         /// </summary>
@@ -1624,8 +1643,8 @@ namespace YWWeb.Controllers
                 {
                     model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
                 }
-
-                DateTime dd = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
+                DateTime dgh = DateTime.Now.AddMonths(-1);
+                DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
                 var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (xsss != null)
                 {
@@ -1642,7 +1661,7 @@ namespace YWWeb.Controllers
                 {
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
                 }
-                int dayy = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month - 1);
+                int dayy = DateTime.DaysInMonth(dgh.Year, dgh.Month);
                 // DateTime ddd = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, dayy);
                 DateTime ddd = DateTime.Now;
                 DateTime sddd = new DateTime(DateTime.Now.Year, 1, 1);

@@ -18,5 +18,10 @@ namespace DAO
         {
            return this.Database.SqlQuery<T>(sql, parameters).ToList();
         }
+
+        public int ExecuteSqlCommand(string sql, params object[] parameters) 
+        {
+            return this.Database.ExecuteSqlCommand( sql,  parameters);
+        }
     }
 }

@@ -22,11 +22,15 @@ namespace DAO
               .HasKey(t => new { t.id });
             base.OnModelCreating(modelBuilder);
         }
-
+        /// <summary>
+        /// 加载已经存在的区域列表
+        /// </summary>
+        /// <param name="item_type"></param>
+        /// <returns></returns>
         public IList<t_EE_EnerUserType> GetOrganizationList(int item_type)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = "SELECT * FROM t_EE_EnerUserType WHERE item_type=" + item_type;
+            string sql = "SELECT b.parent_id,b.child_id,b.unit_head,b.unit_id,b.unit_note,a.Remarks,a.Name,a.item_type FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.parent_id WHERE a.item_type = "+ item_type;
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
 

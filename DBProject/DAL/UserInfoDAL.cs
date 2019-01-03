@@ -16,7 +16,7 @@ namespace DAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
-      
+
         static UserInfoDAL _DataDal;
         static readonly object _loker = new object();
         public static UserInfoDAL getInstance(string json = null)
@@ -33,8 +33,8 @@ namespace DAL
             return _DataDal;
         }
 
-        
-      
+
+
         /// <summary>
         /// 获取拥有PID 权限的用户
         /// </summary>
@@ -54,15 +54,59 @@ namespace DAL
                 throw ex;
             }
             return data;
-           
+
         }
-        public IList<t_CM_UserInfo> GetUsers(string userName,string password)
+        public IList<t_CM_UserInfo> GetUsers(string userName, string password)
         {
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
 
-                data = _dbFactory.userInf.GetUsers(userName,password);
+                data = _dbFactory.userInf.GetUsers(userName, password);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+        public IList<t_CM_UserInfo> GetUsers(string mobile)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+                data = _dbFactory.userInf.GetUsers(mobile);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+        public int UpdateUnitList(int userID, string unitList)
+        {
+
+            try
+            {
+
+                return _dbFactory.userInf.UpdateUnitList(userID, unitList);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+        public IList<t_CM_UserInfo> GetWxUsers(string openid)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+
+                data = _dbFactory.userInf.GetWxUsers(openid);
             }
             catch (Exception ex)
             {

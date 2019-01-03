@@ -20,9 +20,7 @@ namespace IDAO.Models
         public string Name { get; set; }
         public string Remarks { get; set; }
         public int item_type { get; set; }
-
-
-        
-
+        public string addCid { get; set; }
+        public string delCid { get; set; }
     }
 }

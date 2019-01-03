@@ -49,31 +49,39 @@ namespace EnergyManage.Controllers
 
 
 
-
-        public JsonResult GetOrganizationList(int type)
+        /// <summary>
+        /// 加载已经存在的区域列表
+        /// </summary>
+        /// <param name="unitId"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
+        public JsonResult GetOrganizationList( int type)
         {
             IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetOrganizationList(type);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
-        /// 
+        /// 增加子节点
         /// </summary>
-        /// <param name="item_type">类型</param>
-        /// <param name="Name">节点名称</param>
+        /// <param name="parent_id">父节点</param>
+        /// <param name="unit_id">单位id</param>
+        /// <param name="unit_head">负责人</param>
+        /// <param name="unit_note">备注</param>
+        /// <param name="Name">名称</param>
         /// <param name="Remarks">描述</param>
-        /// <param name="parentID">父节点ID</param>
-        /// <param name="unit_note"></param>
-        /// <param name="parent_id"></param>
-        /// <returns></returns>
-        public JsonResult addTreeNode(int item_type, string Name, string Remarks, int parentID,int unit_note,int parent_id)
+        /// <param name="item_type"></param>
+        /// <param name="addCid">减法表</param>
+        /// <param name="delCid">减法表</param>
+        /// <returns>ok/error</returns>
+        public JsonResult addTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string Name, string Remarks, int item_type,string addCid,string delCid)
         {
             //查表中 是否有这段数据  如果有就修改  没有就添加  返回id
             int id = DAL.EnerUserTypeDAL.getInstance().unpDateproject(item_type, Name, Remarks);
             //通过id 去关系表中查  是否有 父级关系 如果parentID是null 则为新建根节点  childID  为添加的id
 
 
-            // child_id unit_head unit_note Name Remarksitem_type
+            
 
 
             return Json(id);
