@@ -35,6 +35,12 @@ namespace DAO
             return Datas.Where(u => u.UserName == userName && u.UserPassWord == password).ToList();
         }
 
+        public int UpdateUnitList(int userID, string unitList)
+        {
+            string sql = $"update t_CM_UserInfo set UNITList= '{unitList}' where UserID={userID}";
+            return ExecuteSqlCommand(sql);
+        }
+
         public DbSet<t_CM_UserInfo> Datas { get; set; }
     }
 }

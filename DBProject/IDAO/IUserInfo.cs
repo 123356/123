@@ -16,5 +16,6 @@ namespace IDAO
         /// <returns></returns>
         IList<t_CM_UserInfo> GetUsers(int pid);
         IList<t_CM_UserInfo> GetUsers(string userName, string password);
+        int UpdateUnitList(int userID, string unitList);
     }
 }

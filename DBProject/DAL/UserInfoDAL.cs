@@ -72,6 +72,21 @@ namespace DAL
             return data;
 
         }
+        public int UpdateUnitList(int userID, string unitList)
+        {
+         
+            try
+            {
+
+                return _dbFactory.userInf.UpdateUnitList(userID, unitList);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
 
     }
 }
