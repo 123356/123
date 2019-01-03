@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "RoomDataMonitoring";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>病房数据监测</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.05" />
+</head>
+<body>
+    <div id="app" style="background:#fff">
+        
+
+
+
+
+       <div class="right allMain" >
+           <div class="top">
+               <div class="right-top-left">
+                   <div class="module-title haveTab">
+                       <img src="~/Content/images/energyDifficiency/barAndLine.png" class="icon" />
+                       <span>实时能耗趋势</span>
+                       <Tabs type="card" class="tabs">
+                           <tab-pane label="用水图表"></tab-pane>
+                           <tab-pane label="用电图表"></tab-pane>
+                           <tab-pane label="冷热量图表"></tab-pane>
+                       </Tabs>
+                   </div>
+                   <div class="barAndLine">
+                       <div class="datePicekerView">
+                           <radio-group v-model="dateType" type="button" size="small">
+                               <Radio label="0">日</Radio>
+                               <Radio label="1">周</Radio>
+                               <Radio label="2">月</Radio>
+                               <Radio label="3">年</Radio>
+                           </radio-group>
+                       </div>
+                       <div id="barAndLine" class="chart" style="width:100%;height:100%"></div>
+                   </div>
+               </div>
+           </div>
+
+
+           <div class="bottom" >
+               <div class="module-title">
+                   <img src="~/Content/images/energyDifficiency/yddb.png" class="icon" />
+                   <span>用电对比信息表</span>
+               </div>
+               <div>
+                   <i-table border ref="selection" :columns="analysisColumns" :data="analysisData" :height="analysisTableHeight"></i-table>
+               </div>
+           </div>
+       </div>
+           
+
+    </div>
+
+
+
+    <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/RoomDataMonitoring._zc.js"></script>
+</body>
+</html>
+

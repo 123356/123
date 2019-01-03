@@ -68,6 +68,46 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult DepartDataMonitoring()
+        {
+            return View();
+        }
+        public ActionResult BudgetSetting()
+        {
+            return View();
+        }
+        public ActionResult EnergyPublicity()
+        {
+            return View();
+        }
+        public ActionResult EnergyQuery()
+        {
+            return View();
+        }
+        public ActionResult EnergyAudit()
+        {
+            return View();
+        }
+        public ActionResult RoomDataMonitoring()
+        {
+            return View();
+        }
+        public ActionResult EnergyOverview()
+        {
+            return View();
+        }
+        public ActionResult Control()
+        {
+            return View();
+        }
+        public ActionResult DepartData()
+        {
+            return View();
+        }
+        public ActionResult ElectricityReport()
+        {
+            return View();
+        }
         //获取尖谷平峰方案列表
         [Login]
         public ActionResult PlanData(int pid, string stagename, int rows, int page)

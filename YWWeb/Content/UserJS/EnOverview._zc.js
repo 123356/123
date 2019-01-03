@@ -231,6 +231,11 @@ function HourYdlGraph_SSQX(DataJson) {
         //$('#Error').css('display', 'none');
         //$('#cavans').css('display', '');
         for (i = 0; i < DataJson.yData.length; i++) {
+            var temp = DataJson.yData[i].split(",")
+            for (var j = 0; j < temp.length; j++) {
+                temp[j] = parseFloat(temp[j]).toFixed(2)
+            }
+            console.log(temp)
             Series.push({
                 name: DataJson.CName[i],
                 type: "line",
@@ -243,13 +248,19 @@ function HourYdlGraph_SSQX(DataJson) {
                         }
                     }
                 },
-                data: DataJson.yData[i].split(','),
+                data:temp,
                 markPoint: {
                     data: [
-                        { type: 'max', name: '最大值' },
-                        { type: 'min', name: '最小值' }
+                        {
+                            type: 'max', name: '最大值',
+                            
+                        },
+                        {
+                            type: 'min', name: '最小值',
+                            
+                        }
                     ]
-                }
+                },
             });
         }
             

@@ -1,109 +1,77 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        listWidth: 0,
-        listHeight: 0,
-        analysisTableHeight:0,
+        analysisTableHeight: 0,
+       
         analysisColumns: [
             {
-                title: '时间',
+                title: '名称',
                 align: 'center',
-                key: 'time'
+                key: 'name'
             },
             {
-                title: '用水(m³)',
+                title: '水',
                 align: 'center',
                 key: 'water'
             },
             {
-                title: '用电(kW·h)',
+                title: '电',
                 align: 'center',
                 key: 'power'
             },
             {
-                title: '用热',
+                title: '冷热',
                 align: 'center',
                 key: 'heat'
             },
             {
-                title: '温度(°C)',
+                title: '详情',
                 align: 'center',
-                width: 60,
-                key: 'temperature'
+                key: 'departID',
+                render: (h, params) => {
+                    var that = this
+                    return h('div', [
+                        h('a', {
+                            attrs: {
+                                href:'/EnergyEfficiency/RoomDataMonitoring'
+                            },
+                            style: {
+                                textDecoration: 'none',
+                                color: '#60b8a2',
+                                fontSize:'12px'
+                            },
+                            on: {
+                                click: () => {
+                                    
+                                }
+                            }
+                        }, '查看'),
+                    ]);
+                }
             },
-            {
-                title: '人流量(人)',
-                align: 'center',
-                width: 100,
-                key: 'visitorsFlowrate'
-            },
-            {
-                title: '建筑面积(㎡)',
-                align: 'center',
-                width: 100,
-                key: 'area'
-            },
+            
            
         ],
         analysisData: [
-            { time: '2018-12-22 12:35:00', water:123,  power: 124, heat:344,  temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
+            { departID: 0, name: '内科诊室1', water: '25(50%)', power: '40(50%)', heat:'40(30%)' },
+            { departID: 1, name: '内科诊室2', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
+            { departID: 2, name: '内科诊室3', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
+            { departID: 3, name: '内科诊室4', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
         ],
-        barAndLineChart: null,
-        dateType:0,
-        treeData: [
-            {
-                title: '医院楼层结构',
-                id:0,
-                expand: true,//是否打开子节点
-                children: [
-                    {
-                        title: '一楼',
-                        expand: true,
-                        id:1,
-                        children: [
-                            {
-                                title: '内科',
-                                expand: true,
-                                id:2,
-                                children: [
-                                    {
-                                        title: '内科诊室一',
-                                        id:3
-                                    },
-                                    {
-                                        title: '内科诊室二',
-                                        id:4
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                ]
-            }
-        ],
-        userMneus: [
-            { name: '能源总览', url: '/EnergyEfficiency/EnergyOverview' },
-            { name: '科室数据监测', url: '/EnergyEfficiency/DepartDataMonitoring' },
-            { name: '能源查询', url: '/EnergyEfficiency/EnergyQuery' },
-            { name: '能源审计', url: '/EnergyEfficiency/EnergyAudit' },
-            { name: '能源公示', url: '/EnergyEfficiency/EnergyPublicity' },
-            { name: '能源报告', url: '/EnergyEfficiency/ElectricityReport' },
-            
-        ],
-        activeIndex: 5,
-        frameSrc:'/EnergyEfficiency/ElectricityReport'
+        barChart: null,
+        dateType: 0,
+        piechart:null
+        
     },
     methods: {
-
-        //用电趋势图
-        createBarAndLine: function () {
-            barAndLineChart = echarts.init(document.getElementById('barAndLine'));
+        selectChange: function (res) {
+            console.log(res[0].id)
+        },
+      
+        createbarChart: function () {
+            barChart = echarts.init(document.getElementById('barChart'));
             var option = {
+                
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -129,7 +97,7 @@
                 },
                 legend: {
                     data: ['今日', '昨日'],
-                    left: 0,
+                    x: 'center',
                     textStyle: {
                         fontSize: 10,
                         color: '#666'
@@ -234,61 +202,78 @@
                     {
                         name: '今日',
                         type: 'bar',
-                        barMaxWidth: '10',
                         color: "#53bda9",
-                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                        
                     },
                     {
                         name: '昨日',
                         type: 'bar',
-                        barMaxWidth: '10',
                         color: "#80c5e2",
-                        data: [1.6, 5.0, 9.5, 20.4, 24.7, 60.7, 165.6, 132.2, 58.7, 28.8, 3.0, 3.3, 5.6, 8.9, 6.0, 36.4, 20.7, 50.7, 110.6, 152.2, 28.7, 58.8, 66.0, 55.3]
+                        data: [1.6, 5.0, 9.5, 20.4, 24.7, 60.7, 165.6, 132.2, 58.7, 28.8, 3.0, 3.3, 5.6, 8.9, 6.0, 36.4, 20.7, 50.7, 110.6, 152.2, 28.7, 58.8, 66.0, 55.3],
+                       
                     },
                    
                 ]
             };
-            barAndLineChart.setOption(option)
+            barChart.setOption(option)
             
         },
+        createPieChart: function () {
+            piechart = echarts.init(document.getElementById('piechart'));
+            var option = {
+                title: {
+                    text: '分项用水、电、冷热量',
+                    subtext:'预算：10万',
+                    x: 'center',
+                    textStyle: {
+                        fontSize: 10,
+                        fontWeight:'normal'
+                    },
+                    subtextStyle: {
+                        fontSize: 10,
+                        fontWeight: 'normal'
+                    }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                color: ['#60b7a4', '#e0c389', '#86d2df'],
 
-        selectChange: function (res) {
-            console.log(res[0].id)
-        },
-        userBtnClick: function (e) {
-            if (this.activeIndex == e) {
-                $("#energyFrame").attr("src", this.userMneus[e].url)
-            }
-                this.activeIndex = e
-            console.log(this.userMneus[e].url)
-            this.frameSrc = this.userMneus[e].url
+                series: [
+                    {
+                        name: '能耗(万元)',
+                        type: 'pie',
+                        radius: '68%',
+                        center: ['50%', '60%'],
+                        data: [
+                            { value: 335, name: '电' },
+                            { value: 310, name: '水' },
+                            { value: 234, name: '冷热' },
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            piechart.setOption(option)
+
 
         },
-        setWidth: function () {
-            var that = this
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.leftWidth = width + 52
-            }
-        },
+
+
         setHeight: function () {
-           // this.listHeight = $(".left .list").height() - 21
-            this.analysisTableHeight = $(".right .bottom").height()-40
+            this.analysisTableHeight = $(".top .right-top-left .con").height()
         }
     },
     beforeMount: function () {
         var that = this
-       /*function setWidth2() {
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.listWidth = width + 32 
-            }
-        }
-      
-        setWidth2()
-        */
         setInterval(function () {
             //setWidth2()
             that.setHeight()
@@ -298,32 +283,13 @@
        
     },
     mounted: function () {
-        /*this.createBarAndLine()
+        this.createPieChart()
+        this.createbarChart()
+        /*this.createBarAndLine()*/
         window.addEventListener("resize", () => {
-            barAndLineChart.resize();
-        });*/
+            piechart.resize();
+            barChart.resize()
+        });
     }
 })
 
-function setScroll() {
-    var scroll = $(".left .treeList").scrollTop()
-    if (scroll == 1) {
-        $(".left .treeList").scrollTop(0)
-    } else {
-        $(".left .treeList").scrollTop(1)
-    }
-    $(".left .treeList").scroll(function () {
-        var width = $(".left .treeList").width()
-        $(this).width(width + 32)
-        $(".left .treeList").css("padding-right", "15px")
-    })
-}
-$(function () {
-   
-    setScroll()
-    window.onresize = function () {
-        setScroll()
-    };
-
-    
-})
