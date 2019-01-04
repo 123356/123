@@ -6,17 +6,27 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>AlarmSysTableList</title>
-    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
-    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/pingmiantu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yicitu.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/yw_table.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/js/artDialog/skins/blue.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/LBYWBase.css" />
+    <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script src="~/Content/js/jquery.jqprint.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
+
 </head>
         <body style="padding:0px 15px 0px 15px;">
             <div id="alarmTable">
-                <div id="tb" class="searchbar" style="margin-bottom:10px;padding-bottom:0">
-                    <div class="searchrow" >
+                <div id="tb" class="searchbar" style="margin-bottom:10px;padding-bottom:0;overflow:inherit">
+                    <div class="searchrow" style="float:left" >
                         <i-form   ref="searchForm" :model="searchForm":label-width="60">
                             <table>
                                 <tr>
+                                   
                                     <td>
                                         <form-item label="站室">
                                             <i-select v-model="searchForm.pid" v-on:on-change="roomChange">
@@ -50,7 +60,7 @@
                 </div>
                 <i-table :columns="alarmColumns" :data="alarmData" style="clear:both;margin-top:50px" :height="tableHeight" :loading="tableLoading"></i-table>
                 <div class="pageView">
-                    <Page :total="page.total" show-elevator show-sizer show-total
+                    <Page :total="page.total" show-elevator show-sizer show-total size="small"
                           :page-size="page.size"
                           :page-size-opts="[20,50,80,100]"
                           :current="page.curPage"
@@ -62,6 +72,6 @@
             <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
             <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
             <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-            <script src="~/Content/UserJS/AlarmSysTableList_zc.js?v=1.142"></script>
+            <script src="~/Content/UserJS/AlarmSysTableList_zc.js?v=1.145"></script>
         </body>
 </html>

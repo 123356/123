@@ -267,7 +267,10 @@ Topo.prototype = {
             }
         };
         if (location.protocol == "https:") {
+            console.log("https")
             options.useSSL = true;
+        } else {
+            console.log("http")
         }
         client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
         //创建连接
