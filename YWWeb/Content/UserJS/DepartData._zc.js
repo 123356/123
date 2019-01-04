@@ -10,17 +10,17 @@
                 key: 'name'
             },
             {
-                title: '水',
+                title: '水(m³)',
                 align: 'center',
                 key: 'water'
             },
             {
-                title: '电',
+                title: '电(kW·h)',
                 align: 'center',
                 key: 'power'
             },
             {
-                title: '冷热',
+                title: '冷热(m³)',
                 align: 'center',
                 key: 'heat'
             },

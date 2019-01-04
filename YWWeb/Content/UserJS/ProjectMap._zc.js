@@ -188,7 +188,7 @@ function addMarker() {
             title = a.title
         } else {
             showControl_ClickPDR(a.ProjectName);
-            title: a.ProjectName
+            title=a.ProjectName
         }
         
         if (g_showPDROk == 0) {

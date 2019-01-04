@@ -1,6 +1,7 @@
 ﻿* {
     margin: 0;
-    padding: 0
+    padding: 0;
+    font-family: "Helvetica Neue"
 }
 
 html {
@@ -166,12 +167,15 @@ html {
     .left .left-item{
 
     }
-    .module-title {
-        font-size: 1.6rem;
-        color: #4c4c4c;
-        letter-spacing: 0.1rem;
-        padding-bottom: 1.5rem;
-    }
+.module-title {
+    font-size: 1.6rem;
+    color: #4c4c4c;
+    letter-spacing: 0.1rem;
+    padding-bottom: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
        
     .module-title .btn {
         color: #fff;
@@ -393,22 +397,33 @@ html {
     .BudgetSetting .header{
         flex:1;
         display:flex;
-        align-items:center;
+        align-items:flex-start;
         justify-content:flex-start;
         position:relative;
         color:#777;
         background:#fff;
-        padding:5px 15px
+        padding:5px 15px;
+        flex-direction:column;
 
 
     }
         .BudgetSetting .header .title{
-            text-align:center;
             font-size:1.8rem
         }
-            .BudgetSetting .header .title .icon {
-                cursor: pointer;
-            }
+        .BudgetSetting .header .formView {
+            display: flex;
+            flex-direction: row
+        }
+        .BudgetSetting .header .proName{
+            font-size:1.5rem;
+            color:#333;
+            padding-left:8px;
+            font-weight:bold;
+            letter-spacing:1px
+        }
+        .BudgetSetting .header .title .icon {
+            cursor: pointer;
+        }
             .BudgetSetting .header .title .previcon {
                 margin-right: 10px
             }
@@ -593,32 +608,45 @@ html {
             .BudgetSetting .main .con table tbody tr td:nth-child(1) {
                 border-right: 1px dashed #e4e4e4
             }
-            .BudgetSetting .main .con table td .ivu-input-number-focused{
+            .BudgetSetting .main .con .ivu-input-number-focused{
                 box-shadow:none !important
             }
-            .BudgetSetting .main .con table td input{
+            .BudgetSetting .main .con input{
                 text-align:center
             }
 
-            .BudgetSetting .main .con table td .ivu-input-number-handler-wrap {
+            .BudgetSetting .main .con .ivu-input-number-handler-wrap {
                 border-left: none !important;
                 background: transparent
             }
-            .BudgetSetting .main .con table td .ivu-input-number-handler-down{
+            .BudgetSetting .main .con .ivu-input-number-handler-down{
                 border-top:none
             }
-            .BudgetSetting .main .con table td .ivu-input-number-disabled {
+            .BudgetSetting .main .con .ivu-input-number-disabled {
                 background: transparent;
                 color:#777
             }
-                .BudgetSetting .main .con table td .ivu-input-number-disabled .ivu-input-number-input {
-                    background: transparent;
-                    color:#777
-                }
-            .BudgetSetting .main .con table td .ivu-input-number,.BudgetSetting .main .con table td .ivu-input-number-input {
+        
+        .BudgetSetting .main .con .ivu-input-number-disabled .ivu-input-number-input {
+            background: transparent;
+            color: #777
+        }
+            .BudgetSetting .main .con .ivu-input-number,.BudgetSetting .main .con .ivu-input-number-input {
                 background: transparent;
                 max-width:40px !important
             }
+        .BudgetSetting .main .con .conModule .ivu-input-number-disabled .ivu-input-number-input {
+            color: #40ae93;
+            font-size: 2.2rem
+        }
+        .BudgetSetting .main .con .conModule .inputNum{
+            width:100px
+        }
+        .BudgetSetting .main .con .conModule .ivu-input-number, .BudgetSetting .main .con .conModule .ivu-input-number-input {
+            max-width: 100px !important;
+            font-size: 2.2rem;
+            color: #40ae93;
+        }
 /*能源总览*/
 #EnergyControl{
     position:absolute;
@@ -903,8 +931,11 @@ html {
 .addEnergyModal .ivu-modal-body {
     height: 250px;
 }
-.setPriceModal .ivu-modal-body{
-    height:auto !important
+.setPriceModal .ivu-modal {
+    width: 850px !important
+}
+.setPriceModal .ivu-modal-body {
+    height: auto !important;
 }
 /*分项页面*/
 .right .UserMenuView {
@@ -1243,6 +1274,20 @@ html {
                             .BudgetSetting .main .main-item .con .conModule p {
                                 font-size: 1.6rem;
                             }
+    .BudgetSetting .main .con .conModule .ivu-input-number-disabled .ivu-input-number-input {
+        font-size: 1.6rem
+    }
+
+    .BudgetSetting .main .con .conModule .inputNum {
+        width: 80px
+    }
+
+    .BudgetSetting .main .con .conModule .ivu-input-number, .BudgetSetting .main .con .conModule .ivu-input-number-input {
+        max-width: 80px !important;
+        font-size: 1.6rem;
+    }
+
+
     .BudgetSetting .main .last-main-item .module {
         margin-bottom: 5px
     }
