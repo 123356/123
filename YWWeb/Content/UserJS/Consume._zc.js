@@ -9,7 +9,9 @@
             {
                 type: 'selection',
                 width: 20,
-                align: 'center'
+                align: 'center',
+               
+
             },
             {
                 title: '排名',
@@ -75,21 +77,21 @@
             }
         ],
         listData: [
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime:'2018-12-02'},
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02'},
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02'},
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02'},
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { index: 0, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: true, _disabled: false},
+            { index: 1, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
+            { index: 2, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 3, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 4, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
+            { index: 5, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
+            { index: 6, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 7, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 8, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 9, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 10, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 11, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 12, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 13, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
+            { index: 14, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
         ],
         analysisColumns: [
             {
@@ -142,17 +144,56 @@
             },
         ],
         analysisData: [
-            { time: '2018-12-22 12:35:00', department:'内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-24 12:35:00', department: '外科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            {  time: '2018-12-22 12:35:00', department:'内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            {  time: '2018-12-24 12:35:00', department: '外科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
             { time: '2018-12-21 12:35:00', department: '内科2',power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
             { time: '2018-12-23 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
             { time: '2018-12-22 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
         ],
         barAndLineChart: null,
-        lineChart:null
+        lineChart: null,
+        tableSelection:[]
     },
     methods: {
-
+        tableSelectChange: function (selection) {
+            console.log(selection.length)
+            if (selection.length > 3) {
+                
+               
+            }else {
+                this.tableSelection = selection
+            }
+            if (this.tableSelection.length == 3) {
+                this.$Modal.warning({
+                    title: '信息提示',
+                    content: '最多只能选择三项进行对比'
+                });
+                this.setSelectState(true)
+            } else {
+                this.setSelectState(false)
+            }
+            
+        },
+        onSelect: function (selection, row) {
+            if (this.tableSelection.length < 3) {
+                this.listData[row.index]._checked=true
+            }
+        },
+        onSelectCancel: function (selection, row) {
+            this.listData[row.index]._checked = false
+        },
+        setSelectState: function (isDisable) {
+            for (var i = 0; i < this.listData.length; i++) {
+                if (isDisable) {
+                    if (!this.listData[i]._checked) {
+                        this.listData[i]._disabled = true
+                    }
+                } else {
+                    this.listData[i]._disabled = false
+                }
+            }
+        },
+       
         //用电趋势图
         createBarAndLine: function () {
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
@@ -444,7 +485,7 @@
             var isScroll = $(".ivu-table-overflowY").length
             if (isScroll > 0) {
                 var width = $(".left .list").width()
-                that.listWidth = width + 16
+                that.listWidth = width + 17
             }
         }
       
@@ -459,6 +500,8 @@
        
     },
     mounted: function () {
+        //用能列表默认第一行选中
+        //this.$refs.tableSelect.$refs.tbody.objData[0]._isChecked = true
         this.createBarAndLine()
         this.createEnergyConLine()
         window.addEventListener("resize", () => {

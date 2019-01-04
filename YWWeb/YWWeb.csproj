@@ -1373,6 +1373,7 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
+    <Content Include="Content\js\mqtt_car.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\iepng.js" />

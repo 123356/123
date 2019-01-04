@@ -98,6 +98,8 @@
             switch (parseInt(e)) {
                 case 0:
                     that.curDateType = 'date'
+                    //that.tableCol[0].children[3].title = '同比昨日%'
+                    
                     console.log(that.curDateType)
                     break;
                 case 1:

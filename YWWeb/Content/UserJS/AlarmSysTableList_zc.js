@@ -73,13 +73,14 @@ new Vue({
     },
     methods: {
         getRooms: function () {
-           
+            var that = this
             this.$http({
                 url: "/BaseInfo/BindPDRInfo?showall=1",
                 method:'post'
             })
             .then(function (res) {
-                this.rooms = res.data
+                that.rooms = res.data
+                console.log(res.data)
                 
             })
             .catch(function (e) {
@@ -170,7 +171,7 @@ new Vue({
         },
         settableHeight: function () {
             var height = $(window).height()
-            this.tableHeight = height - 200
+            this.tableHeight = height - 120
         },
         getBtn: function () {
             var url = window.location.pathname;

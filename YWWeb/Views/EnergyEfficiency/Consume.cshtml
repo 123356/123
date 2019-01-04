@@ -20,7 +20,11 @@
                 <!--<button class="btn">对比</button>-->
             </div>
             <dv class="list consumeList" style="overflow:hidden">
-                <i-table ref="selection" :columns="listColumns" :data="listData" :height="listHeight" :width="listWidth"  ></i-table>
+                <i-table ref="tableSelect" :columns="listColumns" :data="listData" :height="listHeight" :width="listWidth" 
+                         v-on:on-selection-change="tableSelectChange" 
+                         v-on:on-select="onSelect"
+                         v-on:on-select-cancel="onSelectCancel"
+                         ></i-table>
             </dv>
         </div>
         <!--right s-->
@@ -77,7 +81,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.68"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.77"></script>
 </body>
 </html>
 
