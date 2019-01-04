@@ -117,7 +117,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: 'kW·h',
+                        name: '万元',
                         axisLine: {
                             lineStyle: {
                                 color: '#57b9a3',//x轴线颜色

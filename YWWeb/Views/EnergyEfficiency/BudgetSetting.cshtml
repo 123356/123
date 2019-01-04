@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.04" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.38" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.43" />
     <style type="text/css">
         .trActive {
             background: #53bda9;
@@ -25,16 +25,20 @@
 <body>
     <div id="app" class="BudgetSetting noPaddingBottom">
         <div class="header">
-            <p class="title">
-                <date-picker type="year" style="width: 350px" :format="formatDate" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
-            </p>
-            <div class="btnView">
-                <i-button class="btn" icon="ios-create-outline" v-on:click="edit">{{editName}}</i-button>
-                <i-button class="btn" icon="ios-settings-outline" v-on:click="showSetPriceModal">能源单价设置</i-button>
-                <!--<i-button class="btn" icon="ios-cloud-upload" v-on:click="upload">历史上传</i-button>
-    <input type="file" id="uploadFile" style="display:none" />
-    <i-button class="btn" icon="ios-cloud-download-outline">下载</i-button>-->
+            <p class="proName">新源医院</p>
+            <div class="formView" >
+                <p class="title">
+                    <date-picker type="year" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
+                </p>
+                <div class="btnView">
+                    <i-button class="btn" icon="ios-create-outline" v-on:click="edit">{{editName}}</i-button>
+                    <i-button class="btn" icon="ios-settings-outline" v-on:click="showSetPriceModal">能源单价设置</i-button>
+                    <!--<i-button class="btn" icon="ios-cloud-upload" v-on:click="upload">历史上传</i-button>
+        <input type="file" id="uploadFile" style="display:none" />
+        <i-button class="btn" icon="ios-cloud-download-outline">下载</i-button>-->
+                </div>
             </div>
+            
         </div>
         <div class="main">
             <div class="main-item">
@@ -46,15 +50,15 @@
                     <div class="conModule">
                         <h4>计划能耗(万元)</h4>
                         <span>历史参考1400(万)</span>
-                        <p>1300</p>
+                        <p><input-number :min="0"   style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
                     <div class="conModule">
                         <h4>余量设置(万元)</h4>
-                        <p>100</p>
+                        <p><input-number :min="0" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
                     <div class="conModule">
                         <h4>剩余预算(万元)</h4>
-                        <p>1200</p>
+                        <p><input-number :min="0" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
 
                 </div>
@@ -186,7 +190,7 @@
 
         <!--添加模态框-->
         <Modal v-model="setPriceVisable" class="iviewModal addEnergyModal setPriceModal" footer-hide="true" title="能源单价设置" v-on:on-visible-change="setPriceVisableChange">
-            <i-form ref="setForm" :model="setForm" :label-width="90" :rules="rules">
+            <i-form ref="setForm" :model="setForm" :label-width="100" :rules="rules">
                 <table style="width:100%">
                     <tr>
                         <td>
@@ -195,8 +199,13 @@
                             </form-item>
                         </td>
                         <td>
-                            <form-item prop="hotWaterPrice" label="饮用热水" >
-                                <input-number placeholder="(国标0.86/m³)" v-model="setForm.hotWaterPrice"></input-number>
+                            <form-item prop="waterPriceL1" label="第一阶梯用水">
+                                <input-number placeholder="(国标0.86/m³)" v-model="setForm.waterPriceL1"></input-number>
+                            </form-item>
+                        </td>
+                        <td>
+                            <form-item prop="useWater1" label="用水量">
+                                <input-number placeholder="(单位：m³)" v-model="setForm.useWater1"></input-number>
                             </form-item>
                         </td>
                     </tr>
@@ -207,8 +216,13 @@
                             </form-item>
                         </td>
                         <td>
-                            <form-item prop="waterPriceL1" label="一级用水">
-                                <input-number placeholder="(国标0.61/m³)" v-model="setForm.waterPriceL1"></input-number>
+                            <form-item  label="第二阶梯用水">
+                                <input-number placeholder="(国标0.86/m³)" v-model="setForm.waterPriceL2"></input-number>
+                            </form-item>
+                        </td>
+                        <td>
+                            <form-item  label="用水量">
+                                <input-number placeholder="(单位：m³)" v-model="setForm.useWater2"></input-number>
                             </form-item>
                         </td>
                     </tr>
@@ -219,24 +233,33 @@
                             </form-item>
                         </td>
                         <td>
-                            <form-item prop="waterPriceL2" label="二级用水">
-                                <input-number placeholder="(国标0.54/m³)" v-model="setForm.waterPriceL2"></input-number>
+                            <form-item  label="第三阶梯用水">
+                                <input-number placeholder="(国标0.86/m³)" v-model="setForm.waterPriceL3"></input-number>
+                            </form-item>
+                        </td>
+                        <td>
+                            <form-item label="用水量">
+                                <input-number placeholder="(单位：m³)" v-model="setForm.useWater3"></input-number>
                             </form-item>
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <form-item prop="elecPriceJ" label="电单价(尖)">
+                                <input-number placeholder="(国标0.61/kW·h)" v-model="setForm.elecPriceJ"></input-number>
+                            </form-item>
+                        </td>
                         <td>
                             <form-item prop="gasPrice" label="燃气">
                                 <input-number placeholder="(国标0.35/m³)" v-model="setForm.gasPrice"></input-number>
                             </form-item>
                         </td>
-                        <td>
-                            
-                        </td>
+                        <td></td>
                     </tr>
 
                     <tr>
-                        <td colspan="2" class="btnTd">
+                       
+                        <td colspan="3" class="btnTd">
                             <button type="button" class="btn okBtn" v-on:click="setPrice">添加</button>
                             <button type="button" class="btn cancelBtn" v-on:click="setPriceVisable=false">关闭</button>
                         </td>
@@ -257,7 +280,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._zc.js?v=1.100"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._zc.js?v=1.102"></script>
 </body>
 </html>
 

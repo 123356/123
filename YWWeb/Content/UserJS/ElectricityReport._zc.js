@@ -87,12 +87,35 @@
                     { type: '眼科' },
                 ]
             },
-        ]
-
+        ],
+        curDateType:'date'
         
     },
     methods: {
+        dateTypeChange: function (e) {
+            console.log(e)
+            var that = this
+            switch (parseInt(e)) {
+                case 0:
+                    that.curDateType = 'date'
+                    console.log(that.curDateType)
+                    break;
+                case 1:
+                    this.curDateType = 'date'
+                    console.log(that.curDateType)
+                    break;
+                case 2:
+                    that.curDateType = 'month'
+                    console.log(that.curDateType)
+                    break
+                case 3:
+                    that.curDateType = 'year'
+                    console.log(that.curDateType)
+                    break;
 
+            }
+            
+        },
 
 
         setHeight: function () {

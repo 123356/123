@@ -29,6 +29,7 @@
                            <tab-pane label="用电图表"></tab-pane>
                            <tab-pane label="冷热量图表"></tab-pane>
                        </Tabs>
+                       <i-button class="btn" icon="md-arrow-round-forward" onclick="history.go(-1)">返回</i-button>
                    </div>
                    <div class="barAndLine">
                        <div class="datePicekerView">
@@ -48,7 +49,7 @@
            <div class="bottom" >
                <div class="module-title">
                    <img src="~/Content/images/energyDifficiency/yddb.png" class="icon" />
-                   <span>用电对比信息表</span>
+                   <span>用能对比</span>
                </div>
                <div>
                    <i-table border ref="selection" :columns="analysisColumns" :data="analysisData" :height="analysisTableHeight"></i-table>

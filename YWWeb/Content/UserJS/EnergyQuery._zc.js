@@ -30,18 +30,13 @@
                 align: 'center',
                 key: 'type',
             },
-            {
-                title: '楼层',
-                align: 'center',
-                key: 'floor',
-                sortable: true
-            },
+            
         ],
         tableData: [
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', floor:1},
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', floor:2 },
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', floor: 3 },
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100, type: '水', floor: 4 },
+            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
+            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
+            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
+            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100, type: '水',  },
         ],
         searchForm: {
             time: null,

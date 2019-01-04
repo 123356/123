@@ -20,7 +20,7 @@
                 key: 'power'
             },
             {
-                title: '用热',
+                title: '用热(m³)',
                 align: 'center',
                 key: 'heat'
             },
@@ -126,7 +126,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: 'kW·h',
+                        name: '万元',
                         min: 0,
                         max: 250,
                         interval: 50,

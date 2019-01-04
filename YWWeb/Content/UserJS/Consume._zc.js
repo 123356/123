@@ -67,70 +67,68 @@
                 title: '类型',
                 align: 'center',
                 key: 'type'
+            },
+            {
+                title: '时间',
+                align: 'center',
+                key: 'dateTime'
             }
         ],
         listData: [
-            {order: 1,name: '内科室02',proportion: '20%',type:'电'},
-            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电'},
-            { order: 2, name: '内科室03', proportion: '30%', type: '电'},
-            { order: 1, name: '内科室02', proportion: '20%', type: '电'},
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 5, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 1, name: '内科室02', proportion: '20%', type: '电' },
-            { order: 2, name: '内科室03', proportion: '30%', type: '电' },
-            { order: 15, name: '内科室03', proportion: '30%', type: '电' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime:'2018-12-02'},
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02'},
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02'},
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02'},
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
+            { order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02' },
+            { order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02' },
         ],
         analysisColumns: [
             {
                 title: '时间',
                 align: 'center',
-                key: 'time'
+                key: 'time',
+                sortable: true
+            },
+            {
+                title: '科室',
+                align: 'center',
+                key: 'department'
             },
             {
                 title: '电量(kW·h)',
                 align: 'center',
-                key: 'power'
+                key: 'power',
+                sortable: true
             },
             {
                 title: '温度(°C)',
                 align: 'center',
-                width:60,
-                key: 'temperature'
+                width:80,
+                key: 'temperature',
+                sortable: true
             },
             {
                 title: '人流量',
                 align: 'center',
                 width: 100,
-                key: 'visitorsFlowrate'
+                key: 'visitorsFlowrate',
+                sortable: true
             },
             {
-                title: '建筑面积',
+                title: '建筑面积(㎡)',
                 align: 'center',
                 width: 100,
-                key: 'area'
+                key: 'area',
+                sortable: true
             },
             {
                 title: '用途',
@@ -144,11 +142,11 @@
             },
         ],
         analysisData: [
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-22 12:35:00', department:'内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-24 12:35:00', department: '外科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-21 12:35:00', department: '内科2',power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-23 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
+            { time: '2018-12-22 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
         ],
         barAndLineChart: null,
         lineChart:null
@@ -434,14 +432,7 @@
 
 
 
-        setWidth: function () {
-            var that = this
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.leftWidth = width + 52
-            }
-        },
+     
         setHeight: function () {
             this.listHeight = $(".left .list").height() - 21
             this.analysisTableHeight = $(".right .bottom").height()-40
@@ -453,7 +444,7 @@
             var isScroll = $(".ivu-table-overflowY").length
             if (isScroll > 0) {
                 var width = $(".left .list").width()
-                that.listWidth = width + 32 
+                that.listWidth = width + 16
             }
         }
       
@@ -477,19 +468,6 @@
     }
 })
 
-function setScroll() {
-    if ($(".left .list .ivu-table").scrollTop() != 1) {
-        $(".left .list .ivu-table").scrollTop(1)
-    } else {
-        $(".left .list .ivu-table").scrollTop(0)
-    }
-
-    $(".left .list .ivu-table").scroll(function () {
-        var width = $(".left .list").width()
-        $(this).width(width + 32)
-        $(".left .list .ivu-table").css("margin-right", "15px")
-    })
-}
 $(function () {
 
 

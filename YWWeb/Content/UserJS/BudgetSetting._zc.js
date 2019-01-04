@@ -7,7 +7,6 @@
         editIconShow: false,
         editDisable: true,
         slectYear: '2018',
-        formatDate:'yyyy年新源恒远能源预算分配',
         editType: 0,
         editName:'编辑',
         allMonthData: [
@@ -63,9 +62,13 @@
             elecPriceF: null,
             elecPriceP: null,
             elecPriceG: null,
-            hotWaterPrice: null,
+            elecPriceJ: null,
             waterPriceL1: null,
             waterPriceL2: null,
+            waterPriceL3: null,
+            useWater1: null,
+            useWater2: null,
+            useWater3:null,
             gasPrice: null,
         },
         setPriceVisable: false,
@@ -79,17 +82,17 @@
             elecPriceG: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
             ],
-            hotWaterPrice: [
+            elecPriceJ: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
             ],
             waterPriceL1: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
             ],
-            waterPriceL2: [
-                { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
-            ],
             gasPrice: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
+            ],
+            useWater1:[
+                { required: true, type: 'number', message: '请输入用水量', trigger: 'change' },
             ],
         }
     },

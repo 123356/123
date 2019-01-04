@@ -88,15 +88,17 @@
         ],
         userMneus: [
             { name: '能源总览', url: '/EnergyEfficiency/EnergyOverview' },
-            { name: '科室数据监测', url: '/EnergyEfficiency/DepartDataMonitoring' },
+            { name: '能源分析', url: '/EnergyEfficiency/DepartDataMonitoring' },
+            { name: '能源消耗', url: '/EnergyEfficiency/Consume' },
+            { name: '能源公示', url: '/EnergyEfficiency/EnergyPublicity' },
+            { name: '预算管理', url: '/EnergyEfficiency/BudgetSetting' },
             { name: '能源查询', url: '/EnergyEfficiency/EnergyQuery' },
             { name: '能源审计', url: '/EnergyEfficiency/EnergyAudit' },
-            { name: '能源公示', url: '/EnergyEfficiency/EnergyPublicity' },
             { name: '能源报告', url: '/EnergyEfficiency/ElectricityReport' },
             
         ],
-        activeIndex: 5,
-        frameSrc:'/EnergyEfficiency/ElectricityReport'
+        activeIndex: 0,
+        frameSrc:'/EnergyEfficiency/EnergyOverview'
     },
     methods: {
 
