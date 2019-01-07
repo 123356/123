@@ -2573,7 +2573,7 @@ namespace YWWeb.Controllers
                     string CommitUser = string.Empty;
                     //资料类型（图片，视频,文档）
                     string FileType = string.Empty;
-                    //来源(web,app)
+                    //来源(web,app)setAttribute
                     string FSource = string.Empty;
 
                     ControllerContext.HttpContext.Request.ContentEncoding = Encoding.GetEncoding("UTF-8");
@@ -3206,10 +3206,10 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
 
 
 
-
+        
 
         //改保存一次图接口
-        public ActionResult SaveAttribute(int pid, int orderNo, string type, string IP, string port, string account, string password)
+        public ActionResult SaveAttribute(int pid, int orderNo, string type, string IP, string port, string account, string password,string Name)
         {
             string result = "保存成功";
             try
@@ -3251,24 +3251,22 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 sr.Dispose();
                 sr.Close();
 
-                t_PM_OneGraph sql = new t_PM_OneGraph();
-                sql.PID = pid;
-                sql.OrderNo = orderNo;
-                sql.Type = type;
-                sql.Path = saveName;
-                sql.IP = IP;
-                sql.Port = port;
-                sql.Account = account;
-                sql.Password = password;
-                bll.t_PM_OneGraph.AddObject(sql);
 
-                t_PM_OneGraph m = bll.t_PM_OneGraph.Where(p => p.PID == pid && p.OrderNo == orderNo && p.Type == type).FirstOrDefault();
-                if (m != null)
+                var sqlsle = "SELECT * FROM t_PM_OneGraph WHERE OrderNo = "+orderNo+ " and Type = "+type+ " and PID = " +pid;
+                List<one> select = bll.ExecuteStoreQuery<one>(sqlsle).ToList();
+                if (select.Count() >0 )
                 {
-                    bll.t_PM_OneGraph.DeleteObject(m);
+                       var sqlupd = $"UPDATE t_PM_OneGraph SET  Path='{saveName}',IP='{IP}', Port ='{port}', Account ='{account}', Password ='{password}', Name ='{Name}'WHERE PID = {pid} and OrderNo = {orderNo} AND Type={type} ";
+                    List<one> lsit = bll.ExecuteStoreQuery<one>(sqlupd).ToList();
                 }
-                bll.t_PM_OneGraph.AddObject(sql);
-                bll.SaveChanges();
+                else
+                {
+                    var sqlinse = $"INSERT INTO t_PM_OneGraph (PID, OrderNo,Type,Path,IP,Port,Account,Password,Name) VALUES ({pid},{orderNo},'{type}','{saveName}','{IP}','{port}','{account}','{password}','{Name}')";
+                    List<one> lsit = bll.ExecuteStoreQuery<one>(sqlinse).ToList();
+                }
+                
+
+
 
             }
             catch (Exception e)
@@ -3279,7 +3277,18 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
         }
 
 
-
+        public class one {
+            public int ID { get; set; }
+            public int PID { get; set; }
+            public int OrderNo { get; set; }
+            public string Type { get; set; }
+            public string Path { get; set; }
+            public string IP { get; set; }
+            public string Port { get; set; }
+            public string Account { get; set; }
+            public string Password { get; set; }
+            public string Name { get; set; }
+        }
 
         //获取数据
         public ActionResult GetAttribute(int pid, int orderNo, string type)
@@ -3309,9 +3318,14 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                     path += "DownLoad/Communication/";
                 }
 
-                List<t_PM_OneGraph> list = bll.t_PM_OneGraph.Where(d => d.PID == pid && d.OrderNo == orderNo && d.Type == type).ToList();
+                var sqlsle = "SELECT * FROM t_PM_OneGraph WHERE OrderNo = " + orderNo + " and Type = " + type + " and PID = " + pid;
+                List<one> list = bll.ExecuteStoreQuery<one>(sqlsle).ToList();
 
 
+                string strsql = $"SELECT OrderNo,Path,Name FROM t_PM_OneGraph WHERE PID ={pid}  and Type='{type}'";
+                List<OrderNos> OrderNos = bll.ExecuteStoreQuery<OrderNos>(strsql).ToList();
+
+                
                 var result = from s in list
                              select new
                              {
@@ -3322,6 +3336,8 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                                  Port = s.Port,
                                  Account = s.Account,
                                  Password = s.Password,
+                                 OrderNoList= OrderNos,
+                                 Name = s.Name
                              };
                 return Json(result);
             }
@@ -3374,7 +3390,11 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             }
         }
 
-
+        public class OrderNos {
+            public int OrderNo { get; set; }
+            public string Path { get; set; }
+            public string Name { get; set; }
+        }
 
         public class txsj
         {

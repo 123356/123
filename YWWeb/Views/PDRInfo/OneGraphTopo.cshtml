@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>新版本一次图</title>
     <link rel="stylesheet" href="~/Content//topo/css/rescss.css">
-    <link rel="stylesheet" href="~/Content//topo/css/topo.css">
+    <link rel="stylesheet" href="~/Content//topo/css/topo.css?date=123">
     <script src="~/Content//topo/js/mqtt.js"></script>
 
  
@@ -17,8 +17,8 @@
 <body>
     <div id="pid" style="display:none">@ViewData["pid"]</div>
     <div id="orderNo" style="display:none">@ViewData["orderNo"]</div>
-     <div id="topo"></div>
-      <table id="electricMeterBounced">
+    <div id="topo"></div>
+    <table id="electricMeterBounced">
         <thead>
             <tr>
                 <th colspan="4" class='title'></th>
@@ -62,8 +62,9 @@
     <div class="switchBtn"></div>
     <script src="~/Content//topo/js/palette_config.js"></script>
     <script src="~/Content//topo/js/jquery.js"></script>
+    <script src="~/Content/topo/js/jquery.base64.js"></script>
     <script src="~/Content//topo//js/jtopo.js"></script>
-    <script src="~/Content//topo/js/topo.js"></script>
+    <script src="~/Content//topo/js/topo.js?date=123"></script>
 
 
 </body>

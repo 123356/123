@@ -14,43 +14,70 @@ Topo.prototype = {
         this.scene.clear();
         $.ajax({
             type: "post",
-            url: "/PDRInfo/GetOneView",
+            url: "/PDRInfo/GetAttribute",
             data: {
-                pid: that.pid,
-                orderNo: that.orderNo,
+                pid: $('#pid').html(),
+                orderNo: $("[data-type=orderNo]").val() || 1,
+                type: 1
             },
             success: function(res) {
-                $.ajax({
-                    type: "get",
-                    url: res + "?date" + new Date().valueOf(),
-                    success: function(res) {
-                        try {
-                            res = JSON.parse(res);
-                            that.history(res);
-                        } catch (error) {
-                            that.history(res);
-                        }
-                    }
-                })
-            },
+                res = res[0];
 
+                var ul = document.createElement('ul');
+                ul.className = "titleUl"
+
+                for (var a = 0, arr = []; a < res.OrderNoList.length; a++) {
+                    arr.push(`<li class='titleli' data-path='${res.OrderNoList[a].Path}'>${res.OrderNoList[a].Name}</li>`);
+                }
+                ul.innerHTML = arr.join('');
+                $('#topo').append(ul);
+
+                $(ul).on('click', 'li', function () {
+                    that.scene.clear();
+                    that.lodingData(res.url, $(this).attr('data-path'));
+                    that.getNodeState();
+                })
+
+                that.__IP = $.base64.decode(res.IP);
+                $('[data-type=IP]').val(that.__IP);
+
+                that.__account = $.base64.decode(res.Account);
+                $('[data-type=account]').val(that.__account);
+
+                that.__password = $.base64.decode(res.Password);
+                $('[data-type=password]').val(that.__password);
+
+                that.__port = $.base64.decode(res.Port);
+                $('[data-type=port]').val(that.__port);
+                that.lodingData(res.url,res.Path);
+             },
         })
     },
-    uncompileStr: function(code) {
-        code = unescape(code);
-        var c = String.fromCharCode(code.charCodeAt(0) - code.length);
-        for (var i = 1; i < code.length; i++) {
-            c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));
-        }
-        return c;
+    lodingData: function (url,path) {
+        var that = this;
+        $.ajax({
+            type: "get",
+            url: url + path + "?date" + new Date().valueOf(),
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            success: function (data) {
+                console.log(data)
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    data = data;
+                }
+                that.history(data);
+            }
+        })
+
     },
     // 读取历史
     history: function(obj) {
-        this.scene.backgroundColor = "0,0,0";
-        this.__IP = this.uncompileStr(obj.config.IP);
-        this.__account = this.uncompileStr(obj.config.account);
-        this.__password = this.uncompileStr(obj.config.password);
-        this.__port = this.uncompileStr(obj.config.port);
+        this.scene.translateX = obj.config.translateX;
+        this.scene.translateY = obj.config.translateY;
+        this.scene.zoom(obj.config.scaleX, obj.config.scaleY);
+        this.scene.backgroundColor = obj.config.bgColor; //"0,0,0";
+        this.scene.background = null;
         this.copyNode(obj.nodes);
         this.getBindData();
 
@@ -318,7 +345,6 @@ Topo.prototype = {
                 } else if (nodes[a].__type == "line") {
                     that.nodeLine(nodes[a], content);
                 }
-                ////!!!!
             }
         };
     },
