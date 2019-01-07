@@ -587,13 +587,21 @@ new Vue({
         getConTemp: function () {
             console.log(this.calendarDate)
             var time = this.calendarDate
+            var month = time.getMonth() + 1
+            var day = time.getDate()
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (day < 10) {
+                day = "0" + day
+            }
             var that = this
             this.$http({
                 url: "/Home/GetConTemp",
                 method: 'post',
                 params: {
                     conid: this.proId,
-                    time: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate()
+                    time: time.getFullYear() + "-" + month + "-" + day
                 }
             })
             .then(function (res) {
@@ -1472,7 +1480,16 @@ new Vue({
                 time = time.substring(0, 4) + "/" + time.substring(4, 6) + "/" + time.substring(6, 8)
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].StartTime != null) {
-                        if (time == data[i].StartTime.split(" ")[0]) {
+                        var tempMonth = parseInt(data[i].StartTime.split(" ")[0].split("/")[1])
+                        var tempDay = parseInt(data[i].StartTime.split(" ")[0].split("/")[2])
+                        if (tempMonth < 10) {
+                            tempMonth = "0" + tempMonth
+                        }
+                        if (tempDay < 10) {
+                            tempDay = "0" + tempDay
+                        }
+                        var tempDate = data[i].StartTime.split(" ")[0].split("/")[0] + "/" + tempMonth + "/" + tempDay
+                        if (time == tempDate) {
                             if (data[i].isOk == 4) {
                                 $(this).css("color", "#32b194")
                             } else {

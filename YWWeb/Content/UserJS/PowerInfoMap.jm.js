@@ -2,10 +2,10 @@
 var polyline = null
 function createLine() {
     polyline = new BMap.Polygon([
-        new BMap.Point(116.545649, 39.780209),//右上
-        new BMap.Point(116.546026, 39.77971),//右下
-        new BMap.Point(116.544167, 39.778873),//左下
-        new BMap.Point(116.543781, 39.779337)//左上
+        new BMap.Point(116.668155, 40.034145),//右上
+        new BMap.Point(116.662406 ,39.740943),//右下
+        new BMap.Point(116.109337 ,39.713418),//左下
+        new BMap.Point(116.15993 ,40.087158)//左上
 
     ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
     powerMap.addOverlay(polyline);
@@ -45,10 +45,16 @@ $.post("/PDRInfo/getStationInfo", function (data) {
         if (arr[i].title == '1号_工程车') {
             markerArr.push(arr[i])
 
-            var lng = arr[i].point.split(",")[0]
-            var lat = arr[i].point.split(",")[1]
+            var lng = arr[i].point.split("|")[0]
+            var lat = arr[i].point.split("|")[1]
+            var polyline2 = new BMap.Polygon([
+                new BMap.Point(116.668155, 40.034145),//右上
+                new BMap.Point(116.662406 , 39.740943),//右下
+                new BMap.Point(116.109337, 39.713418),//左下
+                new BMap.Point(116.15993, 40.087158)//左上
 
-            var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), polyline);
+            ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+            var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), polyline2);
                 if (!re) {
                     $("#hitnInfo").text("工程车超出范围")
                     $("#alarmDyx").show()
@@ -477,8 +483,9 @@ function changeMarkerLocation(data) {
 //连接mqtt
 function mqtt() {
     
-    var wsbroker = "59.110.153.200"; //location.hostname;  //mqtt websocket enabled broker ip
-    var wsport = 15675; // 端口号
+    var wsbroker = "yw.ife360.com";
+   location.hostname; //mqtt websocket enabled broker ip
+    var wsport = 15673; // 端口号
     //连接选项
     var options = {
         timeout: 30,
