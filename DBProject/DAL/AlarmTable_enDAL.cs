@@ -40,11 +40,14 @@ namespace DAL
         delegate int QueryAlarmCount(/*string pdrlist*/);
         QueryAlarmCount userQueryAlarmCountInf;
         DateTime m_dtAlarmCount ;
+        private bool m_queryed=false;
         private int queryAlarmCountInf(/*string pdrlist*/)
         {
             if (null != m_dtAlarmCount && (DateTime.Now - m_dtAlarmCount).TotalSeconds < 1)
                 return 0;
-
+            if (m_queryed)
+                return 0;
+            m_queryed = true;
             m_dtAlarmCount = DateTime.Now;
             int total = 0;
             //List<int> pdrIDS = new List<int>();
@@ -110,6 +113,7 @@ namespace DAL
             }
             finally
             {
+                m_queryed = false;
             }
             return total;
         }
