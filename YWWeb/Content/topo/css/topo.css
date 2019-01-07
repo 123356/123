@@ -81,3 +81,25 @@ th:first-child {
 .b3 {
     border-top: none !important;
 }
+
+.titleUl {
+    position: absolute;
+    right: 30px;
+    display: flex;
+    color:#fff;
+    top:40px;
+}
+    .titleUl li {
+        height: 40px;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        background: #808080;
+        overflow: hidden;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+        .titleUl li:hover {
+            background: #60600;
+        }
