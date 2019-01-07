@@ -13,11 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.Web" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup>

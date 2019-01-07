@@ -28,13 +28,13 @@ define('script/common/mapControl', function(require, exports, module) {
       initMap: function initMap() {
           var that = this;
           var infoBoxScript = document.createElement('script');
-          infoBoxScript.src = 'https://api.map.baidu.com/library/InfoBox/1.2/src/InfoBox_min.js';
+          infoBoxScript.src = 'http://api.map.baidu.com/library/InfoBox/1.2/src/InfoBox_min.js';
           document.getElementsByTagName('head')[0].appendChild(infoBoxScript);
           var canvasScript = document.createElement('script');
           canvasScript.src = 'static/javascript/CanvasLayer_f84091a.js';
           document.getElementsByTagName('head')[0].appendChild(canvasScript);
           var mapvScript = document.createElement('script');
-          mapvScript.src = 'https://mapv.baidu.com/build/mapv.js';
+          mapvScript.src = 'http://mapv.baidu.com/build/mapv.js';
           document.getElementsByTagName('head')[0].appendChild(mapvScript);
           mapvScript.onload = function () {
               that.initBoundsearch();

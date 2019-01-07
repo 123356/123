@@ -1373,7 +1373,6 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
-    <Content Include="Content\js\mqtt_car.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\iepng.js" />
@@ -1396,6 +1395,7 @@
     <Content Include="Content\js\lightslider2.js" />
     <Content Include="Content\js\menucontrol._zc.js" />
     <Content Include="Content\js\menulast._zc.js" />
+    <Content Include="Content\js\mqtt_car.js" />
     <Content Include="Content\js\online._zc.js" />
     <Content Include="Content\js\ResizeList._zc.js" />
     <Content Include="Content\js\respond.src.js" />
@@ -1844,6 +1844,7 @@
     <Content Include="Content\UserJS\YwConstractView._jm.js" />
     <Content Include="Content\UserJS\YwConstractView._zc.js" />
     <Content Include="Content\UserJS\_Header1.jm.js" />
+    <Content Include="Content\UserJS\mqtt_car.js" />
     <Content Include="Content\UserJS\_Header1.zc.js" />
     <Content Include="Content\UserJS\_Header2.jm.js" />
     <Content Include="Content\UserJS\_Header2.zc.js" />
@@ -2470,16 +2471,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBProject\DAL\DAL.csproj">
-      <Project>{00fcb9f4-fe2b-4c6a-bbb5-05767ffa4f24}</Project>
+      <Project>{aed05950-f7d9-4d5d-9641-ec5377b58726}</Project>
       <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBProject\IDAO\IDAO.csproj">
       <Project>{ba224f68-664a-4222-b812-6735c9c565fa}</Project>
       <Name>IDAO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YWWeb.Lib\EnergyManage\EnergyManage.csproj">
-      <Project>{2c9bb83a-7610-4381-9734-a45877e03a47}</Project>
-      <Name>EnergyManage</Name>
     </ProjectReference>
     <ProjectReference Include="..\YWWeb.Lib\YWWeb.Lib.Base\YWWeb.Lib.Base.csproj">
       <Project>{e93a1cac-e91c-4c76-b56b-dcfbbafffb50}</Project>
