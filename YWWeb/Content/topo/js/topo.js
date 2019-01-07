@@ -32,7 +32,7 @@ Topo.prototype = {
                 ul.innerHTML = arr.join('');
                 $('#topo').append(ul);
 
-                $(ul).on('click', 'li', function () {
+                $(ul).on('click', 'li', function() {
                     that.scene.clear();
                     that.lodingData(res.url, $(this).attr('data-path'));
                     that.getNodeState();
@@ -49,17 +49,17 @@ Topo.prototype = {
 
                 that.__port = $.base64.decode(res.Port);
                 $('[data-type=port]').val(that.__port);
-                that.lodingData(res.url,res.Path);
-             },
+                that.lodingData(res.url, res.Path);
+            },
         })
     },
-    lodingData: function (url,path) {
+    lodingData: function(url, path) {
         var that = this;
         $.ajax({
             type: "get",
             url: url + path + "?date" + new Date().valueOf(),
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            success: function (data) {
+            success: function(data) {
                 console.log(data)
                 try {
                     data = JSON.parse(data);
@@ -163,27 +163,27 @@ Topo.prototype = {
         node.id = obj.id;
         node._failureState = obj._failureState;
         node._cid = obj._cid;
-        if (node._cid) {
-            node.mouseover(function(e) {
-                if (!that.meterData) {
-                    $(this).attr("cursor", "wait");
-                    return;
-                }
-                $('#electricMeterBounced').show();
-                $('#electricMeterBounced').css({
-                    "top": e.clientY + node.height / 3 + 'px',
-                    "left": e.clientX - 150 + 'px'
-                });
-                that.matchElectricMeter(node._cid);
-                that.timer = setInterval(function() {
-                    that.matchElectricMeter(node._cid);
-                }, 1000)
-            });
-            node.mouseout(function() {
-                clearInterval(that.timer);
-                $('#electricMeterBounced').hide();
-            });
-        }
+        // if (node._cid) {
+        //     node.mouseover(function(e) {
+        //         if (!that.meterData) {
+        //             $(this).attr("cursor", "wait");
+        //             return;
+        //         }
+        //         $('#electricMeterBounced').show();
+        //         $('#electricMeterBounced').css({
+        //             "top": e.clientY + node.height / 3 + 'px',
+        //             "left": e.clientX - 150 + 'px'
+        //         });
+        //         that.matchElectricMeter(node._cid);
+        //         that.timer = setInterval(function() {
+        //             that.matchElectricMeter(node._cid);
+        //         }, 1000)
+        //     });
+        //     node.mouseout(function() {
+        //         clearInterval(that.timer);
+        //         $('#electricMeterBounced').hide();
+        //     });
+        // }
         if (obj.id && obj.__type == "text") {
             that.matchText(node);
         }
@@ -237,7 +237,6 @@ Topo.prototype = {
                             } else if (nodes[a].__type == "line") {
                                 that.nodeLine(nodes[a], data)
                             }
-                            ///!!!!
                         }
                     },
                 })
@@ -250,7 +249,6 @@ Topo.prototype = {
             data: {
                 "pid": that.pid,
             },
-            async: false,
             success: function(res) {
                 that.meterData = res;
             },
