@@ -81,7 +81,8 @@ namespace DAL
                         }
                         else
                         {
-                            dbCache.HashDelete(FirstKey, kPid.ToString());
+                            //dbCache.HashDelete(FirstKey, kPid.ToString());
+                            dbCache.HashSet(FirstKey, kPid.ToString(), 0);//不删除，防止读取异常
                         }
 
                     }
@@ -127,6 +128,7 @@ namespace DAL
                     var fks = fields.Where(t => pids.Contains(t));
                     IList<int> alarmCount = dbCache.HashGet<int>(FirstKey, fks.ToList<string>());
                     total=alarmCount.Sum();
+
                     //foreach (var v in pids)
                     //{
                     //    if (dbCache.HashExists(FirstKey, v))
