@@ -94,9 +94,102 @@
                     console.log(document.getElementsByTagName('body'))
                     document.getElementsByTagName('body')[0].style.zoom = 0.67
                 }
-                console.log(" window.screen.width：" + width)
+                console.log(" window.screen.width：" + width);
+
+                mqtt();
             })
 
+            
+
+
+
+
+                
+
+            //连接mqtt
+            function mqtt() {
+
+                var wsbroker = "yw.ife360.com";
+                location.hostname; //mqtt websocket enabled broker ip
+                var wsport = 15673; // 端口号
+                //连接选项
+                var options = {
+                    timeout: 30,
+                    userName: "test",
+                    password: "123",
+                    keepAliveInterval: 10,
+                    onSuccess: function () {
+                        console.log(("连接成功"))
+                        client.subscribe('gps/ny/167', { qos: 2 });//订阅主题
+                    },
+
+                    onFailure: function (message) {
+                        console.log("连接失败 " + message.errorMessage)
+                    }
+                };
+                if (location.protocol == "https:") {
+                    options.useSSL = true;
+                }
+                client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid());
+                //创建连接
+                client.connect(options);
+                client.onConnectionLost = function (responseObject) {
+
+                    if (responseObject.errorCode !== 0) { console.log("异常掉线，掉线信息为:" + responseObject.errorMessage); client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid()); }
+                };
+                client.onMessageArrived = function (message) {
+                    console.log(message)
+                    var msg = message.payloadString
+                    msg = JSON.parse(msg)
+                    var lng = msg.location.split("|")[0]
+                    var lat = msg.location.split("|")[1]
+                    //var point = new BMap.Point(lng, lat)
+                    //上传轨迹
+                    addPoint(lng, lat)
+                    /* var data = {
+                         pid: msg.pid,
+                         point: point,
+                         time: msg.time
+                     }
+                     changeMarkerLocation(data);
+                     $("#dwtime1").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");
+                     $("#dwtime2").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");
+                     console.log("接收消息")
+                     console.log(message.payloadString)*/
+                };
+            }
+
+            function guid() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            //上传轨迹
+            function addPoint(lng, lat) {
+                console.log("上传轨迹")
+                $.ajax({
+                    url: "/Home/SendHttpRequest",
+                    data: {
+                        requestURI: "http://yingyan.baidu.com/api/v3/track/addpoint",
+                        ak: "LVtQ1twauxoSCcFB4mqacBd3F1O6BnGg",
+                        service_id: 208230,
+                        entity_name: '1号_工程车',
+                        latitude: lat,
+                        longitude: lng,
+                        loc_time: Math.round(new Date().getTime() / 1000),
+                        coord_type_input: 'bd09ll',
+                        requestMethod: 'post'
+                    },
+                    type: 'post',
+                    success: function (res) {
+                        console.log(res)
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                })
+            }
 
 
         </script>
