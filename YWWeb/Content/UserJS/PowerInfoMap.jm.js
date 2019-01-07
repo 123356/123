@@ -477,8 +477,9 @@ function changeMarkerLocation(data) {
 //连接mqtt
 function mqtt() {
     
-    var wsbroker = "59.110.153.200"; //location.hostname;  //mqtt websocket enabled broker ip
-    var wsport = 15675; // 端口号
+    var wsbroker = "yw.ife360.com";
+    location.hostname; //mqtt websocket enabled broker ip
+    var wsport = 15673; // 端口号
     //连接选项
     var options = {
         timeout: 30,
