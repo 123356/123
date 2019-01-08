@@ -24,4 +24,16 @@ namespace IDAO.Models
         public string CName { get; set; }
         public DateTime ?RecTime { get; set; }
     }
+
+    [Serializable]
+    public partial class t_V_RealTimeData1 : t_V_RealTimeData
+    {
+        public string TagName { get; set; }
+        public int CID { get; set; }
+        public int PID { get; set; }
+        // public string TypeName { get; set; }
+        public int? DataTypeID { get; set; }
+        public int? ABCID { get; set; }
+        public string Remarks { get; set; }
+    }
 }
