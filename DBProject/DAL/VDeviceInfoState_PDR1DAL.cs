@@ -36,16 +36,15 @@ namespace DAL
         }
 
 
-        public IList<t_V_DeviceInfoState_PDR1> getPDCTree(string unuitID)
+        public IList<t_V_DeviceInfoState_PDR1> GetCidTree(string unitID)
         {
             IList<t_V_DeviceInfoState_PDR1> data = new List<t_V_DeviceInfoState_PDR1>();
             try
             {
-                data = _dbFactory.deviceInfoState_PDR1.getPDCTree(unuitID);
+                data = _dbFactory.deviceInfoState_PDR1.GetCidTree(unitID);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;

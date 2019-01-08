@@ -33,34 +33,42 @@ namespace DAL
             return _DataDal;
         }
 
-        
-      
-        
-        public IList<t_EE_EnerUserType> GetOrganizationList( int itemType)
+        public IList<t_EE_EnerUserType> CheckHistory(string Name, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.GetOrganizationList(itemType);
+                data = _dbFactory.enerUserType.CheckHistory(Name, item_type);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
+        }
 
+        public IList<t_EE_EnerUserType> AddHistory(string Name, int item_type)
+        {
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
+            try
+            {
+                data = _dbFactory.enerUserType.AddHistory(Name, item_type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
         }
 
 
 
-
-        public int unpDateproject(int item_type, string Name, string Remarks)
+        public IList<t_EE_EnerUserType> GetHistoryList(int item_type)
         {
-            int data = new int();
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.unpDateproject(item_type, Name, Remarks);
+                data = _dbFactory.enerUserType.GetHistoryList(item_type);
             }
             catch (Exception ex)
             {
