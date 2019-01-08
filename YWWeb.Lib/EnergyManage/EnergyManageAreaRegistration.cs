@@ -17,7 +17,8 @@ namespace EnergyManage
             context.MapRoute(
                 "energyManage_default",
                 "energyManage/{controller}/{action}/{id}",
-                new {  action = "Index", id = UrlParameter.Optional }
+                new {  action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "EnergyManage.Controllers" }
             );
         }
     }
