@@ -249,8 +249,8 @@ function showinfomessage(marker, point, data) {
             break
 
     }
-    var time = data.CoordinationTime 
-    if (time == null) {
+    var time = data.CoordinationTime
+    if (time == null || time=="") {
         time = "--"
     }
     /*if (data.Type == 1) {*/
@@ -270,7 +270,7 @@ function showinfomessage(marker, point, data) {
         html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
         html += '<tr style="font-size:11px"><td >车牌：京GH4348</td></tr>'
 
-        html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白运光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白唐光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
     }
    
