@@ -2448,7 +2448,7 @@ namespace YWWeb.Controllers
                 string pdrlist = HomeController.GetPID(uids);
                 //List<int> resultlist = new List<string>(pid.Split(',')).ConvertAll(i => int.Parse(i));
                 //var query = from module in bll.t_CM_PDRInfo where resultlist.Contains(module.PID) && module.ParentID > 0 && module.ParentID != null select module;
-                string strsql = "select PID,Name,Coordination,Position,p.TypeID,TypeName,AreaName,i.IndustryName,v.VName,InstalledCapacity from t_CM_PDRInfo p join t_CM_PDRType pt  on p.TypeID=pt.TypeID join t_CM_Area a on p.AreaID=a.AreaID join t_ES_Industry i on p.IndID=i.IndustryID join t_ES_ElecVoltage v on p.VID=v.VID where islast=1 and pid in (" + pdrlist + ")";
+                string strsql = "select PID,Name,Coordination,Position,p.TypeID,TypeName,AreaName,CoordinationTime,i.IndustryName,v.VName,InstalledCapacity from t_CM_PDRInfo p join t_CM_PDRType pt  on p.TypeID=pt.TypeID join t_CM_Area a on p.AreaID=a.AreaID join t_ES_Industry i on p.IndID=i.IndustryID join t_ES_ElecVoltage v on p.VID=v.VID where islast=1 and pid in (" + pdrlist + ")";
                 List<PDRInfo> list = bll.ExecuteStoreQuery<PDRInfo>(strsql).ToList();
                 StringBuilder sbpdf = new StringBuilder();
                 string strAdd = ",isOpen: 0, icon: { w: 27, h: 40, l: 0, t: 0, x: 6, lb: 5} }";
@@ -2463,7 +2463,7 @@ namespace YWWeb.Controllers
                             pid = model.PID;
                             strlocation = "当前位置：首页 > 北京市 > " + model.AreaName + " > " + model.TypeName + " > " + model.Name;
                         }
-                        sbpdf.Append(",{adress:\"" + model.Position + "\",pid :\"" + model.PID + "\",BigIndTypeName :\"" + model.BigIndTypeName + "\",VName :\"" + model.VName + "\",IndustryName :\"" + model.IndustryName + "\",title:\"" + model.Name + "\", content: \"" + model.PID + "\", position: \"" + model.TypeID + "\",InstalledCapacity:\""+ model.InstalledCapacity +"\", point: \"" + model.Coordination + "\"" + strAdd);
+                        sbpdf.Append(",{adress:\"" + model.Position + "\",pid :\"" + model.PID + "\",BigIndTypeName :\"" + model.BigIndTypeName + "\",VName :\"" + model.VName + "\",IndustryName :\"" + model.IndustryName + "\",title:\"" + model.Name + "\", content: \"" + model.PID + "\", position: \"" + model.TypeID + "\",InstalledCapacity:\"" + model.InstalledCapacity + "\", point: \"" + model.Coordination + "\",CoordinationTime:\"" + model.CoordinationTime.ToString() + "\"" + strAdd);
                     }
                 }
                 string result = sbpdf.ToString();
@@ -2490,6 +2490,7 @@ namespace YWWeb.Controllers
             public string VName { get; set; }
             public string BigIndTypeName { get; set; }
             public string InstalledCapacity { get; set; }
+            public DateTime CoordinationTime { get; set; }
         }
         //private t_CM_UserInfo CurrentUser
         //{
