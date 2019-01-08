@@ -57,7 +57,7 @@ Topo.prototype = {
         var that = this;
         $.ajax({
             type: "get",
-            url: url + path + "?date" + new Date().valueOf(),
+            url: url + path,
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             success: function(data) {
                 console.log(data)
