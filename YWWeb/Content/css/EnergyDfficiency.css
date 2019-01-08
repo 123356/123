@@ -391,7 +391,8 @@ html {
 .BudgetSetting{
     display:flex;
     flex-direction:column !important;
-    justify-content:space-around
+    justify-content:space-around;
+    background:#fff
 }
 
     .BudgetSetting .header{
@@ -415,7 +416,7 @@ html {
             flex-direction: row
         }
         .BudgetSetting .header .proName{
-            font-size:1.5rem;
+            font-size:1.6rem;
             color:#333;
             padding-left:8px;
             font-weight:bold;
@@ -490,7 +491,6 @@ html {
         }
 
 .BudgetSetting .main .main-item:last-child {
-    margin-left: 10px;
     border: none
 }
             .BudgetSetting .main .main-item:nth-child(5){
@@ -599,6 +599,9 @@ html {
             .BudgetSetting .main .con table th {
                 background: #cfcdce
             }
+            .BudgetSetting .main .con table th:first-child {
+                width:40%
+            }
             .BudgetSetting .main .con table tbody tr:nth-child(even) {
                 background: #efefef;
             }
@@ -633,7 +636,7 @@ html {
         }
             .BudgetSetting .main .con .ivu-input-number,.BudgetSetting .main .con .ivu-input-number-input {
                 background: transparent;
-                max-width:40px !important
+                max-width:100px !important
             }
         .BudgetSetting .main .con .conModule .ivu-input-number-disabled .ivu-input-number-input {
             color: #40ae93;
@@ -1033,7 +1036,7 @@ html {
             overflow:initial
         }
         .allMain .underFormView {
-            flex: 6
+            flex: 4
         }
     .allMain .searchView .ivu-form .ivu-form-item-label{
         font-size:1.2rem;

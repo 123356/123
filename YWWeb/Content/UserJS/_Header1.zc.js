@@ -117,17 +117,45 @@ function showAlarmWindow() {
     if (sArarmTem == alarmAllInfo)
         return;
     alarmAllInfo = sArarmTem;
-    if (playList.length > 1) {
-        play(audio, playList)
+
+
+
+    var cookiDate = $.cookie("hintDate")
+    if (cookiDate != null || cookiDate != undefined) {
+      var   hintDate = new Date(cookiDate)
+
+        //console.log("cookieDate:" + hintDate.getFullYear() + "-" + (hintDate.getMonth() + 1) + "-" + hintDate.getDate() + " " + hintDate.getHours() + ":" + hintDate.getMinutes() + ":" + hintDate.getSeconds())
+        var curDate = new Date()
+       // console.log("curDate:" + curDate.getFullYear() + "-" + (curDate.getMonth() + 1) + "-" + curDate.getDate() + " " + curDate.getHours() + ":" + curDate.getMinutes() + ":" + curDate.getSeconds())
+        var time = curDate.getTime() - hintDate.getTime()
+        time = Math.floor(time / (60 * 1000))
+        console.log("相差时间：" + time)
+        if (time > 60) {
+            if (playList.length > 1) {
+                play(audio, playList)
+            } else {
+                audio.pause();
+                $(".alarm_popups_box").fadeOut();
+                return
+            }
+        }
     } else {
-        audio.pause();
-        $(".alarm_popups_box").fadeOut();
-        return
+        if (playList.length > 1) {
+            play(audio, playList)
+        } else {
+            audio.pause();
+            $(".alarm_popups_box").fadeOut();
+            return
+        }
     }
+
+
+    
     $("#alarm_content").html($(sArarmTem));
 }
 var i = -1
 function play(audio) {
+    $("#setHint").attr("checked",false)
     $(".alarm_popups_box").fadeIn();
     playm(audio)
 }
@@ -268,3 +296,5 @@ $(document).ready(function () {
     );
 
 });
+
+

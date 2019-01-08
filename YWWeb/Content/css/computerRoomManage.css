@@ -1,0 +1,28 @@
+﻿*{
+    margin:0;
+    padding:0
+}
+html {
+    font-size: 62.5% !important;
+}
+.chart{
+    width:100%;
+    height:100%
+}
+#app {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
+    #app .flex-1 {
+        flex: 1;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center
+    }

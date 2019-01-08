@@ -5,15 +5,15 @@
 
 @section HeadSpecificStyleSheetIncludes{
 
-        <link href="/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
-        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=bGVaSGrmhUZR7nKvysHpsf1rx6DTSCrV"></script>
-        <script type="text/javascript" src="https://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
-        <script src="/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
-        <script src="/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-    <script src="~/Content/js/weather.js"></script>
+    <link href="/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=bGVaSGrmhUZR7nKvysHpsf1rx6DTSCrV"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <script src="/Content/js/artDialog/artDialog.source.js" type="text/javascript"></script>
+    <script src="/Content/js/artDialog/iframeTools.source.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <!--<script src="~/Content/js/weather.js"></script>-->
 
     <style type="text/css">
         body {
@@ -23,7 +23,6 @@
             left: 0px;
             right: 0px;
             bottom: 0px;
-            
         }
 
         #container {
@@ -46,152 +45,82 @@
         a:hover {
             text-decoration: none
         }
+
+        .sethint {
+            display: inline-block;
+            position: relative;
+            width: 100px;
+            margin-left: 5px;
+            text-align: left;
+            top:-5px
+        }
+
+            .sethint input {
+                outline: none
+            }
+
+            .sethint label {
+                position: absolute;
+                display: inline-block;
+                width: 100%;
+                top: 8px;
+                margin-left: 5px;
+                color: #666;
+                font-weight: normal
+            }
     </style>
-    }
-    <body style="">
+}
+<body style="">
 
-        <div id="container" class="tpl-content-wrapper" style="min-height:50%;top:56px;">
-            <div id="dituContent" style="height:100%;">
+    <div id="container" class="tpl-content-wrapper" style="min-height:50%;top:56px;">
+        <div id="dituContent" style="height:100%;">
 
-                <iframe src="UserInfoMap" name="main_frame" id="main_frame" style="width:100%;height:100%;position:absolute;overflow:hidden;padding:10px !important; background:#f5f5f5 !important"></iframe>
-
-            </div>
-            <!--报警弹窗-->
-            <div class="alarm_popups_box radius5" id="alarm_popups">
-                <h3>
-                    提示信息
-                    <button type="button" class="closeBtn" style="outline:none !important"><img src="~/Content/images/close_btn.png" /></button>
-                </h3>
-                <div class="alarm_popups_content" id="alarm_content">
-                </div>
-
-                <div class="alarm_popups_btn">
-
-                    <a id="alarmDetail" target="main_frame">立即查看</a>
-
-                </div>
-            </div>
-
+            <iframe src="UserInfoMap" name="main_frame" id="main_frame" style="width:100%;height:100%;position:absolute;overflow:hidden;padding:10px !important; background:#f5f5f5 !important"></iframe>
 
         </div>
+        <!--报警弹窗-->
+        <div class="alarm_popups_box radius5" id="alarm_popups">
+            <h3>
+                提示信息
+                <button type="button" class="closeBtn" style="outline:none !important"><img src="~/Content/images/close_btn.png" /></button>
+            </h3>
+            <div class="alarm_popups_content" id="alarm_content">
+            </div>
 
-        <script type="text/javascript">
-            $(".closeBtn").click(function () {
+            <div class="alarm_popups_btn">
 
-                $("#alarm_popups").fadeOut("slow")
-            })
-            $(".alarm_popups_btn").click(function () {
+                <a href="" id="alarmDetail" target="main_frame" style="display:inline-block">立即查看</a>
+                <div class="sethint">
+                    <input type="checkbox" id="setHint" name="setHint">
+                    <label>1小时内不再弹出</label>
+                </div>
 
+            </div>
+        </div>
+
+
+    </div>
+
+    <script type="text/javascript">
+        $(".closeBtn").click(function () {
+
+            $("#alarm_popups").fadeOut("slow")
+        })
+        $(".alarm_popups_btn a").click(function () {
+
+            $("#alarm_popups").hide()
+        })
+        $("#setHint").click(function () {
+            var falg = $("#setHint").is(':checked')
+            if (falg) {
+                var cookiDate = new Date()
+                $.cookie("hintDate", cookiDate, { expires: 0.24 })
+                console.log($.cookie("hintDate"))
                 $("#alarm_popups").hide()
-            })
-            /*var obj = document.getElementById("alarm_popups")
-            obj.addEventListener("click", function () {
-                $("#alarm_popups").fadeOut()
-            })*/
-            $(function () {
-                var width = window.screen.width
-                if (width < 1920) {
-                    console.log(document.getElementsByTagName('body'))
-                    document.getElementsByTagName('body')[0].style.zoom = 0.67
-                }
-                console.log(" window.screen.width：" + width);
-
-                mqtt();
-            })
-
-            
-
-
-
-
-                
-
-            //连接mqtt
-            function mqtt() {
-
-                var wsbroker = "yw.ife360.com";
-                location.hostname; //mqtt websocket enabled broker ip
-                var wsport = 15673; // 端口号
-                //连接选项
-                var options = {
-                    timeout: 30,
-                    userName: "test",
-                    password: "123",
-                    keepAliveInterval: 10,
-                    onSuccess: function () {
-                        console.log(("连接成功"))
-                        client.subscribe('gps/ny/167', { qos: 2 });//订阅主题
-                    },
-
-                    onFailure: function (message) {
-                        console.log("连接失败 " + message.errorMessage)
-                    }
-                };
-                if (location.protocol == "https:") {
-                    options.useSSL = true;
-                }
-                client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid());
-                //创建连接
-                client.connect(options);
-                client.onConnectionLost = function (responseObject) {
-
-                    if (responseObject.errorCode !== 0) { console.log("异常掉线，掉线信息为:" + responseObject.errorMessage); client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid()); }
-                };
-                client.onMessageArrived = function (message) {
-                    console.log(message)
-                    var msg = message.payloadString
-                    msg = JSON.parse(msg)
-                    var lng = msg.location.split("|")[0]
-                    var lat = msg.location.split("|")[1]
-                    //var point = new BMap.Point(lng, lat)
-                    //上传轨迹
-                    addPoint(lng, lat)
-                    /* var data = {
-                         pid: msg.pid,
-                         point: point,
-                         time: msg.time
-                     }
-                     changeMarkerLocation(data);
-                     $("#dwtime1").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");
-                     $("#dwtime2").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");
-                     console.log("接收消息")
-                     console.log(message.payloadString)*/
-                };
             }
+            console.log(falg)
+        })
 
-            function guid() {
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-            }
-            //上传轨迹
-            function addPoint(lng, lat) {
-                console.log("上传轨迹")
-                $.ajax({
-                    url: "/Home/SendHttpRequest",
-                    data: {
-                        requestURI: "http://yingyan.baidu.com/api/v3/track/addpoint",
-                        ak: "LVtQ1twauxoSCcFB4mqacBd3F1O6BnGg",
-                        service_id: 208230,
-                        entity_name: '1号_工程车',
-                        latitude: lat,
-                        longitude: lng,
-                        loc_time: Math.round(new Date().getTime() / 1000),
-                        coord_type_input: 'bd09ll',
-                        requestMethod: 'post'
-                    },
-                    type: 'post',
-                    success: function (res) {
-                        console.log(res)
-                    },
-                    error: function (e) {
-                        console.log(e)
-                    }
-                })
-            }
+    </script>
 
-
-        </script>
-
-    </body>
+</body>

@@ -739,6 +739,7 @@
     <Content Include="Content\calendar\js\calendar.js" />
     <Content Include="Content\calendar\js\calendar_core.js" />
     <Content Include="Content\calendar\js\jquery.min.js" />
+    <Content Include="Content\css\computerRoomManage.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -902,8 +903,10 @@
     <Content Include="Content\images\energyDifficiency\order1.png" />
     <Content Include="Content\images\energyDifficiency\order2.png" />
     <Content Include="Content\images\energyDifficiency\order3.png" />
+    <Content Include="Content\images\energyDifficiency\pie.png" />
     <Content Include="Content\images\energyDifficiency\qx.png" />
     <Content Include="Content\images\energyDifficiency\yc.png" />
+    <Content Include="Content\images\energyDifficiency\yubeifeiyong.png" />
     <Content Include="Content\images\energy_manage_dyg.png" />
     <Content Include="Content\images\examine.png" />
     <Content Include="Content\images\excelicon.png" />
@@ -1691,6 +1694,8 @@
     <Content Include="Content\UserJS\ConstractEdit._zc.js" />
     <Content Include="Content\UserJS\ConstractView._jm.js" />
     <Content Include="Content\UserJS\ConstractView._zc.js" />
+    <Content Include="Content\UserJS\PUERealTime._zc .js" />
+    <Content Include="Content\UserJS\PUEHistory._zc.js" />
     <Content Include="Content\UserJS\Consume._zc.js" />
     <Content Include="Content\UserJS\ContractMag._jm.js" />
     <Content Include="Content\UserJS\ContractMag._zc.js" />
@@ -1844,7 +1849,6 @@
     <Content Include="Content\UserJS\YwConstractView._jm.js" />
     <Content Include="Content\UserJS\YwConstractView._zc.js" />
     <Content Include="Content\UserJS\_Header1.jm.js" />
-    <Content Include="Content\UserJS\mqtt_car.js" />
     <Content Include="Content\UserJS\_Header1.zc.js" />
     <Content Include="Content\UserJS\_Header2.jm.js" />
     <Content Include="Content\UserJS\_Header2.zc.js" />
@@ -2444,6 +2448,8 @@
     <Content Include="Views\Constract\ProjectList.cshtml" />
     <Content Include="Views\Constract\ProjectMap.cshtml" />
     <Content Include="Views\Constract\ProjectOverview.cshtml" />
+    <Content Include="Views\Home\PUERealTime.cshtml" />
+    <Content Include="Views\Home\PUEHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
