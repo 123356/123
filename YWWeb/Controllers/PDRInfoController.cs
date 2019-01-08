@@ -2463,7 +2463,7 @@ namespace YWWeb.Controllers
                             pid = model.PID;
                             strlocation = "当前位置：首页 > 北京市 > " + model.AreaName + " > " + model.TypeName + " > " + model.Name;
                         }
-                        sbpdf.Append(",{adress:\"" + model.Position + "\",pid :\"" + model.PID + "\",BigIndTypeName :\"" + model.BigIndTypeName + "\",VName :\"" + model.VName + "\",IndustryName :\"" + model.IndustryName + "\",title:\"" + model.Name + "\", content: \"" + model.PID + "\", position: \"" + model.TypeID + "\",InstalledCapacity:\"" + model.InstalledCapacity + "\", point: \"" + model.Coordination + "\",CoordinationTime:\"" + model.CoordinationTime.ToString() + "\"" + strAdd);
+                        sbpdf.Append(",{adress:\"" + model.Position + "\",pid :\"" + model.PID + "\",BigIndTypeName :\"" + model.BigIndTypeName + "\",VName :\"" + model.VName + "\",IndustryName :\"" + model.IndustryName + "\",title:\"" + model.Name + "\", content: \"" + model.PID + "\", position: \"" + model.TypeID + "\",InstalledCapacity:\"" + model.InstalledCapacity + "\", point: \"" + model.Coordination + "\",CoordinationTime:\"" + model.CoordinationTime + "\"" + strAdd);
                     }
                 }
                 string result = sbpdf.ToString();
@@ -2490,7 +2490,7 @@ namespace YWWeb.Controllers
             public string VName { get; set; }
             public string BigIndTypeName { get; set; }
             public string InstalledCapacity { get; set; }
-            public DateTime CoordinationTime { get; set; }
+            public DateTime? CoordinationTime { get; set; }
         }
         //private t_CM_UserInfo CurrentUser
         //{
