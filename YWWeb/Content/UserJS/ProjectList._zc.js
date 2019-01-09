@@ -198,7 +198,11 @@ new Vue({
                 { required: true, message: '请输入名称', trigger: 'blur' }
             ],
             ConMoneys: [
-                { required: true, message: '请输入金额', trigger: 'blur' }
+                { required: true,  message: '请输入金额', trigger: 'blur' },
+                { validator: moneyValidate, trigger: 'blur'}
+            ],
+            AmountMoney: [
+                { validator: moneyValidate, trigger: 'blur' }
             ],
             end_time: [
                 { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
@@ -210,7 +214,7 @@ new Vue({
                 { required: true, message: '请输入地址', trigger: 'blur' }
             ],
             Coordination: [
-                { required: true, message: '请输入坐标', trigger: 'blur' }
+                { required: true, validator: locationValidate, trigger: 'blur' }
             ],
             UID: [
                 { required: true, message: '请选择客户', trigger: 'change' }
@@ -219,7 +223,8 @@ new Vue({
                 { required: true, message: '请输入客户联系人', trigger: 'blur' }
             ],
             Tel: [
-                { required: true, message: '请输入联系电话', trigger: 'blur' }
+                { required: true, message: '请输入联系电话', trigger: 'blur' },
+                { validator: mobilePhoneValidate, trigger: 'blur'},
             ],
             Personid: [
                 { required: true, type: 'number', message: '请选择项目经理', trigger: 'change' }
@@ -247,9 +252,9 @@ new Vue({
     },
     methods: {
         rowClick:function(data,index){
-            console.log(data)
             console.log(index)
-           
+
+            
         },
         selectChange: function(e) {
             console.log(e)
@@ -261,7 +266,7 @@ new Vue({
                     url: "/BaseInfo/BindCity",
                     method: "get",
                 })
-                .then(function(res) {
+                .then(function (res) {
                     that.proRegionData = res.data
                 })
                 .catch(function(e) {

@@ -10,8 +10,6 @@
                 type: 'selection',
                 width: 20,
                 align: 'center',
-               
-
             },
             {
                 title: '排名',

@@ -34,7 +34,7 @@ namespace DAO
         public IVDeviceInfoState_PDR1 deviceInfoState_PDR1 => new VDeviceInfoState_PDR1DBContext();
 
 		public IEnerUserType enerUserType => new EnerUserTypeDBContext();
-
+        
         public IEneryOverview eneryOverView => new EneryOverviewDBContext();
 
         public IBudget budget => new BudgetDBContext();
@@ -42,5 +42,7 @@ namespace DAO
         public IenTypeConfig typeconfig => new EnTypeConfigDBContext();
 
         public ICollecDevType collecdevtype => new CollecDevTypeDBContext();
+
+        public IVEnerProjectType venerProjectType => new VEnerProjectTypeDBContext();
     }
 }

@@ -31,18 +31,14 @@ namespace DAL
             }
             return _DataDal;
         }
-        /// <summary>
-        /// 获取树
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="itemType"></param>
-        /// <returns></returns>
-        public IList<t_EE_EnerUserProject> GetOrganizationTree(int unitID, int itemType)
+     
+        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid)
+
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.GetOrganizationTree(unitID, itemType);
+                data = _dbFactory.enerUserProject.AddRelationship(child_id, parent_id, unit_id, unit_head, unit_note, addCid, delCid);
             }
             catch (Exception ex)
             {
@@ -50,5 +46,41 @@ namespace DAL
             }
             return data;
         }
+
+
+
+
+
+        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId,int id, int unit_id)
+
+        {
+            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            try
+            {
+                data = _dbFactory.enerUserProject.UpdateSupervisor(oldId, id ,unit_id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+
+        public IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id)
+
+        {
+            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            try
+            {
+                data = _dbFactory.enerUserProject.DeleteSupervisor(parent_id, child_id, unit_id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
     }
 }

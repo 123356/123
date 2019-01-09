@@ -51,7 +51,6 @@
     methods: {
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
-            console.log("height")
         }
     },
     beforeMount: function () {

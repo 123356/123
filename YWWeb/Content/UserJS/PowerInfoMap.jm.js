@@ -1,13 +1,13 @@
 ﻿var x, y;
-var polyline = null
-function createLine() {
-    polyline = new BMap.Polygon([
-        new BMap.Point(116.545649, 39.780209),//右上
-        new BMap.Point(116.546026, 39.77971),//右下
-        new BMap.Point(116.544167, 39.778873),//左下
-        new BMap.Point(116.543781, 39.779337)//左上
+var  polyline = new BMap.Polygon([
+    new BMap.Point(116.633085, 40.137482),//右上
+    new BMap.Point(116.67103, 39.735616),//右下
+    new BMap.Point(116.107612, 39.706313),//左下
+    new BMap.Point(116.12371, 40.155131)//左上
 
-    ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+function createLine() {
+    
     powerMap.addOverlay(polyline);
 }
 try {
@@ -43,11 +43,13 @@ $.post("/PDRInfo/getStationInfo", function (data) {
             markerArr.push(arr[i])
         }
         if (arr[i].title == '1号_工程车') {
+            console.log("@@@@@@@22222")
+            console.log(arr[i])
             markerArr.push(arr[i])
 
-            var lng = arr[i].point.split(",")[0]
-            var lat = arr[i].point.split(",")[1]
-
+            var lng = arr[i].point.split("|")[0]
+            var lat = arr[i].point.split("|")[1]
+           
             var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), polyline);
                 if (!re) {
                     $("#hitnInfo").text("工程车超出范围")
@@ -224,7 +226,7 @@ function addMarker() {
 
 
 function showinfomessage(marker, point, data) {
-    // console.log(data);
+    console.log(data);
     var opts = {
         width: 320,
         height: 130,
@@ -247,8 +249,8 @@ function showinfomessage(marker, point, data) {
             break
 
     }
-    var time = data.CoordinationTime 
-    if (time == null) {
+    var time = data.CoordinationTime
+    if (time == null || time=="") {
         time = "--"
     }
     /*if (data.Type == 1) {*/
@@ -268,7 +270,7 @@ function showinfomessage(marker, point, data) {
         html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
         html += '<tr style="font-size:11px"><td >车牌：京GH4348</td></tr>'
 
-        html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白运光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
+        html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白唐光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
     }
    

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IDAO.InterfaceCache;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace RedisHelp
     /// <summary>
     /// Redis操作
     /// </summary>
-    public class RedisHelper
+    public class RedisHelper:IDBCache
     {
         private int DbNum { get; }
         private readonly ConnectionMultiplexer _conn;
@@ -277,6 +278,21 @@ namespace RedisHelp
             });
         }
 
+        public void HashSet(string key, Dictionary<object,object> hashFields)
+        {
+            key = AddSysCustomKey(key);
+             Do(db =>
+            {
+                List<HashEntry> fieds = new List<HashEntry>();
+                foreach (var pair in hashFields)
+                {
+                    fieds.Add(new HashEntry((RedisValue)pair.Key.ToString(), (RedisValue)pair.Value.ToString()));
+                }
+                db.HashSet(key, fieds.ToArray());
+                return 0;
+            });
+        }
+
         /// <summary>
         /// 移除hash中的某值
         /// </summary>
@@ -300,6 +316,12 @@ namespace RedisHelp
             key = AddSysCustomKey(key);
             //List<RedisValue> dataKeys1 = new List<RedisValue>() {"1","2"};
             return Do(db => db.HashDelete(key, dataKeys.ToArray()));
+        }
+
+
+        public long HashDelete(string key, List<object> dataKeys)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -970,6 +992,17 @@ namespace RedisHelp
         {
             return redisFields.Select(redisKey => (RedisValue)redisKey).ToArray();
         }
+
+        public bool StringSet(List<KeyValuePair<object, object>> keyValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<string> StringGet<T>(List<string> listKey)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion 辅助方法
     }
 }

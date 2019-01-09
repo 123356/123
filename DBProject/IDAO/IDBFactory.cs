@@ -26,5 +26,8 @@ namespace IDAO
         IenTypeConfig typeconfig { get; }
 
         ICollecDevType collecdevtype { get; }
+
+		IVEnerProjectType venerProjectType { get; }
+
     }
 }

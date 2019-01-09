@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.04" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.43" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.45" />
     <style type="text/css">
         .trActive {
             background: #53bda9;
@@ -28,7 +28,7 @@
             <p class="proName">新源医院</p>
             <div class="formView" >
                 <p class="title">
-                    <date-picker type="year" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
+                    <date-picker type="year" v-on:on-change="dateChange" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
                 </p>
                 <div class="btnView">
                     <i-button class="btn" icon="ios-create-outline" v-on:click="edit">{{editName}}</i-button>
@@ -50,22 +50,22 @@
                     <div class="conModule">
                         <h4>计划能耗(万元)</h4>
                         <span>历史参考1400(万)</span>
-                        <p><input-number :min="0"   style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
+                        <p><input-number :min="0" v-model="sumDataSet.plannEnConsumption" v-on:on-change="sumPlanChange"   style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
                     <div class="conModule">
                         <h4>余量设置(万元)</h4>
-                        <p><input-number :min="0" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
+                        <p><input-number :min="0" v-model="sumDataSet.allowance" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
                     <div class="conModule">
                         <h4>剩余预算(万元)</h4>
-                        <p><input-number :min="0" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
+                        <p><input-number :min="0" v-model="sumDataSet.SurplusBudget" style="border:none" :disabled="editDisable" class="inputNum"></input-number></p>
                     </div>
 
                 </div>
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>各月能源<br />预算100万</p>
+                    <p>各月能源<br />预算{{sumAllMonthData}}万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con " :style="{'height':height+'px'}">
@@ -76,9 +76,9 @@
                                 <th>预算(万)</th>
                             </tr>
                             <tbody>
-                                <tr v-for="item in allMonthData">
+                                <tr v-for="item in allMonthData" v-on:click="monthClick(item.month)">
                                     <td style="width:50px"><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.month}}月</td>
-                                    <td><input-number :min="1" v-model="item.money" size="small" style="border:none" :disabled="editDisable"></input-number></td>
+                                    <td><input-number :min="0" v-model="item.money" v-on:on-change="monthPlanChange" size="small" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
                             </tbody>
@@ -86,11 +86,11 @@
                     </div>
 
                 </div>
-                <div class="footer">调整余额-10</div>
+                <div class="footer">当前余额{{everyMonthBalance}}</div>
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>2月份能源<br />预算100万</p>
+                    <p>{{curMonth}}月份能源<br />预算{{sumEnergyData}}万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con" :style="{'height':height+'px'}">
@@ -102,7 +102,7 @@
                         <tbody>
                             <tr v-for="item in energyData">
                                 <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.type}}</td>
-                                <td><input-number :min="1" v-model="item.money" size="small" style="border:none" :disabled="editDisable"></input-number></td>
+                                <td><input-number :min="1" v-model="item.money"  size="small" style="border:none" :disabled="editDisable"></input-number></td>
                             </tr>
 
                         </tbody>
@@ -113,7 +113,7 @@
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>各科室用能<br />预算10万</p>
+                    <p>各科室用{{curEnType}}<br />预算{{sumDepartBudgetData}}万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con" :style="{'height':height+'px'}">
@@ -162,7 +162,7 @@
             </div>
             <div class="main-item last-main-item">
                 <div class="module">
-                    <p class="title"><img src="~/Content/images/energyDifficiency/electric.png" />其它参考数据</p>
+                    <p class="title"><img src="~/Content/images/energyDifficiency/pie.png" />其它参考数据</p>
                     <span class="dec">建筑面积</span>
                     <p class="numtext">35.00㎡</p>
 
@@ -173,7 +173,7 @@
                 </div>
 
                 <div class="module">
-                    <p class="title"><img src="~/Content/images/energyDifficiency/electric.png" />去年能源消耗</p>
+                    <p class="title"><img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />去年能源消耗</p>
                     <span class="typeName">电/万元</span>
                     <p class="numtext">123.45</p>
                     <span class="typeName">水/万元</span>
@@ -280,7 +280,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._zc.js?v=1.102"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._zc.js?v=1.122"></script>
 </body>
 </html>
 

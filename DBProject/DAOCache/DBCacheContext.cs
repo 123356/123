@@ -63,6 +63,11 @@ namespace DAOCache
             return redis.HashSet<T>(key,dataKey,t);
         }
 
+        public void HashSet(string key, Dictionary<object, object> hashFields)
+        {
+            redis.HashSet(key,hashFields);
+        }
+
         public bool KeyDelete(string key)
         {
             return redis.KeyDelete(key);

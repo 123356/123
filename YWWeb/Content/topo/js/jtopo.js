@@ -786,8 +786,6 @@
                     0 != this.frames && (this.frames < 0 && 0 == this.needRepaint || (this.paint(), this.frames < 0 && (this.needRepaint = !1)))
                 },
                 this.zoom = function (a) {
-                    console.log(a)
-
                     this.childs.forEach(function (b) {
                         console.log(b)
                         0 != b.visible && b.zoom(a)

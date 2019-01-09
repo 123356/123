@@ -23,9 +23,9 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_CM_Unit> GetUnitList(string unitList)
+        public IList<t_CM_Unit> GetUnitList(string pids)
         {
-            string sql = "select UnitID,UnitName,PDRList from t_CM_Unit where t_CM_Unit.UnitID in("+ unitList + ")";
+            string sql = "select UnitID,UnitName,PDRList from t_CM_Unit where t_CM_Unit.UnitID in("+ pids + ")";
 
             return SQLQuery<t_CM_Unit>(sql);
         }

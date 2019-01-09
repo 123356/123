@@ -73,6 +73,7 @@
     <Compile Include="IModule.cs" />
     <Compile Include="IEnerUserType.cs" />
     <Compile Include="IVDeviceInfoState_PDR1.cs" />
+    <Compile Include="IVEnerProjectType.cs" />
     <Compile Include="Models.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -90,6 +91,7 @@
     <Compile Include="Models\IntegerValue.cs" />
     <Compile Include="Models\t_CM_Unit.cs" />
     <Compile Include="Models\t_CM_UserInfo.cs" />
+    <Compile Include="Models\t_DM_CircuitInfo.cs" />
     <Compile Include="Models\t_DM_CollectDevType.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
     <Compile Include="Models\t_EE_EnerUserProject.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Models\t_EE_enTypeConfig.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
+    <Compile Include="Models\t_V_EnerProjectType.cs" />
     <Compile Include="Models\t_V_EneryView.cs" />
     <Compile Include="Models\t_V_HisData.cs" />
     <Compile Include="Models\t_CM_ValueType.cs" />

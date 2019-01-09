@@ -133,6 +133,14 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult PUEHistory()
+        {
+            return View();
+        }
+        public ActionResult PUERealTime()
+        {
+            return View();
+        }
         static DateTime m_dtLicense = DateTime.Now.AddHours(-1);//check license 时间
         //登录
         [HttpPost]

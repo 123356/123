@@ -63,7 +63,8 @@ body {
 }
 
 div.form-control{
-    min-height: 150px;
+   overflow-y:auto;
+    height: 150px;
     width: 92%;
     display: inline-block;
 }
@@ -93,15 +94,33 @@ button.close {
     width: 130px;
 }
 
-.meter {
+.meter .close {
     cursor: pointer;
+    display: inline-block;
+    margin-left:7px;
 }
 
-    .meter:hover {
-        background: #999;
-    }
+
+.meter:hover {
+    background: #999;
+}
 
 
 .nometer{
     display:none;
+}
+
+
+.meter {
+    padding: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    margin: .3rem;
+    display: inline-block;
+    line-height: 30px;
 }

@@ -20,15 +20,36 @@ namespace DAO
         {
             Database.SetInitializer<EnerUserProjectDBContext>(null);
             modelBuilder.Entity<t_EE_EnerUserProject>()
-              .HasKey(t => new { t.parent_id });
+              .HasKey(t => new { t.child_id});
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_EE_EnerUserProject> GetOrganizationTree(int unitId, int itemType)
+
+        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid)
+        {
+            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); }); 
+            string sql = "INSERT INTO t_EE_EnerUserProject(child_id,parent_id,unit_id,unit_head,unit_note,addCid,delCid) output inserted.* VALUES(" + child_id + ","+ parent_id + ","+ unit_id + ",'"+ unit_head + "','"+ unit_note + "','"+ addCid + "','"+ delCid + "')";
+            return SQLQuery<t_EE_EnerUserProject>(sql);
+        }
+
+
+
+        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId,int id, int unit_id) {
+            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
+            string sql = $"UPDATE t_EE_EnerUserProject SET child_id = {id}  WHERE child_id = {oldId} and unit_id = {unit_id} ;UPDATE t_EE_EnerUserProject SET parent_id = {id} output inserted.* WHERE parent_id = {oldId} and unit_id = {unit_id}";
+            return SQLQuery<t_EE_EnerUserProject>(sql);
+        }
+
+
+
+        public IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             //  string sql = "SELECT t_EE_EnerUserProject.parent_id,t_EE_EnerUserProject.child_id FROM t_EE_EnerUserType,t_EE_EnerUserProject WHERE t_EE_EnerUserType.item_type = 1 AND t_EE_EnerUserType.id =t_EE_EnerUserProject.parent_id";
             string sql = "SELECT * FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id WHERE b.unit_Id = " + unitId + " AND a.item_type = " + itemType;
+
+            //string sql = $"DELETE FROM t_EE_EnerUserProject   output deleted.* WHERE parent_id = {parent_id} and child_id = {child_id} and unit_id = {unit_id};DELETE FROM t_EE_EnerUserProject WHERE parent_id = {child_id} and  unit_id = {unit_id}";
+
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 

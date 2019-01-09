@@ -296,7 +296,7 @@ namespace YWWeb.PubClass
         }
 
         //生成变压器试验报告；
-        public static void ExportWordFromReport(int OrderID, int DID, t_CM_UserInfo user, int templateId, int pid)
+        public static void ExportWordFromReport(int OrderID, int DID, IDAO.Models.t_CM_UserInfo user, int templateId, int pid)
         {
             Word.Document doc = null;
             string timeFile = DateTime.Now.ToString("yyyyMMddHHmmss");

@@ -12,14 +12,14 @@ namespace IDAO
     /// </summary>
     public interface IEnerUserType : IDAOBase, IDisposable
     {
-        /// <summary>
-        /// 返回树
-        /// </summary>
-        IList<t_EE_EnerUserType> GetOrganizationList(int item_type);
-
+        
         //修改分类项  如果有就修改  没有就添加
         int unpDateproject(int item_type, string Name, string Remarks);
 
         IList<t_EE_EnerUserType> GetComobxList();
+        IList<t_EE_EnerUserType> CheckHistory(string Name, int item_type);
+        IList<t_EE_EnerUserType> AddHistory(string Name, int item_type);
+        IList<t_EE_EnerUserType> GetHistoryList(int item_type);
+        
     }
 }

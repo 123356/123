@@ -1,4 +1,5 @@
 ﻿using EnergyManage.PubClass;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,79 +19,202 @@ namespace EnergyManage.Controllers
         //组织区域管理编辑工具
         public ActionResult OrganizeAreaTreeEdit()
         {
-            
             return View();
         }
         #region 
 
-
-        //返回树
-        public JsonResult GetTree(int pid, int itemType)
+        /// <summary>
+        /// 返回该单位的组织区域树数据
+        /// </summary>
+        /// <param name="unitID"></param>
+        /// <param name="item_type"></param>
+        /// <param name="unitName"></param>
+        /// <returns></returns>
+        public ActionResult GetTreeData(int unitID,int item_type,string unitName)
         {
-            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().GetOrganizationTree(pid, itemType);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            Tree tree = new Tree();
+            tree.id = 0;
+            tree.name = unitName;
+            tree.pId = -1;
+            tree.children = new List<Tree>();
+
+        
+                getTree(list, tree.children, 0);
+    
+         
+            string json = JsonConvert.SerializeObject(tree);
+            return  Content(json);
         }
 
-        //返回单位列表
+        /// <summary>
+        /// 返回该用户权限可见的单位列表
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetUnitList()
         {
             IList<IDAO.Models.t_CM_Unit> list = DAL.UnitDAL.getInstance().GetUnitList(CurrentUser.UNITList);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(list);
         }
-
-
-
-
-        public JsonResult getPDCTree(string unitID)
-        {
-            IList<IDAO.Models.t_V_DeviceInfoState_PDR1> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().getPDCTree(unitID);
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
-
-
-
         /// <summary>
-        /// 加载已经存在的区域列表
+        /// 返回cid树
         /// </summary>
-        /// <param name="unitId"></param>
-        /// <param name="itemType"></param>
+        /// <param name="pids"></param>
         /// <returns></returns>
-        public JsonResult GetOrganizationList( int type)
+        public JsonResult GetCidTree(string pids) {
+            IList<IDAO.Models.t_V_DeviceInfoState_PDR1> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(pids);
+            return Json(list);
+        }
+        /// <summary>
+        /// 拼接tree数据
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="arr"></param>
+        /// <param name="childID"></param>
+        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
         {
-            IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetOrganizationList(type);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            try
+            {
+                for (var a = 0; a < data.Count(); a++)
+                {
+                    if (data[a].parent_id == childID)
+                    {
+                        Tree tree = new Tree();
+                        tree.id = data[a].child_id;
+                        tree.name = data[a].Name;
+                        tree.pId = data[a].parent_id;
+                        tree.addCid = data[a].addCid;
+                        tree.delCid = data[a].delCid;
+                        tree.note = data[a].unit_note;
+                        tree.head = data[a].unit_head;
+                        tree.children = new List<Tree>();
+                        arr.Add(tree);
+                        getTree(data, tree.children, tree.id);
+                    }
+                }
+            }
+            catch {
+            }
         }
 
-        /// <summary>
-        /// 增加子节点
-        /// </summary>
-        /// <param name="parent_id">父节点</param>
-        /// <param name="unit_id">单位id</param>
-        /// <param name="unit_head">负责人</param>
-        /// <param name="unit_note">备注</param>
-        /// <param name="Name">名称</param>
-        /// <param name="Remarks">描述</param>
-        /// <param name="item_type"></param>
-        /// <param name="addCid">减法表</param>
-        /// <param name="delCid">减法表</param>
-        /// <returns>ok/error</returns>
-        public JsonResult addTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string Name, string Remarks, int item_type,string addCid,string delCid)
-        {
-            //查表中 是否有这段数据  如果有就修改  没有就添加  返回id
-            int id = DAL.EnerUserTypeDAL.getInstance().unpDateproject(item_type, Name, Remarks);
-            //通过id 去关系表中查  是否有 父级关系 如果parentID是null 则为新建根节点  childID  为添加的id
 
+
+        /// <summary>
+        /// 添加节点
+        /// </summary>
+        /// <param name="parent_id"></param>
+        /// <param name="unit_id"></param>
+        /// <param name="unit_head"></param>
+        /// <param name="unit_note"></param>
+        /// <param name="addCid"></param>
+        /// <param name="delCid"></param>
+        /// <param name="item_type"></param>
+        /// <param name="Name"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult AddTreeNode(int parent_id,int unit_id,string unit_head,string unit_note,string addCid,string delCid,int item_type, string Name,int id)
+        {
+            //先查之前历史有没有  
+            if (id == -1) {
+                IList<IDAO.Models.t_EE_EnerUserType> checklist = DAL.EnerUserTypeDAL.getInstance().CheckHistory(Name, item_type);
+                id = checklist[0].id;
+            }
+            //没有增加历史  获取id
+            if (id == 0)
+            {
+                IList<IDAO.Models.t_EE_EnerUserType> addlist = DAL.EnerUserTypeDAL.getInstance().AddHistory(Name, item_type);
+                id = addlist[0].id;
+            }
+            //增加关联关系  
+            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().AddRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid);
 
             
-
-
-            return Json(id);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
 
+        /// <summary>
+        /// 修改节点
+        /// </summary>
+        /// <param name="parent_id"></param>
+        /// <param name="unit_id"></param>
+        /// <param name="unit_head"></param>
+        /// <param name="unit_note"></param>
+        /// <param name="addCid"></param>
+        /// <param name="delCid"></param>
+        /// <param name="item_type"></param>
+        /// <param name="Name"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeIgnore]
+        public JsonResult UpdateTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int item_type, string Name, int id)
+        {
+            var updateTypeID = -1;
+            //先查之前历史有没有  
+            try
+            {
+                IList<IDAO.Models.t_EE_EnerUserType> checklist = DAL.EnerUserTypeDAL.getInstance().CheckHistory(Name, item_type);
+                updateTypeID = checklist[0].id;
+            }
+            catch
+            {
+                updateTypeID = -1;
+            }
+            //没有就增加
+            if (updateTypeID == -1)
+            {
+                IList<IDAO.Models.t_EE_EnerUserType> addlist = DAL.EnerUserTypeDAL.getInstance().AddHistory(Name, item_type);
+                updateTypeID = addlist[0].id;
+            }
+            //修改自己本身的关系
+            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().UpdateRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, updateTypeID);
+            //修改上下级间的关系
+            DAL.EnerUserProjectDAL.getInstance().UpdateSupervisor(id, updateTypeID, unit_id);
+
+
+
+
+
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 返回已有的区域类型 用于输入联想
+        /// </summary>
+        /// <param name="item_type"></param>
+        /// <returns></returns>
+        public JsonResult GetHistoryList( int item_type)
+        { 
+            IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetHistoryList(item_type);
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult DeleteSupervisor(int parent_id,int child_id,int unit_id)
+        {
+            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteSupervisor(parent_id, child_id, unit_id);
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
+        
+
+
+        public class Tree
+        {
+            public int id { set; get; }
+            public string name { set; get; }
+            public int? pId { set; get; }
+            public string head { set; get; }
+            public string note { set; get; }
+            public string addCid { set; get; }
+            public string delCid { set; get; }
+            public List<Tree> children { set; get; }
+
+        }
         #endregion
-
-
-
     }
-}
+} 
