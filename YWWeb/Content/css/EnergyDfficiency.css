@@ -876,7 +876,7 @@ html {
     .haveTab .tabs {
         display: inline-block;
         position: absolute;
-        top: -3px
+        
     }
 .mapMsgBox{
     display:flex;

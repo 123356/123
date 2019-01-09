@@ -6,12 +6,14 @@
             {
                 title: '医院楼层结构',
                 id: 0,
+                selected: true,
                 expand: true,//是否打开子节点
                 children: [
                     {
                         title: '一楼',
                         expand: true,
                         id: 1,
+                        
                         children: [
                             {
                                 title: '内科',
@@ -20,11 +22,12 @@
                                 children: [
                                     {
                                         title: '内科诊室一',
-                                        id: 3
+                                        id: 3,
                                     },
                                     {
                                         title: '内科诊室二',
-                                        id: 4
+                                        id: 4,
+
                                     }
                                 ]
                             }
@@ -34,7 +37,8 @@
             }
         ],
 
-        departFrameSrc:'/EnergyEfficiency/DepartData',
+        departFrameSrc: '/EnergyEfficiency/DepartData',
+        
         
     },
     methods: {
@@ -42,7 +46,8 @@
             console.log(res[0].id)
         },
        
-       
+        
+
     },
     beforeMount: function () {
       
