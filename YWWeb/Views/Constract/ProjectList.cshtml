@@ -130,8 +130,8 @@
                                </form-item>
                            </td>
                            <td>
-                               <form-item label="结算金额" class="moneyView">
-                                   <i-input typeof="text" placeholder="请输入金额" v-model="editForm.AmountMoney" :disabled="isCheck"></i-input>
+                               <form-item prop="AmountMoney" label="结算金额" class="moneyView">
+                                   <i-input typeof="text" placeholder="请输入金额"  v-model="editForm.AmountMoney" :disabled="isCheck"></i-input>
                                    <label class="dw">万元</label>
                                </form-item>
                            </td>
@@ -219,7 +219,7 @@
                        </tr>
                        
                        <tr class="title">
-                           <td colspan="2"><img src="~/Content/images/project/peopleInfo.png" class="titleIcon" />权限设置</td>
+                           <td colspan="3"><img src="~/Content/images/project/peopleInfo.png" class="titleIcon" />权限设置</td>
                        </tr>
                        <tr class="noBottomBorder col2Select">
                            <td colspan="3">
@@ -274,7 +274,8 @@
         </Modal>
    
     <script type="text/javascript" src="~/Content/js/lbyw-base.zc.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/ProjectList._zc.js?v=1.02"></script>
+    <script type="text/javascript" src="~/Content/js/rule.js?v=1.11"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ProjectList._zc.js?v=1.18"></script>
     <script type="text/javascript">
        
     </script>

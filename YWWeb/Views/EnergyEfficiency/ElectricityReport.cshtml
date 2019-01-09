@@ -38,11 +38,10 @@
 
                         </dropdown-menu>
                     </Dropdown>
-                    <i-select style="width:100px" placeholder="日期类型" v-on:on-change="dateTypeChange">
-                        <i-option value="0">日报表</i-option>
-                        <i-option value="1">周报表</i-option>
-                        <i-option value="2">月报表</i-option>
-                        <i-option value="3">年报表</i-option>
+                    <i-select style="width:100px" v-model="curDateType" placeholder="日期类型" v-on:on-change="dateTypeChange">
+                        <i-option value="date">日报表</i-option>
+                        <i-option value="month">月报表</i-option>
+                        <i-option value="year">年报表</i-option>
                     </i-select>
                     <date-picker :type="curDateType"style="width: 160px;font-size:12px"  placeholder="请选择时间"></date-picker>
 
