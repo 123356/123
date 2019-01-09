@@ -77,10 +77,8 @@ namespace YWWeb.Controllers
                 var model = LoginManager.WxLogin(openIdResult.openid, this.ControllerContext, out nErrCode);
                 if (model != null)
                 {
-                    //Session["Huerinfo"] = model;
                     string sID = Session.SessionID;
                     Session[sID] = model;
-                    //log
                     Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
                     return Content(sID);
                 }
@@ -88,25 +86,6 @@ namespace YWWeb.Controllers
                 {
                     return Content("用户名密码错误");
                 }
-                //t_CM_UserInfo model = bll.t_CM_UserInfo.Where(u => u.openid2 == openIdResult.openid).FirstOrDefault();
-                //if (model!=null)
-                //{
-                //    if (model.IsScreen == 0)
-                //    {
-                //        Session["Huerinfo"] = model;
-                //        string sID = Session.SessionID;
-                //        Session[sID] = model;
-                //        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
-                //        return Content(sID);
-                //    }else
-                //    {
-                //        return Content("1");
-                //    }
-                //}
-                //else
-                //{
-                //       return Content("0");
-                //}
             }
             catch (Exception ex)
             {
@@ -497,7 +476,7 @@ namespace YWWeb.Controllers
                 string pdrlist = "";
                 if (sid != null && sid != "")
                 {
-                    t_CM_UserInfo user = (t_CM_UserInfo)Session[sid];
+                    IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sid];
                     if (user == null) return Content("{\"resultCode\": 1,\"results\": []}");
                     //pdrlist = user.PDRList;
 
@@ -580,7 +559,7 @@ namespace YWWeb.Controllers
             }
         }
 
-        private List<t_CM_PDRInfo> getPDRinfos(string pdrlist, t_CM_UserInfo user)
+        private List<t_CM_PDRInfo> getPDRinfos(string pdrlist, IDAO.Models.t_CM_UserInfo user)
         {
             List<t_CM_PDRInfo> list;
             if ("admin".Equals(user.UserName))
@@ -746,7 +725,7 @@ namespace YWWeb.Controllers
                 string pdrlist = "";
                 if (sid != null && sid != "")
                 {
-                    t_CM_UserInfo user = (t_CM_UserInfo)Session[sid];
+                    IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sid];
                     if (user == null) return Content("{\"resultCode\": 1,\"results\": []}");
                     //pdrlist = user.PDRList;
                     var pr = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
@@ -830,12 +809,12 @@ namespace YWWeb.Controllers
             }
         }
 
-        private t_CM_UserInfo isLogin()
+        private IDAO.Models.t_CM_UserInfo isLogin()
         {
             string sid = getSessionID();
             if (sid != null && sid != "")
             {
-                return (t_CM_UserInfo)Session[sid];
+                return (IDAO.Models.t_CM_UserInfo)Session[sid];
             }
             else
             {
@@ -856,7 +835,7 @@ namespace YWWeb.Controllers
                     string HiPoTagName;
                     string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
                     string nextMonitorTime, lastMonitorTime, activePower, reactivePower, maxTemperature, load, maxTemp, lastRepairTime;//environmentTemperature, environmentHumidity,
-                    t_CM_UserInfo user = (t_CM_UserInfo)Session[sid];
+                    IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sid];
                     //pdrlist = user.PDRList;
                     pdrlist = HomeController.GetPID(user.UNITList);
                     string strAsql = "select top 1 * from t_AlarmTable_en where AlarmState>0 and pid=" + pid + "and pid in (" + pdrlist + ") order by AlarmState desc,AlarmValue desc"; //判断是否存在报警数据
@@ -1600,7 +1579,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         //string pdrlist = user.PDRList;
                         string pdrlist = HomeController.GetPID(user.UNITList);
@@ -1625,14 +1604,14 @@ namespace YWWeb.Controllers
                         string finishSql = "";
                         if (user.RoleID==1)
                         {
-                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId, CheckDate desc";
-                        }else
-                        {
+                            
                             finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId, CheckDate desc";
                         }
+                        else
+                        {
+                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId, CheckDate desc";
+                        }
                         List<t_Order> listFinish = bll.ExecuteStoreQuery<t_Order>(finishSql).ToList();
-
-                        //listFinish = listFinish.OrderByDescending(o => o.OrderID).ToList();
                         return Content("{\"resultCode\": 0,\"results\": " + "{\"fished_orders\":" + JsonConvert.SerializeObject(listFinish) + "," + "\"unfished_orders\":" + JsonConvert.SerializeObject(list) + "}}");
                     }
                 }
@@ -1658,15 +1637,17 @@ namespace YWWeb.Controllers
 
         public ActionResult getUnOrderDetail(int OrderID)
         {
+            string isShow = "false";
             try
             {
                 string UserName;
                 string sessionid = getSessionID();
+               
                 if (sessionid != null && !sessionid.Equals(""))
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         List<t_PM_Order> sss = bll.ExecuteStoreQuery<t_PM_Order>("SELECT * FROM [t_PM_Order] WHERE OrderID=" + OrderID).ToList();
                         if (sss != null && sss.Count > 0)
@@ -1674,26 +1655,28 @@ namespace YWWeb.Controllers
                             if (sss.First().OrderState == 0)//UPDATE t_PM_Order SET AcceptedDate = '2018-01-02 00:00:00.000',OrderState=1 WHERE OrderID=6
                             bll.ExecuteStoreCommand("UPDATE t_PM_Order SET AcceptedDate ='"+DateTime.Now+"',OrderState=" + 1 + " WHERE OrderID=" + OrderID);
                         }
-                        string sql = "SELECT * FROM [t_PM_Order] WHERE OrderID=" + OrderID + " and  UserName='" + UserName + "' order by CreateDate desc";
+                        string sql = "SELECT * FROM [t_PM_Order] WHERE OrderID=" + OrderID + " order by CreateDate desc";
                         List<t_PM_Order> list = bll.ExecuteStoreQuery<t_PM_Order>(sql).ToList();
                         if (list != null && list.Count > 0)
                         {
                             t_PM_Order order = list.First();
+                            if (order.UserID == user.UserID)
+                                isShow = "true";
                             string sqlPDRinfo = "SELECT * FROM [t_CM_PDRInfo] WHERE PID=" + order.PID;
                             List<t_CM_PDRInfo> listPDRinfo = bll.ExecuteStoreQuery<t_CM_PDRInfo>(sqlPDRinfo).ToList();
                             string sqlCreater = "SELECT * FROM [t_CM_UserInfo] WHERE UserName='" + order.Creater + "'";
                             List<t_CM_UserInfo> listUsers = bll.ExecuteStoreQuery<t_CM_UserInfo>(sqlCreater).ToList();
                             UnOrderDetail orderDetail = new UnOrderDetail(order, listPDRinfo.First(), listUsers.First().Telephone);
-                            return Content("{\"resultCode\": 0,\"results\": " + JsonConvert.SerializeObject(orderDetail) + "}");
+                            return Content("{\"resultCode\": 0,\"results\": " + JsonConvert.SerializeObject(orderDetail) + ",\"isShow\":" + isShow + "}");
                         }
-                        return Content("{\"resultCode\": 0,\"results\": {}}");
+                        return Content("{\"resultCode\": 0,\"results\": {},\"isShow\":" + isShow + "}");
                     }
                 }
-                return Content("{\"resultCode\": 1,\"results\": {}}");
+                return Content("{\"resultCode\": 1,\"results\": {},\"isShow\":" + isShow + "}");
             }
             catch (Exception e)
             {
-                return Content("{\"resultCode\": 2,\"results\": {}}");
+                return Content("{\"resultCode\": 2,\"results\": {},\"isShow\":" + isShow + "}");
             }
         }
 
@@ -1740,7 +1723,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         string strOrderInfo = "SELECT * FROM t_PM_Order_Template WHERE templateId="+templateId+" ORDER BY InfoOrder";
                         List<OrderInfo> infos = bll.ExecuteStoreQuery<OrderInfo>(strOrderInfo).ToList();
@@ -1785,7 +1768,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         List<Oinfo> lista = JsonConvert.DeserializeObject<List<Oinfo>>(postdata);
                         if (lista!=null&&lista.Count>0)
@@ -1885,7 +1868,7 @@ namespace YWWeb.Controllers
         public ActionResult SaveOrderInfo(t_PM_Order order, string BugDesc, string ReportWay = "wx")
         {
             string result = "";
-            t_CM_UserInfo user = isLogin();
+            IDAO.Models.t_CM_UserInfo user = isLogin();
             if (user != null)
             {
 
@@ -1948,7 +1931,7 @@ namespace YWWeb.Controllers
         //    return Content("ExportWordFromReport"); 
         //}
 
-        private void addNewBugInfo(string did, string BugDesc, string ReportWay, t_CM_UserInfo user, t_PM_Order orderinfo)
+        private void addNewBugInfo(string did, string BugDesc, string ReportWay, IDAO.Models.t_CM_UserInfo user, t_PM_Order orderinfo)
         {
 
             t_DM_DeviceInfo d= bll.ExecuteStoreQuery<t_DM_DeviceInfo>("SELECT * FROM t_DM_DeviceInfo WHERE DID ="+did).ToList().First();
@@ -1996,7 +1979,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                       IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         string sql = "SELECT * FROM [t_PM_Order] WHERE OrderID=" + OrderID + " order by CreateDate desc";
                         List<t_PM_Order> list = bll.ExecuteStoreQuery<t_PM_Order>(sql).ToList();
@@ -2036,7 +2019,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         string sql = "SELECT * FROM [t_PM_Order] WHERE OrderID=" + OrderID;
                         List<t_PM_Order> list = bll.ExecuteStoreQuery<t_PM_Order>(sql).ToList();
@@ -2071,7 +2054,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         string sql2 = "SELECT * FROM t_PM_Order where OrderID=" + OrderID;
                         List<t_PM_Order> listee = bll.ExecuteStoreQuery<t_PM_Order>(sql2).ToList();
@@ -2103,7 +2086,7 @@ namespace YWWeb.Controllers
 
         public ActionResult updateArrivedTime(int OrderID,float distance)
         {
-            t_CM_UserInfo user = isLogin();
+            IDAO.Models.t_CM_UserInfo user = isLogin();
             if (user != null)
             {
                 string time = DateTime.Now.ToString();
@@ -2122,7 +2105,7 @@ namespace YWWeb.Controllers
 
         public ActionResult upload(HttpPostedFileBase file, int OrderID, string Modules, string FSource = "wx")
         {
-            t_CM_UserInfo user = isLogin();
+            IDAO.Models.t_CM_UserInfo user = isLogin();
             if (user != null)
             {
                 string CommitUser = user.UserName;
@@ -2142,7 +2125,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         string repairSql = "SELECT * FROM [t_PM_Order] WHERE 1=1 AND OrderState=4 and PID=" + pid + " and CheckDate<'" + DateTime.Now.ToString() + "' order by CheckDate desc";
                         List<t_PM_Order> listRepair = bll.ExecuteStoreQuery<t_PM_Order>(repairSql).ToList();
@@ -2185,7 +2168,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];                      
+                       IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];                      
                         UserName = user.UserName;
 
                         string pdrlist = HomeController.GetPID(user.UNITList);
@@ -2213,7 +2196,7 @@ namespace YWWeb.Controllers
                 {
                     if (Session[sessionid] != null)
                     {
-                        t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                        IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
                         UserName = user.UserName;
                         //SELECT  * FROM t_DM_DeviceInfo WHERE PName like '%AH2%' or DeviceName like '%AH2%'
                         string DEVsql = "SELECT  * FROM t_DM_DeviceInfo WHERE PName like '%"+tname+"%' or DeviceName like '%"+tname+"%'";
@@ -2832,7 +2815,7 @@ namespace YWWeb.Controllers
                 string strJson = "[";
                 if (sid != null && sid != "")
                 {
-                    t_CM_UserInfo user = (t_CM_UserInfo)Session[sid];
+                    IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sid];
                     //pdrlist = user.PDRList;
 
                     pdrlist = HomeController.GetPID(user.UNITList);
@@ -2962,7 +2945,7 @@ namespace YWWeb.Controllers
             string strJson = "no login", sqltime; ;
             if (sessionid != null && sessionid != "")
             {
-                t_CM_UserInfo user = (t_CM_UserInfo)Session[sessionid];
+                IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sessionid];
 
                 string pdrlist = HomeController.GetPID(user.UNITList);
                 try
@@ -3235,7 +3218,7 @@ namespace YWWeb.Controllers
             string sid = getSessionID();
             if (sid != null && sid != "")
             {
-                t_CM_UserInfo user = (t_CM_UserInfo)Session[sid];
+                IDAO.Models.t_CM_UserInfo user = (IDAO.Models.t_CM_UserInfo)Session[sid];
                 string sql = "SELECT * FROM t_CM_Unit WHERE UnitID=(SELECT UID FROM t_CM_UserInfo WHERE UserID=" + user.UserID + ")";
                 t_CM_Unit r = null;
                 try
