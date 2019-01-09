@@ -34,7 +34,7 @@ namespace YWWeb.Controllers
         private t_CM_Unit t_CM_Unit;
         private t_CM_UserInfo user;
         public List<t_cm_files> listFiles;
-        public OrderDetail(t_PM_Order order, t_CM_PDRInfo t_CM_PDRInfo, t_CM_Unit t_CM_Unit, t_CM_UserInfo user, List<t_cm_files> listFiles)
+        public OrderDetail(t_PM_Order order, t_CM_PDRInfo t_CM_PDRInfo, t_CM_Unit t_CM_Unit, IDAO.Models.t_CM_UserInfo user, List<t_cm_files> listFiles)
         {
             // TODO: Complete member initialization
             addr=t_CM_PDRInfo.Position;
