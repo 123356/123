@@ -6,7 +6,7 @@ Topo.prototype = {
         this.pid = $("#pid").html();
         this.orderNo = $("#orderNo").html() || 1;
         this.newCanvas();
-        this.mqtt();
+        
     },
     //创建画布
     newCanvas: function() {
@@ -36,12 +36,9 @@ Topo.prototype = {
                 orderNo: $("[data-type=orderNo]").val() || 1,
                 type: 1
             },
-            success: function(res) {
+            success: function (res) {
                 res = res[0];
-                if (!that.isShowOrderTheTopo) {
-                    that.orderNoList(res);
-                    that.isShowOrderTheTopo = true;
-                }
+
                 that.__IP = $.base64.decode(res.IP);
                 that.__account = $.base64.decode(res.Account);
                 that.__password = $.base64.decode(res.Password);
@@ -49,6 +46,11 @@ Topo.prototype = {
                 that.LoadView(res.url, res.Path);
                 that.LoadData();
                 that.LoadMeter();
+                if (!that.isShowOrderTheTopo) {
+                    that.orderNoList(res);
+                    that.mqtt();
+                    that.isShowOrderTheTopo = true;
+                }
             },
         })
     },
@@ -68,6 +70,7 @@ Topo.prototype = {
                 }
                 that.history(data);
                 that.stage.paint();
+
             }
         })
     },
@@ -336,27 +339,27 @@ Topo.prototype = {
             for (var a = 0, b = 0; a < res.length; a++) {
                 var className = ".meter" + meter[i]._cid;
                 if (res[a].CID == meter[i]._cid) {
+                    meter[i].__TagID = res[a].TagID
                     if (b == 0) {
                         $(className + ' .title').html(meter.CName);
                         b++;
                     }
                     if (res[a].DataTypeID == '2') { //电流
-                        $(className + ' .I' + res[a].ABCID).html(res[a].DValue);
-                        $(className + ' .IA .unit').html(res[a].Units);
+                        $(className + ' .I' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
                     } else if (res[a].DataTypeID == '3' || res[a].DataTypeID == "56") { //电压
-                        $(className + ' .UA' + res[a].ABCID).html(res[a].DValue);
+                        $(className + ' .UA' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + ' .UAB .unit').html(res[a].Units);
                     } else if (res[a].DataTypeID == '6' || res[a].DataTypeID == '51') { //功率因数
-                        $(className + ' .F').html(res[a].DValue);
+                        $(className + ' .F').html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + ' .PF .unit').html(res[a].Units);
                     } else if (res[a].DataTypeID == '46' || res[a].DataTypeID == '7') { //总有功
-                        $(className + ' .P').html(res[a].DValue);
+                        $(className + ' .P').html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + ' ._P .unit').html(res[a].Units);
                     } else if (res[a].DataTypeID == '48' || res[a].DataTypeID == '8') { //总无功功率
-                        $(className + ' .Q').html(res[a].DValue);
+                        $(className + ' .Q').html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + ' ._Q .unit').html(res[a].Units);
                     } else if (res[a].DataTypeID == '52') { //总有功电度
-                        $(className + ' .K').html(res[a].DValue);
+                        $(className + ' .K').html(res[a].DValue).addClass('t_' + res[a].TagID);
                     }
                 }
             }
@@ -366,18 +369,19 @@ Topo.prototype = {
             for (var a = 0; a < res.length; a++) {
                 if (text[b].id == res[a].TagID) {
                     text[b].text = res[a].DValue;
+                    text[b].__TagID = res[a].TagID;
                 }
             }
         }
     },
-    mqtt: function() {
+    mqtt: function () {
         var that = this;
+        console.log(that.__IP, parseInt(that.__port), that.pid, that.__password, that.__account,that.__port)
         var wsbroker = that.__IP;
         location.hostname;
         var wsport = parseInt(that.__port);
         //连接选项
         var client;
-
         var options = {
             timeout: 30,
             userName: that.__account,
@@ -390,7 +394,7 @@ Topo.prototype = {
                 });
             },
             onFailure: function(message) {
-                console.log("连接失败 " + message.errorMessage);
+                console.log("连接失败 ");
                 setTimeout(function() {
                     that.mqtt();
                 }, 10000);
@@ -409,15 +413,32 @@ Topo.prototype = {
         };
         client.onMessageArrived = function(res) {
             var payload = JSON.parse(res.payloadString);
+            var data = payload.content;
+
             if (!payload.type) {
                 return;
             }
-            if (payload.type == 6) {
-                that.setMeter(payload)
-                return
+            if (payload.type == 6) {//  电表文字
+                var text = that.textNode;
+                for (var key in data) {
+                    $('.t_' + key).html(data[key].PV);
+                    for (var a = 0; a < text.length; a++) {
+                        if (text[a].id == key) {
+                            text[a].text = data[key].PV;
+                            that.stage.paint();
+                        }
+                    }
+                }
             } else {
-                that.nodeLine(nodes[a], payload);
-                that.nodeShape(nodes[a], payload);
+                var nodes = that.lineNode;
+                for (var a = 0; a < nodes.length; a++) {
+                    if (nodes[a].__type == "node") {
+                        that.nodeShape(nodes[a], data);
+                    } else if (nodes[a].__type == "line") {
+                        that.nodeLine(nodes[a], data)
+                    }
+                }
+                that.stage.paint();
             }
         };
     },
