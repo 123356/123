@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IDAO
 {
-    interface ICircuitInfo
+    public interface ICircuitInfo:IDAOBase,IDisposable
     {
     }
 }

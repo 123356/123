@@ -31,7 +31,6 @@ namespace DAL
             }
             return _DataDal;
         }
-     
         public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid)
 
         {
@@ -51,13 +50,13 @@ namespace DAL
 
 
 
-        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId,int id, int unit_id)
+        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId, int id, int unit_id)
 
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.UpdateSupervisor(oldId, id ,unit_id);
+                data = _dbFactory.enerUserProject.UpdateSupervisor(oldId, id, unit_id);
             }
             catch (Exception ex)
             {
@@ -81,6 +80,18 @@ namespace DAL
             }
             return data;
         }
-
+        public IList<t_EE_EnerUserProject> GetCidByUidAndIDepID(int uid, int depid)
+        {
+            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            try
+            {
+                data = _dbFactory.enerUserProject.GetCidByUidAndIDepID(uid, depid);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }
