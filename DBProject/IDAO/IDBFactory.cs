@@ -29,5 +29,7 @@ namespace IDAO
 
 		IVEnerProjectType venerProjectType { get; }
 
+        ICircuitInfo circuitinfo { get; }
+
     }
 }

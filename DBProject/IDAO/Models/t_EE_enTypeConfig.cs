@@ -12,6 +12,7 @@ namespace IDAO.Models
         public int UID { get; set; }
         public int UserID { get; set; }
         public int Type { get; set; }
-        public int DepartmentID { get; set; } 
+        public int DepartmentID { get; set; }
+        public string Name { get; set; }
     }
 }

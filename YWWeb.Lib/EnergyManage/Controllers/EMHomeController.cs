@@ -18,127 +18,83 @@ namespace EnergyManage.Controllers
         #region 能源总览
         public JsonResult GetEneryOverView(int uid)
         {
-            IList<IDAO.Models.t_V_EneryView> list_w = DAL.EneryOverViewDAL.getInstance().GetEneryWaterOverview(uid);
-
-            IList<IDAO.Models.t_V_EneryView> list_p = DAL.EneryOverViewDAL.getInstance().GetEneryPowerOverview(uid);
-
-            IList<IDAO.Models.t_V_EneryView> list_g = DAL.EneryOverViewDAL.getInstance().GetEneryGasOverview(uid);
-
-            decimal waterRate = list_w.Sum(p => p.Rate);
-
-            decimal powerRate = list_p.Sum(p => p.Rate);
-
-            decimal gasRate = list_g.Sum(p => p.Rate);
-
-            decimal sumRate = waterRate + powerRate + gasRate;
-
-            IList<IDAO.Models.t_EE_Budget> list_b = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
-
-            decimal waterBudget = list_b.Where(p => p.EnergyTypeID == 1).Sum(p => p.GeneralBudget);
-
-            decimal powerBudget = list_b.Where(p => p.EnergyTypeID == 2).Sum(p => p.GeneralBudget);
-
-            decimal gasBudget = list_b.Where(p => p.EnergyTypeID == 3).Sum(p => p.GeneralBudget);
-
-            decimal sumBudget = waterBudget + powerBudget + gasBudget;
-            List<Dictionary<string, decimal>> w_keyValuePairs = new List<Dictionary<string, decimal>>();
-            var water_pie = list_w.GroupBy(p => p.TypeName);
-            foreach (var item in water_pie)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key, item.Sum(p => p.Value));
-                w_keyValuePairs.Add(it);
-            }
-            List<Dictionary<string, decimal>> p_keyValuePairs = new List<Dictionary<string, decimal>>();
-            var power_pie = list_p.GroupBy(p => p.TypeName);
-            foreach (var item in power_pie)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key, item.Sum(p => p.Value));
-                p_keyValuePairs.Add(it);
-            }
-
-            List<Dictionary<string, decimal>> g_keyValuePairs = new List<Dictionary<string, decimal>>();
-            var gas_pie = list_g.GroupBy(p => p.TypeName);
-            foreach (var item in gas_pie)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key, item.Sum(p => p.Value));
-                g_keyValuePairs.Add(it);
-            }
-
-            List<Dictionary<string, decimal>> w_keyValuePairs_time = new List<Dictionary<string, decimal>>();
-            var water_pie_time = list_w.GroupBy(p => p.RecordTime);
-            foreach (var item in water_pie_time)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key.ToString("dd"), item.Sum(p => p.Value));
-                w_keyValuePairs_time.Add(it);
-            }
-
-            List<Dictionary<string, decimal>> p_keyValuePairs_time = new List<Dictionary<string, decimal>>();
-            var power_pie_time = list_p.GroupBy(p => p.RecordTime);
-            foreach (var item in power_pie_time)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key.ToString("dd"), item.Sum(p => p.Value));
-                p_keyValuePairs_time.Add(it);
-            }
-
-            List<Dictionary<string, decimal>> g_keyValuePairs_time = new List<Dictionary<string, decimal>>();
-            var gas_pie_time = list_g.GroupBy(p => p.RecordTime);
-            foreach (var item in gas_pie_time)
-            {
-                Dictionary<string, decimal> it = new Dictionary<string, decimal>();
-                it.Add(item.Key.ToString("dd"), item.Sum(p => p.Value));
-                g_keyValuePairs_time.Add(it);
-            }
-            decimal water_en = list_w.Sum(p => p.Value);
-
-            decimal power_en = list_p.Sum(p => p.Value);
-
-            decimal gas_en = list_g.Sum(p => p.Value);
+            List<overView> left_view = new List<overView>();
+            List<rightView> list = new List<rightView>();
+            decimal zongRate = 0;
+            //根据权限读取PID;
+            string pids = "138";
+            IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
            
-
-            var sum_pie = new
+            IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
+            foreach(var item_peizhi in list_peizhi)
             {
-                sumBudget,
-                sumRate,
+                decimal rate = 0;
+                decimal energyConsumption = 0;
+                decimal budget = 0;
+                rightView view = new rightView();
+                view.name = item_peizhi.Name;
+                budget = list_budgets.Where(p => p.EnergyTypeID == item_peizhi.Type).Sum(p => p.GeneralBudget);
+                view.budget = budget;
+                IList <t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.DepartmentID);
+                foreach(var item_userP in list_userP)
+                {
+                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
+                    string cids = "";
+                    int index = 0;
+                    foreach (var item_cir in list_cir)
+                    {
+                      
+                        
+                        cids += item_cir.CID + ",";
+                        
+                    }
+                    if (cids != "")
+                        cids = cids.Substring(0, cids.Length - 1);
+                    else
+                        cids = "0";
+                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids);
+                    rate = list_data.Sum(p => p.Rate);
+                    energyConsumption = list_data.Sum(p => p.Value);
+                    zongRate += rate;
+                    var group_list = list_data.GroupBy(p => p.Name);
+                    List<overView> group_data = new List<overView>();
+                    foreach (var item_group in group_list)
+                    {
+                        overView group_i = new overView();
+                        group_i.name = item_group.Key;
+                        group_i.value = item_group.Sum(p => p.Rate);
+                        group_data.Add(group_i);
+                    }
+                    view.keyValuePairs.Add(group_data);
+
+                    var group_list_time = list_data.GroupBy(p => p.RecordTime);
+                    List<overView> group_data_time = new List<overView>();
+                    foreach (var item_group in group_list_time)
+                    {
+                        overView group_i = new overView();
+                        group_i.name = item_group.Key.ToString();
+                        group_i.value = item_group.Sum(p => p.Rate);
+                        group_data_time.Add(group_i);
+                    }
+                    view.keyValuePairs_Time.Add(group_data_time);
+                }
+                view.rate = rate;
+                view.energyConsumption = energyConsumption;
+                list.Add(view);
+
+                overView oview = new overView();
+                oview.name = item_peizhi.Name;
+                oview.value = rate;
+                left_view.Add(oview);
+
+            }
+            decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
+            var list_zong = new
+            {
+                zongRate,
+                zongBudget
             };
-            string[] names_right = new[] { "水", "电", "气" };
-            List<Dictionary<string, decimal>>[] keyValuePairsS = new List<Dictionary<string, decimal>>[] { w_keyValuePairs, p_keyValuePairs, g_keyValuePairs };
-            List<Dictionary<string, decimal>>[] keyValuePairs_TimeS = new List<Dictionary<string, decimal>>[] { w_keyValuePairs_time, p_keyValuePairs_time, g_keyValuePairs_time };
-            decimal[] rates = new[] { waterRate, powerRate, gasRate };
-            decimal[] energyConsumptions = new[] { water_en, power_en, gas_en };
-            decimal[] budgets = new[] { waterBudget, powerBudget, gasBudget };
-            List<rightView> listright = new List<rightView>();
-            for (int i = 0; i < names_right.Length; i++)
-            {
-                rightView rightview = new rightView();
-                rightview.name = names_right[i];
-                rightview.keyValuePairs = keyValuePairsS[i];
-                rightview.keyValuePairs_Time = keyValuePairs_TimeS[i];
-                rightview.rate = rates[i];
-                rightview.energyConsumption = energyConsumptions[i];
-                rightview.budget = budgets[i];
-                listright.Add(rightview);
-            }
-
-            string[] names = new[] { "水", "电", "气" };
-            decimal[] values = new[] { waterRate, powerRate, gasRate };
-            List<overView> item_list = new List<overView>();
-            for (int i = 0; i < values.Length; i++)
-            {
-                overView item_pie = new overView();
-                item_pie.name = names[i];
-                item_pie.value = values[i];
-                item_list.Add(item_pie);
-            }
-
-
-            var result = new { sum_pie = sum_pie, item_list = item_list, listright = listright };
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { list_zong, left_view, list }, JsonRequestBehavior.AllowGet);
         }
 
         public class overView
@@ -149,9 +105,14 @@ namespace EnergyManage.Controllers
 
         public class rightView
         {
+            public rightView()
+            {
+                keyValuePairs = new List<List<overView>>();
+                keyValuePairs_Time = new List<List<overView>>();
+            }
             public string name { get; set; }
-            public List<Dictionary<string, decimal>> keyValuePairs { get; set; }
-            public List<Dictionary<string, decimal>> keyValuePairs_Time { get; set; }
+            public List< List<overView>> keyValuePairs { get; set; }
+            public List<List<overView>> keyValuePairs_Time { get; set; }
             public decimal rate { get; set; }
             public decimal energyConsumption { get; set; }
             public decimal budget { get; set; }

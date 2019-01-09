@@ -13,9 +13,9 @@ namespace IDAO.Models
         public string Name { get; set; }
         public decimal Rate { get; set; }
 
-        public int Type { get; set; }
+        //public int Type { get; set; }
 
-        public string TypeName { get; set; }
+        //public string TypeName { get; set; }
 
         public DateTime RecordTime { get; set; }
     }
