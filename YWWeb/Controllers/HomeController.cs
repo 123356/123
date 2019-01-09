@@ -3280,7 +3280,32 @@ namespace YWWeb.Controllers
             public decimal val { get; set; }
             public string remarks { get; set; }
         }
+        //返回的未完成工单包含模板id列表；
+        public ActionResult getMyselfOrderCount()
+        {
+            try
+            {
+                //string pdrlist = user.PDRList;
+                string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
+                string sql = "";
+                //SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 and  UserName LIKE '%admin%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by CreateDate desc
+                if (CurrentUser.RoleID == 1)
+                {
+                    sql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId,PlanDate desc";
+                }
+                else
+                {
+                    sql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND UserName LIKE '%" + CurrentUser.UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId,PlanDate desc";
+                }
+                int list = bll.ExecuteStoreQuery<t_Order>(sql).Count();
+                return Json(list);
+            }
 
+            catch (Exception e)
+            {
+                return Content("{\"resultCode\": 2,\"results\": {}}");
+            }
+        }
         #region 项目管理
         //获取未完成的项目
         public ActionResult GetUnfinishedPrject()
