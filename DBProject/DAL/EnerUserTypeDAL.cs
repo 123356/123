@@ -68,5 +68,21 @@ namespace DAL
             }
             return data;
         }
+
+        public IList<t_EE_EnerUserType> GetComobxList()
+        {
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
+            try
+            {
+                data = _dbFactory.enerUserType.GetComobxList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
     }
 }

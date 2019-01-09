@@ -21,5 +21,10 @@ namespace IDAO
         IUnit unit { get; }
         IVDeviceInfoState_PDR1 deviceInfoState_PDR1 { get; }
 		IEnerUserType enerUserType { get; }
+        IEneryOverview eneryOverView { get; }
+        IBudget budget { get; }
+        IenTypeConfig typeconfig { get; }
+
+        ICollecDevType collecdevtype { get; }
     }
 }

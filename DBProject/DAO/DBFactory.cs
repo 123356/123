@@ -35,5 +35,12 @@ namespace DAO
 
 		public IEnerUserType enerUserType => new EnerUserTypeDBContext();
 
+        public IEneryOverview eneryOverView => new EneryOverviewDBContext();
+
+        public IBudget budget => new BudgetDBContext();
+
+        public IenTypeConfig typeconfig => new EnTypeConfigDBContext();
+
+        public ICollecDevType collecdevtype => new CollecDevTypeDBContext();
     }
 }

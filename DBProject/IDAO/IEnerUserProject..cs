@@ -10,5 +10,7 @@ namespace IDAO
     public interface IEnerUserProject : IDAOBase, IDisposable
     {
         IList<t_EE_EnerUserProject> GetOrganizationTree(int unitId, int itemType);
+
+        IList<t_EE_EnerUserProject> GetCidByUidAndIDepID(int uid, int depid);
     }
 }

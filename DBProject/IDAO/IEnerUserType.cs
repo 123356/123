@@ -19,5 +19,7 @@ namespace IDAO
 
         //修改分类项  如果有就修改  没有就添加
         int unpDateproject(int item_type, string Name, string Remarks);
+
+        IList<t_EE_EnerUserType> GetComobxList();
     }
 }

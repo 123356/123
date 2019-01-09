@@ -47,6 +47,11 @@ namespace DAO
             return v;
         }
 
+        public IList<t_EE_EnerUserType> GetComobxList()
+        {
+            string sql = "select * from t_EE_EnerUserType";
+            return SQLQuery<t_EE_EnerUserType>(sql);
+        }
 
         public DbSet<t_EE_EnerUserType> Datas { get; set; }
     }
