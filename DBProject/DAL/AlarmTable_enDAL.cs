@@ -66,6 +66,7 @@ namespace DAL
                 if (data.Count > 0)
                 {
                     List<int> listPid = dbCache.HashKeys<int>(FirstKey);
+                    Dictionary<object, object> fields = new Dictionary<object, object>();
                     bool containted = false;
                     foreach (var kPid in listPid)//删除没有报警的
                     {
@@ -85,15 +86,21 @@ namespace DAL
                         else
                         {
                             //dbCache.HashDelete(FirstKey, kPid.ToString());
-                            dbCache.HashSet(FirstKey, kPid.ToString(), 0);//不删除，防止读取异常
+                            //dbCache.HashSet(FirstKey, kPid.ToString(), 0);//不删除，防止读取异常
+                            fields.Add(kPid, 0);
                         }
 
                     }
                     foreach (AlarmCount model in data)
                     {
-                        dbCache.HashSet(FirstKey, model.PID.ToString(), model.Count);
+                        //dbCache.HashSet(FirstKey, model.PID.ToString(), model.Count);
                         //if (pdrIDS.Contains(model.PID))
                         //    total += model.Count;
+                        fields.Add(model.PID, model.Count);
+                    }
+                    if (fields.Count > 0)
+                    {
+                        dbCache.HashSet(FirstKey, fields);
                     }
                 }
                 else
@@ -125,20 +132,25 @@ namespace DAL
             try
             {
                 int total = 0;
-                if (dbCache.KeyExists(FirstKey))
-                {
+                //if (dbCache.KeyExists(FirstKey))
+                //{
                     string[] pids = pdrList.Split(',');
                     IList<string> fields = dbCache.HashKeys<string>(FirstKey);
                     var fks = fields.Where(t => pids.Contains(t));
-                    IList<int> alarmCount = dbCache.HashGet<int>(FirstKey, fks.ToList<string>());
-                    total=alarmCount.Sum();
+                    IList<string> alarmCount1 = dbCache.HashGet<string>(FirstKey, pids.ToList<string>());
+                    IList<int> alarmCount = alarmCount1.Where(t => !string.IsNullOrEmpty(t)).Select(t=>Convert.ToInt32(t)).ToList();
+                    total =alarmCount.Sum();
 
                     //foreach (var v in pids)
                     //{
                     //    if (dbCache.HashExists(FirstKey, v))
                     //        total += dbCache.HashGet<int>(FirstKey, v);
                     //}
-                }
+                //}
+                //else
+                //{
+                //    System.Diagnostics.Debug.WriteLine("dbCache.KeyExists(FirstKey)");
+                //}
                 userQueryAlarmCountInf.BeginInvoke( null, null);
 
                 return total;

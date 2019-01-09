@@ -143,6 +143,7 @@ namespace IDAO.InterfaceCache
         /// <param name="t"></param>
         /// <returns></returns>
          bool HashSet<T>(string key, string dataKey, T t);
+        void HashSet(string key, Dictionary<object,object> hashFields);
 
         /// <summary>
         /// 移除hash中的某值
