@@ -5,13 +5,29 @@ Topo.prototype = {
     init: function() {
         this.pid = $("#pid").html();
         this.orderNo = $("#orderNo").html() || 1;
-        this.createTopo();
-        this.viewTopo();
-        this.getNodeState();
+        this.newCanvas();
+        this.mqtt();
     },
-    viewTopo: function() {
+    //创建画布
+    newCanvas: function() {
+        var canvas = document.createElement('canvas');
+        var box = $('#topo')[0];
+        canvas.width = parseInt($('#topo').css('width'))
+        canvas.height = parseInt($('#topo').css('height'));
+        canvas.className = "topo"
+        box.appendChild(canvas);
+        this.stage = new JTopo.Stage(canvas);
+        this.stage.wheelZoom = 1.1;
+        this.stage.frames = -24;
+        this.scene = new JTopo.Scene(this.stage);
+        this.scene.alpha = 1;
+        this.scene.background = null;
+        this.scene.backgroundColor = "0,0,0";
+        this.view()
+    },
+    //视图
+    view: function() {
         var that = this;
-        this.scene.clear();
         $.ajax({
             type: "post",
             url: "/PDRInfo/GetAttribute",
@@ -22,97 +38,78 @@ Topo.prototype = {
             },
             success: function(res) {
                 res = res[0];
-
-                var ul = document.createElement('ul');
-                ul.className = "titleUl"
-
-                for (var a = 0, arr = []; a < res.OrderNoList.length; a++) {
-                    arr.push(`<li class='titleli' data-path='${res.OrderNoList[a].Path}'>${res.OrderNoList[a].Name}</li>`);
+                if (!that.isShowOrderTheTopo) {
+                    that.orderNoList(res);
+                    that.isShowOrderTheTopo = true;
                 }
-                ul.innerHTML = arr.join('');
-                $('#topo').append(ul);
-
-                $(ul).on('click', 'li', function() {
-                    that.scene.clear();
-                    that.lodingData(res.url, $(this).attr('data-path'));
-                    that.getNodeState();
-                })
-
                 that.__IP = $.base64.decode(res.IP);
-                $('[data-type=IP]').val(that.__IP);
-
                 that.__account = $.base64.decode(res.Account);
-                $('[data-type=account]').val(that.__account);
-
                 that.__password = $.base64.decode(res.Password);
-                $('[data-type=password]').val(that.__password);
-
                 that.__port = $.base64.decode(res.Port);
-                $('[data-type=port]').val(that.__port);
-                that.lodingData(res.url, res.Path);
+                that.LoadView(res.url, res.Path);
+                that.LoadData();
+                that.LoadMeter();
             },
         })
     },
-    lodingData: function(url, path) {
+    //加载视图
+    LoadView: function(url, path) {
         var that = this;
         $.ajax({
             type: "get",
             url: url + path,
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             success: function(data) {
-                console.log(data)
+                that.scene.clear();
                 try {
                     data = JSON.parse(data);
                 } catch (e) {
                     data = data;
                 }
                 that.history(data);
+                that.stage.paint();
             }
         })
-
+    },
+    //加载编号列表
+    orderNoList: function(res) {
+        var that = this;
+        var ul = document.createElement('ul');
+        ul.className = "titleUl"
+        for (var a = 0, arr = []; a < res.OrderNoList.length; a++) {
+            arr.push(`<li class='titleli' data-path='${res.OrderNoList[a].Path}'>${res.OrderNoList[a].Name}</li>`);
+        }
+        ul.innerHTML = arr.join('');
+        $('#topo').append(ul);
+        $(ul).on('click', 'li', function() {
+            $('table').remove();
+            that.LoadView(res.url, $(this).attr('data-path'));
+            that.LoadData();
+            that.LoadMeter();
+        })
     },
     // 读取历史
     history: function(obj) {
-        this.scene.translateX = obj.config.translateX;
-        this.scene.translateY = obj.config.translateY;
+        this.scene.translateX = obj.config.translateX || 1;
+        this.scene.translateY = obj.config.translateY || 1;
         this.scene.zoom(obj.config.scaleX, obj.config.scaleY);
-        this.scene.backgroundColor = obj.config.bgColor; //"0,0,0";
-        this.scene.background = null;
+        this.scene.backgroundColor = obj.config.bgColor;
         this.copyNode(obj.nodes);
-        this.getBindData();
-
     },
     //复制节点
     copyNode: function(list) {
         if (!list) {
             return
         }
+        this.textNode = []; //带有属性的节点
+        this.meterNode = []; //带有cid的电表
+        this.lineNode = []; //带有cid的电表
         for (var a = 0; a < list.length; a++) {
             var node = list[a];
             this.setNode(node);
         }
     },
-    //拓扑
-    createTopo: function() {
-        var that = this;
-        //创建 canvas元素  定义宽高
-        var canvas = document.createElement('canvas');
-        var box = $('#topo')[0];
-        canvas.width = parseInt($('#topo').css('width'));
-        canvas.height = parseInt($('#topo').css('height'));
-        canvas.className = "topo"
-        box.appendChild(canvas);
-        var stage = new JTopo.Stage(canvas);
-        stage.frames = 24; //只有鼠标事件时 才重新绘制
-        stage.wheelZoom = 1.1;
-        this.stage = stage;
-        var scene = new JTopo.Scene(stage);
-        scene.alpha = 1;
-        scene.background = null;
-        // scene.mode = "drag"
-        this.scene = scene;
-    },
-    //创建节点
+    //设置节点
     setNode: function(obj) {
         var that = this;
         if (obj.__type == "text") {
@@ -122,7 +119,6 @@ Topo.prototype = {
             node.setLocation(obj.x, obj.y);
             node.zIndex = obj.zIndex || 4;
             node.__type = 'text';
-            //状态赋值
             node.__statusvalue = obj.__statusvalue || 4;
             node.state4 = obj.state4 || "255,255,255";
             node.fontColor = node["state" + node.__statusvalue];
@@ -163,190 +159,107 @@ Topo.prototype = {
         node.id = obj.id;
         node._failureState = obj._failureState;
         node._cid = obj._cid;
-        // if (node._cid) {
-        //     node.mouseover(function(e) {
-        //         if (!that.meterData) {
-        //             $(this).attr("cursor", "wait");
-        //             return;
-        //         }
-        //         $('#electricMeterBounced').show();
-        //         $('#electricMeterBounced').css({
-        //             "top": e.clientY + node.height / 3 + 'px',
-        //             "left": e.clientX - 150 + 'px'
-        //         });
-        //         that.matchElectricMeter(node._cid);
-        //         that.timer = setInterval(function() {
-        //             that.matchElectricMeter(node._cid);
-        //         }, 1000)
-        //     });
-        //     node.mouseout(function() {
-        //         clearInterval(that.timer);
-        //         $('#electricMeterBounced').hide();
-        //     });
-        // }
-        if (obj.id && obj.__type == "text") {
-            that.matchText(node);
-        }
+
         node.selected = false;
         node.dragable = false;
         node.editAble = false;
         node.showSelected = false;
         this.scene.add(node);
+        if (node._parentID || node._failureState || node.id) {
+            this.lineNode.push(node);
+        }
+        if (node._cid) {
+            this.meterNode.push(node);
+        }
+        if (node.__type == "text" && node.id) {
+            this.textNode.push(node);
+        }
+
+
+        if (node._cid) {
+            var className = 'meter' + node._cid;
+            var str = `  
+             <table id="electricMeterBounced" class="${className}">
+                <thead>
+                    <tr>
+                        <th colspan="4" class='title'></th>
+                    </tr>
+                </thead>
+                <tr class="td3 tdb ">
+                    <th class="b3"></th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                </tr>
+                <tr class="td3 b1">
+                    <td class="b3">电压(kV)</td>
+                    <td class="UA1">--</td>
+                    <td class="UA2">--</td>
+                    <td class="UA3">--</td>
+                </tr>
+                <tr class="td3 b1">
+                    <td class="b3">电流(A)</td>
+                    <td class="I1">--</td>
+                    <td class="I2">--</td>
+                    <td class="I3">--</td>
+                </tr>
+                <tr class="b1">
+                    <td class="">功率因数</td>
+                    <td colspan="3" class="F">--</td>
+                </tr>
+                <tr>
+                    <td>总有功功率(kW)</td>
+                    <td colspan="3" class="P">--</td>
+                </tr>
+                <tr>
+                    <td>总无功功率(kVar)</td>
+                    <td colspan="3" class="Q">--</td>
+                </tr>
+                <tr class="border b1">
+                    <td>总有功电度(kWh)</td>
+                    <td colspan="3" class="K">--</td>
+                </tr>
+            </table>`
+
+            $('body').append(str);
+
+            node.mouseover(function(e) {
+                $('.' + className).show();
+                $('.' + className).css({
+                    "top": e.clientY + node.height / 3 + 'px',
+                    "left": e.clientX - 150 + 'px'
+                });
+            });
+            node.mouseout(function() {
+                $('.' + className).hide();
+            });
+        }
     },
-    //获取绑定节点的数据
-    getBindData: function() {
-        var attributeNode = []; //带有属性的节点
-        var electricMeter = []; //带有cid的电表
-        var textDataNode = [];
-        topo.scene.findElements(function(e) {
-            if (e._parentID || e._failureState || e.id) {
-                attributeNode.push(e);
-            }
-            if (e._cid) {
-                electricMeter.push(e);
-            }
-            if (e.__type == "text") {
-                textDataNode.push(e);
-            }
-        });
-        this.specialNode = attributeNode;
-        this.electricMeter = electricMeter;
-        this.textDataNode = textDataNode;
-    },
-    getNodeState: function() {
+    LoadData: function() {
         var that = this;
-        //等节点加载成功
-        var timer1 = setInterval(function() {
-            if (that.specialNode != undefined && that.specialNode.length != 0) {
-                clearInterval(timer1);
-                $.ajax({
-                    type: 'POST',
-                    url: "/PDRInfo/GetOneGraph_kg",
-                    data: {
-                        "pid": that.pid,
-                    },
-                    success: function(res) {
-                        var data = JSON.parse(res);
-                        var nodes = that.specialNode;
-                        if (!nodes) {
-                            return
-                        }
-                        for (var a = 0; a < nodes.length; a++) {
-                            if (nodes[a].__type == "node") {
-                                that.nodeShape(nodes[a], data);
-                            } else if (nodes[a].__type == "line") {
-                                that.nodeLine(nodes[a], data)
-                            }
-                        }
-                    },
-                })
-            }
-        }, 150);
-        //第一次获取所有数据
         $.ajax({
             type: 'POST',
-            url: "/PDRInfo/GetOneGraph_value",
+            url: "/PDRInfo/GetOneGraph_kg",
             data: {
                 "pid": that.pid,
             },
             success: function(res) {
-                that.meterData = res;
-            },
-        });
-        //连接mqtt获取变化量
-        setTimeout(function() {
-            that.mqtt();
-        }, 1000);
-    },
-    guid: function() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0,
-                v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    },
-    mqtt: function() {
-        var that = this;
-        var wsbroker = that.__IP;
-        location.hostname;
-        var wsport = parseInt(that.__port);
-        //连接选项
-        var client;
-
-        var options = {
-            timeout: 30,
-            userName: that.__account,
-            password: that.__password,
-            keepAliveInterval: 10,
-            onSuccess: function(e) {
-                console.log(("连接成功"));
-                client.subscribe('/ny/' + that.pid, {
-                    qos: 2
-                });
-            },
-            onFailure: function(message) {
-                console.log("连接失败 " + message.errorMessage);
-                setTimeout(function() {
-                    that.mqtt();
-                }, 10000);
-            }
-        };
-        if (location.protocol == "https:") {
-            console.log("https")
-            options.useSSL = true;
-        } else {
-            console.log("http")
-        }
-        client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
-        //创建连接
-        client.connect(options);
-        client.onConnectionLost = function(responseObject) {
-            if (responseObject.errorCode !== 0) {
-                console.error("异常掉线，掉线信息为:" + responseObject.errorMessage);
-            }
-            setTimeout(function() {
-                that.mqtt();
-            }, 10000);
-        };
-        client.onMessageArrived = function(res) {
-            var payload = JSON.parse(res.payloadString);
-            if (!payload.type) {
-                return;
-            }
-            if (payload.type == 6) {
-                var changeData = payload.content;
-                for (var key in changeData) {
-                    for (var a = 0; a < that.meterData.length; a++) {
-                        if (key == that.meterData[a].TagID) {
-                            that.meterData[a].DValue = changeData[key].PV;
-                            break;
-                        }
-                    }
-
-
-                    for (var b = 0; b < that.textDataNode.length; b++) {
-                        if (that.textDataNode[b].id == key) {
-                            that.textDataNode[b].text = changeData[key].PV;
-                        }
+                var data = JSON.parse(res);
+                var nodes = that.lineNode;
+                if (!nodes) {
+                    return
+                }
+                for (var a = 0; a < nodes.length; a++) {
+                    if (nodes[a].__type == "node") {
+                        that.nodeShape(nodes[a], data);
+                    } else if (nodes[a].__type == "line") {
+                        that.nodeLine(nodes[a], data)
                     }
                 }
-                return
-            }
-            var content = payload.content;
-            var nodes = that.specialNode;
-            if (!nodes) {
-                return
-            }
-            for (var a = 0; a < nodes.length; a++) {
-                if (nodes[a].__type == "node") {
-                    that.nodeShape(nodes[a], content);
-                } else if (nodes[a].__type == "line") {
-                    that.nodeLine(nodes[a], content);
-                }
-            }
-        };
+                that.stage.paint();
+            },
+        })
     },
-    // 节点类型改变
     nodeShape: function(node, data) {
         var pv1, //故障
             pv2, //parent
@@ -402,54 +315,118 @@ Topo.prototype = {
             node.fillColor = node.state0;
         }
     },
-    // 匹配表
-    matchElectricMeter: function(cid) {
-        var component = [];
-        var datatypeid = -1;
-        for (var a = 0, b = 0; a < this.meterData.length; a++) {
-            var meter = this.meterData[a];
-            if (meter.CID == cid) {
-                if (b == 0) {
-                    $('.title').html(meter.CName);
-                    b++;
+    LoadMeter: function() {
+        var that = this;
+        $.ajax({
+            type: 'POST',
+            url: "/PDRInfo/GetOneGraph_value",
+            data: {
+                "pid": that.pid,
+            },
+            success: function(res) {
+                that.setMeter(res)
+            },
+        })
+    },
+    setMeter: function(res) {
+        var that = this;
+        var meter = that.meterNode;
+        var text = that.textNode;
+        for (var i = 0; i < meter.length; i++) {
+            for (var a = 0, b = 0; a < res.length; a++) {
+                var className = ".meter" + meter[i]._cid;
+                if (res[a].CID == meter[i]._cid) {
+                    if (b == 0) {
+                        $(className + ' .title').html(meter.CName);
+                        b++;
+                    }
+                    if (res[a].DataTypeID == '2') { //电流
+                        $(className + ' .I' + res[a].ABCID).html(res[a].DValue);
+                        $(className + ' .IA .unit').html(res[a].Units);
+                    } else if (res[a].DataTypeID == '3' || res[a].DataTypeID == "56") { //电压
+                        $(className + ' .UA' + res[a].ABCID).html(res[a].DValue);
+                        $(className + ' .UAB .unit').html(res[a].Units);
+                    } else if (res[a].DataTypeID == '6' || res[a].DataTypeID == '51') { //功率因数
+                        $(className + ' .F').html(res[a].DValue);
+                        $(className + ' .PF .unit').html(res[a].Units);
+                    } else if (res[a].DataTypeID == '46' || res[a].DataTypeID == '7') { //总有功
+                        $(className + ' .P').html(res[a].DValue);
+                        $(className + ' ._P .unit').html(res[a].Units);
+                    } else if (res[a].DataTypeID == '48' || res[a].DataTypeID == '8') { //总无功功率
+                        $(className + ' .Q').html(res[a].DValue);
+                        $(className + ' ._Q .unit').html(res[a].Units);
+                    } else if (res[a].DataTypeID == '52') { //总有功电度
+                        $(className + ' .K').html(res[a].DValue);
+                    }
                 }
+            }
 
-                if (meter.DataTypeID == '2') { //电流
-                    $('.I' + meter.ABCID).html(meter.DValue);
-                    $('.IA .unit').html(meter.Units);
-                } else if (meter.DataTypeID == '3' || meter.DataTypeID == "56") { //电压
-                    $('.UA' + meter.ABCID).html(meter.DValue);
-                    $('.UAB .unit').html(meter.Units);
-                } else if (meter.DataTypeID == '6' || meter.DataTypeID == '51') { //功率因数
-                    $('.F').html(meter.DValue);
-                    $('.PF .unit').html(meter.Units);
-                } else if (meter.DataTypeID == '46' || meter.DataTypeID == '7') { //总有功
-                    $('.P').html(meter.DValue);
-                    $('._P .unit').html(meter.Units);
-                } else if (meter.DataTypeID == '48' || meter.DataTypeID == '8') { //总无功功率
-                    $('.Q').html(meter.DValue);
-                    $('._Q .unit').html(meter.Units);
-                } else if (meter.DataTypeID == '52') { //总有功电度
-                    $('.K').html(meter.DValue);
+        }
+        for (var b = 0; b < text.length; b++) {
+            for (var a = 0; a < res.length; a++) {
+                if (text[b].id == res[a].TagID) {
+                    text[b].text = res[a].DValue;
                 }
-
             }
         }
     },
-    //匹配文字
-    matchText: function(node) {
+    mqtt: function() {
         var that = this;
-        window.timer3 = setInterval(function() {
-            if (that.meterData != undefined && that.meterData.length != 0) {
-                for (var a = 0; a < that.meterData.length; a++) {
-                    if (node.id == that.meterData[a].TagID) {
-                        node.text = that.meterData[a].DValue;
-                        return
-                    }
-                }
-                clearInterval(window.timer3);
+        var wsbroker = that.__IP;
+        location.hostname;
+        var wsport = parseInt(that.__port);
+        //连接选项
+        var client;
+
+        var options = {
+            timeout: 30,
+            userName: that.__account,
+            password: that.__password,
+            keepAliveInterval: 10,
+            onSuccess: function(e) {
+                console.log(("连接成功"));
+                client.subscribe('/ny/' + that.pid, {
+                    qos: 2
+                });
+            },
+            onFailure: function(message) {
+                console.log("连接失败 " + message.errorMessage);
+                setTimeout(function() {
+                    that.mqtt();
+                }, 10000);
             }
-        }, 500);
+        };
+        client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
+        //创建连接
+        client.connect(options);
+        client.onConnectionLost = function(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.error("异常掉线，掉线信息为:" + responseObject.errorMessage);
+            }
+            setTimeout(function() {
+                that.mqtt();
+            }, 10000);
+        };
+        client.onMessageArrived = function(res) {
+            var payload = JSON.parse(res.payloadString);
+            if (!payload.type) {
+                return;
+            }
+            if (payload.type == 6) {
+                that.setMeter(payload)
+                return
+            } else {
+                that.nodeLine(nodes[a], payload);
+                that.nodeShape(nodes[a], payload);
+            }
+        };
+    },
+    guid: function() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 };
 var topo = new Topo();

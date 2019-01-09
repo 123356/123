@@ -22,12 +22,12 @@ namespace DAO
               .HasKey(t => new { t.CID });
             base.OnModelCreating(modelBuilder);
         }
-        public IList<t_V_DeviceInfoState_PDR1> getPDCTree(string unuitID)
+        public IList<t_V_DeviceInfoState_PDR1> GetCidTree(string unitID)
         {
-            //先查所有的PID  存
-            string sql = "SELECT a.PID,a.Name,b.DID,b.DeviceName,CID,CName from t_CM_PDRInfo a right JOIN t_DM_DeviceInfo b on a.PID=b.PID right join t_DM_CircuitInfo c on a.PID = c.PID and b.DID = c.DID where a.pid in("+ unuitID + ") order by PID,DID,CID" ;
+            string sql = "SELECT a.PID,a.Name,b.DID,b.DeviceName,CID,CName from t_CM_PDRInfo a right JOIN t_DM_DeviceInfo b on a.PID=b.PID right join t_DM_CircuitInfo c on a.PID = c.PID and b.DID = c.DID where a.pid in("+ unitID + ") order by PID,DID,CID" ;
             return SQLQuery<t_V_DeviceInfoState_PDR1>(sql);
         }
+
         public DbSet<t_V_DeviceInfoState_PDR1> Datas { get; set; }
     }
 }

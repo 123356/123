@@ -9,6 +9,8 @@ using YWWeb.PubClass;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using IDAO.Models;
+using DAL;
 
 namespace YWWeb.Controllers
 {
@@ -2993,9 +2995,9 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
         public JsonResult GetOneGraph_kg(int pid)
         {
             //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-            string strsql = "select * from V_DeviceInfoState_PDR1 where pid=" + pid + " and DataTypeID = 23 order by did,DataTypeID,TagID,ABCID";
-            List<V_DeviceInfoState_PDR1> list = bll.ExecuteStoreQuery<V_DeviceInfoState_PDR1>(strsql).ToList();
-
+            //string strsql = "select * from V_DeviceInfoState_PDR1 where pid=" + pid + " and DataTypeID = 23 order by did,DataTypeID,TagID,ABCID";
+            //List<V_DeviceInfoState_PDR1> list = bll.ExecuteStoreQuery<V_DeviceInfoState_PDR1>(strsql).ToList();
+            IList<t_V_RealTimeData1> list = VRealTimeDataDAL.getInstance().GetRealTimeData1(99999, 1, "23", false, pid, -1, -1, -1);
 
             Dictionary<int, sj> obj = new Dictionary<int, sj>();
             foreach (var item in list)
@@ -3015,6 +3017,35 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             public decimal? PV { get; set; }
             public string Remarks { get; set; }
         }
+
+#if !UseOld
+         public JsonResult GetOneGraph_value(int pid, string cids = "-1")
+        {
+            //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            List<OneGraphView> re = new List<OneGraphView>();
+            IList<t_V_RealTimeData1> listRealData = VRealTimeDataDAL.getInstance().GetRealTimeData1(99999,1,"23",true,pid,-1,-1,-1);
+            foreach (var model in listRealData)
+            {
+                OneGraphView view = new OneGraphView();
+                                               
+                view.CID = model.CID;
+                view.CName = model.CName;
+                
+                view.DValue = Convert.ToDecimal(model.PV);
+              
+                view.TagID = model.TagID;
+                view.TagName = model.TagName;
+               // view.CtypeName = model.TypeName;
+                view.PositionName = model.Position;
+                view.Units = DataUnitsReplace(model.Units);
+                view.DataTypeID = model.DataTypeID;
+                view.PID = model.PID;
+                view.ABCID = model.ABCID;
+                re.Add(view);
+            }
+            return Json(re, JsonRequestBehavior.AllowGet);
+        }
+#else
         /// <summary>
         /// 一次图数据
         /// </summary>
@@ -3125,6 +3156,7 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             }
             return Json(re, JsonRequestBehavior.AllowGet);
         }
+#endif
         public class OneGraphView
         {
             public OneGraphView()
@@ -3410,6 +3442,6 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             public Object DID { get; set; }
         }
 
-        #endregion
+#endregion
     }
 }

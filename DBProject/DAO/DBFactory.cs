@@ -35,5 +35,8 @@ namespace DAO
 
 		public IEnerUserType enerUserType => new EnerUserTypeDBContext();
 
+        public IVEnerProjectType venerProjectType => new VEnerProjectTypeDBContext();
+
+
     }
 }
