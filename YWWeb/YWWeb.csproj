@@ -1376,6 +1376,7 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
+    <Content Include="Content\js\rule.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />
     <Content Include="Content\js\iepng.js" />
@@ -1398,7 +1399,6 @@
     <Content Include="Content\js\lightslider2.js" />
     <Content Include="Content\js\menucontrol._zc.js" />
     <Content Include="Content\js\menulast._zc.js" />
-    <Content Include="Content\js\mqtt_car.js" />
     <Content Include="Content\js\online._zc.js" />
     <Content Include="Content\js\ResizeList._zc.js" />
     <Content Include="Content\js\respond.src.js" />
