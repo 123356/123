@@ -150,14 +150,17 @@ Topo.prototype = {
         this.editRow();
         this.keyEvent()
     },
-    history: function(obj) {
-        if (!obj) { return }
-        this.scene.translateX = obj.config.translateX;
-        this.scene.translateY = obj.config.translateY;
-        this.scene.zoom(obj.config.scaleX, obj.config.scaleY);
-        this.scene.backgroundColor = obj.config.bgColor; //"0,0,0";
-        this.scene.background = null;
-        this.copyNode(obj.nodes);
+    history: function (obj) {
+        console.log(obj)
+        if (obj) {
+            console.log(obj.config.translateX)
+            this.scene.translateX = obj.config.translateX || 1;
+            this.scene.translateY = obj.config.translateY || 1;
+            this.scene.zoom(obj.config.scaleX, obj.config.scaleY);
+            this.scene.backgroundColor = obj.config.bgColor; //"0,0,0";
+            this.scene.background = null;
+            this.copyNode(obj.nodes);
+        }
     },
     copyNode: function(list) {
         if (!list) {
@@ -226,8 +229,6 @@ Topo.prototype = {
                 },
                 success: function(res) {
                     res = res[0];
-                    console.log(res);
-
                     if (res.IP) {
                         that.__IP = $.base64.decode(res.IP);
                         $('[data-type=IP]').val(that.__IP);
@@ -289,7 +290,7 @@ Topo.prototype = {
         canvas.className = "topo"
         box.appendChild(canvas);
         var stage = new JTopo.Stage(canvas);
-        stage.frames = 24;
+        stage.frames = -24;
         stage.wheelZoom = 1.1;
         that.mode = 'normal';
         this.stage = stage;
@@ -427,7 +428,7 @@ Topo.prototype = {
         $(saveData).css('display', "none");
         $("body").append(saveData);
         var IP = $.base64.encode(that.__IP);
-        var port = $.base64.encode(that.__IP);
+        var port = $.base64.encode(that.__port);
         var account = $.base64.encode(that.__account);
         var password = $.base64.encode(that.__password);
         var val = `?pid=${that.__pid}&orderNo=${that.__orderNo}&type=1&IP=${IP || ""}&port=${port || ""}&account=${account || ""}&password=${password || ""}&Name=${$('input[data-type=Name]').val()}`;

@@ -38,13 +38,11 @@ Topo.prototype = {
             },
             success: function (res) {
                 res = res[0];
-
                 that.__IP = $.base64.decode(res.IP);
                 that.__account = $.base64.decode(res.Account);
                 that.__password = $.base64.decode(res.Password);
                 that.__port = $.base64.decode(res.Port);
                 that.LoadView(res.url, res.Path);
-                that.LoadData();
                 that.LoadMeter();
                 if (!that.isShowOrderTheTopo) {
                     that.orderNoList(res);
@@ -69,8 +67,7 @@ Topo.prototype = {
                     data = data;
                 }
                 that.history(data);
-                that.stage.paint();
-
+                that.LoadData();
             }
         })
     },
@@ -87,8 +84,7 @@ Topo.prototype = {
         $(ul).on('click', 'li', function() {
             $('table').remove();
             that.LoadView(res.url, $(this).attr('data-path'));
-            that.LoadData();
-            that.LoadMeter();
+            that.stage.paint();
         })
     },
     // 读取历史
@@ -177,8 +173,6 @@ Topo.prototype = {
         if (node.__type == "text" && node.id) {
             this.textNode.push(node);
         }
-
-
         if (node._cid) {
             var className = 'meter' + node._cid;
             var str = `  
@@ -250,6 +244,7 @@ Topo.prototype = {
                 var data = JSON.parse(res);
                 var nodes = that.lineNode;
                 if (!nodes) {
+                    console.log('节点还没加载')
                     return
                 }
                 for (var a = 0; a < nodes.length; a++) {
@@ -259,11 +254,11 @@ Topo.prototype = {
                         that.nodeLine(nodes[a], data)
                     }
                 }
-                that.stage.paint();
             },
         })
     },
-    nodeShape: function(node, data) {
+    nodeShape: function (node, data) {
+        var that = this;
         var pv1, //故障
             pv2, //parent
             pv3; //自己ID
@@ -302,7 +297,8 @@ Topo.prototype = {
         }
     },
     // 线类型改变
-    nodeLine: function(node, data) {
+    nodeLine: function (node, data) {
+        var that = this;
         var arr = node._parentID.split(",");
         var num = 0;
         for (var a = 0; a < arr.length; a++) {
@@ -398,6 +394,12 @@ Topo.prototype = {
                 setTimeout(function() {
                     that.mqtt();
                 }, 10000);
+                if (location.protocol == "https:") {
+                    console.log("https")
+                    options.useSSL = true;
+                } else {
+                    console.log("http")
+                }
             }
         };
         client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
@@ -425,10 +427,10 @@ Topo.prototype = {
                     for (var a = 0; a < text.length; a++) {
                         if (text[a].id == key) {
                             text[a].text = data[key].PV;
-                            that.stage.paint();
                         }
                     }
                 }
+                that.stage.paint();
             } else {
                 var nodes = that.lineNode;
                 for (var a = 0; a < nodes.length; a++) {

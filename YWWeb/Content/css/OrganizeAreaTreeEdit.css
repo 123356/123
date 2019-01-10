@@ -2,11 +2,11 @@ html {
     background: #fff;
     display: flex;
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 body {
-    padding: 20px 30px;
+    padding: 8px 30px;
     flex-grow: 1;
 }
 
@@ -22,9 +22,9 @@ body {
     align-items: center;
 }
 
-    .edit > * {
-        margin-right: 15px;
-    }
+.edit>* {
+    margin-right: 15px;
+}
 
 .main {
     height: 90%;
@@ -42,11 +42,11 @@ body {
     border: 1px solid #999;
     height: 100%;
 }
+
 .left {
     border: 1px solid #999;
     height: 100%;
     overflow: hidden;
-  
 }
 
 .right {
@@ -59,11 +59,11 @@ body {
 }
 
 .right {
-    padding: 20px 30px;
+    padding: 8px 30px;
 }
 
-div.form-control{
-   overflow-y:auto;
+div.form-control {
+    overflow-y: auto;
     height: 150px;
     width: 92%;
     display: inline-block;
@@ -78,12 +78,12 @@ div.form-control{
 
 .btn.btn-default {
     background: #fff;
-    border-color:  #ced4da;
+    border-color: #ced4da;
 }
 
-    .btn-default:hover {
-        background: #999;
-    }
+.btn-default:hover {
+    background: #999;
+}
 
 button.close {
     position: absolute;
@@ -97,19 +97,16 @@ button.close {
 .meter .close {
     cursor: pointer;
     display: inline-block;
-    margin-left:7px;
+    margin-left: 7px;
 }
-
 
 .meter:hover {
     background: #999;
 }
 
-
-.nometer{
-    display:none;
+.nometer {
+    display: none;
 }
-
 
 .meter {
     padding: 8px;
@@ -123,4 +120,20 @@ button.close {
     margin: .3rem;
     display: inline-block;
     line-height: 30px;
+}
+
+.modal-body {
+    background: #F0F6E4;
+}
+
+#Organization * {
+    font-size: 18px;
+}
+
+.left {
+    background: #F0F6E4;
+}
+
+.right {
+    background: #fff;
 }
