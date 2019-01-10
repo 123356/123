@@ -8,7 +8,9 @@
 	}
 
 	//动态创建script标签
-	function jsonp(url){
+function jsonp(url) {
+    if (url == undefined)
+        return;
 	    var script = document.createElement('script');
 	    script.src = url;
 	    document.body.append(script);

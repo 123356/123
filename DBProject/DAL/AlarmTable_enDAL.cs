@@ -41,6 +41,7 @@ namespace DAL
         QueryAlarmCount userQueryAlarmCountInf;
         DateTime m_dtAlarmCount ;
         private bool m_queryed=false;
+        //object _redisLoker = new object();
         private int queryAlarmCountInf(/*string pdrlist*/)
         {
             if (null != m_dtAlarmCount && (DateTime.Now - m_dtAlarmCount).TotalSeconds < 1)
@@ -49,6 +50,7 @@ namespace DAL
                 return 0;
             m_queryed = true;
             m_dtAlarmCount = DateTime.Now;
+            //Loger.LogHelper.Info("queryAlarmCountInf: begin");
             int total = 0;
             //List<int> pdrIDS = new List<int>();
             //if(!string.IsNullOrEmpty(pdrlist))
@@ -65,32 +67,37 @@ namespace DAL
                 IDBCache dbCache = _dbCacheFactory.DefautCache;
                 if (data.Count > 0)
                 {
-                    List<int> listPid = dbCache.HashKeys<int>(FirstKey);
-                    Dictionary<object, object> fields = new Dictionary<object, object>();
-                    bool containted = false;
-                    foreach (var kPid in listPid)//删除没有报警的
-                    {
-                        containted = false;
-                        foreach (AlarmCount model in data)
-                        {
-                            if (model.PID == kPid)
-                            {
-                                containted = true;
-                                break;
-                            }
-                        }
-                        if (containted)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            //dbCache.HashDelete(FirstKey, kPid.ToString());
-                            //dbCache.HashSet(FirstKey, kPid.ToString(), 0);//不删除，防止读取异常
-                            fields.Add(kPid, 0);
-                        }
+                    //List<int> listPid = null;
+                    //lock (_redisLoker)
+                    //{
+                    //   listPid = dbCache.HashKeys<int>(FirstKey);
 
-                    }
+                    //}
+                    Dictionary<object, object> fields = new Dictionary<object, object>();
+                    //bool containted = false;
+                    //foreach (var kPid in listPid)//删除没有报警的
+                    //{
+                    //    containted = false;
+                    //    foreach (AlarmCount model in data)
+                    //    {
+                    //        if (model.PID == kPid)
+                    //        {
+                    //            containted = true;
+                    //            break;
+                    //        }
+                    //    }
+                    //    if (containted)
+                    //    {
+                    //        continue;
+                    //    }
+                    //    else
+                    //    {
+                    //        //dbCache.HashDelete(FirstKey, kPid.ToString());
+                    //        //dbCache.HashSet(FirstKey, kPid.ToString(), 0);//不删除，防止读取异常
+                    //        fields.Add(kPid, 0);
+                    //    }
+
+                    //}
                     foreach (AlarmCount model in data)
                     {
                         //dbCache.HashSet(FirstKey, model.PID.ToString(), model.Count);
@@ -100,12 +107,18 @@ namespace DAL
                     }
                     if (fields.Count > 0)
                     {
-                        dbCache.HashSet(FirstKey, fields);
+                        //lock (_redisLoker)
+                        {
+                            //dbCache.HashSet(FirstKey, fields);
+                            string json = JsonConvert.SerializeObject(fields);
+                            dbCache.StringSet(FirstKey,json);
+                        }
                     }
                 }
                 else
                 {
-                    dbCache.KeyDelete(FirstKey);
+                    //dbCache.KeyDelete(FirstKey);
+                    Loger.LogHelper.Info("GetAlarmCount() data.Count():"+ data.Count());
                 }
 
                 dbCache = null;
@@ -116,7 +129,8 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Loger.LogHelper.Error(ex);
             }
             finally
             {
@@ -128,32 +142,39 @@ namespace DAL
         public int GetAlarmCount(string pdrList)
         {
             IDBCache dbCache = _dbCacheFactory.DefautCache;
+            userQueryAlarmCountInf.BeginInvoke(null, null);//放前面防止出错后被跳过
 
             try
             {
                 int total = 0;
                 //if (dbCache.KeyExists(FirstKey))
                 //{
-                    string[] pids = pdrList.Split(',');
-                    IList<string> fields = dbCache.HashKeys<string>(FirstKey);
-                    var fks = fields.Where(t => pids.Contains(t));
-                    IList<string> alarmCount1 = dbCache.HashGet<string>(FirstKey, pids.ToList<string>());
-                    IList<int> alarmCount = alarmCount1.Where(t => !string.IsNullOrEmpty(t)).Select(t=>Convert.ToInt32(t)).ToList();
-                    total =alarmCount.Sum();
-
-                    //foreach (var v in pids)
-                    //{
-                    //    if (dbCache.HashExists(FirstKey, v))
-                    //        total += dbCache.HashGet<int>(FirstKey, v);
-                    //}
+                string[] pids = pdrList.Split(',');
+                //IList<string> fields = dbCache.HashKeys<string>(FirstKey);
+                //var fks = fields.Where(t => pids.Contains(t));
+                //IList<string> alarmCount1 = null;
+                //lock (_redisLoker)
+                //{
+                //    alarmCount1 = dbCache.HashGet<string>(FirstKey, pids.ToList<string>());
+                //}
+                //IList<int> alarmCount = alarmCount1.Where(t => !string.IsNullOrEmpty(t)).Select(t => Convert.ToInt32(t)).ToList();
+                //total = alarmCount.Sum();
+                string json =dbCache.StringGet(FirstKey);
+                Dictionary<int,int> result=JsonConvert.DeserializeObject<Dictionary<int, int>>(json);
+                IList<int> alarmCount = result.Where(t => pids.Contains(t.Key.ToString())).Select(t=> t.Value ).ToList<int>();
+                total = alarmCount.Sum();
+                //foreach (var v in pids)
+                //{
+                //    if (dbCache.HashExists(FirstKey, v))
+                //        total += dbCache.HashGet<int>(FirstKey, v);
+                //}
                 //}
                 //else
                 //{
                 //    System.Diagnostics.Debug.WriteLine("dbCache.KeyExists(FirstKey)");
                 //}
-                userQueryAlarmCountInf.BeginInvoke( null, null);
 
-                return total;
+               return total;
             }
             catch (Exception ex)
             {
