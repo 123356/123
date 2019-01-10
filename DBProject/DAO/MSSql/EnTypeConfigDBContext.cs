@@ -37,7 +37,7 @@ namespace DAO
 
         public IList<t_EE_enTypeConfig> GetenConig(int uid)
         {
-            string sql = $"select * from t_EE_enTypeConfig where UID={uid}";
+            string sql = $"select a.*,b.Name from t_EE_enTypeConfig a join t_DM_CollectDevType b on a.Type=b.ID  where UID={uid}";
             return SQLQuery<t_EE_enTypeConfig>(sql);
         }
 

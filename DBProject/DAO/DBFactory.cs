@@ -44,5 +44,7 @@ namespace DAO
         public ICollecDevType collecdevtype => new CollecDevTypeDBContext();
 
         public IVEnerProjectType venerProjectType => new VEnerProjectTypeDBContext();
+
+        public ICircuitInfo circuitinfo => new CircuitInfoDBContext();
     }
 }

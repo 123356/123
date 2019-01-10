@@ -33,42 +33,57 @@ namespace DAL
 
 
 
-        public IList<t_V_EneryView> GetEneryPowerOverview(int uid)
+        //public IList<t_V_EneryView> GetEneryPowerOverview(int uid)
+        //{
+        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
+        //    try
+        //    {
+        //        data = _dbFactory.eneryOverView.GetEneryPowerOverview(uid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+        //    return data;
+
+        //}
+        //public IList<t_V_EneryView> GetEneryWaterOverview(int uid)
+        //{
+        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
+        //    try
+        //    {
+        //        data = _dbFactory.eneryOverView.GetEneryWaterOverview(uid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+        //    return data;
+
+        //}
+        //public IList<t_V_EneryView> GetEneryGasOverview(int uid)
+        //{
+        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
+        //    try
+        //    {
+        //        data = _dbFactory.eneryOverView.GetEneryGasOverview(uid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+        //    return data;
+
+        //}
+        public IList<t_V_EneryView> GetDatas(string cids,string pids)
         {
             IList<t_V_EneryView> data = new List<t_V_EneryView>();
             try
             {
-                data = _dbFactory.eneryOverView.GetEneryPowerOverview(uid);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            return data;
-
-        }
-        public IList<t_V_EneryView> GetEneryWaterOverview(int uid)
-        {
-            IList<t_V_EneryView> data = new List<t_V_EneryView>();
-            try
-            {
-                data = _dbFactory.eneryOverView.GetEneryWaterOverview(uid);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            return data;
-
-        }
-        public IList<t_V_EneryView> GetEneryGasOverview(int uid)
-        {
-            IList<t_V_EneryView> data = new List<t_V_EneryView>();
-            try
-            {
-                data = _dbFactory.eneryOverView.GetEneryGasOverview(uid);
+                data = _dbFactory.eneryOverView.GetDatas(cids,pids);
             }
             catch (Exception ex)
             {

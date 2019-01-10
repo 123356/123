@@ -59,6 +59,7 @@
     <Compile Include="DBFactoryManager.cs" />
     <Compile Include="IAlarmTable_en.cs" />
     <Compile Include="IBudget.cs" />
+    <Compile Include="ICircuitInfo.cs" />
     <Compile Include="ICollecDevType.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
