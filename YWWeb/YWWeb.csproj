@@ -1687,6 +1687,7 @@
     <Content Include="Content\UserJS\appliction.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._jm.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._zc.js" />
+    <Content Include="Content\UserJS\BudgetSetting._zc.js" />
     <Content Include="Content\UserJS\CategoryView._jm.js" />
     <Content Include="Content\UserJS\CategoryView._zc.js" />
     <Content Include="Content\UserJS\CommonUnit._jm.js" />
@@ -1695,6 +1696,12 @@
     <Content Include="Content\UserJS\ConstractEdit._zc.js" />
     <Content Include="Content\UserJS\ConstractView._jm.js" />
     <Content Include="Content\UserJS\ConstractView._zc.js" />
+    <Content Include="Content\UserJS\Control._zc .js" />
+    <Content Include="Content\UserJS\ElectricityReport._zc.js" />
+    <Content Include="Content\UserJS\EnergyAudit._zc.js" />
+    <Content Include="Content\UserJS\EnergyOverview._zc.js" />
+    <Content Include="Content\UserJS\EnergyPublicity._zc .js" />
+    <Content Include="Content\UserJS\EnergyQuery._zc.js" />
     <Content Include="Content\UserJS\PUERealTime._zc .js" />
     <Content Include="Content\UserJS\PUEHistory._zc.js" />
     <Content Include="Content\UserJS\Consume._zc.js" />
@@ -1807,6 +1814,7 @@
     <Content Include="Content\UserJS\ResizeList._jm.js" />
     <Content Include="Content\UserJS\RoleList_jm.js" />
     <Content Include="Content\UserJS\RoleList_zc.js" />
+    <Content Include="Content\UserJS\RoomDataMonitoring._zc.js" />
     <Content Include="Content\UserJS\SensorList_jm.js" />
     <Content Include="Content\UserJS\SensorList_zc.js" />
     <Content Include="Content\UserJS\SparePartEdits._jm.js" />
@@ -2452,6 +2460,16 @@
     <Content Include="Views\Constract\ProjectOverview.cshtml" />
     <Content Include="Views\Home\PUERealTime.cshtml" />
     <Content Include="Views\Home\PUEHistory.cshtml" />
+    <Content Include="Views\EnergyEfficiency\BudgetSetting.cshtml" />
+    <Content Include="Views\EnergyEfficiency\Control.cshtml" />
+    <Content Include="Views\EnergyEfficiency\DepartData.cshtml" />
+    <Content Include="Views\EnergyEfficiency\DepartDataMonitoring.cshtml" />
+    <Content Include="Views\EnergyEfficiency\ElectricityReport.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyAudit.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyOverview.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyPublicity.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyQuery.cshtml" />
+    <Content Include="Views\EnergyEfficiency\roomDataMonitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
