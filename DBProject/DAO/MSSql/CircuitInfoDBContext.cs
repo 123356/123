@@ -28,5 +28,12 @@ namespace DAO
                         where c.CID in({cids}) and coolect_dev_type={type}";
             return SQLQuery<t_DM_CircuitInfo>(sql);
         }
+
+        public IList<t_DM_CircuitInfo> GetCIDByCIDS(string cids)
+        {
+            string sql = $@"select c.ID, CID,c.Name from (select a.ID,CID,b.Name,a.coolect_dev_type from [t_DM_CircuitInfo] a join t_DM_CollectDevType b on a.coolect_dev_type=b.id) as c 
+                        where c.CID in({cids}) ";
+            return SQLQuery<t_DM_CircuitInfo>(sql);
+        }
     }
 }

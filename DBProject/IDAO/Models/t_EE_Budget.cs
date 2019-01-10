@@ -30,5 +30,7 @@ namespace IDAO.Models
         public decimal SubsectorGate { get; set; }
 
         public decimal DepartmentalApportionment { get; set; }
+
+        public string Name { get; set; }
     }
 }

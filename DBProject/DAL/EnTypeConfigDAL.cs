@@ -57,11 +57,11 @@ namespace DAL
                 throw ex;
             }
         }
-        public IList<t_EE_enTypeConfig> GetenConig(int uid)
+        public IList<t_EE_enTypeConfig> GetenConig(int uid,int depid=0)
         {
             try
             {
-                return _dbFactory.typeconfig.GetenConig(uid);
+                return _dbFactory.typeconfig.GetenConig(uid,depid);
             }
             catch (Exception ex)
             {

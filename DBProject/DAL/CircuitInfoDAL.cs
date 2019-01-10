@@ -44,5 +44,20 @@ namespace DAL
             return data;
 
         }
+        public IList<t_DM_CircuitInfo> GetCIDByCIDS(string cids)
+        {
+            IList<t_DM_CircuitInfo> data = new List<t_DM_CircuitInfo>();
+            try
+            {
+                data = _dbFactory.circuitinfo.GetCIDByCIDS(cids);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
     }
 }

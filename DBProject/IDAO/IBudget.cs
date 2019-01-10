@@ -9,6 +9,7 @@ namespace IDAO
 {
     public interface IBudget:IDAOBase,IDisposable
     {
-        IList<t_EE_Budget> GetBudgetByID(int uid);
+        IList<t_EE_Budget> GetBudgetByID(int uid,int depid=0);
+        
     }
 }

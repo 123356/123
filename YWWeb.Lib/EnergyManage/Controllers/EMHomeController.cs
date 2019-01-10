@@ -33,6 +33,7 @@ namespace EnergyManage.Controllers
                 decimal budget = 0;
                 rightView view = new rightView();
                 view.name = item_peizhi.Name;
+                view.ID = item_peizhi.ID;
                 budget = list_budgets.Where(p => p.EnergyTypeID == item_peizhi.Type).Sum(p => p.GeneralBudget);
                 view.budget = budget;
                 IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.DepartmentID);
@@ -40,7 +41,6 @@ namespace EnergyManage.Controllers
                 {
                     IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
                     string cids = "";
-                    int index = 0;
                     foreach (var item_cir in list_cir)
                     {
 
@@ -117,6 +117,8 @@ namespace EnergyManage.Controllers
             public decimal energyConsumption { get; set; }
             public decimal budget { get; set; }
 
+            public int ID { get; set; }
+
         }
         public JsonResult AddConfig(t_EE_enTypeConfig model)
         {
@@ -146,7 +148,48 @@ namespace EnergyManage.Controllers
             IList<t_CM_Unit> list = GetUnitComobox();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-        
+
+        #endregion
+
+        #region 能源分析
+
+        public JsonResult GetEneryAnalysis(int uid,int DepartmentID,string time="2018-11")
+        {
+            List<overView> list= new List<overView>();
+            //根据权限读取PID;
+            string pids = GetPIDs();
+            IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
+
+            IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid,DepartmentID);
+            foreach (var item_peizhi in list_peizhi)
+            {
+                decimal rate = 0;
+                rightView view = new rightView();
+                view.name = item_peizhi.Name;
+                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
+                foreach (var item_userP in list_userP)
+                {
+                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
+                    string cids = "";
+                    foreach (var item_cir in list_cir)
+                    {
+                        cids += item_cir.CID + ",";
+                    }
+                    if (cids != "")
+                        cids = cids.Substring(0, cids.Length - 1);
+                    else
+                        cids = "0";
+                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
+                    rate = list_data.Sum(p => p.Rate);
+                }
+                view.rate = rate;
+                overView oview = new overView();
+                oview.name = item_peizhi.Name;
+                oview.value = rate;
+                list.Add(oview);
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

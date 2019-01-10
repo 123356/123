@@ -91,7 +91,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
     }
 }

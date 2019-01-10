@@ -29,12 +29,12 @@ namespace DAL
 
             return _DataDal;
         }
-        public IList<t_EE_Budget> GetBudgetByID(int uid)
+        public IList<t_EE_Budget> GetBudgetByID(int uid,int depid=0)
         {
             IList<t_EE_Budget> data = new List<t_EE_Budget>();
             try
             {
-                data = _dbFactory.budget.GetBudgetByID(uid);
+                data = _dbFactory.budget.GetBudgetByID(uid, depid);
             }
             catch (Exception ex)
             {

@@ -11,6 +11,6 @@ namespace IDAO
     {
         int AddConfig(t_EE_enTypeConfig model);
         int DeleteConfig(int id);
-        IList<t_EE_enTypeConfig> GetenConig(int uid);
+        IList<t_EE_enTypeConfig> GetenConig(int uid,int depid=0);
     }
 }
