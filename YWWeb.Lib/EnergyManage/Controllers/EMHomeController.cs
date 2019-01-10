@@ -24,9 +24,9 @@ namespace EnergyManage.Controllers
             //根据权限读取PID;
             string pids = "138";
             IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
-           
+
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
-            foreach(var item_peizhi in list_peizhi)
+            foreach (var item_peizhi in list_peizhi)
             {
                 decimal rate = 0;
                 decimal energyConsumption = 0;
@@ -35,18 +35,18 @@ namespace EnergyManage.Controllers
                 view.name = item_peizhi.Name;
                 budget = list_budgets.Where(p => p.EnergyTypeID == item_peizhi.Type).Sum(p => p.GeneralBudget);
                 view.budget = budget;
-                IList <t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.DepartmentID);
-                foreach(var item_userP in list_userP)
+                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.DepartmentID);
+                foreach (var item_userP in list_userP)
                 {
                     IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
                     string cids = "";
                     int index = 0;
                     foreach (var item_cir in list_cir)
                     {
-                      
-                        
+
+
                         cids += item_cir.CID + ",";
-                        
+
                     }
                     if (cids != "")
                         cids = cids.Substring(0, cids.Length - 1);
@@ -111,7 +111,7 @@ namespace EnergyManage.Controllers
                 keyValuePairs_Time = new List<List<overView>>();
             }
             public string name { get; set; }
-            public List< List<overView>> keyValuePairs { get; set; }
+            public List<List<overView>> keyValuePairs { get; set; }
             public List<List<overView>> keyValuePairs_Time { get; set; }
             public decimal rate { get; set; }
             public decimal energyConsumption { get; set; }
@@ -138,8 +138,15 @@ namespace EnergyManage.Controllers
         public JsonResult GetComobxList()
         {
             IList<t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
-            return Json(list);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetUnitComobxList()
+        {
+            IList<t_CM_Unit> list = GetUnitComobox();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        
         #endregion
     }
 }

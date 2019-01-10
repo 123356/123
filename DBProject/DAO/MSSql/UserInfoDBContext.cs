@@ -34,7 +34,7 @@ namespace DAO
             //this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             return Datas.Where(u => u.UserName == userName && u.UserPassWord == password).ToList();
         }
-        
+
         public IList<t_CM_UserInfo> GetUsers(string mobile)
         {
             return Datas.Where(u => u.Mobilephone == mobile).ToList();
@@ -50,6 +50,19 @@ namespace DAO
             return ExecuteSqlCommand(sql);
         }
 
+
+        public IList<t_CM_UserInfo> GetUnitLIstByUserID(t_CM_UserInfo user)
+        {
+            string sql = "";
+            if (user.RoleID == 1)
+                sql = "select * from t_CM_UserInfo";
+            else if (Convert.ToBoolean(user.IsAdmin))
+                sql = $"select * from t_CM_UserInfo where UID = {user.UID} AND RoleID!= 1";
+            else
+                sql = $"select * from t_CM_UserInfo where UserID={user.UserID}";
+
+            return SQLQuery<t_CM_UserInfo>(sql);
+        }
         public DbSet<t_CM_UserInfo> Datas { get; set; }
     }
 }

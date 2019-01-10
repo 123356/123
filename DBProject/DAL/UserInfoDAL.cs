@@ -117,5 +117,22 @@ namespace DAL
 
         }
 
+        public IList<t_CM_UserInfo> GetUnitLIstByUserID(t_CM_UserInfo user)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+
+                data = _dbFactory.userInf.GetUnitLIstByUserID(user);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+
     }
 }

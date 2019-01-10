@@ -19,5 +19,7 @@ namespace IDAO
         IList<t_CM_UserInfo> GetUsers(string mobile);
         IList<t_CM_UserInfo> GetWxUsers(string openid);
         int UpdateUnitList(int userID, string unitList);
+
+        IList<t_CM_UserInfo> GetUnitLIstByUserID(t_CM_UserInfo user);
     }
 }
