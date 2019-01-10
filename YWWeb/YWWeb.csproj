@@ -1376,6 +1376,7 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
+    <Content Include="Content\js\less.js" />
     <Content Include="Content\js\rule.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />
@@ -2099,6 +2100,7 @@
     <Content Include="Content\iview\dist\styles\fonts\ionicons.woff" />
     <Content Include="Areas\EnergyManage\Views\EMSetting\OrganizeAreaTreeEdit.cshtml" />
     <Content Include="Content\UserJS\RealtimeDataInfo._jm.js.rej" />
+    <Content Include="Content\less\pue.less" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

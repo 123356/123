@@ -1,6 +1,7 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        uid:null,
         curDate: '2018-12',
         powerChart: null,
         energyMoneyChart: null,
@@ -14,19 +15,126 @@
         heatBarChart: null,
         addModal1Visable: false,
         addForm: {
-            type: null,
-            department: null,
+            Type: null,
+            DepartmentID: null,
         },
         rules: {
-            type: [
+            Type: [
                 { required: true, message: '请选择能源类型', trigger: 'change' }
             ],
-            department: [
+            DepartmentID: [
                 { required: true, message: '请选择科室', trigger: 'change' }
             ],
-        }
+        },
+        typeList: [],
+        departMentList: [],
+        comList:[]
     },
     methods: {
+        //类型下拉框
+        getCollectDevTypeList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetCollectDevTypeList',
+                method: 'get',
+            }).then(function (res) {
+               // console.log(res.data)
+                that.typeList = res.data
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
+        //科室下拉框
+        getDepartMentList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetComobxList',
+                method: 'get',
+            }).then(function (res) {
+                console.log(res.data)
+                that.departMentList = res.data
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
+        //单位下拉框
+        getUnitComobxList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetUnitComobxList',
+                method: 'get',
+            }).then(function (res) {
+                console.log(res.data)
+                that.comList = res.data
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
+
+        //删除能源
+        deleteConfig: function (id) {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/DeleteConfig',
+                method: 'post',
+                params: {
+                    id: ID
+                }
+            })
+            .then(function (res) {
+                if (res.data > 0) {
+                    that.$Message.success('删除成功');
+                } else {
+                    that.$Message.warning('删除失败');
+                }
+            })
+            .catch(function (e) {
+                console.log(e)
+                that.$Message.error('请求失败');
+            })
+        },
+        //添加能源
+        addConfig: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/AddConfig',
+                method: 'post',
+                params: {
+                    Type: this.addForm.Type,
+                    DepartmentID: this.addForm.DepartmentID,
+                    UID: this.uid
+                }
+            })
+            .then(function (res) {
+                if (res.data > 0) {
+                    that.$Message.success('添加成功');
+                } else {
+                    that.$Message.warning('添加失败');
+                }
+            })
+            .catch(function (e) {
+                console.log(e)
+                that.$Message.error('请求失败');
+            })
+        },
+        //数据加载
+        getEneryOverView: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryOverView',
+                method: 'post',
+                params: {
+                    UID: this.uid
+                }
+            })
+            .then(function (res) {
+                
+            })
+            .catch(function (e) {
+                console.log(e)
+                that.$Message.error('请求失败');
+            })
+        },
         closeModule: function () {
             this.$Modal.confirm({
                 title: '信息提示',
@@ -54,7 +162,6 @@
                 }
             })
         },
-        
         creatPowerChart: function () {
             powerChart = echarts.init(document.getElementById('powerChart'));
             var option = {
@@ -362,7 +469,13 @@
     },
     beforeMount: function () {
         var that = this
-       
+        var id = $.cookie("enUID")
+        if (id) {
+            this.uid = id
+        }
+        this.getUnitComobxList()
+        this.getCollectDevTypeList()
+        this.getDepartMentList()
        
        
     },

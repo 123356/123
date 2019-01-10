@@ -151,18 +151,16 @@
                 <table style="width:100%">
                     <tr>
                         <td>
-                            <form-item prop="type" label="能源类型">
-                                <i-select v-model="addForm.type">
-                                    <i-option :value="0" :key="0">电</i-option>
-                                    <i-option :value="1" :key="1">水</i-option>
+                            <form-item prop="Type" label="能源类型">
+                                <i-select v-model="addForm.Type">
+                                    <i-option :value="item.ID" :key="item.ID" v-for="item in typeList">{{item.Name}}</i-option>
                                 </i-select>
                             </form-item>
                         </td>
                         <td>
-                            <form-item prop="department" label="科室" class="moneyView">
-                                <i-select v-model="addForm.department">
-                                    <i-option :value="0" :key="0">急诊科</i-option>
-                                    <i-option :value="1" :key="1">内科</i-option>
+                            <form-item prop="DepartmentID" label="科室" class="moneyView">
+                                <i-select v-model="addForm.DepartmentID">
+                                    <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
                                 </i-select>
                             </form-item>
                         </td>
@@ -191,7 +189,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.16"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.19"></script>
     
     
 </body>
