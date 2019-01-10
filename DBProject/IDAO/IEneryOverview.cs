@@ -15,6 +15,6 @@ namespace IDAO
 
         //IList<t_V_EneryView> GetEneryGasOverview(int uid);
 
-        IList<t_V_EneryView> GetDatas(string cids, string pids);
+        IList<t_V_EneryView> GetDatas(string cids, string pids,string month);
     }
 }

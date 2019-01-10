@@ -23,11 +23,11 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_V_EneryView> GetDatas(string cids, string pids)
+        public IList<t_V_EneryView> GetDatas(string cids, string pids,string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,PowerRate as Rate,RecordTime,c.Name  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and a.PowerRate is not null";
+where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
             return SQLQuery<t_V_EneryView>(sql);
         }
 

@@ -29,6 +29,31 @@ namespace YWWeb.Lib.Base
             IList<t_CM_Unit> unitlist = DAL.UnitDAL.getInstance().GetUnitList(unlist);
             return unitlist;
         }
+        public string GetPIDs()
+        {
+            string pidList = string.Empty;
+            string unlist = string.Empty;
+            IList<t_CM_UserInfo> userlist = DAL.UserInfoDAL.getInstance().GetUnitLIstByUserID(CurrentUser);
+            foreach (var item in userlist)
+            {
+                if (!string.IsNullOrEmpty(item.UNITList))
+                    unlist += item.UNITList.Trim() + ",";
+            }
+            if (!string.IsNullOrEmpty(unlist))
+                unlist = unlist.Substring(0, unlist.Length - 1);
+
+            IList<t_CM_Unit> unitlist = DAL.UnitDAL.getInstance().GetUnitList(unlist);
+
+            foreach (var item in unitlist)
+            {
+                if (!string.IsNullOrEmpty(item.PDRList))
+                    pidList += item.PDRList.Trim() + ",";
+            }
+            if (!string.IsNullOrEmpty(unlist))
+                pidList = pidList.Substring(0, pidList.Length - 1);
+
+            return pidList;
+        }
         public virtual void LogDebug(string msg)
         {
             System.Diagnostics.Debug.WriteLine(msg);

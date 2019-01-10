@@ -16,13 +16,13 @@ namespace EnergyManage.Controllers
             return View();
         }
         #region 能源总览
-        public JsonResult GetEneryOverView(int uid)
+        public JsonResult GetEneryOverView(int uid,string time)
         {
             List<overView> left_view = new List<overView>();
             List<rightView> list = new List<rightView>();
             decimal zongRate = 0;
             //根据权限读取PID;
-            string pids = "138";
+            string pids = GetPIDs();
             IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
 
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -52,7 +52,7 @@ namespace EnergyManage.Controllers
                         cids = cids.Substring(0, cids.Length - 1);
                     else
                         cids = "0";
-                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids);
+                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
                     rate = list_data.Sum(p => p.Rate);
                     energyConsumption = list_data.Sum(p => p.Value);
                     zongRate += rate;
