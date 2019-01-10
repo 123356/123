@@ -14,11 +14,10 @@
     <Compile Remove="DBFactoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
-
-    <ProjectReference Include="..\IDAO\IDAO.csproj" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\IDAO\IDAO.csproj" />
   </ItemGroup>
 
 
