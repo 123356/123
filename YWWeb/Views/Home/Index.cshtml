@@ -50,9 +50,12 @@
             display: inline-block;
             position: relative;
             width: 100px;
-            margin-left: 5px;
+            margin-right: 20px;
             text-align: left;
-            top:-5px
+            top:-5px;
+            margin-top:-42px;
+            margin-right:30px;
+            float:right
         }
 
             .sethint input {
@@ -66,7 +69,8 @@
                 top: 8px;
                 margin-left: 5px;
                 color: #666;
-                font-weight: normal
+                font-weight: normal;
+                font-size:12px
             }
     </style>
 }
@@ -90,11 +94,10 @@
             <div class="alarm_popups_btn">
 
                 <a href="" id="alarmDetail" target="main_frame" style="display:inline-block">立即查看</a>
-                <div class="sethint">
-                    <input type="checkbox" id="setHint" name="setHint">
-                    <label>1小时内不再弹出</label>
-                </div>
-
+            </div>
+            <div class="sethint">
+                <input type="checkbox" id="setHint" name="setHint">
+                <label>1小时内不再弹出</label>
             </div>
         </div>
 
@@ -120,7 +123,7 @@
             }
             console.log(falg)
         })
-
+      
     </script>
 
 </body>

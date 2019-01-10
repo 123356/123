@@ -144,6 +144,7 @@
                 var password = $("#txtUserPwd").val();
                 $.cookie("rmbUser", "true", { expires: 3650 }); //
                 $.cookie("username", username, { expires: 3650 });
+                $.cookie("hintDate", null, { expires: 1 })
             } else {
                 $.cookie("rmbUser", "false", { expire: -1 });
                 $.cookie("username", "", { expires: -1 });
