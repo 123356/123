@@ -6,7 +6,7 @@ Topo.prototype = {
         this.pid = $("#pid").html();
         this.orderNo = $("#orderNo").html() || 1;
         this.newCanvas();
-        
+
     },
     //创建画布
     newCanvas: function() {
@@ -18,7 +18,7 @@ Topo.prototype = {
         box.appendChild(canvas);
         this.stage = new JTopo.Stage(canvas);
         this.stage.wheelZoom = 1.1;
-        this.stage.frames = -24;
+        this.stage.frames = 0;
         this.scene = new JTopo.Scene(this.stage);
         this.scene.alpha = 1;
         this.scene.background = null;
@@ -36,17 +36,16 @@ Topo.prototype = {
                 orderNo: $("[data-type=orderNo]").val() || 1,
                 type: 1
             },
-            success: function (res) {
+            success: function(res) {
                 res = res[0];
                 that.__IP = $.base64.decode(res.IP);
                 that.__account = $.base64.decode(res.Account);
                 that.__password = $.base64.decode(res.Password);
                 that.__port = $.base64.decode(res.Port);
                 that.LoadView(res.url, res.Path);
-                that.LoadMeter();
                 if (!that.isShowOrderTheTopo) {
                     that.orderNoList(res);
-                    that.mqtt();
+                    //that.mqtt();
                     that.isShowOrderTheTopo = true;
                 }
             },
@@ -68,6 +67,7 @@ Topo.prototype = {
                 }
                 that.history(data);
                 that.LoadData();
+                that.LoadMeter();
             }
         })
     },
@@ -84,7 +84,7 @@ Topo.prototype = {
         $(ul).on('click', 'li', function() {
             $('table').remove();
             that.LoadView(res.url, $(this).attr('data-path'));
-            that.stage.paint();
+            //  that.stage.paint();
         })
     },
     // 读取历史
@@ -107,10 +107,12 @@ Topo.prototype = {
             var node = list[a];
             this.setNode(node);
         }
+
     },
     //设置节点
     setNode: function(obj) {
         var that = this;
+        
         if (obj.__type == "text") {
             var node = new JTopo.TextNode();
             node.text = obj.text || "请输入内容";
@@ -133,10 +135,15 @@ Topo.prototype = {
             node.state1 = obj.state1 || "#00ff00";
             node.state2 = obj.state2 || "#ffff00";
             node.color = node["state" + node.__statusvalue];
-            node.paint = function(g) {
-                eval(obj.canvas);
-            };
-            node.canvas = obj.canvas;
+            if (obj.canvas.indexOf('.png') > -1) {
+                var url = obj.canvas;
+                node.setImage(url.substring(url.indexOf('src') + 5, url.indexOf('.png') + 4)); 
+            } else {
+                node.paint = function (g) {
+                    eval(obj.canvas);
+                };
+                node.canvas = obj.canvas;
+            }
         } else if (obj.__type == "line") {
             var node = new JTopo.Node();
             node.zIndex = obj.zIndex || 3;
@@ -254,10 +261,11 @@ Topo.prototype = {
                         that.nodeLine(nodes[a], data)
                     }
                 }
+                that.stage.paint();
             },
         })
     },
-    nodeShape: function (node, data) {
+    nodeShape: function(node, data) {
         var that = this;
         var pv1, //故障
             pv2, //parent
@@ -297,7 +305,7 @@ Topo.prototype = {
         }
     },
     // 线类型改变
-    nodeLine: function (node, data) {
+    nodeLine: function(node, data) {
         var that = this;
         var arr = node._parentID.split(",");
         var num = 0;
@@ -324,6 +332,9 @@ Topo.prototype = {
             },
             success: function(res) {
                 that.setMeter(res)
+                that.stage.paint();
+
+               
             },
         })
     },
@@ -335,11 +346,8 @@ Topo.prototype = {
             for (var a = 0, b = 0; a < res.length; a++) {
                 var className = ".meter" + meter[i]._cid;
                 if (res[a].CID == meter[i]._cid) {
-                    meter[i].__TagID = res[a].TagID
-                    if (b == 0) {
-                        $(className + ' .title').html(meter.CName);
-                        b++;
-                    }
+                    meter[i].__TagID = res[a].TagID;
+                    $(className + ' .title').html(res[a].CName);
                     if (res[a].DataTypeID == '2') { //电流
                         $(className + ' .I' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
                     } else if (res[a].DataTypeID == '3' || res[a].DataTypeID == "56") { //电压
@@ -359,7 +367,6 @@ Topo.prototype = {
                     }
                 }
             }
-
         }
         for (var b = 0; b < text.length; b++) {
             for (var a = 0; a < res.length; a++) {
@@ -370,9 +377,8 @@ Topo.prototype = {
             }
         }
     },
-    mqtt: function () {
+    mqtt: function() {
         var that = this;
-        console.log(that.__IP, parseInt(that.__port), that.pid, that.__password, that.__account,that.__port)
         var wsbroker = that.__IP;
         location.hostname;
         var wsport = parseInt(that.__port);
@@ -394,15 +400,14 @@ Topo.prototype = {
                 setTimeout(function() {
                     that.mqtt();
                 }, 10000);
-                if (location.protocol == "https:") {
-                    console.log("https")
-                    options.useSSL = true;
-                } else {
-                    console.log("http")
-                }
             }
+
         };
         client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + that.guid());
+        if (location.protocol == "https:") {
+            console.log("https")
+            options.useSSL = true;
+        }
         //创建连接
         client.connect(options);
         client.onConnectionLost = function(responseObject) {
@@ -420,7 +425,7 @@ Topo.prototype = {
             if (!payload.type) {
                 return;
             }
-            if (payload.type == 6) {//  电表文字
+            if (payload.type == 6) { //  电表文字
                 var text = that.textNode;
                 for (var key in data) {
                     $('.t_' + key).html(data[key].PV);
@@ -430,7 +435,7 @@ Topo.prototype = {
                         }
                     }
                 }
-                that.stage.paint();
+                // that.stage.paint();
             } else {
                 var nodes = that.lineNode;
                 for (var a = 0; a < nodes.length; a++) {
@@ -440,7 +445,7 @@ Topo.prototype = {
                         that.nodeLine(nodes[a], data)
                     }
                 }
-                that.stage.paint();
+                // that.stage.paint();
             }
         };
     },
