@@ -18,7 +18,7 @@ Topo.prototype = {
         box.appendChild(canvas);
         this.stage = new JTopo.Stage(canvas);
         this.stage.wheelZoom = 1.1;
-        this.stage.frames = 0;
+        this.stage.frames = -24;
         this.scene = new JTopo.Scene(this.stage);
         this.scene.alpha = 1;
         this.scene.background = null;
@@ -66,8 +66,12 @@ Topo.prototype = {
                     data = data;
                 }
                 that.history(data);
-                that.LoadData();
-                that.LoadMeter();
+         
+        
+
+               
+                that.stage.paint();
+
             }
         })
     },
@@ -84,7 +88,6 @@ Topo.prototype = {
         $(ul).on('click', 'li', function() {
             $('table').remove();
             that.LoadView(res.url, $(this).attr('data-path'));
-            //  that.stage.paint();
         })
     },
     // 读取历史
@@ -107,7 +110,8 @@ Topo.prototype = {
             var node = list[a];
             this.setNode(node);
         }
-
+        this.LoadData();
+        this.LoadMeter();
     },
     //设置节点
     setNode: function(obj) {
@@ -261,7 +265,6 @@ Topo.prototype = {
                         that.nodeLine(nodes[a], data)
                     }
                 }
-                that.stage.paint();
             },
         })
     },
@@ -332,13 +335,10 @@ Topo.prototype = {
             },
             success: function(res) {
                 that.setMeter(res)
-                that.stage.paint();
-
-               
             },
         })
     },
-    setMeter: function(res) {
+    setMeter: function (res) {
         var that = this;
         var meter = that.meterNode;
         var text = that.textNode;
@@ -376,6 +376,7 @@ Topo.prototype = {
                 }
             }
         }
+        that.stage.paint();
     },
     mqtt: function() {
         var that = this;
