@@ -97,7 +97,7 @@
             </div>
             <div class="sethint">
                 <input type="checkbox" id="setHint" name="setHint">
-                <label>1小时内不再弹出</label>
+                <label>2小时内不再弹出</label>
             </div>
         </div>
 
@@ -117,7 +117,7 @@
             var falg = $("#setHint").is(':checked')
             if (falg) {
                 var cookiDate = new Date()
-                $.cookie("hintDate", cookiDate, { expires: 0.24 })
+                $.cookie("hintDate", cookiDate, { expires: 1 })
                 console.log($.cookie("hintDate"))
                 $("#alarm_popups").hide()
             }

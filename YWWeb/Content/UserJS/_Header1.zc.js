@@ -130,7 +130,7 @@ function showAlarmWindow() {
         var time = curDate.getTime() - hintDate.getTime()
         time = Math.floor(time / (60 * 1000))
         console.log("相差时间：" + time)
-        if (time > 60) {
+        if (time > 120) {
             if (playList.length > 1) {
                 play(audio, playList)
             } else {
