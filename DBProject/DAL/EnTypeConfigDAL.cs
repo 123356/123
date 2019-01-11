@@ -57,7 +57,7 @@ namespace DAL
                 throw ex;
             }
         }
-        public IList<t_EE_enTypeConfig> GetenConig(int uid,int depid=0)
+        public IList<t_EE_enTypeConfig> GetenConig(int uid,string depid="0")
         {
             try
             {
