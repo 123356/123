@@ -80,7 +80,7 @@ namespace YWWeb.Controllers
                     string sID = Session.SessionID;
                     Session[sID] = model;
                     Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
-                    return Content(sID);
+                    return Json(new { sID, model.UserName }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

@@ -92,5 +92,47 @@ namespace DAL
             }
             return data;
         }
+        public IList<t_V_EneryView> GetYearDatasByTime(string cids, string pids, int type, string startTime, string endTime)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetYearDatasByTime(cids, pids, type,startTime,endTime);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+        }
+        public IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetMonthDatasByTime(cids, pids, type, startTime, endTime);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+        }
+        public IList<t_V_EneryView> GetDayDatasByTime(string cids, string pids, int type, string startTime, string endTime)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetDayDatasByTime(cids, pids, type, startTime, endTime);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+        }
     }
 }
