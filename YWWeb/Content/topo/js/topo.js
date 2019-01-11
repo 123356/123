@@ -200,13 +200,13 @@ Topo.prototype = {
                     <th>C</th>
                 </tr>
                 <tr class="td3 b1">
-                    <td class="b3">电压(kV)</td>
+                    <td class="b3">电压<span class='uunit'></span></td>
                     <td class="UA1">--</td>
                     <td class="UA2">--</td>
                     <td class="UA3">--</td>
                 </tr>
                 <tr class="td3 b1">
-                    <td class="b3">电流(A)</td>
+                    <td class="b3">电流<span class='iunit'></span></td>
                     <td class="I1">--</td>
                     <td class="I2">--</td>
                     <td class="I3">--</td>
@@ -216,15 +216,15 @@ Topo.prototype = {
                     <td colspan="3" class="F">--</td>
                 </tr>
                 <tr>
-                    <td>总有功功率(kW)</td>
+                    <td>总有功功率<span class='punit'></span></td>
                     <td colspan="3" class="P">--</td>
                 </tr>
                 <tr>
-                    <td>总无功功率(kVar)</td>
+                    <td>总无功功率<span class='qunit'></span></td>
                     <td colspan="3" class="Q">--</td>
                 </tr>
                 <tr class="border b1">
-                    <td>总有功电度(kWh)</td>
+                    <td>总有功电度<span class='kunit'></span></td>
                     <td colspan="3" class="K">--</td>
                 </tr>
             </table>`
@@ -350,20 +350,22 @@ Topo.prototype = {
                     $(className + ' .title').html(res[a].CName);
                     if (res[a].DataTypeID == '2') { //电流
                         $(className + ' .I' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
+                        $(className + " .iunit").html(res[a].Units); 
+                        console.log(className + ".uunit")
                     } else if (res[a].DataTypeID == '3' || res[a].DataTypeID == "56") { //电压
                         $(className + ' .UA' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
-                        $(className + ' .UAB .unit').html(res[a].Units);
+                        $(className + " .uunit").html(res[a].Units);
                     } else if (res[a].DataTypeID == '6' || res[a].DataTypeID == '51') { //功率因数
                         $(className + ' .F').html(res[a].DValue).addClass('t_' + res[a].TagID);
-                        $(className + ' .PF .unit').html(res[a].Units);
                     } else if (res[a].DataTypeID == '46' || res[a].DataTypeID == '7') { //总有功
                         $(className + ' .P').html(res[a].DValue).addClass('t_' + res[a].TagID);
-                        $(className + ' ._P .unit').html(res[a].Units);
+                        $(className + " .punit").html(res[a].Units);
                     } else if (res[a].DataTypeID == '48' || res[a].DataTypeID == '8') { //总无功功率
                         $(className + ' .Q').html(res[a].DValue).addClass('t_' + res[a].TagID);
-                        $(className + ' ._Q .unit').html(res[a].Units);
+                        $(className + " .qunit").html(res[a].Units);
                     } else if (res[a].DataTypeID == '52') { //总有功电度
                         $(className + ' .K').html(res[a].DValue).addClass('t_' + res[a].TagID);
+                        $(className + " .kunit").html(res[a].Units);
                     }
                 }
             }
