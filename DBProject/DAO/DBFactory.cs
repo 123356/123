@@ -46,5 +46,7 @@ namespace DAO
         public IVEnerProjectType venerProjectType => new VEnerProjectTypeDBContext();
 
         public ICircuitInfo circuitinfo => new CircuitInfoDBContext();
+
+        public IExEnergy exEnergy => new ExEnergyDBContext();
     }
 }

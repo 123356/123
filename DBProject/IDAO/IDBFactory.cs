@@ -31,5 +31,7 @@ namespace IDAO
 
         ICircuitInfo circuitinfo { get; }
 
+        IExEnergy exEnergy { get; }
+
     }
 }
