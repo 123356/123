@@ -260,8 +260,8 @@ namespace EnergyManage.Controllers
                         if (sss != null)
                             keshiNmae = sss.Name;
 
-                        t.ID = item_p.child_id;
-                        t.value.Add(keshiNmae);
+                        t.value.Add("ID", item_p.child_id + "");
+                        t.value.Add("Name", keshiNmae);
                         foreach (var item in TitleList)
                         {
                             if (!string.IsNullOrEmpty(item_p.addCid))
@@ -285,16 +285,16 @@ namespace EnergyManage.Controllers
                                     else
                                         v = 0;
 
-                                    t.value.Add(v + "");
+                                    t.value.Add(item.Type+"",v + "");
                                 }
                                 else
                                 {
-                                    t.value.Add("0");
+                                    t.value.Add(item.Type + "","0");
                                 }
                             }
                             else
                             {
-                                t.value.Add("0");
+                                t.value.Add(item.Type + "","0");
                             }
                         }
                         table.Add(t);
@@ -314,10 +314,9 @@ namespace EnergyManage.Controllers
         {
             public table()
             {
-                value = new List<string>();
+                value = new Dictionary<string, string>();
             }
-            public int ID { get; set; }
-            public List<string> value;
+            public Dictionary<string, string> value { get; set; }
         }
 
         public JsonResult GetEneryLine(int uid, int DepartmentID, int type, int TypeTime, string time = "2018-11")
@@ -419,7 +418,7 @@ namespace EnergyManage.Controllers
             foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
             {
                 table t = new table();
-                t.value.Add(item.Key.ToString());
+                t.value.Add("time",item.Key.ToString());
                 decimal mianji = 0;
                 decimal renliu = 0;
 
@@ -432,15 +431,24 @@ namespace EnergyManage.Controllers
                     string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
                     IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, it.Type, t1, t2);
                     v = list_this.Sum(p => p.Value);
-                    t.value.Add(v + "");
+                    t.value.Add(it.Type + "", v + "");
 
                 }
-                t.value.Add(mianji + "");
-                t.value.Add(renliu + "");
+                t.value.Add("area", mianji + "");
+                t.value.Add("people",renliu + "");
                 table.Add(t);
             }
             return Json(new { TitleList, table });
         }
         #endregion
+
+        #region 能源异常
+
+        public JsonResult GetExTable()
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
 }
