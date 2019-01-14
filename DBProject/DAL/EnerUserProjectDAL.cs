@@ -31,13 +31,13 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid)
+        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int unit_area, int unit_people) 
 
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.AddRelationship(child_id, parent_id, unit_id, unit_head, unit_note, addCid, delCid);
+                data = _dbFactory.enerUserProject.AddRelationship(child_id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, unit_area, unit_people);
             }
             catch (Exception ex)
             {

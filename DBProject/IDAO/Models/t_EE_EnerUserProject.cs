@@ -19,5 +19,7 @@ namespace IDAO.Models
         public string unit_note { get; set; }
         public string addCid { get; set; }
         public string delCid { get; set; }
+        public int unit_area { get; set; }
+        public int unit_people { get; set; }
 }
 }

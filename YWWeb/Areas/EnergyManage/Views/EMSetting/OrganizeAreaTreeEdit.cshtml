@@ -6,7 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <link href="~/Content/css/OrganizeAreaTreeEdit.css?date=23" rel="stylesheet" />
+    <link href="~/Content/css/OrganizeAreaTreeEdit.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/ztree/css/metroStyle/metroStyle.css" rel="stylesheet" />
 </head>
@@ -26,40 +26,42 @@
             <ul id="Organization" class="ztree"></ul>
         </div>
         <div class="right">
-            <div>
-                <h4 style="text-align: right;" id="title"></h4>
+            <h4 id="title">查询</h4>
+            <div class="right_body">
                 <div class="form-group">
                     <label for="name">名称</label>
-                    <input type="text" class="form-control" id="name" placeholder="name" list="areaedList">
+                    <input type="text" class="form-control" id="name" placeholder="--" list="areaedList">
                     <datalist id="areaedList"> </datalist>
                 </div>
                 <div class="form-group">
                     <label for="officer">信息负责人</label>
-                    <input type="text" class="form-control" id="officer" placeholder="Information officer">
+                    <input type="text" class="form-control" id="officer" placeholder="--">
                 </div>
                 <div class="form-group">
                     <label for="note">备注</label>
-                    <input type="text" class="form-control" id="note" placeholder="note">
+                    <input type="text" class="form-control" id="note" placeholder="--">
                 </div>
                 <div class="form-group">
                     <label for="note">面积</label>
-                    <input type="text" class="form-control" id="area" placeholder="area" maxlneght="10">
+                    <input type="text" class="form-control" id="area" placeholder="--" maxlength="9">
                 </div>
                 <div class="form-group">
                     <label for="note">人数</label>
-                    <input type="text" class="form-control" id="people" placeholder="people" maxlneght="10">
+                    <input type="text" class="form-control" id="people" placeholder="--" maxlength="9">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">统计能耗仪表（加数）</label>
-                    <div class="form-control addition add" data-toggle="modal" data-target="#myModal"></div>
+                    <div class="form-control addition" data-toggle="modal" data-target="#myModal"></div>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">统计能耗仪表（减数）</label>
-                    <div class="form-control  reduction del" data-toggle="modal" data-target="#myModal"></div>
+                    <div class="form-control  reduction" data-toggle="modal" data-target="#myModal"></div>
                 </div>
             </div>
-            <button type="button" class="btn btn-default saveupdate offOut">确 认</button>
-            <button type="button" class="btn btn-default offupdate offOut">取 消</button>
+            <div class="right_foot">
+                <button type="button" class="btn btn-default saveupdate offOut">确 认</button>
+                <button type="button" class="btn btn-default offupdate offOut">取 消</button>
+            </div>
         </div>
     </div>
 
@@ -93,5 +95,4 @@
     <script>
     </script>
 </body>
-
 </html>

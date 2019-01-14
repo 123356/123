@@ -25,10 +25,10 @@ namespace DAO
         }
 
 
-        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid)
+        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int unit_area, int unit_people)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); }); 
-            string sql = "INSERT INTO t_EE_EnerUserProject(child_id,parent_id,unit_id,unit_head,unit_note,addCid,delCid) output inserted.* VALUES(" + child_id + ","+ parent_id + ","+ unit_id + ",'"+ unit_head + "','"+ unit_note + "','"+ addCid + "','"+ delCid + "')";
+            string sql = $"INSERT INTO t_EE_EnerUserProject(child_id,parent_id,unit_id,unit_head,unit_note,addCid,delCid,unit_area,unit_people) output inserted.* VALUES({ child_id},{parent_id},{unit_id},'{unit_head}','{unit_note}','{addCid}','{delCid}',{unit_area},{unit_people})";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 

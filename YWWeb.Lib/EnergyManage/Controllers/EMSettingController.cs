@@ -87,6 +87,8 @@ namespace EnergyManage.Controllers
                         tree.delCid = data[a].delCid;
                         tree.note = data[a].unit_note;
                         tree.head = data[a].unit_head;
+                        tree.area = data[a].unit_area;
+                        tree.people = data[a].unit_people;
                         tree.children = new List<Tree>();
                         arr.Add(tree);
                         getTree(data, tree.children, tree.id);
@@ -112,7 +114,7 @@ namespace EnergyManage.Controllers
         /// <param name="Name"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult AddTreeNode(int parent_id,int unit_id,string unit_head,string unit_note,string addCid,string delCid,int item_type, string Name,int id)
+        public JsonResult AddTreeNode(int parent_id,int unit_id,string unit_head,string unit_note,string addCid,string delCid,int item_type, string Name,int id,int unit_area,int unit_people)
         {
             //先查之前历史有没有  
             if (id == -1) {
@@ -126,7 +128,7 @@ namespace EnergyManage.Controllers
                 id = addlist[0].id;
             }
             //增加关联关系  
-            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().AddRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid);
+            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().AddRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, unit_area, unit_people);
 
             
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -147,7 +149,7 @@ namespace EnergyManage.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AuthorizeIgnore]
-        public JsonResult UpdateTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int item_type, string Name, int id)
+        public JsonResult UpdateTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int item_type, string Name, int id,int unit_area,int unit_people)
         {
             var updateTypeID = -1;
             //先查之前历史有没有  
@@ -167,15 +169,9 @@ namespace EnergyManage.Controllers
                 updateTypeID = addlist[0].id;
             }
             //修改自己本身的关系
-            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().UpdateRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, updateTypeID);
+            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().UpdateRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, updateTypeID, unit_area, unit_people);
             //修改上下级间的关系
             DAL.EnerUserProjectDAL.getInstance().UpdateSupervisor(id, updateTypeID, unit_id);
-
-
-
-
-
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -187,7 +183,6 @@ namespace EnergyManage.Controllers
         public JsonResult GetHistoryList( int item_type)
         { 
             IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetHistoryList(item_type);
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -195,7 +190,6 @@ namespace EnergyManage.Controllers
         public JsonResult DeleteSupervisor(int parent_id,int child_id,int unit_id)
         {
             IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteSupervisor(parent_id, child_id, unit_id);
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -212,6 +206,8 @@ namespace EnergyManage.Controllers
             public string note { set; get; }
             public string addCid { set; get; }
             public string delCid { set; get; }
+            public int area { set; get; }
+            public int people { set; get; }
             public List<Tree> children { set; get; }
 
         }

@@ -65,7 +65,6 @@ body {
 div.form-control {
     overflow-y: auto;
     height: 150px;
-    width: 92%;
     display: inline-block;
 }
 
@@ -132,8 +131,28 @@ button.close {
 
 .left {
     background: #F0F6E4;
+    border-radius: 7px;
 }
 
 .right {
     background: #fff;
+    border-radius: 0px 7px 7px 0px;
+    border-right-style: dotted !important;
+}
+
+.right_body {
+    height: 85%;
+    overflow-y: auto;
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px dashed #ddd;
+    padding: 10px 5px;
+    margin: 10px 5px;
+    width: 111%;
+    padding-right: 15%;
+}
+
+.right_foot {
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
 }
