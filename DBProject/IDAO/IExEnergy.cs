@@ -10,5 +10,6 @@ namespace IDAO
     public interface IExEnergy:IDAOBase,IDisposable
     {
         IList<t_EE_ExEnergy> GetExDatas();
+        IList<t_EE_ExEnergy> GetExTable(string id);
     }
 }

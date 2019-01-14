@@ -42,5 +42,17 @@ namespace DAL
                 throw ex;
             }
         }
+        public IList<t_EE_ExEnergy> GetExTable(string id)
+        {
+            try
+            {
+                return _dbFactory.exEnergy.GetExTable(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

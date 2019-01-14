@@ -97,7 +97,7 @@ namespace EnergyManage.Controllers
                 oview.value = rate;
                 left_view.Add(oview);
 
-            }   
+            }
             decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
             decimal zduibi = 0;
             if (lasrRate != 0)
@@ -121,7 +121,7 @@ namespace EnergyManage.Controllers
                 LPeozhanbi,
                 zongBudget
             };
-            return Json(new { list_zong, left_view, list,list_bottom }, JsonRequestBehavior.AllowGet);
+            return Json(new { list_zong, left_view, list, list_bottom }, JsonRequestBehavior.AllowGet);
         }
 
         public class overView
@@ -285,22 +285,22 @@ namespace EnergyManage.Controllers
                                     else
                                         v = 0;
 
-                                    t.value.Add(item.Type+"",v + "");
+                                    t.value.Add(item.Type + "", v + "");
                                 }
                                 else
                                 {
-                                    t.value.Add(item.Type + "","0");
+                                    t.value.Add(item.Type + "", "0");
                                 }
                             }
                             else
                             {
-                                t.value.Add(item.Type + "","0");
+                                t.value.Add(item.Type + "", "0");
                             }
                         }
                         table.Add(t);
                     }
                 }
-               
+
             }
             return Json(new { TitleList, table });
         }
@@ -342,7 +342,7 @@ namespace EnergyManage.Controllers
                 DateTime time_test = Convert.ToDateTime("2018-11-20");
                 if (TypeTime == 1)
                 {
-                   
+
                     for (var i = 0; i < 24; i++)
                     {
                         x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
@@ -393,18 +393,18 @@ namespace EnergyManage.Controllers
                     string t4 = new DateTime(2017, 12, 31).ToString();
                     list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
                 }
-               
-                
+
+
                 foreach (var item in x)
                 {
-                    
-                        overView m = new overView();
-                        m.name = item;
-                        DateTime d = Convert.ToDateTime(item);
-                        m.value = list_this.Where(p=>p.RecordTime==d).Sum(p => p.Rate);
-                        list_r.list_this.Add(m);
-                   
-                    
+
+                    overView m = new overView();
+                    m.name = item;
+                    DateTime d = Convert.ToDateTime(item);
+                    m.value = list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    list_r.list_this.Add(m);
+
+
                 }
                 foreach (var item in x2)
                 {
@@ -416,9 +416,9 @@ namespace EnergyManage.Controllers
                     list_r.list_last.Add(m);
                 }
             }
-           
 
-            return Json(new { list_r ,x}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { list_r, x }, JsonRequestBehavior.AllowGet);
         }
 
         public class duibiView
@@ -491,6 +491,107 @@ namespace EnergyManage.Controllers
         {
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas();
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetExData(string cids, int type, int TypeTime)
+        {
+            string pids = GetPIDs();
+            IList<t_V_EneryView> list_this = null;
+            DateTime time_test = Convert.ToDateTime("2018-11-20");
+            if (TypeTime == 1)
+            {
+
+
+                string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+                string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+                list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
+            }
+            else if (TypeTime == 2)
+            {
+
+                string t1 = time_test.AddDays(1 - time_test.Day).ToString();
+                string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
+                list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
+            }
+            else if (TypeTime == 3)
+            {
+
+                string t1 = new DateTime(2018, 1, 1).ToString();
+                string t2 = new DateTime(2018, 12, 31).ToString();
+                list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
+            }
+
+            List<view> list_line = new List<view>();
+            List<string> x = new List<string>();
+
+            List<string> name = new List<string>();
+
+            foreach (var item in list_this.GroupBy(p => p.RecordTime))
+            {
+                x.Add(item.Key.ToString());
+            }
+
+            foreach (var item in list_this.GroupBy(p => p.CName))
+            {
+                view m = new view();
+                name.Add(item.Key);
+                m.name = item.Key;
+                foreach (var itemf in x)
+                {
+
+                    overView mx = new overView();
+                    DateTime d = Convert.ToDateTime(itemf);
+                    mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    m.list.Add(mx);
+                }
+                list_line.Add(m);
+            }
+            List<string> tianqi = new List<string>();
+            return Json(new { name, x, list_line,tianqi }, JsonRequestBehavior.AllowGet);
+        }
+
+        public class view
+        {
+            public view()
+            {
+                list = new List<overView>();
+            }
+
+            public string name { get; set; }
+            public List<overView> list { get; set; }
+
+        }
+        public JsonResult GetBudgetData(string cids)
+        {
+            string pids = GetPIDs();
+            IList<t_V_EneryView> list_this = null;
+            DateTime time_test = Convert.ToDateTime("2018-11-20");
+            List<string> x = new List<string>();
+            List<string> budgetList = new List<string>();
+            List<string> shijivalue = new List<string>();
+            string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+            string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+            list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, 1, t1, t2);
+
+            for (var i = 0; i < 24; i++)
+            {
+                x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+            }
+
+            List<overView> list_shiji = new List<overView>();
+            foreach(var item in x)
+            {
+                DateTime d = Convert.ToDateTime(item);
+                shijivalue.Add(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate).ToString());
+            }
+
+            return Json(new { x, shijivalue, budgetList }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult GetbugTable(string id)
+        {
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(id);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
 

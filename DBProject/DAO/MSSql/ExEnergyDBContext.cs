@@ -28,5 +28,12 @@ namespace DAO
 join t_DM_CircuitInfo d on a.CID = d.CID join t_DM_CollectDevType e on a.CODID = e.ID order by Proportion desc";
             return SQLQuery<t_EE_ExEnergy>(sql);
         }
+
+        public IList<t_EE_ExEnergy> GetExTable(string id)
+        {
+            string sql = $@" select a.*,b.Name EName, c.DeviceName,d.CName,e.Name as COName from t_EE_ExEnergy a join t_EE_EnerUserType b on a.enerUserTypeID = b.id join t_DM_DeviceInfo c on a.DID = c.DID
+ join t_DM_CircuitInfo d on a.CID = d.CID join t_DM_CollectDevType e on a.CODID = e.ID order by Proportion desc where ID in({id})";
+            return SQLQuery<t_EE_ExEnergy>(sql);
+        }
     }
 }

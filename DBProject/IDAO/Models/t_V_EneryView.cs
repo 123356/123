@@ -18,5 +18,9 @@ namespace IDAO.Models
         //public string TypeName { get; set; }
 
         public DateTime RecordTime { get; set; }
+
+        public int CID { get; set; }
+
+        public String CName { get; set; }
     }
 }
