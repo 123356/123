@@ -97,7 +97,7 @@ namespace EnergyManage.Controllers
                 oview.value = rate;
                 left_view.Add(oview);
 
-            }
+            }   
             decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
             decimal zduibi = 0;
             if (lasrRate != 0)
@@ -237,53 +237,79 @@ namespace EnergyManage.Controllers
             }
             //if (!string.IsNullOrEmpty(childs))
             //{
-            childs = childs.Substring(0, childs.Length - 1);
-            cidss = cidss.Substring(0, cidss.Length - 1);
-            IList<t_EE_enTypeConfig> listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, childs);
-
-            IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
-
-            var zv = list_data_z.Sum(p => p.Rate);
-            var TitleList = listconfig.Select(p => new { p.Type, p.Name }).Distinct().ToList();
-            foreach (var item_p in list_userP)
+            List<title> TitleList = new List<title>();
+            IList<t_EE_enTypeConfig> listconfig = null;
+            if (!string.IsNullOrEmpty(childs))
             {
-                table t = new table();
-
-                var sss = list_keshi.Where(p => p.id == item_p.child_id).FirstOrDefault();
-                string keshiNmae = "";
-                if (sss != null)
-                    keshiNmae = sss.Name;
-
-                t.ID = item_p.child_id;
-                t.value.Add(keshiNmae);
-                foreach (var item in TitleList)
+                childs = childs.Substring(0, childs.Length - 1);
+                listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, childs);
+                IList<t_V_EneryView> list_data_z = null;
+                decimal zv = 0;
+                if (!string.IsNullOrEmpty(cidss))
                 {
-                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_p.addCid, item.Type);
-                    string cids = "";
-                    foreach (var item_cir in list_cir)
+                    cidss = cidss.Substring(0, cidss.Length - 1);
+                    list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
+                    zv = list_data_z.Sum(p => p.Rate);
+                    TitleList = listconfig.Select(p => new title { Type = p.Type, Name = p.Name }).Distinct().ToList();
+                    foreach (var item_p in list_userP)
                     {
-                        cids += item_cir.CID + ",";
+                        table t = new table();
+
+                        var sss = list_keshi.Where(p => p.id == item_p.child_id).FirstOrDefault();
+                        string keshiNmae = "";
+                        if (sss != null)
+                            keshiNmae = sss.Name;
+
+                        t.ID = item_p.child_id;
+                        t.value.Add(keshiNmae);
+                        foreach (var item in TitleList)
+                        {
+                            if (!string.IsNullOrEmpty(item_p.addCid))
+                            {
+                                IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_p.addCid, item.Type);
+                                string cids = "";
+                                foreach (var item_cir in list_cir)
+                                {
+                                    cids += item_cir.CID + ",";
+                                }
+                                if (cids != "")
+                                    cids = cids.Substring(0, cids.Length - 1);
+                                else
+                                    cids = "0";
+                                if (!string.IsNullOrEmpty(cids))
+                                {
+                                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
+                                    decimal v = list_data.Sum(p => p.Rate);
+                                    if (zv != 0)
+                                        v = Math.Round(v / zv, 2) * 100;
+                                    else
+                                        v = 0;
+
+                                    t.value.Add(v + "");
+                                }
+                                else
+                                {
+                                    t.value.Add("0");
+                                }
+                            }
+                            else
+                            {
+                                t.value.Add("0");
+                            }
+                        }
+                        table.Add(t);
                     }
-                    if (cids != "")
-                        cids = cids.Substring(0, cids.Length - 1);
-                    else
-                        cids = "0";
-                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                    decimal v = list_data.Sum(p => p.Rate);
-                    if (zv != 0)
-                        v = Math.Round(v / zv, 2) * 100;
-                    else
-                        v = 0;
-
-                    t.value.Add(v + "");
-
                 }
-                table.Add(t);
+               
             }
-            // }
             return Json(new { TitleList, table });
         }
 
+        public class title
+        {
+            public int Type { get; set; }
+            public string Name { get; set; }
+        }
         public class table
         {
             public table()
