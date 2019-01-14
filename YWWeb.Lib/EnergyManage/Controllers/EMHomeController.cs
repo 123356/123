@@ -321,6 +321,10 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetEneryLine(int uid, int DepartmentID, int type, int TypeTime, string time = "2018-11")
         {
+            duibiView list_r = new duibiView();
+
+            List<string> x = new List<string>();
+            List<string> x2 = new List<string>();
             string pids = GetPIDs();
             IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
@@ -330,56 +334,91 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(item.addCid))
                     cidss += item.addCid + ",";
             }
-            cidss = cidss.Substring(0, cidss.Length - 1);
-            IList<t_V_EneryView> list_this = null;
-            IList<t_V_EneryView> list_last = null;
-            DateTime time_test = Convert.ToDateTime("2018-11-19");
-            if (TypeTime == 1)
+            if (!string.IsNullOrEmpty(cidss))
             {
-                string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
-                string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
-                list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t1, t2);
-                string t3 = time_test.AddDays(-1).ToString("yyyy-MM-dd 00:00:00");
-                string t4 = time_test.AddDays(-1).ToString("yyyy-MM-dd 23:59:59");
-                list_last = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t3, t4);
-            }
-            else if (TypeTime == 2)
-            {
-                string t1 = time_test.AddDays(1 - time_test.Day).ToString();
-                string t2 = time_test.AddDays(1 - time_test.Day).AddDays(-1).ToString();
-                list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t1, t2);
-                string t3 = time_test.AddDays(1 - time_test.Day).AddMonths(-1).ToString();
-                string t4 = time_test.AddDays(1 - time_test.Day).AddDays(-1).AddDays(-1).AddMonths(-1).ToString();
-                list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t3, t4);
-            }
-            else if (TypeTime == 3)
-            {
-                string t1 = new DateTime(2018, 1, 1).ToString();
-                string t2 = new DateTime(2018, 12, 31).ToString();
-                list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t1, t2);
+                cidss = cidss.Substring(0, cidss.Length - 1);
+                IList<t_V_EneryView> list_this = null;
+                IList<t_V_EneryView> list_last = null;
+                DateTime time_test = Convert.ToDateTime("2018-11-20");
+                if (TypeTime == 1)
+                {
+                   
+                    for (var i = 0; i < 24; i++)
+                    {
+                        x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                    }
+                    string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+                    string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t1, t2);
+                    string t3 = time_test.AddDays(-1).ToString("yyyy-MM-dd 00:00:00");
+                    string t4 = time_test.AddDays(-1).ToString("yyyy-MM-dd 23:59:59");
+                    for (var i = 0; i < 24; i++)
+                    {
+                        x2.Add(Convert.ToDateTime(t3).AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                    }
+                    list_last = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t3, t4);
+                }
+                else if (TypeTime == 2)
+                {
+                    for (var i = 0; i < 31; i++)
+                    {
+                        x.Add(time_test.AddDays(1 - time_test.Day).AddDays(i).ToString());
+                    }
+                    string t1 = time_test.AddDays(1 - time_test.Day).ToString();
+                    string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t1, t2);
+                    string t3 = time_test.AddDays(1 - time_test.Day).AddMonths(-1).ToString();
+                    for (var i = 0; i < 31; i++)
+                    {
+                        x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString());
+                    }
+                    string t4 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).AddDays(-1).AddMonths(-1).ToString();
+                    list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t3, t4);
+                }
+                else if (TypeTime == 3)
+                {
+                    for (var i = 0; i < 12; i++)
+                    {
+                        x.Add(new DateTime(2018, 1, 1).AddMonths(i).ToString());
+                    }
+                    string t1 = new DateTime(2018, 1, 1).ToString();
+                    string t2 = new DateTime(2018, 12, 31).ToString();
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t1, t2);
 
-                string t3 = new DateTime(2017, 1, 1).ToString();
-                string t4 = new DateTime(2017, 12, 31).ToString();
-                list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
-            }
-            duibiView list_r = new duibiView();
-            foreach (var item in list_this.GroupBy(p => p.RecordTime))
-            {
+                    for (var i = 0; i < 12; i++)
+                    {
+                        x2.Add(new DateTime(2017, 1, 1).AddMonths(i).ToString());
+                    }
+                    string t3 = new DateTime(2017, 1, 1).ToString();
+                    string t4 = new DateTime(2017, 12, 31).ToString();
+                    list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
+                }
+               
+                
+                foreach (var item in x)
+                {
+                    
+                        overView m = new overView();
+                        m.name = item;
+                        DateTime d = Convert.ToDateTime(item);
+                        m.value = list_this.Where(p=>p.RecordTime==d).Sum(p => p.Rate);
+                        list_r.list_this.Add(m);
+                   
+                    
+                }
+                foreach (var item in x2)
+                {
 
-                overView m = new overView();
-                m.name = item.Key.ToString();
-                m.value = item.Sum(p => p.Rate);
-                list_r.list_this.Add(m);
+                    overView m = new overView();
+                    m.name = item;
+                    DateTime d = Convert.ToDateTime(item);
+                    m.value = list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    list_r.list_last.Add(m);
+                }
             }
-            foreach (var item in list_last.GroupBy(p => p.RecordTime))
-            {
+           
 
-                overView m = new overView();
-                m.name = item.Key.ToString();
-                m.value = item.Sum(p => p.Rate);
-                list_r.list_last.Add(m);
-            }
-            return Json(list_r, JsonRequestBehavior.AllowGet);
+            return Json(new { list_r ,x}, JsonRequestBehavior.AllowGet);
         }
 
         public class duibiView
@@ -397,6 +436,7 @@ namespace EnergyManage.Controllers
         public JsonResult GetChildItemData(int uid, int DepartmentID, string time = "2018-11")
         {
             List<table> table = new List<table>();
+            List<title> TitleList = new List<title>();
             string pids = GetPIDs();
             IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
             string childs = "";
@@ -408,35 +448,38 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(item.addCid))
                     cidss += item.addCid + ",";
             }
-            cidss = cidss.Substring(0, cidss.Length - 1);
-            IList<t_EE_enTypeConfig> listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
-
-            IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
-
-            var TitleList = listconfig.Select(p => new { p.Type, p.Name }).Distinct().ToList();
-
-            foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
+            if (!string.IsNullOrEmpty(cidss))
             {
-                table t = new table();
-                t.value.Add("time",item.Key.ToString());
-                decimal mianji = 0;
-                decimal renliu = 0;
+                cidss = cidss.Substring(0, cidss.Length - 1);
+                IList<t_EE_enTypeConfig> listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
 
+                IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
 
+                TitleList = listconfig.Select(p => new title { Type = p.Type, Name = p.Name }).Distinct().ToList();
 
-                foreach (var it in TitleList)
+                foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
                 {
-                    decimal v = 0;
-                    string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
-                    string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
-                    IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, it.Type, t1, t2);
-                    v = list_this.Sum(p => p.Value);
-                    t.value.Add(it.Type + "", v + "");
+                    table t = new table();
+                    t.value.Add("time", item.Key.ToString());
+                    decimal mianji = 0;
+                    decimal renliu = 0;
 
+
+
+                    foreach (var it in TitleList)
+                    {
+                        decimal v = 0;
+                        string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
+                        string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
+                        IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, it.Type, t1, t2);
+                        v = list_this.Sum(p => p.Value);
+                        t.value.Add(it.Type + "", v + "");
+
+                    }
+                    t.value.Add("area", mianji + "");
+                    t.value.Add("people", renliu + "");
+                    table.Add(t);
                 }
-                t.value.Add("area", mianji + "");
-                t.value.Add("people",renliu + "");
-                table.Add(t);
             }
             return Json(new { TitleList, table });
         }
@@ -446,7 +489,8 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetExTable()
         {
-            return Json("", JsonRequestBehavior.AllowGet);
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
