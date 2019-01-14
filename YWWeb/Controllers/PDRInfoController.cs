@@ -3262,6 +3262,10 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 {
                     road = "/DownLoad/Communication/";
                     fileName = "Communication.json";
+                }else if(type == "3")
+                {
+                    road = "/DownLoad/TreeData/";
+                    fileName = "TreeData.json";
                 }
                 else { return Json("缺少文件类型"); }
 
@@ -3297,10 +3301,6 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                     var sqlinse = $"INSERT INTO t_PM_OneGraph (PID, OrderNo,Type,Path,IP,Port,Account,Password,Name) VALUES ({pid},{orderNo},'{type}','{saveName}','{IP}','{port}','{account}','{password}','{Name}')";
                     List<one> lsit = bll.ExecuteStoreQuery<one>(sqlinse).ToList();
                 }
-                
-
-
-
             }
             catch (Exception e)
             {
@@ -3326,10 +3326,8 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
         //获取数据
         public ActionResult GetAttribute(int pid, int orderNo, string type)
         {
-
             try
             {
-
                 //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 var path = "";
                 string secure = HttpContext.Request.ServerVariables["HTTPS"];
@@ -3346,18 +3344,19 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
                 {
                     path += "DownLoad/OneGraph/";
                 }
-                else
+                else if(type == "2")
                 {
                     path += "DownLoad/Communication/";
+                }else if(type == "3")
+                {
+                    path += "DownLoad/TreeData/";
                 }
 
                 var sqlsle = "SELECT * FROM t_PM_OneGraph WHERE OrderNo = " + orderNo + " and Type = " + type + " and PID = " + pid;
                 List<one> list = bll.ExecuteStoreQuery<one>(sqlsle).ToList();
 
-
                 string strsql = $"SELECT OrderNo,Path,Name FROM t_PM_OneGraph WHERE PID ={pid}  and Type='{type}'";
                 List<OrderNos> OrderNos = bll.ExecuteStoreQuery<OrderNos>(strsql).ToList();
-
                 
                 var result = from s in list
                              select new

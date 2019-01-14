@@ -2037,6 +2037,15 @@ namespace YWWeb.Controllers
         {
             return View();
         }
-#endregion
+        #endregion
+
+
+        #region  编辑树
+        [Login]
+        public ActionResult TreeEdit()
+        {
+            return View();
+        }
+        #endregion
     }
 }

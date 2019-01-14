@@ -45,11 +45,12 @@
      },
      //返回之前添加的区域  加载到输入框的联想
      loadAreaed: function() {
+         var that = this;
          $.ajax({
              type: "post",
              url: "/energyManage/EMSetting/GetHistoryList",
              data: {
-                 item_type: 2
+                 item_type: that.treeType
              },
              success: function(res) {
                  for (var a = 0, arr = []; a < res.length; a++) {
@@ -228,6 +229,18 @@
              })
              //点击确定
          $('.saveupdate').on('click', function() {
+                 var add = [];
+                 var del = [];
+                 for (var a = 0; a < $('.addition .meter').length; a++) {
+                     add.push($('.addition .meter')[a].getAttribute('data-id'));
+                 }
+                 for (var a = 0; a < $('.reduction .meter').length; a++) {
+                     del.push($('.reduction .meter')[a].getAttribute('data-id'));
+                 }
+                 $('.addition').attr('data-id', add.join(','));
+                 $('.reduction').attr('data-id', del.join(','));
+
+
                  if (that.editType == 'add') { //添加
                      that.createNode();
                  } else if (that.editType == 'upd') { //修改
@@ -236,21 +249,7 @@
              })
              //点击表的关闭按钮
          $('.addition,.reduction').on('click', '.close', function() {
-                 $(this).parent('.meter').remove();
-             })
-             //点击确认 保存修改的电表
-         $('.getselect  ').on('click', function() {
-             var add = [];
-             var del = [];
-             for (var a = 0; a < $('.addition .meter').length; a++) {
-                 add.push($('.addition .meter')[a].getAttribute('data-id'));
-             }
-             for (var a = 0; a < $('.reduction .meter').length; a++) {
-                 del.push($('.reduction .meter')[a].getAttribute('data-id'));
-             }
-
-             $('.addition').attr('data-id', add.join(','));
-             $('.reduction').attr('data-id', del.join(','));
+             $(this).parent('.meter').remove();
          })
          $('.offOut').on('click', function() {
              $('.right').fadeOut();
@@ -288,7 +287,7 @@
              unit_note: $('#note').val() || "",
              addCid: $('.addition').attr('data-id') || "",
              delCid: $('.reduction').attr('data-id') || "",
-             item_type: 2,
+             item_type: this.treeType,
              Name: $("#name").val(),
              id: parseInt($(`option[value=${$("#name").val()}]`).attr('data-id')) || 0,
              unit_area: $('#area').val() || 0,
@@ -332,7 +331,7 @@
                  unit_note: $('#note').val(),
                  addCid: $('.addition').attr('data-id') || "",
                  delCid: $('.reduction').attr('data-id') || "",
-                 item_type: 2,
+                 item_type: this.treeType,
                  Name: $('#name').val(),
                  id: nodes[0].id,
                  unit_id: JSON.parse($.cookie('unitID')).id,
@@ -418,38 +417,28 @@
              $('#name').val(treeNode.name);
              $('#officer').val(treeNode.head);
              $('#note').val(treeNode.note);
-             $('.addition').html(that.GetCidView(treeNode.addCid));
-             $('.reduction').html(that.GetCidView(treeNode.delCid));
-             $('#area').val(treeNode.area);
-             $('#people').val(treeNode.people);
+             $('.addition').html(that.GetCidView(treeNode.addCid)) //.attr('data-id', treeNode.addCid);
+             $('.reduction').html(that.GetCidView(treeNode.delCid)) //.attr('data-id', treeNode.delCid);
+             $('#area').val(treeNode.area || "");
+             $('#people').val(treeNode.people || "");
          }
          var zNodes = data;
          $.fn.zTree.init($("#Organization"), setting, zNodes);
      },
      GetCidView: function(ids) {
          var that = this;
-
-         var timer = setInterval(() => {
-             console.log(11111)
-             if (ids && that.cidData) {
-                 var cid = that.cidData;
-                 var id = ids.split(",").map(Number);
-                 for (var a = 0, arr = []; a < cid.length; a++) {
-                     if ($.inArray(cid[a].CID, id) > -1) {
-                         arr.push(
-                             `<span class="meter" data-id="${cid[a].CID}">${cid[a].CName}<i class="close">×</i></span>`
-                         );
-                     }
+         if (ids && that.cidData) {
+             var cid = that.cidData;
+             var id = ids.split(",").map(Number);
+             for (var a = 0, arr = []; a < cid.length; a++) {
+                 if ($.inArray(cid[a].CID, id) > -1) {
+                     arr.push(
+                         `<span class="meter" data-id="${cid[a].CID}">${cid[a].CName}<i class="close">×</i></span>`
+                     );
                  }
-                 clearInterval(timer);
-                 return arr.join("");
              }
-         }, 800);
-
-
-
-
-
+             return arr.join("");
+         }
      },
      //加载组织树
      loadOrganizationTree: function() {
@@ -459,8 +448,8 @@
              type: "post",
              url: "/energyManage/EMSetting/GetTreeData",
              data: {
-                 unitID: 123,
-                 item_type: 1,
+                 unitID: JSON.parse($.cookie('unitID')).id,
+                 item_type: that.treeType,
                  unitName: unit.name
              },
              success: function(res) {
@@ -479,6 +468,8 @@
 
      //初始化
      init: function() {
+         var search = location.search;
+         this.treeType = search.substring(search.indexOf('=') + 1);
          if ($.cookie('unitID')) {
              this.loadOrganizationTree();
          }
@@ -491,25 +482,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
  $(function() {
      var organization = new Organization();
      organization.init();
  });
- //$('.right input').attr('readonly','readonly');
- //$('.right button').attr('disabled','disabled');
-
-
- //$('.right').fadeOut()
