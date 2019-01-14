@@ -64,6 +64,7 @@
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
     <Compile Include="IenTypeConfig.cs" />
+    <Compile Include="IExEnergy.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
     <Compile Include="InterfaceCache\IDBCache.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\t_EE_EnerUserProject.cs" />
     <Compile Include="Models\t_EE_EnerUserType.cs" />
     <Compile Include="Models\t_EE_enTypeConfig.cs" />
+    <Compile Include="Models\t_EE_ExEnergy.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />
