@@ -489,7 +489,8 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetExTable()
         {
-            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas();
+            string pids = GetPIDs();
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas(pids);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetExData(string cids, int type, int TypeTime)
@@ -590,7 +591,8 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetbugTable(string id)
         {
-            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(id);
+            string pids = GetPIDs();
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids,id);
             return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion

@@ -30,11 +30,11 @@ namespace DAL
             return _DataDal;
         }
 
-        public IList<t_EE_ExEnergy> GetExDatas()
+        public IList<t_EE_ExEnergy> GetExDatas(string pids)
         {
             try
             {
-                return _dbFactory.exEnergy.GetExDatas();
+                return _dbFactory.exEnergy.GetExDatas(pids);
             }
             catch (Exception ex)
             {
@@ -42,11 +42,11 @@ namespace DAL
                 throw ex;
             }
         }
-        public IList<t_EE_ExEnergy> GetExTable(string id)
+        public IList<t_EE_ExEnergy> GetExTable(string pids,string id)
         {
             try
             {
-                return _dbFactory.exEnergy.GetExTable(id);
+                return _dbFactory.exEnergy.GetExTable(pids,id);
             }
             catch (Exception ex)
             {

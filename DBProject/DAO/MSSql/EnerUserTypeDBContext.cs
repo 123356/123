@@ -38,7 +38,7 @@ namespace DAO
 
         public IList<t_EE_EnerUserType> GetComobxList()
         {
-            string sql = "select * from t_EE_EnerUserType";
+            string sql = "select * from t_EE_EnerUserType where item_type=2";
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
 

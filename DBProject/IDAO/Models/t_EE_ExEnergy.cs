@@ -27,5 +27,6 @@ namespace IDAO.Models
         public string DeviceName { get; set; }
         public string CName { get; set; }
         public string COName { get; set; }
+        public string PName { get; set; }
     }
 }

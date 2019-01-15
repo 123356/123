@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface IExEnergy:IDAOBase,IDisposable
     {
-        IList<t_EE_ExEnergy> GetExDatas();
-        IList<t_EE_ExEnergy> GetExTable(string id);
+        IList<t_EE_ExEnergy> GetExDatas(string pids);
+        IList<t_EE_ExEnergy> GetExTable(string pids,string id);
     }
 }
