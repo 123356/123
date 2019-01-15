@@ -22,14 +22,9 @@ namespace DAO
               .HasKey(t => new { t.ID });
             base.OnModelCreating(modelBuilder);
         }
-        public IList<t_EE_Budget> GetBudgetByID(int uid,int depid=0)
+        public IList<t_EE_Budget> GetBudgetByID(int uid)
         {
-            string sql = "select a.*,b.Name from t_EE_Budget a join t_DM_CollectDevType b on a.EnergyTypeID=b.ID where UID=" + uid;
-
-            if (depid != 0)
-            {
-                sql += " and SubtypeBudget=" + depid;
-            }
+            string sql = "select a.*,b.Name from t_EE_Budget a join t_DM_CollectDevType b on a.CollTypeID=b.ID where UID=" + uid;
             return SQLQuery<t_EE_Budget>(sql);
         }
     }
