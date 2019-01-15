@@ -37,7 +37,11 @@ where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 
 
         public IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+
+on  CONVERT(varchar(5), b.CID)=d.addCid join
+
+ t_EE_EnerUserType c on d.child_id=c.id
 
 where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
 
@@ -46,7 +50,11 @@ where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and R
 
         public IList<t_V_EneryView> GetYearDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CIDjoin t_EE_EnerUserProject d 
+
+on  CONVERT(varchar(5), b.CID)=d.addCid join
+
+ t_EE_EnerUserType c on d.child_id=c.id
 
 where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
 
@@ -55,30 +63,16 @@ where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and R
 
         public IList<t_V_EneryView> GetDayDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+
+on  CONVERT(varchar(5), b.CID)=d.addCid join
+
+ t_EE_EnerUserType c on d.child_id=c.id
 
 where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
 
             return SQLQuery<t_V_EneryView>(sql);
         }
-
-        //public IList<t_V_EneryView> GetEneryPowerOverview(int uid)
-        //{
-        //    string sql = "select SumUsePower as Value,UserPowerRate as Rate,UUPID as ID,RecordTime, from t_ES_UserUsePowerMonthly where UID=" + uid;
-        //    return SQLQuery<t_V_EneryView>(sql);
-        //}
-
-        //public IList<t_V_EneryView> GetEneryWaterOverview(int uid)
-        //{
-        //    string sql = "select SumUseWater as Value,SumUseWaterRate as Rate,ID,RecordTime from t_ES_UserUseWaterMonthly where UID=" + uid;
-        //    return SQLQuery<t_V_EneryView>(sql);
-        //}
-
-        //public IList<t_V_EneryView> GetEneryGasOverview(int uid)
-        //{
-        //    string sql = "SELECT ID, SumUseGas as Value,SumUseGasRate as Rate,ID,RecordTime FROM t_ES_UserUseGasMonthly where UID=" + uid;
-        //    return SQLQuery<t_V_EneryView>(sql);
-        //}
         public DbSet<t_V_EneryView> Datas { get; set; }
     }
 }
