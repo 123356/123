@@ -25,7 +25,11 @@ namespace DAO
 
         public IList<t_V_EneryView> GetDatas(string cids, string pids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserType c on b.ener_use_type=c.id
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+
+on  CONVERT(varchar(5), b.CID)=d.addCid join
+
+ t_EE_EnerUserType c on d.child_id=c.id
 
 where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);

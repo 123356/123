@@ -49,10 +49,7 @@ namespace EnergyManage.Controllers
                     string cids = "";
                     foreach (var item_cir in list_cir)
                     {
-
-
                         cids += item_cir.CID + ",";
-
                     }
                     if (cids != "")
                         cids = cids.Substring(0, cids.Length - 1);
