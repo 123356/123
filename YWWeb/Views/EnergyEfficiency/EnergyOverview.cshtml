@@ -6,48 +6,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-    <!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
     <title>能源总览</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.03" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.15" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.20" />
 
 </head>
 <body >
-    <div id="app" style="padding:0">
+    <div id="EnergyOverview" style="padding:0">
+        <Spin size="large" fix v-if="loading"></Spin>
         <div class="left flex-item">
             <div class="chartView">
                 <div class="item">
                     <div class="chartTitle">
-                      
-                        <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" class="datePicker"></date-picker>
+
+                        <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" class="datePicker" v-on:on-change="datePicekChange"></date-picker>
                     </div>
                     <div class="main">
-                        <div class="chart" id="powerChart" style="width:100%;height:100%"></div>
+                        <div class="chart" id="powerChart"></div>
                     </div>
                     <div class="footer">
-                        <div class="footer-item">预算：900</div>
-                        <div class="footer-item">同比： 21%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                        <div class="footer-item">预算：{{sumBudget}}</div>
+                        <div class="footer-item">同比： {{zduibi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="chartTitle">
-                        <span>12月能源费用比例</span>
+                        <span>{{month}}月能源费用比例</span>
                     </div>
-                    <div class="main" style="height:85%">
-                        <div class="chart" id="energyMoneyChart" style="width:100%;height:100%"></div>
+                    <div class="main" style="height:85%;display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                        <div v-if="!left_viewIsShow"><span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据</div>
+                        <div class="chart" id="energyMoneyChart" :style="{display:left_viewIsShow?'block':'none',width:'100%',height:'100%'}"></div>
                     </div>
                 </div>
                 <div class="item lastItem">
                     <div class="chartTitle">
-                        <span>12月万元每平米能耗</span>
+                        <span>{{month}}月万元每平米能耗</span>
                     </div>
                     <div class="main">
-                        <p>0.236<span class="dw">(万元/㎡)</span></p>
+                        <p>{{Peozhanbi}}<span class="dw">(万元/㎡)</span></p>
                         <div class="footer">
-                            <div class="footer-item">预算：900</div>
-                            <div class="footer-item">同比： 21%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                            <div class="footer-item">预算：{{zongBudget}}</div>
+                            <div class="footer-item">同比： {{LPeozhanbi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                         </div>
                         <div class="footerBtn" style="margin-top:5px">
                             <button class="btn">分项数据</button>
@@ -61,83 +62,43 @@
         </div>
 
         <div class="right flex-item EnergyModule">
-            <!--电-->
-            <div class="right-module">
+            <!--能耗模块-->
+            <div class="right-module" v-for="item in info.list">
                 <div class="header">
-                    <Icon type="md-close" class="closeIcon" color="#ccc" v-on:click="closeModule" />
+                    <Icon type="md-close" class="closeIcon" color="#ccc" v-on:click="closeModule(item.ID)" />
                 </div>
                 <div class="main">
                     <div class="module-item typeTitle">
                         <div class="imgView">
-                            <img src="~/Content/images/energyDifficiency/electric.png" />
+                            <img src="~/Content/images/energyDifficiency/electric.png" v-if="item.name=='电'" />
+                            <img src="~/Content/images/energyDifficiency/water.png" v-if="item.name=='水'" />
+                            <img src="~/Content/images/energyDifficiency/heat.png" v-if="item.name=='燃气'" />
                         </div>
-                        <p>电</p>
+                        <p>{{item.name}}</p>
                     </div>
                     <div class="module-item info">
-                        <p>用电预算<span>1000万元</span></p>
-                        <p>当前费用<span>960万元</span></p>
-                        <p>当前能耗<span>728.3kW·h</span></p>
+                        <p>用电预算<span>{{item.budget}}万元</span></p>
+                        <p>当前费用<span>{{item.rate}}万元</span></p>
+                        <p>
+                            当前能耗
+                            <span>
+                                {{item.energyConsumption}}
+                                <c v-if="item.name=='电'">kW·h</c>
+                                <c v-else>m³</c>
+                            </span>
+                        </p>
 
                     </div>
                     <div class="module-item pieChart">
-                        <div class="chart" id="electricPieChart"></div>
+                        <div v-if="item.keyValuePairs.length==0"><span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据</div>
+                        <div class="chart" :id="item.pieChart" :style="{display:item.keyValuePairs.length!=0?'block':'none',width:'100%',height:'100%'}"></div>
                     </div>
                     <div class="module-item barChart">
-                        <div class="chart" id="electricBarChart"></div>
+                        <div v-if="item.keyValuePairs_Time.length==0"><span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据</div>
+                        <div class="chart" :id="item.barChart" :style="{display:item.keyValuePairs_Time.length!=0?'block':'none',width:'100%',height:'100%'}"></div>
                     </div>
                 </div>
             </div>
-            <!--水-->
-            <div class="right-module">
-                <div class="header">
-                    <Icon type="md-close" class="closeIcon" color="#ccc" v-on:click="closeModule" />
-                </div>
-                <div class="main">
-                    <div class="module-item typeTitle">
-                        <div class="imgView">
-                            <img src="~/Content/images/energyDifficiency/water.png" />
-                        </div>
-                        <p>水</p>
-                    </div>
-                    <div class="module-item info">
-                        <p>用电预算<span>1000万元</span></p>
-                        <p>当前费用<span>960万元</span></p>
-                        <p>当前能耗<span>728.3kW·h</span></p>
-                    </div>
-                    <div class="module-item pieChart">
-                        <div class="chart" id="waterPieChart"></div>
-                    </div>
-                    <div class="module-item barChart">
-                        <div class="chart" id="waterBarChart"></div>
-                    </div>
-                </div>
-            </div>
-            <!--气-->
-            <div class="right-module">
-                <div class="header">
-                    <Icon type="md-close" class="closeIcon" color="#ccc" v-on:click="closeModule" />
-                </div>
-                <div class="main">
-                    <div class="module-item typeTitle">
-                        <div class="imgView">
-                            <img src="~/Content/images/energyDifficiency/heat.png" />
-                        </div>
-                        <p>气</p>
-                    </div>
-                    <div class="module-item info">
-                        <p>用电预算<span>1000万元</span></p>
-                        <p>当前费用<span>960万元</span></p>
-                        <p>当前能耗<span>728.3kW·h</span></p>
-                    </div>
-                    <div class="module-item pieChart">
-                        <div class="chart" id="gasPieChart"></div>
-                    </div>
-                    <div class="module-item barChart">
-                        <div class="chart" id="gasBarChart"></div>
-                    </div>
-                </div>
-            </div>
-
             <!--add module-->
             <div class="right-module addOptionModule">
                 <i-button class="btn addOptionBtn" type="default" icon="md-add" v-on:click="addModal1Visable=true">添加重点能源</i-button>
@@ -151,21 +112,21 @@
                 <table style="width:100%">
                     <tr>
                         <td>
-                            <form-item prop="Type" label="能源类型">
-                                <i-select v-model="addForm.Type">
+                            <form-item prop="CollTypeID" label="能源类型">
+                                <i-select v-model="addForm.CollTypeID ">
                                     <i-option :value="item.ID" :key="item.ID" v-for="item in typeList">{{item.Name}}</i-option>
                                 </i-select>
                             </form-item>
                         </td>
                         <td>
-                            <form-item prop="DepartmentID" label="科室" class="moneyView">
-                                <i-select v-model="addForm.DepartmentID">
+                            <form-item prop="EnerUserTypeID" label="科室" class="moneyView">
+                                <i-select v-model="addForm.EnerUserTypeID">
                                     <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
                                 </i-select>
                             </form-item>
                         </td>
                     </tr>
-                   
+
                     <tr>
                         <td colspan="2" class="btnTd" style="padding-top:20px">
                             <button type="button" class="btn okBtn" v-on:click="addEnergy">添加</button>
@@ -189,7 +150,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.19"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.59"></script>
     
     
 </body>
