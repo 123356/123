@@ -593,7 +593,7 @@ namespace EnergyManage.Controllers
         {
             string pids = GetPIDs();
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids,id);
-            return Json("", JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
