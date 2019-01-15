@@ -11,8 +11,8 @@ namespace IDAO.Models
         public int ID { get; set; }
         public int UID { get; set; }
         public int UserID { get; set; }
-        public int Type { get; set; }
-        public int DepartmentID { get; set; }
+        public int CollTypeID { get; set; }
+        public int EnerUserTypeID { get; set; }
         public string Name { get; set; }
     }
 }

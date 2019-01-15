@@ -25,7 +25,7 @@ namespace DAO
 
         public int AddConfig(t_EE_enTypeConfig model)
         {
-            string sql = $"insert into t_EE_enTypeConfig(UID,UserID,Type,DepartmentID) values({model.UID},{model.UserID},{model.Type},{model.DepartmentID})";
+            string sql = $"insert into t_EE_enTypeConfig(UID,UserID,CollTypeID,EnerUserTypeID) values({model.UID},{model.UserID},{model.CollTypeID},{model.EnerUserTypeID})";
             return ExecuteSqlCommand(sql);
         }
 
@@ -39,7 +39,7 @@ namespace DAO
         {
             string sql = $"select a.*,b.Name from t_EE_enTypeConfig a join t_DM_CollectDevType b on a.Type=b.ID  where UID={uid}";
             if (depid != "0")
-                sql += $" and DepartmentID in({depid})";
+                sql += $" and EnerUserTypeID in({depid})";
 
             return SQLQuery<t_EE_enTypeConfig>(sql);
         }

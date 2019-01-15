@@ -38,14 +38,14 @@ namespace EnergyManage.Controllers
                 rightView view = new rightView();
                 view.name = item_peizhi.Name;
                 view.ID = item_peizhi.ID;
-                budget = list_budgets.Where(p => p.EnergyTypeID == item_peizhi.Type).Sum(p => p.GeneralBudget);
+                budget = list_budgets.Where(p => p.CollTypeID == item_peizhi.CollTypeID).Sum(p => p.GeneralBudget);
                 view.budget = budget;
-                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.DepartmentID);
+                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.EnerUserTypeID);
 
 
                 foreach (var item_userP in list_userP)
                 {
-                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
+                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
                     string cids = "";
                     foreach (var item_cir in list_cir)
                     {
@@ -198,7 +198,7 @@ namespace EnergyManage.Controllers
                 IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
                 foreach (var item_userP in list_userP)
                 {
-                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.Type);
+                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
                     string cids = "";
                     foreach (var item_cir in list_cir)
                     {
@@ -250,7 +250,7 @@ namespace EnergyManage.Controllers
                     cidss = cidss.Substring(0, cidss.Length - 1);
                     list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
                     zv = list_data_z.Sum(p => p.Rate);
-                    TitleList = listconfig.Select(p => new title { Type = p.Type, Name = p.Name }).Distinct().ToList();
+                    TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
                     foreach (var item_p in list_userP)
                     {
                         table t = new table();
@@ -455,7 +455,7 @@ namespace EnergyManage.Controllers
 
                 IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
 
-                TitleList = listconfig.Select(p => new title { Type = p.Type, Name = p.Name }).Distinct().ToList();
+                TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
 
                 foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
                 {

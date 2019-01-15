@@ -23,7 +23,7 @@ namespace IDAO.Models
         public decimal ActualBudget { get; set; }
 
         public decimal MonthBudget { get; set; }
-        public decimal EnergyTypeID { get; set; }
+        public decimal CollTypeID { get; set; }
 
         public decimal SubtypeBudget { get; set; }
 
