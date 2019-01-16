@@ -33,5 +33,11 @@ namespace IDAO
 
         IExEnergy exEnergy { get; }
 
+        IYearBudget yearBudget { get; }
+
+        ICollTypeBudget collecTypeBudget { get; }
+
+        IEneryUsreBudget eneryUserBudget { get; }
+
     }
 }

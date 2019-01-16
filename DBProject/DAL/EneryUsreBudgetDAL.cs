@@ -9,32 +9,32 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class BudgetDAL
+    public class EneryUsreBudgetDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
 
-        static BudgetDAL _DataDal;
+        static EneryUsreBudgetDAL _DataDal;
         static readonly object _loker = new object();
-        public static BudgetDAL getInstance(string json = null)
+        public static EneryUsreBudgetDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
                 lock (_loker)
                 {
                     if (null == _DataDal)
-                        _DataDal = new BudgetDAL();
+                        _DataDal = new EneryUsreBudgetDAL();
                 }
             }
 
             return _DataDal;
         }
-        public IList<t_EE_Budget> GetBudgetByID(int uid, int year = 0, int month = 0,int CollTypeID=0)
+        public IList<t_EE_EneryUsreBudget> GetBudgetByID(int uid, int year = 0, int month = 0,int id=0)
         {
-            IList<t_EE_Budget> data = new List<t_EE_Budget>();
+            IList<t_EE_EneryUsreBudget> data = new List<t_EE_EneryUsreBudget>();
             try
             {
-                data = _dbFactory.budget.GetBudgetByID(uid, year, month, CollTypeID);
+                data = _dbFactory.eneryUserBudget.GetBudgetByID(uid, year, month,id);
             }
             catch (Exception ex)
             {
@@ -44,12 +44,12 @@ namespace DAL
             return data;
 
         }
-        public int AddBudGet(t_EE_Budget model)
+        public int AddBudGet(t_EE_EneryUsreBudget model)
         {
             int n = 0;
             try
             {
-                n = _dbFactory.budget.AddBudGet(model);
+                n = _dbFactory.eneryUserBudget.AddBudGet(model);
             }
             catch (Exception ex)
             {
@@ -57,12 +57,12 @@ namespace DAL
             }
             return n;
         }
-        public int UpdateBudGet(t_EE_Budget model)
+        public int UpdateBudGet(t_EE_EneryUsreBudget model)
         {
             int n = 0;
             try
             {
-                n = _dbFactory.budget.UpdateBudGet(model);
+                n = _dbFactory.eneryUserBudget.UpdateBudGet(model);
             }
             catch (Exception ex)
             {
@@ -71,13 +71,12 @@ namespace DAL
             return n;
         }
 
-
-        public IList<t_EE_Budget> GetMonthBudgetByYearID(int yearid)
+        public IList<t_EE_EneryUsreBudget> GetenBudgetByYearID(int coid)
         {
-            IList<t_EE_Budget> data = new List<t_EE_Budget>();
+            IList<t_EE_EneryUsreBudget> data = new List<t_EE_EneryUsreBudget>();
             try
             {
-                data = _dbFactory.budget.GetMonthBudgetByYearID(yearid);
+                data = _dbFactory.eneryUserBudget.GetenBudgetByYearID(coid);
             }
             catch (Exception ex)
             {
@@ -87,21 +86,20 @@ namespace DAL
             return data;
 
         }
-
-        public t_EE_Budget GetMonthBudgetByID(int id)
+        public t_EE_EneryUsreBudget GetenBudgetByID(int id)
         {
-            t_EE_Budget  data = new t_EE_Budget();
+            t_EE_EneryUsreBudget data = new t_EE_EneryUsreBudget();
             try
             {
-                data = _dbFactory.budget.GetMonthBudgetByID(id);
+                data = _dbFactory.eneryUserBudget.GetenBudgetByID(id);
             }
             catch (Exception ex)
             {
+
                 throw ex;
             }
             return data;
 
         }
-
     }
 }

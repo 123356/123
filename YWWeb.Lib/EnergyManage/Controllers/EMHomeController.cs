@@ -24,9 +24,12 @@ namespace EnergyManage.Controllers
             decimal lasrRate = 0;
             decimal mianji = 0;
             decimal peos = 0;
+
+            int year = Convert.ToDateTime(time).Year;
+            int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
             string pids = GetPIDs();
-            IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
+            IList<t_EE_CollTypeBudget> list_budgets = DAL.CollTypeBudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
             foreach (var item_peizhi in list_peizhi)
@@ -181,10 +184,11 @@ namespace EnergyManage.Controllers
         public JsonResult GetEneryAnalysis(int uid, int DepartmentID, string time = "2018-11")
         {
             List<overView> list = new List<overView>();
-
+            int year = Convert.ToDateTime(time).Year;
+            int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
             string pids = GetPIDs();
-            IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid);
+            IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
             foreach (var item_peizhi in list_peizhi)
@@ -544,7 +548,7 @@ namespace EnergyManage.Controllers
                 list_line.Add(m);
             }
             List<string> tianqi = new List<string>();
-            return Json(new { name, x, list_line,tianqi }, JsonRequestBehavior.AllowGet);
+            return Json(new { name, x, list_line, tianqi }, JsonRequestBehavior.AllowGet);
         }
 
         public class view
@@ -576,7 +580,7 @@ namespace EnergyManage.Controllers
             }
 
             List<overView> list_shiji = new List<overView>();
-            foreach(var item in x)
+            foreach (var item in x)
             {
                 DateTime d = Convert.ToDateTime(item);
                 shijivalue.Add(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate).ToString());
@@ -589,10 +593,186 @@ namespace EnergyManage.Controllers
         public JsonResult GetbugTable(string id)
         {
             string pids = GetPIDs();
-            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids,id);
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids, id);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region 预算管理
+        public JsonResult GetYearbugGetData(int uid, int year)
+        {
+            var list = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
+            decimal SurplusValue = list.GeneralBudget - list.BudgetBalance;
+            var left_list = new
+            {
+                list.UnitName,
+                list.ID,
+                list.GeneralBudget,
+                list.BudgetBalance,
+                SurplusValue,
+            };
+            return Json(left_list, JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult GetMonthBugGetbyYearID(int yearid)
+        {
+            var list = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearid);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetYearBugGetDataByMonth(int monthid)
+        {
+            IList<t_EE_CollTypeBudget> list = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetYearBugGetDataByType(int coid)
+        {
+            IList<t_EE_EneryUsreBudget> list = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByYearID(coid);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public class BudgetView
+        {
+            public string Name { get; set; }
+            public string Value { get; set; }
+
+            public int ID { get; set; }
+
+            public string Value2 { get; set; }
+        }
+
+        public JsonResult UpdateYearBudGet(decimal BudgetBalance, decimal GeneralBudget, int year, int uid)
+        {
+            int count = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).Count();
+            IList<t_DM_CollectDevType> list_co = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
+            if (count > 0)
+            {
+                var mmm = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
+                mmm.BudgetBalance = BudgetBalance;
+                mmm.GeneralBudget = GeneralBudget;
+                mmm.Year = year;
+                mmm.UID = uid;
+                int n = DAL.YearBudgetDAL.getInstance().UpdateYearBudGet(mmm);
+            }
+            else
+            {
+                //添加
+                t_EE_YearBudget model = new t_EE_YearBudget();
+                model.BudgetBalance = BudgetBalance;
+                model.GeneralBudget = GeneralBudget;
+                model.Year = year;
+                model.UID = uid;
+                int n = DAL.YearBudgetDAL.getInstance().AddYearBudGet(model);
+                if (n > 0)
+                {
+                    var m = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
+
+                    var vv = m.GeneralBudget - m.BudgetBalance;
+                    vv = vv / 12;
+                    for (int i = 1; i <= 12; i++)
+                    {
+
+                        var mm = DAL.BudgetDAL.getInstance().GetBudgetByID(m.UID, m.Year, i);
+                        if (mm.Count() == 0)
+                        {
+                            t_EE_Budget bm = new t_EE_Budget();
+                            bm.Month = i;
+                            bm.MonthBudget = vv;
+                            bm.YearID = m.ID;
+                            DAL.BudgetDAL.getInstance().AddBudGet(bm);
+
+                            foreach (var item in list_co)
+                            {
+                                var mmm = DAL.BudgetDAL.getInstance().GetBudgetByID(m.UID, m.Year, i).FirstOrDefault();
+                                if (mmm != null)
+                                {
+                                    t_EE_CollTypeBudget mmmmm = new t_EE_CollTypeBudget();
+                                    mmmmm.CollTypeID = item.ID;
+                                    mmmmm.MonthID = mmm.ID;
+                                    mmmmm.GeneralBudget = mmm.MonthBudget / list_co.Count();
+                                    DAL.CollTypeBudgetDAL.getInstance().AddBudGet(mmmmm);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            return Json("ok");
+        }
+
+        public JsonResult UpdateMonthBudget(int id, decimal value, int month, int yearid)
+        {
+            var model = DAL.BudgetDAL.getInstance().GetMonthBudgetByID(id);
+            if (model != null)
+            {
+                model.MonthBudget = value;
+                DAL.BudgetDAL.getInstance().UpdateBudGet(model);
+            }
+            else
+            {
+                t_EE_Budget bm = new t_EE_Budget();
+                bm.Month = month;
+                bm.MonthBudget = value;
+                bm.YearID = yearid;
+                DAL.BudgetDAL.getInstance().AddBudGet(bm);
+            }
+            return Json("ok");
+        }
+
+        public JsonResult UpdateContypeBudget(int id, decimal value, int month, int monthid,int cotypeid)
+        {
+            var model = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByID(id);
+            if (model != null)
+            {
+                model.GeneralBudget = value;
+                DAL.CollTypeBudgetDAL.getInstance().UpdateBudGet(model);
+            }
+            else
+            {
+                t_EE_CollTypeBudget bm = new t_EE_CollTypeBudget();
+                bm.GeneralBudget = value;
+                bm.MonthID = monthid;
+                bm.CollTypeID = cotypeid;
+                DAL.CollTypeBudgetDAL.getInstance().AddBudGet(bm);
+            }
+            return Json("ok");
+        }
+
+
+        public JsonResult UpdateEnUserBudget(int id, decimal value, int month, int cotypeid, int eneruserid)
+        {
+            var model = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByID(id);
+            if (model != null)
+            {
+                model.GeneralBudget = value;
+                DAL.EneryUsreBudgetDAL.getInstance().UpdateBudGet(model);
+            }
+            else
+            {
+                t_EE_EneryUsreBudget bm = new t_EE_EneryUsreBudget();
+                bm.GeneralBudget= value;
+                bm.EneryUserID = eneruserid;
+                bm.CollTypeID = cotypeid;
+                DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
+            }
+            return Json("ok");
+        }
+
+        public class UpdateBudGet
+        {
+            public int UID { get; set; }
+            public int year { get; set; }
+            public int month { get; set; }
+            public int typeid { get; set; }
+            public int depid { get; set; }
+            public decimal GeneralBudget { get; set; }
+            public decimal BudgetBalance { get; set; }
+            public decimal MonthBudget { get; set; }
+            public decimal SubsectorGate { get; set; }
+            public decimal SubtypeBudget { get; set; }
+            public decimal DepartmentalApportionment { get; set; }
+        }
+        #endregion
     }
 }

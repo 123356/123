@@ -61,8 +61,10 @@
     <Compile Include="IBudget.cs" />
     <Compile Include="ICircuitInfo.cs" />
     <Compile Include="ICollecDevType.cs" />
+    <Compile Include="ICollTypeBudget.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
+    <Compile Include="IEneryUsreBudget.cs" />
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
     <Compile Include="IUnit.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="IEnerUserType.cs" />
     <Compile Include="IVDeviceInfoState_PDR1.cs" />
     <Compile Include="IVEnerProjectType.cs" />
+    <Compile Include="IYearBudget.cs" />
     <Compile Include="Models.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,10 +99,13 @@
     <Compile Include="Models\t_DM_CircuitInfo.cs" />
     <Compile Include="Models\t_DM_CollectDevType.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
+    <Compile Include="Models\t_EE_CollTypeBudget.cs" />
     <Compile Include="Models\t_EE_EnerUserProject.cs" />
     <Compile Include="Models\t_EE_EnerUserType.cs" />
+    <Compile Include="Models\t_EE_EneryUsreBudget.cs" />
     <Compile Include="Models\t_EE_enTypeConfig.cs" />
     <Compile Include="Models\t_EE_ExEnergy.cs" />
+    <Compile Include="Models\t_EE_YearBudget.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />

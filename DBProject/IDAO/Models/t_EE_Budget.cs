@@ -14,23 +14,10 @@ namespace IDAO.Models
     {
         public int ID { get; set; }
 
-        public int UID { get; set; }
-        public string Year { get; set; }
-        public decimal GeneralBudget { get; set; }
-
-        public decimal BudgetBalance { get; set; }
-
-        public decimal ActualBudget { get; set; }
-
+        public int YearID { get; set; }
+        
         public decimal MonthBudget { get; set; }
-        public decimal CollTypeID { get; set; }
 
-        public decimal SubtypeBudget { get; set; }
-
-        public decimal SubsectorGate { get; set; }
-
-        public decimal DepartmentalApportionment { get; set; }
-
-        public string Name { get; set; }
+        public int Month { get; set; }
     }
 }

@@ -42,11 +42,16 @@ namespace DAO
         public IenTypeConfig typeconfig => new EnTypeConfigDBContext();
 
         public ICollecDevType collecdevtype => new CollecDevTypeDBContext();
-
         public IVEnerProjectType venerProjectType => new VEnerProjectTypeDBContext();
 
         public ICircuitInfo circuitinfo => new CircuitInfoDBContext();
 
         public IExEnergy exEnergy => new ExEnergyDBContext();
+
+        public IYearBudget yearBudget => new YearBudgetDBContext();
+
+        public ICollTypeBudget collecTypeBudget => new CollTypeBudgetDBContext();
+
+        public IEneryUsreBudget eneryUserBudget => new EneryUsreBudgetDBContext();
     }
 }
