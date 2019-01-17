@@ -16,5 +16,8 @@ namespace IDAO
         IList<t_EE_EneryUsreBudget> GetenBudgetByYearID(int cotyid);
 
         t_EE_EneryUsreBudget GetenBudgetByID(int id);
+
+        t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid,int eneryid);
+        int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid);
     }
 }

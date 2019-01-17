@@ -37,27 +37,39 @@ join t_EE_Budget c on b.MonthID=c.ID
 
         public int AddBudGet(t_EE_EneryUsreBudget model)
         {
-            string sql = $@"insert into t_EE_CollTypeBudget(EneryUserID,CollTypeID,GeneralBudget) 
+            string sql = $@"insert into t_EE_EneryUsreBudget(EneryUserID,CollTypeID,GeneralBudget) 
           values({model.EneryUserID},{model.CollTypeID},{model.GeneralBudget})";
             return ExecuteSqlCommand(sql);
         }
 
         public int UpdateBudGet(t_EE_EneryUsreBudget model)
         {
-            string sql = $@"update t_EE_Budget set EneryUserID={model.EneryUserID},CollTypeID={model.CollTypeID},GeneralBudget={model.GeneralBudget} where ID={model.ID}";
+            string sql = $@"update t_EE_EneryUsreBudget set EneryUserID={model.EneryUserID},CollTypeID={model.CollTypeID},GeneralBudget={model.GeneralBudget} where ID={model.ID}";
             return ExecuteSqlCommand(sql);
         }
 
         public IList<t_EE_EneryUsreBudget> GetenBudgetByYearID(int cotyid)
         {
-            string sql = "select * b.Name as EName from t_EE_EneryUsreBudget a join t_EE_EnerUserType b on a.EneryUserID=b.ID where a.CollTypeID=" + cotyid;
+            string sql = "select a.*, b.Name as EName from t_EE_EneryUsreBudget a join t_EE_EnerUserType b on a.EneryUserID=b.ID where a.CollTypeID=" + cotyid;
             return SQLQuery<t_EE_EneryUsreBudget>(sql);
         }
 
         public t_EE_EneryUsreBudget GetenBudgetByID(int id)
         {
-            string sql = "select * b.Name as EName from t_EE_EneryUsreBudget a join t_EE_EnerUserType b on a.EneryUserID=b.ID where a.ID=" + id;
+            string sql = "select a.*, b.Name as EName from t_EE_EneryUsreBudget a join t_EE_EnerUserType b on a.EneryUserID=b.ID where a.ID=" + id;
             return SQLQuery<t_EE_EneryUsreBudget>(sql).FirstOrDefault();
+        }
+
+        public t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid, int eneryid)
+        {
+            string sql = $"select a.*, b.Name as EName from t_EE_EneryUsreBudget a join t_EE_EnerUserType b on a.EneryUserID=b.ID where a.EneryUserID={eneryid} and a.CollTypeID={cotyid}";
+            return SQLQuery<t_EE_EneryUsreBudget>(sql).FirstOrDefault();
+        }
+
+        public int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid)
+        {
+            string sql = $"delete from t_EE_EneryUsreBudget  where EneryUserID={eneryid} and CollTypeID={cotyid}";
+            return ExecuteSqlCommand(sql);
         }
     }
 }

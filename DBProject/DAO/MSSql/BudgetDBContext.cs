@@ -50,13 +50,13 @@ join t_CM_Unit f on b.UID = f.UnitID where b.UID={uid} and b.Year={year}";
 
         public IList<t_EE_Budget> GetMonthBudgetByYearID(int yearid)
         {
-            string sql = $@"select * from t_EE_YearBudget where YearID={yearid}";
+            string sql = $@"select * from t_EE_Budget where YearID={yearid}";
             return SQLQuery<t_EE_Budget>(sql);
         }
 
         public t_EE_Budget GetMonthBudgetByID(int id)
         {
-            string sql = $@"select * from t_EE_YearBudget where ID={id}";
+            string sql = $@"select * from t_EE_Budget where ID={id}";
             return SQLQuery<t_EE_Budget>(sql).FirstOrDefault();
         }
     }

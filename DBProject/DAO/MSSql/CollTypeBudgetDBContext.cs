@@ -46,7 +46,7 @@ join t_DM_CollectDevType e on a.CollTypeID=e.ID where c.UID={uid} AND c.Year={ye
 
         public int UpdateBudGet(t_EE_CollTypeBudget model)
         {
-            string sql = $@"update t_EE_Budget set MonthID={model.MonthID},CollTypeID={model.CollTypeID},GeneralBudget={model.GeneralBudget} where ID={model.ID}";
+            string sql = $@"update t_EE_CollTypeBudget set MonthID={model.MonthID},CollTypeID={model.CollTypeID},GeneralBudget={model.GeneralBudget} where ID={model.ID}";
             return ExecuteSqlCommand(sql);
         }
 
@@ -58,7 +58,7 @@ join t_DM_CollectDevType e on a.CollTypeID=e.ID where c.UID={uid} AND c.Year={ye
 
         public t_EE_CollTypeBudget GetColltypeBudgetByID(int id)
         {
-            string sql = $"select a.*,b.Name as CollTypeName from t_EE_CollTypeBudget a join t_DM_CollectDevType b on a.CollTypeID=b.ID where ID=id";
+            string sql = $"select a.*,b.Name as CollTypeName from t_EE_CollTypeBudget a join t_DM_CollectDevType b on a.CollTypeID=b.ID where a.ID={id}";
             return SQLQuery<t_EE_CollTypeBudget>(sql).FirstOrDefault();
         }
     }

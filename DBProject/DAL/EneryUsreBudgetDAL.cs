@@ -101,5 +101,37 @@ namespace DAL
             return data;
 
         }
+
+        public t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid,int eneryid)
+        {
+            t_EE_EneryUsreBudget data = new t_EE_EneryUsreBudget();
+            try
+            {
+                data = _dbFactory.eneryUserBudget.GetenBudgetByeneyidAndCoID(cotyid, eneryid);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+        public int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid)
+        {
+            int data = 0;
+            try
+            {
+                data = _dbFactory.eneryUserBudget.DeleEnBudgetByeneyidAndCoID(cotyid, eneryid);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return data;
+
+        }
+
     }
 }

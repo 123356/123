@@ -720,7 +720,7 @@ namespace EnergyManage.Controllers
             return Json("ok");
         }
 
-        public JsonResult UpdateContypeBudget(int id, decimal value, int month, int monthid,int cotypeid)
+        public JsonResult UpdateContypeBudget(int id, decimal value, int monthid,int cotypeid)
         {
             var model = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByID(id);
             if (model != null)
@@ -740,7 +740,7 @@ namespace EnergyManage.Controllers
         }
 
 
-        public JsonResult UpdateEnUserBudget(int id, decimal value, int month, int cotypeid, int eneruserid)
+        public JsonResult UpdateEnUserBudget(int id, decimal value,int cotypeid, int eneruserid)
         {
             var model = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByID(id);
             if (model != null)
@@ -756,6 +756,45 @@ namespace EnergyManage.Controllers
                 bm.CollTypeID = cotypeid;
                 DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
             }
+            return Json("ok");
+        }
+
+
+        public JsonResult AddEnUserBudget(int cotypeid,string eneryids)
+        {
+            if (!string.IsNullOrEmpty(eneryids))
+            {
+                var s = eneryids.Split(',').ToList();
+
+                var mm = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByYearID(cotypeid).Select(p => p.EneryUserID).ToList();
+
+                foreach (var item in mm)
+                {
+                    if (!s.Contains(item + ""))
+                    {
+                        DAL.EneryUsreBudgetDAL.getInstance().DeleEnBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
+                    }
+                }
+                
+                foreach(var item  in s)
+                {
+                    
+
+                    var m = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
+                    if (m != null)
+                    {
+
+                    }
+                    else
+                    {
+                        t_EE_EneryUsreBudget bm = new t_EE_EneryUsreBudget();
+                        bm.EneryUserID = Convert.ToInt32(item);
+                        bm.CollTypeID = cotypeid;
+                        DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
+                    }
+                }
+            }
+
             return Json("ok");
         }
 
