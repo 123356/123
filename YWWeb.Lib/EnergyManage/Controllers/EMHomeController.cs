@@ -601,16 +601,24 @@ namespace EnergyManage.Controllers
         public JsonResult GetYearbugGetData(int uid, int year)
         {
             var list = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
-            decimal SurplusValue = list.GeneralBudget - list.BudgetBalance;
-            var left_list = new
+            if (list != null)
             {
-                list.UnitName,
-                list.ID,
-                list.GeneralBudget,
-                list.BudgetBalance,
-                SurplusValue,
-            };
-            return Json(left_list, JsonRequestBehavior.AllowGet);
+                decimal SurplusValue = list.GeneralBudget - list.BudgetBalance;
+                var left_list = new
+                {
+                    list.UnitName,
+                    list.ID,
+                    list.GeneralBudget,
+                    list.BudgetBalance,
+                    SurplusValue,
+                };
+                return Json(left_list, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("no Data", JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         public JsonResult GetMonthBugGetbyYearID(int yearid)
