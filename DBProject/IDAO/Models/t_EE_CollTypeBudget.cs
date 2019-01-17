@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace IDAO.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+    [Serializable]
     public class t_EE_CollTypeBudget
     {
         public int ID { get; set; }
