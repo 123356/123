@@ -62,6 +62,7 @@
     <Compile Include="ICircuitInfo.cs" />
     <Compile Include="ICollecDevType.cs" />
     <Compile Include="ICollTypeBudget.cs" />
+    <Compile Include="IDepartmentalApportionment.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
     <Compile Include="IEneryUsreBudget.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Models\t_DM_CollectDevType.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
     <Compile Include="Models\t_EE_CollTypeBudget.cs" />
+    <Compile Include="Models\t_EE_DepartmentalApportionment.cs" />
     <Compile Include="Models\t_EE_EnerUserProject.cs" />
     <Compile Include="Models\t_EE_EnerUserType.cs" />
     <Compile Include="Models\t_EE_EneryUsreBudget.cs" />

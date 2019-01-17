@@ -631,6 +631,11 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetYearBugGetDataBydepar(int coid)
+        {
+            IList<t_EE_DepartmentalApportionment> list = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByYearID(coid);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         public class BudgetView
         {
             public string Name { get; set; }
@@ -759,6 +764,24 @@ namespace EnergyManage.Controllers
             return Json("ok");
         }
 
+        public JsonResult UpdateDepEnUserBudget(int id, decimal value, int cotypeid, int eneruserid)
+        {
+            var model = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByID(id);
+            if (model != null)
+            {
+                model.GeneralBudget = value;
+                DAL.DepartmentalApportionmentDAL.getInstance().UpdateBudGet(model);
+            }
+            else
+            {
+                t_EE_DepartmentalApportionment bm = new t_EE_DepartmentalApportionment();
+                bm.GeneralBudget = value;
+                bm.EneryUserID = eneruserid;
+                bm.CollTypeID = cotypeid;
+                DAL.DepartmentalApportionmentDAL.getInstance().AddBudGet(bm);
+            }
+            return Json("ok");
+        }
 
         public JsonResult AddEnUserBudget(int cotypeid,string eneryids)
         {

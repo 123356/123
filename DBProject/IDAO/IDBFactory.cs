@@ -39,5 +39,6 @@ namespace IDAO
 
         IEneryUsreBudget eneryUserBudget { get; }
 
+        IDepartmentalApportionment depar { get; }
     }
 }
