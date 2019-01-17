@@ -816,6 +816,35 @@ namespace EnergyManage.Controllers
                         DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
                     }
                 }
+
+
+                var mmm = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByYearID(cotypeid).Select(p => p.EneryUserID).ToList();
+
+                foreach (var item in mmm)
+                {
+                    if (!s.Contains(item + ""))
+                    {
+                        DAL.DepartmentalApportionmentDAL.getInstance().DeleEnBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
+                    }
+                }
+
+                foreach (var item in s)
+                {
+
+
+                    var m = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
+                    if (m != null)
+                    {
+
+                    }
+                    else
+                    {
+                        t_EE_DepartmentalApportionment bm = new t_EE_DepartmentalApportionment();
+                        bm.EneryUserID = Convert.ToInt32(item);
+                        bm.CollTypeID = cotypeid;
+                        DAL.DepartmentalApportionmentDAL.getInstance().AddBudGet(bm);
+                    }
+                }
             }
 
             return Json("ok");
