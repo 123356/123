@@ -233,8 +233,6 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(item.addCid))
                     cidss += item.addCid + ",";
             }
-            //if (!string.IsNullOrEmpty(childs))
-            //{
             List<title> TitleList = new List<title>();
             IList<t_EE_enTypeConfig> listconfig = null;
             if (!string.IsNullOrEmpty(childs))
@@ -298,7 +296,6 @@ namespace EnergyManage.Controllers
                         table.Add(t);
                     }
                 }
-
             }
             return Json(new { TitleList, table });
         }
@@ -320,7 +317,6 @@ namespace EnergyManage.Controllers
         public JsonResult GetEneryLine(int uid, int DepartmentID, int type, int TypeTime, string time = "2018-11")
         {
             duibiView list_r = new duibiView();
-
             List<string> x = new List<string>();
             List<string> x2 = new List<string>();
             string pids = GetPIDs();
@@ -340,7 +336,6 @@ namespace EnergyManage.Controllers
                 DateTime time_test = Convert.ToDateTime("2018-11-20");
                 if (TypeTime == 1)
                 {
-
                     for (var i = 0; i < 24; i++)
                     {
                         x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
@@ -391,8 +386,6 @@ namespace EnergyManage.Controllers
                     string t4 = new DateTime(2017, 12, 31).ToString();
                     list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
                 }
-
-
                 foreach (var item in x)
                 {
 
@@ -440,7 +433,6 @@ namespace EnergyManage.Controllers
             string childs = "";
             string cidss = "";
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
-
             foreach (var item in list_userP)
             {
                 if (!string.IsNullOrEmpty(item.addCid))
@@ -498,8 +490,6 @@ namespace EnergyManage.Controllers
             DateTime time_test = Convert.ToDateTime("2018-11-20");
             if (TypeTime == 1)
             {
-
-
                 string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
                 string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
                 list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
@@ -554,7 +544,6 @@ namespace EnergyManage.Controllers
             {
                 list = new List<overView>();
             }
-
             public string name { get; set; }
             public List<overView> list { get; set; }
 
@@ -570,12 +559,10 @@ namespace EnergyManage.Controllers
             string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
             string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
             list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, 1, t1, t2);
-
             for (var i = 0; i < 24; i++)
             {
                 x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
             }
-
             List<overView> list_shiji = new List<overView>();
             foreach (var item in x)
             {
@@ -615,7 +602,6 @@ namespace EnergyManage.Controllers
             {
                 return Json("no Data", JsonRequestBehavior.AllowGet);
             }
-            
         }
 
         public JsonResult GetMonthBugGetbyYearID(int yearid)
@@ -630,7 +616,7 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetRightData(int uid,int year,int month)
+        public JsonResult GetRightData(int uid, int year, int month)
         {
             string pids = GetPIDs();
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -656,7 +642,7 @@ namespace EnergyManage.Controllers
                     else
                         cids = "0";
                     IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                    rate+= list_data.Sum(p => p.Rate);
+                    rate += list_data.Sum(p => p.Rate);
                 }
                 overView group_i = new overView();
                 group_i.name = item_peizhi.Name;
@@ -694,9 +680,7 @@ namespace EnergyManage.Controllers
         {
             public string Name { get; set; }
             public string Value { get; set; }
-
             public int ID { get; set; }
-
             public string Value2 { get; set; }
         }
 
@@ -725,12 +709,10 @@ namespace EnergyManage.Controllers
                 if (n > 0)
                 {
                     var m = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
-
                     var vv = m.GeneralBudget - m.BudgetBalance;
                     vv = vv / 12;
                     for (int i = 1; i <= 12; i++)
                     {
-
                         var mm = DAL.BudgetDAL.getInstance().GetBudgetByID(m.UID, m.Year, i);
                         if (mm.Count() == 0)
                         {
@@ -779,7 +761,7 @@ namespace EnergyManage.Controllers
             return Json("ok");
         }
 
-        public JsonResult UpdateContypeBudget(int id, decimal value, int monthid,int cotypeid)
+        public JsonResult UpdateContypeBudget(int id, decimal value, int monthid, int cotypeid)
         {
             var model = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByID(id);
             if (model != null)
@@ -799,7 +781,7 @@ namespace EnergyManage.Controllers
         }
 
 
-        public JsonResult UpdateEnUserBudget(int id, decimal value,int cotypeid, int eneruserid)
+        public JsonResult UpdateEnUserBudget(int id, decimal value, int cotypeid, int eneruserid)
         {
             var model = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByID(id);
             if (model != null)
@@ -810,7 +792,7 @@ namespace EnergyManage.Controllers
             else
             {
                 t_EE_EneryUsreBudget bm = new t_EE_EneryUsreBudget();
-                bm.GeneralBudget= value;
+                bm.GeneralBudget = value;
                 bm.EneryUserID = eneruserid;
                 bm.CollTypeID = cotypeid;
                 DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
@@ -837,7 +819,7 @@ namespace EnergyManage.Controllers
             return Json("ok");
         }
 
-        public JsonResult AddEnUserBudget(int cotypeid,string eneryids)
+        public JsonResult AddEnUserBudget(int cotypeid, string eneryids)
         {
             if (!string.IsNullOrEmpty(eneryids))
             {
@@ -852,10 +834,10 @@ namespace EnergyManage.Controllers
                         DAL.EneryUsreBudgetDAL.getInstance().DeleEnBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
                     }
                 }
-                
-                foreach(var item  in s)
+
+                foreach (var item in s)
                 {
-                    
+
 
                     var m = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
                     if (m != null)
