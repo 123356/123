@@ -912,6 +912,7 @@ namespace EnergyManage.Controllers
             public decimal SubsectorGate { get; set; }
             public decimal SubtypeBudget { get; set; }
             public decimal DepartmentalApportionment { get; set; }
+
         }
         #endregion
     }
