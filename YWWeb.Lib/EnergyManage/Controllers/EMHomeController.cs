@@ -24,7 +24,6 @@ namespace EnergyManage.Controllers
             decimal lasrRate = 0;
             decimal mianji = 0;
             decimal peos = 0;
-
             int year = Convert.ToDateTime(time).Year;
             int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
