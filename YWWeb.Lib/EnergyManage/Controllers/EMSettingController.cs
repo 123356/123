@@ -17,7 +17,13 @@ namespace EnergyManage.Controllers
             return View();
         }
         //组织区域管理编辑工具
-        public ActionResult OrganizeAreaTreeEdit()
+        public ActionResult AreaTreeEdit()
+        {
+            return View();
+        }
+
+        //组织区域管理展示
+        public ActionResult AreaTree()
         {
             return View();
         }
@@ -98,8 +104,6 @@ namespace EnergyManage.Controllers
             catch {
             }
         }
-
-
 
         /// <summary>
         /// 添加节点

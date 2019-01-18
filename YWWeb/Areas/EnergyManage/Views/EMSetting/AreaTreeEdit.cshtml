@@ -1,0 +1,781 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/js//vue.min.js"></script>
+
+    <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+    <script src="//unpkg.com/iview/dist/iview.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+
+    <style scoped>
+        #app {
+            background: #efefef;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around
+        }
+
+
+        .layout {
+            border: 1px solid #d7dde4;
+            background: #f5f7f9;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .layout-logo {
+            width: 100px;
+            height: 30px;
+            background: #5b6270;
+            border-radius: 3px;
+            float: left;
+            position: relative;
+            top: 15px;
+            left: 20px;
+        }
+
+        .layout-nav {
+            width: 420px;
+            margin: 0 auto;
+            margin-right: 20px;
+        }
+
+        .ivu-layout.ivu-layout-has-sider {
+            height: 100%;
+        }
+
+        .ivu-layout-sider {
+            overflow: hidden;
+        }
+
+        .ivu-layout-sider-children {
+            overflow-y: auto;
+            width: 110%;
+        }
+
+        .ivu-card-body {
+            height: 700px;
+        }
+
+        .ivu-card-body {
+            overflow: hidden;
+        }
+
+        .cidbox {
+            min-height: 94px;
+            border: 1px solid #dcdee2;
+            border-radius: 4px;
+            color: #35383c;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .ivu-modal {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <template>
+            <div class="layout">
+                <Layout>
+                    <Sider hide-trigger :style="{background: '#fff'}">
+                        <i-Menu :active-name="UnitData.UnitID" theme="light" width="auto" :open-names="['1']" ref="side_menu" v-on:on-select="changeUnitID">
+                            <Submenu name="1">
+                                <template slot="title">
+                                    <Icon type="ios-navigate"></Icon>
+                                    单位
+                                </template>
+                                <menu-item v-for="(itme,index) in untiList" :name="itme.UnitID" :key="index" :data-pids="itme.PDRList" :style="{'border-buttom':'1px soldi #000'}">{{itme.UnitName}}</menu-item>
+                            </Submenu>
+                        </i-Menu>
+                    </Sider>
+                    <Layout :style="{padding: '0 24px 24px'}">
+                        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff', 'flex-grow': '1'}">
+                            <Tabs type="card" :animated="false" v-model="treeType" :value="1">
+                                <tab-pane label="用电分项树" :name="1" icon="ios-leaf"></tab-pane>
+                                <tab-pane label="组织区域树" :name="2" icon="md-pie"></tab-pane>
+                            </Tabs>
+
+                            <template>
+                                <Row style="background:#eee;padding:20px;height:810px" :style="{'overflow':'hiddens'}">
+                                    <i-col span="12">
+                                        <Card :bordered="false">
+                                            <p slot="title">{{UnitData.UnitName}}——{{treeType == 1?"用电分项树":"组织区域树"}}</p>
+                                          
+                                            <Tree :data="treeType == 1?subitemTree: areaTree" 
+                                                  :render="renderContent" 
+                                                  :style="{'height':'80%','overflow-y':'auto','overflow-x':'hidden','width':'110%','padding-right':'10%'}"
+                                                  ref="tree"
+                                                  ></Tree>
+                                        </Card>
+                                    </i-col>
+                                    <i-col span="11" offset="1">
+                                        <Card>
+                                            <p slot="title">{{this.nodeEditTyped == 'add'?'添加' :this.nodeEditTyped == 'upd'?'修改':'查看'}}<span v-show="node.title">-</span>{{node.title}}</p>
+                                            <form class="form-horizontal" id="form" style="padding:10px;height:90%;overflow-y:auto;margin-bottom:25px;">
+                                                <div class="form-group">
+                                                    <label for="name">名称</label>
+                                                    <input type="text" class="form-control" id="name" v-model="node.title" />
+                                                </div>
+                                                <div class="form-group" v-show="treeType==2">
+                                                    <label for="head">负责人</label>
+                                                    <input type="text" class="form-control" id="head" v-model="node.head">
+                                                </div>
+                                                <div class="form-group" v-show="treeType==1">
+                                                    <label for="area">面积</label>
+                                                    <input type="text" class="form-control" id="area" v-model="node.area">
+                                                </div>
+                                                <div class="form-group" v-show="treeType==1">
+                                                    <label for="people">人数</label>
+                                                    <input type="text" class="form-control" id="people" v-model="node.people">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="note">备注</label>
+                                                    <input type="text" class="form-control" id="note" v-model="node.note">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="addCid">累加电表 <i-button type="primary" size="small" icon="md-add" v-on:click="modal1 = true;cidEdit='add'" ghost></i-button></label>
+                                                    <div :rows="4" v-model="addCid" class="cidbox" style="padding:8px">
+                                                        <Tag  closable v-on:on-close="handleClose(parseInt(itme.id),'add')" v-for="(itme,index) in addCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="delCid">累减电表 <i-button type="primary" size="small" icon="md-add" v-on:click="modal1 = true;cidEdit='del'" ghost></i-button></label>
+                                                    <div :rows="4" v-model="delCid" class="cidbox" style="padding:8px">
+                                                        <Tag  closable v-on:on-close="handleClose(parseInt(itme.id),'del')" v-for="(itme,index) in  delCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <button type="submit" class="btn btn-default" element-id="form" v-on:click="submitForm">Submit</button>
+                                            <p slot="foot"></p>
+                                        </Card>
+                                    </i-col>
+                                </Row>
+                            </template>
+
+                        </Content>
+                    </Layout>
+                </Layout>
+            </div>
+        </template>
+
+        <Modal :title="UnitData.UnitName" v-model="modal1"   v-on:on-ok="ModalonOk" v-on:on-cancel="ModalonCancel"  >
+            <Tree :data="cidTree"  show-checkbox  :style="{'height':'500px','width':'100%','overflow-y': 'auto;','overflow-x': 'hidden'}" v-on:on-check-change="selectedCidNode"></Tree>
+        </Modal>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                value2: '1',
+                theme1: 'light',
+                treeType: 1,        //树类型
+                untiList: null,     //单位列表
+                node: {
+                    title: "",
+                    addCid: "",
+                    delCid: "",
+                    area: 0,
+                    people: 0,
+                    note: "",
+                    head:""
+                },
+                modal1: false,      //模态框
+                subitemTree: [],    //分项树
+                areaTree: [],       //区域树
+                UnitData: {},       //单位id name pid
+
+                cidEdit:null,
+
+                cidTree: [],
+
+
+                addCid: null,
+                delCid:null,
+
+                buttonProps: {
+                    type: 'default',
+                    size: 'small',
+                },
+
+                show:true
+            },
+            methods: {
+             
+                //选中的cid  的关闭事件
+                handleClose(id, type) {
+                    if (type == 'add') {
+                        for (var a = 0; a < this.addCid.length; a++) {
+                            if (this.addCid[a].id == id) {
+                                this.addCid.splice(a, 1)
+                                break;
+                            }
+                        }
+                    } else {
+                        for (var a = 0; a < this.delCid.length; a++) {
+                            if (parseInt(this.delCid[a].id) == id) {
+                                this.delCid.splice(a, 1)
+                                break;
+                            }
+                        }
+                    }
+                },
+                //模态框点击ok
+                ModalonOk: function () {                 
+                    for (key in this.cidselect) {
+                        this.cidselect[key].checked = false;
+                    }
+                    if (this.cidEdit == 'add') {
+                        this.oldCidSelectedDel = this.addCid ;
+                    } else {
+                        this.oldCidSelectedAdd = this.delCid;
+                    }
+                },
+                //模态框点击取消
+                ModalonCancel: function () {
+                    if (this.cidEdit == 'add') {
+                        this.addCid = this.oldCidSelectedDel;
+                    } else {
+                        this.delCid = this.oldCidSelectedAdd;
+                    }
+                    for (key in this.cidselect) {
+                        this.cidselect[key].checked = false;
+                    }
+                },
+                //获取选中的cid
+                selectedCidNode: function (data) {
+                    this.oldCidSelectedDel = this.addCid;
+                    this.oldCidSelectedAdd = this.delCid;
+
+                    this.cidselect = data;
+                    var list = [];
+                    for (var a = 0; a < data.length; a++) {
+                        if (data[a].type == 'cid') {
+                            list.push({ pid: data[a].pid, id: parseInt(data[a].id), title: data[a].title });
+                        }
+                    }
+                    if (this.cidEdit == 'add') {
+                        this.addCid = list;
+                    } else {
+                        this.delCid = list;
+                    }
+                },
+                //加载单位列表
+                loadUnitList: function () {
+                    var that = this;
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetUnitList",
+                        method: "post",
+                        params: {}
+                    })
+                        .then(function (res) {
+                            if (!$.cookie('UnitData')) {
+                                this.UnitData = res.data[0];
+                                $.cookie('UnitData', JSON.stringify(res.data[0]), { expires: 7, path: '/' });
+                                this.getSubitemTree();
+                                this.getAreaTree();
+                                this.getPDRList()
+                            }
+                            this.untiList = res.data;
+                    })
+                        .catch(function (e) {
+                    })
+                },
+                //改变单位保存属性
+                changeUnitID: function (e) {
+                    for (var a = 0; a < this.untiList.length; a++) {
+                        if (this.untiList[a].UnitID == e) {
+                            this.UnitData = this.untiList[a];
+                            $.cookie('UnitData', JSON.stringify(this.untiList[a]), { expires: 7, path: '/' });
+                        }
+                    }
+                    this.getSubitemTree();
+                    this.getAreaTree();
+                    this.getPDRList()
+
+                },
+                //加载分项用电树
+                getSubitemTree: function () {
+                    var that = this;
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetTreeData",
+                        method: "post",
+                        params: {
+                            unitID: that.UnitData.UnitID,
+                            item_type:1,
+                            unitName: that.UnitData.UnitName
+                        }
+                    })
+                        .then(function (res) {
+                            that.subitemTree = that.strNameToTitle(res.data);
+                        })
+                        .catch(function (e) {
+                        })
+                },
+                //字符串name 替换title 加属性
+                strNameToTitle: function (data) {
+                    var str = JSON.stringify(data);
+                    str = str.replace(/name/g ,"title").replace(`,"children":[]`, "");
+                    var arr = [];
+                    arr.push(JSON.parse(str))
+                    arr[0].render = (h, { root, node, data }) => {
+                        return h('span', {
+                            style: {
+                                display: 'inline-block',
+                                width: '100%'
+                            }
+                        }, [
+                                h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-folder-outline'
+                                        },
+                                        style: {
+                                            marginRight: '8px'
+                                        }
+                                    }),
+                                    h('span', data.title)
+                                ]),
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        float: 'right',
+                                        marginRight: '32px'
+                                    }
+                                },
+                                [
+                                    h('Button', {
+                                        props: Object.assign({}, this.buttonProps, {
+                                            icon: 'ios-add',
+                                            type: 'primary'
+                                        }),
+                                        style: {
+                                            marginRight: '8px'
+                                        },
+                                        on: {
+                                            click: () => { this.append(data) }
+                                        }
+                                    }),
+                                    h('Button', {
+                                        props: Object.assign({}, this.buttonProps, {
+                                            icon: 'ios-search-outline',
+                                            type: 'primary'
+                                        }),
+                                     
+                                        on: {
+                                            click: () => { this.search(data) }
+                                        }
+                                    }),
+
+                                ])
+                            ]);
+                    };
+                    arr[0].selected = true;
+                    arr[0].expand = true;
+                    return arr;
+                },
+                //加载组织区域树
+                getAreaTree: function () {
+                    var that = this;
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetTreeData",
+                        method: "post",
+                        params: {
+                            unitID: that.UnitData.UnitID,
+                            item_type: 2,
+                            unitName: that.UnitData.UnitName
+                        }
+                    })
+                        .then(function (res) {
+                            that.areaTree = that.strNameToTitle(res.data);
+                        })
+                        .catch(function (e) {
+                        })
+                },
+                //加载该单位的cid树
+                getPDRList: function () {
+                    var that = this;
+                    if (!that.UnitData.PDRList) {
+                        return 
+                    }
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetCidTree",
+                        method: "post",
+                        params: {
+                            pids: that.UnitData.PDRList,
+                        }
+                    })
+                        .then(function (res) {
+                            that.oldCidTree = res.data;
+                            that.cidTree = that.finishCidData(res.data);
+                        })
+                        .catch(function (e) {
+                        })
+                },
+                //cid数据格式
+                finishCidData: function (data) {
+                    var tree = [];
+                    for (var a = 0, pid = -1, cid = -1, did = -1; a < data.length; a++) {
+                        if (pid != data[a].PID) {
+                            tree.push({
+                                title: data[a].Name,
+                                type: 'pid',
+                                id: data[a].PID + "_p",
+                                children: [{
+                                    title: data[a].DeviceName,
+                                    type: 'did',
+                                    id: data[a].DID + "_d",
+                                    children: [
+                                        { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", children: [], pid: data[a].PID}
+                                    ]
+                                }]
+                            });
+                            pid = data[a].PID;
+                            did = data[a].DID;
+                            cid = data[a].CID;
+                        } else if (pid == data[a].PID && did != data[a].DID) {
+                            var pidlen = tree.length - 1;
+                            tree[pidlen].children.push({
+                                title: data[a].DeviceName,
+                                type: 'did',
+                                id: data[a].DID + "_d",
+                                children: [
+                                    { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID}
+                                ]
+                            })
+                            did = data[a].DID;
+                            cid = data[a].CID;
+
+                        } else if (pid == data[a].PID && did == data[a].DID ) {
+                            var pidlen = tree.length - 1;
+                            var didlen = tree[pidlen].children.length - 1;
+                            tree[pidlen].children[didlen].children.push({ title: data[a].CName, type: 'cid', id: data[a].CID + "_c" ,pid: data[a].PID})
+                        }
+                    }
+
+
+                    return tree;
+                },
+                renderContent(h, { root, node, data }) {
+                    var that = this;
+                    return h('span', {
+                        style: {
+                            display: 'inline-block',
+                            width: '100%'
+                        }
+                    }, [
+                            h('span', [
+                                h('Icon', {
+                                    props: {
+                                        type: 'ios-paper-outline'
+                                    },
+                                    style: {
+                                        marginRight: '8px'
+                                    }
+                                }),
+                                h('span', data.title)
+                            ]),
+                            h('span', {
+                                style: {
+                                    display: 'inline-block',
+                                    float: 'right',
+                                    marginRight: '32px'
+                                }
+                            }, [
+                                    h('Button', {
+                                        props: Object.assign({}, that.buttonProps, {
+                                            icon: 'ios-add'
+                                        }),
+                                        style: {
+                                            marginRight: '8px'
+                                        },
+                                        on: {
+                                            click: () => { that.append(data) }
+                                        }
+                                    }),
+                                    h('Button', {
+                                        props: Object.assign({}, that.buttonProps, {
+                                            icon: 'ios-remove'
+                                        }),
+                                        style: {
+                                            marginRight: '8px'
+                                        },
+                                        on: {
+                                            click: () => { that.remove(root, node, data) }
+                                        }
+                                    }),
+                                    h('Button', {
+                                        props: Object.assign({}, that.buttonProps, {
+                                            icon: 'ios-build-outline'
+                                        }),
+                                        style: {
+                                            marginRight: '8px'
+                                        },
+                                        on: {
+                                            click: () => { that.update(root, node, data) }
+                                        }
+                                    }),
+                                    h('Button', {
+                                        props: Object.assign({}, that.buttonProps, {
+                                            icon: 'ios-search-outline'
+                                        }),
+                                        on: {
+                                            click: () => { that.search(root, node, data) }
+                                        }
+                                    }),
+                                 
+                                  
+                                ])
+                        ]);
+                },
+                //添加节点
+                append(data) {       
+                    this.node = {};
+                    this.node.parent_id = data.id;
+                    this.treeParent = data;
+                    this.nodeEditTyped = "add";
+                    this.addCid = [];
+                    this.delCid = [];
+                },
+                //删除节点
+                remove(root, node, data) {
+                    const parentKey = root.find(el => el === node).parent;
+                    const parent = root.find(el => el.nodeKey === parentKey).node;
+                    const index = parent.children.indexOf(data);
+                    parent.children.splice(index, 1);
+                },
+                //修改节点
+                update(root, node, data) {
+                    if (data) {
+                        this.node = data;
+                    } else {
+                        this.node = root;
+                    }
+                    this.addCid = this.PIDCIdToView(this.node.addCid);
+                    this.delCid = this.PIDCIdToView(this.node.delCid);
+                    this.node.parent_id = node.parent;
+                    this.node.id = node.node.id;
+                    this.nodeEditTyped = "upd";
+                },
+                //查看节点
+                search(root, node, data) {
+                    if (data) {
+                        this.node = data;
+                    } else {
+                        this.node = root;
+                    }
+                    this.nodeEditTyped = "sea";
+                    this.addCid = this.PIDCIdToView(this.node.addCid);
+                    this.delCid = this.PIDCIdToView(this.node.delCid);
+                },
+                submitForm() {
+                    var that = this;
+                    if (this.nodeEditTyped == 'add') {
+                        if (!this.node.title) {
+                            this.$Message.warning("节点名称不能为空");
+                            return;
+                        }
+                        this.node.addCid = this.ViewToPIDCId(this.addCid);
+                        this.node.delCid = this.ViewToPIDCId(this.delCid);
+                        var name = that.node.title;
+                        this.$http({
+                            url: "/energyManage/EMSetting/AddTreeNode",
+                            method: "post",
+                            params: {
+                                parent_id: that.node.parent_id,
+                                unit_id: that.UnitData.UnitID,
+                                unit_head: that.node.head,
+                                unit_note: that.node.note,
+                                addCid: that.node.addCid,
+                                delCid: that.node.delCid,
+                                item_type: that.treeType,
+                                Name: name,
+                                id: 0,
+                                unit_area: that.node.area,
+                                unit_people: that.node.people,
+                            }
+                        })
+                            .then(function (res) {
+                                if (res.data.lenght) { 
+                                    const children = this.treeParent.children || [];
+                                    children.push({
+                                        title: name,
+                                        area: res.data[0].unit_area,
+                                        people: res.data[0].unit_people,
+                                        id: res.data[0].child_id,
+                                        head: res.data[0].unit_head,
+                                        note: res.data[0].unit_note,
+                                        addCid: res.data[0].addCid,
+                                        delCid: res.data[0].delCid,
+                                        expand: true
+                                    });
+                                    this.$set(this.treeParent, 'children', children);
+                                    this.$Message.success("添加成功");
+                                } else {
+                                    this.$Modal.error("返回异常")
+                                }
+                            })
+                            .catch(function (e) {
+                                this.$Message.error("数据异常");
+                            })
+                    } else if (this.nodeEditTyped == 'upd') {
+                        if (!this.node.title) {
+                            this.$Message.warning("节点名称不能为空");
+                            return;
+                        }
+                        this.node.addCid = this.ViewToPIDCId(this.addCid);
+                        this.node.delCid = this.ViewToPIDCId(this.delCid);
+                        var name = that.node.title;
+
+
+                        console.log({
+                            parent_id: that.node.parent_id,
+                            unit_id: that.UnitData.UnitID,
+                            unit_head: that.node.head,
+                            unit_note: that.node.note,
+                            addCid: that.node.addCid,
+                            delCid: that.node.delCid,
+                            item_type: that.treeType,
+                            Name: name,
+                            id: that.node.id,
+                            unit_area: that.node.area,
+                            unit_people: that.node.people,
+                        })
+
+
+                        this.$http({
+                            url: "/energyManage/EMSetting/UpdateTreeNode",
+                            method: "post",
+                            params: {
+                                parent_id: that.node.parent_id,
+                                unit_id: that.UnitData.UnitID,
+                                unit_head: that.node.head,
+                                unit_note: that.node.note,
+                                addCid: that.node.addCid,
+                                delCid: that.node.delCid,
+                                item_type: that.treeType,
+                                Name: name,
+                                id: that.node.id,
+                                unit_area: that.node.area,
+                                unit_people: that.node.people,
+                            }
+                        })
+                            .then(function (res) {
+                                console.log(res.data)
+                                if (res.data.length > 0) {
+
+                                    //const children = this.treeParent.children || [];
+                                    //children.push({
+                                    //    title: name,
+                                    //    area: res.data[0].unit_area,
+                                    //    people: res.data[0].unit_people,
+                                    //    id: res.data[0].child_id,
+                                    //    head: res.data[0].unit_head,
+                                    //    note: res.data[0].unit_note,
+                                    //    addCid: res.data[0].addCid,
+                                    //    delCid: res.data[0].delCid,
+                                    //    expand: true
+                                    //});
+                                    //this.$set(this.treeParent, 'children', children);
+                                    this.$Message.success("修改成功");
+                                } else {
+                                    this.$Modal.error("返回异常")
+                                }
+
+                            })
+                            .catch(function (e) {
+                                this.$Message.error("数据异常");
+                            })
+
+
+                    }
+                },
+                //视图转cid字符串 
+                ViewToPIDCId(arr) {
+                    if (arr) {
+                        for (var a = 0, list = []; a < arr.length; a++) {
+                            list[a] = arr[a].pid + "-" + arr[a].id;
+                        }
+                        return list.join(',');
+                    }
+                    else {
+                        return "";
+                    }
+                },
+                //cid字符串 转 视图
+                PIDCIdToView(str) {
+                    if (str) {
+                        var str = str.split(',');
+                        for (var a = 0, arr = []; a < str.length; a++) {
+                            var q = str[a].split('-');
+                            var obj = { pid: q[0], id: q[1] };
+                            for (var b = 0; b < this.oldCidTree.length; b++) {
+                                if (this.oldCidTree[b].CID == obj.id) {
+                                    obj.title = this.oldCidTree[b].CName;
+                                    break;
+                                }
+                            }
+                            arr.push(obj);
+                        }
+                        return arr;
+                    }
+                    else {
+                        return "";
+                    }
+                }
+            },
+            updated: function () {
+                this.$nextTick(() => {
+                    this.$refs.side_menu.updateOpened();
+                    this.$refs.side_menu.updateActiveName();
+                })
+            },
+            beforeMount: function () {                      //挂载之前
+                if ($.cookie('UnitData')) {
+                    this.UnitData = JSON.parse($.cookie('UnitData'));
+                    this.getSubitemTree();
+                    this.getAreaTree();
+                    this.getPDRList()
+                }
+                this.loadUnitList();
+            }
+        })
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
