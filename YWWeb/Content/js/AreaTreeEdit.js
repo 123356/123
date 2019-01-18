@@ -427,6 +427,7 @@
      },
      GetCidView: function(ids) {
          var that = this;
+         console.log(ids)
          if (ids && that.cidData) {
              var cid = that.cidData;
              var id = ids.split(",").map(Number);

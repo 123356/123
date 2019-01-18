@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new EnTypeConfigDAL();
                 }
             }
-
             return _DataDal;
         }
 
@@ -41,7 +40,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -53,7 +51,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -65,7 +62,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

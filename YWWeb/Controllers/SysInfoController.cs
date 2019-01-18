@@ -2042,7 +2042,7 @@ namespace YWWeb.Controllers
 
         #region  编辑树
         [Login]
-        public ActionResult TreeEdit()
+        public ActionResult CommunicaEdit()
         {
             return View();
         }

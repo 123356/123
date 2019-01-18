@@ -45,11 +45,7 @@ namespace DAL
             }
             return data;
         }
-
-
-
-
-
+        
         public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId, int id, int unit_id)
 
         {

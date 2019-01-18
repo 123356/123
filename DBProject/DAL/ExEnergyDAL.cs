@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new ExEnergyDAL();
                 }
             }
-
             return _DataDal;
         }
 
@@ -38,7 +37,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -50,7 +48,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

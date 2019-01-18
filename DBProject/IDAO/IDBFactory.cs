@@ -42,5 +42,7 @@ namespace IDAO
         IDepartmentalApportionment depar { get; }
 
         IPDRInfo pdrInfo { get; }
+
+        IPriceEnery priceEnery { get; }
     }
 }

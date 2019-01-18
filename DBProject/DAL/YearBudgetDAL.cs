@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new YearBudgetDAL();
                 }
             }
-
             return _DataDal;
         }
         public IList<t_EE_YearBudget> GetYearBudgetByID(int uid, int year)
@@ -38,7 +37,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -51,7 +49,8 @@ namespace DAL
             try
             {
                 n = _dbFactory.yearBudget.AddYearBudGet(model);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }

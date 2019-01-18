@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new PDRInfoDAL();
                 }
             }
-
             return _DataDal;
         }
 
@@ -38,7 +37,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

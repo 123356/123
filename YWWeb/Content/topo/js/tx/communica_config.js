@@ -61,7 +61,7 @@ var palette_Attributes = [{
         sort: "node",
         title: "path"
     },
-
+ 
     {
         name: "文字颜色",
         type: "color",

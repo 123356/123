@@ -24,7 +24,6 @@ namespace EnergyManage.Controllers
             decimal lasrRate = 0;
             decimal mianji = 0;
             decimal peos = 0;
-
             int year = Convert.ToDateTime(time).Year;
             int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
@@ -128,7 +127,6 @@ namespace EnergyManage.Controllers
         {
             public string name { get; set; }
             public decimal value { get; set; }
-
         }
 
         public class rightView
@@ -144,7 +142,6 @@ namespace EnergyManage.Controllers
             public decimal rate { get; set; }
             public decimal energyConsumption { get; set; }
             public decimal budget { get; set; }
-
             public int ID { get; set; }
 
         }
@@ -153,28 +150,33 @@ namespace EnergyManage.Controllers
             model.UserID = CurrentUser.UserID;
             int n = DAL.EnTypeConfigDAL.getInstance().AddConfig(model);
             return Json(n, JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult DeleteConfig(int id)
         {
             int n = DAL.EnTypeConfigDAL.getInstance().DeleteConfig(id);
             return Json(n, JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult GetCollectDevTypeList()
         {
             IList<t_DM_CollectDevType> list = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetComobxList()
         {
             IList<t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetUnitComobxList()
         {
             IList<t_CM_Unit> list = GetUnitComobox();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         #endregion
@@ -188,6 +190,7 @@ namespace EnergyManage.Controllers
             int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
             string pids = GetPIDs();
+
             IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
@@ -236,8 +239,6 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(item.addCid))
                     cidss += item.addCid + ",";
             }
-            //if (!string.IsNullOrEmpty(childs))
-            //{
             List<title> TitleList = new List<title>();
             IList<t_EE_enTypeConfig> listconfig = null;
             if (!string.IsNullOrEmpty(childs))
@@ -301,13 +302,13 @@ namespace EnergyManage.Controllers
                         table.Add(t);
                     }
                 }
-
             }
             return Json(new { TitleList, table });
         }
 
         public class title
         {
+
             public int Type { get; set; }
             public string Name { get; set; }
         }
@@ -317,13 +318,13 @@ namespace EnergyManage.Controllers
             {
                 value = new Dictionary<string, string>();
             }
+
             public Dictionary<string, string> value { get; set; }
         }
 
         public JsonResult GetEneryLine(int uid, int DepartmentID, int type, int TypeTime, string time = "2018-11")
         {
             duibiView list_r = new duibiView();
-
             List<string> x = new List<string>();
             List<string> x2 = new List<string>();
             string pids = GetPIDs();
@@ -343,7 +344,6 @@ namespace EnergyManage.Controllers
                 DateTime time_test = Convert.ToDateTime("2018-11-20");
                 if (TypeTime == 1)
                 {
-
                     for (var i = 0; i < 24; i++)
                     {
                         x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
@@ -394,8 +394,6 @@ namespace EnergyManage.Controllers
                     string t4 = new DateTime(2017, 12, 31).ToString();
                     list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
                 }
-
-
                 foreach (var item in x)
                 {
 
@@ -429,6 +427,7 @@ namespace EnergyManage.Controllers
                 list_this = new List<overView>();
                 list_last = new List<overView>();
             }
+
             public List<overView> list_this { get; set; }
             public List<overView> list_last { get; set; }
         }
@@ -443,7 +442,6 @@ namespace EnergyManage.Controllers
             string childs = "";
             string cidss = "";
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
-
             foreach (var item in list_userP)
             {
                 if (!string.IsNullOrEmpty(item.addCid))
@@ -464,7 +462,6 @@ namespace EnergyManage.Controllers
                     t.value.Add("time", item.Key.ToString());
                     decimal mianji = 0;
                     decimal renliu = 0;
-
 
 
                     foreach (var it in TitleList)
@@ -491,6 +488,7 @@ namespace EnergyManage.Controllers
         public JsonResult GetExTable()
         {
             string pids = GetPIDs();
+
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas(pids);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -501,8 +499,6 @@ namespace EnergyManage.Controllers
             DateTime time_test = Convert.ToDateTime("2018-11-20");
             if (TypeTime == 1)
             {
-
-
                 string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
                 string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
                 list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
@@ -557,10 +553,8 @@ namespace EnergyManage.Controllers
             {
                 list = new List<overView>();
             }
-
             public string name { get; set; }
             public List<overView> list { get; set; }
-
         }
         public JsonResult GetBudgetData(string cids)
         {
@@ -573,12 +567,10 @@ namespace EnergyManage.Controllers
             string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
             string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
             list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, 1, t1, t2);
-
             for (var i = 0; i < 24; i++)
             {
                 x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
             }
-
             List<overView> list_shiji = new List<overView>();
             foreach (var item in x)
             {
@@ -594,6 +586,7 @@ namespace EnergyManage.Controllers
         {
             string pids = GetPIDs();
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids, id);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -618,22 +611,23 @@ namespace EnergyManage.Controllers
             {
                 return Json("no Data", JsonRequestBehavior.AllowGet);
             }
-            
         }
 
         public JsonResult GetMonthBugGetbyYearID(int yearid)
         {
             var list = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetYearBugGetDataByMonth(int monthid)
         {
             IList<t_EE_CollTypeBudget> list = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetRightData(int uid,int year,int month)
+        public JsonResult GetRightData(int uid, int year, int month)
         {
             string pids = GetPIDs();
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -659,7 +653,7 @@ namespace EnergyManage.Controllers
                     else
                         cids = "0";
                     IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                    rate+= list_data.Sum(p => p.Rate);
+                    rate += list_data.Sum(p => p.Rate);
                 }
                 overView group_i = new overView();
                 group_i.name = item_peizhi.Name;
@@ -685,21 +679,21 @@ namespace EnergyManage.Controllers
         public JsonResult GetYearBugGetDataByType(int coid)
         {
             IList<t_EE_EneryUsreBudget> list = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByYearID(coid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetYearBugGetDataBydepar(int coid)
         {
             IList<t_EE_DepartmentalApportionment> list = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByYearID(coid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public class BudgetView
         {
             public string Name { get; set; }
             public string Value { get; set; }
-
             public int ID { get; set; }
-
             public string Value2 { get; set; }
         }
 
@@ -728,12 +722,10 @@ namespace EnergyManage.Controllers
                 if (n > 0)
                 {
                     var m = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, year).FirstOrDefault();
-
                     var vv = m.GeneralBudget - m.BudgetBalance;
                     vv = vv / 12;
                     for (int i = 1; i <= 12; i++)
                     {
-
                         var mm = DAL.BudgetDAL.getInstance().GetBudgetByID(m.UID, m.Year, i);
                         if (mm.Count() == 0)
                         {
@@ -779,10 +771,10 @@ namespace EnergyManage.Controllers
                 bm.YearID = yearid;
                 DAL.BudgetDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok");
+            return Json("ok",JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateContypeBudget(int id, decimal value, int monthid,int cotypeid)
+        public JsonResult UpdateContypeBudget(int id, decimal value, int monthid, int cotypeid)
         {
             var model = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByID(id);
             if (model != null)
@@ -802,7 +794,7 @@ namespace EnergyManage.Controllers
         }
 
 
-        public JsonResult UpdateEnUserBudget(int id, decimal value,int cotypeid, int eneruserid)
+        public JsonResult UpdateEnUserBudget(int id, decimal value, int cotypeid, int eneruserid)
         {
             var model = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByID(id);
             if (model != null)
@@ -813,7 +805,7 @@ namespace EnergyManage.Controllers
             else
             {
                 t_EE_EneryUsreBudget bm = new t_EE_EneryUsreBudget();
-                bm.GeneralBudget= value;
+                bm.GeneralBudget = value;
                 bm.EneryUserID = eneruserid;
                 bm.CollTypeID = cotypeid;
                 DAL.EneryUsreBudgetDAL.getInstance().AddBudGet(bm);
@@ -837,10 +829,10 @@ namespace EnergyManage.Controllers
                 bm.CollTypeID = cotypeid;
                 DAL.DepartmentalApportionmentDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok");
+            return Json("ok",JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddEnUserBudget(int cotypeid,string eneryids)
+        public JsonResult AddEnUserBudget(int cotypeid, string eneryids)
         {
             if (!string.IsNullOrEmpty(eneryids))
             {
@@ -855,10 +847,10 @@ namespace EnergyManage.Controllers
                         DAL.EneryUsreBudgetDAL.getInstance().DeleEnBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
                     }
                 }
-                
-                foreach(var item  in s)
+
+                foreach (var item in s)
                 {
-                    
+
 
                     var m = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(cotypeid, Convert.ToInt32(item));
                     if (m != null)
@@ -920,6 +912,7 @@ namespace EnergyManage.Controllers
             public decimal SubsectorGate { get; set; }
             public decimal SubtypeBudget { get; set; }
             public decimal DepartmentalApportionment { get; set; }
+
         }
         #endregion
     }

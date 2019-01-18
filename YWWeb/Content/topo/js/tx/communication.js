@@ -21,7 +21,7 @@ Layout.prototype = {
         this.dragline($(this.lineright), 'right');
         this.resize();
         this.adaptive();
-
+ 
     },
     //加载class 添加节点  class 给定默认样式
     creatBox: function() {
@@ -88,7 +88,7 @@ Layout.prototype = {
         //屏幕尺寸变化次数
         var that = this;
         $(window).resize(function() {
-
+ 
             //获取屏幕宽度
             that.globalwdith = parseInt($(window).width());
             that.adaptive();
@@ -102,8 +102,8 @@ Layout.prototype = {
         var boxcenter = this.boxcenter;
         var boxright = this.boxright;
         var boxleft = this.boxleft;
-
-
+ 
+ 
         lineleft.style.left = lineleft.style.left || "255px";
         boxleft.style.width = parseInt(lineleft.style.left) + 10 + 'px';
         lineright.style.left = lineright.style.left || main - 236 + "px";
@@ -111,14 +111,14 @@ Layout.prototype = {
         boxright.style.left = main - parseInt(boxright.style.width) + 4 + 'px';
         boxcenter.style.left = parseInt(lineleft.style.left) + 13 + "px"
         boxcenter.style.width = main - parseInt(boxright.style.width) - parseInt(boxleft.style.width) - 2 + "px"
-
+ 
         this.canvas.width = $(boxcenter).width();
         this.canvas.height = $(boxcenter).height();
     }
 };
 var layout = new Layout();
 layout.init();
-
+ 
 //左侧节点列表
 function NodeList() {
     this.selectCanvas = null;
@@ -135,10 +135,10 @@ NodeList.prototype = {
                 //创建头 和itme
             $('.boxLeft').append(' <div class="palette-header"><i class="caret"></i>' +
                 '<span class="palette-title-text">' + palette_config[key].name + '</span></div>').append(content);
-
+ 
             // 遍历节点
             var path = '../../../Content/topo/img/communication/'
-
+ 
             var items = palette_config[key].items;
             for (var a = 0; a < items.length; a++) {
                 var item = document.createElement("div");
@@ -177,7 +177,7 @@ NodeList.prototype = {
 };
 var nodeList = new NodeList();
 nodeList.init();
-
+ 
 //中间部分
 function Topo() {
     //选中节点
@@ -255,12 +255,12 @@ Topo.prototype = {
                     node.setLocation(node.x + that.copyOffset, node.y);
                 }
             }
-
+ 
             if (event.keyCode == 32) {
                 that.ceshi();
             }
-
-
+ 
+ 
             //上下左右
             if (that.scene.selectedElements && (event.keyCode == 38 || event.keyCode == 40 || event.keyCode == 37 || event.keyCode == 39)) {
                 var selectedElements = that.scene.selectedElements;
@@ -341,18 +341,18 @@ Topo.prototype = {
         stage.frames = 24; //只有鼠标事件时 才重新绘制
         stage.wheelZoom = 0.95;
         stage.eagleEye.visible = true;
-
+ 
         that.mode = 'normal';
         // stage.zoom(0.5, 0.5);
         this.stage = stage;
-
+ 
         stage.click(function(event) {
             if (event.button == 0) { // 右键
                 $("#contextmenu").hide();
                 $(".panel-default").hide();
             }
         });
-
+ 
         var scene = new JTopo.Scene(stage);
         scene.alpha = 1;
         scene.background = null;
@@ -370,7 +370,7 @@ Topo.prototype = {
             }
         })
         this.scene = scene;
-
+ 
     },
     // 编辑
     editRow: function() {
@@ -425,22 +425,22 @@ Topo.prototype = {
                 l.type = e.type;
                 line.push(l);
             }
-
+ 
             if (e.elementType == "node") {
                 delete e.inLinks;
                 delete e.outLinks;
                 nodes[e.ID] = e;
             }
-
+ 
         })
         ojbect.data = { node: nodes, line: line };
         var saveData = document.createElement("input");
         $(saveData).val(JSON.stringify(ojbect));
         $(saveData).css('display', "none")
         $("body").append(saveData);
-
+ 
         var val = `?pid=${that.__pid}&orderNo=${that.__orderNo}&type=2&IP=${that.compileStr(that.__IP)}&port=${that.compileStr(that.__port)}&account=${ that.compileStr(that.__account)}&password=${ that.compileStr(that.__password)}`;
-
+ 
         $.ajax({
             type: 'POST',
             url: "/PDRInfo/SaveAttribute" + val,
@@ -457,7 +457,7 @@ Topo.prototype = {
             },
         })
     },
-
+ 
     //保存文件
     saveAs: function(obj, filename) {
         var a = document.createElement('a');
@@ -472,9 +472,9 @@ Topo.prototype = {
         if (!code) {
             return null;
         }
-        var c = String.fromCharCode(code.charCodeAt(0) + code.length); 
+        var c = String.fromCharCode(code.charCodeAt(0) + code.length); 
         for (var i = 1; i < code.length; i++) {
-            c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1)); 
+            c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1)); 
         }
         return escape(c);
     },
@@ -500,7 +500,7 @@ Topo.prototype = {
             node.__type = 'text';
             node.textPosition = 'Middle_Center';
             node.font = obj.font || '16px 微软雅黑 block';
-
+ 
         } else if (obj.__type == "node") {
             var node = new JTopo.Node();
             node.text = obj.text || "";
@@ -582,7 +582,7 @@ Topo.prototype = {
                     }
                 })
             }
-
+ 
             $("#contextmenu").hide();
         });
         $('.addChild').on('click', function() {
@@ -591,8 +591,8 @@ Topo.prototype = {
             $('.panel-default').hide();
             $('.allCheck')[0].checked = false;
         })
-
-
+ 
+ 
         //全选按钮
         $('.allCheck').on('change', function() {
             var userids = this.checked;
@@ -601,7 +601,7 @@ Topo.prototype = {
             });
         })
     },
-
+ 
     ceshi: function() {
         this.scene.clear();
         var that = this;
@@ -654,7 +654,7 @@ Topo.prototype = {
                     });
                     var PID_DID = that.setlink(DID, PID);
                     PID_DID._parentID = PID.ID;
-
+ 
                     $.ajax({
                         type: "post",
                         url: "/PDRInfo/GetCirByDID",
@@ -675,13 +675,13 @@ Topo.prototype = {
                                     x: DID.x + DID.width / 3 * 2,
                                     y: DID.y + DID.height + 30 + (50 + 8) * b,
                                     textOffsetY: -15
-
+ 
                                 });
                                 var DID_CID = that.setFoldLink(CID, DID);
                                 DID_CID._parentID = DID.ID;
                             }
                         }
-
+ 
                     })
                 }
             }
@@ -689,7 +689,7 @@ Topo.prototype = {
         setTimeout(() => {
             that.stage.eagleEye.update();
         }, 500);
-
+ 
     },
     // 添加DID节点 或者CID节点
     addDIDorCID: function(node) {
@@ -704,8 +704,8 @@ Topo.prototype = {
         var maxleng = parseInt($('.nodewidth').val());
         var postiionX = node1.x - ($('input:checkbox:checked').length / 2) * maxleng + node1.width * .5;
         var _userType = node1._userType == "PID" ? "DID" : "CID";
-
-
+ 
+ 
         $.each($('.childs  input:checkbox:checked'), function() {
             if (_userType == "DID") {
                 var x = $('input:checkbox:checked').length == 1 ? node1.x : postiionX + maxleng * num;
@@ -732,14 +732,14 @@ Topo.prototype = {
             } else {
                 var line = that.setFoldLink(node1, node2);
                 node2.linkElementID = node1.ID;
-
+ 
             }
             node2.linkElementID = node1.ID;
             line._parentID = node1.ID;
             num++;
         });
     },
-
+ 
     //二次折线
     setlink: function(nodeA, nodeZ, text) {
         var link = new JTopo.FlexionalLink(nodeA, nodeZ, text || null);
@@ -793,22 +793,22 @@ Topo.prototype = {
         $("[data-type=copyOffset]").val(this.copyOffset);
         $("[data-type=_userType]").val(node._userType);
         $("[data-type=ID]").val(node.ID);
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
         node._visible = node._visible ? 0 : 1;
         this.contractionSubset(node);
         this.stage.eagleEye.update();
-
+ 
     },
     //收缩子集
     contractionSubset: function(node) {
         if (!node.ID) {
             return;
         }
-
+ 
         var arr;
         if (node._userType == "PID") {
             arr = this.DIDS;
@@ -817,15 +817,15 @@ Topo.prototype = {
         } else {
             return;
         }
-
+ 
         for (var a = 0; a < arr.length; a++) {
             if (arr[a]._parentID == node.ID) {
-
+ 
                 if (node._visible == 1) { //打开
                     if (node.image.src.match(/_j/)) {
                         node.setImage(node.image.src.replace('_j.png', '.png'))
                     }
-
+ 
                 } else if (node._visible == 0) { // 关闭
                     if (!node.image.src.match(/_j/)) {
                         node.setImage(node.image.src.replace('.png', '_j.png'))
@@ -833,7 +833,7 @@ Topo.prototype = {
                 }
                 arr[a]._visible = node._visible;
                 arr[a].visible = arr[a]._visible;
-
+ 
                 if (arr[a]._userType == "DID") {
                     this.contractionSubset(arr[a], node._visible);
                 }
@@ -846,7 +846,7 @@ Topo.prototype = {
         }
         var reg = /(\d{1,3}),(\d{1,3}),(\d{1,3})/;
         var arr = reg.exec(rgb);
-
+ 
         function hex(x) {
             return ("0" + parseInt(x).toString(16)).slice(-2);
         }
@@ -856,7 +856,7 @@ Topo.prototype = {
 };
 var topo = new Topo();
 topo.init();
-
+ 
 //右侧属性表格
 var AttributesTab = function() {}
 AttributesTab.prototype = {
@@ -981,11 +981,11 @@ AttributesTab.prototype = {
                 case "password":
                     topo.__password = value;
                     break;
-
+ 
             }
         })
     },
-
+ 
     //颜色转换
     hexToRgba: function(hex, opacity) {
         return parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7));

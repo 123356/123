@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new DepartmentalApportionmentDAL();
                 }
             }
-
             return _DataDal;
         }
         public int AddBudGet(t_EE_DepartmentalApportionment model)
@@ -69,7 +68,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public t_EE_DepartmentalApportionment GetenBudgetByID(int id)
         {
@@ -84,7 +82,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
 
         public t_EE_DepartmentalApportionment GetenBudgetByeneyidAndCoID(int cotyid, int eneryid)
@@ -100,7 +97,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid)
         {
@@ -115,7 +111,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
     }
 }

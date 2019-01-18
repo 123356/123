@@ -69,6 +69,7 @@
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
     <Compile Include="IPDRInfo.cs" />
+    <Compile Include="IPriceEnery.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
     <Compile Include="InterfaceCache\IDBCache.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Models\t_EE_EneryUsreBudget.cs" />
     <Compile Include="Models\t_EE_enTypeConfig.cs" />
     <Compile Include="Models\t_EE_ExEnergy.cs" />
+    <Compile Include="Models\t_EE_PriceEnery.cs" />
     <Compile Include="Models\t_EE_YearBudget.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />

@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new EneryOverViewDAL();
                 }
             }
-
             return _DataDal;
         }
 
@@ -87,7 +86,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -101,7 +99,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -115,7 +112,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -129,7 +125,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;

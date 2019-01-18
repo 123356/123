@@ -29,7 +29,6 @@ namespace DAL
                         _DataDal = new UserInfoDAL();
                 }
             }
-
             return _DataDal;
         }
 
@@ -45,12 +44,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetUsers(pid);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -61,12 +58,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetUsers(userName, password);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -90,7 +85,6 @@ namespace DAL
 
             try
             {
-
                 return _dbFactory.userInf.UpdateUnitList(userID, unitList);
             }
             catch (Exception ex)
@@ -105,12 +99,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetWxUsers(openid);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -122,12 +114,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetUnitLIstByUserID(user);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
