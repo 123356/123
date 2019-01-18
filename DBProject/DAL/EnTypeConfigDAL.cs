@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new EnTypeConfigDAL();
                 }
             }
-
             return _DataDal;
         }
 

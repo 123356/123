@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new PDRInfoDAL();
                 }
             }
-
             return _DataDal;
         }
 

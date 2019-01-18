@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new EneryOverViewDAL();
                 }
             }
-
             return _DataDal;
         }
 

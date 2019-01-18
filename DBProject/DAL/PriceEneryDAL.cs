@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new PriceEneryDAL();
                 }
             }
-
             return _DataDal;
         }
 

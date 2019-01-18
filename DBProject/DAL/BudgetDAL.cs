@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new BudgetDAL();
                 }
             }
-
             return _DataDal;
         }
         public IList<t_EE_Budget> GetBudgetByID(int uid, int year = 0, int month = 0,int CollTypeID=0)
@@ -42,7 +41,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public int AddBudGet(t_EE_Budget model)
         {
@@ -85,7 +83,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
 
         public t_EE_Budget GetMonthBudgetByID(int id)
@@ -100,7 +97,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
 
     }

@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new CircuitInfoDAL();
                 }
             }
-
             return _DataDal;
         }
         public IList<t_DM_CircuitInfo> GetCID(string cids,int type)
@@ -42,7 +41,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public IList<t_DM_CircuitInfo> GetCIDByCIDS(string cids)
         {
@@ -57,7 +55,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
     }
 }

@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new CollecDevTypeDAL();
                 }
             }
-
             return _DataDal;
         }
         public IList<t_DM_CollectDevType> GetCollectDevTypeList()
@@ -42,7 +41,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
     }
 }

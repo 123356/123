@@ -127,7 +127,6 @@ namespace EnergyManage.Controllers
         {
             public string name { get; set; }
             public decimal value { get; set; }
-
         }
 
         public class rightView
@@ -143,7 +142,6 @@ namespace EnergyManage.Controllers
             public decimal rate { get; set; }
             public decimal energyConsumption { get; set; }
             public decimal budget { get; set; }
-
             public int ID { get; set; }
 
         }

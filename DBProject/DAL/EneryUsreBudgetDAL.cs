@@ -26,7 +26,6 @@ namespace DAL
                         _DataDal = new EneryUsreBudgetDAL();
                 }
             }
-
             return _DataDal;
         }
         public IList<t_EE_EneryUsreBudget> GetBudgetByID(int uid, int year = 0, int month = 0,int id=0)
@@ -42,7 +41,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public int AddBudGet(t_EE_EneryUsreBudget model)
         {
@@ -99,7 +97,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
 
         public t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid,int eneryid)
@@ -115,7 +112,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
         public int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid)
         {
@@ -130,7 +126,6 @@ namespace DAL
                 throw ex;
             }
             return data;
-
         }
 
     }
