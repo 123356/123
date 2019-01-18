@@ -46,9 +46,35 @@
             type: null,
             floor:null
         },
-        
+        typeList: [],
+        departMentList:[]
     },
     methods: {
+        //类型下拉框
+        getCollectDevTypeList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetCollectDevTypeList',
+                method: 'get',
+            }).then(function (res) {
+                // console.log(res.data)
+                that.typeList = res.data
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
+        //科室下拉框
+        getDepartMentList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetComobxList',
+                method: 'get',
+            }).then(function (res) {
+                that.departMentList = res.data
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
         }
@@ -59,6 +85,8 @@
         setInterval(function () {
             that.tableHeight = $(".bottomView .con").height() 
         }, 100)
+        this.getCollectDevTypeList()
+        this.getDepartMentList()
     },
     mounted: function () {
         

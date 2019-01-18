@@ -109,8 +109,31 @@ html {
             overflow:hidden
         }
 
+.history .headerUl {
+    width:100%;
+    list-style:none
 
-
+}
+.history .headerUl li{
+   float:left;
+   padding:0px 5px;
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   height:100%
+       
+}
+    
+    .history .headerUl li .ivu-select {
+        width: 280px
+    }
+    .history .headerUl li .typeSelect {
+        width: 100px
+    }
+    .bottomChart {
+        flex: 8;
+        overflow:hidden
+    }
 
 
 

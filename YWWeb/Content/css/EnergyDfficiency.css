@@ -8,8 +8,13 @@ html {
     font-size: 62.5% !important;
     background: #f3f4f6;
 }
+.noData{
+    display:flex;
+    justify-content:center;
+    align-items:center
+}
 
-#app {
+#app, #EnergyOverview {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -120,7 +125,7 @@ html {
 }
         .left .treeList {
             width: 100%;
-            height: 100%;
+            height: 95%;
             display: block;
             overflow-y: auto;
             overflow-x: hidden;
@@ -187,7 +192,7 @@ html {
     }
 
 .right {
-    flex: 4.5;
+    flex: 5;
     margin-right: 0;
     display: flex;
     flex-direction: column;
@@ -372,13 +377,18 @@ html {
                     color: #777;
                     margin-left: 1rem
                 }
-                .EnergyModule .right-module .main .pieChart {
-                    
-                    flex: 1;
-                }
-            .EnergyModule .right-module .main .barChart {
-                flex: 5;
-            }
+.EnergyModule .right-module .main .pieChart {
+    flex: 1;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.EnergyModule .right-module .main .barChart {
+    flex: 5;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
         .left .consumeList .ivu-checkbox-wrapper {
             margin-top: 5px;
 
@@ -650,15 +660,26 @@ html {
             font-size: 2.2rem;
             color: #40ae93;
         }
+
+.BudgetSetting .treeModalVisable{
+
+}
+.treeModal .ivu-modal-body{
+    height:450px !important;
+    max-height:500px !important
+}
+.treeModal .ivu-modal-footer .ivu-btn-text{
+    display:none
+}
 /*能源总览*/
-#EnergyControl{
-    position:absolute;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:space-around;
-    flex-direction:column;
-    overflow:hidden
+#EnergyControl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    overflow: hidden
 }
     #EnergyControl ul{
         list-style:none
@@ -961,7 +982,7 @@ html {
         .right .UserMenuView .menuList li {
             cursor: pointer;
             padding: 5px 12px;
-            color:#777;
+            color:#333;
             font-size:1.2rem;
             border-radius:2px;
             height:100%;
@@ -1206,7 +1227,7 @@ html {
     }
 
     .left .chartView .lastItem {
-        flex: 1.3
+        flex: 1.5
     }
 
     .left .chartView .item .main p {

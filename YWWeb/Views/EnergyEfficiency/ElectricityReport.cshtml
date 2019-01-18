@@ -19,35 +19,30 @@
             <div class="bottomView main-item">
                 <div class="module-title">
                     <img src="~/Content/images/energyDifficiency/fx.png" class="icon" />
-                    <Dropdown trigger="click" style="margin-right:15px">
+                    <Dropdown trigger="click" style="margin-right:15px" v-on:on-click="dropdownClick">
                         <span>
                             报表类型
                             <Icon type="md-arrow-dropdown" size="25" />
                         </span>
                         <dropdown-menu slot="list" v-for="item in reportType">
-                            <dropdown-item v-if="item.children==null">{{item.type}}</dropdown-item>
-                            <Dropdown placement="right-start" v-else>
-                                <dropdown-item>
-                                    {{item.type}}
-                                    <Icon type="ios-arrow-forward"></Icon>
-                                </dropdown-item>
-                                <dropdown-menu slot="list" class="dropdownMenuChild">
-                                    <dropdown-item v-for="child in item.children">{{child.type}}</dropdown-item>
-                                </dropdown-menu>
-                            </Dropdown>
-
+                            <dropdown-item :name="item.name">{{item.type}}</dropdown-item>
                         </dropdown-menu>
                     </Dropdown>
+                    <i-select style="width:100px" v-model="curDepart" placeholder="科室" v-on:on-change="departmentChange" v-show="curReportType==1">
+                        <i-option :value="item.id" v-for="item in departmentList">{{item.name}}</i-option>
+                        
+                    </i-select>
                     <i-select style="width:100px" v-model="curDateType" placeholder="日期类型" v-on:on-change="dateTypeChange">
                         <i-option value="date">日报表</i-option>
                         <i-option value="month">月报表</i-option>
                         <i-option value="year">年报表</i-option>
                     </i-select>
-                    <date-picker :type="curDateType"style="width: 160px;font-size:12px"  placeholder="请选择时间"></date-picker>
+                    <date-picker :type="curDateType" style="width: 160px;font-size:12px" placeholder="请选择时间"></date-picker>
 
                     <i-button icon="ios-print-outline" class="btn">打印</i-button>
                 </div>
                 <div class="con">
+                    
                     <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border></i-table>
                 </div>
                 
@@ -62,7 +57,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.05"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.09"></script>
 </body>
 </html>
 

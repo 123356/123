@@ -1,58 +1,93 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        uid: null,
+        uName:'',
         analysisTableHeight: 0,
-        treeData: [
-            {
-                title: '医院楼层结构',
-                id: 0,
-                selected: true,
-                expand: true,//是否打开子节点
-                children: [
-                    {
-                        title: '一楼',
-                        expand: true,
-                        id: 1,
-                        
-                        children: [
-                            {
-                                title: '内科',
-                                expand: true,
-                                id: 2,
-                                children: [
-                                    {
-                                        title: '内科诊室一',
-                                        id: 3,
-                                    },
-                                    {
-                                        title: '内科诊室二',
-                                        id: 4,
-
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                ]
-            }
-        ],
-
-        departFrameSrc: '/EnergyEfficiency/DepartData',
-        
+        treeData: [],
+        departFrameSrc: '',
         
     },
     methods: {
+        //tree data
+        getTreeData: function () {
+            var that = this
+           
+            this.$http({
+                url: '/energyManage/EMSetting/GetTreeData',
+                method: 'POST',
+                params: {
+                    unitID: that.uid,
+                    item_type: 2,
+                    unitName: that.uName
+                }
+            })
+                .then(function (res) {
+                    res.data.open = true
+                    that.init(res.data)
+                    that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
+                   /* if (res.data.children.length > 0) {
+                        that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res.data.children[0].id
+                        res.data.children[0].selected=true
+                    } else {
+                        that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
+                    }
+                    this.treeData = [
+                        {
+                            title: this.uName,
+                            id: this.uid,
+                            //selected: true,
+                            expand: true,//是否打开子节点
+                            children: that.traverseTree(res.data).children
+                        }
+
+                    ]*/
+                    
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        init: function (data) {
+            var setting = {
+                check: {
+                    enable: false
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                edit: {
+                    enable: false
+                },
+                callback: {
+                    onClick: nodeClick
+                }
+            };
+
+            var zNodes = data
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            function nodeClick(event,treeId, treeNode) {
+                $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id)
+                this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id
+            }
+        },
+       
+
         selectChange: function (res) {
-            console.log(res[0].id)
+            this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res[0].id
+            document.getElementById('departFrame').contentWindow.location.reload(true);
         },
        
         
 
     },
     beforeMount: function () {
-      
+        this.uid = $.cookie("enUID")
+        this.uName = $.cookie("enUName")
         
-       
+        this.getTreeData()
        
     },
     mounted: function () {
@@ -61,20 +96,11 @@
 })
 
 function setScroll() {
-    var scroll = $(".left .treeList").scrollTop()
-    if (scroll == 1) {
-        $(".left .treeList").scrollTop(0)
-    } else {
-        $(".left .treeList").scrollTop(1)
-    }
-    $(".left .treeList").scroll(function () {
-        var width = $(".left .treeList").width()
-        $(this).width(width + 32)
-        $(".left .treeList").css("padding-right", "15px")
-    })
+    var treeWidth = $(".left").width()
+    $(".left .treeList").width(treeWidth + 32)
+    document.getElementsByClassName(".treeList").scrollTop = 100
 }
 $(function () {
-   
     setScroll()
     window.onresize = function () {
         setScroll()

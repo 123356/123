@@ -250,24 +250,29 @@ function GetStationStateByPid() {
             uid: id
         },
         success: function (data) {
-            if (data != null) {
-                var normalDays = data.NormalDays
-                if (normalDays == null) {
-                    normalDays = "--"
+            if (data != null && data != undefined) {
+                var normalDays = "--"
+                if (data.NormalDays != undefined && data.NormalDays != null) {
+                    normalDays = data.NormalDays
                 }
-                var checkDay = data.CheckDays
-                var score = data.Score
-                if (checkDay == null) {
-                    checkDay = "--"
+                console.log(normalDays)
+                var checkDay = "--"
+                if (data.CheckDays != undefined && data.CheckDays != null) {
+                    checkDay = data.CheckDays
                 }
-                if (score == null) {
-                    score = "--"
+                var score ="--"
+                if (data.Score != undefined && data.Score != null) {
+                    score = data.Score
+                }
+                var name = "--"
+                if (data.Name != undefined || data.Name != null) {
+                    name = data.Name
                 }
                 //轮播模块
                 if (data.Name == "严重") {
                     $(".slide1-1").append('<p class="warningStat"><a href="/AlarmManage/Index?pid=0">严重</a></p><span class="littltInfo" style="margin-left:0">' + normalDays + '</span>')
                 } else {
-                    $(".slide1-1").append('<p class="normal">' + data.Name + '</p><span class="littltInfo">正常' + normalDays + '天</span>')
+                    $(".slide1-1").append('<p class="normal">' + name+ '</p><span class="littltInfo">正常' + normalDays + '天</span>')
                 }
                 $(".slide2").append('<p class="normal">' + checkDay + '天</p><span class="littltInfo">距离下次检修</span>')
                 $(".slide3").append('<p class="normal" onclick="score()" style="cursor: pointer;"> ' + score + '</p><span class="littltInfo">配电室平均评分</span>')
@@ -290,8 +295,6 @@ function GetStationStateByPid() {
                
                 //上月用电
                 isEmpty(data.thisMonthPower, ".thisMonthPower")
-                console.log("(((((((((((((((((((((((((((((")
-                console.log(data.thisMonthOccupation + "*******************")
                 if (data.thisMonthOccupation != null && data.thisMonthOccupation != "" && data.thisMonthOccupation != 0) {
                     if ((data.thisMonthOccupation * 100) > 1) {
                         $(".yearMonTB").append('<span>上年同月对比 <span class="num thisMonthOccupation">' + data.thisMonthOccupation + '%</span><img src="~/Content/images/icon4/up.png" /></span>')
@@ -395,6 +398,9 @@ function createMonELChart(data) {
     var x = '20'
     if (data != 0) {
         x = '5'
+    }
+    if (data == undefined || data == null) {
+        data = '--'
     }
 	var option = {
 	    title : {

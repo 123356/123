@@ -1051,6 +1051,21 @@ namespace YWWeb.Controllers
             }
             return "";
         }
+        public JsonResult GetThirdMenuInfo2(int mid)
+        {
+            StringBuilder sbMenu = new StringBuilder();
+            if (CurrentUser != null)
+            {
+
+                int UserID = CurrentUser.UserID;
+                string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
+                //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
+                List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
+                
+                return Json(list);
+            }
+            return null;
+        }
         [Login]
         public string CurrentUserName()
         {

@@ -9,7 +9,7 @@
     <title>能源分项</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.05" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.07" />
 </head>
 <body>
     <div id="app">
@@ -19,11 +19,11 @@
             
             <ul class="menuList">
                 <li>
-                    <i-select filterable="true" style="width:250px">
-                        <i-option>新源医院</i-option>
+                    <i-select filterable="true" :label-in-value="true" style="width:250px" v-on:on-change="selectChange" v-model="selectedCom">
+                        <i-option :value="item.UnitID" :key="item.UnitID" v-for="item in comList">{{item.UnitName}}</i-option>
                     </i-select>
                 </li>
-                <li :class="{'active':index==activeIndex}" v-for="(item,index) in userMneus " v-on:click="userBtnClick(index)">{{item.name}}</li>
+                <li :class="{'active':index==activeIndex}" v-for="(item,index) in thirdMenu " v-on:click="userBtnClick(index,item.Location)">{{item.ModuleName}}</li>
             </ul>
         </div>
         <div class="bottom ifreamView">
@@ -39,7 +39,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/SubItem._zc.js?v=1.18"></script>
+    <script type="text/javascript" src="~/Content/UserJS/SubItem._zc.js?v=1.25"></script>
 </body>
 </html>
 

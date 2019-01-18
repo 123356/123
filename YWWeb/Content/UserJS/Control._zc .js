@@ -20,9 +20,11 @@
         loadViewHeight: 0,
         isShowList: true,
         isShowLeft: 0,
-        listViewHeight:0
+        listViewHeight: 0,
+        comList:[]
     },
     methods: {
+       
         changeCurPage: function (type) {
             switch (type) {
                 case 'prev':
@@ -284,6 +286,7 @@
         window.onresize = function () {
             that.setHeight()
         };
+        
         
     },
     mounted: function () {

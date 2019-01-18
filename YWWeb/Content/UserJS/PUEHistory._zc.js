@@ -2,182 +2,136 @@
     el: "#app",
     data: {
        
-       
-        barAndLineChart: null,
+        treeData: [],
+        typeList: [
+            { id: 0, name: '近一日' }, { id: 1, name: '近一周' }, { id: 2, name: '近一月' }, { id: 3, name: '自定义' },
+        ],
+        curType:0,
+        lineChart: null,
     },
     methods: {
+        selectChange: function () {
+
+        },
         
-       
-        //用电趋势图
-        createBarAndLine: function () {
-            barAndLineChart = echarts.init(document.getElementById('barAndLine'));
+      
+        renderContent(h, { root, node, data }) {
+            console.log(data.id + "--" + data.title)
+            return h('Option', {
+                style: {
+                    display: 'inline-block',
+                    margin: '0'
+                },
+                props: {
+                    value: data.id
+                }
+            }, data.title)
+        },
+        createLine: function () {
+            lineChart = echarts.init(document.getElementById('lineChart'));
             var option = {
+                backgroundColor: '#fff',
                 tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: 35,
+                    right: 35,
+                },
+                xAxis: {
+                    boundaryGap: false,
+                    data: ['01-06 12:00', '01-06 13:00', '01-06 14:00', '01-06 15:00', '01-06 16:00', '01-06 17:00', '01-06 18:00', '01-06 19:00', '01-06 20:00', '01-06 21:00', '01-06 22:00', '01-06 23:00', '01-06 24:00', '01-07 01:00', '01-07 02:00', '01-07 03:00', '01-07 04:00', '01-07 05:00',]
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
                     }
                 },
+
                 toolbox: {
+                    right: 35,
+                    show: true,
+                    itemSize: 12,
+                    itemGap: 5,
                     feature: {
                         dataZoom: {
                             yAxisIndex: 'none'
                         },
-                        dataView: { show: true, readOnly: false },
-                        magicType: { show: true, type: ['line', 'bar'] },
-                        restore: { show: true },
-                        saveAsImage: { show: true },
-                    },
-                    itemSize: 10,
-                    itemGap:1
-                    
-                },
-                legend: {
-                    data: ['能耗', '温度'],
-                    x: 'center',
-                    textStyle: {
-                        fontSize: 10,
-                        color: '#666'
+                        dataView: { readOnly: false },
+                        magicType: { type: ['line', 'bar'] },
+                        restore: {},
+                        saveAsImage: {}
                     }
                 },
-                color: ['#53bda9'],
-                grid: {
-                    bottom: 30,
-                    left: 30,
-                    right: 20
+                dataZoom: [{
+                    startValue: '01-06 14:00'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    left: 'center',
+                    orient: 'horizontal',
+                    pieces: [{
+                        gt: 0,
+                        lte: 2,
+                        color: '#54ab88'
+                    }, {
+                        gt: 2,
+                        lte: 5,
+                        color: '#ca9a5c'
+                    }, {
+                        gt: 5,
+                        lte: 6,
+                        color: '#cd574b'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
                 },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-                        axisPointer: {
-                            type: 'shadow'
-                        },
-                        axisLine: {
+                series: {
+                    name: 'Beijing AQI',
+                    type: 'line',
+                    data: [1, 2, 3, 4, 5, 3, 6, 5, 4, 5, 3, 6, 5, 4, 2, 3, 4, 1],
+                    areaStyle: {},
+                    smooth: true,
+                    symbol: 'none',
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 2,
                             lineStyle: {
-                                color: '#cdcdcd',//x轴线颜色
-                                width: '0.7'
-                            },
-                        },
-                        axisTick: {
-                            show: false,
-                        },
-                        axisLabel: { //调整y轴的lable  
-                            textStyle: {
-                                fontSize: 10,// 让字体变大
-                                color: '#9f9d9d'
+                                color: '#54ab88'
                             }
-                        },
-
+                        }, {
+                            yAxis: 5,
+                            lineStyle: {
+                                color: '#ca9a5c'
+                            }
+                        }, {
+                            yAxis: 6,
+                            lineStyle: {
+                                color: '#ce584c'
+                            }
+                        }]
                     }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: 'kW·h',
-                        min: 0,
-                        max: 250,
-                        interval: 50,
-                        axisLabel: {
-                            formatter: '{value}'
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#cdcdcd',//x轴线颜色
-                                width: '0.7'
-                            },
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        splitLine: {
-                            show: true,
-                            lineStyle: {
-                                color: '#ededed'
-                            }
-                        },
-                        axisLabel: { //调整y轴的lable  
-                            textStyle: {
-                                fontSize: 10,// 让字体变大
-                                color: '#9f9d9d'
-                            }
-                        },
-                    },
-                    {
-                        type: 'value',
-                        name: '温度',
-                        min: 0,
-                        max: 25,
-                        interval: 5,
-                        axisLabel: {
-                            formatter: '{value} °C'
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#cdcdcd',//x轴线颜色
-                                width: '0.7'
-                            },
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        splitLine: {
-                            show: false
-                        },
-                        axisLabel: { //调整y轴的lable  
-                            textStyle: {
-                                fontSize: 10,// 让字体变大
-                                color: '#9f9d9d'
-                            }
-                        },
-
-                    }
-                ],
-                series: [
-
-                    {
-                        name: '能耗',
-                        type: 'bar',
-                        barMaxWidth: '10',
-                        color: "#53bda9",
-                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                    },
-                    {
-                        name: '温度',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        smooth: true,
-                        symbol: 'none',//节点样式
-                        lineStyle: {
-                            color: '#53bda9',
-                            width: 1,
-
-                        },
-                        data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2, 2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-                    }
-                ]
+                }
             };
-            barAndLineChart.setOption(option)
-            
+
+
+            lineChart.clear()
+            lineChart.setOption(option)
+
         },
-       
-        
-     
     },
     beforeMount: function () {
        
-       
     },
     mounted: function () {
-       /* this.createBarAndLine()
-        this.createEnergyConLine()
+       this.createLine()
         window.addEventListener("resize", () => {
-            barAndLineChart.resize();
-            lineChart.resize()
-        });*/
+            lineChart.resize();
+        });
     }
 })
 

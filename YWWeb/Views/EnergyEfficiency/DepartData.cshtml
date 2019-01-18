@@ -9,30 +9,31 @@
     <title>科室数据监测</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.09" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.10" />
 </head>
 <body>
     <div id="app" style="padding:0">
-
+        <Spin size="large" fix v-if="loading"></Spin>
         <div class="right allMain departmentWatch">
             <div class="top">
                 <div class="right-top-left flex-1">
                     <div class="module-title">
                         <img src="~/Content/images/energyDifficiency/fxjg.png" class="icon" />
-                        <span>门诊部大楼</span>
+                        <span>{{uName}}</span>
                         <div class="datePicekerView">
-                            <date-picker type="month" size="small" ></date-picker>
+                            <date-picker v-model="curDate" type="month" size="small" v-on:on-change="dateChange"></date-picker>
                         </div>
                     </div>
-                    <div class="con pieView" >
-                        <div class="chart flex-1" id="piechart" style="width:100%;height:100%;"></div>
+                    <div class="con pieView">
+                        <div class="chart flex-1 noData" v-if="!pieShow">暂无数据</div>
+                        <div class="chart flex-1" id="piechart" :style="{display:pieShow?'block':'none',width:'100%',height:'100%'}"></div>
                         <div class="flex-4" style="overflow:hidden">
                             <i-table border :columns="analysisColumns" :data="analysisData" :height="analysisTableHeight"></i-table>
                         </div>
                     </div>
 
                 </div>
-                
+
             </div>
 
 
@@ -40,23 +41,22 @@
                 <div class="module-title haveTab">
                     <img src="~/Content/images/energyDifficiency/fxjg.png" class="icon" />
                     <span>能耗监测</span>
-                    <Tabs type="card" class="tabs">
-                        <tab-pane label="用水图表"></tab-pane>
-                        <tab-pane label="用电图表"></tab-pane>
-                        <tab-pane label="冷热量图表"></tab-pane>
+                    <Tabs type="card" class="tabs" v-on:on-click="typeTabClick">
+                        <tab-pane :label="item.Name" :name="item.ID" :value="item.ID" v-for="item in typeList"></tab-pane>
+
                     </Tabs>
                 </div>
 
                 <div class="con">
                     <div class="datePicekerView">
-                        <radio-group v-model="dateType" type="button" size="small">
-                            <Radio label="0">日</Radio>
-                            <Radio label="1">周</Radio>
-                            <Radio label="2">月</Radio>
-                            <Radio label="3">年</Radio>
+                        <radio-group v-model="dateType" type="button" size="small" v-on:on-change="dateTypeChange">
+                            <Radio label="1" value="1">日</Radio>
+                            <Radio label="2" value="2">月</Radio>
+                            <Radio label="3" value="3">年</Radio>
                         </radio-group>
                     </div>
-                    <div id="barChart" class="chart" style="width:100%;height:100%"></div>
+                    <div class="chart noData" v-if="!barShow" style="width:100%;height:100%">暂无数据</div>
+                    <div id="barChart" class="chart" :style="{display:barShow?'block':'none',width:'100%',height:'100%'}"></div>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/DepartData._zc.js?v=1.03"></script>
+    <script type="text/javascript" src="~/Content/UserJS/DepartData._zc.js?v=1.11"></script>
 </body>
 </html>
 

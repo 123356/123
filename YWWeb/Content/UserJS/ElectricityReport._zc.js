@@ -61,34 +61,15 @@
             { dateTime: '1月3日', reportType: '内科能耗周报表', elec: 100, elecTb: 3, water: 120, waterTb: 5, money: 12, moneyTb: 4 },
         ],
         reportType: [
-            { type: '总报表' },
-            {
-                type: '科室报表',
-                children: [
-                    { type: '内科' },
-                    { type: '外科' },
-                    { type: '皮肤科' },
-                    { type: '眼科' },
-                    { type: '内科' },
-                    { type: '外科' },
-                    { type: '皮肤科' },
-                    { type: '眼科' },
-                    { type: '内科' },
-                    { type: '外科' },
-                    { type: '皮肤科' },
-                    { type: '眼科' },
-                    { type: '内科' },
-                    { type: '外科' },
-                    { type: '皮肤科' },
-                    { type: '眼科' },
-                    { type: '内科' },
-                    { type: '外科' },
-                    { type: '皮肤科' },
-                    { type: '眼科' },
-                ]
-            },
+            { name: 0, type: '总报表' }, { name: 1,type: '科室报表' },
         ],
-        curDateType:'date'
+        departmentList: [
+            { id: 0, name: '眼科' }, { id: 1, name: '内科' }, { id: 2, name: '外科' }
+        ],
+        curDateType: 'date',
+        curReportType: 0,
+        closable:true,
+        curDepart:0,
         
     },
     methods: {
@@ -114,11 +95,15 @@
                     that.curDateType = 'year'
                     console.log(that.curDateType)
                     break;
-
             }
-            
         },
+        departmentChange: function (e) {
 
+        },
+        dropdownClick: function (e) {
+            console.log(e)
+            this.curReportType = e
+        },
 
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() 

@@ -1,10 +1,12 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
+        uid:null,
         listWidth: 0,
         listHeight: 0,
         analysisTableHeight: 0,
-        dateType:0,
+        dateType:'1',
         listColumns: [
             {
                 type: 'selection',
@@ -14,12 +16,13 @@
             {
                 title: '排名',
                 align: 'center',
-                key: 'order',
+                key: 'index',
                 render: (h, params) => {
-                    if (params.row.order <= 3) {
+                    var index = params.index + 1
+                    if (index<= 3) {
                         return h('img', {
                             attrs: {
-                                src: '/Content/images/energyDifficiency/order' + params.row.order + '.png',
+                                src: '/Content/images/energyDifficiency/order' +index + '.png',
                                 style: 'width: 18px;height:24px;',
                                 class:'iconImg'
                             },
@@ -39,7 +42,7 @@
                                 click: () => {
                                 }
                             }
-                        }, params.row.order)
+                        }, index)
                     }
                     
                 }
@@ -47,130 +50,316 @@
             },
             {
                 title: '名称',
-                align: 'center',
-                key: 'name',
+                align: 'left',
+                tooltip: true,
+                key: 'EName',
                 render: (h, params) => {
                     return h('span',
                         {
                             attrs: {
                                 style: 'color:#6d6d6f',
                             },
-                        }, params.row.name)
+                        }, params.row.EName)
                 }
             },
             {
                 title: '总比例',
                 align: 'center',
-                key: 'proportion'
+                key: 'Proportion'
             },
             {
                 title: '类型',
+                width: 35,
                 align: 'center',
-                key: 'type'
+                key: 'COName'
             },
             {
                 title: '时间',
+                tooltip:true,
                 align: 'center',
-                key: 'dateTime'
+                key: 'RecordTime',
+                render: (h, params) => {
+                    var time = params.row.RecordTime
+                    var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
+                    var d = date.getFullYear() + "-" + (date.getMonth() +1)+ "-" + date.getDate()
+                    return h('span',
+                        {
+                            attrs: {
+                                style: 'color:#6d6d6f',
+                            },
+                        }, d)
+                }
             }
         ],
-        listData: [
-            { index: 0, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: true, _disabled: false},
-            { index: 1, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
-            { index: 2, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 3, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 4, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
-            { index: 5, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
-            { index: 6, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 7, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 8, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 9, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 10, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 11, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 12, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 13, order: 2, name: '内科室03', proportion: '30%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false },
-            { index: 14, order: 1, name: '内科室02', proportion: '20%', type: '电', dateTime: '2018-12-02', _checked: false, _disabled: false},
-        ],
+        listData: [],
         analysisColumns: [
             {
                 title: '时间',
                 align: 'center',
-                key: 'time',
-                sortable: true
+                sortable: true,
+                key: 'RecordTime',
+                render: (h, params) => {
+                    var time = params.row.RecordTime
+                    var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+                    return h('span',
+                        {
+                            attrs: {
+                                style: 'color:#6d6d6f',
+                            },
+                        }, d)
+                }
             },
             {
                 title: '科室',
                 align: 'center',
-                key: 'department'
+                key: 'EName'
             },
             {
                 title: '电量(kW·h)',
                 align: 'center',
-                key: 'power',
-                sortable: true
+                key: 'ActualEnergy',
+                sortable: true,
+                
             },
             {
                 title: '温度(°C)',
                 align: 'center',
                 width:80,
-                key: 'temperature',
+                key: 'Temperature',
                 sortable: true
             },
             {
                 title: '人流量',
                 align: 'center',
                 width: 100,
-                key: 'visitorsFlowrate',
+                key: 'People',
                 sortable: true
             },
             {
                 title: '建筑面积(㎡)',
                 align: 'center',
                 width: 100,
-                key: 'area',
+                key: 'Area',
                 sortable: true
             },
             {
                 title: '用途',
                 align: 'center',
-                key: 'usage'
+                key: 'CName'
             },
-            {
+           /* {
                 title: '结论',
                 align: 'center',
                 key: 'result'
-            },
+            },*/
         ],
-        analysisData: [
-            {  time: '2018-12-22 12:35:00', department:'内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            {  time: '2018-12-24 12:35:00', department: '外科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-21 12:35:00', department: '内科2',power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-23 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-            { time: '2018-12-22 12:35:00', department: '内科', power: 124, temperature: 23, visitorsFlowrate: 140, area: 123, usage: '照明、空调', result: '偏差异常' },
-        ],
+        analysisData: [],
         barAndLineChart: null,
         lineChart: null,
-        tableSelection:[]
+        tableSelection: [],
+        uid: null,
+        curSelectID: '',
+        curCID: '',
+        curEntype: 1,
+        barShow: true,
+        lineShow:true
     },
     methods: {
-        tableSelectChange: function (selection) {
-            console.log(selection.length)
-            if (selection.length > 3) {
+        //异常列表
+        getLeftList: function () {
+            var that = this
+            this.loading = true
+            this.$http({
+                url: '/energyManage/EMHome/GetExTable',
+                method: 'post',
+                params: {
+                    id:that.uid
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (i == 0) {
+                                data[i]._checked = true
+                            } else {
+                                data[i]._checked = false
+                            }
+                            data[i]._disabled = false
+                            data[i].index = i
+                            
+                        }
+                        var id = data[0].ID
+                        that.curCID = data[0].CID
+                        that.curSelectID = data[0].ID
+                        that.getTableList(data[0].ID)
+                        that.getBarData(data[0].CID)
+                        that.getLineData(data[0].CID)
+                    }
+                    that.listData = data
+                   
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        //异常分析表格
+        getTableList: function (id) {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetbugTable',
+                method: 'post',
+                params: {
+                    id:id
+                }
+            })
+            .then(function (res) {
+                    if (res.data != "") {
+                        that.analysisData = res.data
+                    }
                 
-               
-            }else {
-                this.tableSelection = selection
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        //柱状图数据
+        getBarData: function (cids) {
+            this.loading = true
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetExData',
+                method: 'post',
+                params: {
+                    cids: cids,
+                    type: that.curEntype,
+                    TypeTime: that.dateType
+                }
+            })
+                .then(function (res) {
+                    
+                    if (res.data) {
+                        if (res.data.name.length > 0) {
+                            that.barShow = true
+                            that.createBarAndLine(res.data)
+                        } else {
+                            barAndLineChart.clear()
+                            that.barShow = false
+                        }
+
+                    } else {
+                        barAndLineChart.clear()
+                        that.barShow = false
+                    }
+                    that.loading = false
+           })
+           .catch(function (e) {
+               that.loading = false
+               throw new ReferenceError(e.message)
+           })
+        },
+        //折线图数据
+        getLineData: function (cids) {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetBudgetData',
+                method: 'post',
+                params: {
+                    cids: cids,
+                }
+            })
+                .then(function (res) {
+                    if (res.data) {
+                        if (res.data.shijivalue.length > 0) {
+                            that.lineShow = true
+                            that.createEnergyConLine(res.data)
+                        } else {
+                            lineChart.clear()
+                            that.lineShow = false
+                        }
+                    } else {
+                        lineChart.clear()
+                        that.lineShow = false
+                    }
+                    
+                    
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
+        tableSelectChange: function (selection) {
+            this.curSelectID = ''
+            this.curCID = ''
+            if (selection.length == 0) {
+                barAndLineChart.clear()
+                lineChart.clear()
+                this.analysisData = []
+                this.barShow = false
+                this.lineShow = false
+                return 
             }
-            if (this.tableSelection.length == 3) {
-                this.$Modal.warning({
-                    title: '信息提示',
-                    content: '最多只能选择三项进行对比'
-                });
-                this.setSelectState(true)
-            } else {
-                this.setSelectState(false)
+           
+            this.curEntype = selection[0].CODID
+            if (selection.length > 1) {
+                if (selection[1].CODID != selection[0].CODID) {
+                    
+                    this.$Message.warning({
+                        content: '请选择相同能源类型进行对比',
+                        duration: 10,
+                        closable: true
+                    });
+
+                    this.listData[selection[1].index]._checked = false
+                    selection.splice(1, 1)
+                }
             }
+                
+
+                if (selection.length <= 2) {
+                    this.tableSelection = selection
+
+                }
+                if (this.tableSelection.length == 2) {
+                    this.$Modal.warning({
+                        title: '信息提示',
+                        content: '最多只能选择两项进行对比'
+                    });
+                    this.setSelectState(true)
+                } else {
+                    this.setSelectState(false)
+                }
+                //判断表头
+                if (selection[0].CODID == 1) {
+                    this.analysisColumns[2].title = "电量(kW·h)"
+                } else if (selection[0].CODID == 2) {
+                    this.analysisColumns[2].title = "水(m³)"
+                } else if (selection[0].CODID == 3) {
+                    this.analysisColumns[2].title = "燃气(m³)"
+                }
+
+
+                for (var i = 0; i < selection.length; i++) {
+                    if ((i + 1) == selection.length) {
+                        this.curSelectID += selection[i].ID + ""
+                        this.curCID += selection[i].CID + ""
+                    } else {
+                        this.curSelectID += selection[i].ID + ","
+                        this.curCID += selection[i].CID + ","
+                    }
+                }
+                this.getTableList(this.curSelectID)
+                this.getBarData(this.curCID)
+                this.getLineData(this.curCID)
             
+            
+            
+        },
+
+        dateTypeChange: function (e) {
+            this.dateType = e
+            this.getBarData(this.curCID )
         },
         onSelect: function (selection, row) {
             if (this.tableSelection.length < 3) {
@@ -193,8 +382,48 @@
         },
        
         //用电趋势图
-        createBarAndLine: function () {
+        createBarAndLine: function (data) {
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
+            var legend = data.name
+            legend.push("温度")
+            var yName = "kW·h"
+            if (this.curEntype != 1) {
+                yName = "m³"
+            }
+            var color = ['#53bda9', '#7fc4e1', '#3ea19c',]
+            var seriesData = new Array()
+            for (var i = 0; i < data.list_line.length; i++) {
+
+                var tempData = data.list_line[i].list
+                var dataArray = new Array()
+                for (var j = 0; j < tempData.length; j++) {
+                    dataArray.push(tempData[i].value)
+                }
+                var temp = {
+                    name: data.list_line[i].name,
+                    type: 'bar',
+                    barMaxWidth: '15',
+                    color: color[i],
+                    data: dataArray
+                }
+                seriesData.push(temp)
+            }
+            seriesData.push(
+                {
+                    name: '温度',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    smooth: true,
+                    symbol: 'none',//节点样式
+                    lineStyle: {
+                        color: '#53bda9',
+                        width: 1,
+
+                    },
+                    data: data.tianqi
+                }
+            )
+           
             var option = {
                 tooltip: {
                     trigger: 'axis',
@@ -215,12 +444,12 @@
                         restore: { show: true },
                         saveAsImage: { show: true },
                     },
-                    itemSize: 10,
+                    itemSize: 8,
                     itemGap:1
                     
                 },
                 legend: {
-                    data: ['能耗', '温度'],
+                    data: legend,
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -229,14 +458,14 @@
                 },
                 color: ['#53bda9'],
                 grid: {
-                    bottom: 30,
-                    left: 30,
+                    bottom:50,
+                    left: 40,
                     right: 20
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+                        data: data.x,
                         axisPointer: {
                             type: 'shadow'
                         },
@@ -261,10 +490,8 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: 'kW·h',
-                        min: 0,
-                        max: 250,
-                        interval: 50,
+                        name: yName,
+                        //interval: 50,
                         axisLabel: {
                             formatter: '{value}'
                         },
@@ -292,7 +519,7 @@
                     },
                     {
                         type: 'value',
-                        name: '温度',
+                        name: '温度℃',
                         min: 0,
                         max: 25,
                         interval: 5,
@@ -320,42 +547,36 @@
 
                     }
                 ],
-                series: [
-
+                series: seriesData,
+                dataZoom: [
                     {
-                        name: '能耗',
-                        type: 'bar',
-                        barMaxWidth: '10',
-                        color: "#53bda9",
-                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                    },
-                    {
-                        name: '温度',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        smooth: true,
-                        symbol: 'none',//节点样式
-                        lineStyle: {
-                            color: '#53bda9',
-                            width: 1,
-
-                        },
-                        data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2, 2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                        type: 'inside'
                     }
                 ]
             };
+            barAndLineChart.clear()
             barAndLineChart.setOption(option)
+            window.addEventListener("resize", () => {
+                barAndLineChart.resize();
+            });
             
         },
-        createEnergyConLine: function () {
+        createEnergyConLine: function (data) {
             lineChart = echarts.init(document.getElementById('energyConLine'));
+            var width = $(window).width()
+           
+            var yName = "kW·h"
+            if (this.curEntype != 1) {
+                yName = "m³"
+            }
+          
             var option = option = {
 
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['实际供能', '预测供能'],
+                    data: ['实际', '预测'],
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -364,10 +585,10 @@
                 },
                 color: ['#53bda9', '#fa8033'],
                 grid: {
-
+                    top:50,
                     left: 35,
                     right: 5,
-                    bottom: 70,
+                    bottom: 50,
                 },
                 toolbox: {
                     feature: {
@@ -379,7 +600,7 @@
                         restore: {},
                         saveAsImage: {}
                     },
-                    itemSize: 10,
+                    itemSize: 8,
                     itemGap:1
                 },
                 xAxis: {
@@ -401,10 +622,10 @@
                             color: '#9f9d9d'
                         }
                     },
-                    data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
+                    data: data.x
                 },
                 yAxis: {
-                    name:'kW·h',
+                    name: yName,
                     type: 'value',
                     axisLine: {
                         lineStyle: {
@@ -431,7 +652,7 @@
                 series: [
 
                     {
-                        name: '实际供能',
+                        name: '实际',
                         type: 'line',
                         smooth: true,
                         symbol: 'none',//节点样式
@@ -440,10 +661,10 @@
                             width: 1,
 
                         },
-                        data: [320, 332, 301, 334, 390, 330, 320, 320, 332, 301, 334, 390, 330, 320, 320, 332, 301, 334, 390, 330, 320, 330, 320, 334]
+                        data: data.shijivalue
                     },
                     {
-                        name: '预测供能',
+                        name: '预测',
                         type: 'line',
                         symbol: 'none',//节点样式
                         smooth: true,
@@ -454,12 +675,19 @@
 
                         },
 
-                        data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330, 1320, 1290, 1330, 1320]
+                        data: data.budgetList
+                    }
+                ],
+                dataZoom: [
+                    {
+                        type: 'inside'
                     }
                 ]
             };
             lineChart.setOption(option)
-
+            window.addEventListener("resize", () => {
+                lineChart.resize()
+            });
         },
         
 
@@ -478,6 +706,8 @@
         }
     },
     beforeMount: function () {
+        this.uid = $.cookie("enUID")
+
         var that = this
        function setWidth2() {
             var isScroll = $(".ivu-table-overflowY").length
@@ -493,19 +723,15 @@
             setWidth2()
             that.setHeight()
         }, 100)
-        
+        this.getLeftList()
        
        
     },
     mounted: function () {
         //用能列表默认第一行选中
         //this.$refs.tableSelect.$refs.tbody.objData[0]._isChecked = true
-        this.createBarAndLine()
-        this.createEnergyConLine()
-        window.addEventListener("resize", () => {
-            barAndLineChart.resize();
-            lineChart.resize()
-        });
+        
+       
     }
 })
 

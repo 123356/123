@@ -1,77 +1,222 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        uid: null,
+        uName:null,
+        loading:true,
+        departmentID:92,
         analysisTableHeight: 0,
-       
-        analysisColumns: [
-            {
-                title: '名称',
-                align: 'center',
-                key: 'name'
-            },
-            {
-                title: '水(m³)',
-                align: 'center',
-                key: 'water'
-            },
-            {
-                title: '电(kW·h)',
-                align: 'center',
-                key: 'power'
-            },
-            {
-                title: '冷热(m³)',
-                align: 'center',
-                key: 'heat'
-            },
-            {
-                title: '详情',
-                align: 'center',
-                key: 'departID',
-                render: (h, params) => {
-                    var that = this
-                    return h('div', [
-                        h('a', {
-                            attrs: {
-                                href:'/EnergyEfficiency/RoomDataMonitoring'
-                            },
-                            style: {
-                                textDecoration: 'none',
-                                color: '#60b8a2',
-                                fontSize:'12px'
-                            },
-                            on: {
-                                click: () => {
-                                    
-                                }
-                            }
-                        }, '查看'),
-                    ]);
-                }
-            },
-            
-           
-        ],
-        analysisData: [
-            { departID: 0, name: '内科诊室1', water: '25(50%)', power: '40(50%)', heat:'40(30%)' },
-            { departID: 1, name: '内科诊室2', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
-            { departID: 2, name: '内科诊室3', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
-            { departID: 3, name: '内科诊室4', water: '25(50%)', power: '40(50%)', heat: '40(30%)' },
-        ],
+        analysisColumns: [],
+        analysisData:[],
         barChart: null,
-        dateType: 0,
-        piechart:null
+        dateType: '1',
+        piechart: null,
+        typeList: [],
+        curType: null,
+        curDate: '',
+        pieShow: true,
+        barShow: true,
+        loading:true,
         
     },
     methods: {
-        selectChange: function (res) {
-            console.log(res[0].id)
+        //获取能源类型
+        getCollectDevTypeList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetCollectDevTypeList',
+                method: 'get',
+            }).then(function (res) {
+                that.typeList = res.data
+                if (res.data.length > 0) {
+                    that.curType = res.data[0].ID
+                   that.getBarData()
+                }
+            }).catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
-      
-        createbarChart: function () {
-            barChart = echarts.init(document.getElementById('barChart'));
-            var option = {
+        typeTabClick: function (name) {
+            this.curType = name
+            this.getBarData()
+        },
+        dateTypeChange: function (res) {
+            this.dateType = res
+            this.getBarData()
+        },
+        //饼图数据
+        GetEneryAnalysisPie: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryAnalysis',
+                method: 'post',
+                params: {
+                    uid: that.uid,
+                    time: that.curDate,
+                    DepartmentID: that.departmentID
+                }
+            })
+                .then(function (res) {
+                    console.log(res.data.length)
+                    if (res.data.length > 0) {
+                        that.pieShow = true
+                        that.createPieChart(res.data)
+                    } else {
+                        that.pieShow =false
+                    }
                 
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        //表格数据
+        getTableData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryTable',
+                method: 'post',
+                params: {
+                    uid: that.uid,
+                    DepartmentID: that.departmentID,
+                    time: that.curDate,
+                    
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    var title = [
+                        {
+                            title: '名称',
+                            align: 'center',
+                            key: 'Name'
+                        }
+                    ]
+                    for (var i = 0; i < data.TitleList.length; i++) {
+                        var dw = 'kW·h'
+                        if (data.TitleList[i].Type !=1) {
+                            dw = 'm³'
+                        }
+                        var temp = {
+                            title: data.TitleList[i].Name+'('+dw+')',
+                            align: 'center',
+                            key: data.TitleList[i].Type
+                        }
+                        title.push(temp)
+                    }
+                    title.push(
+                        {
+                            title: '详情',
+                            align: 'center',
+                            key: 'departID',
+                            render: (h, params) => {
+                                var that = this
+                                var tempdate = new Date(that.curDate)
+                                var month = tempdate.getMonth() + 1
+                                if (month < 10) {
+                                    month = "0" + month
+                                }
+                                return h('div', [
+
+                                    h('a', {
+                                        attrs: {
+                                            href: '/EnergyEfficiency/RoomDataMonitoring?departmentID=' + params.row.ID + "&time=" + (tempdate.getFullYear() + "-" + month)
+                                        },
+                                        style: {
+                                            textDecoration: 'none',
+                                            color: '#60b8a2',
+                                            fontSize: '12px'
+                                        },
+                                        on: {
+                                            click: () => {
+
+                                            }
+                                        }
+                                    }, '查看'),
+                                ]);
+                            }
+                        }
+                    )
+                    that.analysisColumns = title
+                    var tempTable = new Array()
+                    for (var i = 0; i < data.table.length; i++) {
+                        tempTable.push(data.table[i].value)
+                    }
+                    that.analysisData = tempTable
+                    that.loading = false
+                })
+                .catch(function (e) {
+                    
+                    that.loading = false
+                    throw new ReferenceError(e.message)
+                })
+        },
+        //柱状图数据
+        getBarData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryLine',
+                method: 'post',
+                params: {
+                    uid: that.uid,
+                    DepartmentID: that.departmentID,
+                    type: that.curType,
+                    TypeTime: parseInt(that.dateType),
+                    time: that.curDate,
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    if (data) {
+                        if (data.list_r.list_this.length > 0 || data.list_r.list_last.length > 0) {
+                            that.barShow = true
+                            that.createbarChart(data)
+                        } else {
+                            that.barShow = false
+                        }
+                    } else {
+                        console.log("为false")
+                        that.barShow = false
+                    }
+                    console.log(that.barShow)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        dateChange: function (e) {
+            this.curDate = e
+            this.GetEneryAnalysisPie()
+            this.getTableData()
+
+        },
+        selectChange: function (res) {
+        },
+        createbarChart: function (data) {
+            barChart = echarts.init(document.getElementById('barChart'));
+            var legendData = new Array()
+            if (this.dateType == '1') {
+                legendData = ['今日', '昨日']
+            } else if (this.dateType == '2') {
+                legendData = ['本月', '上月']
+            } else {
+                legendData = ['今年', '去年']
+            }
+            var yName = 'kW·h';
+            if (this.curType != '1') {
+                yName = 'm³';
+            } 
+            var serData1 = new Array()
+            for (var i = 0; i < data.list_r.list_this.length; i++) {
+                serData1.push(data.list_r.list_this[i].value)
+                
+            }
+            var serDataLast = new Array()
+            for (var i = 0; i < data.list_r.list_last.length; i++) {
+                serDataLast.push(data.list_r.list_last[i].value)
+               
+            }
+            var option = {
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -96,7 +241,7 @@
                     
                 },
                 legend: {
-                    data: ['今日', '昨日'],
+                    data: legendData,
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -105,14 +250,15 @@
                 },
                 color: ['#53bda9'],
                 grid: {
-                    bottom: '10%',
+                    bottom: '5%',
                     left: 30,
-                    right: 20
+                    right: 20,
+                    top:'17%'
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+                        data: data.x,
                         axisPointer: {
                             type: 'shadow'
                         },
@@ -137,10 +283,10 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: 'kW·h',
+                        name: yName,
                         min: 0,
-                        max: 250,
-                        interval: 50,
+                       
+                      
                         axisLabel: {
                             formatter: '{value}'
                         },
@@ -203,27 +349,41 @@
                         name: '今日',
                         type: 'bar',
                         color: "#53bda9",
-                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                        data: serData1,
                         
                     },
                     {
                         name: '昨日',
                         type: 'bar',
                         color: "#80c5e2",
-                        data: [1.6, 5.0, 9.5, 20.4, 24.7, 60.7, 165.6, 132.2, 58.7, 28.8, 3.0, 3.3, 5.6, 8.9, 6.0, 36.4, 20.7, 50.7, 110.6, 152.2, 28.7, 58.8, 66.0, 55.3],
+                        data: serDataLast,
                        
                     },
                    
+                ],
+                dataZoom: [
+                    {
+                        type: 'inside'
+                    }
                 ]
             };
+            barChart.clear()
             barChart.setOption(option)
+            window.addEventListener("resize", () => {
+                barChart.resize()
+            });
             
         },
-        createPieChart: function () {
+        createPieChart: function (data) {
             piechart = echarts.init(document.getElementById('piechart'));
+            var str = ''
+            for (var i = 0; i < data.length; i++) {
+                str += data[i].name
+            }
+            
             var option = {
                 title: {
-                    text: '分项用水、电、冷热量',
+                    text: '分项用'+str,
                     subtext:'预算：10万',
                     x: 'center',
                     textStyle: {
@@ -247,11 +407,7 @@
                         type: 'pie',
                         radius: '68%',
                         center: ['50%', '60%'],
-                        data: [
-                            { value: 335, name: '电' },
-                            { value: 310, name: '水' },
-                            { value: 234, name: '冷热' },
-                        ],
+                        data:data,
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -263,7 +419,9 @@
                 ]
             };
             piechart.setOption(option)
-
+            window.addEventListener("resize", () => {
+                piechart.resize();
+            });
 
         },
 
@@ -273,23 +431,27 @@
         }
     },
     beforeMount: function () {
+        this.uid = $.cookie("enUID")
+        this.uName = $.cookie("enUName")
         var that = this
         setInterval(function () {
             //setWidth2()
             that.setHeight()
         }, 100)
-        
-       
-       
+        var date = new Date()
+        var month = date.getMonth() + 1
+        if (month < 10) {
+            month = "0" + month
+        }
+        this.curDate = date.getFullYear() + "-" + month
+        this.getCollectDevTypeList()
+        this.GetEneryAnalysisPie()
+        this.getTableData()
     },
     mounted: function () {
-        this.createPieChart()
-        this.createbarChart()
+        //this.createbarChart()
         /*this.createBarAndLine()*/
-        window.addEventListener("resize", () => {
-            piechart.resize();
-            barChart.resize()
-        });
+       
     }
 })
 

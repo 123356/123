@@ -8,7 +8,6 @@ function checkDidenable(ModuleID, obj) {
             disenalble = " am-btn am-btn-default am-disabled ";
             break;
         }
-    }
     return disenalble;
 }
 //分配按钮

@@ -3,57 +3,6 @@
     data: {
         listWidth: 0,
         listHeight: 0,
-        analysisTableHeight:0,
-        analysisColumns: [
-            {
-                title: '时间',
-                align: 'center',
-                key: 'time'
-            },
-            {
-                title: '用水(m³)',
-                align: 'center',
-                key: 'water'
-            },
-            {
-                title: '用电(kW·h)',
-                align: 'center',
-                key: 'power'
-            },
-            {
-                title: '用热',
-                align: 'center',
-                key: 'heat'
-            },
-            {
-                title: '温度(°C)',
-                align: 'center',
-                width: 60,
-                key: 'temperature'
-            },
-            {
-                title: '人流量(人)',
-                align: 'center',
-                width: 100,
-                key: 'visitorsFlowrate'
-            },
-            {
-                title: '建筑面积(㎡)',
-                align: 'center',
-                width: 100,
-                key: 'area'
-            },
-           
-        ],
-        analysisData: [
-            { time: '2018-12-22 12:35:00', water:123,  power: 124, heat:344,  temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-        ],
-        barAndLineChart: null,
         dateType:0,
         treeData: [
             {
@@ -98,83 +47,89 @@
             
         ],
         activeIndex: 0,
-        frameSrc:'/EnergyEfficiency/EnergyOverview'
+        frameSrc: '',
+        comList: [],
+        unitID: null,
+        selectedCom: 0,
+        thirdMenu:[]
+
     },
     methods: {
-
-
-        selectChange: function (res) {
-            console.log(res[0].id)
-        },
-        userBtnClick: function (e) {
-            if (this.activeIndex == e) {
-                $("#energyFrame").attr("src", this.userMneus[e].url)
-            }
-                this.activeIndex = e
-            console.log(this.userMneus[e].url)
-            this.frameSrc = this.userMneus[e].url
-
-        },
-        setWidth: function () {
+        //获取三级菜单
+        getThirdMenuInfo: function (mid) {
             var that = this
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.leftWidth = width + 52
-            }
+            this.$http({
+                url: '/Home/GetThirdMenuInfo2',
+                method: 'post',
+                params: {
+                    mid:mid
+                }
+            })
+            .then(function (res) {
+                that.thirdMenu = res.data
+                /*if (res.data.length > 0) {
+                    that.frameSrc = res.data[0].Location
+                }*/
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
-        setHeight: function () {
-           // this.listHeight = $(".left .list").height() - 21
-            this.analysisTableHeight = $(".right .bottom").height()-40
-        }
+        //单位下拉框
+        getUnitComobxList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetUnitComobxList',
+                method: 'get',
+            }).then(function (res) {
+                that.comList = res.data
+                if (that.unitID == null) {
+                    if (res.data.length > 0) {
+                        that.unitID = res.data[0].UnitID
+                        $.cookie("enUID", that.unitID, { expires: 7 })
+                        $.cookie("enUName", res.data[0].UnitName, { expires: 7 })  
+                    }
+                }
+                if (that.unitID != null) {
+                    if (that.thirdMenu.length > 0) {
+                        that.frameSrc = that.thirdMenu[0].Location
+                    }
+                }
+                that.selectedCom = parseInt($.cookie("enUID"))
+
+            }).catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        selectChange: function (res) {
+            this.unitID = res.value
+            $.cookie("enUID", this.unitID, { expires: 7 })
+            $.cookie("enUName", res.label, { expires: 7 })  
+            document.getElementById('energyFrame').contentWindow.location.reload(true);
+        },
+        userBtnClick: function (e,url) {
+            if (this.activeIndex == e) {
+                $("#energyFrame").attr("src", url)
+            }
+            this.activeIndex = e
+            this.frameSrc = url
+
+        },
     },
     beforeMount: function () {
-        var that = this
-       /*function setWidth2() {
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.listWidth = width + 32 
-            }
+        var mid = window.location.search.split("=")[1]
+        var id = $.cookie("enUID")
+        if (id!=null) {
+            this.unitID = id
         }
-      
-        setWidth2()
-        */
-        setInterval(function () {
-            //setWidth2()
-            that.setHeight()
-        }, 100)
-        
-       
-       
+        this.getThirdMenuInfo(mid)
+        this.getUnitComobxList()
     },
     mounted: function () {
-        /*this.createBarAndLine()
-        window.addEventListener("resize", () => {
-            barAndLineChart.resize();
-        });*/
     }
 })
 
-function setScroll() {
-    var scroll = $(".left .treeList").scrollTop()
-    if (scroll == 1) {
-        $(".left .treeList").scrollTop(0)
-    } else {
-        $(".left .treeList").scrollTop(1)
-    }
-    $(".left .treeList").scroll(function () {
-        var width = $(".left .treeList").width()
-        $(this).width(width + 32)
-        $(".left .treeList").css("padding-right", "15px")
-    })
-}
 $(function () {
    
-    setScroll()
-    window.onresize = function () {
-        setScroll()
-    };
-
     
 })

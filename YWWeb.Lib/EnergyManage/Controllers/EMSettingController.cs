@@ -47,6 +47,7 @@ namespace EnergyManage.Controllers
             return  Content(json);
         }
 
+
         /// <summary>
         /// 返回该用户权限可见的单位列表
         /// </summary>

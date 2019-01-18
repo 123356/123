@@ -43,143 +43,169 @@
         //类型下拉框
         getCollectDevTypeList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetCollectDevTypeList',
-                method: 'get',
-            }).then(function (res) {
-                // console.log(res.data)
-                that.typeList = res.data
-            }).catch(function (e) {
-                console.log(e)
-            })
+            
+                this.$http({
+                    url: '/energyManage/EMHome/GetCollectDevTypeList',
+                    method: 'get',
+                }).then(function (res) {
+                    that.typeList = res.data
+                }).catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+            
+            
         },
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetComobxList',
-                method: 'get',
-            }).then(function (res) {
-                that.departMentList = res.data
-            }).catch(function (e) {
-                console.log(e)
-            })
+            
+                this.$http({
+                    url: '/energyManage/EMHome/GetComobxList',
+                    method: 'get',
+                }).then(function (res) {
+                    that.departMentList = res.data
+                }).catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+           
+            
         },
 
         //删除能源
         deleteConfig: function (id) {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/DeleteConfig',
-                method: 'post',
-                params: {
-                    ID: id
-                }
-            })
-                .then(function (res) {
-                    if (res.data > 0) {
-                        that.$Message.success('删除成功');
-                        that.getEneryOverView()
-                    } else {
-                        that.$Message.warning('删除失败');
+            
+                this.$http({
+                    url: '/energyManage/EMHome/DeleteConfig',
+                    method: 'post',
+                    params: {
+                        ID: id
                     }
                 })
-                .catch(function (e) {
-                    console.log(e)
-                    that.$Message.error('请求失败');
-                })
+                    .then(function (res) {
+                        if (res.data > 0) {
+                            that.$Message.success('删除成功');
+                            that.getEneryOverView()
+                        } else {
+                            that.$Message.warning('删除失败');
+                        }
+                    })
+                    .catch(function (e) {
+                        throw new ReferenceError(e.message)
+                    })
+          
+            
         },
         //添加能源
         addConfig: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/AddConfig',
-                method: 'post',
-                params: {
-                    CollTypeID: this.addForm.CollTypeID,
-                    EnerUserTypeID: this.addForm.EnerUserTypeID,
-                    UID: this.uid
-                }
-            })
-                .then(function (res) {
-                    if (res.data > 0) {
-                        that.$Message.success('添加成功');
-                        that.addModal1Visable = false
-                        that.getEneryOverView()
-                    } else {
-                        that.$Message.warning('添加失败');
+          
+                this.$http({
+                    url: '/energyManage/EMHome/AddConfig',
+                    method: 'post',
+                    params: {
+                        CollTypeID: this.addForm.CollTypeID,
+                        EnerUserTypeID: this.addForm.EnerUserTypeID,
+                        UID: this.uid,
+
                     }
                 })
-                .catch(function (e) {
-                    console.log(e)
-                    that.$Message.error('请求失败');
-                })
+                    .then(function (res) {
+                        if (res.data > 0) {
+                            that.$Message.success('添加成功');
+                            that.addModal1Visable = false
+
+                            that.getEneryOverView()
+                        } else {
+                            that.$Message.warning('添加失败');
+                        }
+                    })
+                    .catch(function (e) {
+                       
+                        that.$Message.error('请求失败');
+                        throw new ReferenceError(e.message)
+                    })
+            
+            
         },
         //数据加载
         getEneryOverView: function () {
             var that = this
             this.loading = true
-            this.$http({
-                url: '/energyManage/EMHome/GetEneryOverView',
-                method: 'post',
-                params: {
-                    UID: this.uid,
-                    time: this.curDate
-                }
-            })
-                .then(function (res) {
-                    if (res.data) {
+            var time = new Date(this.curDate)
+            var month = time.getMonth() + 1
+            if (month < 10) {
+                month = "0" + month
+            }
+            time = time.getFullYear() + "-" + month
+          
+          
+                this.$http({
+                    url: '/energyManage/EMHome/GetEneryOverView',
+                    method: 'post',
+                    params: {
+                        uid: this.uid,
+                        time: time
 
-                    
-                    for (var i = 0; i < res.data.list.length; i++) {
-                        res.data.list[i].pieChart = "pie" + i
-                        res.data.list[i].barChart = "bar" + i
-                        res.data.list[i].rate = res.data.list[i].rate.toFixed(2)
-                        res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(2)
-                        res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
                     }
-                    this.info = res.data
-                    this.sumBudget = res.data.list_zong.zongBudget
-                    this.zduibi = res.data.list_zong.zduibi
-                    this.Peozhanbi = res.data.list_bottom.Peozhanbi,
-                    this.LPeozhanbi = res.data.list_bottom.LPeozhanbi,
-                    this.zongBudget = res.data.list_bottom.zongBudget,
-                    this.bottomInfo = res.data.list_bottom
-                    that.creatPowerChart(res.data)
-                    if (res.data.left_view.length > 0) {
-                        this.creatEnergyMoneyChart(res.data)
-                        this.left_viewIsShow = true
-                    } else {
-                        this.left_viewIsShow = false
-                    }
-                    
-                    
-                    var temp = res.data.list
-                    if (temp.length > 0) {
-                        var timer = setInterval(function () {
-                            if ($("#" + temp[0].pieChart).length > 0) {
-                                for (var i = 0; i < temp.length; i++) {
-                                    if (temp[i].keyValuePairs.length > 0) {
-                                        that.createModulePieChart(temp[i].pieChart, temp[i])
-                                    }
-                                    if (temp[i].keyValuePairs_Time.length > 0) {
-                                        that.createModuleBarChart(temp[i].barChart, temp[i])
-                                    }
+                })
+                    .then(function (res) {
+                        if (res.data) {
 
-                                }
-                                clearInterval(timer)
+
+                            for (var i = 0; i < res.data.list.length; i++) {
+                                res.data.list[i].pieChart = "pie" + i
+                                res.data.list[i].barChart = "bar" + i
+                                res.data.list[i].rate = res.data.list[i].rate.toFixed(2)
+                                res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(2)
+                                res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
                             }
-                        }, 100)
-                    }
-                    }
-                    this.loading = false
-                })
-                .catch(function (e) {
-                    console.log(e)
-                    that.$Message.error('请求失败');
-                    this.loading = false
-                })
-                
+                            this.info = res.data
+                            this.sumBudget = res.data.list_zong.zongBudget
+                            this.zduibi = res.data.list_zong.zduibi
+                            this.Peozhanbi = res.data.list_bottom.Peozhanbi
+                            this.LPeozhanbi = res.data.list_bottom.LPeozhanbi
+                            this.zongBudget = res.data.list_bottom.zongBudget
+                            this.bottomInfo = res.data.list_bottom
+                            that.creatPowerChart(res.data)
+                            if (res.data.left_view.length > 0) {
+                                this.creatEnergyMoneyChart(res.data)
+                                this.left_viewIsShow = true
+                            } else {
+                                this.left_viewIsShow = false
+                            }
+
+
+                            var temp = res.data.list
+                            if (temp.length > 0) {
+                                var timer = setInterval(function () {
+                                    if ($("#" + temp[0].pieChart).length > 0) {
+                                        for (var i = 0; i < temp.length; i++) {
+                                            if (temp[i].keyValuePairs.length > 0) {
+                                                that.createModulePieChart(temp[i].pieChart, temp[i])
+                                            }
+                                            if (temp[i].keyValuePairs_Time.length > 0) {
+                                                that.createModuleBarChart(temp[i].barChart, temp[i])
+                                            }
+
+                                        }
+                                        clearInterval(timer)
+                                    }
+                                }, 100)
+                            }
+                        }
+                        this.loading = false
+                    })
+                    .catch(function (e) {
+                        
+                        that.$Message.error('请求失败');
+                        this.loading = false
+                        throw new ReferenceError(e.message)
+                    })
+
+           
+
+            
         },
         closeModule: function (id) {
             var that = this
@@ -549,7 +575,11 @@
         }
         var date = new Date()
         this.month = (date.getMonth() + 1)
-        this.curDate = date.getFullYear() + "-" + (date.getMonth() + 1)
+        var month = (date.getMonth() + 1)
+        if (month < 10) {
+            month = "0"+month
+        }
+        this.curDate = date.getFullYear() + "-" + month
         console.log(this.curDate)
         this.getCollectDevTypeList()
         this.getDepartMentList()

@@ -27,8 +27,8 @@
                         <div class="chart" id="powerChart"></div>
                     </div>
                     <div class="footer">
-                        <div class="footer-item">预算：{{sumBudget}}</div>
-                        <div class="footer-item">同比： {{zduibi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                        <div class="footer-item">预算：{{sumBudget==undefined||sumBudget==null?'--':sumBudget}}</div>
+                        <div class="footer-item">同比： {{zduibi==undefined||zduibi==null?'--':zduibi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                     </div>
                 </div>
                 <div class="item">
@@ -45,10 +45,10 @@
                         <span>{{month}}月万元每平米能耗</span>
                     </div>
                     <div class="main">
-                        <p>{{Peozhanbi}}<span class="dw">(万元/㎡)</span></p>
+                        <p>{{Peozhanbi==undefined||Peozhanbi==null?'--':Peozhanbi}}<span class="dw">(万元/㎡)</span></p>
                         <div class="footer">
-                            <div class="footer-item">预算：{{zongBudget}}</div>
-                            <div class="footer-item">同比： {{LPeozhanbi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                            <div class="footer-item">预算：{{zongBudget==undefined||zongBudget==null?'--':zongBudget}}</div>
+                            <div class="footer-item">同比： {{LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                         </div>
                         <div class="footerBtn" style="margin-top:5px">
                             <button class="btn">分项数据</button>
@@ -150,7 +150,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.59"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.62"></script>
     
     
 </body>

@@ -1,75 +1,33 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
+        uid: null,
+        uName:null,
         height: 0,
         width:0,
         num: 110,
         editIconShow: false,
         editDisable: true,
-        slectYear: '2018',
+        slectYear: '',
         editType: 0,
         editName: '编辑',
         sumDataSet: {
-            plannEnConsumption: 0,//计划能耗
-            allowance: 0,//余量
-            SurplusBudget: 0,//剩余预算
+            GeneralBudget: 0,//计划能耗
+            BudgetBalance: 0,//余量
+            SurplusValue: 0,//剩余预算
             
         },
         //各月能源预算总值
         sumAllMonthData:0,
         //各月能源预算
-        allMonthData: [
-            { month: 1, money: 0 },
-            { month: 2, money: 0 },
-            { month: 3, money: 0 },
-            { month: 4, money: 0 },
-            { month: 5, money: 0 },
-            { month: 6, money: 0 },
-            { month: 7, money: 0 },
-            { month: 8, money: 0 },
-            { month: 9, money: 0 },
-            { month: 10, money: 0 },
-            { month: 11, money: 0 },
-            { month: 12, money: 0 },
-        ],
+        allMonthData: [],
         sumEnergyData:0,
         //各类型能源平均值
-        energyData: [
-            { type: '电', money: 0 },
-            { type: '水', money: 0 },
-            { type: '气', money: 0 },
-            { type: '热', money: 0 },
-            { type: '油', money: 0 },
-        ],
+        energyData: [],
         sumDepartBudgetData:0,
-        departBudgetData: [
-            { name: '门诊科', money: 0 },
-            { name: '急诊科', money: 0 },
-            { name: '收费科', money: 0 },
-            { name: '后勤室', money: 0 },
-            { name: '放射科', money: 0 },
-            { name: '住院部', money: 0 },
-            { name: '药房室', money: 0 },
-            { name: '化验科', money: 0 },
-            { name: '手术室', money: 0 },
-            { name: '外租区', money: 0 },
-            { name: 'B超室', money: 0 },
-            { name: '行政楼', money: 0 },
-        ],
-        departMoneyData: [
-            { name: '门诊科', money: 0 },
-            { name: '急诊科', money: 0 },
-            { name: '收费科', money: 0 },
-            { name: '后勤室', money: 0 },
-            { name: '放射科', money: 0 },
-            { name: '住院部', money: 0 },
-            { name: '药房室', money: 0 },
-            { name: '化验科', money: 0 },
-            { name: '手术室', money: 0 },
-            { name: '外租区', money: 0 },
-            { name: 'B超室', money: 0 },
-            { name: '行政楼', money: 0 },
-        ],
+        departBudgetData: [],
+        departMoneyData: [],
         setForm: {
             elecPriceF: null,
             elecPriceP: null,
@@ -113,15 +71,319 @@
         enTypeBalance: 0,
         departBalance: 0,
         departAvgBalance: 0,
-        isInit: true
+        isInit: true,
+        isEdit: true,
+        treeModalVisable: false,
+        treeSelectList: [],
+        cotypeid: null ,//当前能源类型表格id
+        isAdd: false,//是否显示编辑部门按钮
+        Area: 0,
+        Bili: 0,
+        rightList:[]
     },
     methods: {
+        //获取最左边数据
+        getYearbugGetData: function () {
+            var that = this
+            var year = new Date(this.slectYear)
+            this.$http({
+                url: '/energyManage/EMHome/GetYearbugGetData',
+                method: 'POST',
+                params: {
+                    uid: this.uid,
+                    year: year.getFullYear()
+                }
+            })
+            .then(function (res) {
+                if (res.data!="no Data") {
+                    that.sumDataSet = res.data
+                    that.getMonthBugGetbyYearID(res.data.ID)
+                    that.sumAllMonthData = that.sumDataSet.SurplusValue
+                    that.isInit = false
+                } else {
+                    that.clearAllData()
+                }
+                
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+           
+        },
+        //清空数据
+        clearAllData: function () {
+            this.sumDataSet = {
+                GeneralBudget: 0,//计划能耗
+                BudgetBalance: 0,//余量
+                SurplusValue: 0,//剩余预算
+            }
+            this.sumAllMonthData = 0
+            this.allMonthData= []
+            this.sumDepartBudgetData = 0
+            this.departBudgetData = []
+            this.departMoneyData = []
+            this.curMonth = null
+            this.curEnType= null
+            this.everyMonthBalance = 0
+            this.enTypeBalance = 0
+            this.departBalance = 0
+            this.departAvgBalance = 0
+            this.isInit=true
+            this.isEdit = true
+            this.treeSelectList = []
+            this.isAdd = false
+            this.cotypeid = null
+            this.energyData = []
+            this.sumEnergyData =0
+        },
+        //初始化table
+        initTableData: function (data) {
+            var that = this
+            this.$http({
+                url: data.url,
+                method: 'POST',
+                params: data.params
+            })
+            .then(function (res) {
+                if (res.data) {
+                    switch (data.index) {
+                        case 1:
+                            that.allMonthData = res.data
+                            that.everyMonthBalance = that.sumAllMonthData - that.totalComputation("allMonthData")
+                            that.getYearBugGetDataByMonth(res.data[0].ID)
+                            that.getRightData()
+                            that.sumEnergyData = res.data[0].MonthBudget//能源总预算
+                            break;
+                        case 2:
+                            that.energyData = res.data
+                            that.enTypeBalance = that.sumEnergyData - that.totalComputation("energyData")//能源当前余额
+                            that.getYearBugGetDataByType(res.data[0].ID)
+                            that.sumDepartBudgetData = res.data[0].GeneralBudget //科室总预算
+                            that.isAdd = true
+                            break;
+                        case 3:
+                            that.departBudgetData = res.data
+                            that.departBalance = that.sumDepartBudgetData - that.totalComputation("departBudgetData") //科室当前余额
+                            that.treeSelectList = res.data
+                            that.getYearBugGetDataBydepar()
+                            break;
+                        case 4:
+                            that.departMoneyData = res.data
+                            that.departAvgBalance = that.sumDepartBudgetData - that.totalComputation("departMoneyData") //科室当前余额
+                            that.loading = false
+                            break;
+
+                    }
+                } else {
+                    if (data.index == 2) {
+                        that.isAdd = false
+                    }
+                }
+
+             })
+             .catch(function (e) {
+                 throw new ReferenceError(e.message)
+             })
+        },
+        //获取第一个表格数据
+        getMonthBugGetbyYearID: function (id) {
+            var that = this
+            var data = {
+                url: '/energyManage/EMHome/GetMonthBugGetbyYearID',
+                obj: this.allMonthData,
+                index: 1,
+                params: {
+                    yearid: id
+                }
+            }
+            this.initTableData(data)
+        },
+        //获取第2个表格数据
+        getYearBugGetDataByMonth: function (id) {
+            var that = this
+            var data = {
+                url: '/energyManage/EMHome/GetYearBugGetDataByMonth',
+                obj: this.energyData,
+                index: 2,
+                params: {
+                    monthid: id
+                }
+            }
+            this.initTableData(data)
+        },
+        //获取第3个表格数据
+        getYearBugGetDataByType: function (id) {
+            this.cotypeid = id
+            var that = this
+            var data = {
+                url: '/energyManage/EMHome/getYearBugGetDataByType',
+                obj: this.departBudgetData,
+                index: 3,
+                params: {
+                    coid: id
+                }
+            }
+            this.initTableData(data)
+        },
+        //获取第4个表格数据
+        getYearBugGetDataBydepar: function () {
+            var that = this
+            var data = {
+                url: '/energyManage/EMHome/GetYearBugGetDataBydepar',
+                obj: this.departMoneyData,
+                index: 4,
+                params: {
+                    coid: this.cotypeid
+                }
+            }
+            this.initTableData(data)
+        },
+        
+        //获取树
+        getTreeData: function () {
+            var that = this
+
+            this.$http({
+                url: '/energyManage/EMSetting/GetTreeData',
+                method: 'POST',
+                params: {
+                    unitID: that.uid,
+                    item_type: 2,
+                    unitName: that.uName
+                }
+            })
+            .then(function (res) {
+                for (var i = 0; i < res.data.length; i++) {
+                    res.data[i].EneryUserID = res.data[i].id
+                }
+                res.data.open = true
+                that.initTree(res.data)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        initTree: function (data) {
+            var setting = {
+                check: {
+                    enable: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                edit: {
+                    enable: false
+                },
+                callback: {
+                    onCheck:nodeCheck
+                }
+            };
+
+            var zNodes = data
+            var zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            var getNodes = zTree.getNodes()
+            if (this.departBudgetData.length != 0) {
+                this.traverseTree(zTree, getNodes[0])
+            }
+            var that = this
+            function nodeCheck(event, treeId, treeNode) {
+                var isCheck = treeNode.checked
+                if (isCheck) {
+                    treeNode.EName = treeNode.name
+                    treeNode.GeneralBudget = 0
+                    treeNode.EneryUserID = treeNode.id
+                    treeNode.CollTypeID = this.cotypeid
+                    that.treeSelectList.push(treeNode)
+                    //that.departMoneyData.push(treeNode)
+                } else {
+                    that.changeTreeSelect(treeNode.id)
+                }
+            }
+            
+            
+        },
+        //遍历树,设置默认选中节点
+        traverseTree: function (zTree, node) {
+            if (!node) {
+                return;
+            }
+            var that = this
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    that.traverseTree(zTree, node.children[i]);
+                    //设置默认选项
+                    for (var j = 0; j < that.departBudgetData.length; j++) {
+                        if (node.children[i].id == that.departBudgetData[j].EneryUserID) {
+                            zTree.checkNode(node.children[i], true)
+                            break
+                        }
+                    }
+                }
+            } 
+        },
+        //取消选中树节点
+        changeTreeSelect: function (id) {
+            for (var i = 0; i < this.treeSelectList.length; i++) {
+                if (this.treeSelectList[i].EneryUserID == id) {
+                    this.treeSelectList.splice(i, 1)
+                    this.departMoneyData.splice(i, 1)
+                    break
+                }
+            }
+        },
+        selectTreeOk: function () {
+            if (this.treeSelectList.length > 0) {
+                var eneruserids = new Array()
+                for (var i = 0; i < this.treeSelectList.length; i++) {
+                    eneruserids.push(this.treeSelectList[i].EneryUserID)
+                }
+                eneruserids = [...eneruserids].join(',')
+                this.addEnUserBudget(eneruserids)
+            }
+            
+            this.treeModalVisable = false
+        },
+        //添加部门
+        addEnUserBudget: function (ids) {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/AddEnUserBudget',
+                method: 'POST',
+                params: {
+                    cotypeid: this.cotypeid,
+                    eneryids : ids
+                }
+            })
+            .then(function (res) {
+                    that.treeSelectList = []
+                    that.getYearBugGetDataByType(that.cotypeid)
+                    
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        selectTreeCancel: function () {
+            if (this.treeSelectList.length == 0) {
+                this.getTreeData()
+            }
+            
+        },
+        showTreeModal: function () {
+            this.treeModalVisable = true
+            this.getTreeData()
+        },
         edit: function () {
             if (this.editType == 1) {
                 this.editType = 0
                 this.editName = '编辑'
                 this.editIconShow = false;
                 this.editDisable = true;
+                //验证预算是否合格
+                this.checkBudget()
+
             } else {
                 this.editType = 1
                 this.editName = '保存'
@@ -130,18 +392,39 @@
             }
             
         },
+        //验证预算是否合格
+        checkBudget: function () {
+            if (this.everyMonthBalance != 0 || this.enTypeBalance != 0 || this.departBalance != 0 || this.departAvgBalance != 0) {
+                this.$Modal.warning({
+                    title: '信息提示',
+                    content: '数据已保存，但有余额需要调整'
+                });
+            } else {
+                this.$Modal.success({
+                    title: '信息提示',
+                    content: '数据保存成功'
+                });
+            }
+        },
         //总计划能耗设置
         sumPlanChange: function (e) {
-            this.sumAllMonthData = e
+            
+            this.sumDataSet.SurplusValue = e - this.sumDataSet.BudgetBalance
+            this.sumAllMonthData = this.sumDataSet.SurplusValue
+            
+            this.everyMonthBalance = this.sumAllMonthData - this.totalComputation("allMonthData")
+        },
+        allowanceChange: function (e) {
+            this.sumDataSet.SurplusValue = this.sumDataSet.GeneralBudget - e
             if (this.isInit) {
                 //各月预算平均值
-                var monAvg = parseFloat(e / 12).toFixed(2)
+                var monAvg = parseFloat(this.sumAllMonthData / 12)
                 //各类型能源平均值
-                var typeAvg = parseFloat(monAvg / this.energyData.length).toFixed(2)
+                var typeAvg = parseFloat(monAvg / this.energyData.length)
                 //科室预算平均
-                var departBugAvg = parseFloat(monAvg / this.departBudgetData.length).toFixed(2)
+                var departBugAvg = parseFloat(typeAvg / this.treeSelectList.length)
                 this.sumEnergyData = monAvg
-                this.sumDepartBudgetData = departBugAvg
+                this.sumDepartBudgetData = typeAvg
                 for (i in this.allMonthData) {
                     this.allMonthData[i].money = monAvg
                 }
@@ -149,7 +432,12 @@
                 this.setAvg("departBudgetData", departBugAvg)
                 this.setAvg("departMoneyData", departBugAvg)
             }
-            this.sumAllMonthData = e
+        },
+        //y余量设置
+        BudgetBalanceChange: function (e) {
+            this.sumDataSet.SurplusValue = this.sumDataSet.GeneralBudget - e
+            this.sumAllMonthData = this.sumDataSet.SurplusValue
+            this.everyMonthBalance = this.sumAllMonthData - this.totalComputation("allMonthData")
         },
         //设置平均值
         setAvg: function (type, val) {
@@ -166,17 +454,157 @@
                     break;
             }
             for (i in data) {
-                data[i].money = val
+                data[i].GeneralBudget = val
             }
         },
-        monthClick: function (month) {
-            console.log(month)
-            this.curMonth = month
+        //修改或添加数据
+        upadteOrAddData: function (data) {
+            var that = this
+            this.$http({
+                url: data.url,
+                method: 'POST',
+                params: data.params
+            })
+            .then(function (res) {
+                    if (res.data === "ok") {
+                        that.changeDataByType(data.index)
+                    }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
+        changeDataByType: function (index) {
+            switch (index) {
+                case 0:
+                    //最左侧
+                    this.getYearbugGetData()
+                    break;
+                case 1:
+                    //table1
+                    break;
+                case 2:
+                    //table2
+                    break;
+                case 3:
+                    //table3
+                    break;
+                case 4:
+                    //table3
+                    break;
+            }
+        },
+        //编辑最左侧数据
+        editLeftData: function (par) {
+            var data = {
+                url: '/energyManage/EMHome/UpdateYearBudGet',
+                params: par,
+                index:0
+            }
+            this.upadteOrAddData(data)
+        },
+      
+        
+        //编辑table
+        editTable: function (par,index,url) {
+            var data = {
+                url: url,
+                params: par,
+                index: index
+            }
+            this.upadteOrAddData(data)
+        },
+        //最左侧输入框失去焦点
+        sumBlur: function () {
+            var year = new Date(this.slectYear)
+            var data = {
+                year: year.getFullYear(),
+                uid: this.uid,
+                GeneralBudget: this.sumDataSet.GeneralBudget,
+                BudgetBalance: this.sumDataSet.BudgetBalance
+            }
+            this.editLeftData(data)
+        },
+        tableBlur: function (type, item) {
+            var val = 0
+            if (type == 1) {
+                val = item.MonthBudget
+            } else {
+                val = item.GeneralBudget
+            }
+            var url = ''
+            var data = {
+                id: item.ID,
+                value: val
+            }
+            switch (type) {
+                case 1:
+                    //table1
+                    data.yearid = item.YearID
+                    data.month = item.Month
+                    url = '/energyManage/EMHome/UpdateMonthBudget'
+                    break;
+                case 2:
+                    //table2
+                    data.monthid = item.MonthID
+                    data.cotypeid = item.CollTypeID
+                    url = '/energyManage/EMHome/UpdateContypeBudget'
+                    break;
+                case 3:
+                     //table3
+                    data.cotypeid = item.CollTypeID
+                    data.eneruserid = item.EneryUserID
+                    url = '/energyManage/EMHome/UpdateEnUserBudget'
+                    break;
+                case 4:
+                    //table4
+                    data.cotypeid = item.CollTypeID
+                    data.eneruserid = item.EneryUserID
+                    url = '/energyManage/EMHome/UpdateDepEnUserBudget'
+                    break;
+            }
+            this.editTable(data,type,url)
+            
+        },
+        monthClick: function (e) {
+            this.curMonth = e.Month
+            this.sumEnergyData = e.MonthBudget
+            this.getYearBugGetDataByMonth(e.ID)
+            this.getRightData()
+            //this.enTypeBalance = this.sumEnergyData - this.totalComputation("energyData")
+        },
+        typeClick: function (e) {
+            this.curEnType = e.CollTypeName
+            this.sumDepartBudgetData = e.GeneralBudget
+            this.getYearBugGetDataByType(e.ID)
+            //this.departBalance = this.sumDepartBudgetData - this.totalComputation("departBudgetData")
+        },
+        //各月
         monthPlanChange: function (e) {
-            console.log(this.totalComputation("allMonthData"))
+            this.sumEnergyData = e
             var sumMOney = this.totalComputation("allMonthData")
-            this.everyMonthBalance = (this.sumAllMonthData - sumMOney).toFixed(2)
+            this.everyMonthBalance = (this.sumDataSet.SurplusValue - sumMOney)
+            //改变能源类型总预算值
+            
+            //能源余额调整
+            this.enTypeBalance = this.sumEnergyData - this.totalComputation("energyData")
+        },
+        //能源
+        EnPlanChange: function (e) {
+            var sumMOney = this.totalComputation("energyData")
+            this.enTypeBalance = (this.sumEnergyData - sumMOney)
+            this.sumDepartBudgetData = e
+            this.departBalance = this.sumDepartBudgetData - this.totalComputation("departBudgetData")
+
+
+        },
+        departPlanChnage: function(e) {
+            var sumMOney = this.totalComputation("departBudgetData")
+            this.departBalance = (this.sumDepartBudgetData - sumMOney)
+        },
+        departAvgChange: function (e) {
+            var sumMOney = this.totalComputation("departMoneyData")
+            this.departAvgBalance = (this.sumDepartBudgetData - sumMOney)
         },
         //计算总额
         totalComputation: function (type) {
@@ -196,9 +624,14 @@
                     data = this.departMoneyData
                     break;
             }
-            for (i in data) {
-                sum += parseFloat(data[i].money)
+            for (var i = 0; i < data.length;i++) {
+                if (type ==='allMonthData') {
+                    sum += parseFloat(data[i].MonthBudget)
+                } else {
+                    sum += parseFloat(data[i].GeneralBudget)
+                }
             }
+           
             return sum
         },
         setPriceVisableChange: function (e) {
@@ -223,11 +656,46 @@
         upload: function () {
             $("#uploadFile").click()
         },
-        dateChange: function () {
+        dateChange: function (e) {
             $(".con table tbody tr td").removeClass("trActive")
             $(".con table tbody tr td .ivu-input-number-input").removeClass("activeColor")
             this.editDisable = true
+            this.slectYear = e.substring(0, 4)
+            var curYear = new Date().getFullYear()
+            this.getYearbugGetData()
+            if (parseInt(this.slectYear) <= curYear) {
+                this.isEdit = false
+            } else {
+                this.isEdit = true
+            }
         },
+
+        //最右侧数据
+        getRightData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetRightData',
+                method: 'POST',
+                params: {
+                    uid: this.uid,
+                    year: new Date(this.slectYear).getFullYear(),
+                    month: this.curMonth
+                }
+            })
+            .then(function (res) {
+                    if (res.data) {
+                        that.Area = res.data.top.Area
+                        that.Bili = res.data.top.Bili
+                        that.rightList = res.data.list
+                    }
+                    
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+
+
         setHeight: function () {
             var itemHeight = $(".main .main-item").height()-45
             var titleH = $(".main .main-item .item-title").height()
@@ -272,8 +740,17 @@
         }
     },
     beforeMount: function () {
-       
-       
+        this.uid = $.cookie("enUID")
+        this.uName = $.cookie("enUName")
+        this.slectYear = new Date().getFullYear().toString()
+        if (parseInt(this.slectYear) <= new Date().getFullYear()) {
+            this.isEdit = false
+        } else {
+            this.isEdit = true
+        }
+        this.getYearbugGetData()
+        
+        //this.getTreeData()
     },
     mounted: function () {
         this.setWidth()
@@ -287,6 +764,7 @@
             that.setWidth()
             that.setHeight()
         };
+        
 
     }
 })

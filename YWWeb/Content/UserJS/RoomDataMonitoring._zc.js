@@ -1,7 +1,8 @@
 ﻿new Vue({
     el: "#app",
     data: {
-       
+        uid: null,
+        departmentID:null,
         analysisTableHeight:0,
         analysisColumns: [
             {
@@ -10,31 +11,10 @@
                 key: 'time'
             },
             {
-                title: '用水(m³)',
-                align: 'center',
-                key: 'water'
-            },
-            {
-                title: '用电(kW·h)',
-                align: 'center',
-                key: 'power'
-            },
-            {
-                title: '用热(m³)',
-                align: 'center',
-                key: 'heat'
-            },
-            {
-                title: '温度(°C)',
-                align: 'center',
-                width: 60,
-                key: 'temperature'
-            },
-            {
                 title: '人流量(人)',
                 align: 'center',
                 width: 100,
-                key: 'visitorsFlowrate'
+                key: 'people'
             },
             {
                 title: '建筑面积(㎡)',
@@ -44,22 +24,140 @@
             },
            
         ],
-        analysisData: [
-            { time: '2018-12-22 12:35:00', water:123,  power: 124, heat:344,  temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-            { time: '2018-12-22 12:35:00', water: 123, power: 124, heat: 344, temperature: 23, visitorsFlowrate: 140, area: 123 },
-        ],
-        barAndLineChart: null,
-        dateType:0,
+        analysisData: [],
+        barChart: null,
+        dateType: '1',
+        curType: null,
+        typeList: [],
+        curTime: '',
+        barShow: true,
+        loading:true
        
     },
     methods: {
+        typeTabClick: function (name) {
+            this.curType = name
+            this.getBarData()
+        },
+        dateTypeChange: function (res) {
+            this.dateType = res
+            this.getBarData()
+        },
+        //获取table数据
+        getTableData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetChildItemData',
+                method: 'post',
+                params: {
+                    uid: that.uid,
+                    DepartmentID: that.departmentID,
+                    time: that.curTime
+                }
+            })
+            .then(function (res) {
+                var data = res.data
+                
+                for (var i = 0; i < data.TitleList.length; i++) {
+                    var dw = 'kW·h'
+                    if (data.TitleList[i].Type != 1) {
+                        dw = 'm³'
+                    }
+                    this.analysisColumns.push(
+                        {
+                            title: data.TitleList[i].Name + '(' + dw + ')',
+                            align: 'center',
+                            key: data.TitleList[i].Type
+                        }
+                    )
+                   
+                }
+                var tempTable = new Array()
+                for (var i = 0; i < data.table.length; i++) {
+                    tempTable.push(data.table[i].value)
+                }
+                that.analysisData = tempTable
+                that.loading = false
+            })
+            .catch(function (e) {
+                console.log(e)
+                that.loading = false
+            })
+        },
+        //获取能源类型
+        getCollectDevTypeList: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetCollectDevTypeList',
+                method: 'get',
+            }).then(function (res) {
+                that.typeList = res.data
+                if (res.data.length > 0) {
+                    that.curType = res.data[0].ID
+                    that.getBarData()
+                }
+            }).catch(function (e) {
+                console.log(e)
+            })
+        },
+        //柱状图数据
+        getBarData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryLine',
+                method: 'post',
+                params: {
+                    uid: that.uid,
+                    DepartmentID: that.departmentID,
+                    type: that.curType,
+                    TypeTime: parseInt(that.dateType),
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    if (data) {
+                        if (data.list_r.list_this.length > 0 || data.list_r.list_last.length > 0) {
+                            that.barShow = true
+                            that.createbarChart(data)
+                        } else {
+                            that.barShow = false
+                        }
+                    } else {
+                        console.log("为false")
+                        that.barShow = false
+                    }
+                    console.log(that.barShow)
+                })
+                .catch(function (e) {
+                    console.log(e)
+                })
+        },
 
-        //用电趋势图
-        createBarAndLine: function () {
-            barAndLineChart = echarts.init(document.getElementById('barAndLine'));
+        
+        createbarChart: function (data) {
+            barChart = echarts.init(document.getElementById('barChart'));
+            var legendData = new Array()
+            if (this.dateType == '1') {
+                legendData = ['今日', '昨日']
+            } else if (this.dateType == '2') {
+                legendData = ['本月', '上月']
+            } else {
+                legendData = ['今年', '去年']
+            }
+            var yName = 'kW·h';
+            if (this.curType != '1') {
+                yName = 'm³';
+            }
+            var serData1 = new Array()
+            for (var i = 0; i < data.list_r.list_this.length; i++) {
+                serData1.push(data.list_r.list_this[i].value)
+
+            }
+            var serDataLast = new Array()
+            for (var i = 0; i < data.list_r.list_last.length; i++) {
+                serDataLast.push(data.list_r.list_last[i].value)
+
+            }
             var option = {
                 tooltip: {
                     trigger: 'axis',
@@ -81,12 +179,12 @@
                         saveAsImage: { show: true },
                     },
                     itemSize: 10,
-                    itemGap:1
-                    
+                    itemGap: 1
+
                 },
                 legend: {
-                    data: ['今日', '昨日'],
-                    x:'center',
+                    data: legendData,
+                    x: 'center',
                     textStyle: {
                         fontSize: 10,
                         color: '#666'
@@ -94,14 +192,15 @@
                 },
                 color: ['#53bda9'],
                 grid: {
-                    bottom: '10%',
+                    bottom: '7%',
                     left: 30,
-                    right: 20
+                    right: 20,
+                    top: '25%'
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+                        data: data.x,
                         axisPointer: {
                             type: 'shadow'
                         },
@@ -126,10 +225,10 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: '万元',
+                        name: yName,
                         min: 0,
-                        max: 250,
-                        interval: 50,
+
+
                         axisLabel: {
                             formatter: '{value}'
                         },
@@ -161,7 +260,7 @@
                         min: 0,
                         max: 25,
                         interval: 5,
-                        show:false,
+                        show: false,
                         axisLabel: {
                             formatter: '{value} °C'
                         },
@@ -192,45 +291,60 @@
                         name: '今日',
                         type: 'bar',
                         color: "#53bda9",
-                        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                        data: serData1,
+
                     },
                     {
                         name: '昨日',
                         type: 'bar',
                         color: "#80c5e2",
-                        data: [1.6, 5.0, 9.5, 20.4, 24.7, 60.7, 165.6, 132.2, 58.7, 28.8, 3.0, 3.3, 5.6, 8.9, 6.0, 36.4, 20.7, 50.7, 110.6, 152.2, 28.7, 58.8, 66.0, 55.3]
+                        data: serDataLast,
+
                     },
-                   
+
+                ],
+                dataZoom: [
+                    {
+                        type: 'inside'
+                    }
                 ]
             };
-            barAndLineChart.setOption(option)
-            
+            barChart.clear()
+            barChart.setOption(option)
+            window.addEventListener("resize", () => {
+                barChart.resize()
+            });
+
         },
 
         userBtnClick: function (e) {
             this.activeIndex = e
-            console.log(this.userMneus[e].url)
             this.frameSrc = this.userMneus[e].url
 
         },
         setHeight: function () {
             this.analysisTableHeight = $(".right .bottom").height()-40
+        },
+        getParURl: function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
         }
     },
     beforeMount: function () {
+        this.uid = $.cookie("enUID")
+        this.departmentID = this.getParURl("departmentID")
+        this.curTime = this.getParURl("time")
         var that = this
         setInterval(function () {
             that.setHeight()
         }, 100)
-        
-       
+       this.getTableData()
+       this.getCollectDevTypeList()
        
     },
     mounted: function () {
-        this.createBarAndLine()
-        window.addEventListener("resize", () => {
-            barAndLineChart.resize();
-        });
+        
     }
 })
 

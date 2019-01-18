@@ -9,10 +9,12 @@
     <title>能源消耗</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.30"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.30" />
+  
 </head>
 <body>
-    <div id="app" class="noPaddingBottom"  style="padding:0">
+    <div id="app" class="noPaddingBottom" style="padding:0">
+        <Spin size="large" fix v-if="loading"></Spin>
         <div class="left flex-item">
             <div class="module-title">
                 <img src="~/Content/images/energyDifficiency/yc.png" class="icon" />
@@ -20,16 +22,15 @@
                 <!--<button class="btn">对比</button>-->
             </div>
             <dv class="list consumeList" style="overflow:hidden">
-                <i-table ref="tableSelect" :columns="listColumns" :data="listData" :height="listHeight" :width="listWidth" 
-                         v-on:on-selection-change="tableSelectChange" 
+                <i-table ref="tableSelect" :columns="listColumns" :data="listData" :height="listHeight" :width="listWidth"
+                         v-on:on-selection-change="tableSelectChange"
                          v-on:on-select="onSelect"
-                         v-on:on-select-cancel="onSelectCancel"
-                         ></i-table>
+                         v-on:on-select-cancel="onSelectCancel"></i-table>
             </dv>
         </div>
         <!--right s-->
         <div class="right flex-item">
-            <div class="top">
+            <div class="top" style="overflow:hidden">
                 <div class="right-top-left">
                     <div class="module-title">
                         <img src="~/Content/images/energyDifficiency/barAndLine.png" class="icon" />
@@ -37,17 +38,17 @@
                     </div>
                     <div class="barAndLine">
                         <div class="datePicekerView">
-                        <radio-group v-model="dateType" type="button" size="small">
-                            <Radio label="0">日</Radio>
-                            <Radio label="1">周</Radio>
-                            <Radio label="2">月</Radio>
-                            <Radio label="3">年</Radio>
-                        </radio-group>
-                    </div>
-                        <div id="barAndLine" class="chart" style="width:100%;height:100%"></div>
+                            <radio-group v-model="dateType" type="button" size="small" v-on:on-change="dateTypeChange">
+                                <Radio label="1" value="1">日</Radio>
+                                <Radio label="2" value="2">月</Radio>
+                                <Radio label="3" value="3">年</Radio>
+                            </radio-group>
+                        </div>
+                        <div class="chart noData" v-if="!barShow">暂无数据</div>
+                        <div id="barAndLine" class="chart" :style="{display:barShow?'block':'none',width:'100%',height:'100%'}"></div>
                     </div>
                 </div>
-               
+
                 <div class="right-top-right">
                     <div class="module-title">
                         <img src="~/Content/images/energyDifficiency/qx.png" class="icon" />
@@ -55,9 +56,10 @@
                     </div>
                     <div class="barAndLine">
                         <div style="overflow:hidden;position:absolute;width:100%;height:100%">
-                            <div class="chart" id="energyConLine" style="width:100%;height:100%;"></div>
+                            <div class="chart noData" v-if="!lineShow">暂无数据</div>
+                            <div class="chart" id="energyConLine" :style="{display:lineShow?'block':'none',width:'100%',height:'100%'}"></div>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -81,7 +83,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.77"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/Consume._zc.js?v=1.95"></script>
 </body>
 </html>
 

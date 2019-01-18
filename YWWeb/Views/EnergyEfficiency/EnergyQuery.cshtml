@@ -41,16 +41,14 @@
                                 <td>
                                     <form-item label="科室">
                                         <i-select v-model="searchForm.department" :filterable="true" multiple>
-                                            <i-option :value="0" :key="0">急诊科</i-option>
-                                            <i-option :value="1" :key="1">内科</i-option>
+                                            <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
                                         </i-select>
                                     </form-item>
                                 </td>
                                 <td>
                                     <form-item label="类型">
                                         <i-select v-model="searchForm.type" :filterable="true">
-                                            <i-option :value="0" :key="0">急诊科</i-option>
-                                            <i-option :value="1" :key="1">内科</i-option>
+                                            <i-option :value="item.ID" :key="item.ID"  v-for="item in typeList">{{item.Name}}</i-option>
                                         </i-select>
                                     </form-item>
                                 </td>
@@ -81,7 +79,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/EnergyQuery._zc.js?v=1.05"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/EnergyQuery._zc.js?v=1.07"></script>
 </body>
 </html>
 

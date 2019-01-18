@@ -7,36 +7,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>科室数据监测</title>
-    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.10" />
+    <link rel="stylesheet" href="~/Content/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
 </head>
 <body>
     <div id="app" style="padding:0">
 
 
         <div class="left flex-item">
-            <div class="module-title" title="新源医院能源结构">
+            <div class="module-title" :title="uName">
                 <img src="~/Content/images/energyDifficiency/fxjg.png" class="icon" />
-                <span>新源医院能源结构</span>
-                
+                <span>{{uName}}能源结构</span>
+
                 <!--<span>能源分项解构</span>-->
                 <!-- <button class="btn">加入对比</button>-->
             </div>
             <div class="treeList">
-                    <Tree :data="treeData"
-                          empty-text="暂无数据"
-                          :multiple="false"
-                          class="tree"
-                          v-on:on-select-change="selectChange">
+                <!-- <Tree :data="treeData"
+                      empty-text="暂无数据"
+                      :multiple="false"
+                      class="tree"
+                      v-on:on-select-change="selectChange">
 
-                    </Tree>
+                </Tree>-->
+                <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
             </div>
         </div>
 
 
         <div class="right allMain departmentWatch">
-            <iframe id="departFrame" name="departFrame"  :src="departFrameSrc" frameborder="0"></iframe>
+            <iframe id="departFrame" name="departFrame" :src="departFrameSrc" frameborder="0"></iframe>
         </div>
 
     </div>
@@ -44,12 +46,13 @@
 
 
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.ztree.core.js"></script>
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/DepartDataMonitoring._zc.js?v=1.21"></script>
+    <script type="text/javascript" src="~/Content/UserJS/DepartDataMonitoring._zc.js?v=1.33"></script>
 </body>
 </html>
 
