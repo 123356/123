@@ -55,5 +55,7 @@ namespace DAO
         public IEneryUsreBudget eneryUserBudget => new EneryUsreBudgetDBContext();
 
         public IDepartmentalApportionment depar => new DepartmentalApportionmentContext();
+
+        public IPDRInfo pdrInfo => new PDRInfoDBContext();
     }
 }

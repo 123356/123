@@ -68,6 +68,7 @@
     <Compile Include="IEneryUsreBudget.cs" />
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
+    <Compile Include="IPDRInfo.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
     <Compile Include="InterfaceCache\IDBCache.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Models\t_AlarmTable_en.cs" />
     <Compile Include="Models\t_CM_Module.cs" />
     <Compile Include="Models\IntegerValue.cs" />
+    <Compile Include="Models\t_CM_PDRInfo.cs" />
     <Compile Include="Models\t_CM_Unit.cs" />
     <Compile Include="Models\t_CM_UserInfo.cs" />
     <Compile Include="Models\t_DM_CircuitInfo.cs" />

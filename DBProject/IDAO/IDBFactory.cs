@@ -40,5 +40,7 @@ namespace IDAO
         IEneryUsreBudget eneryUserBudget { get; }
 
         IDepartmentalApportionment depar { get; }
+
+        IPDRInfo pdrInfo { get; }
     }
 }

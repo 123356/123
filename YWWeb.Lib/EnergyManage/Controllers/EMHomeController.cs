@@ -633,6 +633,55 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetRightData(int uid,int year,int month)
+        {
+            string pids = GetPIDs();
+            IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
+
+            var time = new DateTime(year, month, 1).ToString("yyyy-MM");
+
+            List<overView> list = new List<overView>();
+            decimal zongRate = 0;
+            foreach (var item_peizhi in list_peizhi)
+            {
+                decimal rate = 0;
+                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.EnerUserTypeID);
+                foreach (var item_userP in list_userP)
+                {
+                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
+                    string cids = "";
+                    foreach (var item_cir in list_cir)
+                    {
+                        cids += item_cir.CID + ",";
+                    }
+                    if (cids != "")
+                        cids = cids.Substring(0, cids.Length - 1);
+                    else
+                        cids = "0";
+                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
+                    rate+= list_data.Sum(p => p.Rate);
+                }
+                overView group_i = new overView();
+                group_i.name = item_peizhi.Name;
+                group_i.value = rate;
+                zongRate += rate;
+                list.Add(group_i);
+            }
+
+            var pdrl = DAL.PDRInfoDAL.getInstance().GetPDRList(pids).Sum(p => p.build_area);
+
+            decimal bili = 0;
+            if (pdrl != 0)
+                bili = Math.Round(zongRate / pdrl, 2);
+
+            var top = new
+            {
+                Area = pdrl,
+                Bili = bili
+            };
+
+            return Json(new { top, list }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetYearBugGetDataByType(int coid)
         {
             IList<t_EE_EneryUsreBudget> list = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByYearID(coid);
