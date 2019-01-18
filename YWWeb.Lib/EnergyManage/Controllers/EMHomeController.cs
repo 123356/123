@@ -150,28 +150,33 @@ namespace EnergyManage.Controllers
             model.UserID = CurrentUser.UserID;
             int n = DAL.EnTypeConfigDAL.getInstance().AddConfig(model);
             return Json(n, JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult DeleteConfig(int id)
         {
             int n = DAL.EnTypeConfigDAL.getInstance().DeleteConfig(id);
             return Json(n, JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult GetCollectDevTypeList()
         {
             IList<t_DM_CollectDevType> list = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetComobxList()
         {
             IList<t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetUnitComobxList()
         {
             IList<t_CM_Unit> list = GetUnitComobox();
             return Json(list, JsonRequestBehavior.AllowGet);
+
         }
 
         #endregion
@@ -185,6 +190,7 @@ namespace EnergyManage.Controllers
             int month = Convert.ToDateTime(time).Month;
             //根据权限读取PID;
             string pids = GetPIDs();
+
             IList<t_EE_Budget> list_budgets = DAL.BudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
@@ -302,6 +308,7 @@ namespace EnergyManage.Controllers
 
         public class title
         {
+
             public int Type { get; set; }
             public string Name { get; set; }
         }
@@ -311,6 +318,7 @@ namespace EnergyManage.Controllers
             {
                 value = new Dictionary<string, string>();
             }
+
             public Dictionary<string, string> value { get; set; }
         }
 
@@ -419,6 +427,7 @@ namespace EnergyManage.Controllers
                 list_this = new List<overView>();
                 list_last = new List<overView>();
             }
+
             public List<overView> list_this { get; set; }
             public List<overView> list_last { get; set; }
         }
@@ -455,7 +464,6 @@ namespace EnergyManage.Controllers
                     decimal renliu = 0;
 
 
-
                     foreach (var it in TitleList)
                     {
                         decimal v = 0;
@@ -480,6 +488,7 @@ namespace EnergyManage.Controllers
         public JsonResult GetExTable()
         {
             string pids = GetPIDs();
+
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas(pids);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -546,7 +555,6 @@ namespace EnergyManage.Controllers
             }
             public string name { get; set; }
             public List<overView> list { get; set; }
-
         }
         public JsonResult GetBudgetData(string cids)
         {
@@ -578,6 +586,7 @@ namespace EnergyManage.Controllers
         {
             string pids = GetPIDs();
             IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids, id);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -607,12 +616,14 @@ namespace EnergyManage.Controllers
         public JsonResult GetMonthBugGetbyYearID(int yearid)
         {
             var list = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetYearBugGetDataByMonth(int monthid)
         {
             IList<t_EE_CollTypeBudget> list = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -668,12 +679,14 @@ namespace EnergyManage.Controllers
         public JsonResult GetYearBugGetDataByType(int coid)
         {
             IList<t_EE_EneryUsreBudget> list = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByYearID(coid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetYearBugGetDataBydepar(int coid)
         {
             IList<t_EE_DepartmentalApportionment> list = DAL.DepartmentalApportionmentDAL.getInstance().GetenBudgetByYearID(coid);
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public class BudgetView
@@ -758,7 +771,7 @@ namespace EnergyManage.Controllers
                 bm.YearID = yearid;
                 DAL.BudgetDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok");
+            return Json("ok",JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateContypeBudget(int id, decimal value, int monthid, int cotypeid)
@@ -816,7 +829,7 @@ namespace EnergyManage.Controllers
                 bm.CollTypeID = cotypeid;
                 DAL.DepartmentalApportionmentDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok");
+            return Json("ok",JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AddEnUserBudget(int cotypeid, string eneryids)
