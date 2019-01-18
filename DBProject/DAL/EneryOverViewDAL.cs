@@ -86,7 +86,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -100,7 +99,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -114,7 +112,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -128,7 +125,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
