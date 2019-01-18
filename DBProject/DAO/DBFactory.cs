@@ -57,5 +57,7 @@ namespace DAO
         public IDepartmentalApportionment depar => new DepartmentalApportionmentContext();
 
         public IPDRInfo pdrInfo => new PDRInfoDBContext();
+
+        public IPriceEnery priceEnery => new PriceEneryDBContext();
     }
 }
