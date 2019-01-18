@@ -44,12 +44,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetUsers(pid);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -60,12 +58,10 @@ namespace DAL
             IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
             try
             {
-
                 data = _dbFactory.userInf.GetUsers(userName, password);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -107,7 +103,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
@@ -123,7 +118,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return data;
