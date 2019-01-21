@@ -55,7 +55,7 @@ namespace DAO
            ({model.UID}
            ,{model.CollTypeID}
            ,{model.Ladder}
-           ,{model.LadderValue}
+           ,'{model.LadderValue}'
            ,{model.Price})";
             return ExecuteSqlCommand(sql);
         }
@@ -66,7 +66,7 @@ namespace DAO
    SET [UID] = {model.UID}
       ,[CollTypeID] = {model.CollTypeID}
       ,[Ladder] = {model.Ladder}
-      ,[LadderValue] = {model.LadderValue}
+      ,[LadderValue] = '{model.LadderValue}'
       ,[Price] = {model.Price}
  WHERE ID={model.ID}";
             return ExecuteSqlCommand(sql);

@@ -915,5 +915,38 @@ namespace EnergyManage.Controllers
 
         }
         #endregion
+
+
+        public JsonResult AddEneryPrice(t_EE_PriceEnery model)
+        {
+            int n = 0;
+            if (model.ID <= 0)
+            {
+                 n = DAL.PriceEneryDAL.getInstance().InserPriceEnery(model);
+            }
+            else
+            {
+                t_EE_PriceEnery m = DAL.PriceEneryDAL.getInstance().GetPriceEneryByID(model.ID);
+                m.UID = model.UID;
+                m.CollTypeID = model.CollTypeID;
+                m.Ladder = model.Ladder;
+                m.LadderValue = model.LadderValue;
+                m.Price = model.Price;
+                n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(model);
+            }
+            return Json(n, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteEneryPrice(int ID)
+        {
+            int n = DAL.PriceEneryDAL.getInstance().DeletePriceEnery(ID);
+            return Json(n, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0)
+        {
+            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(uid, colltypeid, level);
+            return Json(list, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
