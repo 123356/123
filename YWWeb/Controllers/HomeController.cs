@@ -4888,29 +4888,30 @@ namespace YWWeb.Controllers
         #endregion
         #region PUE相关
 
-        public JsonResult GetRealTimePUEData(int uid)
+        public JsonResult GetRealTimePUEData()
         {
             List<pueView> list_top = new List<pueView>();
+            string uids = HomeController.GetUID();
             decimal RealValue = 0;
             DateTime time = DateTime.Now;
-            var TopList = bll.t_EE_PUERealTime.Where(p => p.UID == uid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderByDescending(p => p.RecordTime).ToList();
-            var groupTopList = TopList.GroupBy(p => p.RecordTime);
-            foreach (var item in groupTopList)
-            {
-                pueView m = new pueView();
-                m.name = item.Key.ToString();
-                m.value = item.Sum(p => p.PUE);
-                list_top.Add(m);
-            }
-            var model = TopList.FirstOrDefault();
-            if (model != null)
-            {
-                RealValue = model.PUE.Value;
-            }
-            string uids = HomeController.GetUID();
             List<pueView> list_le = new List<pueView>();
             if (!string.IsNullOrEmpty(uids))
             {
+                var uidList = uids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p));
+                var TopList = bll.t_EE_PUERealTime.Where(p => uidList.Contains(p.UID)&& p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderByDescending(p => p.RecordTime).ToList();
+                var groupTopList = TopList.GroupBy(p => p.RecordTime);
+                foreach (var item in groupTopList)
+                {
+                    pueView m = new pueView();
+                    m.name = item.Key.ToString();
+                    m.value = item.Sum(p => p.PUE);
+                    list_top.Add(m);
+                }
+                var model = TopList.FirstOrDefault();
+                if (model != null)
+                {
+                    RealValue = model.PUE.Value;
+                }
                 string pids = HomeController.GetPID(uids);
                 if (!string.IsNullOrEmpty(pids))
                 {
