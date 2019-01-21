@@ -956,7 +956,7 @@ html {
     height: 250px;
 }
 .setPriceModal .ivu-modal {
-    width: 850px !important
+    width: 550px !important
 }
 .setPriceModal .ivu-modal-body {
     height: auto !important;
@@ -1143,8 +1143,48 @@ html {
     overflow-y:auto
 }
 
-@media screen and (max-width: 1300px) {
-    .BudgetSetting .header .ivu-input{
+.tableMain {
+    flex: 1;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 2px 2px 3px #e8e8e8;
+    border-radius: 4px;
+    padding:15px
+}
+    .tableMain .searchForm .ivu-select {
+        width: 200px
+    }
+    .tableMain .btnView .btn{
+        border:none;
+        background:#40ae93;
+        color:#fff;
+        margin-right:10px
+    }
+        .tableMain .btnView .btn img{
+            width:12px;
+            height:12px;
+            margin-right:5px;
+            margin-top:-2px
+        }
+        .tableMain .searchForm .formView {
+            display: inline-block;
+            float: left;
+            margin-right: 15px
+        }
+    .tableMain .tableView{
+        overflow:hidden;
+        clear:both
+    }
+    .tableMain .pageView{
+        display:flex;
+        flex-direction:row;
+        justify-content:flex-end;
+        align-items:center;
+        height:45px
+
+    }
+    @media screen and (max-width: 1300px) {
+        .BudgetSetting .header .ivu-input{
                     font-size:1.6rem
                 }
                 .allMain .searchView {

@@ -55,42 +55,42 @@
                         orient:'horizontal',
                         pieces: [{
                             gt: 0,
-                            lte: 2,
+                            lte: 1.8,
                             color: '#54ab88'
                         }, {
-                            gt: 2,
-                            lte: 5,
+                            gt: 1.8,
+                            lte: 2.6,
                                 color: '#ca9a5c'
                         }, {
-                            gt: 5,
-                            lte: 6,
+                            gt: 2.6,
+                            lte: 5,
                             color: '#cd574b'
                         }],
                         outOfRange: {
-                            color: '#999'
+                            color: '#cd574b'
                         }
                     },
                     series: {
                         name: 'Beijing AQI',
                         type: 'line',
-                        data: [1, 2, 3, 4, 5, 3, 6, 5, 4, 5, 3, 6, 5, 4, 2, 3, 4, 1],
+                        data: [1, 2, 3, 4, 5, 3, 6, 5, 4, 5, 3, 3, 5, 4, 2, 3, 4, 1],
                         areaStyle: {},
                         smooth: true,
                         symbol: 'none',
                         markLine: {
                             silent: true,
                             data: [{
-                                yAxis: 2,
+                                yAxis: 1.8,
                                 lineStyle: {
                                     color: '#54ab88'
                                 }
                             }, {
-                                yAxis: 5,
+                                yAxis: 2.6,
                                 lineStyle: {
                                     color: '#ca9a5c'
                                 }
                             }, {
-                                yAxis: 6,
+                                yAxis: 5,
                                 lineStyle: {
                                     color: '#ce584c'
                                 }
@@ -119,7 +119,7 @@
                             radius: '95%',
                             type: 'gauge',
                             min: 1,
-                            max: 6,
+                            max: 5,
                             splitNumber: 5,
                             detail: {
                                 formatter: '{value}',
@@ -137,7 +137,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: [[0.2, '#32b194'], [0.8, '#cc9c50'], [1, '#d15642']],
+                                    color: [[0.2, '#32b194'], [0.4, '#cc9c50'], [1, '#d15642']],
                                     width: 18
                                 }
                             },

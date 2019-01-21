@@ -4,7 +4,7 @@
        
         treeData: [],
         typeList: [
-            { id: 0, name: '近一日' }, { id: 1, name: '近一周' }, { id: 2, name: '近一月' }, { id: 3, name: '自定义' },
+            { id: 0, name: '近一日' }, { id: 1, name: '近一月' }, { id: 2, name: '近一年' }, { id: 3, name: '自定义' },
         ],
         curType:0,
         lineChart: null,
@@ -74,42 +74,42 @@
                     orient: 'horizontal',
                     pieces: [{
                         gt: 0,
-                        lte: 2,
+                        lte: 1.8,
                         color: '#54ab88'
                     }, {
-                        gt: 2,
-                        lte: 5,
+                        gt: 1.8,
+                        lte: 2.6,
                         color: '#ca9a5c'
                     }, {
-                        gt: 5,
-                        lte: 6,
+                        gt: 2.6,
+                        lte: 5,
                         color: '#cd574b'
                     }],
                     outOfRange: {
-                        color: '#999'
+                        color: '#cd574b'
                     }
                 },
                 series: {
                     name: 'Beijing AQI',
                     type: 'line',
                     data: [1, 2, 3, 4, 5, 3, 6, 5, 4, 5, 3, 6, 5, 4, 2, 3, 4, 1],
-                    areaStyle: {},
+                    //areaStyle: {},
                     smooth: true,
                     symbol: 'none',
                     markLine: {
                         silent: true,
                         data: [{
-                            yAxis: 2,
+                            yAxis: 1.8,
                             lineStyle: {
                                 color: '#54ab88'
                             }
                         }, {
-                            yAxis: 5,
+                            yAxis: 2.6,
                             lineStyle: {
                                 color: '#ca9a5c'
                             }
                         }, {
-                            yAxis: 6,
+                            yAxis: 5,
                             lineStyle: {
                                 color: '#ce584c'
                             }

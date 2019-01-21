@@ -342,6 +342,55 @@ namespace YWWeb.Controllers
             string strJson = JsonConvert.SerializeObject(sb_Button.ToString());
             return Content(strJson);
         }
+        [Login]
+        public JsonResult UserButtonList2(string CurrUrl)
+        {
+            //t_CM_UserInfo user = loginbll.CurrentUser;
+            int UserID = 0;
+            if (CurrentUser != null)
+                UserID = CurrentUser.UserID;
+            StringBuilder sb_Button = new StringBuilder();
+            List<t_CM_Module> list = null;
+            //获取模块
+            List<t_CM_Module> thislist = bll.t_CM_Module.Where(m => m.Location == CurrUrl && m.ParentID > 0).ToList();
+            if (thislist.Count > 0)
+            {
+                int parentid = thislist[0].ModuleID;
+                //获取用户权限功能列表
+                //获取用户角色列表
+                List<t_CM_UserRoles> listrole = bll.t_CM_UserRoles.Where(u => u.UserID == UserID).ToList();
+                //获取角色权限列表
+                List<int> listm = new List<int>();
+                string strlist = ",";
+                foreach (t_CM_UserRoles userrole in listrole)
+                {
+                    List<t_CM_RoleRight> listright = bll.t_CM_RoleRight.Where(r => r.RoleID == userrole.RoleID).ToList();
+                    int moduleid = 0;
+                    foreach (t_CM_RoleRight right in listright)
+                    {
+                        moduleid = (int)right.ModuleID;
+                        if (!strlist.Contains("," + moduleid + ","))
+                        {
+                            strlist += moduleid + ",";
+                            listm.Add(moduleid);
+                        }
+                    }
+                }
+                //获取模块功能列表
+                //List<t_CM_Module> list = bll.t_CM_Module.Where(m => m.ParentID == parentid && m.ModuleType == 3 && listm.Any(a => a == m.ModuleID)).ToList();
+                var query = from module in bll.t_CM_Module where listm.Contains((int)module.ModuleID) && module.ParentID == parentid && module.ModuleType == 3 select module;
+                list = query.ToList();
+               
+            }
+            else
+            {
+                //sb_Button.Append("<a class=\"button green\">");
+                //sb_Button.Append("无操作按钮");
+                //sb_Button.Append("</a>");
+            }
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         //删除
         [Login]
         public ActionResult DeleteModule(int ModuleID)

@@ -1693,6 +1693,7 @@
     <Content Include="Content\UserJS\appliction.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._jm.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._zc.js" />
+    <Content Include="Content\UserJS\EnergyPrice._zc.js" />
     <Content Include="Content\UserJS\BudgetSetting._zc.js" />
     <Content Include="Content\UserJS\CategoryView._jm.js" />
     <Content Include="Content\UserJS\CategoryView._zc.js" />
@@ -2475,6 +2476,7 @@
     <Content Include="Views\EnergyEfficiency\EnergyPublicity.cshtml" />
     <Content Include="Views\EnergyEfficiency\EnergyQuery.cshtml" />
     <Content Include="Views\EnergyEfficiency\roomDataMonitoring.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyPrice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
