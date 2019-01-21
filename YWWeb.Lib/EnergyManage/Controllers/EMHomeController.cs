@@ -942,9 +942,9 @@ namespace EnergyManage.Controllers
             int n = DAL.PriceEneryDAL.getInstance().DeletePriceEnery(ID);
             return Json(n, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0)
+        public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0, int page = 1,int rows=15)
         {
-            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(uid, colltypeid, level);
+            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(uid, colltypeid, level,page,rows);
             return Json(list, JsonRequestBehavior.AllowGet);
 
         }
