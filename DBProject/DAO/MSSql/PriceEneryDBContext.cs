@@ -23,23 +23,29 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_EE_PriceEnery> GetPriceEneryBy(int uid=0, int colltypeid=0,int level=0,int page=1,int rows=15)
+        public IList<t_EE_PriceEnery> GetPriceEneryBy(out int total,int uid=0, int colltypeid=0,int level=0,int page=1,int rows=15)
         {
             string sql = $@"select top {rows} a.ID,a.UID,a.CollTypeID,a.Ladder,a.LadderValue,a.Price,b.UnitName,c.Name as CollTypeName from (select ROW_NUMBER () OVER (ORDER BY ID) RowNumber,* FROM [t_EE_PriceEnery]) a 
 	 JOIN t_CM_Unit b on a.UID=b.UnitID 
      join t_DM_CollectDevType c on a.CollTypeID=c.ID where a.RowNumber>{rows * (page - 1)}";
+            string sqlcount = $@"select a.*,b.UnitName,c.Name as CollTypeName from t_EE_PriceEnery a JOIN t_CM_Unit b on a.UID=b.UnitID 
+     join t_DM_CollectDevType c on a.CollTypeID = c.ID where 1=1";
             if (uid != 0)
             {
                 sql += $"  AND a.UID={uid}";
+                sqlcount+= $"  AND UID={uid}";
             }
             if (colltypeid != 0)
             {
                 sql += $"  AND a.CollTypeID={colltypeid}";
+                sqlcount+= $"  AND CollTypeID={colltypeid}";
             }
             if (level != 0)
             {
                 sql += $"  AND a.Ladder={level}";
+                sqlcount+= $"  AND Ladder={level}";
             }
+            total = SQLQuery<t_EE_PriceEnery>(sqlcount).Count;
             return SQLQuery<t_EE_PriceEnery>(sql);
         }
 

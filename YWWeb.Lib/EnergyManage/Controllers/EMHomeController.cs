@@ -944,8 +944,9 @@ namespace EnergyManage.Controllers
         }
         public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0, int page = 1,int rows=15)
         {
-            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(uid, colltypeid, level,page,rows);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            int total = 0;
+            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(out total, uid, colltypeid, level, page, rows);
+            return Json(new { total, list }, JsonRequestBehavior.AllowGet);
 
         }
     }
