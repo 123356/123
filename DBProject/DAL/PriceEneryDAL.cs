@@ -29,11 +29,11 @@ namespace DAL
             return _DataDal;
         }
 
-        public IList<t_EE_PriceEnery> GetPriceEneryBy(int uid=0,int colltypeid=0,int level=0)
+        public IList<t_EE_PriceEnery> GetPriceEneryBy(int uid=0,int colltypeid=0,int level=0,int page=1,int rows=15)
         {
             try
             {
-                return _dbFactory.priceEnery.GetPriceEneryBy(uid, colltypeid, level);
+                return _dbFactory.priceEnery.GetPriceEneryBy(uid, colltypeid, level,page,rows);
             }
             catch (Exception ex)
             {
