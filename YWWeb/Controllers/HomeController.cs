@@ -24,7 +24,7 @@ using System.Reflection;
 
 namespace YWWeb.Controllers
 {
-    public class HomeController :UserControllerBaseEx //Controller
+    public class HomeController : UserControllerBaseEx //Controller
     {
         //
         // GET: /Home/
@@ -150,7 +150,7 @@ namespace YWWeb.Controllers
             try
             {
                 int errCode;
-                IDAO.Models.t_CM_UserInfo userinfo = LoginManager.Login(username, UserPassWord,this.ControllerContext, out errCode);
+                IDAO.Models.t_CM_UserInfo userinfo = LoginManager.Login(username, UserPassWord, this.ControllerContext, out errCode);
                 if (null != userinfo)
                 {
                     if (userinfo.IsScreen == 0)//启用
@@ -783,11 +783,11 @@ namespace YWWeb.Controllers
         [Login]
         public ActionResult getPtAlarmInfo()
         {
-            
+
             string strAlarmInfo = "null";//返回值不能为空
             string format = " <p class=\"content_size\"> <a href=\"/AlarmManage/Index?pid=0\" target=\"main_frame\">有<span class=\"am-badge am-badge-warning am-round item-feed-badge\" id=\"alarmNum\">{0}</span>条【监测报警】，请立即处理...</a></p>";
             if (null == CurrentUser)
-                return Content(string.Format(format,0));
+                return Content(string.Format(format, 0));
             try
             {
                 int rowcount = AlarmTable_enDAL.getInstance().GetAlarmCount(HomeController.GetPID(CurrentUser.UNITList));
@@ -972,7 +972,7 @@ namespace YWWeb.Controllers
                 return Content("{}");
             }
             string json = ModuleDAL.getInstance().GetMenuInfoJson(CurrentUser.UserID);
-             sw.Stop();
+            sw.Stop();
             Debug.WriteLine("GetMenuInfoJson time:" + sw.Elapsed.ToString());
             return Content(json);
 #if N_Redis
@@ -1061,7 +1061,7 @@ namespace YWWeb.Controllers
                 string strsql = "select * from t_CM_Module where ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=" + mid + " order by SN";
                 //List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();            
                 List<t_CM_Module> list = bll.ExecuteStoreQuery<t_CM_Module>(strsql).ToList();
-                
+
                 return Json(list);
             }
             return null;
@@ -1159,8 +1159,8 @@ namespace YWWeb.Controllers
             return Json(reslut);
         }
         #region 用户地图
-        
-       
+
+
         [Login]
         public ActionResult UnitListData()
         {
@@ -1378,7 +1378,7 @@ namespace YWWeb.Controllers
             return Json(unit);
         }
 
-#endregion
+        #endregion
 
         //根据权限获取站室
         public static string GetPID(string UNITList)
@@ -1633,10 +1633,10 @@ namespace YWWeb.Controllers
                             checkDays = sp.Days.ToString();
                             model.CheckDays = checkDays;
                         }
-                        
-                     
+
+
                     }
-                   
+
                 }
                 decimal SumScore = 0;
                 foreach (var item in pidlist)
@@ -1846,7 +1846,8 @@ namespace YWWeb.Controllers
         public DateTime GetDatime(DateTime d)
         {
             DateTime dt = d.AddMonths(6);
-            while (dt<DateTime.Now) {
+            while (dt < DateTime.Now)
+            {
                 dt = dt.AddMonths(6);
             };
             DateTime start = Convert.ToDateTime(Convert.ToDateTime(dt.ToShortDateString()));
@@ -3038,7 +3039,7 @@ namespace YWWeb.Controllers
             var result = bll.t_DM_DeviceInfo.Where(p => p.PID == pid && p.DTID == dtid).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-#endregion
+        #endregion
 
         public ActionResult GetScoreByUID(int uid)
         {
@@ -4828,7 +4829,7 @@ namespace YWWeb.Controllers
         {
 
         }
-        
+
 
 
         public string SendHttpRequest(string requestURI, string requestMethod, PostData data)
@@ -4885,6 +4886,155 @@ namespace YWWeb.Controllers
             public string coord_type_input { get; set; }
         }
         #endregion
+        #region PUE相关
 
+        public JsonResult GetRealTimePUEData(int uid)
+        {
+            List<pueView> list_top = new List<pueView>();
+            decimal RealValue = 0;
+            DateTime time = DateTime.Now;
+            var TopList = bll.t_EE_PUERealTime.Where(p => p.UID == uid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderByDescending(p => p.RecordTime).ToList();
+            var groupTopList = TopList.GroupBy(p => p.RecordTime);
+            foreach (var item in groupTopList)
+            {
+                pueView m = new pueView();
+                m.name = item.Key.ToString();
+                m.value = item.Sum(p => p.PUE);
+                list_top.Add(m);
+            }
+            var model = TopList.FirstOrDefault();
+            if (model != null)
+            {
+                RealValue = model.PUE.Value;
+            }
+            string uids = HomeController.GetUID();
+            List<pueView> list_le = new List<pueView>();
+            if (!string.IsNullOrEmpty(uids))
+            {
+                string pids = HomeController.GetPID(uids);
+                if (!string.IsNullOrEmpty(pids))
+                {
+                    var Plist = pids.Split(',').ToList().ConvertAll<int>(p => int.Parse(p));
+                    foreach (var item in Plist)
+                    {
+                        var cids = GetcidByPID("PUE能耗效率统计", item);
+                        if (cids != "0")
+                        {
+                            var cidList = cids.Split(',').ToList().ConvertAll<int>(p => Convert.ToInt32(p));
+                            foreach (var cid in cidList)
+                            {
+                                pueView mm = new pueView();
+                                string pName = "";
+                                if (bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault() != null)
+                                {
+                                    pName = bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault().Name;
+                                }
+                                string CName = "";
+                                if (bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault() != null)
+                                {
+                                    CName = bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault().CName;
+                                }
+                                mm.name = pName + "_" + CName;
+                                if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
+                                    mm.value = 0;
+                                else
+                                    bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power);
+
+                                list_le.Add(mm);
+                            }
+                        }
+                    }
+                }
+            }
+            return Json(new { list_top, RealValue, list_le }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid)
+        {
+            List<pueView> data = new List<pueView>();
+            try
+            {
+                string tablename = "";
+                switch (totaltype)
+                {
+                    case 1:
+                        tablename = "Daily";
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        datestart = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                        break;
+                    case 2:
+                        tablename = "Monthly";
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        datestart = TimeUtils.getThisMonthFirstDay(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss");
+                        break;
+                    case 3:
+                        tablename = "Yearly";
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        datestart = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd HH:mm:ss");
+                        break;
+                    case 4:
+                        tablename = "Monthly";
+                        break;
+                }
+                string tabname = "t_EE_PUE" + tablename;
+                string strsql = "select * from " + tabname + "  where PUE is not null";
+                if (!pid.Equals(""))
+                {
+                    strsql += " and PID=" + pid + "";
+                }
+                if (!string.IsNullOrEmpty(datestart) && !string.IsNullOrEmpty(dateend))
+                {
+                    strsql += " and RecordTime >='" + datestart + "' and RecordTime <='" + dateend + "'";
+                }
+                strsql += "   ORDER BY RecordTime";
+                List<PUEViewLine> list = bll.ExecuteStoreQuery<PUEViewLine>(strsql).ToList();
+                foreach (var item in list.GroupBy(p => p.RecordTime))
+                {
+                    pueView m = new pueView();
+                    m.name = item.Key.ToString();
+                    m.value = item.Sum(p => p.PUE);
+                    data.Add(m);
+                }
+            }
+            catch (Exception ex)
+            {
+                data = null;
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public class PUEViewLine
+        {
+            public int ID { get; set; }
+            public int UID { get; set; }
+            public int PID { get; set; }
+            public decimal PUE { get; set; }
+            public decimal AllPower { get; set; }
+            public decimal ITPower { get; set; }
+            public DateTime RecordTime { get; set; }
+        }
+        private string GetcidByPID(string typename, int pid)
+        {
+            string cid = "0";
+            using (var bll = new pdermsWebEntities())
+            {
+
+                t_EE_PowerConfigInfo model = bll.t_EE_PowerConfigInfo.Where(p => p.cid_type_name == typename).FirstOrDefault();
+                if (model != null)
+                {
+                    var info = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == model.cid_type_id && p.pid == pid).FirstOrDefault();
+                    if (info != null)
+                    {
+                        cid = info.cid;
+                    }
+                }
+            }
+            return cid;
+        }
+        public class pueView
+        {
+            public string name { get; set; }
+            public decimal? value { get; set; }
+        }
+        #endregion
     }
 }

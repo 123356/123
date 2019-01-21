@@ -1444,22 +1444,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_DM_CircuitType> t_DM_CircuitType
-        {
-            get
-            {
-                if ((_t_DM_CircuitType == null))
-                {
-                    _t_DM_CircuitType = base.CreateObjectSet<t_DM_CircuitType>("t_DM_CircuitType");
-                }
-                return _t_DM_CircuitType;
-            }
-        }
-        private ObjectSet<t_DM_CircuitType> _t_DM_CircuitType;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_DM_CircuitAnalysis> t_DM_CircuitAnalysis
         {
             get
@@ -2244,22 +2228,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_CM_OneGraph> t_CM_OneGraph
-        {
-            get
-            {
-                if ((_t_CM_OneGraph == null))
-                {
-                    _t_CM_OneGraph = base.CreateObjectSet<t_CM_OneGraph>("t_CM_OneGraph");
-                }
-                return _t_CM_OneGraph;
-            }
-        }
-        private ObjectSet<t_CM_OneGraph> _t_CM_OneGraph;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_CM_BigScoringType> t_CM_BigScoringType
         {
             get
@@ -2368,6 +2336,70 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_DM_CircuitInfo> _t_DM_CircuitInfo;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_PUEDaily> t_EE_PUEDaily
+        {
+            get
+            {
+                if ((_t_EE_PUEDaily == null))
+                {
+                    _t_EE_PUEDaily = base.CreateObjectSet<t_EE_PUEDaily>("t_EE_PUEDaily");
+                }
+                return _t_EE_PUEDaily;
+            }
+        }
+        private ObjectSet<t_EE_PUEDaily> _t_EE_PUEDaily;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_PUEMonthly> t_EE_PUEMonthly
+        {
+            get
+            {
+                if ((_t_EE_PUEMonthly == null))
+                {
+                    _t_EE_PUEMonthly = base.CreateObjectSet<t_EE_PUEMonthly>("t_EE_PUEMonthly");
+                }
+                return _t_EE_PUEMonthly;
+            }
+        }
+        private ObjectSet<t_EE_PUEMonthly> _t_EE_PUEMonthly;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_PUERealTime> t_EE_PUERealTime
+        {
+            get
+            {
+                if ((_t_EE_PUERealTime == null))
+                {
+                    _t_EE_PUERealTime = base.CreateObjectSet<t_EE_PUERealTime>("t_EE_PUERealTime");
+                }
+                return _t_EE_PUERealTime;
+            }
+        }
+        private ObjectSet<t_EE_PUERealTime> _t_EE_PUERealTime;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_PUEYearly> t_EE_PUEYearly
+        {
+            get
+            {
+                if ((_t_EE_PUEYearly == null))
+                {
+                    _t_EE_PUEYearly = base.CreateObjectSet<t_EE_PUEYearly>("t_EE_PUEYearly");
+                }
+                return _t_EE_PUEYearly;
+            }
+        }
+        private ObjectSet<t_EE_PUEYearly> _t_EE_PUEYearly;
 
         #endregion
 
@@ -3062,14 +3094,6 @@ namespace YWWeb
         }
     
         /// <summary>
-        /// 用于向 t_DM_CircuitType EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_DM_CircuitType(t_DM_CircuitType t_DM_CircuitType)
-        {
-            base.AddObject("t_DM_CircuitType", t_DM_CircuitType);
-        }
-    
-        /// <summary>
         /// 用于向 t_DM_CircuitAnalysis EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTot_DM_CircuitAnalysis(t_DM_CircuitAnalysis t_DM_CircuitAnalysis)
@@ -3462,14 +3486,6 @@ namespace YWWeb
         }
     
         /// <summary>
-        /// 用于向 t_CM_OneGraph EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_CM_OneGraph(t_CM_OneGraph t_CM_OneGraph)
-        {
-            base.AddObject("t_CM_OneGraph", t_CM_OneGraph);
-        }
-    
-        /// <summary>
         /// 用于向 t_CM_BigScoringType EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTot_CM_BigScoringType(t_CM_BigScoringType t_CM_BigScoringType)
@@ -3523,6 +3539,38 @@ namespace YWWeb
         public void AddTot_DM_CircuitInfo(t_DM_CircuitInfo t_DM_CircuitInfo)
         {
             base.AddObject("t_DM_CircuitInfo", t_DM_CircuitInfo);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_PUEDaily EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_PUEDaily(t_EE_PUEDaily t_EE_PUEDaily)
+        {
+            base.AddObject("t_EE_PUEDaily", t_EE_PUEDaily);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_PUEMonthly EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_PUEMonthly(t_EE_PUEMonthly t_EE_PUEMonthly)
+        {
+            base.AddObject("t_EE_PUEMonthly", t_EE_PUEMonthly);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_PUERealTime EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_PUERealTime(t_EE_PUERealTime t_EE_PUERealTime)
+        {
+            base.AddObject("t_EE_PUERealTime", t_EE_PUERealTime);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_PUEYearly EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_PUEYearly(t_EE_PUEYearly t_EE_PUEYearly)
+        {
+            base.AddObject("t_EE_PUEYearly", t_EE_PUEYearly);
         }
 
         #endregion
@@ -12894,134 +12942,6 @@ namespace YWWeb
         private Nullable<global::System.DateTime> _CreateDate;
         partial void OnCreateDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCreateDateChanged();
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// 没有元数据文档可用。
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_CM_OneGraph")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class t_CM_OneGraph : EntityObject
-    {
-        #region 工厂方法
-    
-        /// <summary>
-        /// 创建新的 t_CM_OneGraph 对象。
-        /// </summary>
-        /// <param name="id">ID 属性的初始值。</param>
-        public static t_CM_OneGraph Createt_CM_OneGraph(global::System.Int32 id)
-        {
-            t_CM_OneGraph t_CM_OneGraph = new t_CM_OneGraph();
-            t_CM_OneGraph.ID = id;
-            return t_CM_OneGraph;
-        }
-
-        #endregion
-
-        #region 简单属性
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ID
-        {
-            get
-            {
-                return _ID;
-            }
-            set
-            {
-                if (_ID != value)
-                {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value, "ID");
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ID;
-        partial void OnIDChanging(global::System.Int32 value);
-        partial void OnIDChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Data
-        {
-            get
-            {
-                return _Data;
-            }
-            set
-            {
-                OnDataChanging(value);
-                ReportPropertyChanging("Data");
-                _Data = StructuralObject.SetValidValue(value, true, "Data");
-                ReportPropertyChanged("Data");
-                OnDataChanged();
-            }
-        }
-        private global::System.String _Data;
-        partial void OnDataChanging(global::System.String value);
-        partial void OnDataChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> OrderNo
-        {
-            get
-            {
-                return _OrderNo;
-            }
-            set
-            {
-                OnOrderNoChanging(value);
-                ReportPropertyChanging("OrderNo");
-                _OrderNo = StructuralObject.SetValidValue(value, "OrderNo");
-                ReportPropertyChanged("OrderNo");
-                OnOrderNoChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _OrderNo;
-        partial void OnOrderNoChanging(Nullable<global::System.Int32> value);
-        partial void OnOrderNoChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> PID
-        {
-            get
-            {
-                return _PID;
-            }
-            set
-            {
-                OnPIDChanging(value);
-                ReportPropertyChanging("PID");
-                _PID = StructuralObject.SetValidValue(value, "PID");
-                ReportPropertyChanged("PID");
-                OnPIDChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _PID;
-        partial void OnPIDChanging(Nullable<global::System.Int32> value);
-        partial void OnPIDChanged();
 
         #endregion
 
@@ -22491,110 +22411,30 @@ namespace YWWeb
         private Nullable<global::System.Int32> _State;
         partial void OnStateChanging(Nullable<global::System.Int32> value);
         partial void OnStateChanged();
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// 没有元数据文档可用。
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_DM_CircuitType")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class t_DM_CircuitType : EntityObject
-    {
-        #region 工厂方法
-    
-        /// <summary>
-        /// 创建新的 t_DM_CircuitType 对象。
-        /// </summary>
-        /// <param name="id">ID 属性的初始值。</param>
-        public static t_DM_CircuitType Createt_DM_CircuitType(global::System.Int32 id)
-        {
-            t_DM_CircuitType t_DM_CircuitType = new t_DM_CircuitType();
-            t_DM_CircuitType.ID = id;
-            return t_DM_CircuitType;
-        }
-
-        #endregion
-
-        #region 简单属性
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ID
-        {
-            get
-            {
-                return _ID;
-            }
-            set
-            {
-                if (_ID != value)
-                {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value, "ID");
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ID;
-        partial void OnIDChanging(global::System.Int32 value);
-        partial void OnIDChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String CTypeName
+        public Nullable<global::System.Int32> coolect_dev_type
         {
             get
             {
-                return _CTypeName;
+                return _coolect_dev_type;
             }
             set
             {
-                OnCTypeNameChanging(value);
-                ReportPropertyChanging("CTypeName");
-                _CTypeName = StructuralObject.SetValidValue(value, true, "CTypeName");
-                ReportPropertyChanged("CTypeName");
-                OnCTypeNameChanged();
+                Oncoolect_dev_typeChanging(value);
+                ReportPropertyChanging("coolect_dev_type");
+                _coolect_dev_type = StructuralObject.SetValidValue(value, "coolect_dev_type");
+                ReportPropertyChanged("coolect_dev_type");
+                Oncoolect_dev_typeChanged();
             }
         }
-        private global::System.String _CTypeName;
-        partial void OnCTypeNameChanging(global::System.String value);
-        partial void OnCTypeNameChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CDimension
-        {
-            get
-            {
-                return _CDimension;
-            }
-            set
-            {
-                OnCDimensionChanging(value);
-                ReportPropertyChanging("CDimension");
-                _CDimension = StructuralObject.SetValidValue(value, true, "CDimension");
-                ReportPropertyChanged("CDimension");
-                OnCDimensionChanged();
-            }
-        }
-        private global::System.String _CDimension;
-        partial void OnCDimensionChanging(global::System.String value);
-        partial void OnCDimensionChanged();
+        private Nullable<global::System.Int32> _coolect_dev_type;
+        partial void Oncoolect_dev_typeChanging(Nullable<global::System.Int32> value);
+        partial void Oncoolect_dev_typeChanged();
 
         #endregion
 
@@ -28874,12 +28714,10 @@ namespace YWWeb
         /// 创建新的 t_EE_PowerReportConfig 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        /// <param name="isUpload">isUpload 属性的初始值。</param>
-        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id, global::System.Int32 isUpload)
+        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id)
         {
             t_EE_PowerReportConfig t_EE_PowerReportConfig = new t_EE_PowerReportConfig();
             t_EE_PowerReportConfig.id = id;
-            t_EE_PowerReportConfig.isUpload = isUpload;
             return t_EE_PowerReportConfig;
         }
 
@@ -29037,9 +28875,9 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 isUpload
+        public Nullable<global::System.Int32> isUpload
         {
             get
             {
@@ -29054,9 +28892,953 @@ namespace YWWeb
                 OnisUploadChanged();
             }
         }
-        private global::System.Int32 _isUpload;
-        partial void OnisUploadChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _isUpload;
+        partial void OnisUploadChanging(Nullable<global::System.Int32> value);
         partial void OnisUploadChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_PUEDaily")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_PUEDaily : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_PUEDaily 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_PUEDaily Createt_EE_PUEDaily(global::System.Int32 id)
+        {
+            t_EE_PUEDaily t_EE_PUEDaily = new t_EE_PUEDaily();
+            t_EE_PUEDaily.ID = id;
+            return t_EE_PUEDaily;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value, "UID");
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PID;
+        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PUE
+        {
+            get
+            {
+                return _PUE;
+            }
+            set
+            {
+                OnPUEChanging(value);
+                ReportPropertyChanging("PUE");
+                _PUE = StructuralObject.SetValidValue(value, "PUE");
+                ReportPropertyChanged("PUE");
+                OnPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PUE;
+        partial void OnPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AllUsePower
+        {
+            get
+            {
+                return _AllUsePower;
+            }
+            set
+            {
+                OnAllUsePowerChanging(value);
+                ReportPropertyChanging("AllUsePower");
+                _AllUsePower = StructuralObject.SetValidValue(value, "AllUsePower");
+                ReportPropertyChanged("AllUsePower");
+                OnAllUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AllUsePower;
+        partial void OnAllUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnAllUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ITUsePower
+        {
+            get
+            {
+                return _ITUsePower;
+            }
+            set
+            {
+                OnITUsePowerChanging(value);
+                ReportPropertyChanging("ITUsePower");
+                _ITUsePower = StructuralObject.SetValidValue(value, "ITUsePower");
+                ReportPropertyChanged("ITUsePower");
+                OnITUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ITUsePower;
+        partial void OnITUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnITUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MaxPUE
+        {
+            get
+            {
+                return _MaxPUE;
+            }
+            set
+            {
+                OnMaxPUEChanging(value);
+                ReportPropertyChanging("MaxPUE");
+                _MaxPUE = StructuralObject.SetValidValue(value, "MaxPUE");
+                ReportPropertyChanged("MaxPUE");
+                OnMaxPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MaxPUE;
+        partial void OnMaxPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMaxPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MinPUE
+        {
+            get
+            {
+                return _MinPUE;
+            }
+            set
+            {
+                OnMinPUEChanging(value);
+                ReportPropertyChanging("MinPUE");
+                _MinPUE = StructuralObject.SetValidValue(value, "MinPUE");
+                ReportPropertyChanged("MinPUE");
+                OnMinPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MinPUE;
+        partial void OnMinPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMinPUEChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_PUEMonthly")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_PUEMonthly : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_PUEMonthly 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_PUEMonthly Createt_EE_PUEMonthly(global::System.Int32 id)
+        {
+            t_EE_PUEMonthly t_EE_PUEMonthly = new t_EE_PUEMonthly();
+            t_EE_PUEMonthly.ID = id;
+            return t_EE_PUEMonthly;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value, "UID");
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PID;
+        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PUE
+        {
+            get
+            {
+                return _PUE;
+            }
+            set
+            {
+                OnPUEChanging(value);
+                ReportPropertyChanging("PUE");
+                _PUE = StructuralObject.SetValidValue(value, "PUE");
+                ReportPropertyChanged("PUE");
+                OnPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PUE;
+        partial void OnPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AllUsePower
+        {
+            get
+            {
+                return _AllUsePower;
+            }
+            set
+            {
+                OnAllUsePowerChanging(value);
+                ReportPropertyChanging("AllUsePower");
+                _AllUsePower = StructuralObject.SetValidValue(value, "AllUsePower");
+                ReportPropertyChanged("AllUsePower");
+                OnAllUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AllUsePower;
+        partial void OnAllUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnAllUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ITUsePower
+        {
+            get
+            {
+                return _ITUsePower;
+            }
+            set
+            {
+                OnITUsePowerChanging(value);
+                ReportPropertyChanging("ITUsePower");
+                _ITUsePower = StructuralObject.SetValidValue(value, "ITUsePower");
+                ReportPropertyChanged("ITUsePower");
+                OnITUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ITUsePower;
+        partial void OnITUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnITUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MaxPUE
+        {
+            get
+            {
+                return _MaxPUE;
+            }
+            set
+            {
+                OnMaxPUEChanging(value);
+                ReportPropertyChanging("MaxPUE");
+                _MaxPUE = StructuralObject.SetValidValue(value, "MaxPUE");
+                ReportPropertyChanged("MaxPUE");
+                OnMaxPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MaxPUE;
+        partial void OnMaxPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMaxPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MinPUE
+        {
+            get
+            {
+                return _MinPUE;
+            }
+            set
+            {
+                OnMinPUEChanging(value);
+                ReportPropertyChanging("MinPUE");
+                _MinPUE = StructuralObject.SetValidValue(value, "MinPUE");
+                ReportPropertyChanged("MinPUE");
+                OnMinPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MinPUE;
+        partial void OnMinPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMinPUEChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_PUERealTime")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_PUERealTime : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_PUERealTime 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_PUERealTime Createt_EE_PUERealTime(global::System.Int32 id)
+        {
+            t_EE_PUERealTime t_EE_PUERealTime = new t_EE_PUERealTime();
+            t_EE_PUERealTime.ID = id;
+            return t_EE_PUERealTime;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value, "UID");
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PID;
+        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PUE
+        {
+            get
+            {
+                return _PUE;
+            }
+            set
+            {
+                OnPUEChanging(value);
+                ReportPropertyChanging("PUE");
+                _PUE = StructuralObject.SetValidValue(value, "PUE");
+                ReportPropertyChanged("PUE");
+                OnPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PUE;
+        partial void OnPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AllPower
+        {
+            get
+            {
+                return _AllPower;
+            }
+            set
+            {
+                OnAllPowerChanging(value);
+                ReportPropertyChanging("AllPower");
+                _AllPower = StructuralObject.SetValidValue(value, "AllPower");
+                ReportPropertyChanged("AllPower");
+                OnAllPowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AllPower;
+        partial void OnAllPowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnAllPowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ITPower
+        {
+            get
+            {
+                return _ITPower;
+            }
+            set
+            {
+                OnITPowerChanging(value);
+                ReportPropertyChanging("ITPower");
+                _ITPower = StructuralObject.SetValidValue(value, "ITPower");
+                ReportPropertyChanged("ITPower");
+                OnITPowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ITPower;
+        partial void OnITPowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnITPowerChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_PUEYearly")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_PUEYearly : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_PUEYearly 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_PUEYearly Createt_EE_PUEYearly(global::System.Int32 id)
+        {
+            t_EE_PUEYearly t_EE_PUEYearly = new t_EE_PUEYearly();
+            t_EE_PUEYearly.ID = id;
+            return t_EE_PUEYearly;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value, "UID");
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PID;
+        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PUE
+        {
+            get
+            {
+                return _PUE;
+            }
+            set
+            {
+                OnPUEChanging(value);
+                ReportPropertyChanging("PUE");
+                _PUE = StructuralObject.SetValidValue(value, "PUE");
+                ReportPropertyChanged("PUE");
+                OnPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PUE;
+        partial void OnPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AllUsePower
+        {
+            get
+            {
+                return _AllUsePower;
+            }
+            set
+            {
+                OnAllUsePowerChanging(value);
+                ReportPropertyChanging("AllUsePower");
+                _AllUsePower = StructuralObject.SetValidValue(value, "AllUsePower");
+                ReportPropertyChanged("AllUsePower");
+                OnAllUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AllUsePower;
+        partial void OnAllUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnAllUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ITUsePower
+        {
+            get
+            {
+                return _ITUsePower;
+            }
+            set
+            {
+                OnITUsePowerChanging(value);
+                ReportPropertyChanging("ITUsePower");
+                _ITUsePower = StructuralObject.SetValidValue(value, "ITUsePower");
+                ReportPropertyChanged("ITUsePower");
+                OnITUsePowerChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ITUsePower;
+        partial void OnITUsePowerChanging(Nullable<global::System.Decimal> value);
+        partial void OnITUsePowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MaxPUE
+        {
+            get
+            {
+                return _MaxPUE;
+            }
+            set
+            {
+                OnMaxPUEChanging(value);
+                ReportPropertyChanging("MaxPUE");
+                _MaxPUE = StructuralObject.SetValidValue(value, "MaxPUE");
+                ReportPropertyChanged("MaxPUE");
+                OnMaxPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MaxPUE;
+        partial void OnMaxPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMaxPUEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MinPUE
+        {
+            get
+            {
+                return _MinPUE;
+            }
+            set
+            {
+                OnMinPUEChanging(value);
+                ReportPropertyChanging("MinPUE");
+                _MinPUE = StructuralObject.SetValidValue(value, "MinPUE");
+                ReportPropertyChanged("MinPUE");
+                OnMinPUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MinPUE;
+        partial void OnMinPUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnMinPUEChanged();
 
         #endregion
 
@@ -35048,12 +35830,16 @@ namespace YWWeb
         /// 创建新的 t_PM_OneGraph 对象。
         /// </summary>
         /// <param name="id">ID 属性的初始值。</param>
+        /// <param name="pID">PID 属性的初始值。</param>
         /// <param name="orderNo">OrderNo 属性的初始值。</param>
-        public static t_PM_OneGraph Createt_PM_OneGraph(global::System.Int32 id, global::System.Int32 orderNo)
+        /// <param name="type">Type 属性的初始值。</param>
+        public static t_PM_OneGraph Createt_PM_OneGraph(global::System.Int32 id, global::System.Int32 pID, global::System.Int32 orderNo, global::System.String type)
         {
             t_PM_OneGraph t_PM_OneGraph = new t_PM_OneGraph();
             t_PM_OneGraph.ID = id;
+            t_PM_OneGraph.PID = pID;
             t_PM_OneGraph.OrderNo = orderNo;
+            t_PM_OneGraph.Type = type;
             return t_PM_OneGraph;
         }
 
@@ -35091,9 +35877,9 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> PID
+        public global::System.Int32 PID
         {
             get
             {
@@ -35108,8 +35894,8 @@ namespace YWWeb
                 OnPIDChanged();
             }
         }
-        private Nullable<global::System.Int32> _PID;
-        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _PID;
+        partial void OnPIDChanging(global::System.Int32 value);
         partial void OnPIDChanged();
     
         /// <summary>
@@ -35139,7 +35925,7 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String Type
         {
@@ -35151,7 +35937,7 @@ namespace YWWeb
             {
                 OnTypeChanging(value);
                 ReportPropertyChanging("Type");
-                _Type = StructuralObject.SetValidValue(value, true, "Type");
+                _Type = StructuralObject.SetValidValue(value, false, "Type");
                 ReportPropertyChanged("Type");
                 OnTypeChanged();
             }
@@ -35279,6 +36065,54 @@ namespace YWWeb
         private global::System.String _Password;
         partial void OnPasswordChanging(global::System.String value);
         partial void OnPasswordChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UnitID
+        {
+            get
+            {
+                return _UnitID;
+            }
+            set
+            {
+                OnUnitIDChanging(value);
+                ReportPropertyChanging("UnitID");
+                _UnitID = StructuralObject.SetValidValue(value, "UnitID");
+                ReportPropertyChanged("UnitID");
+                OnUnitIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UnitID;
+        partial void OnUnitIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUnitIDChanged();
 
         #endregion
 
@@ -36247,6 +37081,78 @@ namespace YWWeb
         private global::System.String _Subcontract;
         partial void OnSubcontractChanging(global::System.String value);
         partial void OnSubcontractChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CcMen
+        {
+            get
+            {
+                return _CcMen;
+            }
+            set
+            {
+                OnCcMenChanging(value);
+                ReportPropertyChanging("CcMen");
+                _CcMen = StructuralObject.SetValidValue(value, true, "CcMen");
+                ReportPropertyChanged("CcMen");
+                OnCcMenChanged();
+            }
+        }
+        private global::System.String _CcMen;
+        partial void OnCcMenChanging(global::System.String value);
+        partial void OnCcMenChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> EndTime
+        {
+            get
+            {
+                return _EndTime;
+            }
+            set
+            {
+                OnEndTimeChanging(value);
+                ReportPropertyChanging("EndTime");
+                _EndTime = StructuralObject.SetValidValue(value, "EndTime");
+                ReportPropertyChanged("EndTime");
+                OnEndTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _EndTime;
+        partial void OnEndTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnEndTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FocusProject
+        {
+            get
+            {
+                return _FocusProject;
+            }
+            set
+            {
+                OnFocusProjectChanging(value);
+                ReportPropertyChanging("FocusProject");
+                _FocusProject = StructuralObject.SetValidValue(value, true, "FocusProject");
+                ReportPropertyChanged("FocusProject");
+                OnFocusProjectChanged();
+            }
+        }
+        private global::System.String _FocusProject;
+        partial void OnFocusProjectChanging(global::System.String value);
+        partial void OnFocusProjectChanged();
 
         #endregion
 
