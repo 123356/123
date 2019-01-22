@@ -118,6 +118,7 @@ namespace DAL
                 else
                 {
                     //dbCache.KeyDelete(FirstKey);
+                    dbCache.StringSet(FirstKey, "{}");
                     Loger.LogHelper.Debug("GetAlarmCount() data.Count():"+ data.Count());
                 }
 
