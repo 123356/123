@@ -1693,6 +1693,8 @@
     <Content Include="Content\UserJS\appliction.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._jm.js" />
     <Content Include="Content\UserJS\AutoRepotIndex._zc.js" />
+    <Content Include="Content\UserJS\ElectricityConsumptionRepor._zc.js" />
+    <Content Include="Content\UserJS\ElectricityMonthConsumptionRepor._zc.js" />
     <Content Include="Content\UserJS\EnergyPrice._zc.js" />
     <Content Include="Content\UserJS\BudgetSetting._zc.js" />
     <Content Include="Content\UserJS\CategoryView._jm.js" />
@@ -1865,6 +1867,7 @@
     <Content Include="Content\UserJS\YwConstractView._jm.js" />
     <Content Include="Content\UserJS\YwConstractView._zc.js" />
     <Content Include="Content\UserJS\_Header1.jm.js" />
+    <Content Include="Content\UserJS\ElectricityYearConsumptionRepor._zc.js" />
     <Content Include="Content\UserJS\_Header1.zc.js" />
     <Content Include="Content\UserJS\_Header2.jm.js" />
     <Content Include="Content\UserJS\_Header2.zc.js" />

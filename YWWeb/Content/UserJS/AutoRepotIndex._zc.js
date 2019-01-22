@@ -136,7 +136,7 @@ function getReport(pid) {
            "        <tr>\n" +
            "            <td colspan='3'>电压(kV)</td>\n" +
            "            <td colspan='3'>电流(A)</td>\n" +
-           "            <td rowspan='2'>用电量</td>\n" +
+           "            <td rowspan='2'>用电量(kW·h)</td>\n" +
            "            <td rowspan='2'>功率因数</td>\n" +
            "        </tr>\n" +
            "        <tr>\n" +
