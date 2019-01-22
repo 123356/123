@@ -130,17 +130,17 @@ namespace YWWeb.Controllers
                                 if (type == 1)
                                 {
                                     var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour).Sum(p => p.Aphase);
-                                    mo.Value.Add(s);
+                                    mo.Value.Add(Math.Round(s, 2));
                                 }
                                 else if (type == 2)
                                 {
                                     var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day ).Sum(p => p.Aphase);
-                                    mo.Value.Add(s);
+                                    mo.Value.Add(Math.Round(s, 2));
                                 }
                                 else if(type == 3)
                                 {
                                     var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).Sum(p => p.Aphase);
-                                    mo.Value.Add(s);
+                                    mo.Value.Add(Math.Round(s, 2));
                                 }
                             }
                             model.list_data.Add(mo);
