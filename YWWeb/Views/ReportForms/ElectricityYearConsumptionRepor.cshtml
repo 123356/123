@@ -7,242 +7,371 @@
     <meta name="viewport" content="width=device-width" />
     <title>年用电量分析</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
     <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
     <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+
     <style>
         #pzhtml td {
             text-align: center;
         }
+        #yearReport{
+            padding:15px;
+            padding-bottom:50px
+        }
+        .reportTable {
+            width: 100%;
+            margin-top: 50px
+        }
+
+            .reportTable td {
+                padding: 0 !important
+            }
+
+                .reportTable td .item-div {
+                    border-right: 1px solid #000;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-bottom: 1px solid #000;
+                }
+
+                .reportTable td .outItem-div:last-child .item-div {
+                    border-bottom: 0px
+                }
+
+                .reportTable td .item-div:last-child {
+                    border-right: 0px
+                }
+
+
+
+            .reportTable .title {
+                font-size: 20px;
+                font-weight: bold;
+                padding: 10px 0px !important;
+            }
+
+            .reportTable .littleTitle {
+                font-size: 16px;
+                font-weight: bold;
+                padding: 5px 10px !important;
+            }
+
+        .searchbutton .btn {
+            border: none;
+            color: #fff;
+            background: #62b9a0;
+            margin-top: 2px;
+            border-radius: 2px;
+            margin-right: 5px
+        }
+
+        .table2 tr td {
+            border: 1px solid #000;
+            border-right: 0px
+        }
+
+            .table2 tr td:first-child {
+                border-left: 0px;
+            }
+
+            .table2 tr td:last-child {
+                border-bottom: 0px;
+            }
+
+        .table2 tr:last-child td {
+            border-bottom: 0
+        }
+
+        .table2 tr:first-child td {
+            border-top: 0
+        }
     </style>
 </head>
 <body>
-    <div id="tb" class="searchbar">
+    <div id="yearReport">
+        <div id="tb" class="searchbar" style="overflow:visible;">
 
-        <div class="searchrow">
-            站室:
-            <select id="SPID" style="width: 200px;"></select>
+            <div class="searchrow">
+                站室:
+                <i-select style="width:180px" v-model="PID" v-on:on-change="stationChange" :label-in-value="true">
+                    <i-option v-for="item in stationList" :value="item.PID">{{item.Name}}</i-option>
+                </i-select>
+            </div>
+            <div class="searchrow">
+                年份:
+                <date-picker type="year" style="width: 180px" v-model="year" :clearable="false" v-on:on-change="dateChange"></date-picker>
+            </div>
+            <div class="searchrow">
+                用户类型:
+
+                <i-select style="width:180px" v-model="userType">
+                    <i-option v-for="item in userTypeList" :value="item.id">{{item.name}}</i-option>
+                </i-select>
+            </div>
+
+            <div id="" class="searchbutton">
+                <i-button v-for="item in userBtn" class="btn" v-on:click="userMenuClick(item.Location)"><img v-bind:src="item.src" />{{item.ModuleName}}</i-button>
+                <i-button class="btn" v-on:click="openOrPrint" icon="ios-print-outline">打印</i-button>
+                <i-button class="btn" v-on:click="ExcelPort" icon="md-exit">导出</i-button>
+            </div>
+
         </div>
-        <div class="searchrow">
-            年份: <input id="Time" name="PlanDate" />
-        </div>
-        @*<div class="searchrow">
-            结束时间:
-            <input id="endTime" name="PlanDate" class="easyui-datebox" />
-        </div>*@
-        <div id="userbutton" class="searchbutton">
-        </div>
-        <a href="#" id="bt_print" onclick="openOrPrint()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="margin-top: 5px;margin-left: 5px;">
-            打印
-        </a>
-        <a href="#" id="bt_print" onclick="ExcelPort()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="margin-top: 5px;margin-left: 5px;">
-            导出
-        </a>
-    </div>
+        <Spin size="large" fix v-if="loading"></Spin>
 
-    <p><span id="CTitle" style="text-align:center;font-size:25px;margin-left:625px;"></span><span style="font-size: 21px;margin-left: 575px;">单位kW•h</span></p>
-    <table cellpadding="" cellspacing="" border="1" class="d_list" style="margin-top:20px; font-size:14px;" id="pzhtml">
-        @*<caption style="font-weight:bold;" id="CTitle"></caption>*@
-        <thead>
-            <tr id="header" style='background-color:#F5F5F7'>
-                @*<th>序号</th>
-
-                <th>日期</th>
-
-                <th>1号</th>
-
-                <th>2号</th>*@
-            </tr>
-        </thead>
-        <tbody id="content" style="background-color:#FFFFFF">
+        <table border="" cellspacing="0" cellpadding="0" class="reportTable">
             <tr>
-                @*<td>品种1</td>
-                <td>品种1</td>
-                <td>品种1</td>
-                <td>品种1</td>*@
-                @*<td>品种1</td>
-                    <td>品种1</td>*@
+                <td colspan="14" align="center" class="title">{{curTimeStr}}年配电室能源统计表 (kW·h)</td>
+            </tr>
+            <tr>
+                <td colspan="14" class="littleTitle">&nbsp;{{cruPname}}</td>
             </tr>
 
-        </tbody>
-
-        <tfoot id="fotter"  style='font-weight:bold;background-color:#FFFFFF'>
-            @*<tr>
-
-                <td></td>
-                <td></td>
-                </tr>
-                <tr>
-                <td></td>
-                <td>最大值</td>
-                <td></td>
-                <td></td>
-                </tr>*@
-        </tfoot>
-    </table>
 
 
+            <tr>
+                <td colspan="1" style="width:100px">&nbsp;</td>
+                <td colspan="13">
+                    <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
+                        <div style="flex:1" class="item-div"></div>
+                        <div style="flex:1" class="item-div" v-for="item in month">
+                            {{item}}月
+                        </div>
+                    </div>
+                </td>
 
-</body>
-</html>
-<script type="text/javascript">
-    var type = 3;
-    ////获取url中的参数
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null) return unescape(r[2]); return null; //返回参数值
-    }
-    var flag = getUrlParam("isHide");
-    if (flag == 1) {
-        $("#tb").hide()
-    } else {
-        $("#tb").show();
-    }
-    function GetYear() {
-        var data = [];
-        var count = new Date().getFullYear();
-        for (var i = 0; i < 10; i++) {
-            data.push({
-                value: count + i,
-                text: count + i
-            })
+            </tr>
+            <tr v-for='item in info'>
+                <td align="center" style="width:100px">
+                    {{item.DeviceName}}
+
+                </td>
+                <td colspan="25">
+
+                    <div style="width:100%;display:flex;flex-direction:row" class="outItem-div" v-for="data in item.list_data">
+                        <div style="flex:1;word-wrap:break-word;word-break: normal;overflow:hidden" class="item-div" :title="data.Cname">
+                            {{data.Cname==""?'--':data.Cname}}
+                        </div>
+                        <div style="flex:1;" class="item-div" v-for="val in data.Value">
+                            <div class="item-div" style="word-wrap:break-word;word-break: normal;overflow:hidden;border-bottom:0px">
+                                {{val}}
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
+
+
+        </table>
+    </div>
+    </body>
+    </html>
+
+    <script type="text/javascript">
+        /*var type = 3;
+        ////获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
         }
-        return data;
-    }
-    $('#Time').combobox({
-        valueField: 'value',
-        textField: 'text',
-        editable: false,
-        width: 200,
-        data: GetYear(),
-        onLoadSuccess: function () { //数据加载完毕事件
-            //var data = $('#Time').combobox('getData');
-            //if (data.length > 0) {
-            //    $("#Time").combobox('select', data);
-            //}
+        var flag = getUrlParam("isHide");
+        if (flag == 1) {
+            $("#tb").hide()
+        } else {
+            $("#tb").show();
         }
-    });
+        function GetYear() {
+            var curYear = new Date().getFullYear()
 
-
-    $("#SPID").combobox({
-        url: "/BaseInfo/BindPDRInfo?showall=0",
-        valueField: 'PID',
-        textField: 'Name',
-        editable: true,
-        onLoadSuccess: function () { //数据加载完毕事件
-            var data = $('#SPID').combobox('getData');
-            //alert(1);
-            //console.log(data);
-            if ($.cookie('cookiepid') > 0) {
-                $("#SPID").combobox('select', $.cookie('cookiepid'));
-                return
-            }
-            else if (data.length > 0) {
-                $("#SPID").combobox('select', data[0].PID);
-            }
-        }, onSelect: function (v) {
-            $.cookie('cookiepid', v.PID, { expires: 7, path: '/' });
-            dosearch();
-        }
-    });
-    function dosearch() {
-        var t = getUrlParam("Time");
-        if (t != null && t != "") {
-            $('#Time').combobox("setValue", t);
-        }
-        if ($("#Time").combobox("getValue") == "" || $("#Time").combobox("getValue") == null) {
-            $('#Time').combobox("setValue", (new Date()).getFullYear());
-        }
-        $.post("/ReportForms/getPowerQualityData", { "pid": $('#SPID').combobox("getValue"), "Time": $('#Time').combobox("getValue"),"type":type }, function (data) {
-            $("#header").empty();
-            $("#content").empty();
-            $("#fotter").empty();
-            var str = "";
-            if ($("#Time").combobox("getValue") != "") {
-                str = $("#Time").combobox("getValue") + "年用电量数据分析";
-            }
-            $("#CTitle").html(str)
-            console.log(data);
-            var Hhtml = "<th>序号</th><th>日期</th>";
-            $.each(data.Cname, function (index, val) {
-                Hhtml += " <th>" + val.CID + "号回路" + val.CName + "</th>";
-            })
-            Hhtml += " <th>合计</th>"
-            $("#header").html(Hhtml);
-            var html = "";
-            var inn = 1;
-
-            $.each(data.Rtime, function (index, val) {
-                var summ = 0;
-                var itt = 1;
-                html += "<tr>";
-                html += "<td>" + (index + 1) + "</td>"
-                html += "<td>" + (DateFormat(val)) + "</td>"
-                $.each(data.list[index], function (inde, va) {
-                    summ += va.Aphase;
-                    html += "<td>" + va.Aphase + "</td>"
-                    itt++;
+            var data = [];
+            var count = new Date().getFullYear();
+            for (var i = 1971; i < curYear; i++) {
+                data.push({
+                    value: i,
+                    text: i
                 })
-                for (itt; itt <= data.Cname.length; itt++) {
-                    html += "<td>0</td>"
-                }
-                html += "<td>" + summ.toFixed(2) + "</td>";
-                html += "</tr>"
+            }
+            data.push({
+                value: curYear,
+                text: curYear
             })
-            $("#content").html(html);
-            var fhtml = "<tr><td></td><td>最大值</td>";
-            for (var index = 0; index < data.Cname.length + 1; index++) {
-                fhtml += " <td>" + (getMaxValue(1, index + 2)) + "</td>";
+            for (var i = (curYear + 1); i < (curYear + 10); i++) {
+                data.push({
+                    value: i,
+                    text: i
+                })
             }
-            fhtml += "</tr>"
-            var summmm = 0;
-            fhtml += "<tr><td></td><td>小计</td>";
-            for (var index = 0; index < data.Cname.length + 1; index++) {
-                summmm += parseFloat((getTdValue(1, index + 2)));
-                fhtml += " <td>" + (getTdValue(1, index + 2)) + "</td>";
+            return data;
+        }
+
+
+
+
+        $('#Time').combobox({
+            valueField: 'value',
+            textField: 'text',
+            editable: false,
+            width: 200,
+            data: GetYear(),
+            onLoadSuccess: function () { //数据加载完毕事件
+                //var data = $('#Time').combobox('getData');
+                //if (data.length > 0) {
+                //    $("#Time").combobox('select', data);
+                //}
             }
-            fhtml += "</tr>"
-            $("#fotter").html(fhtml);
         });
-    }
-
-    function DateFormat(value, row, index) {
-        var lDate = formatDate(value, 'MM-dd hh:mm');
-        return lDate;
-    }
-
-    function getTdValue(ii, x) {
-        var tableId = document.getElementById("pzhtml");
-        var str = 0;
-        //alert(tableId.rows[1].cells[2].innerHTML);
-        for (var i = ii; i < tableId.rows.length; i++) {
-
-            str += parseFloat(tableId.rows[i].cells[x].innerHTML);
 
 
+        $("#SPID").combobox({
+            url: "/BaseInfo/BindPDRInfo?showall=0",
+            valueField: 'PID',
+            textField: 'Name',
+            editable: true,
+            onLoadSuccess: function () { //数据加载完毕事件
+                var data = $('#SPID').combobox('getData');
+                //alert(1);
+                //console.log(data);
+                if ($.cookie('cookiepid') > 0) {
+                    $("#SPID").combobox('select', $.cookie('cookiepid'));
+                    return
+                }
+                else if (data.length > 0) {
+                    $("#SPID").combobox('select', data[0].PID);
+                }
+            }, onSelect: function (v) {
+                $.cookie('cookiepid', v.PID, { expires: 7, path: '/' });
+                dosearch();
+            }
+        });
+
+        $("#CircuitUserType").combobox({
+            url: "/BaseInfo/BindCircuitTypeByPID?PID=" + $('#SPID').combobox("getValue") + "&iType=0",
+            valueField: 'id',
+            textField: 'name',
+            editable: false,
+            onLoadSuccess: function (data) {
+            },
+            onSelect: function (data) {
+                /*if (data.id == 0) {
+                    userType = "";
+                } else {
+                    userType = data.name;
+                }
+                lock();*/
+          /*  }
+        });  
+     
+
+        function dosearch() {
+            var t = getUrlParam("Time");
+            if (t != null && t != "") {
+                $('#Time').combobox("setValue", t);
+            }
+            if ($("#Time").combobox("getValue") == "" || $("#Time").combobox("getValue") == null) {
+                $('#Time').combobox("setValue", (new Date()).getFullYear());
+            }
+            $.post("/ReportForms/getPowerQualityData", { "pid": $('#SPID').combobox("getValue"), "Time": $('#Time').combobox("getValue"), "type": type }, function (data) {
+                $("#header").empty();
+                $("#content").empty();
+                $("#fotter").empty();
+                var str = "";
+                if ($("#Time").combobox("getValue") != "") {
+                    str = $("#Time").combobox("getValue") + "年用电量数据分析";
+                }
+                $("#CTitle").html(str)
+                console.log(data);
+                var Hhtml = "<th>序号</th><th>日期</th>";
+                $.each(data.Cname, function (index, val) {
+                    Hhtml += " <th>" + val.CID + "号回路" + val.CName + "</th>";
+                })
+                Hhtml += " <th>合计</th>"
+                $("#header").html(Hhtml);
+                var html = "";
+                var inn = 1;
+
+                $.each(data.Rtime, function (index, val) {
+                    var summ = 0;
+                    var itt = 1;
+                    html += "<tr>";
+                    html += "<td>" + (index + 1) + "</td>"
+                    html += "<td>" + (DateFormat(val)) + "</td>"
+                    $.each(data.list[index], function (inde, va) {
+                        summ += va.Aphase;
+                        html += "<td>" + va.Aphase + "</td>"
+                        itt++;
+                    })
+                    for (itt; itt <= data.Cname.length; itt++) {
+                        html += "<td>0</td>"
+                    }
+                    html += "<td>" + summ.toFixed(2) + "</td>";
+                    html += "</tr>"
+                })
+                $("#content").html(html);
+                var fhtml = "<tr><td></td><td>最大值</td>";
+                for (var index = 0; index < data.Cname.length + 1; index++) {
+                    fhtml += " <td>" + (getMaxValue(1, index + 2)) + "</td>";
+                }
+                fhtml += "</tr>"
+                var summmm = 0;
+                fhtml += "<tr><td></td><td>小计</td>";
+                for (var index = 0; index < data.Cname.length + 1; index++) {
+                    summmm += parseFloat((getTdValue(1, index + 2)));
+                    fhtml += " <td>" + (getTdValue(1, index + 2)) + "</td>";
+                }
+                fhtml += "</tr>"
+                $("#fotter").html(fhtml);
+            });
         }
-        return str.toFixed(2);
-    }
-    function getMaxValue(ii, x) {
-        var tableId = document.getElementById("pzhtml");
-        //alert(tableId.rows[1].cells[2].innerHTML);
-        var obj = [];
-        for (var i = ii; i < tableId.rows.length; i++) {
 
-            obj.push(parseFloat(tableId.rows[i].cells[x].innerHTML));
+        function DateFormat(value, row, index) {
+            var lDate = formatDate(value, 'MM-dd hh:mm');
+            return lDate;
         }
-        var max = Math.max.apply(obj, obj);
-        if (max == -Infinity)
-            max = 0;
-        return max.toFixed(2);
-    }
-    function openOrPrint() {
-        window.open('/ReportForms/ElectricityYearConsumptionRepor?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1", '_blank');
-        window.print()
-    }
-    function ExcelPort() {
-        window.open('/ReportForms/ExportData?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1" + "&type=" + type, '_blank');
-        //window.print()
-    }
-</script>
+
+        function getTdValue(ii, x) {
+            var tableId = document.getElementById("pzhtml");
+            var str = 0;
+            //alert(tableId.rows[1].cells[2].innerHTML);
+            for (var i = ii; i < tableId.rows.length; i++) {
+
+                str += parseFloat(tableId.rows[i].cells[x].innerHTML);
+
+
+            }
+            return str.toFixed(2);
+        }
+        function getMaxValue(ii, x) {
+            var tableId = document.getElementById("pzhtml");
+            //alert(tableId.rows[1].cells[2].innerHTML);
+            var obj = [];
+            for (var i = ii; i < tableId.rows.length; i++) {
+
+                obj.push(parseFloat(tableId.rows[i].cells[x].innerHTML));
+            }
+            var max = Math.max.apply(obj, obj);
+            if (max == -Infinity)
+                max = 0;
+            return max.toFixed(2);
+        }
+        function openOrPrint() {
+            window.open('/ReportForms/ElectricityYearConsumptionRepor?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1", '_blank');
+            window.print()
+        }
+        function ExcelPort() {
+            window.open('/ReportForms/ExportData?pid=' + $('#SPID').combobox("getValue") + "&Time=" + $('#Time').datebox("getValue") + "&isHide=1" + "&type=" + type, '_blank');
+            //window.print()
+        }*/
+    </script>
+
+    <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ElectricityYearConsumptionRepor._zc.js?v=1.06"></script>
