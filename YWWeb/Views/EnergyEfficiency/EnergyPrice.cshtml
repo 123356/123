@@ -21,14 +21,30 @@
         <div class="main tableMain">
             <div class="searchForm">
                 <div class="formView">
-                    <i-form ref="searchForm" model="searchForm" label-width="80">
+                    <i-form ref="searchForm" :model="searchForm" label-width="80">
                         <table>
                             <tr>
                                 <td>
-                                    <form-item label="单位名称">
-                                        <i-select>
+                                    <form-item label="单位">
+                                        <i-select v-model="searchForm.uid" v-on:on-change="selectChange">
                                             <i-option value="">全部</i-option>
                                             <i-option v-for="item in comList" :value="item.UnitID">{{item.UnitName	}}</i-option>
+                                        </i-select>
+                                    </form-item>
+                                </td>
+                                <td>
+                                    <form-item label="能源类型">
+                                        <i-select v-model="searchForm.colltypeid" v-on:on-change="selectChange">
+                                            <i-option value="">全部</i-option>
+                                            <i-option v-for="item in enTypeList" :value="item.ID">{{item.Name}}</i-option>
+                                        </i-select>
+                                    </form-item>
+                                </td>
+                                <td>
+                                    <form-item label="阶梯">
+                                        <i-select v-model="searchForm.level" v-on:on-change="selectChange">
+                                            <i-option value="">全部</i-option>
+                                            <i-option v-for="item in ladders" :value="item.id">{{item.value}}</i-option>
                                         </i-select>
                                     </form-item>
                                 </td>
@@ -41,10 +57,15 @@
                 </div>
             </div>
             <div class="tableView" :style="{'height':height+'px'}">
-                <i-table  ref="selection" :columns="tableColumn" :data="tableData" :height="height"></i-table>
+                <i-table  ref="selection" :columns="tableColumn" :data="tableData" :height="height" v-on:on-selection-change="selectionChange"></i-table>
             </div>
             <div class="pageView">
-                <Page :total="40" size="small" show-elevator show-sizer />
+                <Page :total="totalRow"
+                      :page-size="searchForm.rows"
+                      :show-total="true"
+                      v-on:on-change="curPageChange"
+                      v-on:on-page-size-change="pageSizeChange"
+                      size="small" show-elevator show-sizer />
             </div>
         </div>
 
@@ -121,7 +142,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyPrice._zc.js?v=1.08"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyPrice._zc.js?v=1.19"></script>
 </body>
 </html>
 

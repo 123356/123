@@ -2,7 +2,7 @@
     el: "#app",
     data: {
         setPriceVisable: false,
-        loading:false,
+        loading:true,
         uid: null,
         uName:null,
         height: 0,
@@ -15,7 +15,14 @@
             LadderValue: null,
             Price:null,
         },
-
+        searchForm: {
+            uid: null,
+            colltypeid: null,
+            level: null,
+            page: 1,
+            rows: 20,
+        },
+        totalRow:100,
         rules: {
             UID: [
                 { required: true, type: 'number', message: '请选择单位', trigger: 'change' },
@@ -41,15 +48,28 @@
             },
             {
                 title: '单位名称',
-                key: 'name'
+                key: 'UnitName',
+                align: 'center'
             },
             {
                 title: '能源类型',
-                key: 'type'
+                key: 'CollTypeName',
+                align: 'center'
             },
             {
                 title: '阶梯',
-                key: 'level'
+                key: 'Ladder',
+                align: 'center'
+            },
+            {
+                title: '阶梯范围',
+                key: 'LadderValue',
+                align: 'center'
+            },
+            {
+                title: '单价',
+                key: 'Price',
+                align: 'center'
             },
         ],
         tableData: [],
@@ -59,9 +79,20 @@
         ladders: [
             { id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3 },
         ],
-        enTypeList:[],//能源类型
+        enTypeList: [],//能源类型,
+        curSelection:[]
     },
     methods: {
+        curPageChange: function (vurPage) {
+            this.searchForm.page = vurPage
+            this.loading = true
+            this.getTableData()
+        },
+        pageSizeChange: function (size) {
+            this.searchForm.rows = size
+            this.loading = true
+            this.getTableData()
+        },
         //获取权限按钮
         getUserMenus: function () {
             var that = this
@@ -120,7 +151,64 @@
                 params: this.setForm
             })
             .then(function (res) {
-                    that.setPriceVisable = false
+                    if (res.data > 0) {
+                        that.$Message.success('编辑成功');
+                    } else {
+                        that.$Message.error('编辑失败');
+                    }
+                that.setPriceVisable = false
+                that.curSelection = []
+                that.getTableData()
+            })
+            .catch(function (e) {
+                    that.$Message.error('请求失败');
+                throw new ReferenceError(e.message)
+            })
+        },
+        //获取table数据
+        getTableData: function () {
+            var that = this
+            this.$http({
+                url: "/energyManage/EMHome/GetEneryPriceList",
+                method: 'post',
+                params: this.searchForm
+            })
+            .then(function (res) {
+                that.tableData = res.data.list
+                that.totalRow = res.data.total
+                that.loading = false
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+                that.loading = false
+            })
+        },
+
+        selectionChange: function (selection) {
+            this.curSelection = selection
+        },
+        //条件查询
+        selectChange: function (e) {
+            this.getTableData()
+        },
+        //删除
+        delete: function () {
+            var that = this
+            this.$http({
+                url: "/energyManage/EMHome/DeleteEneryPrice",
+                method: 'post',
+                params: {
+                    ID: this.curSelection[0].ID
+                }
+            })
+            .then(function (res) {
+                if (res.data > 0) {
+                    that.$Message.success('删除成功');
+                } else {
+                    that.$Message.error('删除失败');
+                }
+                that.curSelection = []
+                that.getTableData()
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -132,35 +220,52 @@
                     this.setPriceVisable = true
                     break;
                 case 'edit()':
-
+                    this.edit()
                     break;
                 case 'Delete()':
-
+                    if (this.curSelection.length != 1) {
+                        this.$Modal.warning({
+                            title: '信息提示',
+                            content: '请选择一项要删除的数据'
+                        });
+                        return
+                    }
+                    var that = this
+                    this.$Modal.confirm({
+                        title: '信息提示',
+                        content: '确定要删除吗',
+                        onOk: () => {
+                            that.delete()
+                        },
+                        onCancel: () => {
+                            that.curSelection = []
+                            that.getTableData()
+                        }
+                    });
+                    
                     break;
             }
         },
 
-
         edit: function () {
-            if (this.editType == 1) {
-                this.editType = 0
-                this.editName = '编辑'
-                this.editIconShow = false;
-                this.editDisable = true;
-                //验证预算是否合格
-                this.checkBudget()
-
-            } else {
-                this.editType = 1
-                this.editName = '保存'
-                this.editIconShow = true;
-                this.editDisable = false;
+            if (this.curSelection.length != 1) {
+                this.$Modal.warning({
+                    title: '信息提示',
+                    content: '请选择一项要编辑的数据'
+                });
+                return
             }
+
+            this.setPriceVisable = true
+            this.setForm = this.curSelection[0]
+            
             
         },
         setPriceVisableChange: function (e) {
             if (!e) {
                 this.$refs['setForm'].resetFields()
+                this.getTableData()
+                this.curSelection = []
             }
         },
         
@@ -192,6 +297,7 @@
         this.getUserMenus()
         this.getComList()
         this.getEnTypeList()
+        this.getTableData()
     },
     mounted: function () {
         this.setHeight()
