@@ -116,12 +116,7 @@ namespace YWWeb.Controllers
                         }
                     }
                     strsql += "   ORDER BY a.CID,RecordTime";
-
                     var list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
-
-
-
-
                     foreach (var item in list.GroupBy(p => p.DeviceName))
                     {
                         DevC model = new DevC();
