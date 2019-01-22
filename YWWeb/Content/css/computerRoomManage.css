@@ -108,39 +108,57 @@ html {
             flex:1;
             overflow:hidden
         }
-
+.realTimeApp .flex .con{
+    display:flex
+}
 .history .headerUl {
-    width:100%;
-    list-style:none
+    width: 100%;
+    list-style: none
+}
+    .history .headerUl .outLi {
+        float: left;
+        padding: 0px 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%
+    }
 
-}
-.history .headerUl li{
-   float:left;
-   padding:0px 5px;
-   display:flex;
-   justify-content:center;
-   align-items:center;
-   height:100%
-       
-}
-    
-    .history .headerUl li .ivu-select {
-        width: 280px
-    }
-    .history .headerUl li .typeSelect {
-        width: 100px
-    }
+        .history .headerUl .outLi .ivu-select {
+            width: 280px
+        }
+        .history .headerUl .outLi .typeSelect {
+            width: 100px
+        }
     .bottomChart {
         flex: 8;
-        overflow:hidden
+        overflow:hidden;
+        display:flex;
+        position:relative
     }
+        .bottomChart .noData {
+            position: absolute;
+            z-index: 2500;
+            top: 30%
+        }
 
 
+        .history .okBtn {
+            color: #fff;
+            border: none;
+            background: #40ae93;
+            margin-left: 15px
+        }
 
 
-
-
-
+.noData {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width:100%
+    
+}
 
 
 

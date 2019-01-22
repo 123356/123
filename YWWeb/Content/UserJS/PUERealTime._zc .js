@@ -4,11 +4,65 @@
         pieChart: null,
         gaugeChart: null,
         lineChart: null,
-        barChart:null
+        barChart: null,
+        lineShow: true,
+        gaugeSHow: true,
+        barShow: true,
+        pieShow:true
+
     },
     methods: {
+        //获取数据
+        getRealTimePUEData: function () {
+            var that = this
+            this.$http({
+                url: '/Home/GetRealTimePUEData',
+                method: 'POST',
+                
+            })
+             .then(function (res) {
+                 
+                 if (res.data) {
+                     if (res.data.list_top && res.data.list_top.length > 0) {
+                         that.lineShow = true
+                         that.createLine(res.data.list_top)
+                     } else {
+                         that.lineShow = false
+                     }
+                     if (res.data.RealValue) {
+                         that.gaugeSHow = true
+                         this.createGauge(res.data.RealValue)
+                         
+                     } else {
+                         that.gaugeSHow = false
+                     }
+                     if (res.data.list_le && res.data.list_le.length > 0) {
+                         that.barShow = true
+                         that.pieShow = true
+                         this.createBar(res.data.list_le)
+                         this.createPie(res.data.list_le)
+                     } else {
+                         that.barShow = false
+                         that.pieShow = false
+                     }
+                    
+                     
+                     
+                     
+                 }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
         //实时趋势
-        createLine: function () {
+        createLine: function (data) {
+            var x = new Array()
+            var y = new Array()
+            for (var i = 0; i < data.length; i++) {
+                x.push(data[i].name)
+                y.push(data[i].value)
+            }
             lineChart = echarts.init(document.getElementById('lineChart'));
             var  option = {
                 backgroundColor: '#fff',
@@ -21,8 +75,8 @@
                     bottom: 25,
                 },
                 xAxis: {
-                        boundaryGap: false,
-                        data: ['01-06 12:00', '01-06 13:00', '01-06 14:00', '01-06 15:00', '01-06 16:00', '01-06 17:00', '01-06 18:00', '01-06 19:00', '01-06 20:00', '01-06 21:00', '01-06 22:00', '01-06 23:00', '01-06 24:00', '01-07 01:00', '01-07 02:00', '01-07 03:00', '01-07 04:00', '01-07 05:00',]
+                    boundaryGap: false,
+                    data: x
                     },
                     yAxis: {
                         splitLine: {
@@ -71,9 +125,9 @@
                         }
                     },
                     series: {
-                        name: 'Beijing AQI',
+                        name: 'PUE统计',
                         type: 'line',
-                        data: [1, 2, 3, 4, 5, 3, 6, 5, 4, 5, 3, 3, 5, 4, 2, 3, 4, 1],
+                        data: y,
                         areaStyle: {},
                         smooth: true,
                         symbol: 'none',
@@ -102,10 +156,13 @@
 
             lineChart.clear()
             lineChart.setOption(option)
+            window.addEventListener("resize", () => {
+                lineChart.resize();
+            });
             
         },
         //仪表盘
-        createGauge: function () {
+        createGauge: function (data) {
             gaugeChart = echarts.init(document.getElementById('gaugeChart'));
             var option ={
                     backgroundColor: '#fff',
@@ -146,7 +203,7 @@
                             },
                             data: [
                                 {
-                                    value: 3,
+                                    value: data,
                                     name: 'PUE',
                                     fontSize: 30,
                                 },
@@ -158,10 +215,19 @@
 
             gaugeChart.clear()
             gaugeChart.setOption(option)
+            window.addEventListener("resize", () => {
+                gaugeChart.resize();
+            });
 
         },
         //柱状图排名
-        createBar: function () {
+        createBar: function (data) {
+            var x = new Array()
+            var y = new Array()
+            for (var i = 0; i < data.length; i++) {
+                x.push(data[i].name)
+                y.push(data[i].value)
+            }
             barChart = echarts.init(document.getElementById('barChart'));
             var option = {
                 tooltip: {
@@ -195,14 +261,14 @@
                         color: '#666',
                         fontSize:12
                     },
-                    data: ['空调1', '空调2', '空调3', '空调4', '空调5', '空调6', '空调7', '空调8', '空调9', '空调10']
+                    data: x
                 },
                 series: [
 
                     {
                         name: '2012年',
                         type: 'bar',
-                        data: [ 23438, 31000, 121594, 134141, 19325, 281807, 381807, 481807, 581807, 681807]
+                        data: y
                     }
                 ]
             };
@@ -210,10 +276,13 @@
 
             barChart.clear()
             barChart.setOption(option)
+            window.addEventListener("resize", () => {
+                barChart.resize();
+            });
 
         },
         //饼图
-         createPie: function () {
+         createPie: function (data) {
              pieChart = echarts.init(document.getElementById('pieChart'));
              var option = {
                  tooltip: {
@@ -223,17 +292,11 @@
                  color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
                  series: [
                      {
-                         name: '访问来源',
+                         name: '能耗',
                          type: 'pie',
                          radius: '70%',
                          center: ['50%', '50%'],
-                         data: [
-                             { value: 12, name: '精密空调' },
-                             { value: 34, name: '新风系统' },
-                             { value: 11, name: '通讯负载' },
-                             { value: 23, name: '其它' },
-                             { value: 32, name: 'IT负载' },
-                         ],
+                         data:data,
                          itemStyle: {
                              emphasis: {
                                  shadowBlur: 10,
@@ -248,27 +311,22 @@
 
              pieChart.clear()
              pieChart.setOption(option)
+             window.addEventListener("resize", () => {
+                 pieChart.resize()
+             });
 
         },
 
      
     },
     beforeMount: function () {
-       
+        this.getRealTimePUEData()
        
        
     },
     mounted: function () {
-        this.createLine()
-        this.createGauge()
-        this.createBar()
-        this.createPie()
-       window.addEventListener("resize", () => {
-           lineChart.resize();
-           gaugeChart.resize();
-           barChart.resize();
-           pieChart.resize()
-        });
+        
+       
     }
 })
 

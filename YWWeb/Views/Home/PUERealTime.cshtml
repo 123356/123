@@ -22,8 +22,9 @@
                 </p>
                 <span class="subTitle">数值越接近1，效率越高</span>
             </div>
-            <div class="con" style="flex:6;width:100%;height:100%;display:block"   > 
-                <div id="lineChart" class="chart"></div>
+            <div class="con" style="flex:6;width:100%;height:100%;display:flex"   > 
+                <div class="noData" v-show="!lineShow">暂无数据</div>
+                <div id="lineChart" class="chart" :style="{display:lineShow?'block':'none',width:'100%',height:'100%'}"></div>
             </div>
         </div>
         <div class="flex flex-1 flex-module bottomFlex1">
@@ -36,7 +37,8 @@
                     <span class="subTitle">数值越接近1，效率越高</span>
                 </div>
                 <div class="con">
-                    <div id="gaugeChart" class="chart"></div>
+                    <div class="noData"  v-show="!gaugeSHow">暂无数据</div>
+                    <div id="gaugeChart" class="chart" :style="{display:gaugeSHow?'block':'none',width:'100%',height:'100%'}"></div>
                 </div>
             </div>
             <div class="right flex-module">
@@ -48,10 +50,11 @@
                     <span class="subTitle">根据能耗对比，改进设备效率</span>
                 </div>
                 <div class="con">
+                    <div class="noData" v-show="!barShow">暂无数据</div>
                     <div class="barView">
-                        <div class="chart" id="barChart"></div>
+                        <div class="chart" id="barChart" :style="{display:barShow?'block':'none',width:'100%',height:'100%'}"></div>
                     </div>
-                    <div class="pieView"  id="pieChart"></div>
+                    <div class="pieView" id="pieChart" :style="{display:barShow?'block':'none',width:'100%',height:'100%'}"></div>
                 </div>
             </div>
         </div>
@@ -67,7 +70,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/PUERealTime._zc .js?v=1.07"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUERealTime._zc .js?v=1.10"></script>
 </body>
 </html>
 
