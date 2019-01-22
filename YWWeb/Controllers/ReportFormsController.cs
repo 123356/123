@@ -45,7 +45,9 @@ namespace YWWeb.Controllers
         /// <returns></returns>
         public JsonResult getPowerQualityData(int pid, string Time, int type)
         {
-            List<PowerData_SSQX> list = new List<PowerData_SSQX>();
+            //List<PowerData_SSQX> list = new List<PowerData_SSQX>();
+            List<DevC> data = new List<DevC>();
+            List<DateTime> times = new List<DateTime>();
             try
             {
                 using (var bll = new pdermsWebEntities())
@@ -68,7 +70,7 @@ namespace YWWeb.Controllers
                         tableName = "t_EE_PowerQualityYearly";
                     }
                     CIDS = GetcidByPID(type, pid);
-                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from  " + tableName + "  a,t_DM_CircuitInfo b where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and a.UsePower is not null";
+                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.DID,b.CName,b.UserType,b.AreaType,b.ItemType,c.DeviceName from  " + tableName + "  a,t_DM_CircuitInfo b,t_DM_DeviceInfo c where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and b.DID=c.DID and a.UsePower is not null";
 
                     if (!pid.Equals(""))
                     {
@@ -79,30 +81,80 @@ namespace YWWeb.Controllers
 
                         if (type == 1)
                         {
+
                             int year = Convert.ToDateTime(Time).Year;
                             int month = Convert.ToDateTime(Time).Month;
                             int day = Convert.ToDateTime(Time).Day;
+                            for (int i = 0; i < 24; i++)
+                            {
+                                times.Add(new DateTime(year, month, day).AddHours(i));
+                            }
                             strsql += " and  (Day(a.RecordTime)=" + day + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)!=0 or Day(a.RecordTime)=" + (day + 1) + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)=0)";
 
                         }
                         else if (type == 2)
                         {
+
+
                             int year = Convert.ToDateTime(Time).Year;
                             int month = Convert.ToDateTime(Time).Month;
+                            int days = DateTime.DaysInMonth(year, month);
+                            for (int i = 0; i < days; i++)
+                            {
+                                times.Add(new DateTime(year, 1, 1).AddDays(i));
+                            }
                             strsql += " and  Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "";
                         }
                         else if (type == 3)
                         {
+                            for (int i = 0; i < 12; i++)
+                            {
+                                times.Add(new DateTime(int.Parse(Time), 1, 1).AddMonths(i));
+                            }
                             //int year = Convert.ToDateTime(Time).Year;
                             strsql += " and  Year(a.RecordTime)='" + Time + "'";
                         }
                     }
                     strsql += "   ORDER BY a.CID,RecordTime";
 
-                    list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
-                    var Cname = list.Select(p => new { p.CID, p.CName }).Distinct();
+                    var list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
 
-                    return Json(new { list = list.GroupBy(p => p.RecordTime), Rtime = list.Select(p => p.RecordTime).Distinct(), Cname = Cname });
+
+
+
+                    foreach (var item in list.GroupBy(p => p.DeviceName))
+                    {
+                        DevC model = new DevC();
+                        model.DeviceName = item.Key;
+                        foreach (var it in item.GroupBy(p => p.CName))
+                        {
+                            PowerView mo = new PowerView();
+                            mo.Cname = it.Key;
+                            for (int i = 0; i < times.Count; i++)
+                            {
+                                if (type == 1)
+                                {
+                                    var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour).Sum(p => p.Aphase);
+                                    mo.Value.Add(s);
+                                }
+                                else if (type == 2)
+                                {
+                                    var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day ).Sum(p => p.Aphase);
+                                    mo.Value.Add(s);
+                                }
+                                else if(type == 3)
+                                {
+                                    var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).Sum(p => p.Aphase);
+                                    mo.Value.Add(s);
+                                }
+                            }
+                            model.list_data.Add(mo);
+                        }
+                        data.Add(model);
+                    }
+                    //var Cname = list.Select(p => new { p.CID, p.CName }).Distinct();
+
+                    return Json(data);
 
                 }
             }
@@ -111,6 +163,26 @@ namespace YWWeb.Controllers
                 return Json(ex.ToString());
             }
 
+        }
+
+
+        public class PowerView
+        {
+            public PowerView()
+            {
+                Value = new List<decimal>();
+            }
+            public string Cname { get; set; }
+            public List<decimal> Value { get; set; }
+        }
+        public class DevC
+        {
+            public DevC()
+            {
+                list_data = new List<PowerView>();
+            }
+            public string DeviceName { get; set; }
+            public List<PowerView> list_data { get; set; }
         }
 
 
@@ -165,6 +237,8 @@ namespace YWWeb.Controllers
             public string UserType { get; set; }
             public string AreaType { get; set; }
             public string ItemType { get; set; }
+            public int DID { get; set; }
+            public string DeviceName { get; set; }
         }
 
 
@@ -357,7 +431,7 @@ namespace YWWeb.Controllers
                         int year = Convert.ToDateTime(Time).Year;
                         int month = Convert.ToDateTime(Time).Month;
                         int day = Convert.ToDateTime(Time).Day;
-                        strsql += " and  (Day(a.RecordTime)=" + day + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)!=0 or Day(a.RecordTime)=" + (day+1) + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)=0)";
+                        strsql += " and  (Day(a.RecordTime)=" + day + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)!=0 or Day(a.RecordTime)=" + (day + 1) + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)=0)";
 
                     }
                     strsql += "   ORDER BY a.CID,RecordTime";
@@ -365,7 +439,7 @@ namespace YWWeb.Controllers
                     list = bll.ExecuteStoreQuery<V>(strsql).ToList();
                     var Cname = list.Select(p => new { p.CID, p.CName }).Distinct();
 
-                    return Json(new { list = list.GroupBy(p => p.RecordTime),Rtime = list.Select(p => p.RecordTime).Distinct().OrderBy(p=>p), Cname = Cname });
+                    return Json(new { list = list.GroupBy(p => p.RecordTime), Rtime = list.Select(p => p.RecordTime).Distinct().OrderBy(p => p), Cname = Cname });
 
                 }
             }
@@ -379,7 +453,7 @@ namespace YWWeb.Controllers
         {
             public string CName { get; set; }
         }
-        public ActionResult ExportCVData(int pid, int type,string Time)
+        public ActionResult ExportCVData(int pid, int type, string Time)
         {
             List<V> list = new List<V>();
             try
@@ -472,7 +546,7 @@ namespace YWWeb.Controllers
 
                 sbHtml.Append("<tr>");
                 sbHtml.AppendFormat("<td>{0}</td>", i + 1);
-                sbHtml.Append("<td>"+ss+"</td>");
+                sbHtml.Append("<td>" + ss + "</td>");
                 foreach (var j in data[i])
                 {
                     sbHtml.AppendFormat("<td>{0}</td>", j.ACurrent);
