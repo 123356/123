@@ -4922,17 +4922,12 @@ namespace YWWeb.Controllers
                     foreach (var cid in cidList)
                     {
                         pueView mm = new pueView();
-                        string pName = "";
-                        if (bll.t_CM_PDRInfo.Where(p => p.PID == pid).FirstOrDefault() != null)
-                        {
-                            pName = bll.t_CM_PDRInfo.Where(p => p.PID == pid).FirstOrDefault().Name;
-                        }
                         string CName = "";
                         if (bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault() != null)
                         {
                             CName = bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault().CName;
                         }
-                        mm.name = pName + "_" + CName;
+                        mm.name = CName;
                         if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
                             mm.value = 0;
                         else
