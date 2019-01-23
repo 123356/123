@@ -157,12 +157,16 @@ $('#list_data').datagrid({
     url: 'empty.json'
 });
 function export1() {
-    var dname = $("#selDID").combobox('getText');
-    var cname = $("#cname").val();
-    var pid = $("#SPID").combobox('getValue');
-    var startdate = $('#StartDate').datebox('getValue');
-    var enddate = $('#EndDate').datebox('getValue');
-    var typename = $("#cbType").combobox('getText');
+
+   
+
+
+     dname = $("#selDID").combobox('getValue');
+     cname = $("#cname").val();
+     pid = $("#SPID").combobox('getValue');
+     startdate = $('#StartDate').datebox('getValue');
+     enddate = $('#EndDate').datebox('getValue');
+    typename = $("#selCID").combobox('getText');
     var ajaxbg = top.$("#loading_background,#loading");
     var aDate, oDate1, oDate2, iDays
     aDate = startdate.split("-");
