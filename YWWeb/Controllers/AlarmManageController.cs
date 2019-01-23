@@ -525,12 +525,12 @@ namespace YWWeb.Controllers
                 query = query + " and alarmstate= " + alarmstate;
             if (!startdate.Equals(""))
             {
-                startdate = startdate.Replace('-', '/');
+                //startdate = startdate.Replace('-', '/');
                 query = query + " and AlarmDateTime>='" + startdate + "'";
             }
             if (!enddate.Equals(""))
             {
-                enddate = enddate.Replace('-', '/');
+                //enddate = enddate.Replace('-', '/');
                 query = query + " and AlarmDateTime<='" + enddate + "'";
             }
             string strsql = "select ALarmType 报警类型,AlarmDateTime 日期,PDRName 站室名称,CASE AlarmState WHEN 0 THEN '通讯正常' ELSE '通讯断开' END 通讯状态 from t_AlarmSysTable_en " + query + " order by AlarmID desc";
