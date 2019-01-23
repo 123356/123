@@ -4898,7 +4898,7 @@ namespace YWWeb.Controllers
             if (!string.IsNullOrEmpty(uids))
             {
                 var uidList = uids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p));
-                var TopList = bll.t_EE_PUERealTime.Where(p => uidList.Contains(p.UID)&& p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderByDescending(p => p.RecordTime).ToList();
+                var TopList = bll.t_EE_PUERealTime.Where(p => uidList.Contains(p.UID)&& p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
                 var groupTopList = TopList.GroupBy(p => p.RecordTime);
                 foreach (var item in groupTopList)
                 {
@@ -4907,10 +4907,13 @@ namespace YWWeb.Controllers
                     m.value = item.Sum(p => p.PUE);
                     list_top.Add(m);
                 }
-                var model = TopList.FirstOrDefault();
+                var model = groupTopList.OrderByDescending(p => p.Key).FirstOrDefault();
                 if (model != null)
                 {
-                    RealValue = model.PUE.Value;
+                    if (model.Sum(p => p.PUE) != null)
+                        RealValue = model.Sum(p => p.PUE).Value;
+                    else
+                        RealValue = 0;
                 }
                 string pids = HomeController.GetPID(uids);
                 if (!string.IsNullOrEmpty(pids))
@@ -4939,7 +4942,7 @@ namespace YWWeb.Controllers
                                 if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
                                     mm.value = 0;
                                 else
-                                    bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power);
+                                   mm.value= bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power);
 
                                 list_le.Add(mm);
                             }
@@ -4947,7 +4950,7 @@ namespace YWWeb.Controllers
                     }
                 }
             }
-            return Json(new { list_top, RealValue, list_le }, JsonRequestBehavior.AllowGet);
+            return Json(new { list_top, RealValue, list_le = list_le.OrderBy(p => p.value) }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid)
         {
