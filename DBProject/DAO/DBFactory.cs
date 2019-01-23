@@ -59,5 +59,7 @@ namespace DAO
         public IPDRInfo pdrInfo => new PDRInfoDBContext();
 
         public IPriceEnery priceEnery => new PriceEneryDBContext();
+
+	    public IPointsInfo PointsInfo => new PointsInfoDBContext();
     }
 }

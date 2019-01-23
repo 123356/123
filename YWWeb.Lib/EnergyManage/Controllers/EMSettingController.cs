@@ -217,5 +217,17 @@ namespace EnergyManage.Controllers
 
         }
         #endregion
+
+
+		#region
+
+		public JsonResult GetTageID( int pid, int cid )
+		{
+			IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
+			return(Json( list, JsonRequestBehavior.AllowGet ) );
+		}
+
+
+		#endregion
     }
 } 
