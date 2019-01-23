@@ -161,7 +161,7 @@ function export1() {
    
 
 
-     dname = $("#selDID").combobox('getValue');
+    dname = $("#selDID").combobox('getText');
      cname = $("#cname").val();
      pid = $("#SPID").combobox('getValue');
      startdate = $('#StartDate').datebox('getValue');
@@ -182,16 +182,12 @@ function export1() {
         { 'pid': pid, 'dname': dname, 'cname': cname, 'startdate': startdate, 'enddate': enddate, 'typename': typename },
         function (data, status) {
             ajaxbg.hide();
-            if ('success' == status) {
-                if (-1 == data.indexOf("Fail")) {
-                    window.open('http://' + window.location.host + data);
-                }
-                else {
-                    alert(data);
-                }
-            }
-            else {
-                alert('导出失败');
+
+            if (data.code == 0) {
+                $.messager.alert("提示", data.v, "info");
+            } else {
+                alert(data.v);
+                window.open('http://' + window.location.host + data.v);
             }
         }
     );

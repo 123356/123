@@ -114,6 +114,7 @@ namespace YWWeb.Controllers
         }
         public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
         {
+            pdermsWebEntities b = new pdermsWebEntities();
             StringBuilder json = new StringBuilder();
             //{"total":5,"rows":[  
             //int total = list.Count;
@@ -141,6 +142,17 @@ namespace YWWeb.Controllers
                             json.Append("\"" + "TagName" + "\":\"" + poinf.TagName + "\"");
                             json.Append(",");
                             json.Append("\"" + "Remarks" + "\":\"" + poinf.Remarks + "\"");
+                            b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault();
+                            if (b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault() != null)
+                            {
+                                json.Append(",");
+                                json.Append("\"" + "CName" + "\":\"" + b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault().CName + "\"");
+                            }
+                            else
+                            {
+                                json.Append(",");
+                                json.Append("\"" + "CName" + "\":\"--\"");
+                            }
                         }
                     }
                     if (j < pis.Length - 1)
@@ -167,8 +179,8 @@ namespace YWWeb.Controllers
             if (!dname.Equals("==全部=="))
                 query = query + " and 设备名称 = '" + dname + "'";
             query = query + " and 测点位置<>'备用01' and (测点名称 like '%" + cname + "%' or 测点位置 like '%" + cname + "%')";
-            if (!typename.Equals(""))
-                query = query + " and 数据类型='" + typename + "'";
+            //if (!typename.Equals(""))
+            //    query = query + " and 数据类型='" + typename + "'";
             if (!startdate.Equals(""))
             {
                 DateStart = Convert.ToDateTime(startdate).ToString("yyyy-MM-dd");
@@ -182,34 +194,56 @@ namespace YWWeb.Controllers
             return query;
         }
         //导出历史数据查询
-        public string ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "温度")
+        public JsonResult ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "温度")
         {
             try
             {
                 if (pid == 0)
                 {
                     pid =Convert.ToInt32( HomeController.GetPID(CurrentUser.UNITList).Split(',')[0]);
-                    //pid = Convert.ToInt32(CurrentUser.PDRList.Split(',')[0]);
                 }
                 string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
-                string strsql = "SELECT  设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
+                string strsql = "SELECT 设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
                 string query = GetHisQuery(dname, cname, startdate, enddate, typename);
                 strsql = strsql + " where " + query + " order by 记录时间 desc ";
+
+
+                var count = bll.ExecuteStoreQuery<ExHisData>(strsql).Count();
+                if (count > 30000)
+                {
+                    return Json(new { code = 0, v = "最多可导出30000条,当前导出条数为" + count + "条,请重新选择" }, JsonRequestBehavior.AllowGet);
+                }
                 //string strPath = Server.MapPath("~/Download/");
                 //string strExport = "历史数据导出_" + DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss") + ".csv";
                 //string strFullExport = strPath + strExport;
                 //List<配电房_00001_历史数据表> list = bll.ExecuteStoreQuery<配电房_00001_历史数据表>(strFullSql).ToList();
                 //ExportCSV(strFullExport, list);
-                DataSet ds = SQLtoDataSet.GetReportSummary(strsql);
-                ExportExcel.doExport2003(ds, "~/DownLoad/historydata.xls");
-                return "/DownLoad/historydata.xls";
+                else
+                {
+                    DataSet ds = SQLtoDataSet.GetReportSummary(strsql);
+                    ExportExcel.doExport2003(ds, "~/DownLoad/historydata.xls");
+                    return Json(new { code = 1, v = "/DownLoad/historydata.xls" }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
-                return "Fail:" + ex.Message;
+                return Json(ex.Message);
             }
-            return "Fail";
         }
+
+        public class ExHisData
+        {
+            public string 设备名称 { get; set; }
+            public string 设备编码 { get; set; }
+            public string 测点名称 { get; set; }
+            public int 测点编号 { get; set; }
+            public string 监测位置 { get; set; }
+            public double 测量值 { get; set; }
+            public string 报警状态 { get; set; }
+            public DateTime 记录时间 { get; set; }
+            public DateTime 监测时间 { get; set; }
+        }
+
         //确认所有配电房的报警
         public ActionResult DelAllPAlarm()
         {
