@@ -69,6 +69,7 @@
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
     <Compile Include="IPDRInfo.cs" />
+    <Compile Include="IPointsInfo.cs" />
     <Compile Include="IPriceEnery.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
