@@ -21,6 +21,8 @@ DBProject/IDAO/bin
 DBProject/IDAO/obj
 DBProject/DAOCache/bin
 DBProject/DAOCache/obj
+DBProject/DAOMongoDB/bin
+DBProject/DAOMongoDB/obj
 YWWeb.Lib/EnergyManage/bin
 YWWeb.Lib/EnergyManage/obj
 YWWeb.Lib/YWWeb.Lib.Base/bin

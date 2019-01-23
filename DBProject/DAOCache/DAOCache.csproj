@@ -13,7 +13,7 @@
     <ProjectReference Include="..\IDAO\IDAO.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy $(TargetDir)*.dll $(SolutionDir)YWWeb\bin\  /y" />
+    <Exec Command="xcopy $(TargetDir)*.dll $(SolutionDir)YWWeb\bin\Cache\  /y" />
   </Target>
 
 </Project>

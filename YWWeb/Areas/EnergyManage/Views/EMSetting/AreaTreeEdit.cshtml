@@ -130,7 +130,7 @@
 
                                             <Tree :data="treeType == 1?subitemTree: areaTree"
                                                   :render="renderContent"
-                                                  :style="{'height':'80%','overflow-y':'auto','overflow-x':'hidden','width':'110%','padding-right':'10%'}"
+                                                  :style="{'height':'100%','overflow-y':'auto','overflow-x':'hidden','width':'110%','padding-right':'10%'}"
                                                   ref="tree"></Tree>
                                         </Card>
                                     </i-col>
@@ -341,7 +341,7 @@
                 //字符串name 替换title 加属性
                 strNameToTitle: function (data) {
                     var str = JSON.stringify(data);
-                    str = str.replace(/name/g, "title").replace(`,"children":[]`, "");
+                    str = str.replace(/name/g, "title").replace(`,"children":[]`, "").replace(/{/g, `{"expand":"true",`); 
                     var arr = [];
                     arr.push(JSON.parse(str))
                     arr[0].render = (h, { root, node, data }) => {
@@ -397,7 +397,6 @@
                             ]);
                     };
                     arr[0].selected = true;
-                    arr[0].expand = true;
                     return arr;
                 },
                 //加载组织区域树
@@ -565,10 +564,28 @@
                 },
                 //删除节点
                 remove(root, node, data) {
-                    const parentKey = root.find(el => el === node).parent;
-                    const parent = root.find(el => el.nodeKey === parentKey).node;
-                    const index = parent.children.indexOf(data);
-                    parent.children.splice(index, 1);
+                    var that = this;
+                    this.$http({
+                        url: "/energyManage/EMSetting/DeleteSupervisor",
+                        method: "post",
+                        params: {
+                            parent_id: data.pId,
+                            child_id: node.node.id,
+                            unit_id: that.UnitData.UnitID,
+                        }
+                    }).then(function (res) {
+                        console.log(res.data)
+                        const parentKey = root.find(el => el === node).parent;
+                        const parent = root.find(el => el.nodeKey === parentKey).node;
+                        const index = parent.children.indexOf(data);
+                        parent.children.splice(index, 1);
+
+                        this.$Message.success("删除成功");
+
+                    })
+                        .catch(function (e) {
+                            this.$Message.error("数据异常");
+                        })
                 },
                 //修改节点
                 update(root, node, data) {

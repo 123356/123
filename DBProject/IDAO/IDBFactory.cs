@@ -24,25 +24,16 @@ namespace IDAO
         IEneryOverview eneryOverView { get; }
         IBudget budget { get; }
         IenTypeConfig typeconfig { get; }
-
         ICollecDevType collecdevtype { get; }
-
 		IVEnerProjectType venerProjectType { get; }
-
         ICircuitInfo circuitinfo { get; }
-
         IExEnergy exEnergy { get; }
-
         IYearBudget yearBudget { get; }
-
         ICollTypeBudget collecTypeBudget { get; }
-
         IEneryUsreBudget eneryUserBudget { get; }
-
         IDepartmentalApportionment depar { get; }
-
         IPDRInfo pdrInfo { get; }
-
         IPriceEnery priceEnery { get; }
+        IPointsInfo PointsInfo { get; }
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using IDAO;
 using DAO;
 using IDAO.Models;
+using System.Configuration;
 
 namespace DAL
 {
     public class HisDataDAL
     {
-        IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
+        IDBFactory _dbFactory = DBFactoryManager.GetDBFactory(ConfigurationManager.AppSettings["HisDataDAL"]);
         static HisDataDAL _DataDal;
         static readonly object _loker = new object();
         public static HisDataDAL getInstance(string json = null)
