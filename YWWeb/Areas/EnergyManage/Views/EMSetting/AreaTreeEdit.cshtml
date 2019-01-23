@@ -127,12 +127,11 @@
                                     <i-col span="12">
                                         <Card :bordered="false">
                                             <p slot="title">{{UnitData.UnitName}}——{{treeType == 1?"用电分项树":"组织区域树"}}</p>
-                                          
-                                            <Tree :data="treeType == 1?subitemTree: areaTree" 
-                                                  :render="renderContent" 
+
+                                            <Tree :data="treeType == 1?subitemTree: areaTree"
+                                                  :render="renderContent"
                                                   :style="{'height':'80%','overflow-y':'auto','overflow-x':'hidden','width':'110%','padding-right':'10%'}"
-                                                  ref="tree"
-                                                  ></Tree>
+                                                  ref="tree"></Tree>
                                         </Card>
                                     </i-col>
                                     <i-col span="11" offset="1">
@@ -162,13 +161,13 @@
                                                 <div class="form-group">
                                                     <label for="addCid">累加电表 <i-button type="primary" size="small" icon="md-add" v-on:click="modal1 = true;cidEdit='add'" ghost></i-button></label>
                                                     <div :rows="4" v-model="addCid" class="cidbox" style="padding:8px">
-                                                        <Tag  closable v-on:on-close="handleClose(parseInt(itme.id),'add')" v-for="(itme,index) in addCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
+                                                        <Tag closable v-on:on-close="handleClose(parseInt(itme.id),'add')" v-for="(itme,index) in addCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="delCid">累减电表 <i-button type="primary" size="small" icon="md-add" v-on:click="modal1 = true;cidEdit='del'" ghost></i-button></label>
                                                     <div :rows="4" v-model="delCid" class="cidbox" style="padding:8px">
-                                                        <Tag  closable v-on:on-close="handleClose(parseInt(itme.id),'del')" v-for="(itme,index) in  delCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
+                                                        <Tag closable v-on:on-close="handleClose(parseInt(itme.id),'del')" v-for="(itme,index) in  delCid" :id="parseInt(itme.id)" :key="index">{{itme.title}}</Tag>
                                                     </div>
                                                 </div>
                                             </form>
@@ -185,8 +184,8 @@
             </div>
         </template>
 
-        <Modal :title="UnitData.UnitName" v-model="modal1"   v-on:on-ok="ModalonOk" v-on:on-cancel="ModalonCancel"  >
-            <Tree :data="cidTree"  show-checkbox  :style="{'height':'500px','width':'100%','overflow-y': 'auto;','overflow-x': 'hidden'}" v-on:on-check-change="selectedCidNode"></Tree>
+        <Modal :title="UnitData.UnitName" v-model="modal1" v-on:on-ok="ModalonOk" v-on:on-cancel="ModalonCancel">
+            <Tree :data="cidTree" show-checkbox :style="{'height':'500px','width':'100%','overflow-y': 'auto;','overflow-x': 'hidden'}" v-on:on-check-change="selectedCidNode"></Tree>
         </Modal>
     </div>
 
@@ -205,30 +204,30 @@
                     area: 0,
                     people: 0,
                     note: "",
-                    head:""
+                    head: ""
                 },
                 modal1: false,      //模态框
                 subitemTree: [],    //分项树
                 areaTree: [],       //区域树
                 UnitData: {},       //单位id name pid
 
-                cidEdit:null,
+                cidEdit: null,
 
                 cidTree: [],
 
 
                 addCid: null,
-                delCid:null,
+                delCid: null,
 
                 buttonProps: {
                     type: 'default',
                     size: 'small',
                 },
 
-                show:true
+                show: true
             },
             methods: {
-             
+
                 //选中的cid  的关闭事件
                 handleClose(id, type) {
                     if (type == 'add') {
@@ -248,12 +247,12 @@
                     }
                 },
                 //模态框点击ok
-                ModalonOk: function () {                 
+                ModalonOk: function () {
                     for (key in this.cidselect) {
                         this.cidselect[key].checked = false;
                     }
                     if (this.cidEdit == 'add') {
-                        this.oldCidSelectedDel = this.addCid ;
+                        this.oldCidSelectedDel = this.addCid;
                     } else {
                         this.oldCidSelectedAdd = this.delCid;
                     }
@@ -304,9 +303,9 @@
                                 this.getPDRList()
                             }
                             this.untiList = res.data;
-                    })
+                        })
                         .catch(function (e) {
-                    })
+                        })
                 },
                 //改变单位保存属性
                 changeUnitID: function (e) {
@@ -329,7 +328,7 @@
                         method: "post",
                         params: {
                             unitID: that.UnitData.UnitID,
-                            item_type:1,
+                            item_type: 1,
                             unitName: that.UnitData.UnitName
                         }
                     })
@@ -342,7 +341,7 @@
                 //字符串name 替换title 加属性
                 strNameToTitle: function (data) {
                     var str = JSON.stringify(data);
-                    str = str.replace(/name/g ,"title").replace(`,"children":[]`, "");
+                    str = str.replace(/name/g, "title").replace(`,"children":[]`, "");
                     var arr = [];
                     arr.push(JSON.parse(str))
                     arr[0].render = (h, { root, node, data }) => {
@@ -370,31 +369,31 @@
                                         marginRight: '32px'
                                     }
                                 },
-                                [
-                                    h('Button', {
-                                        props: Object.assign({}, this.buttonProps, {
-                                            icon: 'ios-add',
-                                            type: 'primary'
+                                    [
+                                        h('Button', {
+                                            props: Object.assign({}, this.buttonProps, {
+                                                icon: 'ios-add',
+                                                type: 'primary'
+                                            }),
+                                            style: {
+                                                marginRight: '8px'
+                                            },
+                                            on: {
+                                                click: () => { this.append(data) }
+                                            }
                                         }),
-                                        style: {
-                                            marginRight: '8px'
-                                        },
-                                        on: {
-                                            click: () => { this.append(data) }
-                                        }
-                                    }),
-                                    h('Button', {
-                                        props: Object.assign({}, this.buttonProps, {
-                                            icon: 'ios-search-outline',
-                                            type: 'primary'
-                                        }),
-                                     
-                                        on: {
-                                            click: () => { this.search(data) }
-                                        }
-                                    }),
+                                        h('Button', {
+                                            props: Object.assign({}, this.buttonProps, {
+                                                icon: 'ios-search-outline',
+                                                type: 'primary'
+                                            }),
 
-                                ])
+                                            on: {
+                                                click: () => { this.search(data) }
+                                            }
+                                        }),
+
+                                    ])
                             ]);
                     };
                     arr[0].selected = true;
@@ -423,7 +422,7 @@
                 getPDRList: function () {
                     var that = this;
                     if (!that.UnitData.PDRList) {
-                        return 
+                        return
                     }
                     this.$http({
                         url: "/energyManage/EMSetting/GetCidTree",
@@ -453,7 +452,7 @@
                                     type: 'did',
                                     id: data[a].DID + "_d",
                                     children: [
-                                        { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", children: [], pid: data[a].PID}
+                                        { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", children: [], pid: data[a].PID }
                                     ]
                                 }]
                             });
@@ -467,16 +466,16 @@
                                 type: 'did',
                                 id: data[a].DID + "_d",
                                 children: [
-                                    { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID}
+                                    { title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID }
                                 ]
                             })
                             did = data[a].DID;
                             cid = data[a].CID;
 
-                        } else if (pid == data[a].PID && did == data[a].DID ) {
+                        } else if (pid == data[a].PID && did == data[a].DID) {
                             var pidlen = tree.length - 1;
                             var didlen = tree[pidlen].children.length - 1;
-                            tree[pidlen].children[didlen].children.push({ title: data[a].CName, type: 'cid', id: data[a].CID + "_c" ,pid: data[a].PID})
+                            tree[pidlen].children[didlen].children.push({ title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID })
                         }
                     }
 
@@ -550,13 +549,13 @@
                                             click: () => { that.search(root, node, data) }
                                         }
                                     }),
-                                 
-                                  
+
+
                                 ])
                         ]);
                 },
                 //添加节点
-                append(data) {       
+                append(data) {
                     this.node = {};
                     this.node.parent_id = data.id;
                     this.treeParent = data;
@@ -605,6 +604,7 @@
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
+                                      
                         this.$http({
                             url: "/energyManage/EMSetting/AddTreeNode",
                             method: "post",
@@ -613,34 +613,31 @@
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
                                 unit_note: that.node.note,
-                                addCid: that.node.addCid,
-                                delCid: that.node.delCid,
+                                addCid: that.node.addCid || 0,
+                                delCid: that.node.delCid || 0,
                                 item_type: that.treeType,
                                 Name: name,
                                 id: 0,
-                                unit_area: that.node.area,
-                                unit_people: that.node.people,
+                                unit_area: that.node.area || 0,
+                                unit_people: that.node.people || 0,
                             }
                         })
                             .then(function (res) {
-                                if (res.data.lenght) { 
                                     const children = this.treeParent.children || [];
                                     children.push({
                                         title: name,
-                                        area: res.data[0].unit_area,
-                                        people: res.data[0].unit_people,
+                                        area: res.data[0].unit_area || 0,
+                                        people: res.data[0].unit_people || 0,
                                         id: res.data[0].child_id,
                                         head: res.data[0].unit_head,
                                         note: res.data[0].unit_note,
-                                        addCid: res.data[0].addCid,
+                                        addCid: res.data[0].addCid ,
                                         delCid: res.data[0].delCid,
                                         expand: true
                                     });
                                     this.$set(this.treeParent, 'children', children);
                                     this.$Message.success("添加成功");
-                                } else {
-                                    this.$Modal.error("返回异常")
-                                }
+                             
                             })
                             .catch(function (e) {
                                 this.$Message.error("数据异常");
@@ -653,22 +650,6 @@
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
-
-
-                        console.log({
-                            parent_id: that.node.parent_id,
-                            unit_id: that.UnitData.UnitID,
-                            unit_head: that.node.head,
-                            unit_note: that.node.note,
-                            addCid: that.node.addCid,
-                            delCid: that.node.delCid,
-                            item_type: that.treeType,
-                            Name: name,
-                            id: that.node.id,
-                            unit_area: that.node.area,
-                            unit_people: that.node.people,
-                        })
-
 
                         this.$http({
                             url: "/energyManage/EMSetting/UpdateTreeNode",
@@ -688,27 +669,7 @@
                             }
                         })
                             .then(function (res) {
-                                console.log(res.data)
-                                if (res.data.length > 0) {
-
-                                    //const children = this.treeParent.children || [];
-                                    //children.push({
-                                    //    title: name,
-                                    //    area: res.data[0].unit_area,
-                                    //    people: res.data[0].unit_people,
-                                    //    id: res.data[0].child_id,
-                                    //    head: res.data[0].unit_head,
-                                    //    note: res.data[0].unit_note,
-                                    //    addCid: res.data[0].addCid,
-                                    //    delCid: res.data[0].delCid,
-                                    //    expand: true
-                                    //});
-                                    //this.$set(this.treeParent, 'children', children);
-                                    this.$Message.success("修改成功");
-                                } else {
-                                    this.$Modal.error("返回异常")
-                                }
-
+                                this.$Message.success("修改成功");
                             })
                             .catch(function (e) {
                                 this.$Message.error("数据异常");
@@ -717,7 +678,7 @@
 
                     }
                 },
-                //视图转cid字符串 
+                //视图转cid字符串
                 ViewToPIDCId(arr) {
                     if (arr) {
                         for (var a = 0, list = []; a < arr.length; a++) {
