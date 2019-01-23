@@ -48,9 +48,7 @@
                     border-right: 0px
                 }
 
-                    .reportTable td div:last-child {
-                        border-bottom: 0 !important;
-                    }
+                    
 
             .reportTable .title {
                 font-size: 20px;
@@ -97,7 +95,7 @@
 
             <div class="searchrow">
                 站室:
-                <i-select style="width:180px" v-model="PID" v-on:on-change="stationChange">
+                <i-select style="width:180px" v-model="PID" v-on:on-change="stationChange" :label-in-value="true">
                     <i-option v-for="item in stationList" :value="item.PID">{{item.Name}}</i-option>
                 </i-select>
             </div>
@@ -167,10 +165,10 @@
                 <td colspan="26" class="littleTitle">&nbsp;{{cruPname}}</td>
             </tr>
             <tr>
-                <td colspan="1" style="width:100px">&nbsp;</td>
+                <td colspan="1" style="width:50px">&nbsp;</td>
                 <td colspan="25">
                     <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                        <div style="flex:1" class="item-div"></div>
+                        <div style="flex:2" class="item-div"></div>
                         <div style="flex:1" class="item-div" v-for="item in hours">
                             {{item}}
                         </div>
@@ -179,19 +177,19 @@
 
             </tr>
             <tr v-for='item in info'>
-                <td align="center" style="width:100px">
+                <td align="center" style="width:50px">
                     {{item.DeviceName}}
 
                 </td>
                 <td colspan="25">
 
                     <div style="width:100%;display:flex;flex-direction:row" class="outItem-div" v-for="data in item.list_data">
-                        <div style="flex:1;word-wrap:break-word;word-break: normal;overflow:hidden" class="item-div" :title="data.Cname">
+                        <div style="flex:2;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
                             {{data.Cname==""?'--':data.Cname}}
                         </div>
-                        <div style="flex:1;" class="item-div" v-for="val in data.Value">
-                            <div class="item-div" style="word-wrap:break-word;word-break: normal;overflow:hidden;border-bottom:0px">
-                                {{val}}
+                        <div style="flex:1;overflow:hidden" class="item-div" v-for="val in data.Value">
+                            <div class="item-div" style="word-wrap:break-word;word-break: break-all;overflow:hidden;border-bottom:0px">
+                                {{val |toFixed}}
                             </div>
                         </div>
                     </div>
@@ -369,4 +367,4 @@
 <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
 <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
 <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.03"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.04"></script>

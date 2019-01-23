@@ -14,12 +14,13 @@
 </head>
 <body>
     <div id="app" class="history">
+        <Spin size="large" fix v-if="loading"></Spin>
         <div class="flex flex-1  flex-module">
             <div class="flex flex-1">
                 <ul class="headerUl">
                     <li class="outLi">数据中心选择：</li>
                     <li class="outLi">
-                        <i-select v-on:on-change="checkStation" v-model="curPid" v-on:on-open-change="openSelect">
+                        <i-select v-on:on-change="checkStation" v-model="curPid" v-on:on-open-change="openSelect" :filterable="true">
                             <i-option :value="curPid" v-show="initSelectShow">{{curPname}}</i-option>
                             <Tree :data="treeData"
                                   empty-text="暂无数据"
@@ -27,8 +28,7 @@
                                   class="tree"
                                   ref="tree"
                                   :render="renderContent"
-                                  style="margin:5px"
-                                  ></Tree>
+                                  style="margin:5px"></Tree>
                         </i-select>
                     </li>
                     <li class="outLi">PUE趋势图：</li>
@@ -38,19 +38,19 @@
                         </i-select>
                     </li>
                     <li class="outLi" v-show="curType==4">
-                        <date-picker type="daterange" placement="bottom-end" v-model="selectDate"  style="width: 200px" ></date-picker>
+                        <date-picker type="daterange" placement="bottom-end" v-model="selectDate" style="width: 200px"></date-picker>
                         <i-button class="okBtn" v-on:click="search">确定</i-button>
                     </li>
                 </ul>
-                        
-                    
-                    
-                   
-                </div>
+
+
+
+
+            </div>
 
             <div class="bottomChart" style="position:relative">
                 <div v-if="!chartShow" class="noData">暂无数据</div>
-                <div class="chart" id="lineChart" ></div>
+                <div class="chart" id="lineChart"></div>
                 <!-- <div class="chart" id="lineChart" :style="{display:chartShow?'block':'none',width:'100%',height:'100%'}"></div>-->
             </div>
 
@@ -64,7 +64,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/PUEHistory._zc.js?v=1.43"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUEHistory._zc.js?v=1.52"></script>
 
 </body>
 </html>

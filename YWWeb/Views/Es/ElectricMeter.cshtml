@@ -9,6 +9,15 @@
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
     <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://vuejs.org/js/vue.min.js"></script>
+
+    <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+    <script src="//unpkg.com/iview/dist/iview.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <script src="~/Content/topo/js/mqtt.js"></script>
 </head>
 <body>
     <table id="list_data" class="easyui-datagrid" style="width: auto;" idfield="ID"
@@ -45,7 +54,7 @@
                 <th data-options="field:'collect_jzqno',width:80,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
                     电表集中器编号
                 </th>
-                <th data-options="field:'collect_gy',width:50,editor:'numberbox'" @*editor="{type:'combobox',options:{valueField:'MPID',textField:'Name', url: '/BaseInfo/BindMonitorPosition?row=' + Math.random(),required:true }}*@">
+                <th data-options="field:'collect_gy',width:50,editor:'numberbox'" @*editor="{type:'combobox',options:{valueField:'MPID',textField:'Name', url: '/BaseInfo/BindMonitorPosition?row=' + Math.random(),required:true }}*@ ">
                     采集规约
                 </th>
                 <th data-options="field:'collect_baud',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
@@ -56,7 +65,7 @@
                 </th>
                 <th data-options="field:'collect_period',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
                     电表设备采集周期
-                </th>                
+                </th>
                 <th data-options="field:'MultipleRate',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
                     电表倍率
                 </th>
@@ -80,6 +89,7 @@
             </div>
             <div id="userbutton" class="searchbutton">
             </div>
+
         </div>
         <div id="uploadwin" title="导入测点表" class="easyui-dialog" closed="true" style="width: 600px;
         height: 300px; padding: 20px;" minimizable="false" maximizable="false" collapsible="false">
@@ -110,6 +120,179 @@
             <div id="msg"></div>
         </div>
     </form>
+    <div id="powerControl">
+        <Modal v-model="modal"
+               title="用电设置"
+                :width ="'680px'"
+                footer-hide="true"
+               >
+            <Tabs value="name1" :style="{'height':'500px','overflow-y':'auto'}">
+                <tab-pane label="用电控制" name="name1">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>控制状态</th>
+                                <th>读取</th>
+                                <th>控制</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>远程控制</td>
+                                <td>
+                                    <i-select style="width:80px" v-model="assist.RefrigerationHeat">
+                                        <i-option :value="0" :key="0">制冷</i-option>
+                                        <i-option :value="1" :key="1">制热</i-option>
+                                    </i-select>
+                                    <radio-group v-model="value.DTU_CTR_TMP.modelStatu">
+                                        <Radio :label="1" :style="{'margin':'0'}">开机</Radio>
+                                        <Radio :label="0" :style="{'margin':'0'}">关机</Radio>
+                                    </radio-group>
+                                    温度：
+                                    <input-number :max="32" :min="16" clearable :style="{'width':'80px'}" v-model="value.DTU_CTR_TMP.temp"/>
+                                </td>
+                                <td><i-button v-on:click="ReadData(value['DTU_CTR_TMP'].id)" >读取</i-button></td>
+                                <td><i-button  v-on:click="SetData(value['DTU_CTR_TMP'].id)">配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>当前季节</td>
+                                <td>
+                                    <radio-group v-model="value['DTU_CTR_MODEL'].value">
+                                        <Radio :label="1" :style="{'margin':'0'}">夏天制冷</Radio>
+                                        <Radio :label="16" :style="{'margin':'0'}">冬天制热</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button v-on:click="ReadData(value['DTU_CTR_MODEL'].id)">读取</i-button></td>
+                                <td><i-button v-on:click="SetData(value['DTU_CTR_MODEL'].id)" >配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>继电器状态</td>
+                                <td>
+                                    <radio-group v-model="value['DTU_DI'].value">
+                                        <Radio :label="1">通电</Radio>
+                                        <Radio :label="0">断电</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button v-on:click="ReadData(value['DTU_DI'].id)">读取</i-button></td>
+                                <td><i-button v-on:click="SetData(value['DTU_DI'].id)">配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>远程锁定</td>
+                                <td>
+                                    <radio-group>
+                                        <Radio :label="'true'" :style="{'margin':'0'}" disabled>开启</Radio>
+                                        <Radio :label="false" :style="{'margin':'0'}" disabled>关闭</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button disabled>读取</i-button></td>
+                                <td><i-button disabled>配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>过电保护</td>
+                                <td>
+                                    <radio-group>
+                                        <Radio :label="'true'" :style="{'margin':'0'}" disabled>开启</Radio>
+                                        <Radio :label="false" :style="{'margin':'0'}" disabled>关闭</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button disabled>读取</i-button></td>
+                                <td><i-button disabled>配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>越限保护</td>
+                                <td>
+                                    <radio-group>
+                                        <Radio :label="'true'" :style="{'margin':'0'}" disabled>开启</Radio>
+                                        <Radio :label="false" :style="{'margin':'0'}" disabled>关闭</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button disabled>读取</i-button></td>
+                                <td><i-button disabled>配置</i-button></td>
+                            </tr>
+                            <tr>
+                                <td>时控模式</td>
+                                <td>
+                                    <radio-group>
+                                        <Radio :label="'true'" :style="{'margin':'0'}" disabled>开启</Radio>
+                                        <Radio :label="false" :style="{'margin':'0'}" disabled>关闭</Radio>
+                                    </radio-group>
+                                </td>
+                                <td><i-button disabled>读取</i-button></td>
+                                <td><i-button disabled>配置</i-button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tab-pane>
+                <tab-pane label="时段信息设置" name="name2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <i-select  style="width:160px" disabled>
+                                        <i-option v-for="item in assist.weeks" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                                    </i-select>
+                                </th>
+                                <td><i-button disabled>读取</i-button></td>
+                                <td><i-button disabled>配置</i-button></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>时段</td>
+                                <td>
+                                    开启时间
+                                </td>
+                                <td colspan="2">
+                                    关闭时间
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>第一时间段</td>
+                                <td>
+                                    <i-input :type="'time'" disabled/>
+                                </td>
+                                <td colspan="2">
+                                    <i-input :type="'time'" disabled/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>第二时间段</td>
+                                <td>
+                                    <i-input :type="'time'"disabled />
+                                </td>
+                                <td colspan="2">
+                                    <i-input :type="'time'" disabled/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>第三时间段</td>
+                                <td>
+                                    <i-input :type="'time'" disabled/>
+                                </td>
+                                <td colspan="2">
+                                    <i-input :type="'time'" disabled/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>临时计划:</td>
+                                <td>
+                                    <i-input :type="'datetime-local'" disabled />
+                                </td>
+                                <td colspan="2">
+                                    <i-input :type="'datetime-local'" disabled/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tab-pane>
+                @*<tab-pane label="红外遥控设置" name="name3"> </tab-pane>*@
+            </Tabs>
+        </Modal>
+
+    </div>
+
     <script type="text/javascript">
         $("#currPosition", window.top.document).html("当前位置：设置 > 基本设置 > 点表管理 ");
 
@@ -132,13 +315,13 @@
                     pid = data[0].PID;
                 }
                 $("#SPID").combobox('select', pid);
-               // dosearch();
+                // dosearch();
             }, onChange: function (n, o) {
                 //console.log(o);
                 dosearch();
+                vm.mqtt();
             }
         });
-
         var editIndex = undefined;
         function endEditing() {
             if (editIndex == undefined) { return true }
@@ -159,7 +342,6 @@
                 $('#list_data').datagrid('selectRow', editIndex);
             }
         }
-
         function dosearch() {
             pid = $("#SPID").combobox('getValue');
             var tagname = $("#tagname").val();
@@ -171,7 +353,7 @@
         }
         function add() {
             if (endEditing()) {
-                $('#list_data').datagrid('appendRow', { CName: '新回路', MetersID: '000000000000', device_type:'7' });
+                $('#list_data').datagrid('appendRow', { CName: '新回路', MetersID: '000000000000', device_type: '7' });
                 editIndex = $('#list_data').datagrid('getRows').length - 1;
                 $('#list_data').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
             }
@@ -193,7 +375,7 @@
             if (row) {
                 var cid, eid;
                 cid = row.ID;
-               if (cid > 0) {
+                if (cid > 0) {
                     $.messager.confirm('提示', '你确定要删除选中的回路？', function (r) {
                         if (r) {
                             $.post("/Es/DeleteEM", { "IDS": cid }, function (data) {
@@ -234,18 +416,18 @@
                         PID: pid,
                         ID: row.ID,
                         CID: row.CID,
-                        DID:row.DID,
+                        DID: row.DID,
                         CName: row.CName,
                         UserType: row.UserType,
                         AreaType: row.AreaType,
                         ItemType: row.ItemType,
                         MetersID: row.MetersID,
-                        device_type:row.device_type,
-                        collect_port:row.collect_port,
-                        collect_jzqno:row.collect_jzqno,
-                        collect_gy:row.collect_gy,
-                        collect_baud:row.collect_baud,
-                        collect_cjq:row.collect_cjq,
+                        device_type: row.device_type,
+                        collect_port: row.collect_port,
+                        collect_jzqno: row.collect_jzqno,
+                        collect_gy: row.collect_gy,
+                        collect_baud: row.collect_baud,
+                        collect_cjq: row.collect_cjq,
                         collect_period: row.collect_period,
                         MultipleRate: row.MultipleRate,
                         collect_cld: row.collect_cld
@@ -380,6 +562,6 @@
             }
         }
     </script>
-    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <script src="~/Content/js/ResizeList._zc.js"></script>
 </body>
 </html>

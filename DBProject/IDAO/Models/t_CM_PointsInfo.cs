@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IDAO.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
     [Serializable]
-    [Table("t_CM_PointsInfo")]
-    public partial class t_CM_PointsInfo
+    public partial class t_CM_PointsInfoBase1
     {
         public int TagID { get; set; }
+
+        public Nullable<int> CID { get; set; }
+        public string 数据类型 { get; set; }
+    }
+
+    [Serializable]
+    [Table("t_CM_PointsInfo")]
+    public partial class t_CM_PointsInfo: t_CM_PointsInfoBase1
+    {
         public string TagName { get; set; }
         public int DID { get; set; }
-        public Nullable<int> CID { get; set; }
         public Nullable<int> DataTypeID { get; set; }
         public string Position { get; set; }
         public Nullable<int> MPID { get; set; }
@@ -24,7 +31,6 @@ namespace IDAO.Models
         public Nullable<int> PIOID { get; set; }
         public Nullable<int> ABCID { get; set; }
         public string Remarks { get; set; }
-        public string 数据类型 { get; set; }
         public string 设备点名 { get; set; }
         public string 中文描述 { get; set; }
         public string 站内点号 { get; set; }

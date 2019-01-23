@@ -134,6 +134,14 @@
             this.curTimeStr = new Date(this.year).getFullYear().toString()
         },
     },
+    filters: {
+        toFixed: function (value) {
+            if (!value) {
+                return 0
+            }
+            return value.toFixed(2)
+        },
+    },
     beforeMount: function () {
         this.year = new Date().getFullYear().toString()
         this.curTimeStr = new Date().getFullYear().toString()

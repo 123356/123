@@ -351,7 +351,6 @@ Topo.prototype = {
                     if (res[a].DataTypeID == '2') { //电流
                         $(className + ' .I' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + " .iunit").html(res[a].Units); 
-                        console.log(className + ".uunit")
                     } else if (res[a].DataTypeID == '3' || res[a].DataTypeID == "56") { //电压
                         $(className + ' .UA' + res[a].ABCID).html(res[a].DValue).addClass('t_' + res[a].TagID);
                         $(className + " .uunit").html(res[a].Units);
