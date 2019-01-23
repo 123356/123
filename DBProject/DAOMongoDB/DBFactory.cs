@@ -57,5 +57,7 @@ namespace DAOMongoDB
         public IPDRInfo pdrInfo => throw new NotImplementedException();
 
         public IPriceEnery priceEnery => throw new NotImplementedException();
+
+        public IPointsInfo PointsInfo => throw new NotImplementedException();
     }
 }
