@@ -739,6 +739,7 @@
     <Content Include="Content\calendar\js\calendar.js" />
     <Content Include="Content\calendar\js\calendar_core.js" />
     <Content Include="Content\calendar\js\jquery.min.js" />
+    <Content Include="Content\css\ElecReport.css" />
     <Content Include="Content\css\bootstrapStyle\bootstrapStyle.css" />
     <Content Include="Content\css\bootstrapStyle\img\bootstrap.gif" />
     <Content Include="Content\css\bootstrapStyle\img\bootstrap.png" />
