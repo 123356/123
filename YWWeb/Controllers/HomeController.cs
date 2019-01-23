@@ -4956,7 +4956,7 @@ namespace YWWeb.Controllers
                         datestart = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd HH:mm:ss");
                         break;
                     case 4:
-                        tablename = "Monthly";
+                        tablename = "Daily";
                         break;
                 }
                 string tabname = "t_EE_PUE" + tablename;
