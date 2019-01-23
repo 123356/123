@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace IDAO
 {
-    public interface IPDRInfo:IDAOBase,IDisposable
+    public interface IPointsInfo : IDAOBase, IDisposable
     {
-        IList<t_CM_PDRInfo> GetPDRList(string pids);
-      
+        IList<t_CM_PointsInfoBase1> GetTageID(int pid,int cid);
     }
 }
