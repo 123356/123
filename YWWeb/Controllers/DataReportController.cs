@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using Newtonsoft.Json;
-using System.IO;
 using System.Text;
 //using System.Data.Objects;
 //using System.Data.Objects.SqlClient;
-using System.Data.SqlClient;
 using YWWeb.PubClass;
 using DAL;
 using IDAO.Models;
 using System.Reflection;
-using MongoDB.Driver;
-using MongoDB;
-using MongoDB.Bson;
 
 namespace YWWeb.Controllers
 {
@@ -108,10 +102,7 @@ namespace YWWeb.Controllers
             //}
             //return Content(strJson);
         }
-        public class his : BaseEntity
-        {
-
-        }
+     
         public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
         {
             pdermsWebEntities b = new pdermsWebEntities();

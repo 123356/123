@@ -6,20 +6,14 @@ using System.Web.Mvc;
 using System.Text;
 using YWWeb.PubClass;
 using System.Data;
-using System.Collections.Specialized;
 using System.IO;
-using System.Web.Hosting;
 using Loger;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Collections;
-using Newtonsoft.Json.Converters;
 using YWWeb.Lib.Base;
 using DAL;
-using MongoDB.Driver;
-using MongoDB.Bson;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
 
 namespace YWWeb.Controllers
@@ -4825,10 +4819,7 @@ namespace YWWeb.Controllers
         //    }
         //    return Json("ok",JsonRequestBehavior.AllowGet);
         //}
-        public class his : BaseEntity
-        {
-
-        }
+        
 
 
 

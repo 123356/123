@@ -69,15 +69,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Bson, Version=2.7.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Bson.2.7.2\lib\net45\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.7.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.2.7.2\lib\net45\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core, Version=2.7.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.Core.2.7.2\lib\net45\MongoDB.Driver.Core.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.10.8\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
@@ -306,8 +297,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PubClass\BaseEntity.cs" />
-    <Compile Include="PubClass\Builder.cs" />
     <Compile Include="PubClass\ComboTree.cs" />
     <Compile Include="PubClass\Common.cs" />
     <Compile Include="PubClass\CommonData.cs" />
@@ -321,7 +310,6 @@
     <Compile Include="PubClass\HttpUtils.cs" />
     <Compile Include="PubClass\ILogger.cs" />
     <Compile Include="PubClass\JsonHelper.cs" />
-    <Compile Include="PubClass\MongoHelper.cs" />
     <Compile Include="PubClass\OrderRecord.cs" />
     <Compile Include="PubClass\RowCount.cs" />
     <Compile Include="PubClass\SQLHelper.cs" />

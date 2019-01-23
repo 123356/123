@@ -7,7 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 
-namespace YWWeb.PubClass
+namespace DAOMongoDB.Mongo
 {
     public class MongoHelper : IDisposable
     {
@@ -128,7 +128,7 @@ namespace YWWeb.PubClass
 
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
-        protected static ILogger _logger;
+     
         private static readonly string connStr = ConfigurationManager.ConnectionStrings["MgconnStr"].ToString();
 
         private static readonly string dbName = ConfigurationManager.AppSettings["dbName"].ToString();
@@ -139,11 +139,16 @@ namespace YWWeb.PubClass
             _database = _client.GetDatabase(dbName);
         }
 
-        public MongoHelper(string dbname, ILogger log)
+        //public MongoHelper(string dbname, ILogger log)
+        //{
+        //    _client = new MongoClient(connStr);
+        //    _database = _client.GetDatabase(dbName);
+        //    //_logger = log;
+        //}
+        public MongoHelper(string dbname)
         {
             _client = new MongoClient(connStr);
             _database = _client.GetDatabase(dbName);
-            _logger = log;
         }
         #endregion
 
@@ -164,7 +169,8 @@ namespace YWWeb.PubClass
             catch (Exception ex)
             {
                 this.WriteError("SelectCount", "SelectCount(string collectionName)", ex.Message);
-                return null;
+                throw ex;
+                //return null;
             }
         }
         /// <summary>
@@ -421,8 +427,9 @@ namespace YWWeb.PubClass
         #region private
         private void WriteError(string title, string function, string message)
         {
-            if (_logger != null)
-                _logger.WriteError(title, function, message);
+            //if (_logger != null)
+            //    _logger.WriteError(title, function, message);
+            System.Diagnostics.Debug.Write(title + function + "-"+message);
         }
         #endregion
 

@@ -20,25 +20,32 @@ namespace DAO
         }
         public static IDBFactory GetDBFactory(string dbInf)
         {
-            if (DefaultKey.Equals(dbInf))
+            if (DefaultKey.Equals(dbInf)||string.IsNullOrEmpty(dbInf))
             {
                 lock (m_dbFactoryMgr)
                 {
                     if (!m_dbFactoryMgr.ContainsKey(DefaultKey))
                     {
-                        m_dbFactoryMgr.Add(DefaultKey, BuildDBFactory());
+                        m_dbFactoryMgr.Add(DefaultKey, BuildDBFactory(ConnectionString));
                     }
                 }
                 return m_dbFactoryMgr[DefaultKey];
             }
             else
             {
-                throw new NotImplementedException();
+                lock (m_dbFactoryMgr)
+                {
+                    if (!m_dbFactoryMgr.ContainsKey(dbInf))
+                    {
+                        m_dbFactoryMgr.Add(dbInf, BuildDBFactory(dbInf));
+                    }
+                }
+                return m_dbFactoryMgr[dbInf];
             }
         }
-        public static IDBFactory BuildDBFactory(){
+        public static IDBFactory BuildDBFactory(string dllInf){
             //return new DBFactory();
-            string[]inf=ConnectionString.Split(',');
+            string[]inf= dllInf.Split(',');
             if (inf.Length < 1)
                 throw new Exception("数据库集配置错误.");
             return Instance<IDBFactory>(inf[0], inf[1]);
