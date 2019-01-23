@@ -99,7 +99,6 @@
         },
         //导出
         ExcelPort: function () {
-            
             window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + new Date(this.year).getFullYear()+ "&isHide=1" + "&type=" + 3, '_blank');
         },
         getUserBtn: function () {

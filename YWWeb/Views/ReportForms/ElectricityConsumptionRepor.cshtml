@@ -11,6 +11,7 @@
     <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
     <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css"/>
     <style>
         #pzhtml td {
             text-align: center;
@@ -157,7 +158,31 @@
                 </tr>*@
             </tfoot>
         </table>
-        <table border="" cellspacing="0" cellpadding="0" class="reportTable">
+
+        <div class="reportView">
+            <div class="title">{{curTimeStr}} 日配电室能源统计表 (kW·h)</div>
+            <div class="stationName">&nbsp;{{cruPname}}</div>
+            <div  class="row">
+                <div class="flex-item flex-1_5"></div>
+                <div class="flex-item flex-2"></div>
+                <div class="flex-item flex-24 noBorder">
+                    <div class="flex-item flex-1 center" v-for="item in hours" >{{item}}</div>
+                </div>
+            </div>
+            <div class="row"  v-for='item in info' >
+                <div class="flex-item flex-1_5 center"> {{item.DeviceName}}</div>
+                <div class="flex-item flex-26 noBorder outView " >
+                    <div class="flex-item flex-1 noBorder " v-for="data in item.list_data">
+                        <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
+                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val |toFixed}}</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <table border="" cellspacing="0" cellpadding="0" class="reportTable" style="display:none">
             <tr>
                 <td colspan="26" align="center" class="title">{{curTimeStr}} 日配电室能源统计表 (kW·h)</td>
             </tr>
@@ -168,8 +193,8 @@
                 <td colspan="1" style="width:50px">&nbsp;</td>
                 <td colspan="25">
                     <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                        <div style="flex:2" class="item-div"></div>
-                        <div style="flex:1" class="item-div" v-for="item in hours">
+                        <div style="flex:2"  class="item-div"></div>
+                        <div style="flex:1" class="item-div"  v-for="item in hours" >
                             {{item}}
                         </div>
                     </div>

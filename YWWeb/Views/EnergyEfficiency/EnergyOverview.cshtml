@@ -51,7 +51,7 @@
                             <div class="footer-item">同比： {{LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                         </div>
                         <div class="footerBtn" style="margin-top:5px">
-                            <button class="btn">分项数据</button>
+                            <button class="btn" v-on:click="toAreaTree">分项数据</button>
                         </div>
                     </div>
 
@@ -150,7 +150,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.62"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.64"></script>
     
     
 </body>

@@ -25,13 +25,9 @@
             }
         },
         checkStation: function (e) {
-            console.log(e)
-
-            if (e == 0) {
-                this.$Message.warning('请选择站');
-                return
-            }
             this.curPid = e
+            console.log(this.curPid)
+            $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
             this.getRealTimePUEData()
         },
         renderContent(h, { root, node, data }) {
@@ -63,10 +59,15 @@
             })
                 .then(function (res) {
                     var data = res.data
+                    if ($.cookie('cookiepid') > 0) {
+                        that.curPid = $.cookie('cookiepid')
+
+                    }
                     var arr = new Array()
                     for (var i = 1; i < data.length; i++) {
                         arr.push(data[i])
                     }
+                    console.log(that.curPid)
                     var temp = new Array()
                     temp.push(
                         {
@@ -101,6 +102,11 @@
                             this.curPid = node.children[i].id;
                             this.curPname = node.children[i].text
                             node.children[i].selected = true
+                        } else {
+                            if (this.curPid == node.children[i].id) {
+                                this.curPname = node.children[i].text
+                            }
+
                         }
                     }
                     this.foreachTree(node.children[i]);
@@ -451,6 +457,7 @@
      
     },
     beforeMount: function () {
+       
         this.getStation()
       //  this.getRealTimePUEData()
         

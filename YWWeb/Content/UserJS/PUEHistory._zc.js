@@ -46,6 +46,10 @@
                 .then(function (res) {
                     var data = res.data
                     var arr = new Array()
+                    if ($.cookie('cookiepid') > 0) {
+                        that.curPid = $.cookie('cookiepid')
+
+                    }
                     for (var i = 1; i < data.length; i++) {
                         arr.push(data[i])
                     }
@@ -135,6 +139,12 @@
                             this.curPid = node.children[i].id;
                             this.curPname = node.children[i].text
                             node.children[i].selected = true
+                        } else {
+                            if (this.curPid == node.children[i].id) {
+                                this.curPname = node.children[i].text
+                            }
+                            
+                           
                         }
                     }
                     this.foreachTree(node.children[i]);
@@ -145,14 +155,8 @@
            
         },
         checkStation: function (e) {
-            console.log(e)
-            
-            if (e == 0) {
-                this.$Message.warning('请选择站');
-                return
-            }
             this.curPid = e
-            console.log("调用方法")
+            $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
             this.getPUEDataByTime()
         },
         openSelect: function (e) {
@@ -284,6 +288,8 @@
         },
     },
     beforeMount: function () {
+        
+
         this.getStation()
     },
     mounted: function () {

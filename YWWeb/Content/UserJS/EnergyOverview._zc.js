@@ -4,6 +4,7 @@
         loading:true,
         info: {},
         uid: null,
+        Uname:'',
         curDate: null,
         month: null,
         powerChart: null,
@@ -40,6 +41,11 @@
         zongBudget:null,
     },
     methods: {
+        toAreaTree: function () {
+            $.cookie('UnitData', JSON.stringify({ UnitID: this.uid, UnitName: this.Uname, PDRList: null }), { expires: 7, path: '//EnergyManage/EMSetting/AreaTree' });
+            console.log("跳转")
+            location.href = '/EnergyManage/EMSetting/AreaTree'
+        },
         //类型下拉框
         getCollectDevTypeList: function () {
             var that = this
@@ -571,6 +577,7 @@
         var id = $.cookie("enUID")
         if (id!=null) {
             this.uid = id
+            this.Uname = $.cookie("enUName")
             console.log(this.uid)
         }
         var date = new Date()
