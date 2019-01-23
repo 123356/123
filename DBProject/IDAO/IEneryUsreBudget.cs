@@ -12,12 +12,9 @@ namespace IDAO
         IList<t_EE_EneryUsreBudget> GetBudgetByID(int uid, int year = 0, int month = 0, int coTypeID = 0);
         int AddBudGet(t_EE_EneryUsreBudget model);
         int UpdateBudGet(t_EE_EneryUsreBudget model);
-
         IList<t_EE_EneryUsreBudget> GetenBudgetByYearID(int cotyid);
-
         t_EE_EneryUsreBudget GetenBudgetByID(int id);
-
-        t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid,int eneryid);
+        t_EE_EneryUsreBudget GetenBudgetByeneyidAndCoID(int cotyid, int eneryid);
         int DeleEnBudgetByeneyidAndCoID(int cotyid, int eneryid);
     }
 }

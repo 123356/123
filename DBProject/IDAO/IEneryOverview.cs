@@ -9,13 +9,7 @@ namespace IDAO
 {
     public interface IEneryOverview : IDAOBase, IDisposable
     {
-        //IList<t_V_EneryView> GetEneryPowerOverview(int uid);
-
-        //IList<t_V_EneryView> GetEneryWaterOverview(int uid);
-
-        //IList<t_V_EneryView> GetEneryGasOverview(int uid);
-
-        IList<t_V_EneryView> GetDatas(string cids, string pids,string month);
+        IList<t_V_EneryView> GetDatas(string cids, string pids, string month);
 
         IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime);
 
