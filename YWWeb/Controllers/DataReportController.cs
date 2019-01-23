@@ -137,7 +137,7 @@ namespace YWWeb.Controllers
                             if (b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault() != null)
                             {
                                 json.Append(",");
-                                json.Append("\"" + "CName" + "\":\"" + b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault().CName + "\"");
+                                json.Append("\"" + "CName" + "\":\"" + b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID&&p.PID==poinf.PID).FirstOrDefault().CName + "\"");
                             }
                             else
                             {

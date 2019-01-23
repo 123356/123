@@ -101,18 +101,17 @@
 </head>
 <body>
     <div id="app">
-        <template>
             <div class="layout">
                 <Layout>
                     <Sider hide-trigger :style="{background: '#fff'}">
                         <i-Menu :active-name="UnitData.UnitID" theme="light" width="auto" :open-names="['1']" ref="side_menu" v-on:on-select="changeUnitID">
                             <Submenu name="1">
+
                                 <template slot="title">
-                                    <Icon type="ios-navigate"></Icon>
-                                    单位
+                                  <Icon type="ios-navigate"></Icon>  单位
                                 </template>
-                                <menu-item v-for="(itme,index) in untiList" :name="itme.UnitID" :key="index" :data-pids="itme.PDRList" :style="{'border-buttom':'1px soldi #000'}">{{itme.UnitName}}</menu-item>
-                            </Submenu>
+                                        <menu-item v-for="(itme,index) in untiList" :name="itme.UnitID" :key="index" :data-pids="itme.PDRList" :style="{'border-buttom':'1px soldi #000'}">{{itme.UnitName}}</menu-item>
+</Submenu>
                         </i-Menu>
                     </Sider>
                     <Layout :style="{padding: '0 24px 24px'}">
@@ -122,16 +121,15 @@
                                 <tab-pane label="组织区域树" :name="2" icon="md-pie"></tab-pane>
                             </Tabs>
 
-                            <template>
-                                <Row style="background:#eee;padding:20px;height:810px" :style="{'overflow':'hiddens'}">
+                                <Row style="background:#eee;padding:20px;height:810px;overflow:hidden">
                                     <i-col span="12">
                                         <Card :bordered="false">
                                             <p slot="title">{{UnitData.UnitName}}——{{treeType == 1?"用电分项树":"组织区域树"}}</p>
-
-                                            <Tree :data="treeType == 1?subitemTree: areaTree"
+                                            <tree :data="treeType == 1 ? subitemTree: areaTree"
                                                   :render="renderContent"
                                                   :style="{'height':'100%','overflow-y':'auto','overflow-x':'hidden','width':'110%','padding-right':'10%'}"
-                                                  ref="tree"></Tree>
+                                                  ref="tree">
+                                            </tree>
                                         </Card>
                                     </i-col>
                                     <i-col span="11" offset="1">
@@ -140,23 +138,26 @@
                                             <form class="form-horizontal" id="form" style="padding:10px;height:90%;overflow-y:auto;margin-bottom:25px;">
                                                 <div class="form-group">
                                                     <label for="name">名称</label>
-                                                    <input type="text" class="form-control" id="name" v-model="node.title" />
+                                                    
+                                                    <i-select filterable :id="name" v-model="node.title">
+                                                        <i-option v-for="item in typeHistory" :value="item.Name" :key="item.id">{{ item.Name }}</i-option>
+                                                    </i-select>
                                                 </div>
                                                 <div class="form-group" v-show="treeType==2">
                                                     <label for="head">负责人</label>
-                                                    <input type="text" class="form-control" id="head" v-model="node.head">
+                                                    <i-input type="text" :id="'head'" v-model="node.head">
                                                 </div>
                                                 <div class="form-group" v-show="treeType==1">
                                                     <label for="area">面积</label>
-                                                    <input type="text" class="form-control" id="area" v-model="node.area">
+                                                    <i-input type="text" :id="'area'" v-model="node.area">
                                                 </div>
                                                 <div class="form-group" v-show="treeType==1">
                                                     <label for="people">人数</label>
-                                                    <input type="text" class="form-control" id="people" v-model="node.people">
+                                                    <i-input type="text" :id="'people'" v-model="node.people">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="note">备注</label>
-                                                    <input type="text" class="form-control" id="note" v-model="node.note">
+                                                    <i-input type="text" :id="'note'" v-model="node.note">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="addCid">累加电表 <i-button type="primary" size="small" icon="md-add" v-on:click="modal1 = true;cidEdit='add'" ghost></i-button></label>
@@ -171,18 +172,23 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                            <button type="submit" class="btn btn-default" element-id="form" v-on:click="submitForm">Submit</button>
-                                            <p slot="foot"></p>
+                                            
+                                            <i-row>
+                                                <i-col span="6" offset="6">
+                                                    <i-button  type="primary" element-id="form" v-on:click="submitForm" :style="{'width':'90%'}">保存</i-button>
+                                                </i-col>
+                                                <i-col span="6">
+                                                    <i-button type="primary" element-id="form" :style="{'width':'90%'}">取消</i-button>
+                                                </i-col>
+                                            </i-row>
+
                                         </Card>
                                     </i-col>
                                 </Row>
-                            </template>
-
                         </Content>
                     </Layout>
                 </Layout>
             </div>
-        </template>
 
         <Modal :title="UnitData.UnitName" v-model="modal1" v-on:on-ok="ModalonOk" v-on:on-cancel="ModalonCancel">
             <Tree :data="cidTree" show-checkbox :style="{'height':'500px','width':'100%','overflow-y': 'auto;','overflow-x': 'hidden'}" v-on:on-check-change="selectedCidNode"></Tree>
@@ -224,7 +230,13 @@
                     size: 'small',
                 },
 
-                show: true
+                show: true,
+
+
+
+
+
+                typeHistory: []
             },
             methods: {
 
@@ -727,6 +739,21 @@
                     else {
                         return "";
                     }
+                },
+
+                GetTypeHistory: function () {
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetTypeHistory",
+                        method: "post",
+                        params: {
+                            type: this.treeType
+                        }
+                    })
+                        .then(function (res) {
+                            this.typeHistory = res.data
+                        })
+                        .catch(function (e) {
+                        })
                 }
             },
             updated: function () {
@@ -743,6 +770,7 @@
                     this.getPDRList()
                 }
                 this.loadUnitList();
+                this.GetTypeHistory();
             }
         })
 

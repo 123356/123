@@ -38,7 +38,22 @@ namespace EnergyManage.Controllers
         /// <returns></returns>
         public ActionResult GetTreeData(int unitID,int item_type,string unitName)
         {
-            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            IList<IDAO.Models.t_V_EnerProjectType> list;
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+
+
+
+            if (list.Count() == 0 && item_type==1)
+            {
+               DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            }
+
+
+
+
+
+
             Tree tree = new Tree();
             tree.id = 0;
             tree.name = unitName;
@@ -214,14 +229,18 @@ namespace EnergyManage.Controllers
             public int area { set; get; }
             public int people { set; get; }
             public List<Tree> children { set; get; }
+        }
 
+        public JsonResult GetTypeHistory(int type)
+        {
+            IList<IDAO.Models.t_EE_EnerUserType> list = DAL.EnerUserTypeDAL.getInstance().GetHistoryList(type);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
 
-		#region
-
-		public JsonResult GetTageID( int pid, int cid )
+        #region
+        public JsonResult GetTageID( int pid, int cid )
 		{
 			IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
 			return(Json( list, JsonRequestBehavior.AllowGet ) );

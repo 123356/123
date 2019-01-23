@@ -64,5 +64,25 @@ namespace DAL
             return data;
         }
 
+
+        public IList<t_V_EnerProjectType> AddProjectTemplate(int unitID, int item_type)
+
+        {
+            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
+            try
+            {
+                data = _dbFactory.venerProjectType.AddProjectTemplate(unitID, item_type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+
+
+
+
     }
 }
