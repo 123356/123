@@ -1,6 +1,7 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
         pieChart: null,
         gaugeChart: null,
         lineChart: null,
@@ -8,16 +9,110 @@
         lineShow: true,
         gaugeSHow: true,
         barShow: true,
-        pieShow:true
-
+        pieShow: true,
+        curPid: null,
+        curPname: '',
+        treeData:[],
+        initSelectShow: true,
+        isInitLine: true,
+        isInitGauge: true,
+        isInitBar:true
     },
     methods: {
+        openSelect: function (e) {
+            if (e) {
+                this.initSelectShow = false
+            }
+        },
+        checkStation: function (e) {
+            console.log(e)
+
+            if (e == 0) {
+                this.$Message.warning('请选择站');
+                return
+            }
+            this.curPid = e
+            this.getRealTimePUEData()
+        },
+        renderContent(h, { root, node, data }) {
+            var that = this
+            return h('Option', {
+                style: {
+                    display: 'inline-block',
+                    margin: '5px'
+                },
+                attrs: {
+                    selected: data.id == that.curPid
+                },
+                props: {
+                    value: data.id
+                }
+            }, data.text)
+        },
+        //获取站
+        getStation: function () {
+            var that = this
+            this.$http({
+                url: '/Home/ComboTreeMenu?type=1',
+                method: 'post'
+            })
+                .then(function (res) {
+                    var data = res.data
+                    var arr = new Array()
+                    for (var i = 1; i < data.length; i++) {
+                        arr.push(data[i])
+                    }
+                    var temp = new Array()
+                    temp.push(
+                        {
+                            id: -1,
+                            text: '全部',
+                            expand: true,
+                            children: arr
+                        }
+                    )
+                    that.foreachTree(temp[0])
+                    that.treeData = temp
+                    that.getRealTimePUEData()
+                    setInterval(function () {
+                        that.getRealTimePUEData()
+                    }, 60000)
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    if (!node.children[i].children) {
+                        if (this.curPid == null) {
+                            node.expand = true
+                            this.curPid = node.children[i].id;
+                            this.curPname = node.children[i].text
+                            node.children[i].selected = true
+                        }
+                    }
+                    this.foreachTree(node.children[i]);
+
+
+                }
+            }
+
+        },
         //获取数据
         getRealTimePUEData: function () {
             var that = this
             this.$http({
                 url: '/Home/GetRealTimePUEData',
                 method: 'POST',
+                params: {
+                    pid: this.curPid
+                }
                 
             })
              .then(function (res) {
@@ -25,34 +120,50 @@
                  if (res.data) {
                      if (res.data.list_top && res.data.list_top.length > 0) {
                          that.lineShow = true
+                         that.isInitLine = false
                          that.createLine(res.data.list_top)
+                         
                      } else {
                          that.lineShow = false
+                         if (!that.isInitLine) {
+                             lineChart.clear()
+                         }
                      }
                      if (res.data.RealValue) {
                          that.gaugeSHow = true
+                         that.isInitGauge = false
                          this.createGauge(res.data.RealValue)
-                         
+                        
                      } else {
                          that.gaugeSHow = false
+                         if (!that.isInitGauge) {
+                             gaugeChart.clear()
+                         }
                      }
                      if (res.data.list_le && res.data.list_le.length > 0) {
                          that.barShow = true
                          that.pieShow = true
+                         that.isInitBar = false
                          this.createBar(res.data.list_le)
                          this.createPie(res.data.list_le)
                      } else {
                          that.barShow = false
                          that.pieShow = false
+                         if (!that.isInitBar) {
+                             barChart.clear()
+                             pieChart.clear()
+                         }
                      }
                     
                      
                      
                      
                  }
+                 that.loading = false
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
+                that.loading = false
             })
         },
         //实时趋势
@@ -67,9 +178,13 @@
             var  option = {
                 backgroundColor: '#fff',
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    textStyle: {
+                        fontSize: 12
+                    }
                 },
                 grid: {
+                    top:40,
                     left: 35,
                     right: 35,
                     bottom: 25,
@@ -167,7 +282,10 @@
             var option ={
                     backgroundColor: '#fff',
                     tooltip: {
-                        formatter: "{a} <br/>{b} : {c}%"
+                        formatter: "{b} : {c}%",
+                        textStyle: {
+                            fontSize: 12
+                        }
                     },
                
                     color: ['#32b194'],
@@ -234,6 +352,9 @@
                     trigger: 'axis',
                     axisPointer: {
                         type: 'shadow'
+                    },
+                    textStyle: {
+                        fontSize: 12
                     }
                 },
 
@@ -244,7 +365,7 @@
                     top:'5%',
                     containLabel: true
                 },
-                color: ['#56646f'],
+                color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
                 xAxis: {
                     type: 'value',
                     boundaryGap: [0, 0.01],
@@ -257,7 +378,7 @@
                 yAxis: {
                     type: 'category',
                     axisLabel: {
-                        rotate: 30,
+                      //  rotate: 30,
                         color: '#666',
                         fontSize:12
                     },
@@ -266,7 +387,7 @@
                 series: [
 
                     {
-                        name: '2012年',
+                        //name: '2012年',
                         type: 'bar',
                         data: y
                     }
@@ -287,14 +408,17 @@
              var option = {
                  tooltip: {
                      trigger: 'item',
-                     formatter: "{a} <br/>{b} : {c} ({d}%)"
+                     formatter: "{a} <br/>{b} : <br/>{c} ({d}%)",
+                     textStyle: {
+                         fontSize:12
+                     }
                  },
                  color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
                  series: [
                      {
-                         name: '能耗',
+                         name: '能耗效率',
                          type: 'pie',
-                         radius: '70%',
+                         radius: '68%',
                          center: ['50%', '50%'],
                          data:data,
                          itemStyle: {
@@ -320,13 +444,16 @@
      
     },
     beforeMount: function () {
-        this.getRealTimePUEData()
+        this.getStation()
+      //  this.getRealTimePUEData()
+        
+        
        
        
     },
     mounted: function () {
-        
        
+        
     }
 })
 

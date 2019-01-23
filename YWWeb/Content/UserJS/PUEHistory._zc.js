@@ -1,7 +1,7 @@
 ﻿new Vue({
     el: "#app",
     data: {
-       
+        loading:true,
         treeData: [],
         typeList: [
             { id: 1, name: '近一日' }, { id: 2, name: '近一月' }, { id: 3, name: '近一年' }, { id: 4, name: '自定义' },
@@ -96,10 +96,12 @@
                         }
                         
                     }
-                    
+                    that.loading = false
             })
             .catch(function (e) {
-                throw new ReferenceError(e.message)
+                //throw new ReferenceError(e.message)
+                that.loading = false
+                console.log(e)
             })
         },
         fromatDate: function (date) {
@@ -165,6 +167,7 @@
             this.getPUEDataByTime()
         },
         createLine: function (data) {
+            console.log(data)
             this.chartShow = true
             var x = new Array()
             var y = new Array()
@@ -173,8 +176,9 @@
                     x.push(data[i].name)
                     y.push(data[i].value)
                 }
-            
-            
+
+            console.log(x)
+            console.log(y)
             lineChart = echarts.init(document.getElementById('lineChart'));
             var option = {
                 backgroundColor: '#fff',
@@ -194,7 +198,6 @@
                         show: false
                     }
                 },
-
                 toolbox: {
                     right: 35,
                     show: true,
@@ -211,7 +214,7 @@
                     }
                 },
                 dataZoom: [{
-                    startValue: '01-06 14:00'
+                    //startValue: '01-06 14:00'
                 }, {
                     type: 'inside'
                 }],
@@ -264,10 +267,10 @@
                     }
                 }
             };
-
+            console.log(option)
 
             lineChart.clear()
-            lineChart.setOption(option)
+            lineChart.setOption(option,true)
             window.addEventListener("resize", () => {
                 lineChart.resize();
             });
