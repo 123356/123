@@ -136,7 +136,7 @@
                 <td colspan="1" style="width:50px">&nbsp;</td>
                 <td colspan="13">
                     <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                        <div style="flex:1" class="item-div"></div>
+                        <div style="flex:2" class="item-div"></div>
                         <div style="flex:1" class="item-div" v-for="item in month">
                             {{item}}月
                         </div>
@@ -152,7 +152,7 @@
                 <td colspan="25">
 
                     <div style="width:100%;display:flex;flex-direction:row" class="outItem-div" v-for="data in item.list_data">
-                        <div style="flex:1;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
+                        <div style="flex:2;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
                             {{data.Cname==""?'--':data.Cname}}
                         </div>
                         <div style="flex:1;overflow:hidden" class="item-div" v-for="val in data.Value">
