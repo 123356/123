@@ -4984,7 +4984,7 @@ namespace YWWeb.Controllers
                 {
                     pueView m = new pueView();
                     m.name = item.Key.ToString();
-                    m.value = item.Sum(p => p.PUE);
+                    m.value = Math.Round(item.Sum(p => p.PUE), 2);
                     data.Add(m);
                 }
             }
