@@ -35,6 +35,10 @@
             this.getRealTimePUEData()
         },
         renderContent(h, { root, node, data }) {
+            var disabled = false
+            if (data.id == 0) {
+                disabled=true
+            }
             var that = this
             return h('Option', {
                 style: {
@@ -42,7 +46,8 @@
                     margin: '5px'
                 },
                 attrs: {
-                    selected: data.id == that.curPid
+                    selected: data.id == that.curPid,
+                    disabled: disabled
                 },
                 props: {
                     value: data.id
@@ -89,6 +94,7 @@
             }
             if (node.children && node.children.length > 0) {
                 for (var i = 0; i < node.children.length; i++) {
+                    
                     if (!node.children[i].children) {
                         if (this.curPid == null) {
                             node.expand = true
@@ -221,7 +227,8 @@
                     visualMap: {
                         top: 10,
                         left: 'center',
-                        orient:'horizontal',
+                        orient: 'horizontal',
+                        precision: 1,
                         pieces: [{
                             gt: 0,
                             lte: 1.8,

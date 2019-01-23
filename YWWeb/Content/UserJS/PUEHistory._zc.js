@@ -17,6 +17,10 @@
     },
     methods: {
         renderContent(h, { root, node, data }) {
+            var disabled = false
+            if (data.id == 0) {
+                disabled = true
+            }
             var that = this
             return h('Option', {
                 style: {
@@ -24,7 +28,8 @@
                     margin: '5px'
                 },
                 attrs: {
-                    selected: data.id == that.curPid
+                    selected: data.id == that.curPid,
+                    disabled: disabled
                 },
                 props: {
                     value: data.id
@@ -221,6 +226,7 @@
                 visualMap: {
                     top: 10,
                     left: 'center',
+                    precision: 1,
                     orient: 'horizontal',
                     pieces: [{
                         gt: 0,
