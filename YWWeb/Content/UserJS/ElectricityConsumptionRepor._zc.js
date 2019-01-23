@@ -46,8 +46,8 @@
                 })
         },
         stationChange: function (e) {
-            this.cruPname = val.label
-            this.PID = val.value
+            this.cruPname = e.label
+            this.PID = e.value
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
         },
         //用户类型
@@ -154,6 +154,14 @@
             this.curTimeStr = this.getDate()
         },
        
+    },
+    filters: {
+        toFixed: function (value) {
+            if (!value) {
+                return 0
+            }
+            return value.toFixed(2)
+        },
     },
     beforeMount: function () {
         
