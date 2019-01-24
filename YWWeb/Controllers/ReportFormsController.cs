@@ -244,6 +244,8 @@ namespace YWWeb.Controllers
             public string ItemType { get; set; }
             public int DID { get; set; }
             public string DeviceName { get; set; }
+
+            public string OrderBy { get; set; }
         }
 
 
@@ -273,7 +275,7 @@ namespace YWWeb.Controllers
                         tableName = "t_EE_PowerQualityYearly";
                     }
                     CIDS = GetcidByPID(type, pid);
-                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.DID,b.CName,b.UserType,b.AreaType,b.ItemType,c.DeviceName from  " + tableName + "  a,t_DM_CircuitInfo b,t_DM_DeviceInfo c where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and b.DID=c.DID and a.UsePower is not null";
+                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.DID,b.CName,b.UserType,b.AreaType,b.ItemType,c.DeviceName,c.OrderBy from  " + tableName + "  a,t_DM_CircuitInfo b,t_DM_DeviceInfo c where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and b.DID=c.DID and a.UsePower is not null";
 
                     if (!pid.Equals(""))
                     {
@@ -318,11 +320,11 @@ namespace YWWeb.Controllers
                     strsql += "   ORDER BY a.CID,RecordTime";
 
                     var list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
-                    foreach (var item in list.GroupBy(p => p.DeviceName))
+                    foreach (var item in list.OrderBy(p=>p.OrderBy).GroupBy(p => p.DeviceName))
                     {
                         DevC model = new DevC();
                         model.DeviceName = item.Key;
-                        foreach (var it in item.GroupBy(p => p.CName))
+                        foreach (var it in item.OrderBy(p=>p.CID).GroupBy(p => p.CName))
                         {
                             PowerView mo = new PowerView();
                             mo.Cname = it.Key;
