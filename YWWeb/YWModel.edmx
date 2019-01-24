@@ -1393,6 +1393,39 @@
           <Property Name="MaxPUE" Type="numeric" Precision="18" Scale="2" />
           <Property Name="MinPUE" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="t_EE_WeatherDaily">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+          <Property Name="CityCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaxValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="MinValue" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="t_EE_WeatherMonthly">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+          <Property Name="CityCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaxValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="MinValue" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="t_EE_WeatherYearly">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+          <Property Name="CityCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaxValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="MinValue" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="t_ES_Category">
           <Key>
             <PropertyRef Name="id" />
@@ -2806,6 +2839,9 @@
           <EntitySet Name="t_EE_PowerQualityRealTime" EntityType="Self.t_EE_PowerQualityRealTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_EE_PowerQualityYearly" EntityType="Self.t_EE_PowerQualityYearly" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_EE_PowerReportConfig" EntityType="Self.t_EE_PowerReportConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_EE_WeatherDaily" EntityType="Self.t_EE_WeatherDaily" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_EE_WeatherMonthly" EntityType="Self.t_EE_WeatherMonthly" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_EE_WeatherYearly" EntityType="Self.t_EE_WeatherYearly" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_ES_Category" EntityType="Self.t_ES_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_ES_ContractPurchase" EntityType="Self.t_ES_ContractPurchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_ES_ContractTemplet" EntityType="Self.t_ES_ContractTemplet" Schema="dbo" store:Type="Tables" />
@@ -3776,6 +3812,9 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_EE_PUEMonthly" EntityType="YWModel.t_EE_PUEMonthly" />
           <EntitySet Name="t_EE_PUERealTime" EntityType="YWModel.t_EE_PUERealTime" />
           <EntitySet Name="t_EE_PUEYearly" EntityType="YWModel.t_EE_PUEYearly" />
+          <EntitySet Name="t_EE_WeatherDaily" EntityType="YWModel.t_EE_WeatherDaily" />
+          <EntitySet Name="t_EE_WeatherMonthly" EntityType="YWModel.t_EE_WeatherMonthly" />
+          <EntitySet Name="t_EE_WeatherYearly" EntityType="YWModel.t_EE_WeatherYearly" />
         </EntityContainer>
         <EntityType Name="t_AlarmTable_en">
           <Key>
@@ -6409,6 +6448,39 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="ITUsePower" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MaxPUE" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MinPUE" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="t_EE_WeatherDaily">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+          <Property Name="CityCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaxValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="t_EE_WeatherMonthly">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+          <Property Name="CityCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaxValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="t_EE_WeatherYearly">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+          <Property Name="CityCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaxValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -9130,6 +9202,42 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="PUE" ColumnName="PUE" />
                 <ScalarProperty Name="PID" ColumnName="PID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_EE_WeatherDaily">
+            <EntityTypeMapping TypeName="YWModel.t_EE_WeatherDaily">
+              <MappingFragment StoreEntitySet="t_EE_WeatherDaily">
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_EE_WeatherMonthly">
+            <EntityTypeMapping TypeName="YWModel.t_EE_WeatherMonthly">
+              <MappingFragment StoreEntitySet="t_EE_WeatherMonthly">
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_EE_WeatherYearly">
+            <EntityTypeMapping TypeName="YWModel.t_EE_WeatherYearly">
+              <MappingFragment StoreEntitySet="t_EE_WeatherYearly">
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
                 <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

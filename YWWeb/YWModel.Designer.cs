@@ -2400,6 +2400,54 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_EE_PUEYearly> _t_EE_PUEYearly;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_WeatherDaily> t_EE_WeatherDaily
+        {
+            get
+            {
+                if ((_t_EE_WeatherDaily == null))
+                {
+                    _t_EE_WeatherDaily = base.CreateObjectSet<t_EE_WeatherDaily>("t_EE_WeatherDaily");
+                }
+                return _t_EE_WeatherDaily;
+            }
+        }
+        private ObjectSet<t_EE_WeatherDaily> _t_EE_WeatherDaily;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_WeatherMonthly> t_EE_WeatherMonthly
+        {
+            get
+            {
+                if ((_t_EE_WeatherMonthly == null))
+                {
+                    _t_EE_WeatherMonthly = base.CreateObjectSet<t_EE_WeatherMonthly>("t_EE_WeatherMonthly");
+                }
+                return _t_EE_WeatherMonthly;
+            }
+        }
+        private ObjectSet<t_EE_WeatherMonthly> _t_EE_WeatherMonthly;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_WeatherYearly> t_EE_WeatherYearly
+        {
+            get
+            {
+                if ((_t_EE_WeatherYearly == null))
+                {
+                    _t_EE_WeatherYearly = base.CreateObjectSet<t_EE_WeatherYearly>("t_EE_WeatherYearly");
+                }
+                return _t_EE_WeatherYearly;
+            }
+        }
+        private ObjectSet<t_EE_WeatherYearly> _t_EE_WeatherYearly;
 
         #endregion
 
@@ -3571,6 +3619,30 @@ namespace YWWeb
         public void AddTot_EE_PUEYearly(t_EE_PUEYearly t_EE_PUEYearly)
         {
             base.AddObject("t_EE_PUEYearly", t_EE_PUEYearly);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_WeatherDaily EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_WeatherDaily(t_EE_WeatherDaily t_EE_WeatherDaily)
+        {
+            base.AddObject("t_EE_WeatherDaily", t_EE_WeatherDaily);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_WeatherMonthly EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_WeatherMonthly(t_EE_WeatherMonthly t_EE_WeatherMonthly)
+        {
+            base.AddObject("t_EE_WeatherMonthly", t_EE_WeatherMonthly);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_WeatherYearly EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_WeatherYearly(t_EE_WeatherYearly t_EE_WeatherYearly)
+        {
+            base.AddObject("t_EE_WeatherYearly", t_EE_WeatherYearly);
         }
 
         #endregion
@@ -29839,6 +29911,534 @@ namespace YWWeb
         private Nullable<global::System.Decimal> _MinPUE;
         partial void OnMinPUEChanging(Nullable<global::System.Decimal> value);
         partial void OnMinPUEChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_WeatherDaily")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_WeatherDaily : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_WeatherDaily 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_WeatherDaily Createt_EE_WeatherDaily(global::System.Int32 id)
+        {
+            t_EE_WeatherDaily t_EE_WeatherDaily = new t_EE_WeatherDaily();
+            t_EE_WeatherDaily.ID = id;
+            return t_EE_WeatherDaily;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityCode
+        {
+            get
+            {
+                return _CityCode;
+            }
+            set
+            {
+                OnCityCodeChanging(value);
+                ReportPropertyChanging("CityCode");
+                _CityCode = StructuralObject.SetValidValue(value, true, "CityCode");
+                ReportPropertyChanged("CityCode");
+                OnCityCodeChanged();
+            }
+        }
+        private global::System.String _CityCode;
+        partial void OnCityCodeChanging(global::System.String value);
+        partial void OnCityCodeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityName
+        {
+            get
+            {
+                return _CityName;
+            }
+            set
+            {
+                OnCityNameChanging(value);
+                ReportPropertyChanging("CityName");
+                _CityName = StructuralObject.SetValidValue(value, true, "CityName");
+                ReportPropertyChanged("CityName");
+                OnCityNameChanged();
+            }
+        }
+        private global::System.String _CityName;
+        partial void OnCityNameChanging(global::System.String value);
+        partial void OnCityNameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxValue
+        {
+            get
+            {
+                return _MaxValue;
+            }
+            set
+            {
+                OnMaxValueChanging(value);
+                ReportPropertyChanging("MaxValue");
+                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
+                ReportPropertyChanged("MaxValue");
+                OnMaxValueChanged();
+            }
+        }
+        private global::System.String _MaxValue;
+        partial void OnMaxValueChanging(global::System.String value);
+        partial void OnMaxValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinValue
+        {
+            get
+            {
+                return _MinValue;
+            }
+            set
+            {
+                OnMinValueChanging(value);
+                ReportPropertyChanging("MinValue");
+                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
+                ReportPropertyChanged("MinValue");
+                OnMinValueChanged();
+            }
+        }
+        private global::System.String _MinValue;
+        partial void OnMinValueChanging(global::System.String value);
+        partial void OnMinValueChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_WeatherMonthly")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_WeatherMonthly : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_WeatherMonthly 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_WeatherMonthly Createt_EE_WeatherMonthly(global::System.Int32 id)
+        {
+            t_EE_WeatherMonthly t_EE_WeatherMonthly = new t_EE_WeatherMonthly();
+            t_EE_WeatherMonthly.ID = id;
+            return t_EE_WeatherMonthly;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityCode
+        {
+            get
+            {
+                return _CityCode;
+            }
+            set
+            {
+                OnCityCodeChanging(value);
+                ReportPropertyChanging("CityCode");
+                _CityCode = StructuralObject.SetValidValue(value, true, "CityCode");
+                ReportPropertyChanged("CityCode");
+                OnCityCodeChanged();
+            }
+        }
+        private global::System.String _CityCode;
+        partial void OnCityCodeChanging(global::System.String value);
+        partial void OnCityCodeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityName
+        {
+            get
+            {
+                return _CityName;
+            }
+            set
+            {
+                OnCityNameChanging(value);
+                ReportPropertyChanging("CityName");
+                _CityName = StructuralObject.SetValidValue(value, true, "CityName");
+                ReportPropertyChanged("CityName");
+                OnCityNameChanged();
+            }
+        }
+        private global::System.String _CityName;
+        partial void OnCityNameChanging(global::System.String value);
+        partial void OnCityNameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxValue
+        {
+            get
+            {
+                return _MaxValue;
+            }
+            set
+            {
+                OnMaxValueChanging(value);
+                ReportPropertyChanging("MaxValue");
+                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
+                ReportPropertyChanged("MaxValue");
+                OnMaxValueChanged();
+            }
+        }
+        private global::System.String _MaxValue;
+        partial void OnMaxValueChanging(global::System.String value);
+        partial void OnMaxValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinValue
+        {
+            get
+            {
+                return _MinValue;
+            }
+            set
+            {
+                OnMinValueChanging(value);
+                ReportPropertyChanging("MinValue");
+                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
+                ReportPropertyChanged("MinValue");
+                OnMinValueChanged();
+            }
+        }
+        private global::System.String _MinValue;
+        partial void OnMinValueChanging(global::System.String value);
+        partial void OnMinValueChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_WeatherYearly")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_WeatherYearly : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_WeatherYearly 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_WeatherYearly Createt_EE_WeatherYearly(global::System.Int32 id)
+        {
+            t_EE_WeatherYearly t_EE_WeatherYearly = new t_EE_WeatherYearly();
+            t_EE_WeatherYearly.ID = id;
+            return t_EE_WeatherYearly;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> RecordTime
+        {
+            get
+            {
+                return _RecordTime;
+            }
+            set
+            {
+                OnRecordTimeChanging(value);
+                ReportPropertyChanging("RecordTime");
+                _RecordTime = StructuralObject.SetValidValue(value, "RecordTime");
+                ReportPropertyChanged("RecordTime");
+                OnRecordTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _RecordTime;
+        partial void OnRecordTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnRecordTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityCode
+        {
+            get
+            {
+                return _CityCode;
+            }
+            set
+            {
+                OnCityCodeChanging(value);
+                ReportPropertyChanging("CityCode");
+                _CityCode = StructuralObject.SetValidValue(value, true, "CityCode");
+                ReportPropertyChanged("CityCode");
+                OnCityCodeChanged();
+            }
+        }
+        private global::System.String _CityCode;
+        partial void OnCityCodeChanging(global::System.String value);
+        partial void OnCityCodeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CityName
+        {
+            get
+            {
+                return _CityName;
+            }
+            set
+            {
+                OnCityNameChanging(value);
+                ReportPropertyChanging("CityName");
+                _CityName = StructuralObject.SetValidValue(value, true, "CityName");
+                ReportPropertyChanged("CityName");
+                OnCityNameChanged();
+            }
+        }
+        private global::System.String _CityName;
+        partial void OnCityNameChanging(global::System.String value);
+        partial void OnCityNameChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxValue
+        {
+            get
+            {
+                return _MaxValue;
+            }
+            set
+            {
+                OnMaxValueChanging(value);
+                ReportPropertyChanging("MaxValue");
+                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
+                ReportPropertyChanged("MaxValue");
+                OnMaxValueChanged();
+            }
+        }
+        private global::System.String _MaxValue;
+        partial void OnMaxValueChanging(global::System.String value);
+        partial void OnMaxValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinValue
+        {
+            get
+            {
+                return _MinValue;
+            }
+            set
+            {
+                OnMinValueChanging(value);
+                ReportPropertyChanging("MinValue");
+                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
+                ReportPropertyChanged("MinValue");
+                OnMinValueChanged();
+            }
+        }
+        private global::System.String _MinValue;
+        partial void OnMinValueChanging(global::System.String value);
+        partial void OnMinValueChanged();
 
         #endregion
 
