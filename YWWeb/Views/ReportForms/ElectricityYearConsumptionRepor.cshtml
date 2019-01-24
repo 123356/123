@@ -95,7 +95,7 @@
 </head>
 <body>
     <div id="yearReport">
-        <div id="tb" class="searchbar" style="overflow:visible;">
+        <div id="tb" class="searchbar" style="overflow:visible;margin-bottom:50px">
 
             <div class="searchrow">
                 站室:
@@ -141,7 +141,7 @@
                 <div class="flex-item flex-14 noBorder outView ">
                     <div class="flex-item flex-1 noBorder " v-for="data in item.list_data">
                         <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
-                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val |toFixed}}</div>
+                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
                     </div>
                 </div>
 
@@ -149,60 +149,21 @@
         </div>
 
 
-
-
-        <table border="" cellspacing="0" cellpadding="0" class="reportTable" style="display:none">
-            <tr>
-                <td colspan="14" align="center" class="title">{{curTimeStr}}年配电室能源统计表 (kW·h)</td>
-            </tr>
-            <tr>
-                <td colspan="14" class="littleTitle">&nbsp;{{cruPname}}</td>
-            </tr>
-
-
-
-            <tr>
-                <td colspan="1" style="width:110px">&nbsp;</td>
-                <td colspan="13">
-                    <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                        <div style="flex:1.5" class="item-div"></div>
-                        <div style="flex:1" class="item-div" v-for="item in month">
-                            {{item}}月
-                        </div>
-                    </div>
-                </td>
-
-            </tr>
-            <tr v-for='item in info'>
-                <td align="center" style="width:110px">
-                    {{item.DeviceName}}
-
-                </td>
-                <td colspan="25">
-
-
-                    <div style="width:100%;display:flex;flex-direction:row;height:100%" class="outItem-div" v-for="data in item.list_data">
-                        <div style="flex:1.5;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
-                            {{data.Cname==""?'--':data.Cname}}
-                        </div>
-
-                        <div style="flex:1;overflow:hidden" class="item-div" v-for="val in data.Value">
-                            <div class="item-div" style="word-wrap:break-word;word-break: break-all;overflow:hidden;border-bottom:0px">
-                                {{val|toFixed}}
-                            </div>
-                        </div>
-
-                    </div>
-                </td>
-            </tr>
-
-
-
-        </table>
     </div>
     </body>
     </html>
+<script type="text/javascript">
+    var par = window.location.search.split("=")
+    console.log(par)
+    if (par.length > 2) {
+        if (par[3] == "false") {
+            $("#tb").hide()
+        } else {
+            $("#tb").show()
+        }
+    }
 
+</script>
     <script type="text/javascript">
         /*var type = 3;
         ////获取url中的参数
@@ -405,4 +366,4 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/ElectricityYearConsumptionRepor._zc.js?v=1.08"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ElectricityYearConsumptionRepor._zc.js?v=1.09"></script>

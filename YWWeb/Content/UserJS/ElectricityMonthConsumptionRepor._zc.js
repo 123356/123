@@ -74,6 +74,7 @@
         //报表查询
         getReport: function () {
             var that = this
+            this.getUrlParam()
             this.$http({
                 url: '/ReportForms/getPowerQualityData',
                 method: 'POST',
@@ -94,13 +95,13 @@
         },
         //打印
         openOrPrint: function () {
-            //window.open('/ReportForms/ElectricityMonthConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=1", '_blank');
+            window.open('/ReportForms/ElectricityMonthConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
             window.print()
         },
         //导出
         ExcelPort: function () {
             var time =
-                window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=1" + "&type=" + 2, '_blank');
+                window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false" + "&type=" + 2, '_blank');
         },
         getDate: function () {
             var date = new Date(this.dateTime)
@@ -149,11 +150,21 @@
             this.getDays()
             this.curTimeStr = this.getDate()
         },
+        getUrlParam: function () {
+            var par = window.location.search.substr(1).split("&")
+            if (par.length > 1) {
+                console.log(par[0].split("=")[1])
+                console.log(par[1].split("=")[1])
+                this.PID = par[0].split("=")[1]
+                this.dateTime = par[1].split("=")[1]
+                this.curTimeStr = par[1].split("=")[1]
+            }
+        }
     },
     filters: {
         toFixed: function (value) {
             if (!value) {
-                return 0
+                return ''
             }
             return value.toFixed(2)
         },

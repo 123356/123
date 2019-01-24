@@ -100,7 +100,7 @@
 
         <Spin size="large" fix v-if="loading"></Spin>
 
-        <div id="tb" class="searchbar" style="overflow:visible;">
+        <div id="tb" class="searchbar" style="overflow:visible;margin-bottom:50px">
 
             <div class="searchrow">
                 站室:
@@ -145,7 +145,7 @@
                 <div class="flex-item  noBorder outView monthFlex " :style="{flex:days.length+2}">
                     <div class="flex-item flex-1 noBorder " v-for="data in item.list_data">
                         <div class="flex-item flex-2 center" style="padding-right:1px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
-                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val |toFixed}}</div>
+                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
                     </div>
                 </div>
 
@@ -156,51 +156,19 @@
 
 
 
-        <!--
-    <table border="" cellspacing="0" cellpadding="0" class="reportTable" style="display:none">
-        <tr>
-            <td :colspan="days.length+2" align="center" class="title">{{curTimeStr}} 月配电室能源统计表 (kW·h)</td>
-        </tr>
-        <tr>
-            <td :colspan="days.length+2" class="littleTitle">&nbsp;{{cruPname}}</td>
-        </tr>
-        <tr>
-            <td colspan="1" style="width:50px">&nbsp;</td>
-            <td :colspan="days.length+1">
-                <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                    <div style="flex:2" class="item-div"></div>
-                    <div style="flex:1" class="item-div" v-for="item in days">
-                        {{item}}
-                    </div>
-                </div>
-            </td>
-
-        </tr>
-        <tr v-for='item in info'>
-            <td align="center" style="width:50px">
-                {{item.DeviceName}}
-
-            </td>
-            <td :colspan="days.length+1">
-                <div style="width:100%;display:flex;flex-direction:row" class="outItem-div" v-for="data in item.list_data">
-                    <div style="flex:2;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
-                        {{data.Cname==""?'--':data.Cname}}
-                    </div>
-                    <div style="flex:1;overflow:hidden" class="item-div" v-for="val in data.Value">
-                        <div class="item-div" style="word-wrap:break-word;word-break: break-all;overflow:hidden;border-bottom:0px">
-                            {{val |toFixed}}
-                        </div>
-                    </div>
-                </div>
-
-            </td>
-        </tr>
-
-    </table>
-
-        -->
     </div>
+    <script type="text/javascript">
+        var par = window.location.search.split("=")
+        console.log(par)
+        if (par.length > 2) {
+            if (par[3] == "false") {
+                $("#tb").hide()
+            } else {
+                $("#tb").show()
+            }
+        }
 
+    </script>
 </body>
 </html>
 

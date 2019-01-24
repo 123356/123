@@ -11,7 +11,7 @@
     <script src="~/Content/UserJS/CommonUnit._jm.js"></script>
     <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css?v=1.0"/>
     <style>
         #pzhtml td {
             text-align: center;
@@ -92,7 +92,7 @@
 <body>
     <div id="dayReport">
         <Spin size="large" fix v-if="loading"></Spin>
-        <div id="tb" class="searchbar" style="overflow:visible;">
+        <div id="tb" class="searchbar" style="overflow:visible;margin-bottom:50px">
 
             <div class="searchrow">
                 站室:
@@ -119,45 +119,6 @@
             </div>
 
         </div>
-        <table cellpadding="" cellspacing="" border="1" class="d_list" style="margin-top:20px; font-size:14px;" id="pzhtml">
-            @*<caption style="font-weight:bold;" id="CTitle"></caption>*@
-            <thead>
-                <tr id="header" style='background-color:#F5F5F7'>
-                    @*<th>序号</th>
-
-                    <th>日期</th>
-
-                    <th>1号</th>
-
-                    <th>2号</th>*@
-                </tr>
-            </thead>
-            <tbody id="content" style="background-color:#FFFFFF">
-                <tr>
-                    @*<td>品种1</td>
-                    <td>品种1</td>
-                    <td>品种1</td>
-                    <td>品种1</td>*@
-                    @*<td>品种1</td>
-                    <td>品种1</td>*@
-                </tr>
-
-            </tbody>
-
-            <tfoot id="fotter" style='font-weight:bold;background-color:#FFFFFF'>
-                @*<tr>
-
-                <td></td>
-                <td></td>
-                </tr>
-                <tr>
-                <td></td>
-                <td>最大值</td>
-                <td></td>
-                <td></td>
-                </tr>*@
-            </tfoot>
-        </table>
 
         <div class="reportView">
             <div class="title">{{curTimeStr}} 日配电室能源统计表 (kW·h)</div>
@@ -174,7 +135,7 @@
                 <div class="flex-item flex-26 noBorder outView " >
                     <div class="flex-item flex-1 noBorder " v-for="data in item.list_data">
                         <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
-                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val |toFixed}}</div>
+                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
                     </div>
                 </div>
                 
@@ -182,50 +143,27 @@
         </div>
 
 
-        <table border="" cellspacing="0" cellpadding="0" class="reportTable" style="display:none">
-            <tr>
-                <td colspan="26" align="center" class="title">{{curTimeStr}} 日配电室能源统计表 (kW·h)</td>
-            </tr>
-            <tr>
-                <td colspan="26" class="littleTitle">&nbsp;{{cruPname}}</td>
-            </tr>
-            <tr>
-                <td colspan="1" style="width:50px">&nbsp;</td>
-                <td colspan="25">
-                    <div style="width:100%;display:flex;flex-direction:row" class="outItem-div">
-                        <div style="flex:2"  class="item-div"></div>
-                        <div style="flex:1" class="item-div"  v-for="item in hours" >
-                            {{item}}
-                        </div>
-                    </div>
-                </td>
-
-            </tr>
-            <tr v-for='item in info'>
-                <td align="center" style="width:50px">
-                    {{item.DeviceName}}
-
-                </td>
-                <td colspan="25">
-
-                    <div style="width:100%;display:flex;flex-direction:row" class="outItem-div" v-for="data in item.list_data">
-                        <div style="flex:2;word-wrap:break-word;word-break: break-all;overflow:hidden" class="item-div" :title="data.Cname">
-                            {{data.Cname==""?'--':data.Cname}}
-                        </div>
-                        <div style="flex:1;overflow:hidden" class="item-div" v-for="val in data.Value">
-                            <div class="item-div" style="word-wrap:break-word;word-break: break-all;overflow:hidden;border-bottom:0px">
-                                {{val |toFixed}}
-                            </div>
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
     </div>
 
 </body>
 </html>
+<script type="text/javascript">
+    var par = window.location.search.split("=")
+    console.log(par)
+    if (par.length > 2) {
+        if (par[3] == "false") {
+            $("#tb").hide()
+        } else {
+            $("#tb").show()
+        }
+    }
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    console.log(getUrlParam("Time"))
+</script>
 <script type="text/javascript">
     /*
     var type = 1;
@@ -392,4 +330,4 @@
 <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
 <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
 <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.04"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.11"></script>
