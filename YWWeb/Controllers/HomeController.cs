@@ -1792,7 +1792,15 @@ namespace YWWeb.Controllers
                     pdfview pdf = new pdfview();
                     var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == iii && p.DTID == 3).ToList();
                     pdf.bianyaCount = bianyaqilist.Count();
-                    pdf.zhaungji = bianyaqilist.Select(p => p.Z).ToList().ConvertAll<decimal?>(p => decimal.Parse(p)).Sum(p => p);
+                    if (bianyaqilist.Count != 0)
+                    {
+                        var zj = bianyaqilist.Where(p => p.Z != "" && p.Z != null).Select(p => p.Z).ToList();
+                        if (zj.Count != 0)
+                            pdf.zhaungji = zj.ConvertAll<decimal?>(p => decimal.Parse(p)).Sum(p => p);
+                        else
+                            pdf.zhaungji = 0;
+                    }
+                
                     foreach (var by in bianyaqilist)
                     {
                         if (!string.IsNullOrEmpty(by.C))
@@ -2157,9 +2165,13 @@ namespace YWWeb.Controllers
             List<t_CM_PDRInfo> list = new List<t_CM_PDRInfo>();
             if (uid != 0)
             {
-                var s = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-                //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-                list = bll.t_CM_PDRInfo.Where(p => s.Contains(p.PID)).ToList();
+
+                var s = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (s != null && !string.IsNullOrEmpty(s.PDRList))
+                {
+                    var pids = s.PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                    list = bll.t_CM_PDRInfo.Where(p => pids.Contains(p.PID)).ToList();
+                }    
             }
             return Json(list);
         }
