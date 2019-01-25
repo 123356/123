@@ -574,8 +574,6 @@
                 //删除节点
                 remove(root, node, data) {
                     var that = this;
-
-
                     this.$Modal.confirm({
                         title: '提示',
                         content: '<p>确认删除节点吗</p>',
@@ -589,7 +587,6 @@
                                     unit_id: that.UnitData.UnitID,
                                 }
                             }).then(function (res) {
-                                console.log(res.data)
                                 const parentKey = root.find(el => el === node).parent;
                                 const parent = root.find(el => el.nodeKey === parentKey).node;
                                 const index = parent.children.indexOf(data);
@@ -647,8 +644,8 @@
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
                                 unit_note: that.node.note,
-                                addCid: that.node.addCid || 0,
-                                delCid: that.node.delCid || 0,
+                                addCid: that.node.addCid ,
+                                delCid: that.node.delCid,
                                 item_type: that.treeType,
                                 Name: name,
                                 id: 0,
@@ -714,7 +711,7 @@
                 },
                 //视图转cid字符串
                 ViewToPIDCId(arr) {
-                    if (arr) {
+                    if (arr.length) {
                         for (var a = 0, list = []; a < arr.length; a++) {
                             list[a] = arr[a].pid + "-" + arr[a].id;
                         }
