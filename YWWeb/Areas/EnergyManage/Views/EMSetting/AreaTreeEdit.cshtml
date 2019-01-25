@@ -580,9 +580,6 @@
                         title: '提示',
                         content: '<p>确认删除节点吗</p>',
                         onOk: () => {
-                            this.$Message.info('Clicked ok');
-
-
                             this.$http({
                                 url: "/energyManage/EMSetting/DeleteSupervisor",
                                 method: "post",
