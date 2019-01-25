@@ -12,7 +12,7 @@
     <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css?v=1.0"/>
-    <style>
+    <style  >
         #pzhtml td {
             text-align: center;
         }
@@ -88,11 +88,16 @@
             border-top: 0
         }
     </style>
+    <style media="print" type="text/css">
+        .noprint {
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
     <div id="dayReport">
         <Spin size="large" fix v-if="loading"></Spin>
-        <div id="tb" class="searchbar" style="overflow:visible;margin-bottom:50px">
+        <div id="tb" class="searchbar noprint" style="overflow:visible;margin-bottom:50px">
 
             <div class="searchrow">
                 站室:
@@ -147,24 +152,6 @@
 
 </body>
 </html>
-<script type="text/javascript">
-    var par = window.location.search.split("=")
-    console.log(par)
-    if (par.length > 2) {
-        if (par[3] == "false") {
-            $("#tb").hide()
-            
-        } else {
-            $("#tb").show()
-        }
-    }
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null) return unescape(r[2]); return null; //返回参数值
-    }
-    console.log(getUrlParam("Time"))
-</script>
 <script type="text/javascript">
     /*
     var type = 1;
