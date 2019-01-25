@@ -1808,6 +1808,7 @@
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+  color:#fff;
 }
 .calendar-prevmonth,
 .calendar-nextmonth,
