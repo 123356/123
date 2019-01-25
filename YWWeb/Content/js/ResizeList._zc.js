@@ -114,21 +114,18 @@ var vm = new Vue({
                 }
             }
             if (obj.content.value || obj.content.value==0 ) {
-                console.log(obj.content.value)
                this.send(JSON.stringify(obj));
             } else {
                 vm.$Message.error("请先配置数据");
             }
         },
         intToBytes: function (value) {
-            console.log(value)
             var bytes = new Array(2);
             bytes[0] = value & 0xff;
             bytes[1] = (value >> 8) & 0xFF
             return bytes;
         },
         byteToShort: function (value) {
-            console.log(value)
             var bytes = (value[1] & 0xff) << 8 | (value[0]) & 0xff;
             return bytes;
         },
@@ -165,7 +162,6 @@ var vm = new Vue({
                 keepAliveInterval: 10,
                 onSuccess: function(e) {
                     console.log(("连接成功"));
-                    console.log('/ny/control_result/' + window.pid)
                     client.subscribe('/ny/control_result/' + window.pid, {
                         qos: 2
                     });
@@ -195,21 +191,18 @@ var vm = new Vue({
             client.onMessageArrived = function (res) {
                 data = JSON.parse(res.payloadString);
                 res = JSON.parse(data.content);
+                console.log('接收');
+                console.log(res)
                 if (res.statu==1 && data.type == 1){
                     vm.$Message.success("配置成功");
                 } else if (res.statu == 1 && data.type == 1){
                     vm.$Message.error("配置失败");
-                }
                 if (res.PointType == "DTU_CTR_TMP") { //空调
-                    console.log(res)
                     that.assist.RefrigerationHeat = parseInt(res.modelStatu) == 1 ? 1 : 0;
                     that.value.DTU_CTR_TMP.modelStatu = parseInt(res.modelStatu) == 0? 0:1;
-                    console.log(that.value.DTU_CTR_TMP.modelStatu)
                     that.value.DTU_CTR_TMP.temp = parseInt(res.temp);
-                 
                     vm.$Message.success("读取成功");
                 } else if (res.PointType == "DTU_CTR_MODEL") { //季节
-
                     that.value['DTU_CTR_MODEL'].value = parseInt(res.pv);
                     vm.$Message.success("读取成功");
                 } else if (res.PointType == "DTU_DI") { //插座开关
@@ -219,6 +212,8 @@ var vm = new Vue({
             };
             //发送
             that.send = function (data) {
+                console.log('发送');
+                console.log(data);
                 var message = new Paho.MQTT.Message(data);
                 message.destinationName = '/ny/control/' + window.pid;
                 client.send(message);
@@ -239,7 +234,7 @@ function power() {
             if (b > 0) {
                 vm.modal = !vm.modal
             } else {
-                vm.$Message.warning("该回路没有可控数据");
+                vm.$Message.warning("该回路没有采集数据");
             }
         });
     } else {
