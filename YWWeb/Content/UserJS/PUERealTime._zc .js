@@ -26,7 +26,6 @@
         },
         checkStation: function (e) {
             this.curPid = e
-            console.log(this.curPid)
             $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
             this.getRealTimePUEData()
         },
@@ -67,7 +66,6 @@
                     for (var i = 1; i < data.length; i++) {
                         arr.push(data[i])
                     }
-                    console.log(that.curPid)
                     var temp = new Array()
                     temp.push(
                         {
@@ -198,7 +196,7 @@
                 grid: {
                     top:40,
                     left: 35,
-                    right: 35,
+                    right: 40,
                     bottom: 25,
                 },
                 xAxis: {
@@ -259,9 +257,27 @@
                         areaStyle: {},
                         smooth: true,
                         symbol: 'none',
+                        markPoint: {
+                            data: [
+                                { type: 'max', name: '最大值' },
+                                { type: 'min', name: '最小值' }
+                            ]
+                        },
                         markLine: {
                             silent: true,
-                            data: [{
+                            data: [
+                                {
+                                    type: 'average', name: '平均值',
+                                    lineStyle: {
+                                        type: 'solid'
+                                    },
+                                    label: {
+                                        show: true,
+                                        position: 'end',
+                                        formatter: '{b}\n{c}'
+                                    }
+                                },
+                                {
                                 yAxis: 1.8,
                                 lineStyle: {
                                     color: '#54ab88'
