@@ -132,19 +132,22 @@ namespace YWWeb
 
                     //var sss = item.StartTime.Value.Date;
                     //var ss = DateTime.Now.AddDays(Convert.ToDouble(item.BeforDay)).Date;
-                    if (
-                        (item.StartTime.Value.Date == DateTime.Now.AddDays(Convert.ToDouble(item.BeforDay)).Date && item.AlarmTime.Value.Date != DateTime.Now.Date)
-                        || item.AlarmTime.Value.Date == Convert.ToDateTime("1900-01-01").Date
-                        || (item.StartTime.Value.Date == DateTime.Now.Date && item.AlarmTime.Value.Date != DateTime.Now.Date)
-                        )
-
+                    if (null != item.StartTime && null != item.AlarmTime)
                     {
-                        t_CM_UserInfo user = bll.t_CM_UserInfo.Where(p => p.UserID == item.PersonID).FirstOrDefault();
-                        if (user != null)
+                        if (
+                          (item.StartTime.Value.Date == DateTime.Now.AddDays(Convert.ToDouble(item.BeforDay)).Date && item.AlarmTime.Value.Date != DateTime.Now.Date)
+                          || item.AlarmTime.Value.Date == Convert.ToDateTime("1900-01-01").Date
+                          || (item.StartTime.Value.Date == DateTime.Now.Date && item.AlarmTime.Value.Date != DateTime.Now.Date)
+                          )
+
                         {
-                            item.AlarmTime = DateTime.Now;
-                            bll.ObjectStateManager.ChangeObjectState(item, System.Data.EntityState.Modified);
-                            UtilsSms.smsConTemp(user.Telephone);
+                            t_CM_UserInfo user = bll.t_CM_UserInfo.Where(p => p.UserID == item.PersonID).FirstOrDefault();
+                            if (user != null)
+                            {
+                                item.AlarmTime = DateTime.Now;
+                                bll.ObjectStateManager.ChangeObjectState(item, System.Data.EntityState.Modified);
+                                UtilsSms.smsConTemp(user.Telephone);
+                            }
                         }
                     }
                 }
