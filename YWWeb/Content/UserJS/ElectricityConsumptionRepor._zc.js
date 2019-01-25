@@ -91,6 +91,13 @@
                     console.log(that.getDate())
                     that.info = res.data
                     that.loading = false
+                    setTimeout(function () {
+                        if (that.isHide == "false") {
+                            window.print()
+                        }
+                    },100)
+                    
+
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -127,6 +134,7 @@
                         res.data[i].src = '/Content/images/Icon16/' + res.data[i].Icon
                     }
                     that.userBtn = res.data
+
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -158,11 +166,10 @@
         getUrlParam: function () {
             var par = window.location.search.substr(1).split("&")
             if (par.length > 1) {
-                console.log(par[0].split("=")[1])
-                console.log(par[1].split("=")[1])
                 this.PID = par[0].split("=")[1]
                 this.dateTime = par[1].split("=")[1]
                 this.curTimeStr = par[1].split("=")[1]
+                this.isHide = par[2].split("=")[1]
             }
         }
     },
