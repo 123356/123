@@ -225,13 +225,7 @@ var vm = new Vue({
             }
         }
     }
-
-
-
 })
-
-
-
 function power() {
     if ($('#list_data').datagrid('getSelected')) {
         $.post("/energyManage/EMSetting/GetTageID", { "pid": pid, "cid": parseInt($('#list_data').datagrid('getSelected').CID) }, function(data) {
@@ -251,11 +245,6 @@ function power() {
     } else {
         vm.$Message.warning("请选择回路");
     }
-
-
-
-
-
 }
 
 
