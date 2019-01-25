@@ -70,7 +70,7 @@ namespace YWWeb.Controllers
                         tableName = "t_EE_PowerQualityYearly";
                     }
                     CIDS = GetcidByPID(type, pid);
-                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.DID,b.CName,b.UserType,b.AreaType,b.ItemType,c.DeviceName from  " + tableName + "  a,t_DM_CircuitInfo b,t_DM_DeviceInfo c where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and b.DID=c.DID and a.UsePower is not null";
+                    string strsql = "select a.RecordTime,a.UsePower Aphase,a.CID,b.DID,b.CName,b.UserType,b.AreaType,b.ItemType,c.DeviceName,c.OrderBy from  " + tableName + "  a,t_DM_CircuitInfo b,t_DM_DeviceInfo c where 1=1 and a.CID IN(" + CIDS + ") and a.CID = b.cid and b.DID=c.DID and a.UsePower is not null";
 
                     if (!pid.Equals(""))
                     {
@@ -85,9 +85,16 @@ namespace YWWeb.Controllers
                             int year = Convert.ToDateTime(Time).Year;
                             int month = Convert.ToDateTime(Time).Month;
                             int day = Convert.ToDateTime(Time).Day;
-                            for (int i = 0; i < 24; i++)
+                            for (int i = 1; i <= 24; i++)
                             {
-                                times.Add(new DateTime(year, month, day).AddHours(i));
+                                //if (i == 23)
+                                //{
+                                //    times.Add(new DateTime(year, month, day).AddDays(1).AddHours(i));
+                                //}
+                                //else
+                                //{
+                                    times.Add(new DateTime(year, month, day).AddHours(i));
+                                //}
                             }
                             strsql += " and  (Day(a.RecordTime)=" + day + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)!=0 or Day(a.RecordTime)=" + (day + 1) + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)=0)";
 
@@ -245,7 +252,7 @@ namespace YWWeb.Controllers
             public int DID { get; set; }
             public string DeviceName { get; set; }
 
-            public string OrderBy { get; set; }
+            public int OrderBy { get; set; }
         }
 
 
@@ -289,7 +296,7 @@ namespace YWWeb.Controllers
                             int year = Convert.ToDateTime(Time).Year;
                             int month = Convert.ToDateTime(Time).Month;
                             int day = Convert.ToDateTime(Time).Day;
-                            for (int i = 0; i < 24; i++)
+                            for (int i = 1; i <= 24; i++)
                             {
                                 times.Add(new DateTime(year, month, day).AddHours(i));
                             }
@@ -384,7 +391,7 @@ namespace YWWeb.Controllers
                 string ss = "";
                 if (type == 1)
                 {
-                    ss = item.ToString("HH:mm");
+                    ss = item.AddHours(-1).ToString("HH:mm");
                 }
                 else if (type == 2)
                 {
