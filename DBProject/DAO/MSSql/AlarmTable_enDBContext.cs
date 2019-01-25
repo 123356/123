@@ -7,13 +7,14 @@ using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
 using DAO.Public;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class AlarmTable_enDBContext:DBContextBase, IAlarmTable_en
     {
         public AlarmTable_enDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(AlarmTable_enDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

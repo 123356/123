@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class ModuleDBContext:DBContextBase, IModule
     {
         public ModuleDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(ModuleDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

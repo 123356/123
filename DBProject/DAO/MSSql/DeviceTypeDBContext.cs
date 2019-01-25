@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class DeviceTypeDBContext:DBContextBase,IDeviceType
     {
         public DeviceTypeDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(DeviceTypeDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class VEnerProjectTypeDBContext : DBContextBase, IVEnerProjectType
     {
         public VEnerProjectTypeDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(VEnerProjectTypeDBContext).Name))
         {
         }
 

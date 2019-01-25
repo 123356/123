@@ -1,4 +1,5 @@
-﻿using IDAO;
+﻿using DAO.MSSql;
+using IDAO;
 using IDAO.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DAO
     public class EneryOverviewDBContext : DBContextBase, IEneryOverview
     {
         public EneryOverviewDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(EneryOverviewDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

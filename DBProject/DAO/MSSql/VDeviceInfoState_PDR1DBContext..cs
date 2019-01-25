@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class VDeviceInfoState_PDR1DBContext : DBContextBase, IVDeviceInfoState_PDR1
     {
         public VDeviceInfoState_PDR1DBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(VDeviceInfoState_PDR1DBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
