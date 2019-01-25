@@ -27,3 +27,7 @@ YWWeb.Lib/EnergyManage/bin
 YWWeb.Lib/EnergyManage/obj
 YWWeb.Lib/YWWeb.Lib.Base/bin
 YWWeb.Lib/YWWeb.Lib.Base/obj
+YWWeb_publish/
+YWWeb/DLL/mfc110.dll
+YWWeb/DLL/License.data
+YWWeb/DLL/MSVCR110.DLL

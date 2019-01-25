@@ -818,117 +818,126 @@ namespace YWWeb.Controllers
             if (CurrentUser == null)
                 return new JsonResult();
 
-            //string pdrlist = CurrentUser.PDRList;
-            string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
-            string strsql = "select top 6 * from t_PM_Order where 1=1";
-            string strquery = "";
-            if (PID > 0)
-                strquery += " and pid=" + PID;
-            else
-            {
-                if (!string.IsNullOrEmpty(pdrlist))
-                    strquery += " and pid in (" + pdrlist + ")";
-            }
-
-            //orderState = 2 有工单申请进场+拒绝,需要提示，报警            
-            strquery += " and (OrderState=2 or OrderState=5 or OrderState=0)";
-            //if (orderState > 0)
-            //    strquery += " and OrderState=" + orderState;
-
-            //orderState = 2 申请工单情况
-
-            strsql = strsql + strquery + "order by CreateDate desc";
-
-            List<string> text = new List<string>();
-
-            List<int> listInt = bll.ExecuteStoreQuery<int>("select count(*) from t_PM_Order where 1=1 " + strquery).ToList();
-            if (listInt.Count > 0)
-            {
-                if (0 < listInt[0])
-                    text.Add("<span class=\"am-badge am-badge-success am-round item-feed-badge\" id=\"orderNum\">" + listInt[0] + "</span>");
-
-                List<t_PM_Order> Blist = bll.ExecuteStoreQuery<t_PM_Order>(strsql).ToList();
-                //string strJson = Common.List2Json(Blist, rows, page);
-                if (Blist.Count > 0)
+            
+                //string pdrlist = CurrentUser.PDRList;
+                string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
+                string strsql = "select top 6 * from t_PM_Order where 1=1";
+                string strquery = "";
+                if (PID > 0)
+                    strquery += " and pid=" + PID;
+                else
                 {
+                    if (!string.IsNullOrEmpty(pdrlist))
+                        strquery += " and pid in (" + pdrlist + ")";
+                }
 
-                    string val = string.Empty;
-                    StringBuilder itemInf = new StringBuilder();
+                //orderState = 2 有工单申请进场+拒绝,需要提示，报警            
+                strquery += " and (OrderState=2 or OrderState=5 or OrderState=0)";
+                //if (orderState > 0)
+                //    strquery += " and OrderState=" + orderState;
 
-                    string inf = string.Empty;
-                    string time = string.Empty;
-                    TimeSpan ts = new TimeSpan();
-                    string sOrderStateInfo = "";
-                    foreach (var item in Blist)
+                //orderState = 2 申请工单情况
+
+                strsql = strsql + strquery + "order by CreateDate desc";
+
+                List<string> text = new List<string>();
+            try
+            {
+                List<int> listInt = bll.ExecuteStoreQuery<int>("select count(*) from t_PM_Order where 1=1 " + strquery).ToList();
+                if (listInt.Count > 0)
+                {
+                    if (0 < listInt[0])
+                        text.Add("<span class=\"am-badge am-badge-success am-round item-feed-badge\" id=\"orderNum\">" + listInt[0] + "</span>");
+
+                    List<t_PM_Order> Blist = bll.ExecuteStoreQuery<t_PM_Order>(strsql).ToList();
+                    //string strJson = Common.List2Json(Blist, rows, page);
+                    if (Blist.Count > 0)
                     {
-                        itemInf.Clear();
-                        inf = item.PName + "/" + item.OrderName + "/<br>到场时间：" + item.FistDate + "/<br>当前位置：" + item.Currentplace;
 
-                        itemInf.Append("<li class=\"tpl-dropdown-menu-messages order-app-add\">");
-                        itemInf.Append("<a href=\"/Orderinfo/OrderList\" target=\"main_frame\" class=\"tpl-dropdown-menu-messages-item am-cf\">");
-                        itemInf.Append("<div class=\"menu-messages-ico\" style=\"width:auto;height:auto;\">");
-                        //itemInf.Append("<img src=\"../Content/images/unknown_user.png\" alt=\"\">");
-                        itemInf.Append(" <i class=\"am-icon-circle-o am-text-success\"></i>");
-                        itemInf.Append("</div>");
-                        itemInf.Append("<div class=\"menu-messages-time\" style=\"width:auto;margin-left:auto;\">");
+                        string val = string.Empty;
+                        StringBuilder itemInf = new StringBuilder();
 
-                        if (item.OrderState == 0)
-                            sOrderStateInfo = "工单未接收";
-                        if (item.OrderState == 2)
-                            sOrderStateInfo = "申请进场中";
-
-                        if (item.FistDate == null)
+                        string inf = string.Empty;
+                        string time = string.Empty;
+                        TimeSpan ts = new TimeSpan();
+                        string sOrderStateInfo = "";
+                        foreach (var item in Blist)
                         {
-                            time = "";
-                        }
-                        else
-                        {
-                            ts = DateTime.Now - (DateTime)item.FistDate;
-                            if ((int)ts.TotalHours > 0)
+                            itemInf.Clear();
+                            inf = item.PName + "/" + item.OrderName + "/<br>到场时间：" + item.FistDate + "/<br>当前位置：" + item.Currentplace;
+
+                            itemInf.Append("<li class=\"tpl-dropdown-menu-messages order-app-add\">");
+                            itemInf.Append("<a href=\"/Orderinfo/OrderList\" target=\"main_frame\" class=\"tpl-dropdown-menu-messages-item am-cf\">");
+                            itemInf.Append("<div class=\"menu-messages-ico\" style=\"width:auto;height:auto;\">");
+                            //itemInf.Append("<img src=\"../Content/images/unknown_user.png\" alt=\"\">");
+                            itemInf.Append(" <i class=\"am-icon-circle-o am-text-success\"></i>");
+                            itemInf.Append("</div>");
+                            itemInf.Append("<div class=\"menu-messages-time\" style=\"width:auto;margin-left:auto;\">");
+
+                            if (item.OrderState == 0)
+                                sOrderStateInfo = "工单未接收";
+                            if (item.OrderState == 2)
+                                sOrderStateInfo = "申请进场中";
+
+                            if (item.FistDate == null)
                             {
-                                time = (int)ts.TotalHours + "小时前";
+                                time = "";
                             }
                             else
                             {
-                                time = (int)ts.TotalMinutes + "分钟前";
+                                ts = DateTime.Now - (DateTime)item.FistDate;
+                                if ((int)ts.TotalHours > 0)
+                                {
+                                    time = (int)ts.TotalHours + "小时前";
+                                }
+                                else
+                                {
+                                    time = (int)ts.TotalMinutes + "分钟前";
+                                }
                             }
+
+
+                            itemInf.Append(time);
+                            itemInf.Append("</div>");
+                            itemInf.Append("<div class=\"menu-messages-content\" style=\"margin-left:22px;margin-right:auto;\">");
+                            itemInf.Append("<div class=\"menu-messages-content-title\">");
+                            //itemInf.Append(" <i class=\"am-icon-circle-o am-text-success\"></i>");                                               
+
+                            itemInf.Append("<span>" + sOrderStateInfo + "：" + item.UserName + "</span>");
+                            itemInf.Append("</div>");
+                            itemInf.Append("<div class=\"am-text-truncate\" style=\"overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:240px; \">" + inf + "</div>");
+                            if (null == item.PlanDate)
+                            {
+                                time = "--:--";
+                            }
+                            else
+                            {
+                                time = ((DateTime)item.PlanDate).ToString("yyyy-MM-dd HH:mm");
+                            }
+                            itemInf.Append("<div class=\"menu-messages-content-time\">" + time + "</div>");
+                            itemInf.Append("</div>");
+                            itemInf.Append("</a>");
+                            itemInf.Append("</li>");
+
+                            val += itemInf;
+
                         }
-
-
-                        itemInf.Append(time);
-                        itemInf.Append("</div>");
-                        itemInf.Append("<div class=\"menu-messages-content\" style=\"margin-left:22px;margin-right:auto;\">");
-                        itemInf.Append("<div class=\"menu-messages-content-title\">");
-                        //itemInf.Append(" <i class=\"am-icon-circle-o am-text-success\"></i>");                                               
-
-                        itemInf.Append("<span>" + sOrderStateInfo + "：" + item.UserName + "</span>");
-                        itemInf.Append("</div>");
-                        itemInf.Append("<div class=\"am-text-truncate\" style=\"overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:240px; \">" + inf + "</div>");
-                        if (null == item.PlanDate)
-                        {
-                            time = "--:--";
-                        }
-                        else
-                        {
-                            time = ((DateTime)item.PlanDate).ToString("yyyy-MM-dd HH:mm");
-                        }
-                        itemInf.Append("<div class=\"menu-messages-content-time\">" + time + "</div>");
-                        itemInf.Append("</div>");
-                        itemInf.Append("</a>");
-                        itemInf.Append("</li>");
-
-                        val += itemInf;
-
+                        text.Add(val);
                     }
-                    text.Add(val);
+                    Blist.Clear();
+                    Blist = null;
                 }
-                Blist.Clear();
-                Blist = null;
+
+            }
+            catch (Exception ex)
+            {
+                //strJson = ex.ToString();
             }
             var result = new JsonResult();
-            result.Data = text;
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                result.Data = text;
+                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
+            
             return result;
         }
     }

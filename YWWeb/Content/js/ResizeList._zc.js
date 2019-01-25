@@ -225,20 +225,14 @@ var vm = new Vue({
             }
         }
     }
-
-
-
 })
-
-
-
 function power() {
     if ($('#list_data').datagrid('getSelected')) {
         $.post("/energyManage/EMSetting/GetTageID", { "pid": pid, "cid": parseInt($('#list_data').datagrid('getSelected').CID) }, function(data) {
             for (var a = 0, b = 0; a < data.length; a++) {
-                b += data[a].TagID;
                 var obj = vm.value[data[a]['数据类型']];
                 if (obj) {
+                    b += data[a].TagID;
                     obj.id = data[a].TagID
                 }
             }
@@ -251,11 +245,6 @@ function power() {
     } else {
         vm.$Message.warning("请选择回路");
     }
-
-
-
-
-
 }
 
 
