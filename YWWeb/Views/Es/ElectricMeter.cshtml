@@ -126,7 +126,7 @@
                 :width ="'680px'"
                 footer-hide="true"
                >
-            <Tabs value="name1" :style="{'height':'500px','overflow-y':'auto'}">
+            <Tabs value="name1" :style="{'max-height':'500px','overflow-y':'auto'}">
                 <tab-pane label="用电控制" name="name1">
                     <table class="table table-bordered">
                         <thead>
@@ -138,7 +138,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr v-if="value.DTU_CTR_TMP.id!=-1">
                                 <td>远程控制</td>
                                 <td>
                                     <i-select style="width:80px" v-model="assist.RefrigerationHeat">
@@ -150,12 +150,12 @@
                                         <Radio :label="0" :style="{'margin':'0'}">关机</Radio>
                                     </radio-group>
                                     温度：
-                                    <input-number :max="32" :min="16" clearable :style="{'width':'80px'}" v-model="value.DTU_CTR_TMP.temp"/>
+                                    <input-number :max="32" :min="16" clearable :style="{'width':'80px'}" v-model="value.DTU_CTR_TMP.temp" />
                                 </td>
-                                <td><i-button v-on:click="ReadData(value['DTU_CTR_TMP'].id)" >读取</i-button></td>
-                                <td><i-button  v-on:click="SetData(value['DTU_CTR_TMP'].id)">配置</i-button></td>
+                                <td><i-button v-on:click="ReadData(value['DTU_CTR_TMP'].id)">读取</i-button></td>
+                                <td><i-button v-on:click="SetData(value['DTU_CTR_TMP'].id)">配置</i-button></td>
                             </tr>
-                            <tr>
+                            <tr v-if="value.DTU_CTR_MODEL.id!=-1">
                                 <td>当前季节</td>
                                 <td>
                                     <radio-group v-model="value['DTU_CTR_MODEL'].value">
@@ -164,9 +164,9 @@
                                     </radio-group>
                                 </td>
                                 <td><i-button v-on:click="ReadData(value['DTU_CTR_MODEL'].id)">读取</i-button></td>
-                                <td><i-button v-on:click="SetData(value['DTU_CTR_MODEL'].id)" >配置</i-button></td>
+                                <td><i-button v-on:click="SetData(value['DTU_CTR_MODEL'].id)">配置</i-button></td>
                             </tr>
-                            <tr>
+                            <tr v-if="value.DTU_DI.id!=-1">
                                 <td>继电器状态</td>
                                 <td>
                                     <radio-group v-model="value['DTU_DI'].value">
