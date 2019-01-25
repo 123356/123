@@ -100,7 +100,7 @@
         //打印
         openOrPrint: function () {
             window.open('/ReportForms/ElectricityConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
-            window.print()
+            //window.print()
         },
         //导出
         ExcelPort: function () {
