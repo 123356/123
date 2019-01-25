@@ -151,9 +151,9 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEMonthly" Width="1.5" PointX="39.375" PointY="27.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUERealTime" Width="1.5" PointX="29.375" PointY="39.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEYearly" Width="1.5" PointX="39.375" PointY="31.75" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherDaily" Width="1.5" PointX="39.375" PointY="3.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherMonthly" Width="1.5" PointX="31.375" PointY="39.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherYearly" Width="1.5" PointX="39.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherDaily" Width="1.5" PointX="39.375" PointY="39.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

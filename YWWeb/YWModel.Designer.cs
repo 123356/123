@@ -2404,22 +2404,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_EE_WeatherDaily> t_EE_WeatherDaily
-        {
-            get
-            {
-                if ((_t_EE_WeatherDaily == null))
-                {
-                    _t_EE_WeatherDaily = base.CreateObjectSet<t_EE_WeatherDaily>("t_EE_WeatherDaily");
-                }
-                return _t_EE_WeatherDaily;
-            }
-        }
-        private ObjectSet<t_EE_WeatherDaily> _t_EE_WeatherDaily;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_EE_WeatherMonthly> t_EE_WeatherMonthly
         {
             get
@@ -2448,6 +2432,22 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_EE_WeatherYearly> _t_EE_WeatherYearly;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_WeatherDaily> t_EE_WeatherDaily
+        {
+            get
+            {
+                if ((_t_EE_WeatherDaily == null))
+                {
+                    _t_EE_WeatherDaily = base.CreateObjectSet<t_EE_WeatherDaily>("t_EE_WeatherDaily");
+                }
+                return _t_EE_WeatherDaily;
+            }
+        }
+        private ObjectSet<t_EE_WeatherDaily> _t_EE_WeatherDaily;
 
         #endregion
 
@@ -3622,14 +3622,6 @@ namespace YWWeb
         }
     
         /// <summary>
-        /// 用于向 t_EE_WeatherDaily EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_EE_WeatherDaily(t_EE_WeatherDaily t_EE_WeatherDaily)
-        {
-            base.AddObject("t_EE_WeatherDaily", t_EE_WeatherDaily);
-        }
-    
-        /// <summary>
         /// 用于向 t_EE_WeatherMonthly EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTot_EE_WeatherMonthly(t_EE_WeatherMonthly t_EE_WeatherMonthly)
@@ -3643,6 +3635,14 @@ namespace YWWeb
         public void AddTot_EE_WeatherYearly(t_EE_WeatherYearly t_EE_WeatherYearly)
         {
             base.AddObject("t_EE_WeatherYearly", t_EE_WeatherYearly);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_WeatherDaily EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_WeatherDaily(t_EE_WeatherDaily t_EE_WeatherDaily)
+        {
+            base.AddObject("t_EE_WeatherDaily", t_EE_WeatherDaily);
         }
 
         #endregion
@@ -30045,48 +30045,144 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MaxValue
+        public global::System.String MaxTemperatureValue
         {
             get
             {
-                return _MaxValue;
+                return _MaxTemperatureValue;
             }
             set
             {
-                OnMaxValueChanging(value);
-                ReportPropertyChanging("MaxValue");
-                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
-                ReportPropertyChanged("MaxValue");
-                OnMaxValueChanged();
+                OnMaxTemperatureValueChanging(value);
+                ReportPropertyChanging("MaxTemperatureValue");
+                _MaxTemperatureValue = StructuralObject.SetValidValue(value, true, "MaxTemperatureValue");
+                ReportPropertyChanged("MaxTemperatureValue");
+                OnMaxTemperatureValueChanged();
             }
         }
-        private global::System.String _MaxValue;
-        partial void OnMaxValueChanging(global::System.String value);
-        partial void OnMaxValueChanged();
+        private global::System.String _MaxTemperatureValue;
+        partial void OnMaxTemperatureValueChanging(global::System.String value);
+        partial void OnMaxTemperatureValueChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MinValue
+        public global::System.String MinTemperatureValue
         {
             get
             {
-                return _MinValue;
+                return _MinTemperatureValue;
             }
             set
             {
-                OnMinValueChanging(value);
-                ReportPropertyChanging("MinValue");
-                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
-                ReportPropertyChanged("MinValue");
-                OnMinValueChanged();
+                OnMinTemperatureValueChanging(value);
+                ReportPropertyChanging("MinTemperatureValue");
+                _MinTemperatureValue = StructuralObject.SetValidValue(value, true, "MinTemperatureValue");
+                ReportPropertyChanged("MinTemperatureValue");
+                OnMinTemperatureValueChanged();
             }
         }
-        private global::System.String _MinValue;
-        partial void OnMinValueChanging(global::System.String value);
-        partial void OnMinValueChanged();
+        private global::System.String _MinTemperatureValue;
+        partial void OnMinTemperatureValueChanging(global::System.String value);
+        partial void OnMinTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisTemperatureValue
+        {
+            get
+            {
+                return _ThisTemperatureValue;
+            }
+            set
+            {
+                OnThisTemperatureValueChanging(value);
+                ReportPropertyChanging("ThisTemperatureValue");
+                _ThisTemperatureValue = StructuralObject.SetValidValue(value, true, "ThisTemperatureValue");
+                ReportPropertyChanged("ThisTemperatureValue");
+                OnThisTemperatureValueChanged();
+            }
+        }
+        private global::System.String _ThisTemperatureValue;
+        partial void OnThisTemperatureValueChanging(global::System.String value);
+        partial void OnThisTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxHumidityValue
+        {
+            get
+            {
+                return _MaxHumidityValue;
+            }
+            set
+            {
+                OnMaxHumidityValueChanging(value);
+                ReportPropertyChanging("MaxHumidityValue");
+                _MaxHumidityValue = StructuralObject.SetValidValue(value, true, "MaxHumidityValue");
+                ReportPropertyChanged("MaxHumidityValue");
+                OnMaxHumidityValueChanged();
+            }
+        }
+        private global::System.String _MaxHumidityValue;
+        partial void OnMaxHumidityValueChanging(global::System.String value);
+        partial void OnMaxHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinHumidityValue
+        {
+            get
+            {
+                return _MinHumidityValue;
+            }
+            set
+            {
+                OnMinHumidityValueChanging(value);
+                ReportPropertyChanging("MinHumidityValue");
+                _MinHumidityValue = StructuralObject.SetValidValue(value, true, "MinHumidityValue");
+                ReportPropertyChanged("MinHumidityValue");
+                OnMinHumidityValueChanged();
+            }
+        }
+        private global::System.String _MinHumidityValue;
+        partial void OnMinHumidityValueChanging(global::System.String value);
+        partial void OnMinHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisHumidityValue
+        {
+            get
+            {
+                return _ThisHumidityValue;
+            }
+            set
+            {
+                OnThisHumidityValueChanging(value);
+                ReportPropertyChanging("ThisHumidityValue");
+                _ThisHumidityValue = StructuralObject.SetValidValue(value, true, "ThisHumidityValue");
+                ReportPropertyChanged("ThisHumidityValue");
+                OnThisHumidityValueChanged();
+            }
+        }
+        private global::System.String _ThisHumidityValue;
+        partial void OnThisHumidityValueChanging(global::System.String value);
+        partial void OnThisHumidityValueChanged();
 
         #endregion
 
@@ -30221,48 +30317,144 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MaxValue
+        public global::System.String MaxTemperatureValue
         {
             get
             {
-                return _MaxValue;
+                return _MaxTemperatureValue;
             }
             set
             {
-                OnMaxValueChanging(value);
-                ReportPropertyChanging("MaxValue");
-                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
-                ReportPropertyChanged("MaxValue");
-                OnMaxValueChanged();
+                OnMaxTemperatureValueChanging(value);
+                ReportPropertyChanging("MaxTemperatureValue");
+                _MaxTemperatureValue = StructuralObject.SetValidValue(value, true, "MaxTemperatureValue");
+                ReportPropertyChanged("MaxTemperatureValue");
+                OnMaxTemperatureValueChanged();
             }
         }
-        private global::System.String _MaxValue;
-        partial void OnMaxValueChanging(global::System.String value);
-        partial void OnMaxValueChanged();
+        private global::System.String _MaxTemperatureValue;
+        partial void OnMaxTemperatureValueChanging(global::System.String value);
+        partial void OnMaxTemperatureValueChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MinValue
+        public global::System.String MinTemperatureValue
         {
             get
             {
-                return _MinValue;
+                return _MinTemperatureValue;
             }
             set
             {
-                OnMinValueChanging(value);
-                ReportPropertyChanging("MinValue");
-                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
-                ReportPropertyChanged("MinValue");
-                OnMinValueChanged();
+                OnMinTemperatureValueChanging(value);
+                ReportPropertyChanging("MinTemperatureValue");
+                _MinTemperatureValue = StructuralObject.SetValidValue(value, true, "MinTemperatureValue");
+                ReportPropertyChanged("MinTemperatureValue");
+                OnMinTemperatureValueChanged();
             }
         }
-        private global::System.String _MinValue;
-        partial void OnMinValueChanging(global::System.String value);
-        partial void OnMinValueChanged();
+        private global::System.String _MinTemperatureValue;
+        partial void OnMinTemperatureValueChanging(global::System.String value);
+        partial void OnMinTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisTemperatureValue
+        {
+            get
+            {
+                return _ThisTemperatureValue;
+            }
+            set
+            {
+                OnThisTemperatureValueChanging(value);
+                ReportPropertyChanging("ThisTemperatureValue");
+                _ThisTemperatureValue = StructuralObject.SetValidValue(value, true, "ThisTemperatureValue");
+                ReportPropertyChanged("ThisTemperatureValue");
+                OnThisTemperatureValueChanged();
+            }
+        }
+        private global::System.String _ThisTemperatureValue;
+        partial void OnThisTemperatureValueChanging(global::System.String value);
+        partial void OnThisTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxHumidityValue
+        {
+            get
+            {
+                return _MaxHumidityValue;
+            }
+            set
+            {
+                OnMaxHumidityValueChanging(value);
+                ReportPropertyChanging("MaxHumidityValue");
+                _MaxHumidityValue = StructuralObject.SetValidValue(value, true, "MaxHumidityValue");
+                ReportPropertyChanged("MaxHumidityValue");
+                OnMaxHumidityValueChanged();
+            }
+        }
+        private global::System.String _MaxHumidityValue;
+        partial void OnMaxHumidityValueChanging(global::System.String value);
+        partial void OnMaxHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinHumidityValue
+        {
+            get
+            {
+                return _MinHumidityValue;
+            }
+            set
+            {
+                OnMinHumidityValueChanging(value);
+                ReportPropertyChanging("MinHumidityValue");
+                _MinHumidityValue = StructuralObject.SetValidValue(value, true, "MinHumidityValue");
+                ReportPropertyChanged("MinHumidityValue");
+                OnMinHumidityValueChanged();
+            }
+        }
+        private global::System.String _MinHumidityValue;
+        partial void OnMinHumidityValueChanging(global::System.String value);
+        partial void OnMinHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisHumidityValue
+        {
+            get
+            {
+                return _ThisHumidityValue;
+            }
+            set
+            {
+                OnThisHumidityValueChanging(value);
+                ReportPropertyChanging("ThisHumidityValue");
+                _ThisHumidityValue = StructuralObject.SetValidValue(value, true, "ThisHumidityValue");
+                ReportPropertyChanged("ThisHumidityValue");
+                OnThisHumidityValueChanged();
+            }
+        }
+        private global::System.String _ThisHumidityValue;
+        partial void OnThisHumidityValueChanging(global::System.String value);
+        partial void OnThisHumidityValueChanged();
 
         #endregion
 
@@ -30397,48 +30589,144 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MaxValue
+        public global::System.String MaxTemperatureValue
         {
             get
             {
-                return _MaxValue;
+                return _MaxTemperatureValue;
             }
             set
             {
-                OnMaxValueChanging(value);
-                ReportPropertyChanging("MaxValue");
-                _MaxValue = StructuralObject.SetValidValue(value, true, "MaxValue");
-                ReportPropertyChanged("MaxValue");
-                OnMaxValueChanged();
+                OnMaxTemperatureValueChanging(value);
+                ReportPropertyChanging("MaxTemperatureValue");
+                _MaxTemperatureValue = StructuralObject.SetValidValue(value, true, "MaxTemperatureValue");
+                ReportPropertyChanged("MaxTemperatureValue");
+                OnMaxTemperatureValueChanged();
             }
         }
-        private global::System.String _MaxValue;
-        partial void OnMaxValueChanging(global::System.String value);
-        partial void OnMaxValueChanged();
+        private global::System.String _MaxTemperatureValue;
+        partial void OnMaxTemperatureValueChanging(global::System.String value);
+        partial void OnMaxTemperatureValueChanged();
     
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MinValue
+        public global::System.String MinTemperatureValue
         {
             get
             {
-                return _MinValue;
+                return _MinTemperatureValue;
             }
             set
             {
-                OnMinValueChanging(value);
-                ReportPropertyChanging("MinValue");
-                _MinValue = StructuralObject.SetValidValue(value, true, "MinValue");
-                ReportPropertyChanged("MinValue");
-                OnMinValueChanged();
+                OnMinTemperatureValueChanging(value);
+                ReportPropertyChanging("MinTemperatureValue");
+                _MinTemperatureValue = StructuralObject.SetValidValue(value, true, "MinTemperatureValue");
+                ReportPropertyChanged("MinTemperatureValue");
+                OnMinTemperatureValueChanged();
             }
         }
-        private global::System.String _MinValue;
-        partial void OnMinValueChanging(global::System.String value);
-        partial void OnMinValueChanged();
+        private global::System.String _MinTemperatureValue;
+        partial void OnMinTemperatureValueChanging(global::System.String value);
+        partial void OnMinTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisTemperatureValue
+        {
+            get
+            {
+                return _ThisTemperatureValue;
+            }
+            set
+            {
+                OnThisTemperatureValueChanging(value);
+                ReportPropertyChanging("ThisTemperatureValue");
+                _ThisTemperatureValue = StructuralObject.SetValidValue(value, true, "ThisTemperatureValue");
+                ReportPropertyChanged("ThisTemperatureValue");
+                OnThisTemperatureValueChanged();
+            }
+        }
+        private global::System.String _ThisTemperatureValue;
+        partial void OnThisTemperatureValueChanging(global::System.String value);
+        partial void OnThisTemperatureValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaxHumidityValue
+        {
+            get
+            {
+                return _MaxHumidityValue;
+            }
+            set
+            {
+                OnMaxHumidityValueChanging(value);
+                ReportPropertyChanging("MaxHumidityValue");
+                _MaxHumidityValue = StructuralObject.SetValidValue(value, true, "MaxHumidityValue");
+                ReportPropertyChanged("MaxHumidityValue");
+                OnMaxHumidityValueChanged();
+            }
+        }
+        private global::System.String _MaxHumidityValue;
+        partial void OnMaxHumidityValueChanging(global::System.String value);
+        partial void OnMaxHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MinHumidityValue
+        {
+            get
+            {
+                return _MinHumidityValue;
+            }
+            set
+            {
+                OnMinHumidityValueChanging(value);
+                ReportPropertyChanging("MinHumidityValue");
+                _MinHumidityValue = StructuralObject.SetValidValue(value, true, "MinHumidityValue");
+                ReportPropertyChanged("MinHumidityValue");
+                OnMinHumidityValueChanged();
+            }
+        }
+        private global::System.String _MinHumidityValue;
+        partial void OnMinHumidityValueChanging(global::System.String value);
+        partial void OnMinHumidityValueChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ThisHumidityValue
+        {
+            get
+            {
+                return _ThisHumidityValue;
+            }
+            set
+            {
+                OnThisHumidityValueChanging(value);
+                ReportPropertyChanging("ThisHumidityValue");
+                _ThisHumidityValue = StructuralObject.SetValidValue(value, true, "ThisHumidityValue");
+                ReportPropertyChanged("ThisHumidityValue");
+                OnThisHumidityValueChanged();
+            }
+        }
+        private global::System.String _ThisHumidityValue;
+        partial void OnThisHumidityValueChanging(global::System.String value);
+        partial void OnThisHumidityValueChanged();
 
         #endregion
 
