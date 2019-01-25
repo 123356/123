@@ -77,7 +77,7 @@
         //报表查询
         getReport: function () {
             var that = this
-            this.getUrlParam()
+            //this.getUrlParam()
             this.$http({
                 url: '/ReportForms/getPowerQualityData',
                 method: 'POST',
@@ -91,11 +91,7 @@
                     console.log(that.getDate())
                     that.info = res.data
                     that.loading = false
-                    setTimeout(function () {
-                        if (that.isHide == "false") {
-                            window.print()
-                        }
-                    },100)
+                    
                     
 
                 })
@@ -106,8 +102,8 @@
         },
         //打印
         openOrPrint: function () {
-            window.open('/ReportForms/ElectricityConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
-            //window.print()
+            //window.open('/ReportForms/ElectricityConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
+            window.print()
         },
         //导出
         ExcelPort: function () {

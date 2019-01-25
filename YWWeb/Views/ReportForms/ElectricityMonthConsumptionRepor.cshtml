@@ -93,6 +93,11 @@
             border-top: 0
         }
     </style>
+    <style media="print" type="text/css">
+        .noprint {
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
 
@@ -100,7 +105,7 @@
 
         <Spin size="large" fix v-if="loading"></Spin>
 
-        <div id="tb" class="searchbar" style="overflow:visible;margin-bottom:50px">
+        <div id="tb" class="searchbar noprint" style="overflow:visible;margin-bottom:50px">
 
             <div class="searchrow">
                 站室:
