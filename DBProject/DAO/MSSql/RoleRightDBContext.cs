@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class RoleRightDBContext : DBContextBase,IRoleRight
     {
         public RoleRightDBContext()
-            : base("name=YWConnectionStringHis")
+            : base(ConnectBuild.GetConnect(typeof(RoleRightDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -7,13 +7,14 @@ using System.Data.Entity;
 using IDAO.Models;
 using IDAO;
 using System.Linq.Expressions;
+using DAO.MSSql;
 
 namespace DAO
 {
     public class VHisDataDBContext:DBContextBase,IVHisData
     {
         public VHisDataDBContext()
-            : base("name =YWConnectionStringHis")//("name=dbConnectString")
+            : base(ConnectBuild.GetConnect(typeof(VHisDataDBContext).Name))//("name=dbConnectString")
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

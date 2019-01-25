@@ -1,4 +1,5 @@
-﻿using IDAO;
+﻿using DAO.MSSql;
+using IDAO;
 using IDAO.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DAO
     public class ExEnergyDBContext : DBContextBase, IExEnergy
     {
         public ExEnergyDBContext()
-           : base("name=YWConnectionStringHis")
+           : base(ConnectBuild.GetConnect(typeof(ExEnergyDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

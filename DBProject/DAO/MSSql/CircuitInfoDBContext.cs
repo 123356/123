@@ -1,4 +1,5 @@
-﻿using IDAO;
+﻿using DAO.MSSql;
+using IDAO;
 using IDAO.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DAO
     public class CircuitInfoDBContext : DBContextBase, ICircuitInfo
     {
         public CircuitInfoDBContext()
-             : base("name=YWConnectionStringHis")
+             : base(ConnectBuild.GetConnect(typeof(CircuitInfoDBContext).Name))
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
