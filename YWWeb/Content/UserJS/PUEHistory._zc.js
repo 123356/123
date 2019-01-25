@@ -72,10 +72,7 @@
             })
         },
         selectChange: function (e) {
-            console.log(e)
-            /*this.curPid = e
-            console.log("调用方法")
-            this.getPUEDataByTime()*/
+           
         },
 
         //获取数据
@@ -108,9 +105,8 @@
                     that.loading = false
             })
             .catch(function (e) {
-                //throw new ReferenceError(e.message)
                 that.loading = false
-                console.log(e)
+                throw new ReferenceError(e.message)
             })
         },
         fromatDate: function (date) {
@@ -165,18 +161,15 @@
             }
         },
         dateTypeChange: function (e) {
-            console.log(e)
             if (e != 4) {
                 this.getPUEDataByTime()
             }
            
         },
         search: function () {
-            console.log(this.selectDate)
             this.getPUEDataByTime()
         },
         createLine: function (data) {
-            console.log(data)
             this.chartShow = true
             var x = new Array()
             var y = new Array()
@@ -186,8 +179,6 @@
                     y.push(data[i].value)
                 }
 
-            console.log(x)
-            console.log(y)
             lineChart = echarts.init(document.getElementById('lineChart'));
             var option = {
                 backgroundColor: '#fff',
@@ -196,7 +187,7 @@
                 },
                 grid: {
                     left: 35,
-                    right: 35,
+                    right: 50,
                 },
                 xAxis: {
                     boundaryGap: false,
@@ -253,12 +244,29 @@
                     name: '历史PUE',
                     type: 'line',
                     data: y,
-                    //areaStyle: {},
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    },
                     smooth: true,
                     symbol: 'none',
                     markLine: {
                         silent: true,
-                        data: [{
+                        data: [
+                            {
+                                type: 'average', name: '平均值',
+                                lineStyle: {
+                                    type: 'solid'
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'end',
+                                    formatter: '{b}\n{c}'
+                                }
+                            },
+                            {
                             yAxis: 1.8,
                             lineStyle: {
                                 color: '#54ab88'
@@ -277,7 +285,6 @@
                     }
                 }
             };
-            console.log(option)
 
             lineChart.clear()
             lineChart.setOption(option,true)
