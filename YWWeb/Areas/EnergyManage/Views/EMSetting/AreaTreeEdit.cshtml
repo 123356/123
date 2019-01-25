@@ -138,10 +138,8 @@
                                             <form class="form-horizontal" id="form" style="padding:10px;height:90%;overflow-y:auto;margin-bottom:25px;">
                                                 <div class="form-group">
                                                     <label for="name">名称</label>
-                                                    
-                                                    <i-select filterable :id="name" v-model="node.title">
-                                                        <i-option v-for="item in typeHistory" :value="item.Name" :key="item.id">{{ item.Name }}</i-option>
-                                                    </i-select>
+
+                                                    <i-input type="text" :id="'name'" v-model="node.title">
                                                 </div>
                                                 <div class="form-group" v-show="treeType==2">
                                                     <label for="head">负责人</label>
@@ -490,7 +488,6 @@
                         }
                     }
 
-
                     return tree;
                 },
                 renderContent(h, { root, node, data }) {
@@ -770,7 +767,6 @@
                     this.getPDRList()
                 }
                 this.loadUnitList();
-                this.GetTypeHistory();
             }
         })
 
