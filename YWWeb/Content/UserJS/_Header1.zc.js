@@ -162,8 +162,13 @@ function play(audio) {
 
 function playm(audio) {
     i++
-    if (i == playList.length) i = 0
+    if (i >= playList.length) i = 0
+    if (undefined == playList[i]) {
+        console.log('nudefined == audio.src');
+        return;
+    }
     audio.src = playList[i];
+    
     audio.play();
     audio.onended = function () {
         playm(audio)
