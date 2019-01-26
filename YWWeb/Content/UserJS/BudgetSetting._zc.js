@@ -101,6 +101,7 @@
                     that.sumAllMonthData = that.sumDataSet.SurplusValue
                     that.isInit = false
                 } else {
+                    that.loading = false
                     that.clearAllData()
                 }
                 
@@ -170,18 +171,20 @@
                         case 4:
                             that.departMoneyData = res.data
                             that.departAvgBalance = that.sumDepartBudgetData - that.totalComputation("departMoneyData") //科室当前余额
-                            that.loading = false
                             break;
 
                     }
+                    that.loading = false
                 } else {
                     if (data.index == 2) {
                         that.isAdd = false
                     }
+                    that.loading = false
                 }
 
              })
-             .catch(function (e) {
+                .catch(function (e) {
+                    that.loading = false
                  throw new ReferenceError(e.message)
              })
         },
