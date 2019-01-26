@@ -341,7 +341,7 @@ namespace EnergyManage.Controllers
                 cidss = cidss.Substring(0, cidss.Length - 1);
                 IList<t_V_EneryView> list_this = null;
                 IList<t_V_EneryView> list_last = null;
-                DateTime time_test = Convert.ToDateTime("2018-11-20");
+                DateTime time_test = Convert.ToDateTime(time);
                 if (TypeTime == 1)
                 {
                     for (var i = 0; i < 24; i++)
