@@ -188,7 +188,7 @@
                             }
                             data[i]._disabled = false
                             data[i].index = i
-                            
+
                         }
                         var id = data[0].ID
                         that.curCID = data[0].CID
@@ -196,11 +196,15 @@
                         that.getTableList(data[0].ID)
                         that.getBarData(data[0].CID)
                         that.getLineData(data[0].CID)
+                    } else {
+                        that.loading = false
                     }
                     that.listData = data
+                    
                    
             })
-            .catch(function (e) {
+                .catch(function (e) {
+                    that.loading = false
                 throw new ReferenceError(e.message)
             })
         },
