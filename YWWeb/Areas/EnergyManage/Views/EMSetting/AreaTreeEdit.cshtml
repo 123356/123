@@ -625,7 +625,7 @@
                             this.$Message.warning("节点名称不能为空");
                             return;
                         }
-                        if (this.node.root.indexOf(that.node.title)>0) {
+                        if (this.node.root && this.node.root.indexOf(that.node.title)>0) {
                             this.$Message.warning("节点名称不能重复");
                             return;
                         }
