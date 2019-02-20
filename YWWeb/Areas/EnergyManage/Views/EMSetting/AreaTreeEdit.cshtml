@@ -629,10 +629,7 @@
                         return;
                     }
 
-                    if (this.node.root && this.node.root.indexOf(that.node.title) > 0) {
-                        this.$Message.warning("节点不能循环绑定");
-                        return;
-                    }
+                 
                     if (that.node.area && !/^[0-9]+.?[0-9]*$/.test(that.node.area)) {
                         this.$Message.warning("面积请输入数字");
                         return;
@@ -645,7 +642,10 @@
 
 
                     if (this.nodeEditTyped == 'add') {
-                  
+                        if (this.node.root && this.node.root.indexOf(that.node.title) > 0) {
+                            this.$Message.warning("节点不能循环绑定");
+                            return;
+                        }
                         delete this.node.root;
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
@@ -688,7 +688,7 @@
                                 this.$Message.error("数据异常");
                             })
                     } else if (this.nodeEditTyped == 'upd') {
-                  
+
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
