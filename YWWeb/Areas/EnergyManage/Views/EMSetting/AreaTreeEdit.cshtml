@@ -222,8 +222,8 @@
                 UnitData: {},       //单位id name pid
                 cidEdit: null,
                 cidTree: [],
-                addCid: null,
-                delCid: null,
+                addCid: "",
+                delCid: "",
                 buttonProps: {
                     type: 'default',
                     size: 'small',
@@ -383,7 +383,7 @@
                                                 marginRight: '8px'
                                             },
                                             on: {
-                                                click: () => { this.append(data) }
+                                                click: () => { this.append(data,root) }
                                             }
                                         }),
                                         h('Button', {
@@ -558,6 +558,7 @@
                 },
                 //添加节点
                 append(data, root) {
+                    console.log(111)
                     this.node = {};
                     this.node.parent_id = data.id;
                     this.treeParent = data;
@@ -606,6 +607,7 @@
                     this.node.parent_id = node.parent;
                     this.node.id = node.node.id;
                     this.nodeEditTyped = "upd";
+                    this.node.root = JSON.stringify(root);
                 },
                 //查看节点
                 search(root, node, data) {
@@ -620,15 +622,30 @@
                 },
                 submitForm() {
                     var that = this;
+
+
+                    if (!this.node.title) {
+                        this.$Message.warning("节点名称不能为空");
+                        return;
+                    }
+
+                    if (this.node.root && this.node.root.indexOf(that.node.title) > 0) {
+                        this.$Message.warning("节点不能循环绑定");
+                        return;
+                    }
+                    if (that.node.area && !/^[0-9]+.?[0-9]*$/.test(that.node.area)) {
+                        this.$Message.warning("面积请输入数字");
+                        return;
+                    }
+
+                    if (that.node.people && !/^[0-9]+.?[0-9]*$/.test(that.node.people)) {
+                        this.$Message.warning("人数请输入数字");
+                        return;
+                    }
+
+
                     if (this.nodeEditTyped == 'add') {
-                        if (!this.node.title) {
-                            this.$Message.warning("节点名称不能为空");
-                            return;
-                        }
-                        if (this.node.root && this.node.root.indexOf(that.node.title)>0) {
-                            this.$Message.warning("节点名称不能重复");
-                            return;
-                        }
+                  
                         delete this.node.root;
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
@@ -642,8 +659,8 @@
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
                                 unit_note: that.node.note,
-                                addCid: that.node.addCid ,
-                                delCid: that.node.delCid,
+                                addCid: that.node.addCid|| "" ,
+                                delCid: that.node.delCid || "",
                                 item_type: that.treeType,
                                 Name: name,
                                 id: 0,
@@ -660,8 +677,8 @@
                                         id: res.data[0].child_id,
                                         head: res.data[0].unit_head,
                                         note: res.data[0].unit_note,
-                                        addCid: res.data[0].addCid ,
-                                        delCid: res.data[0].delCid,
+                                        addCid: res.data[0].addCid || "" ,
+                                        delCid: res.data[0].delCid || "",
                                         expand: true
                                     });
                                     this.$set(this.treeParent, 'children', children);
@@ -671,10 +688,7 @@
                                 this.$Message.error("数据异常");
                             })
                     } else if (this.nodeEditTyped == 'upd') {
-                        if (!this.node.title) {
-                            this.$Message.warning("节点名称不能为空");
-                            return;
-                        }
+                  
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
@@ -687,8 +701,8 @@
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
                                 unit_note: that.node.note,
-                                addCid: that.node.addCid,
-                                delCid: that.node.delCid,
+                                addCid: that.node.addCid || "",
+                                delCid: that.node.delCid || "",
                                 item_type: that.treeType,
                                 Name: name,
                                 id: that.node.id,
