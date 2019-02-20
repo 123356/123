@@ -105,6 +105,7 @@
             this.unitID = res.value
             $.cookie("enUID", this.unitID, { expires: 7 })
             $.cookie("enUName", res.label, { expires: 7 })  
+            $.cookie('UnitData', JSON.stringify({ UnitID: this.unitID, UnitName: res.label, PDRList: null }), { expires: 7, path: '//EnergyManage/EMSetting/AreaTree' });
             document.getElementById('energyFrame').contentWindow.location.reload(true);
         },
         userBtnClick: function (e,url) {
@@ -118,6 +119,8 @@
     },
     beforeMount: function () {
         var mid = window.location.search.split("=")[1]
+        console.log(window.location)
+        console.log(mid)
         var id = $.cookie("enUID")
         if (id!=null) {
             this.unitID = id
