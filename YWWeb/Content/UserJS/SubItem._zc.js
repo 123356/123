@@ -98,7 +98,7 @@
             this.unitID = res.value
             $.cookie("enUID", this.unitID, { expires: 7 })
             $.cookie("enUName", res.label, { expires: 7 })
-            window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: this.unitID, UnitName: res.label, PDRList: null }))
+            window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: $.cookie("enUID"), UnitName: $.cookie("enUName"), PDRList: null }))
             document.getElementById('energyFrame').contentWindow.location.reload(true);
             console.log(JSON.parse(window.localStorage.getItem("UnitData")));
         },
@@ -116,6 +116,7 @@
         console.log(window.location)
         console.log(mid)
         var id = $.cookie("enUID")
+        window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: $.cookie("enUID"), UnitName: $.cookie("enUName") }))
         if (id != null) {
             this.unitID = id
         }
