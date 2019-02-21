@@ -123,7 +123,7 @@
 </Submenu>
                         </i-Menu>
                     </Sider>
-                    <Layout :style="{padding: '0 24px 24px'}">
+                    <Layout :style="{padding: '0 24px 0px','overflow':'hidden'}">
                         <Content :style="{padding: '24px', minHeight: '280px', background: '#fff', 'flex-grow': '1'}">
                             <Tabs type="card" :animated="false" v-model="treeType" :value="1">
                                 <tab-pane label="用电分项树" :name="1" icon="ios-leaf"></tab-pane>
@@ -199,6 +199,14 @@
     </div>
 
     <script>
+
+
+        Vue.http.options.emulateHTTP = true;
+        Vue.http.options.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }
+
+
         var vm = new Vue({
             el: '#app',
             data: {
@@ -720,8 +728,9 @@
                 },
                 //视图转cid字符串
                 ViewToPIDCId(arr) {
-                    if (arr.length) {
-                        for (var a = 0, list = []; a < arr.length; a++) {
+                    if (arr.length ) {
+                        var num = arr.length > 200 ? 200 : arr.length;
+                        for (var a = 0, list = []; a < num; a++) {
                             list[a] = arr[a].pid + "-" + arr[a].id;
                         }
                         return list.join(',');
