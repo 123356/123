@@ -140,6 +140,10 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult UserView2()//用户总览
+        {
+            return View();
+        }
         public ActionResult PowerPurchaseContract()
         {
             return View();
