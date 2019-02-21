@@ -1675,7 +1675,7 @@ namespace YWWeb.Controllers
 
                 var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (lastMonthPower != 0)
-                {
+                {   
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
                 }
                 int dayy = DateTime.DaysInMonth(dgh.Year, dgh.Month);
@@ -1845,6 +1845,210 @@ namespace YWWeb.Controllers
             return Json(model);
         }
 
+
+        public JsonResult GetStationState(int uid)
+        {
+            PdfState model = new PdfState();
+            try
+            {
+                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
+                var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
+                if (list.Count() > 0)
+                {
+                    model.Name = "严重";
+                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+                }
+                else
+                {
+                    var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
+                    int days = 0;
+                    if (list_yunxing.Count() > 0)
+                    {
+                        DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                        DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                        TimeSpan sp = end.Subtract(start);
+                        days = sp.Days;
+                    }
+                    else
+                    {
+                        if (pdflist.Count() > 0)
+                        {
+                            DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
+                            DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                            TimeSpan sp = end.Subtract(start);
+                            days = sp.Days;
+                        }
+                    }
+                    model.Name = "正常运行";
+                    model.NormalDays = days.ToString();
+                }
+                if (pdflist.Count() > 0)
+                {
+                    string checkDays = "--";
+                    DateTime start;
+                    DateTime end;
+                    var order = bll.t_PM_Order.Where(p => pidlist.Contains(p.PID) && p.OrderContent.Contains("检修试验") && p.OrderState == 0).OrderByDescending(p => p.AcceptedDate);
+                    if (order.Count() > 0)
+                    {
+                        start = Convert.ToDateTime(Convert.ToDateTime(order.FirstOrDefault().AcceptedDate).AddMonths(6).ToShortDateString());
+                        end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+
+                    }
+                    else
+                    {
+
+                        //if (Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6) < DateTime.Now)
+                        //    start = DateTime.Now.AddMonths(6);
+                        //else
+                        //    start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6).ToShortDateString());
+                        if (pdflist.FirstOrDefault().ApplcationTime == null)
+                        {
+                            model.CheckDays = checkDays;
+                        }
+                        else
+                        {
+                            start = GetDatime(pdflist.FirstOrDefault().ApplcationTime.Value);
+                            end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                            TimeSpan sp = start.Subtract(end);
+                            checkDays = sp.Days.ToString();
+                            model.CheckDays = checkDays;
+                        }
+
+
+                    }
+
+                }
+                decimal SumScore = 0;
+                foreach (var item in pidlist)
+                {
+                    var sids = bll.t_CM_InstallRecord.Where(p => p.pid == item).Select(p => p.contentId).ToList();
+                    SumScore += Convert.ToDecimal(bll.t_CM_InstallType.Where(p => sids.Contains(p.id)).Sum(p => p.score));
+                }
+                model.Score = GetUnitScoreByUID(uid);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetThisDayPower(int uid)
+        {
+            PdfState model = new PdfState();
+            try
+            {
+                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+              
+                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
+                List<int?> cidlist = new List<int?>();
+                string s = "";
+                foreach (var xssss in cidsss)
+                {
+                    s += xssss.cid + ",";
+                }
+                if (s != "")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                }
+
+                DateTime d = DateTime.Now.Date;
+                DateTime xd = DateTime.Now;
+                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (xzzz != null)
+                {
+                    model.thisDayPower = Math.Round(xzzz.Value, 2);
+                }
+                else
+                {
+                    model.thisDayPower = 0;
+                }
+                if (model.thisDayPower == null)
+                    model.thisDayPower = 0;
+                DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
+                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (lastDayPower != 0)
+                {
+                    model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLastMonthPower(int uid)
+        {
+            PdfState model = new PdfState();
+            try
+            {
+                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+           
+                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
+                List<int?> cidlist = new List<int?>();
+                string s = "";
+                foreach (var xssss in cidsss)
+                {
+                    s += xssss.cid + ",";
+                }
+                if (s != "")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                }
+                DateTime d = DateTime.Now.Date;
+                DateTime dgh = DateTime.Now.AddMonths(-1);
+                DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
+                var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (xsss != null)
+                {
+                    model.thisMonthPower = Math.Round(xsss.Value, 2);
+                }
+                else
+                {
+                    model.thisMonthPower = 0;
+                }
+                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
+
+                var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                if (lastMonthPower != 0)
+                {
+                    model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetThisYearPower(int uid)
+        {
+            PdfState model = new PdfState();
+            try
+            {
+                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+                DateTime ddd = DateTime.Now;
+                DateTime sddd = new DateTime(DateTime.Now.Year, 1, 1);
+                var sumYearPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= sddd && p.RecordTime <= ddd && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                var lastPower = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().LastYearPower;
+                model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
         public DateTime GetDatime(DateTime d)
         {
             DateTime dt = d.AddMonths(6);
