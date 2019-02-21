@@ -642,7 +642,7 @@
 
 
                     if (this.nodeEditTyped == 'add') {
-                        if (this.node.root && this.node.root.indexOf(that.node.title) > 0) {
+                        if (this.node.root && this.node.root.indexOf(`"${that.node.title}"`) > 0) {
                             this.$Message.warning("节点不能循环绑定");
                             return;
                         }
