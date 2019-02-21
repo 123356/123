@@ -658,11 +658,11 @@
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
-                                      
+                                        
                         this.$http({
                             url: "/energyManage/EMSetting/AddTreeNode",
                             method: "post",
-                            params: {
+                            body: {
                                 parent_id: that.node.parent_id,
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
@@ -704,7 +704,7 @@
                         this.$http({
                             url: "/energyManage/EMSetting/UpdateTreeNode",
                             method: "post",
-                            params: {
+                            body: {
                                 parent_id: that.node.parent_id,
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
@@ -729,12 +729,7 @@
                 //视图转cid字符串
                 ViewToPIDCId(arr) {
                     if (arr.length ) {
-                        var num = arr.length;
-                        if (num > 200) {
-                            this.$Message.error("绑定电表过多，只保留前200个");
-                            num = 200;
-                        }
-                        for (var a = 0, list = []; a < num; a++) {
+                        for (var a = 0, list = []; a < arr.length; a++) {
                             list[a] = arr[a].pid + "-" + arr[a].id;
                         }
                         return list.join(',');
