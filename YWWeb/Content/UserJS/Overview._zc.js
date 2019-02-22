@@ -29,8 +29,14 @@ function getKehuIndustryData_FX() {
     $.post("/ES/getKeHuData_FX", {
         type: 1
     }, function (data) {
-        var DataJson = JSON.parse(data);
-        PowerKehuIndustryData_FX(DataJson);
+
+        if (data) {
+            var DataJson = JSON.parse(data);
+            PowerKehuIndustryData_FX(DataJson);
+        } else {
+            console.log("暂无数据")
+        }
+        
     });
 }
 function PowerKehuIndustryData_FX(DataJson) {
@@ -79,10 +85,12 @@ function getKehuAreaData_FX() {
     $.post("/ES/getKeHuData_FX", {
         type: 2
     }, function (data) {
-
-
-        var DataJson = JSON.parse(data);
-        PowerKehuAreaData_FX(DataJson);
+        if (data) {
+            var DataJson = JSON.parse(data);
+            PowerKehuAreaData_FX(DataJson);
+        } else {
+            console.log("暂无数据")
+        }
     });
 }
 function PowerKehuAreaData_FX(DataJson) {

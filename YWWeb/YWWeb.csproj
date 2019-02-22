@@ -743,6 +743,7 @@
     <Content Include="Content\css\master.css" />
     <Content Include="Content\css\master2.css" />
     <Content Include="Content\css\modalForm.css" />
+    <Content Include="Content\css\newUserView.css" />
     <Content Include="Content\css\onepub.css" />
     <Content Include="Content\css\OrganizeAreaTreeEdit.css" />
     <Content Include="Content\css\pingmiantu.css" />
@@ -1694,6 +1695,7 @@
     <Content Include="Content\UserJS\EnergyOverview._zc.js" />
     <Content Include="Content\UserJS\EnergyPublicity._zc .js" />
     <Content Include="Content\UserJS\EnergyQuery._zc.js" />
+    <Content Include="Content\UserJS\NewUserView._zc.js" />
     <Content Include="Content\UserJS\PUERealTime._zc .js" />
     <Content Include="Content\UserJS\PUEHistory._zc.js" />
     <Content Include="Content\UserJS\Consume._zc.js" />

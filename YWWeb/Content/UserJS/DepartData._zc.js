@@ -4,7 +4,7 @@
         uid: null,
         uName:null,
         loading:true,
-        departmentID:92,
+        departmentID:null,
         analysisTableHeight: 0,
         analysisColumns: [],
         analysisData:[],
@@ -431,6 +431,7 @@
         }
     },
     beforeMount: function () {
+        this.departmentID = window.location.search.split("=")[1]
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")
         var that = this

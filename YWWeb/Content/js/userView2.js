@@ -655,7 +655,12 @@ function createBurthenChart(data) {
 	};
 
 	burthenChart.clear()
-	burthenChart.setOption(option)
+    burthenChart.setOption(option)
+    window.addEventListener("resize", () => {
+        burthenChart.resize();
+    });
+
+
 }
 $(".btnList .list").on("click", ".list-item", function () {
         $(".btnList .list .list-item").removeClass("roomBtnActive");

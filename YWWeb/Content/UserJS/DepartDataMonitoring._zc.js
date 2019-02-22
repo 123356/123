@@ -25,7 +25,13 @@
                 .then(function (res) {
                     res.data.open = true
                     that.init(res.data)
-                    that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
+                    var did = null
+                    if (res.data) {
+                        if (res.data.children.length > 0) {
+                            did = res.data.children[0].id
+                        }
+                    }
+                    that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
                    /* if (res.data.children.length > 0) {
                         that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res.data.children[0].id
                         res.data.children[0].selected=true

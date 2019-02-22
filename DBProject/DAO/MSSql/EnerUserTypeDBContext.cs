@@ -43,11 +43,7 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
 
-        public IList<t_EE_EnerUserType> GetHistoryList(int item_type)
-        {
-            string sql = "select * from t_EE_EnerUserType where item_type = "+ item_type;
-            return SQLQuery<t_EE_EnerUserType>(sql);
-        }
+    
         public DbSet<t_EE_EnerUserType> Datas { get; set; }
     }
 }

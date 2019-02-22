@@ -173,9 +173,9 @@
             this.$http({
                 url: '/energyManage/EMHome/GetExTable',
                 method: 'post',
-                params: {
+               /* params: {
                     id:that.uid
-                }
+                }*/
             })
                 .then(function (res) {
                     var data = res.data

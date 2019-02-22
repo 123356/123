@@ -12,13 +12,8 @@ namespace IDAO
     /// </summary>
     public interface IEnerUserType : IDAOBase, IDisposable
     {
-        
-        //修改分类项  如果有就修改  没有就添加
-
         IList<t_EE_EnerUserType> GetComobxList();
         IList<t_EE_EnerUserType> CheckHistory(string Name, int item_type);
         IList<t_EE_EnerUserType> AddHistory(string Name, int item_type);
-        IList<t_EE_EnerUserType> GetHistoryList(int item_type);
-        
     }
 }

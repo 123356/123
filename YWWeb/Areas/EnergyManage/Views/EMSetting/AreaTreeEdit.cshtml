@@ -123,7 +123,7 @@
 </Submenu>
                         </i-Menu>
                     </Sider>
-                    <Layout :style="{padding: '0 24px 24px'}">
+                    <Layout :style="{padding: '0 24px 0px','overflow':'hidden'}">
                         <Content :style="{padding: '24px', minHeight: '280px', background: '#fff', 'flex-grow': '1'}">
                             <Tabs type="card" :animated="false" v-model="treeType" :value="1">
                                 <tab-pane label="用电分项树" :name="1" icon="ios-leaf"></tab-pane>
@@ -296,7 +296,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetUnitList",
                         method: "post",
-                        params: {}
+                        body: {}
                     })
                         .then(function (res) {
                             if (!$.cookie('UnitData')) {
@@ -330,7 +330,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTreeData",
                         method: "post",
-                        params: {
+                        body: {
                             unitID: that.UnitData.UnitID,
                             item_type: 1,
                             unitName: that.UnitData.UnitName
@@ -409,7 +409,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTreeData",
                         method: "post",
-                        params: {
+                        body: {
                             unitID: that.UnitData.UnitID,
                             item_type: 2,
                             unitName: that.UnitData.UnitName
@@ -430,7 +430,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetCidTree",
                         method: "post",
-                        params: {
+                        body: {
                             pids: that.UnitData.PDRList,
                         }
                     })
@@ -577,7 +577,7 @@
                             this.$http({
                                 url: "/energyManage/EMSetting/DeleteSupervisor",
                                 method: "post",
-                                params: {
+                                body: {
                                     parent_id: data.pId,
                                     child_id: node.node.id,
                                     unit_id: that.UnitData.UnitID,
@@ -642,7 +642,7 @@
 
 
                     if (this.nodeEditTyped == 'add') {
-                        if (this.node.root && this.node.root.indexOf(that.node.title) > 0) {
+                        if (this.node.root && this.node.root.indexOf(`"${that.node.title}"`) > 0) {
                             this.$Message.warning("节点不能循环绑定");
                             return;
                         }
@@ -650,11 +650,11 @@
                         this.node.addCid = this.ViewToPIDCId(this.addCid);
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
-                                      
+                                        
                         this.$http({
                             url: "/energyManage/EMSetting/AddTreeNode",
                             method: "post",
-                            params: {
+                            body: {
                                 parent_id: that.node.parent_id,
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
@@ -663,7 +663,7 @@
                                 delCid: that.node.delCid || "",
                                 item_type: that.treeType,
                                 Name: name,
-                                id: 0,
+                                id: -1,
                                 unit_area: that.node.area || 0,
                                 unit_people: that.node.people || 0,
                             }
@@ -696,7 +696,7 @@
                         this.$http({
                             url: "/energyManage/EMSetting/UpdateTreeNode",
                             method: "post",
-                            params: {
+                            body: {
                                 parent_id: that.node.parent_id,
                                 unit_id: that.UnitData.UnitID,
                                 unit_head: that.node.head,
@@ -720,7 +720,7 @@
                 },
                 //视图转cid字符串
                 ViewToPIDCId(arr) {
-                    if (arr.length) {
+                    if (arr.length ) {
                         for (var a = 0, list = []; a < arr.length; a++) {
                             list[a] = arr[a].pid + "-" + arr[a].id;
                         }
@@ -755,7 +755,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTypeHistory",
                         method: "post",
-                        params: {
+                        body: {
                             type: this.treeType
                         }
                     })

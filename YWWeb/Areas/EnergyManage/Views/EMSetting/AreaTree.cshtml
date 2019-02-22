@@ -42,7 +42,10 @@
         }
 
         text {
-            font-size: 14px;
+            font-size: 16px;
+        }
+        .electricity{
+            color:#ff6a00;
         }
     </style>
 </head>
@@ -68,10 +71,8 @@
             .value(function (d) {
                 return d.size;
             });
-        var data = JSON.parse($.cookie('UnitData'));
+        var data = JSON.parse(window.localStorage.getItem("UnitData"));
 
-
-        console.log(data)
 
         $.ajax({
             type: "post",
@@ -107,32 +108,31 @@
                         return d.children.length ? "parent" : "child";
                     });
 
-                g.append("svg:text")
-                    .attr("transform", transform)
+                var text = g.append("svg:text")
                     .attr("dy", ".35em")
                     .style("opacity", function (d) {
-                        return d.dx * ky > 14 ? 1 : 0;
+                        return d.dx * ky > 32 ? 1 : 0;
                     })
-                    .attr("class", "name")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("transform", transform)
                     .text(function (d) {
                         return d.name;
                     })
 
-         
-                g.append("svg:text")
-                    .attr("transform", function (d) {
-                        return "translate(8," + (d.dx * ky / 2 + 14) + ")";
+
+                text.selectAll("tspan")
+                    .data(function (d) {
+                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + 123123]
                     })
-                    .attr("class", "electricity")
-                    .attr("dy", ".35em")
-                    .style("opacity", function (d) {
-                        return d.dx * ky > 30 ? 1 : 0;
-                    })
+                    .enter()
+                    .append("svg:tspan")
+                    .attr("x", text.attr("x"))
+                    .attr("dy", "1em")
+                    .attr('fill','#333')
                     .text(function (d) {
-                        return d.name + ":总用电量：143";
-                    })
-
-
+                        return d;
+                    });
 
                 d3.select(window)
                     .on("click", function () {
@@ -153,7 +153,7 @@
                     var t = g.transition()
                         .duration(d3.event.altKey ? 7500 : 750)
                         .attr("transform", function (d) {
-                            return "translate(" + x(d.y) + "," + y(d.x) + ")";
+                            return "translate(" + x(d.y) + "," + y(d.x)  +")";
                         });
 
                     t.select("rect")
@@ -162,37 +162,21 @@
                             return d.dx * ky;
                         });
 
-                    t.select("text")
-              
 
+                    t.select("text")
                         .attr("transform", transform)
                         .style("opacity", function (d) {
-                            console.log($(this).attr('class'));
-
-
-                            //return d.dx * ky > 14 ? 1 : 0;
-                            //return d.dx * ky > 30 ? 1 : 0;
+                            return d.dx * ky > 32 ? 1 : 0;
                         });
-
-                
-
-
                     d3.event.stopPropagation();
                 }
-
                 function transform(d) {
-                    return "translate(8," + d.dx * ky / 2 + ")";
+                    return "translate(8," + (d.dx * ky / 2 - 8) + ")";
                 }
-
-
-
             }
         })
-
-
                 //x最小 像素大小
                 //x最大 w/层数-文字个数*像素大小
-                //
 
                 //y最小 0+像素*2
                 //y最大 d.dx*ky-2*像素大小

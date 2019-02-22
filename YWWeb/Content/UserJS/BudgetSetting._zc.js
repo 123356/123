@@ -86,14 +86,14 @@
         getYearbugGetData: function () {
             var that = this
             var year = new Date(this.slectYear)
-            this.$http({
-                url: '/energyManage/EMHome/GetYearbugGetData',
-                method: 'POST',
-                params: {
+            this.$http.post(
+                 '/energyManage/EMHome/GetYearbugGetData',
+                //method: 'POST',
+                {
                     uid: this.uid,
                     year: year.getFullYear()
                 }
-            })
+            )
             .then(function (res) {
                 if (res.data!="no Data") {
                     that.sumDataSet = res.data

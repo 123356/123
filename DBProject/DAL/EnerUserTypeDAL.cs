@@ -61,22 +61,6 @@ namespace DAL
             return data;
         }
 
-
-
-        public IList<t_EE_EnerUserType> GetHistoryList(int item_type)
-        {
-            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
-            try
-            {
-                data = _dbFactory.enerUserType.GetHistoryList(item_type);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return data;
-        }
-
         public IList<t_EE_EnerUserType> GetComobxList()
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
