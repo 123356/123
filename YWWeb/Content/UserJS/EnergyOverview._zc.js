@@ -43,7 +43,6 @@
     methods: {
         toAreaTree: function () {
             $.cookie('UnitData', JSON.stringify({ UnitID: this.uid, UnitName: this.Uname, PDRList: null }), { expires: 7, path: '//EnergyManage/EMSetting/AreaTree' });
-            console.log("跳转")
             location.href = '/EnergyManage/EMSetting/AreaTree'
         },
         //类型下拉框
@@ -236,7 +235,6 @@
             var that = this
             this.$refs['addForm'].validate((valid) => {
                 if (valid) {
-                    console.log("success")
                     that.addConfig()
                     
                 } else {
@@ -381,7 +379,6 @@
             });
         },
         createModulePieChart: function (chart, data) {
-            console.log(data)
             for (var i = 0; i < data.keyValuePairs.length; i++) {
                 data.keyValuePairs[i].value = data.keyValuePairs[i].value.toFixed(2)
             }
@@ -560,7 +557,6 @@
         datePicekChange: function (e) {
             var time = e.substring(0, 7)
             this.month = time.split("-")[1]
-            console.log(time)
             this.curDate = time
             this.getEneryOverView()
         }
@@ -578,7 +574,6 @@
         if (id!=null) {
             this.uid = id
             this.Uname = $.cookie("enUName")
-            console.log(this.uid)
         }
         var date = new Date()
         this.month = (date.getMonth() + 1)
@@ -587,7 +582,6 @@
             month = "0"+month
         }
         this.curDate = date.getFullYear() + "-" + month
-        console.log(this.curDate)
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getEneryOverView()
