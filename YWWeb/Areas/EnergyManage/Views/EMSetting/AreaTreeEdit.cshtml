@@ -199,14 +199,6 @@
     </div>
 
     <script>
-
-
-        Vue.http.options.emulateHTTP = true;
-        Vue.http.options.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        }
-
-
         var vm = new Vue({
             el: '#app',
             data: {
@@ -304,7 +296,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetUnitList",
                         method: "post",
-                        params: {}
+                        body: {}
                     })
                         .then(function (res) {
                             if (!$.cookie('UnitData')) {
@@ -338,7 +330,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTreeData",
                         method: "post",
-                        params: {
+                        body: {
                             unitID: that.UnitData.UnitID,
                             item_type: 1,
                             unitName: that.UnitData.UnitName
@@ -417,7 +409,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTreeData",
                         method: "post",
-                        params: {
+                        body: {
                             unitID: that.UnitData.UnitID,
                             item_type: 2,
                             unitName: that.UnitData.UnitName
@@ -438,7 +430,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetCidTree",
                         method: "post",
-                        params: {
+                        body: {
                             pids: that.UnitData.PDRList,
                         }
                     })
@@ -585,7 +577,7 @@
                             this.$http({
                                 url: "/energyManage/EMSetting/DeleteSupervisor",
                                 method: "post",
-                                params: {
+                                body: {
                                     parent_id: data.pId,
                                     child_id: node.node.id,
                                     unit_id: that.UnitData.UnitID,
@@ -763,7 +755,7 @@
                     this.$http({
                         url: "/energyManage/EMSetting/GetTypeHistory",
                         method: "post",
-                        params: {
+                        body: {
                             type: this.treeType
                         }
                     })
