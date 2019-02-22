@@ -139,10 +139,12 @@ namespace EnergyManage.Controllers
             //先查之前历史有没有  
             if (id == -1) {
                 IList<IDAO.Models.t_EE_EnerUserType> checklist = DAL.EnerUserTypeDAL.getInstance().CheckHistory(Name, item_type);
-                id = checklist[0].id;
+                if (checklist.Count != 0) {
+                    id = checklist[0].id;
+                }
             }
             //没有增加历史  获取id
-            if (id == 0)
+            if (id == -1)
             {
                 IList<IDAO.Models.t_EE_EnerUserType> addlist = DAL.EnerUserTypeDAL.getInstance().AddHistory(Name, item_type);
                 id = addlist[0].id;
