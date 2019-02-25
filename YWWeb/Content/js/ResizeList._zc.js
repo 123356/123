@@ -81,14 +81,21 @@ var vm = new Vue({
             var obj = {
                 version: "v0.0.0.1",
                 type: 2,
-                content: { tagID: id, value: 0 }
+                content: {
+                    tagID: id,
+                    value: 0
+                }
             }
             this.send(JSON.stringify(obj));
         },
         SetData(id) {
             var obj = {
-                version: "v0.0.0.1", type: 1,
-                content: { tagID: id, value: null }
+                version: "v0.0.0.1",
+                type: 1,
+                content: {
+                    tagID: id,
+                    value: null
+                }
             }
             for (var key in this.value) {
                 if (key == "DTU_CTR_TMP" && id == this.value[key].id) { //空调
@@ -113,19 +120,19 @@ var vm = new Vue({
                     obj.content.value = this.value[key].value;
                 }
             }
-            if (obj.content.value || obj.content.value==0 ) {
-               this.send(JSON.stringify(obj));
+            if (obj.content.value || obj.content.value == 0) {
+                this.send(JSON.stringify(obj));
             } else {
                 vm.$Message.error("请先配置数据");
             }
         },
-        intToBytes: function (value) {
+        intToBytes: function(value) {
             var bytes = new Array(2);
             bytes[0] = value & 0xff;
             bytes[1] = (value >> 8) & 0xFF
             return bytes;
         },
-        byteToShort: function (value) {
+        byteToShort: function(value) {
             var bytes = (value[1] & 0xff) << 8 | (value[0]) & 0xff;
             return bytes;
         },
@@ -136,15 +143,13 @@ var vm = new Vue({
                 return v.toString(16);
             });
         },
-        intToBytes: function (value) 
-        {
-                var bytes = new Array(2);
-                bytes[0] = value & 0xff;
-                bytes[1] = (value >> 8) & 0xFF
-                return bytes;
+        intToBytes: function(value) {
+            var bytes = new Array(2);
+            bytes[0] = value & 0xff;
+            bytes[1] = (value >> 8) & 0xFF
+            return bytes;
         },
-        byteToShort: function (value) 
-        {
+        byteToShort: function(value) {
             var bytes = (value[1] & 0xff) << 8 | (value[0]) & 0xff;
             return bytes;
         },
@@ -188,42 +193,47 @@ var vm = new Vue({
                     that.mqtt();
                 }, 10000);
             };
-            client.onMessageArrived = function (res) {
+            client.onMessageArrived = function(res) {
                 data = JSON.parse(res.payloadString);
                 res = JSON.parse(data.content);
                 console.log('接收');
                 console.log(res)
-                if (res.statu==1 && data.type == 1){
+                if (res.statu == 1 && data.type == 1) {
                     vm.$Message.success("配置成功");
-                } else if (res.statu == 1 && data.type == 1){
+                } else if (res.statu == 1 && data.type == 1) {
                     vm.$Message.error("配置失败");
-                if (res.PointType == "DTU_CTR_TMP") { //空调
-                    that.assist.RefrigerationHeat = parseInt(res.modelStatu) == 1 ? 1 : 0;
-                    that.value.DTU_CTR_TMP.modelStatu = parseInt(res.modelStatu) == 0? 0:1;
-                    that.value.DTU_CTR_TMP.temp = parseInt(res.temp);
-                    vm.$Message.success("读取成功");
-                } else if (res.PointType == "DTU_CTR_MODEL") { //季节
-                    that.value['DTU_CTR_MODEL'].value = parseInt(res.pv);
-                    vm.$Message.success("读取成功");
-                } else if (res.PointType == "DTU_DI") { //插座开关
-                    that.value['DTU_DI'].value = parseInt(res.pv);
-                    vm.$Message.success("读取成功");
-                } 
-            };
-            //发送
-            that.send = function (data) {
-                console.log('发送');
-                console.log(data);
-                var message = new Paho.MQTT.Message(data);
-                message.destinationName = '/ny/control/' + window.pid;
-                client.send(message);
+                    if (res.PointType == "DTU_CTR_TMP") { //空调
+                        that.assist.RefrigerationHeat = parseInt(res.modelStatu) == 1 ? 1 : 0;
+                        that.value.DTU_CTR_TMP.modelStatu = parseInt(res.modelStatu) == 0 ? 0 : 1;
+                        that.value.DTU_CTR_TMP.temp = parseInt(res.temp);
+                        vm.$Message.success("读取成功");
+                    } else if (res.PointType == "DTU_CTR_MODEL") { //季节
+                        that.value['DTU_CTR_MODEL'].value = parseInt(res.pv);
+                        vm.$Message.success("读取成功");
+                    } else if (res.PointType == "DTU_DI") { //插座开关
+                        that.value['DTU_DI'].value = parseInt(res.pv);
+                        vm.$Message.success("读取成功");
+                    }
+                };
+                //发送
+                that.send = function(data) {
+                    console.log('发送');
+                    console.log(data);
+                    var message = new Paho.MQTT.Message(data);
+                    message.destinationName = '/ny/control/' + window.pid;
+                    client.send(message);
+                }
             }
         }
     }
 })
+
 function power() {
     if ($('#list_data').datagrid('getSelected')) {
-        $.post("/energyManage/EMSetting/GetTageID", { "pid": pid, "cid": parseInt($('#list_data').datagrid('getSelected').CID) }, function(data) {
+        $.post("/energyManage/EMSetting/GetTageID", {
+            "pid": pid,
+            "cid": parseInt($('#list_data').datagrid('getSelected').CID)
+        }, function(data) {
             for (var a = 0, b = 0; a < data.length; a++) {
                 var obj = vm.value[data[a]['数据类型']];
                 if (obj) {
