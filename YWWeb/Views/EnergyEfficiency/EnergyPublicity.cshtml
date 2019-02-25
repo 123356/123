@@ -13,7 +13,7 @@
 </head>
 <body>
     <div id="app" class="noPaddingBottom" style="background:#fff;padding:0;margin:0">
-        
+        <Spin size="large" fix v-if="loading"></Spin>
         <!--right s-->
         <div class="right allMain">
             <div class="topView main-item">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="con" >
                     <div class="datePicekerView">
-                        <date-picker type="date" size="small" :clearable="false"></date-picker>
+                        <date-picker type="date" size="small" :clearable="false" v-model="time" v-on:on-change="dateChange"></date-picker>
                     </div>
                     <div class="chart" id="barChart" style="height:100%;width:100%"></div>
                 </div>
@@ -50,7 +50,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/EnergyPublicity._zc .js?v=1.05"></script>
+    <script  type="text/javascript" src="~/Content/UserJS/EnergyPublicity._zc .js?v=1.15"></script>
 </body>
 </html>
 

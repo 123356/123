@@ -1,6 +1,9 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
+        UID: null,
+        UName:null,
         listWidth: 0,
         chartHeight: 0,
         tableHeight: 0,
@@ -10,44 +13,76 @@
             {
                 title: '科室',
                 align: 'center',
-                key: 'department',
+                key: 'Name',
             },
             {
-                title: '能耗费用',
+                title: '能耗费用(万元)',
                 align: 'center',
-                key: 'money',
+                key: 'DValue',
                 sortable: true
             },
             {
-                title: '面积',
+                title: '面积(㎡)',
                 align: 'center',
-                key: 'area',
+                key: 'unit_area',
                 sortable: true
             },
             {
-                title: '人员',
+                title: '人员(人)',
                 align: 'center',
-                key: 'people',
+                key: 'unit_people',
                 sortable: true
             },
             {
                 title: '人均能耗值',
                 align: 'center',
-                key: 'average',
+                key: 'avgV',
                 sortable: true
             },
             
         ],
-        tableData: [
-            { department: '内科1', money: 100,area: 123.4,people:12,average:1.2},
-            { department: '内科2', money: 345, area: 34.4, people: 62, average: 1.62 },
-            { department: '内科3', money: 222, area: 45.4, people: 162, average: 1.02 },
-        ],
+        tableData: [],
         barChart: null,
+        time:new Date()
     },
     methods: {
-
-        createBarChart: function () {
+        //获取数据
+        getEneryView: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryView',
+                method: 'post',
+                body: {
+                    uid: that.UID,
+                    time: that.formaterDate()
+                }
+            })
+            .then(function (res) {
+                that.tableData = res.data
+                that.createBarChart(res.data)
+                that.loading = false
+            })
+            .catch(function (e) {
+                that.loading = false
+                throw new ReferenceError(e.message)
+            })
+        },
+        dateChange: function () {
+            this.loading = true
+            this.getEneryView()
+        },
+        formaterDate: function () {
+            var date = new Date(this.time)
+           date= date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+            return date
+        },
+        createBarChart: function (data) {
+            var xData = []
+            var yData = []
+            for (var i = 0; i < data.length; i++) {
+                xData.push(data[i].Name)
+                yData.push(data[i].DValue)
+            }
             barChart = echarts.init(document.getElementById("barChart"));
             var option = {
                 title: {
@@ -87,13 +122,13 @@
                     top: 60,
                     left: 0,
                     right: 0,
-                    bottom: 0,
+                    bottom: 10,
                     containLabel: true
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['口腔科','中医内科','外科','行政楼','肾脏科','眼科','妇科','急诊','皮肤科','骨科','外科','五官科','心理','手术室','门诊','儿科','肠胃科'],
+                        data: xData,
 
                         axisLine: {
                             lineStyle: {
@@ -108,7 +143,7 @@
 
                         axisLabel: { //调整y轴的lable  
                             textStyle: {
-                                fontSize: 9,// 让字体变大
+                                fontSize: 10,// 让字体变大
                                 color: '#9f9d9d'
                             }
                         },
@@ -148,7 +183,7 @@
                         name: '能耗费用(万)',
                         type: 'bar',
                         barWidth: '50%',
-                        data: [10, 52, 200, 334, 390, 330, 220, 10, 52, 200, 334, 390, 330, 220, 10, 52, 200]
+                        data: yData
                     }
                 ],
                 dataZoom: [
@@ -181,6 +216,9 @@
         }
     },
     beforeMount: function () {
+        this.UID = $.cookie("enUID")
+        this.UName = $.cookie("enUName")
+        this.getEneryView()
         var that = this
         this.setHeight()
         setInterval(function () {
@@ -188,8 +226,7 @@
         }, 100)
     },
     mounted: function () {
-        var that = this
-       this.createBarChart()
+     
         
     }
 })
