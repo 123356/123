@@ -59,5 +59,7 @@ namespace DAOMongoDB
         public IPriceEnery priceEnery => throw new NotImplementedException();
 
         public IPointsInfo PointsInfo => throw new NotImplementedException();
+
+        public ILookEneryView LookEnery => throw new NotImplementedException();
     }
 }

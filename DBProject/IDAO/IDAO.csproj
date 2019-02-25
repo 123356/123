@@ -68,6 +68,7 @@
     <Compile Include="IEneryUsreBudget.cs" />
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
+    <Compile Include="ILookEneryView.cs" />
     <Compile Include="IPDRInfo.cs" />
     <Compile Include="IPointsInfo.cs" />
     <Compile Include="IPriceEnery.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Models\t_CM_ValueTypeComBox.cs" />
     <Compile Include="Models\t_CM_DeviceTypeComBox.cs" />
     <Compile Include="Models\t_CM_RoleRight.cs" />
+    <Compile Include="Models\t_V_LookEneryView.cs" />
     <Compile Include="Models\t_V_RealTimeData.cs" />
     <Compile Include="t_SM_HisData.Context.cs">
       <AutoGen>True</AutoGen>

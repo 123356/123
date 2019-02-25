@@ -129,5 +129,20 @@ namespace DAL
             }
             return data;
         }
+
+
+        public IList<t_V_EneryView> GetLookDatas(string cids, string pids, string time)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetLookDatas(cids, pids, time);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }

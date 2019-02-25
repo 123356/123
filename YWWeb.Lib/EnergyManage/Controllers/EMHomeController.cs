@@ -590,6 +590,7 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region 预算管理
         public JsonResult GetYearbugGetData(int uid, int year)
         {
@@ -771,7 +772,7 @@ namespace EnergyManage.Controllers
                 bm.YearID = yearid;
                 DAL.BudgetDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok",JsonRequestBehavior.AllowGet);
+            return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateContypeBudget(int id, decimal value, int monthid, int cotypeid)
@@ -829,7 +830,7 @@ namespace EnergyManage.Controllers
                 bm.CollTypeID = cotypeid;
                 DAL.DepartmentalApportionmentDAL.getInstance().AddBudGet(bm);
             }
-            return Json("ok",JsonRequestBehavior.AllowGet);
+            return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AddEnUserBudget(int cotypeid, string eneryids)
@@ -916,13 +917,13 @@ namespace EnergyManage.Controllers
         }
         #endregion
 
-
+        #region 能源单价
         public JsonResult AddEneryPrice(t_EE_PriceEnery model)
         {
             int n = 0;
             if (model.ID <= 0)
             {
-                 n = DAL.PriceEneryDAL.getInstance().InserPriceEnery(model);
+                n = DAL.PriceEneryDAL.getInstance().InserPriceEnery(model);
             }
             else
             {
@@ -942,11 +943,54 @@ namespace EnergyManage.Controllers
             int n = DAL.PriceEneryDAL.getInstance().DeletePriceEnery(ID);
             return Json(n, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0, int page = 1,int rows=15)
+        public JsonResult GetEneryPriceList(int uid = 0, int colltypeid = 0, int level = 0, int page = 1, int rows = 15)
         {
             int total = 0;
             IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(out total, uid, colltypeid, level, page, rows);
             return Json(new { total, list }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region 能源公示
+        public JsonResult GetEneryView(int uid = 0, string time = "2018-11-25")
+        {
+            List<LookView> lookList = new List<LookView>();
+            try
+            {
+                string pids = GetPIDs();
+                IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByUID(uid);
+                foreach (var item in list)
+                {
+                    if (!string.IsNullOrEmpty(item.cids.Trim()))
+                    {
+                        var v = DAL.EneryOverViewDAL.getInstance().GetLookDatas(item.cids, pids, time);
+                        LookView m = new LookView();
+                        m.Name = item.Name;
+                        m.DValue = v.Sum(p => p.Rate);
+                        m.unit_area = item.unit_area;
+                        m.unit_people = item.unit_people;
+                        if (item.unit_people != 0)
+                            m.avgV = m.DValue / item.unit_people;
+
+                        lookList.Add(m);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(lookList, JsonRequestBehavior.AllowGet);
+        }
+        public class LookView
+        {
+            public string Name { get; set; }
+            public decimal DValue { get; set; }
+            public int unit_area { get; set; }
+            public int unit_people { get; set; }
+            public decimal avgV { get; set; } = 0;
+        }
+
+        #endregion
     }
 }

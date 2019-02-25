@@ -35,5 +35,6 @@ namespace IDAO
         IPDRInfo pdrInfo { get; }
         IPriceEnery priceEnery { get; }
         IPointsInfo PointsInfo { get; }
+        ILookEneryView LookEnery { get; }
     }
 }

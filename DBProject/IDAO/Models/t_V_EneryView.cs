@@ -21,6 +21,6 @@ namespace IDAO.Models
 
         public int CID { get; set; }
 
-        public String CName { get; set; }
+        public string CName { get; set; }
     }
 }

@@ -61,5 +61,7 @@ namespace DAO
         public IPriceEnery priceEnery => new PriceEneryDBContext();
 
 	    public IPointsInfo PointsInfo => new PointsInfoDBContext();
+
+        public ILookEneryView LookEnery => new LookEneryViewDBContext();
     }
 }
