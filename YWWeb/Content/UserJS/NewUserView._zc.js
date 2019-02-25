@@ -70,7 +70,7 @@
             this.$http({
                 url: '/Home/GetStationState',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -88,7 +88,7 @@
             this.$http({
                 url: '/Home/GetThisDayPower',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -110,7 +110,7 @@
             this.$http({
                 url: '/Home/GetLastMonthPower',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -132,7 +132,7 @@
             this.$http({
                 url: '/Home/GetThisYearPower',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -156,7 +156,7 @@
             this.$http({
                 url: '/Home/AlarmManager',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -191,7 +191,7 @@
             this.$http({
                 url: '/Home/GetProjectInfo',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -208,7 +208,7 @@
             this.$http({
                 url: '/Home/GetPDF',
                 method: 'POST',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -234,7 +234,7 @@
             this.$http({
                 url: '/Home/getBianyaqi',
                 method: 'POST',
-                params: {
+                body: {
                     pid: this.PID
                 }
             })
@@ -262,7 +262,7 @@
             this.$http({
                 url: '/Home/ViewLoop',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -283,7 +283,7 @@
             this.$http({
                 url: '/Home/ViewLoop',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.UnitID
                 }
             })
@@ -313,7 +313,7 @@
             this.$http({
                 url: '/Home/LoadCurve',
                 method: 'POST',
-                params: {
+                body: {
                     pid: this.PID,
                     did: this.activeIndex,
                     cid: null

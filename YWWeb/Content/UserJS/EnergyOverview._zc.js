@@ -1,10 +1,10 @@
 ﻿new Vue({
     el: "#EnergyOverview",
     data: {
-        loading:true,
+        loading: true,
         info: {},
         uid: null,
-        Uname:'',
+        Uname: '',
         curDate: null,
         month: null,
         powerChart: null,
@@ -33,105 +33,117 @@
         typeList: [],
         departMentList: [],
         comList: [],
-        sumBudget: 0, 
+        sumBudget: 0,
         left_viewIsShow: true,
         zduibi: null,
         Peozhanbi: null,
         LPeozhanbi: null,
-        zongBudget:null,
+        zongBudget: null,
     },
     methods: {
         toAreaTree: function () {
-            $.cookie('UnitData', JSON.stringify({ UnitID: this.uid, UnitName: this.Uname, PDRList: null }), { expires: 7, path: '//EnergyManage/EMSetting/AreaTree' });
+            console.log("跳转")
             location.href = '/EnergyManage/EMSetting/AreaTree'
         },
         //类型下拉框
         getCollectDevTypeList: function () {
             var that = this
-            
-                this.$http({
-                    url: '/energyManage/EMHome/GetCollectDevTypeList',
-                    method: 'get',
-                }).then(function (res) {
-                    that.typeList = res.data
-                }).catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
-            
-            
+
+            this.$http({
+                url: '/energyManage/EMHome/GetCollectDevTypeList',
+                method: 'get',
+            }).then(function (res) {
+                that.typeList = res.data
+            }).catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+
+
         },
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-            
-                this.$http({
-                    url: '/energyManage/EMHome/GetComobxList',
-                    method: 'get',
-                }).then(function (res) {
-                    that.departMentList = res.data
-                }).catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
-           
-            
+
+            //wwn 2019 02 22
+            //this.$http({
+            //    url: '/energyManage/EMSetting/GetHistoryList',
+            //    method: 'get',
+            //}).then(function(res) {
+            //    that.departMentList = res.data
+            //}).catch(function(e) {
+            //    throw new ReferenceError(e.message)
+            //})
+            this.$http({
+                url: "/energyManage/EMSetting/GetHistoryList",
+                method: "post",
+                body: {
+                    unitID: parseInt(that.uid),
+                    item_type: 2
+                }
+            }).then(function (res) {
+                console.log(res.data);
+                that.departMentList = res.data;
+            }).catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
 
         //删除能源
         deleteConfig: function (id) {
             var that = this
-            
-                this.$http({
-                    url: '/energyManage/EMHome/DeleteConfig',
-                    method: 'post',
-                    params: {
-                        ID: id
+
+            this.$http({
+                url: '/energyManage/EMHome/DeleteConfig',
+                method: 'post',
+                params: {
+                    ID: id
+                }
+            })
+                .then(function (res) {
+                    if (res.data > 0) {
+                        that.$Message.success('删除成功');
+                        that.getEneryOverView()
+                    } else {
+                        that.$Message.warning('删除失败');
                     }
                 })
-                    .then(function (res) {
-                        if (res.data > 0) {
-                            that.$Message.success('删除成功');
-                            that.getEneryOverView()
-                        } else {
-                            that.$Message.warning('删除失败');
-                        }
-                    })
-                    .catch(function (e) {
-                        throw new ReferenceError(e.message)
-                    })
-          
-            
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+
+
         },
         //添加能源
         addConfig: function () {
             var that = this
-          
-                this.$http({
-                    url: '/energyManage/EMHome/AddConfig',
-                    method: 'post',
-                    params: {
-                        CollTypeID: this.addForm.CollTypeID,
-                        EnerUserTypeID: this.addForm.EnerUserTypeID,
-                        UID: this.uid,
 
+            this.$http({
+                url: '/energyManage/EMHome/AddConfig',
+                method: 'post',
+                params: {
+                    CollTypeID: this.addForm.CollTypeID,
+                    EnerUserTypeID: this.addForm.EnerUserTypeID,
+                    UID: this.uid,
+
+                }
+            })
+                .then(function (res) {
+                    if (res.data > 0) {
+                        that.$Message.success('添加成功');
+                        that.addModal1Visable = false
+
+                        that.getEneryOverView()
+                    } else {
+                        that.$Message.warning('添加失败');
                     }
                 })
-                    .then(function (res) {
-                        if (res.data > 0) {
-                            that.$Message.success('添加成功');
-                            that.addModal1Visable = false
+                .catch(function (e) {
 
-                            that.getEneryOverView()
-                        } else {
-                            that.$Message.warning('添加失败');
-                        }
-                    })
-                    .catch(function (e) {
-                       
-                        that.$Message.error('请求失败');
-                        throw new ReferenceError(e.message)
-                    })
-            
-            
+                    that.$Message.error('请求失败');
+                    throw new ReferenceError(e.message)
+                })
+
+
         },
         //数据加载
         getEneryOverView: function () {
@@ -143,74 +155,74 @@
                 month = "0" + month
             }
             time = time.getFullYear() + "-" + month
-          
-          
-                this.$http({
-                    url: '/energyManage/EMHome/GetEneryOverView',
-                    method: 'post',
-                    params: {
-                        uid: this.uid,
-                        time: time
-
-                    }
-                })
-                    .then(function (res) {
-                        if (res.data) {
 
 
-                            for (var i = 0; i < res.data.list.length; i++) {
-                                res.data.list[i].pieChart = "pie" + i
-                                res.data.list[i].barChart = "bar" + i
-                                res.data.list[i].rate = res.data.list[i].rate.toFixed(2)
-                                res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(2)
-                                res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
-                            }
-                            this.info = res.data
-                            this.sumBudget = res.data.list_zong.zongBudget
-                            this.zduibi = res.data.list_zong.zduibi
-                            this.Peozhanbi = res.data.list_bottom.Peozhanbi
-                            this.LPeozhanbi = res.data.list_bottom.LPeozhanbi
-                            this.zongBudget = res.data.list_bottom.zongBudget
-                            this.bottomInfo = res.data.list_bottom
-                            that.creatPowerChart(res.data)
-                            if (res.data.left_view.length > 0) {
-                                this.creatEnergyMoneyChart(res.data)
-                                this.left_viewIsShow = true
-                            } else {
-                                this.left_viewIsShow = false
-                            }
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryOverView',
+                method: 'post',
+                params: {
+                    uid: this.uid,
+                    time: time
+
+                }
+            })
+                .then(function (res) {
+                    if (res.data) {
 
 
-                            var temp = res.data.list
-                            if (temp.length > 0) {
-                                var timer = setInterval(function () {
-                                    if ($("#" + temp[0].pieChart).length > 0) {
-                                        for (var i = 0; i < temp.length; i++) {
-                                            if (temp[i].keyValuePairs.length > 0) {
-                                                that.createModulePieChart(temp[i].pieChart, temp[i])
-                                            }
-                                            if (temp[i].keyValuePairs_Time.length > 0) {
-                                                that.createModuleBarChart(temp[i].barChart, temp[i])
-                                            }
-
-                                        }
-                                        clearInterval(timer)
-                                    }
-                                }, 100)
-                            }
+                        for (var i = 0; i < res.data.list.length; i++) {
+                            res.data.list[i].pieChart = "pie" + i
+                            res.data.list[i].barChart = "bar" + i
+                            res.data.list[i].rate = res.data.list[i].rate.toFixed(2)
+                            res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(2)
+                            res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
                         }
-                        this.loading = false
-                    })
-                    .catch(function (e) {
-                        
-                        that.$Message.error('请求失败');
-                        this.loading = false
-                        throw new ReferenceError(e.message)
-                    })
+                        this.info = res.data
+                        this.sumBudget = res.data.list_zong.zongBudget
+                        this.zduibi = res.data.list_zong.zduibi
+                        this.Peozhanbi = res.data.list_bottom.Peozhanbi
+                        this.LPeozhanbi = res.data.list_bottom.LPeozhanbi
+                        this.zongBudget = res.data.list_bottom.zongBudget
+                        this.bottomInfo = res.data.list_bottom
+                        that.creatPowerChart(res.data)
+                        if (res.data.left_view.length > 0) {
+                            this.creatEnergyMoneyChart(res.data)
+                            this.left_viewIsShow = true
+                        } else {
+                            this.left_viewIsShow = false
+                        }
 
-           
 
-            
+                        var temp = res.data.list
+                        if (temp.length > 0) {
+                            var timer = setInterval(function () {
+                                if ($("#" + temp[0].pieChart).length > 0) {
+                                    for (var i = 0; i < temp.length; i++) {
+                                        if (temp[i].keyValuePairs.length > 0) {
+                                            that.createModulePieChart(temp[i].pieChart, temp[i])
+                                        }
+                                        if (temp[i].keyValuePairs_Time.length > 0) {
+                                            that.createModuleBarChart(temp[i].barChart, temp[i])
+                                        }
+
+                                    }
+                                    clearInterval(timer)
+                                }
+                            }, 100)
+                        }
+                    }
+                    this.loading = false
+                })
+                .catch(function (e) {
+
+                    that.$Message.error('请求失败');
+                    this.loading = false
+                    throw new ReferenceError(e.message)
+                })
+
+
+
+
         },
         closeModule: function (id) {
             var that = this
@@ -235,8 +247,9 @@
             var that = this
             this.$refs['addForm'].validate((valid) => {
                 if (valid) {
+                    console.log("success")
                     that.addConfig()
-                    
+
                 } else {
                     console.log("error")
                 }
@@ -261,54 +274,52 @@
                 ]
                 color = ['#f9b88c', '#58b9a3']
             }
-           
-          
+
+
             var option = {
                 tooltip: {
                     trigger: 'item',
                     formatter: "{b}: <br/>{c}万<br/> ({d}%)"
                 },
                 color: color,
-                series: [
-                    {
-                        name: '电量',
-                        type: 'pie',
-                        center: ['48%', '52%'],
-                        radius: ['85%', '62%'],
-                        avoidLabelOverlap: false,
-                        hoverAnimation: false,
+                series: [{
+                    name: '电量',
+                    type: 'pie',
+                    center: ['48%', '52%'],
+                    radius: ['85%', '62%'],
+                    avoidLabelOverlap: false,
+                    hoverAnimation: false,
 
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'center',
-                                formatter: [
-                                    '{a|总费用}',
-                                    '{b|' + rate + '}'
-                                ].join('\n'),
-                                rich: {
-                                    a: {
-                                        color: '#525252',
-                                        lineHeight: 20,
-                                        fontSize: 14,
-                                    },
-                                    b: {
-                                        color: '#525252',
-                                        lineHeight: 30,
-                                        fontSize: 18,
-                                    }
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            formatter: [
+                                '{a|总费用}',
+                                '{b|' + rate + '}'
+                            ].join('\n'),
+                            rich: {
+                                a: {
+                                    color: '#525252',
+                                    lineHeight: 20,
+                                    fontSize: 14,
                                 },
-
+                                b: {
+                                    color: '#525252',
+                                    lineHeight: 30,
+                                    fontSize: 18,
+                                }
                             },
+
                         },
-                        labelLine: {
-                            normal: {
-                                show: false
-                            }
-                        },
-                        data: serData
-                    }
-                ]
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: serData
+                }]
             };
             powerChart.clear()
             powerChart.setOption(option)
@@ -332,45 +343,43 @@
                 legend: {
                     orient: 'horizontal',
                     x: 'center',
-                    bottom:'5%',
+                    bottom: '5%',
                     data: legend,
                     itemWidth: 13,
                     textStyle: {
                         fontSize: 10
                     },
-                    borderRadius:0
+                    borderRadius: 0
 
                 },
-               
-                series: [
-                    {
-                        name: '费用比例',
-                        type: 'pie',
-                        center: ['48%', '44%'],
-                        radius: ['66%', '48%'],
-                        avoidLabelOverlap: false,
-                        hoverAnimation: false,
-                        label: {
-                            normal: {
-                                show: false,
-                                position: 'center'
-                            },
-                            emphasis: {
-                                show: true,
-                                textStyle: {
-                                    fontSize: '25',
-                                    fontWeight: 'bold'
-                                }
-                            }
+
+                series: [{
+                    name: '费用比例',
+                    type: 'pie',
+                    center: ['48%', '44%'],
+                    radius: ['66%', '48%'],
+                    avoidLabelOverlap: false,
+                    hoverAnimation: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
                         },
-                        labelLine: {
-                            normal: {
-                                show: false
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '25',
+                                fontWeight: 'bold'
                             }
-                        },
-                        data: data.left_view
-                    }
-                ]
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: data.left_view
+                }]
             };
             energyMoneyChart.clear()
             energyMoneyChart.setOption(option)
@@ -379,6 +388,7 @@
             });
         },
         createModulePieChart: function (chart, data) {
+            console.log(data)
             for (var i = 0; i < data.keyValuePairs.length; i++) {
                 data.keyValuePairs[i].value = data.keyValuePairs[i].value.toFixed(2)
             }
@@ -390,40 +400,38 @@
                     position: ['left', 'top']
                 },
                 color: ['#f9b88c', '#58b9a3', '#d0737b'],
-                series: [
-                    {
-                        name: data.name,
-                        type: 'pie',
-                        radius: ['90%', '60%'],
-                        avoidLabelOverlap: false,
-                        hoverAnimation: false,
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'center',
-                                formatter: function (arg) {
-                                    var html = data.rate;
-                                    return html
-                                },
-                                textStyle: {
-                                    color: '#525252',
-                                    fontSize: 13,
-                                    fontFamily: "sans-serif",
-                                    fontWeight:100
-                                }
-
+                series: [{
+                    name: data.name,
+                    type: 'pie',
+                    radius: ['90%', '60%'],
+                    avoidLabelOverlap: false,
+                    hoverAnimation: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            formatter: function (arg) {
+                                var html = data.rate;
+                                return html
                             },
-
-
-                        },
-                        labelLine: {
-                            normal: {
-                                show: false
+                            textStyle: {
+                                color: '#525252',
+                                fontSize: 13,
+                                fontFamily: "sans-serif",
+                                fontWeight: 100
                             }
+
                         },
-                        data: data.keyValuePairs
-                    }
-                ]
+
+
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: data.keyValuePairs
+                }]
             };
             chart.setOption(option)
             window.addEventListener("resize", () => {
@@ -431,7 +439,7 @@
 
             });
         },
-        createModuleBarChart: function (data,data) {
+        createModuleBarChart: function (data, data) {
             var chart = data.barChart
             var xData = new Array()
             var yData = new Array()
@@ -440,158 +448,149 @@
                 yData.push(data.keyValuePairs_Time[i].value)
             }
             chart = echarts.init(document.getElementById(chart));
-            var  option = {
+            var option = {
                 title: {
                     text: this.month + '月' + data.name + '消耗图(万元)',
-                        left: 'center',
-                        textStyle: {
-                            color: '#757575',
-                            fontWeight: 'normal',
-                            fontSize: 10,
-                        },
-                        top:0
+                    left: 'center',
+                    textStyle: {
+                        color: '#757575',
+                        fontWeight: 'normal',
+                        fontSize: 10,
                     },
-                    color: ['#57b9a3'],
-                    tooltip: {
-                        trigger: 'axis',
-                        formatter: "{a}: <br/>" + this.month + "-{b}:{c}",
-                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        },
-                        position: ['50%', '50%']
+                    top: 0
+                },
+                color: ['#57b9a3'],
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: "{a}: <br/>" + this.month + "-{b}:{c}",
+                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                     },
-                    toolbox: {
-                        feature: {
-                            dataZoom: {
-                                yAxisIndex: 'none'
-                            },
-                            dataView: { readOnly: false },
-                            magicType: { type: ['line', 'bar'] },
-                            restore: {},
-                            saveAsImage: {}
+                    position: ['50%', '50%']
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
                         },
-                        itemSize: 9,
-                        itemGap: 1,
-                        right:20
+                        dataView: { readOnly: false },
+                        magicType: { type: ['line', 'bar'] },
+                        restore: {},
+                        saveAsImage: {}
                     },
+                    itemSize: 9,
+                    itemGap: 1,
+                    right: 20
+                },
                 grid: {
-                        top:25,
-                        left: '3%',
-                        right: 0,
-                        bottom: 0,
-                        containLabel: true
+                    top: 25,
+                    left: '3%',
+                    right: 0,
+                    bottom: 0,
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    data: xData,
+
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57b9a3', //x轴线颜色
+                            width: '0.7'
+                        },
                     },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            data: xData,
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
 
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#57b9a3',//x轴线颜色
-                                    width: '0.7'
-                                },
-                            },
-                            axisTick: {
-                                show: false,
-                                alignWithLabel: true
-                            },
+                    axisLabel: { //调整y轴的lable  
+                        textStyle: {
+                            fontSize: 9, // 让字体变大
+                            color: '#9f9d9d'
+                        }
+                    },
+                }],
+                yAxis: [{
+                    type: 'value',
+                    name: 'kW·h',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57b9a3', //x轴线颜色
+                            width: '0.7'
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
 
-                            axisLabel: { //调整y轴的lable  
-                                textStyle: {
-                                    fontSize: 9,// 让字体变大
-                                    color: '#9f9d9d'
-                                }
-                            },
+                    axisLabel: { //调整y轴的lable  
+                        textStyle: {
+                            fontSize: 9, // 让字体变大
+                            color: '#9f9d9d'
                         }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: 'kW·h',
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#57b9a3',//x轴线颜色
-                                    width: '0.7'
-                                },
-                            },
-                            axisTick: {
-                                show: false,
-                                alignWithLabel: true
-                            },
-
-                            axisLabel: { //调整y轴的lable  
-                                textStyle: {
-                                    fontSize: 9,// 让字体变大
-                                    color: '#9f9d9d'
-                                }
-                            },
-                            splitLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#ededed'
-                                }
-                            },
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#ededed'
                         }
-                    ],
-                    series: [
-                        {
-                            name: '能耗费用',
-                            type: 'bar',
-                            barWidth: '50%',
-                            data: yData
-                        }
-                    ],
-                    dataZoom: [
-                        {
-                            type: 'inside'
-                        }
-                    ]
+                    },
+                }],
+                series: [{
+                    name: '能耗费用',
+                    type: 'bar',
+                    barWidth: '50%',
+                    data: yData
+                }],
+                dataZoom: [{
+                    type: 'inside'
+                }]
             };
             chart.setOption(option)
             window.addEventListener("resize", () => {
                 chart.resize();
-                
+
             });
         },
         datePicekChange: function (e) {
             var time = e.substring(0, 7)
             this.month = time.split("-")[1]
+            console.log(time)
             this.curDate = time
             this.getEneryOverView()
         }
-      
 
 
 
 
-        
-       
+
+
+
     },
     beforeMount: function () {
         var that = this
         var id = $.cookie("enUID")
-        if (id!=null) {
+        if (id != null) {
             this.uid = id
             this.Uname = $.cookie("enUName")
+            window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: this.uid, UnitName: this.Uname }))
         }
         var date = new Date()
         this.month = (date.getMonth() + 1)
         var month = (date.getMonth() + 1)
         if (month < 10) {
-            month = "0"+month
+            month = "0" + month
         }
         this.curDate = date.getFullYear() + "-" + month
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getEneryOverView()
-       
-        
     },
     mounted: function () {
-      
-        
-       
+
+
+
     }
 })
-
