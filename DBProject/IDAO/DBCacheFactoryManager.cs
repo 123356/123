@@ -19,6 +19,11 @@ namespace DAO
         }
         public static IDBCacheFactory GetDBFactory(string dbInf)
         {
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["UseCache"])
+                          && !"true".Equals(ConfigurationManager.AppSettings["UseCache"].ToLower()))
+            {
+                return null;
+            }
             if (DefaultKey.Equals(dbInf))
             {
                 lock (m_dbFactoryMgr)

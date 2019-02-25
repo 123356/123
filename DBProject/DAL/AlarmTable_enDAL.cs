@@ -9,13 +9,14 @@ using IDAO.Models;
 using DAL.Models;
 using Newtonsoft.Json;
 using IDAO.InterfaceCache;
+using System.Configuration;
 
 namespace DAL
 {
     public class AlarmTable_enDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
-        IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
+        IDBCacheFactory _dbCacheFactory = null;// DBCacheFactoryManager.GetDBFactory();
         static readonly string FirstKey = "alarm_en_count";
         static readonly object _loker = new object();
         static AlarmTable_enDAL _DataDal;
@@ -30,6 +31,9 @@ namespace DAL
                         _DataDal = new AlarmTable_enDAL();
                         _DataDal.userQueryAlarmCountInf = new QueryAlarmCount(_DataDal.queryAlarmCountInf);
                     }
+
+                    _DataDal._dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
+
                 }
             }
             return _DataDal;
@@ -44,12 +48,16 @@ namespace DAL
         //object _redisLoker = new object();
         private int queryAlarmCountInf(/*string pdrlist*/)
         {
-            if (null != m_dtAlarmCount && (DateTime.Now - m_dtAlarmCount).TotalSeconds < 1)
-                return 0;
-            if (m_queryed)
-                return 0;
-            m_queryed = true;
-            m_dtAlarmCount = DateTime.Now;
+            IDBCache dbCache = (null == _dbCacheFactory) ? null : _dbCacheFactory.DefautCache;
+            if (null != dbCache)
+            {
+                if (null != m_dtAlarmCount && (DateTime.Now - m_dtAlarmCount).TotalSeconds < 1)
+                    return 0;
+                if (m_queryed)
+                    return 0;
+                m_queryed = true;
+                m_dtAlarmCount = DateTime.Now;
+            }
             //Loger.LogHelper.Info("queryAlarmCountInf: begin");
             int total = 0;
             //List<int> pdrIDS = new List<int>();
@@ -64,7 +72,6 @@ namespace DAL
                 //    data = (_hisDataDao as IDAOBase).SQLQuery<AlarmCount>(query);
                 //}
                 data = _dbFactory.alarmTable_en.GetAlarmCount();
-                IDBCache dbCache = _dbCacheFactory.DefautCache;
                 if (data.Count > 0)
                 {
                     //List<int> listPid = null;
@@ -102,24 +109,25 @@ namespace DAL
                     {
                         //dbCache.HashSet(FirstKey, model.PID.ToString(), model.Count);
                         //if (pdrIDS.Contains(model.PID))
-                        //    total += model.Count;
+                        total += model.Count;
                         fields.Add(model.PID, model.Count);
                     }
-                    if (fields.Count > 0)
+                    if (null != dbCache && fields.Count > 0)
                     {
                         //lock (_redisLoker)
                         {
                             //dbCache.HashSet(FirstKey, fields);
                             string json = JsonConvert.SerializeObject(fields);
-                            dbCache.StringSet(FirstKey,json);
+                            dbCache.StringSet(FirstKey, json);
                         }
                     }
                 }
                 else
                 {
                     //dbCache.KeyDelete(FirstKey);
-                    dbCache.StringSet(FirstKey, "{}");
-                    Loger.LogHelper.Debug("GetAlarmCount() data.Count():"+ data.Count());
+                    if (null != dbCache)
+                        dbCache.StringSet(FirstKey, "{}");
+                    Loger.LogHelper.Debug("GetAlarmCount() data.Count():" + data.Count());
                 }
 
                 dbCache = null;
@@ -142,40 +150,47 @@ namespace DAL
         //实时数据项包含的类型
         public int GetAlarmCount(string pdrList)
         {
-            IDBCache dbCache = _dbCacheFactory.DefautCache;
-            userQueryAlarmCountInf.BeginInvoke(null, null);//放前面防止出错后被跳过
+            IDBCache dbCache = (null== _dbCacheFactory)?null:_dbCacheFactory.DefautCache;
 
             try
             {
                 int total = 0;
-                //if (dbCache.KeyExists(FirstKey))
-                //{
-                string[] pids = pdrList.Split(',');
-                //IList<string> fields = dbCache.HashKeys<string>(FirstKey);
-                //var fks = fields.Where(t => pids.Contains(t));
-                //IList<string> alarmCount1 = null;
-                //lock (_redisLoker)
-                //{
-                //    alarmCount1 = dbCache.HashGet<string>(FirstKey, pids.ToList<string>());
-                //}
-                //IList<int> alarmCount = alarmCount1.Where(t => !string.IsNullOrEmpty(t)).Select(t => Convert.ToInt32(t)).ToList();
-                //total = alarmCount.Sum();
-                string json =dbCache.StringGet(FirstKey);
-                Dictionary<int,int> result=JsonConvert.DeserializeObject<Dictionary<int, int>>(json);
-                IList<int> alarmCount = result.Where(t => pids.Contains(t.Key.ToString())).Select(t=> t.Value ).ToList<int>();
-                total = alarmCount.Sum();
-                //foreach (var v in pids)
-                //{
-                //    if (dbCache.HashExists(FirstKey, v))
-                //        total += dbCache.HashGet<int>(FirstKey, v);
-                //}
-                //}
-                //else
-                //{
-                //    System.Diagnostics.Debug.WriteLine("dbCache.KeyExists(FirstKey)");
-                //}
+                if (null != dbCache)
+                {
+                    userQueryAlarmCountInf.BeginInvoke(null, null);//放前面防止出错后被跳过
+                    //if (dbCache.KeyExists(FirstKey))
+                    //{
+                    string[] pids = pdrList.Split(',');
+                    //IList<string> fields = dbCache.HashKeys<string>(FirstKey);
+                    //var fks = fields.Where(t => pids.Contains(t));
+                    //IList<string> alarmCount1 = null;
+                    //lock (_redisLoker)
+                    //{
+                    //    alarmCount1 = dbCache.HashGet<string>(FirstKey, pids.ToList<string>());
+                    //}
+                    //IList<int> alarmCount = alarmCount1.Where(t => !string.IsNullOrEmpty(t)).Select(t => Convert.ToInt32(t)).ToList();
+                    //total = alarmCount.Sum();
+                    string json = dbCache.StringGet(FirstKey);
+                    Dictionary<int, int> result = JsonConvert.DeserializeObject<Dictionary<int, int>>(json);
+                    IList<int> alarmCount = result.Where(t => pids.Contains(t.Key.ToString())).Select(t => t.Value).ToList<int>();
+                    total = alarmCount.Sum();
+                    //foreach (var v in pids)
+                    //{
+                    //    if (dbCache.HashExists(FirstKey, v))
+                    //        total += dbCache.HashGet<int>(FirstKey, v);
+                    //}
+                    //}
+                    //else
+                    //{
+                    //    System.Diagnostics.Debug.WriteLine("dbCache.KeyExists(FirstKey)");
+                    //}
+                }
+                else
+                {
+                    total = userQueryAlarmCountInf();
+                }
 
-               return total;
+                return total;
             }
             catch (Exception ex)
             {

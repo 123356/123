@@ -9,13 +9,14 @@ using IDAO.Models;
 using DAL.Models;
 using Newtonsoft.Json;
 using IDAO.InterfaceCache;
+using System.Configuration;
 
 namespace DAL
 {
     public class ModuleDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
-        IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
+        IDBCacheFactory _dbCacheFactory = null;// DBCacheFactoryManager.GetDBFactory();
         static readonly string MenuKey = "user_left_menu";
         static readonly object _loker = new object();
         static ModuleDAL _DataDal;
@@ -29,6 +30,9 @@ namespace DAL
                     {
                         _DataDal = new ModuleDAL();
                         _DataDal.userQueryMenuInf = new QueryMenuInf(_DataDal.queryMenuInf);
+
+                        _DataDal._dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
+
                     }
                 }
             }
@@ -43,7 +47,9 @@ namespace DAL
         private string queryMenuInf(int userID, DateTime ?lastTime)
         {
             string retValue="unknown process.";
-            if (null != lastTime && DateTime.Now.Subtract((DateTime)lastTime).TotalSeconds < 3)
+            IDBCache dbCache = (null== _dbCacheFactory)?null:_dbCacheFactory.DefautCache;
+
+            if (null!= dbCache&&null != lastTime && DateTime.Now.Subtract((DateTime)lastTime).TotalSeconds < 3)
             {
                 return string.Empty;
             }
@@ -96,9 +102,11 @@ namespace DAL
                 //redis.StringSet(key + "_" + DateTime.Now.ToString(), retValue);
                 menuAdp.dateTime = DateTime.Now;
                 menuAdp.menuInfJson = retValue;
-                string key = "user_" + userID;
-                IDBCache dbCache = _dbCacheFactory.DefautCache;
-                dbCache.HashSet(MenuKey, key, menuAdp);
+                if (null != dbCache)
+                {
+                    string key = "user_" + userID;
+                    dbCache.HashSet(MenuKey, key, menuAdp);
+                }
                 data.Clear();
                 data = null;
                 roleRight.Clear();
@@ -115,14 +123,14 @@ namespace DAL
         public string GetMenuInfoJson(int userID)
         {
             string key = "user_"+userID;
-            IDBCache dbCache = _dbCacheFactory.DefautCache;
+            IDBCache dbCache = (_dbCacheFactory==null)?null:_dbCacheFactory.DefautCache;
             try
             {
 
                 MenuInfAdapter menuAdp = null;
                 try
                 {
-                    if (dbCache.HashExists(MenuKey, key))
+                    if (null!=dbCache&&dbCache.HashExists(MenuKey, key))
                         menuAdp = dbCache.HashGet<MenuInfAdapter>(MenuKey, key);
                 }
                 catch //(Exception)
