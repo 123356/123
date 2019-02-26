@@ -56,6 +56,11 @@ namespace YWWeb.Controllers
             return View();
         }
 
+        public ActionResult CommunicaTopo()//通讯树
+        {
+            return View();
+        }
+
         #region 报警数据
 
         /// <summary>
