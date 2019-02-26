@@ -9,47 +9,38 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class LookEneryViewDAL
+    public class EnerySelectViewDAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
 
-        static LookEneryViewDAL _DataDal;
+        static EnerySelectViewDAL _DataDal;
         static readonly object _loker = new object();
-        public static LookEneryViewDAL getInstance(string json = null)
+        public static EnerySelectViewDAL getInstance(string json = null)
         {
             if (null == _DataDal)
             {
                 lock (_loker)
                 {
                     if (null == _DataDal)
-                        _DataDal = new LookEneryViewDAL();
+                        _DataDal = new EnerySelectViewDAL();
                 }
             }
             return _DataDal;
         }
+        public IList<t_V_EnerySelectView> GetDatas(string time, string cids,string pids, int did = 0, int cotypeid = 0)
+        {
+            IList<t_V_EnerySelectView> data = new List<t_V_EnerySelectView>();
+            try
+            {
+                data = _dbFactory.enerySelectView.GetDatas(time, cids, pids, did, cotypeid);
+            }
+            catch (Exception ex)
+            {
 
-        public IList<t_V_LookEneryView> GetCIDByUID(int uid)
-        {
-            try
-            {
-                return _dbFactory.LookEnery.GetCIDByUID(uid);
-            }
-            catch (Exception ex)
-            {
                 throw ex;
             }
-        }
-        public IList<t_V_LookEneryView> GetCIDByID(string id)
-        {
-            try
-            {
-                return _dbFactory.LookEnery.GetCIDByID(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return data;
         }
     }
 }

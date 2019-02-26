@@ -992,5 +992,62 @@ namespace EnergyManage.Controllers
         }
 
         #endregion
+
+        #region 能源查询
+        public JsonResult GetEneryList(string time, string ksid,int did=0, int cotypeid=0)
+        {
+            List<enview> datas = new List<enview>();
+            try
+            {
+                string pids = GetPIDs();
+                IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ksid);
+                foreach (var item in list)
+                {
+                    if (!string.IsNullOrEmpty(item.cids.Trim()))
+                    {
+                        IList<t_V_EnerySelectView> list_data = DAL.EnerySelectViewDAL.getInstance().GetDatas(time, item.cids, pids, did, cotypeid);
+                        foreach(var it in list_data.GroupBy(p=>p.RecordTime))
+                        {
+                           
+                            foreach(var i in it.GroupBy(p=>p.DeviceName))
+                            {
+                             
+                                foreach(var ii in i.GroupBy(p => p.Name))
+                                {
+                                    enview m = new enview();
+                                    m.RecordTime = it.Key.ToString();
+                                    m.DeviceName = i.Key;
+                                    m.TypeName = ii.Key;
+                                    m.DValue = ii.Sum(p => p.UserPowerRate);
+                                    m.Name = item.Name;
+                                    datas.Add(m);
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(datas, JsonRequestBehavior.AllowGet);
+        }
+        public class enview
+        {
+            public string RecordTime { get; set; }
+            public string Name { get; set; }
+            public decimal DValue { get; set; }
+            public string TypeName { get; set; }
+            public string DeviceName { get; set; }
+
+        }
+        public JsonResult GetDeviceCombox()
+        {
+            string pids = GetPIDs();
+            IList<t_DM_DeviceInfo> list = DAL.DeviceInfoDAL.getInstance().GetDeviceCombox(pids);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

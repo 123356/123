@@ -1,4 +1,5 @@
-﻿var isLoad=false;
+﻿
+var isLoad = false;
 var Request = new Object();
 Request = GetRequest();
 var pid =1, sid = 0;

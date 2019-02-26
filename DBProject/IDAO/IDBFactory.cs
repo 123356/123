@@ -36,5 +36,8 @@ namespace IDAO
         IPriceEnery priceEnery { get; }
         IPointsInfo PointsInfo { get; }
         ILookEneryView LookEnery { get; }
+        IEnerySelectView enerySelectView { get; }
+
+        IDeviceInfo deviceInfo { get; }
     }
 }

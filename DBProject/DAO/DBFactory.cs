@@ -63,5 +63,9 @@ namespace DAO
 	    public IPointsInfo PointsInfo => new PointsInfoDBContext();
 
         public ILookEneryView LookEnery => new LookEneryViewDBContext();
+
+        public IEnerySelectView enerySelectView => new EnerySelectViewDBContext();
+
+        public IDeviceInfo deviceInfo => new DeviceInfoDBContext();
     }
 }

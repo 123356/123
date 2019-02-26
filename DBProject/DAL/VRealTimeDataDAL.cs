@@ -32,12 +32,12 @@ namespace DAL
 
               
        
-        public IList<t_V_RealTimeData> GetRealTimeData(int pageSize,int nPage, int pid, int cid, int tdid, int  did)
+        public IList<t_V_RealTimeData> GetTagIdDetail( int pid)
         {
             IList<t_V_RealTimeData> data = new List<t_V_RealTimeData>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
             try
             {
-                data = _dbFactory.vRealTimeData.GetRealTimeData(pageSize, nPage, pid, cid, tdid, did);
+                data = _dbFactory.vRealTimeData.GetTagIdDetail(pid);
             }
             catch (Exception ex)
             {

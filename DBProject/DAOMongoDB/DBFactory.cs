@@ -61,5 +61,9 @@ namespace DAOMongoDB
         public IPointsInfo PointsInfo => throw new NotImplementedException();
 
         public ILookEneryView LookEnery => throw new NotImplementedException();
+
+        public IEnerySelectView enerySelectView => throw new NotImplementedException();
+
+        public IDeviceInfo deviceInfo => throw new NotImplementedException();
     }
 }
