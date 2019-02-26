@@ -8,10 +8,11 @@
     <title>Index</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script src="~/Content/js/jquery.jqprint.js" type="text/javascript"></script>
+    <link href="~/Content/css/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <table id="list_data" style="width: auto;" idfield="AlarmID" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
-        fitcolumns="true">
+           fitcolumns="true">
         <thead>
             <tr>
                 <th field='ALarmID' checkbox="true">
@@ -35,8 +36,8 @@
                     阈值
                 </th>
                 @*<th field='AlarmAddress' width="60px">
-                    报警描述
-                </th>*@
+                        报警描述
+                    </th>*@
                 <th field='RArae' width="60px">
                     报警位置
                 </th>
@@ -56,18 +57,16 @@
                 </th>
                 <th field='AlarmTreatment' width="60px">
                     处理信息
-                </th>             
+                </th>
             </tr>
         </thead>
     </table>
     <div id="tb" class="searchbar">
         <div class="searchrow">
             站室:
-            <select id="SPID" style="width: 200px;">
-            </select>
+            <select id="SPID" style="width: 200px;"></select>
             数据类型:
-            <select id="cbType" style="width: 200px;">
-            </select>
+            <select id="cbType" style="width: 200px;"></select>
             开始时间：
             <input id="StartDate" name="PlanDate" class="easyui-datebox" />
             结束时间：
@@ -77,7 +76,49 @@
         </div>
     </div>
 
-    <script src="~/Content/UserJS/AlarmIndex._jm.js"></script>
+    <div id="querens" title="批量确认报警" class="easyui-dialog" closed="true" style="width: 600px; height: 350px; padding: 5px;display:none"
+         minimizable="false" maximizable="false" collapsible="false">
+        <div class="container">
+            <div class="row clearfix">
+                <div>
+                    <div id="info" style="height:80px;background-color:white;">
+                        <p style="font-size:30px;text-align:center;">您已选择<span id="Anum" style="font-size:30px;text-align:center; color:red;">0</span>条报警记录，统一处理</p>
+                    </div>
+                    <div style="padding-right:50px;margin-left:170px;margin-top: -7px;">
+                        <div>
+                            选择批注：
+                        </div>
+                        <div class="radio m">
+                            <label>
+                                <input type="radio" name="group1" id="optionsRadios1" value="设备调试">设备调试
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="group1" id="optionsRadios2" value="真实故障">真实故障
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="group1" id="optionsRadios3" value="误报">误报
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="group1" id="optionsRadios4" value="其他">其他
+                            </label>
+                            <input id="ii" />
+                        </div>
+                    </div>
+                    <button onclick="querensAlarm()" style="width: 116px;height: 31px;background-color: #1565c0;color:white;position: relative;left:223px;top:40px;">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src="~/Content/UserJS/AlarmIndex._zc.js"></script>
     <script src="~/Content/UserJS/ResizeList._jm.js" type="text/javascript"></script>
     <div id="editwin" title=" " class="easyui-window" closed="true" style="width: 630px;
         height: 600px; padding: 0px;" minimizable="false" maximizable="false" collapsible="false">

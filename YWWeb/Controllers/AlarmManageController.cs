@@ -285,7 +285,28 @@ namespace YWWeb.Controllers
                 return Content("报警确认失败！");
             }
         }
-
+        public ActionResult DelAlarmByIds(string AlarmID, string AlarmTreatment)
+        {
+            try
+            {
+                string PDRList = HomeController.GetPID(CurrentUser.UNITList);
+                if (!PDRList.Equals(""))
+                {
+                    string sSql = "update [t_AlarmTable_en] set AlarmState = 0,AlarmTreatment = '" + AlarmTreatment + "',AlarmConfirm='已确认',UserName='" + CurrentUser.UserName + "',ConfirmDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "' where PID in (" + PDRList + ") and AlarmConfirm='未确认' and AlarmState>0 and AlarmID IN(" + AlarmID + ")";
+                    bll.ExecuteStoreCommand(sSql);
+                    return Content("报警已确认！");
+                }
+                else
+                {
+                    return Content("没有权限，报警未确认！");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                return Content("报警确认失败！");
+            }
+        }
 
         public ActionResult getMan(int AlarmID)
         {
