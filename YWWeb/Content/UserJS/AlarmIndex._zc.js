@@ -128,7 +128,7 @@ $("#SPID").combobox({
     editable: false,
     textField: 'Name',
     onLoadSuccess: function () { //数据加载完毕事件
-        
+
         var data = $('#SPID').combobox('getData');
 
         $("#SPID").combobox('setValue', pid);
@@ -223,15 +223,15 @@ function dosearch() {
         pageSize: 30,
         queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
         rowStyler: function (index, row) {
-        if (row.AlarmState == "1") {
-            return 'background-color:Yellow;color:#333;font-weight:bold;';
-        }
-        else if (row.AlarmState == "2") {
-            return 'background-color:#ed9700;color:#fff;font-weight:bold;';
-        }
-        else if (row.AlarmState == "3") {
-            return 'background-color:#b00000;color:#fff;font-weight:bold;';
-        }
+            if (row.AlarmState == "1") {
+                return 'background-color:Yellow;color:#333;font-weight:bold;';
+            }
+            else if (row.AlarmState == "2") {
+                return 'background-color:#ed9700;color:#fff;font-weight:bold;';
+            }
+            else if (row.AlarmState == "3") {
+                return 'background-color:#b00000;color:#fff;font-weight:bold;';
+            }
         },
         onDblClickRow: function (rowIndex, rowData) {
             if (rowData) {
@@ -295,3 +295,58 @@ function dosearch() {
 //    $("#SPID").combobox('select', pid);
 //    dosearch();
 //}
+
+//批量确认报警
+function recovers() {
+    var ids = [];
+    var rows = $('#list_data').datagrid('getSelections');
+    if (rows.length < 1) {
+        $.messager.alert("提示", "请选择要确认的行！", "info");
+    }
+    else {
+        for (var i = 0; i < rows.length; i++) {
+            ids.push(rows[i].AlarmID);
+        }
+        $("#querens").dialog({
+            closed: false,
+            top: ($(window).height() - 300) * 0.5,
+            left: ($(window).width() - 600) * 0.5,
+            minimizable: false, //最小化，默认false  
+            maximizable: false, //最大化，默认false  
+            collapsible: false, //可折叠，默认false  
+            draggable: true, //可拖动，默认false  
+            resizable: false//可缩放，即可以通脱拖拉改变大小，默认false 
+        });
+        $("#Anum").html(ids.length);
+    }
+}
+function querensAlarm() {
+    var ids = [];
+    var rows = $('#list_data').datagrid('getSelections');
+    for (var i = 0; i < rows.length; i++) {
+        ids.push(rows[i].AlarmID);
+    }
+    var AlarmTreatment = ""
+    var group1 = $("[name='group1']").filter(":checked");
+    //console.log(group1.attr("id"));
+
+    if (group1.val() != "其他") {
+        AlarmTreatment = group1.val()
+    } else {
+        AlarmTreatment = document.getElementById("ii").value
+    }
+
+    //console.log(AlarmTreatment);
+    if (AlarmTreatment == undefined || AlarmTreatment == "") {
+        $.messager.alert("提示", "批注不能为空", "info");
+        return;
+    }
+
+    //去掉前后空格               
+    AlarmTreatment = AlarmTreatment.replace(/(^\s*)|(\s*$)/g, "");
+    $.post("/AlarmManage/DelAlarmByIds", { "AlarmID": ids.join(','), "AlarmTreatment": AlarmTreatment }, function (data) {
+        $.messager.alert("提示",data, "info");
+        $('#querens').window('close');
+        dosearch();
+    });
+}
