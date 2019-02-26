@@ -11,7 +11,8 @@
 }
 loadTemplateName();
 var ordersRC=[];
-var ordersSY=[];
+var ordersSY = [];
+
 
 $('#cs_xj_time').datebox({
 });
@@ -315,6 +316,7 @@ $(function () {
             $.messager.alert("提示", "请输入联系电话！", "info");
             return false;
         }
+        
         else if ($("#start_time").datebox('getValue') == "") {
             $.messager.alert("提示", "请输入开始日期！", "info");
             return false;
@@ -323,7 +325,12 @@ $(function () {
             $.messager.alert("提示", "请输入结束日期！", "info");
             return false;
         }
-
+        else if ($("#Tel").val() != "") {
+            if (!/^1[3-8]+\d{9}$/.test($("#Tel").val()) && !/(^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)|(^((\d3)|(\d{3}\-))?(1[358]\d{9})$)/.test($("#Tel").val())) {
+                $.messager.alert("提示", "联系电话格式有误！", "info");
+                return false
+            }
+        }
         var xj_time=getTimeStrs(ordersRC);
         var xj_time2=getTimeStrs(ordersSY);
 

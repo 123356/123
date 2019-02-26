@@ -69,15 +69,15 @@
                 <td class="d_l_d">
                     <input id="id" type="hidden"/>
                     <input id="trade_price" runat="server" name="BugLocation" missingmessage="必填项！"
-                        class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b
+                        class="easyui-numberbox" style="width: 200px;"precision="2" data-options="required:true" /><b
                             class="RStar">&nbsp*</b>
                     <p style="color:red;">(品种1电量*品种1电价+品种2电量*品种2电价+...）<br />除以（品种1电量+品种2电量+...)</p>
                 </td>
                 <td class="d_l_t">实际交易量(MW·H)：
                 </td>
                 <td class="d_l_d">
-                    <input id="trade_num" runat="server" name="BugLocation" missingmessage="必填项！"
-                        class="easyui-validatebox" style="width: 200px;" data-options="required:true" /><b
+                    <input id="trade_num" runat="server" precision="3" name="BugLocation" missingmessage="必填项！"
+                        class="easyui-numberbox" style="width: 200px;" data-options="required:true" /><b
                             class="RStar">&nbsp*</b>
                 </td>
             </tr>
@@ -85,7 +85,7 @@
             <td class="d_l_t">年月：
                 </td>
             <td class="d_l_d">
-                <input id="trade_time" name="trade_time" class="easyui-datebox" style="width:207px;" />
+                <input id="trade_time" name="trade_time" class="easyui-datebox" editable="fasle" style="width:207px;" />
                 <b class="RStar">&nbsp*</b>
             </td>
              <td class="d_l_t">客户名称：
@@ -101,14 +101,14 @@
                     目录电价(元/MW·H)：
                 </td>
                 <td class="d_l_d">
-                    <input id="catalog_price" name="trade_time" class="easyui-validatebox" style="width:207px;" />
+                    <input id="catalog_price" name="trade_time" class="easyui-numberbox" precision="3" style="width:207px;" />
                     <b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
                     节省偏差考核费(元)：
                 </td>
                 <td class="d_l_d">
-                    <input id="pc_save_cost" name="trade_time" class="easyui-validatebox" style="width:207px;" />
+                    <input id="pc_save_cost" name="trade_time" class="easyui-numberbox" precision="3" style="width:207px;" />
                     <b class="RStar">&nbsp*</b>
                 </td>
             </tr>

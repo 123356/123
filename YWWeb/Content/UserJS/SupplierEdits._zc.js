@@ -1,4 +1,27 @@
-﻿function loadInfo() {
+﻿//表单验证
+$.extend($.fn.validatebox.defaults.rules, {
+    phoneNum: { //验证手机号  
+        validator: function (value, param) {
+            if (value != "") {
+                return /^1[3-8]+\d{9}$/.test(value);
+            }
+            return true
+        },
+        message: '请输入正确的手机号码。'
+    },
+
+    telNum: { //既验证手机号，又验证座机号
+        validator: function (value, param) {
+            if (value != "") {
+                return /(^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)|(^((\d3)|(\d{3}\-))?(1[358]\d{9})$)/.test(value);
+            }
+            return true
+        },
+        message: '请输入正确的电话号码。'
+    }
+})
+
+function loadInfo() {
     if (supplierid > 0) {
         $.post("/SupplierManage/SupplierInfoDetail", { "supplierid": supplierid }, function (data) {
             var row = eval("(" + data + ")");
@@ -28,7 +51,11 @@ function save() {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }
-
+    if (!$("#editForm").form('validate')) {
+        $.messager.alert("提示", "输入数据格式有误或超出范围！", "info");
+        return false;
+    }
+   
     var postData = {
         SupplierID: $("#SupplierID").val(),
         SupplierCode: $("#SupplierCode").val(),
