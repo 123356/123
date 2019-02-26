@@ -376,66 +376,15 @@ namespace YWWeb.Controllers
             }
         }
 
-        public JsonResult GetTaskJson(jqDataTableParameter tableParam, int did, int cid, int tdid, int pid = 1)
+        public JsonResult GetTaskJson(int pid = 1)
         {           
             #region 2.0 加载分页数据
-
-            //0.0 全部数据
-            //string strquery = " and DataTypeID!=23 ";// 不显示开关量
-            //string strsql = "select v.* from V_DeviceInfoState_PDR1 v join t_CM_PDRInfo p on p.PID=v.PID where (v.PID=" + pid + " or p.ParentID=" + pid + ") " + strquery ;
-            //if (cid != 0)
-            //{
-            //    strsql += " and v.CID=" + cid;
-            //}
-            //if (did != 0)
-            //{
-            //    strsql += " and v.DID=" + did;
-            //}
-            //if (tdid != 0)
-            //{
-            //    strsql += " and v.DTID=" + tdid;
-            //}
-            //strsql += " order by cid,orderby,devicetypename,did,DataTypeID,TagID,ABCID";
-            //List<V_DeviceInfoState_PDR1> DataSource = bll.ExecuteStoreQuery<V_DeviceInfoState_PDR1>(strsql).ToList();
-
-            List<t_V_RealTimeData> DataSource = VRealTimeDataDAL.getInstance().GetRealTimeData(99999, 1, pid, cid, tdid, did).ToList();
-            ////1.0 首先获取datatable提交过来的参数
-            string echo = tableParam.sEcho;  //用于客户端自己的校验
-            int dataStart = tableParam.iDisplayStart;//要请求的该页第一条数据的序号
-            int pageSize = tableParam.iDisplayLength == -1 ? DataSource.Count : tableParam.iDisplayLength;//每页容量（=-1表示取全部数据）
-            string search = tableParam.sSearch;
-            int i = tableParam.iSortingCols;
-            string columns = tableParam.sColumns;
-            string sortCol = tableParam.iSortCol_0;
-            string sortDir = tableParam.sSortDir_0;
-            //var data = DataSource.Skip<V_DeviceInfoState_PDR1>(dataStart)
-            //                     .Take(pageSize)
-            //                     .Select(a => new
-            //                     {
-            //                         DeviceTypeName = a.DeviceTypeName,
-            //                         DeviceName = a.DeviceName,
-            //                         CName = a.CName,
-            //                         Position = a.中文描述,
-            //                         pv = DataRepalce(Convert.ToInt32(a.DataTypeID), Convert.ToDecimal(a.PV)),
-            //                         tagid = a.TagID,
-            //                         did = a.DID,
-            //                         Units=a.Units,
-            //                         pointstatus = loadAlarmStatus(a.TagID, a.AlarmStatus),//获取测点状态
-            //                         rectime = a.RecTime.ToString("yyyy-MM-dd HH:mm")
-            //                     }).ToList();
-            
-            var data = DataSource.Skip<t_V_RealTimeData>(dataStart)
-                                 .Take(pageSize).ToList();
-            //3.0 构造datatable所需要的数据json对象...aaData里面应是一个二维数组：即里面是一个数组[["","",""],[],[],[]]
-            return Json(new
-            {
-                sEcho = echo,
-                iTotalRecords = DataSource.Count,
-                iTotalDisplayRecords = DataSource.Count,
-                aaData = data
-            }, JsonRequestBehavior.AllowGet);
+            List<t_V_RealTimeData> DataSource = VRealTimeDataDAL.getInstance().GetTagIdDetail(pid).ToList();
+            return Json(DataSource, JsonRequestBehavior.AllowGet);
             #endregion
         }
+
+
 
         //类别
         //public ActionResult BindDeviceTypeName(int pid)
@@ -658,5 +607,9 @@ namespace YWWeb.Controllers
         ///9.0排序的类型
         /// </summary>
         public string sSortDir_0 { get; set; }
+
+
+
+
     }
 }
