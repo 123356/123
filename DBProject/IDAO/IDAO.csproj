@@ -63,8 +63,10 @@
     <Compile Include="ICollecDevType.cs" />
     <Compile Include="ICollTypeBudget.cs" />
     <Compile Include="IDepartmentalApportionment.cs" />
+    <Compile Include="IDeviceInfo.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
+    <Compile Include="IEnerySelectView.cs" />
     <Compile Include="IEneryUsreBudget.cs" />
     <Compile Include="IenTypeConfig.cs" />
     <Compile Include="IExEnergy.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Models\t_CM_UserInfo.cs" />
     <Compile Include="Models\t_DM_CircuitInfo.cs" />
     <Compile Include="Models\t_DM_CollectDevType.cs" />
+    <Compile Include="Models\t_DM_DeviceInfo.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
     <Compile Include="Models\t_EE_CollTypeBudget.cs" />
     <Compile Include="Models\t_EE_DepartmentalApportionment.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />
+    <Compile Include="Models\t_V_EnerySelectView.cs" />
     <Compile Include="Models\t_V_EneryView.cs" />
     <Compile Include="Models\t_V_HisData.cs" />
     <Compile Include="Models\t_CM_ValueType.cs" />

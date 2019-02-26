@@ -29,5 +29,15 @@ namespace DAO
             string sql = $"select b.Name,a.addCid as cids,a.unit_area,a.unit_people from t_EE_EnerUserProject a join t_EE_EnerUserType b on a.child_id=b.id where  b.item_type=2 and a.unit_id={uid}";
             return SQLQuery<t_V_LookEneryView>(sql);
         }
+
+        public IList<t_V_LookEneryView> GetCIDByID(string id)
+        {
+            string sql = $"select b.Name,a.addCid as cids,a.unit_area,a.unit_people from t_EE_EnerUserProject a join t_EE_EnerUserType b on a.child_id=b.id where  b.item_type=2";
+            if (!string.IsNullOrEmpty(id))
+            {
+                sql += $" and a.child_id IN({id})";
+            }
+            return SQLQuery<t_V_LookEneryView>(sql);
+        }
     }
 }
