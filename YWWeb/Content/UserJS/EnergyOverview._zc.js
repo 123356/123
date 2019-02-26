@@ -160,7 +160,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetEneryOverView',
                 method: 'post',
-                params: {
+                body: {
                     uid: this.uid,
                     time: time
 
