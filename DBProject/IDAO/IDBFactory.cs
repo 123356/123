@@ -39,5 +39,7 @@ namespace IDAO
         IEnerySelectView enerySelectView { get; }
 
         IDeviceInfo deviceInfo { get; }
+
+        IElementDevice elementDevice { get; }
     }
 }

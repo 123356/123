@@ -64,6 +64,7 @@
     <Compile Include="ICollTypeBudget.cs" />
     <Compile Include="IDepartmentalApportionment.cs" />
     <Compile Include="IDeviceInfo.cs" />
+    <Compile Include="IElementDevice.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
     <Compile Include="IEnerySelectView.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Models\t_DM_CircuitInfo.cs" />
     <Compile Include="Models\t_DM_CollectDevType.cs" />
     <Compile Include="Models\t_DM_DeviceInfo.cs" />
+    <Compile Include="Models\t_DM_ElementDevice.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
     <Compile Include="Models\t_EE_CollTypeBudget.cs" />
     <Compile Include="Models\t_EE_DepartmentalApportionment.cs" />
