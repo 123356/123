@@ -40,11 +40,11 @@ namespace DAL
                 throw ex;
             }
         }
-        public IList<t_V_LookEneryView> GetCIDByID(string id)
+        public IList<t_V_LookEneryView> GetCIDByID(string id,int uid)
         {
             try
             {
-                return _dbFactory.LookEnery.GetCIDByID(id);
+                return _dbFactory.LookEnery.GetCIDByID(id, uid);
             }
             catch (Exception ex)
             {

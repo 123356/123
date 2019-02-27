@@ -10,7 +10,7 @@ namespace IDAO
     public interface ILookEneryView : IDAOBase, IDisposable
     {
         IList<t_V_LookEneryView> GetCIDByUID(int uid);
-        IList<t_V_LookEneryView> GetCIDByID(string id);
+        IList<t_V_LookEneryView> GetCIDByID(string id,int uid);
 
     }
 }
