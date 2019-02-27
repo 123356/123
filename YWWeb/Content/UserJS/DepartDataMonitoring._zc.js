@@ -16,7 +16,7 @@
             this.$http({
                 url: '/energyManage/EMSetting/GetTreeData',
                 method: 'POST',
-                params: {
+                body: {
                     unitID: that.uid,
                     item_type: 2,
                     unitName: that.uName

@@ -214,7 +214,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetbugTable',
                 method: 'post',
-                params: {
+                body: {
                     id:id
                 }
             })
@@ -235,7 +235,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetExData',
                 method: 'post',
-                params: {
+                body: {
                     cids: cids,
                     type: that.curEntype,
                     TypeTime: that.dateType
@@ -269,7 +269,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetBudgetData',
                 method: 'post',
-                params: {
+                body: {
                     cids: cids,
                 }
             })

@@ -76,6 +76,7 @@
            date= date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
             return date
         },
+        //创建图表
         createBarChart: function (data) {
             var xData = []
             var yData = []
@@ -200,16 +201,6 @@
             });
         },
        
-        
-
-
-
-
-
-
-
-
-
         setHeight: function () {
             this.tableHeight = $(".main-item").height() - 35
             console.log("height")

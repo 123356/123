@@ -1,53 +1,49 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
+        UID:null,
         tableHeight: 0,
         dateType:0,
         tableCol: [
             {
                 title: '时间',
                 align: 'center',
-                key: 'time',
+                key: 'RecordTime',
             },
             {
                 title: '科室',
                 align: 'center',
-                key: 'department',
+                key: 'Name',
             },
             {
                 title: '设备',
                 align: 'center',
-                key: 'sb',
+                key: 'DeviceName',
             },
             {
                 title: '能耗',
                 align: 'center',
-                key: 'energy',
+                key: 'DValue',
                 sortable: true
             },
             {
                 title: '类型',
                 align: 'center',
-                key: 'type',
+                key: 'TypeName',
             },
             
         ],
-        tableData: [
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100,  type: '水', },
-            { time: '2018-12-28', department: '内科', sb: '设备1', energy: 100, type: '水',  },
-        ],
+        tableData: [],
         searchForm: {
-            time: null,
-            equipment: null,
-            department: [],
-            people: null,
-            type: null,
-            floor:null
+            time: null,//日期
+            did: null,//设备
+            ksid: [],//科室
+            cotypeid: null,//能源类型
         },
         typeList: [],
-        departMentList:[]
+        departMentList: [],
+        deviceList:[]
     },
     methods: {
         //类型下拉框
@@ -60,7 +56,7 @@
                 // console.log(res.data)
                 that.typeList = res.data
             }).catch(function (e) {
-                console.log(e)
+                throw new ReferenceError(e.message)
             })
         },
         //科室下拉框
@@ -72,14 +68,58 @@
             }).then(function (res) {
                 that.departMentList = res.data
             }).catch(function (e) {
-                console.log(e)
+                throw new ReferenceError(e.message)
+             })
+           
+        },
+        //设备下拉框
+        getDeviceCombox: function () {
+            
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetDeviceCombox',
+                method: 'post',
+            }).then(function (res) {
+                that.deviceList = res.data
+                that.loading = false 
+             }).catch(function (e) {
+                 that.loading = false
+                 throw new ReferenceError(e.message)
             })
+        },
+        //查询
+        getEneryList: function () {
+            this.loading = true
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetEneryList',
+                method: 'post',
+                body: {
+                    time: that.formaterDate(),
+                    did: that.searchForm.did,
+                    cotypeid: that.searchForm.cotypeid,
+                    ksid: [...that.searchForm.ksid].join(',').toString()
+                }
+            }).then(function (res) {
+                that.tableData = res.data
+            }).catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+        },
+        formaterDate: function () {
+            if (this.searchForm.time) {
+                var temp = new Date(this.searchForm.time)
+                return temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate()
+            }
+            return ""
+            
         },
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
         }
     },
     beforeMount: function () {
+        this.UID = $.cookie("enUID")
         var that = this
         this.setHeight()
         setInterval(function () {
@@ -87,6 +127,8 @@
         }, 100)
         this.getCollectDevTypeList()
         this.getDepartMentList()
+        this.getDeviceCombox()
+        this.getEneryList()
     },
     mounted: function () {
         
@@ -94,8 +136,4 @@
 })
 
 
-$(function () {
 
-
-    
-})

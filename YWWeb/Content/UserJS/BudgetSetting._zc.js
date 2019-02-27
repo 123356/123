@@ -143,7 +143,7 @@
             this.$http({
                 url: data.url,
                 method: 'POST',
-                params: data.params
+                body: data.params
             })
             .then(function (res) {
                 if (res.data) {
@@ -466,7 +466,7 @@
             this.$http({
                 url: data.url,
                 method: 'POST',
-                params: data.params
+                body: data.params
             })
             .then(function (res) {
                     if (res.data === "ok") {

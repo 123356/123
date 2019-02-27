@@ -50,7 +50,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetEneryAnalysis',
                 method: 'post',
-                params: {
+                body: {
                     uid: that.uid,
                     time: that.curDate,
                     DepartmentID: that.departmentID
@@ -76,7 +76,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetEneryTable',
                 method: 'post',
-                params: {
+                body: {
                     uid: that.uid,
                     DepartmentID: that.departmentID,
                     time: that.curDate,
@@ -157,7 +157,7 @@
             this.$http({
                 url: '/energyManage/EMHome/GetEneryLine',
                 method: 'post',
-                params: {
+                body: {
                     uid: that.uid,
                     DepartmentID: that.departmentID,
                     type: that.curType,
