@@ -695,6 +695,20 @@ namespace YWWeb.Controllers
             string strjson = sbAccord.ToString();
             return Content(strjson);
         }
+        //站室设备列表 json
+        [Login]
+        public JsonResult StationDeviceTreeJson(int pid, string typeName)
+        {
+            string addType = "";
+            if (typeName != "")
+            {
+                addType = "dt.Name like '%" + typeName + "%'";
+            }
+            string strsql = "select DID,DeviceName,dt.Name TypeName, OrderBy from t_DM_DeviceInfo d join t_CM_DeviceType dt on d.DTID=dt.DTID join t_CM_PDRInfo p on d.PID=p.PID where (d.pid=" + pid + " or parentid=" + pid + ") and " + addType + "and d.DTID!=8  order by TypeName, OrderBy";
+
+            List<DeviceType> list = bll.ExecuteStoreQuery<DeviceType>(strsql).ToList();
+            return Json(list);
+        }
         //站室传感器列表
         [Login]
         public ActionResult StationPointsType(int pid)
