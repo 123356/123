@@ -67,7 +67,7 @@ namespace DAL
             }
             return n;
         }
-        public int Delete(int id)
+        public int Delete(string id)
         {
             int n = 0;
             try

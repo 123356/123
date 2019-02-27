@@ -31,9 +31,9 @@ namespace DAO
             return ExecuteSqlCommand(sql);
         }
 
-        public int Delete(int id)
+        public int Delete(string id)
         {
-            string sql = $"DELETE FROM[dbo].[t_DM_ElementDevice] WHERE ID={id}";
+            string sql = $"DELETE FROM[dbo].[t_DM_ElementDevice] WHERE ID IN({id})";
             return ExecuteSqlCommand(sql);
         }
 

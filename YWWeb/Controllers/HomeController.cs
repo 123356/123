@@ -5251,7 +5251,7 @@ namespace YWWeb.Controllers
         }
         #endregion
 
-        #region MyRegion
+        #region 元器件
         public JsonResult GetElementList(string name, int page=1, int rows=10)
         {
             IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name, page, rows);
@@ -5296,7 +5296,7 @@ namespace YWWeb.Controllers
             }
         }
 
-        public JsonResult DeleteElementList(int id)
+        public JsonResult DeleteElementList(string id)
         {
             int n = DAL.ElementDeviceDAL.getInstance().Delete(id);
             if (n > 0)

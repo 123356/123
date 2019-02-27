@@ -12,7 +12,7 @@ namespace IDAO
         IList<t_DM_ElementDevice> GetElementList(string name,int page,int rows);
         int Add(t_DM_ElementDevice model);
         int Update(t_DM_ElementDevice model);
-        int Delete(int id);
+        int Delete(string id);
         t_DM_ElementDevice GetModelByID(int id);
     }
 }
