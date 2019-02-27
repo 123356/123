@@ -27,13 +27,13 @@
     <div id="app" class="BudgetSetting noPaddingBottom">
         <Spin size="large" fix v-if="loading"></Spin>
         <div class="header">
-            <p class="proName">{{uName}}</p>
+            <p class="proName" v-html="uName">--</p>
             <div class="formView">
                 <p class="title">
                     <date-picker type="year" v-on:on-change="dateChange" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
                 </p>
                 <div class="btnView">
-                    <i-button class="btn" icon="ios-create-outline" v-on:click="edit" :disabled="!isEdit">{{editName}}</i-button>
+                    <i-button class="btn" icon="ios-create-outline" v-on:click="edit" :disabled="!isEdit" v-html="editName">编辑</i-button>
                     <i-button class="btn" icon="ios-settings-outline" v-on:click="showSetPriceModal" v-show="false">能源单价设置</i-button>
                     <!-- <i-button class="btn" icon="ios-settings-outline" ref="test" v-on:click="test">测试{{count}}</i-button>
                                    <i-button class="btn" icon="ios-cloud-upload" v-on:click="upload">历史上传</i-button>
@@ -68,7 +68,7 @@
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>各月能源<br />预算{{sumAllMonthData}}万</p>
+                    <p>各月能源<br />预算<font v-html="sumAllMonthData">--</font>万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con " :style="{'height':height+'px'}">
@@ -80,7 +80,7 @@
                             </tr>
                             <tbody>
                                 <tr v-for="item in allMonthData" v-on:click="monthClick(item)">
-                                    <td style="width:50px"><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.Month}}月</td>
+                                    <td style="width:50px"><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.Month">--</font>月</td>
                                     <td><input-number :min="0" v-model="item.MonthBudget" v-on:on-change="monthPlanChange" v-on:on-blur="tableBlur(1,item)" size="small" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
@@ -89,11 +89,11 @@
                     </div>
 
                 </div>
-                <div class="footer">当前余额{{everyMonthBalance}}</div>
+                <div class="footer">当前余额<font v-html="everyMonthBalance">--</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>{{curMonth}}月份能源<br />预算{{sumEnergyData}}万</p>
+                    <p><font v-html="curMonth">--</font>月份能源<br />预算<font v-html="sumEnergyData">--</font>万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con" :style="{'height':height+'px'}">
@@ -104,7 +104,7 @@
                         </tr>
                         <tbody>
                             <tr v-for="item in energyData" v-on:click="typeClick(item)">
-                                <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.CollTypeName}}</td>
+                                <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.CollTypeName">--</font></td>
                                 <td><input-number :min="1" v-model="item.GeneralBudget" size="small" v-on:on-change="EnPlanChange" v-on:on-blur="tableBlur(2,item)" style="border:none" :disabled="editDisable"></input-number></td>
                             </tr>
 
@@ -112,11 +112,11 @@
                     </table>
 
                 </div>
-                <div class="footer">当前余额{{enTypeBalance}}</div>
+                <div class="footer">当前余额<font v-html="enTypeBalance">--</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title" style="position:relative">
-                    <p>各科室用{{curEnType}}<br />预算{{sumDepartBudgetData}}万</p>
+                    <p>各科室用<font v-html="curEnType">--</font><br />预算<font v-html="sumDepartBudgetData">--</font>万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                     <div style="position:absolute;right:0;cursor:pointer" v-on:click="showTreeModal"><Icon type="md-add" size="18" color="#333" v-if="isAdd" /></div>
                 </div>
@@ -129,7 +129,7 @@
                             </tr>
                             <tbody>
                                 <tr v-for="item in departBudgetData">
-                                    <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.EName}}</td>
+                                    <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.EName">--</font></td>
                                     <td><input-number :min="1" v-model="item.GeneralBudget" size="small" v-on:on-change="departPlanChnage" v-on:on-blur="tableBlur(3,item)" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
@@ -138,7 +138,7 @@
                     </div>
 
                 </div>
-                <div class="footer">当前余额{{departBalance}}</div>
+                <div class="footer">当前余额<font v-html="departBalance">--</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title">
@@ -154,7 +154,7 @@
                             </tr>
                             <tbody>
                                 <tr v-for="item in departMoneyData">
-                                    <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span>{{item.EName}}</td>
+                                    <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.EName">--</font></td>
                                     <td><input-number :min="1" v-model="item.GeneralBudget" v-on:on-change="departAvgChange" v-on:on-blur="tableBlur(4,item)" size="small" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
@@ -162,25 +162,25 @@
                         </table>
                     </div>
                 </div>
-                <div class="footer">调整余额{{departAvgBalance}}</div>
+                <div class="footer">调整余额<font v-html="departAvgBalance">--</font></div>
             </div>
             <div class="main-item last-main-item">
                 <div class="module">
                     <p class="title"><img src="~/Content/images/energyDifficiency/pie.png" />其它参考数据</p>
                     <span class="dec">建筑面积</span>
-                    <p class="numtext">{{Area}}㎡</p>
+                    <p class="numtext"><font v-html="Area">--</font>㎡</p>
 
                     <span class="dec">单位面积能耗</span>
                     <span class="subdec">绿地医院标准能耗5.0/㎡</span>
-                    <p class="numtext">{{Bili}}</p>
+                    <p class="numtext"><font v-html="Bili">--</font></p>
 
                 </div>
 
                 <div class="module">
                     <p class="title"><img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />去年能源消耗</p>
                     <template v-for="item in rightList">
-                        <span class="typeName">{{item.name}}/万元</span>
-                        <p class="numtext">{{item.value}}</p>
+                        <span class="typeName"><font v-html="item.name">--</font>/万元</span>
+                        <p class="numtext"><font v-html="item.value">--</font></p>
                     </template>
                 </div>
 
