@@ -67,5 +67,7 @@ namespace DAO
         public IEnerySelectView enerySelectView => new EnerySelectViewDBContext();
 
         public IDeviceInfo deviceInfo => new DeviceInfoDBContext();
+
+        public IElementDevice elementDevice => new ElementDeviceDBContext();
     }
 }

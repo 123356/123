@@ -65,5 +65,7 @@ namespace DAOMongoDB
         public IEnerySelectView enerySelectView => throw new NotImplementedException();
 
         public IDeviceInfo deviceInfo => throw new NotImplementedException();
+
+        public IElementDevice elementDevice => throw new NotImplementedException();
     }
 }
