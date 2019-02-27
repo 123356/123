@@ -27,13 +27,13 @@
                         <div class="chart" id="powerChart"></div>
                     </div>
                     <div class="footer">
-                        <div class="footer-item">预算：{{sumBudget==undefined||sumBudget==null?'--':sumBudget}}</div>
-                        <div class="footer-item">同比： {{zduibi==undefined||zduibi==null?'--':zduibi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                        <div class="footer-item">预算：<font v-html="sumBudget==undefined||sumBudget==null?'--':sumBudget">--</font></div>
+                        <div class="footer-item">同比：<font v-html="zduibi==undefined||zduibi==null?'--':zduibi">--</font> %<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="chartTitle">
-                        <span>{{month}}月能源费用比例</span>
+                        <span><font v-html="month">--</font>月能源费用比例</span>
                     </div>
                     <div class="main" style="height:85%;display:flex;flex-direction:row;justify-content:center;align-items:center;">
                         <div v-if="!left_viewIsShow"><span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据</div>
@@ -42,13 +42,13 @@
                 </div>
                 <div class="item lastItem">
                     <div class="chartTitle">
-                        <span>{{month}}月万元每平米能耗</span>
+                        <span><font v-html="month">--</font>月万元每平米能耗</span>
                     </div>
                     <div class="main">
-                        <p>{{Peozhanbi==undefined||Peozhanbi==null?'--':Peozhanbi}}<span class="dw">(万元/㎡)</span></p>
+                        <p><font v-html="Peozhanbi==undefined||Peozhanbi==null?'--':Peozhanbi">--</font><span class="dw">(万元/㎡)</span></p>
                         <div class="footer">
-                            <div class="footer-item">预算：{{zongBudget==undefined||zongBudget==null?'--':zongBudget}}</div>
-                            <div class="footer-item">同比： {{LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi}}%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                            <div class="footer-item">预算：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
+                            <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
                         </div>
                         <div class="footerBtn" style="margin-top:5px">
                             <button class="btn" v-on:click="toAreaTree">分项数据</button>
@@ -74,15 +74,15 @@
                             <img src="~/Content/images/energyDifficiency/water.png" v-if="item.name=='水'" />
                             <img src="~/Content/images/energyDifficiency/heat.png" v-if="item.name=='燃气'" />
                         </div>
-                        <p>{{item.name}}</p>
+                        <p v-html="item.name">--</p>
                     </div>
                     <div class="module-item info">
-                        <p>用电预算<span>{{item.budget}}万元</span></p>
-                        <p>当前费用<span>{{item.rate}}万元</span></p>
+                        <p>用电预算<span><font v-html="item.budget">--</font>万元</span></p>
+                        <p>当前费用<span><font v-html="item.rate">--</font>万元</span></p>
                         <p>
                             当前能耗
                             <span>
-                                {{item.energyConsumption}}
+                                <font v-html="item.energyConsumption">--</font>
                                 <c v-if="item.name=='电'">kW·h</c>
                                 <c v-else>m³</c>
                             </span>

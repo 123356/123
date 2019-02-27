@@ -62,15 +62,19 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
+           
             this.$http({
-                url: '/energyManage/EMHome/GetComobxList',
-                method: 'get',
+                url: "/energyManage/EMSetting/GetHistoryList",
+                method: "post",
+                body: {
+                    unitID: that.UID,
+                    item_type: 2
+                }
             }).then(function (res) {
                 that.departMentList = res.data
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
-             })
-           
+            })
         },
         //设备下拉框
         getDeviceCombox: function () {
@@ -81,9 +85,8 @@
                 method: 'post',
             }).then(function (res) {
                 that.deviceList = res.data
-                that.loading = false 
              }).catch(function (e) {
-                 that.loading = false
+                 
                  throw new ReferenceError(e.message)
             })
         },
@@ -95,14 +98,17 @@
                 url: '/energyManage/EMHome/GetEneryList',
                 method: 'post',
                 body: {
+                    uid: that.UID,
                     time: that.formaterDate(),
                     did: that.searchForm.did,
                     cotypeid: that.searchForm.cotypeid,
                     ksid: [...that.searchForm.ksid].join(',').toString()
                 }
             }).then(function (res) {
+                that.loading = false
                 that.tableData = res.data
-            }).catch(function (e) {
+                }).catch(function (e) {
+                    that.loading = false
                 throw new ReferenceError(e.message)
             })
         },
