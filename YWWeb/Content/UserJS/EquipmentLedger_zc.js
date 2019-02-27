@@ -1,25 +1,140 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：运维 > 台账 > 设备台账 ");
+pid = $.cookie("cookiepid")
+var did = null
+//测点类型列表
+function getBindValueType() {
+    $.ajax({
+        url: '/BaseInfo/BindValueType?pid=' + pid,
+        type: 'post',
+
+        success: function (data) {
+            getTreeData(JSON.parse(data))
+        },
+        error: function (e) {
+            throw new ReferenceError(e.message)
+        }
+    })
+}
+getBindValueType()
+//获取树数据(设备)
+function getTreeData(par) {
+    var nodeArr = []
+    nodeArr.push({
+        id: 0,
+        name: '设备',
+        open: true
+
+    })
+    $.ajax({
+        url: '/Home/StationDeviceTreeJson?pid=' + pid,
+        type: 'post',
+        success: function (data) {
+            if (data.length > 0) {
+                did = data[0].DID
+                loadDeviceInfo();
+            }
+            for (var i = 0; i < par.length; i++) {
+                var temp = {
+                    id: "0" + par[i].DTID,
+                    name: par[i].Name,
+                    pId: 0
+                }
+                nodeArr.push(temp)
+                for (var j = 0; j < data.length; j++) {
+                    if (par[i].Name == data[j].TypeName) {
+                        var temp2 = {
+                            id: data[j].DID + "-",
+                            name: data[j].DeviceName,
+                            pId: "0" + par[i].DTID
+                        }
+
+                        nodeArr.push(temp2)
+                    }
+                }
+            }
+            initTree(nodeArr)
+            /*if (data.length > 0) {
+                var curSelect = "0" + data[0].DID
+                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");//ztree树的ID
+                var node = treeObj.getNodeByParam("id", curSelect);//根据ID找到该节点
+                treeObj.selectNode(node);
+            }*/
+
+        },
+        error: function (e) {
+            throw new ReferenceError(e.message)
+        }
+    })
+}
+
+//初始化树
+function initTree(nodes) {
+    var setting = {
+        check: {
+            enable: false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        edit: {
+            enable: false
+        },
+        callback: {
+            onClick: nodeClick
+        }
+    };
+
+    var zNodes = nodes;
+    $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    //点击树节点
+    function nodeClick(event, treeId, treeNode) {
+        if (treeNode.level == 2) {
+            did = parseInt(treeNode.id.split("-")[0])
+            loadDeviceInfo()
+            if (select == 0) {
+                loadSparePartData()
+            }
+            if (select == 1) {
+                loadBugData()
+            }
+            if (select == 3) {
+                loadExperimentData();
+            }
+            if (select == 4) {
+                loadSensorData()
+            }
+        }
+    }
+}
+$(function () {
+    initTree()
+})
+
+
+$(".frame2").addClass("hide")
 function popwindow() {
     var pop_contentwidth = $(".pop_window").width() / 2;
     var pop_contentheight = $(".pop_window").height() / 2;
     $('.pop_window h3').mousedown(
-function (event) {
-    var isMove = true;
-    var abs_x = event.pageX - $('div.pop_window').offset().left - pop_contentwidth;
-    var abs_y = event.pageY - $('div.pop_window').offset().top - pop_contentheight;
-    $(document).mousemove(function (event) {
-        if (isMove) {
-            var obj = $('div.pop_window');
-            obj.css({ 'left': event.pageX - abs_x, 'top': event.pageY - abs_y });
+        function (event) {
+            var isMove = true;
+            var abs_x = event.pageX - $('div.pop_window').offset().left - pop_contentwidth;
+            var abs_y = event.pageY - $('div.pop_window').offset().top - pop_contentheight;
+            $(document).mousemove(function (event) {
+                if (isMove) {
+                    var obj = $('div.pop_window');
+                    obj.css({ 'left': event.pageX - abs_x, 'top': event.pageY - abs_y });
+                }
+            }
+            ).mouseup(
+                function () {
+                    isMove = false;
+                }
+            );
         }
-    }
-).mouseup(
-function () {
-    isMove = false;
-}
-);
-}
-);
+    );
     $(".pop_window").css({ "margin-left": -pop_contentwidth, "margin-top": -pop_contentheight });
     $(".pop_window").fadeIn();
     $(".pop_windowbg").fadeIn();
@@ -29,11 +144,12 @@ function popclose() {
     $(".pop_windowbg").fadeOut();
 }
 $(document).ready(function () {
-    $(".el_content").width($(document).width() - $(".el_sidebar").width());
+    // $(".el_content").width($(document).width() - $(".el_sidebar").width());
 });
 
-var did = 5;
+//var did = 5;
 var select = 0;
+
 //日期转换
 function DateFormat(value, row, index) {
     var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss');
@@ -47,14 +163,20 @@ function lookDetail(bugid) {
     var url = "/PerationMaintenance/HazardManDetail?bugid=" + bugid;
     top.openDialog(url, 'HazardManDetail_Form', '隐患详情', 1000, 700, 50, 50);
 }
+
 BuildLeftMenu();
+
+
+loadSparePartData()
 function callAway(tpid, tdid) {
-    did = tdid;
-    loadDeviceInfo();
+    //did = tdid;
+
+
     if (select == 0)
-        loadBugData();
+        loadSparePartData()
     else if (select == 1)
-        loadOrderData();
+        loadBugData();
+    // loadOrderData();
     else if (select == 3)
         loadExperimentData();
     else if (select == 4)
@@ -63,8 +185,7 @@ function callAway(tpid, tdid) {
 $('.BugState').click(function () {
     loadBugData();
 });
-loadDeviceInfo();
-loadBugData();
+
 function loadDeviceInfo() {
     $.post("/DeviceManage/DeviceDetail", { "did": did }, function (data) {
         var info = eval("(" + data + ")");
@@ -111,7 +232,7 @@ function loadDeviceInfo() {
 }
 
 function loadBugData() {
-    select = 0;
+    select = 1;
     var type = $("input[name='BugState']:checked").val();
     var HS = "";
     if (type == 0)
@@ -143,17 +264,44 @@ function loadBugData() {
         pagination: true
     });
 }
+//元器件
+function loadSparePartData() {
+    select = 0
+
+    $('#list_data').datagrid({
+        url: '/Home/GetElementList',
+        columns: [[
+            { field: 'DeviceCode', title: '编码', width: '10%' },
+            { field: 'DeviceName', title: '名称', width: '20%' },
+            { field: 'DeviceModel', title: '型号', width: '10%' },
+            { field: 'Manufactor', title: '厂家', width: '20%' },
+            { field: 'DName', title: '柜设备', width: '20%' },
+            { field: 'PName', title: '站名称', width: '20%' },]],
+        queryParams: { "name": '',"pid":pid },
+        rownumbers: true,
+        pageSize: 15,
+        pageList: [10, 15, 20, 30, 50],
+        toolbar: '#tb',
+        method: 'post',
+        striped: true,
+        fitcolumns: true,
+        fit: true,
+        pagination: true
+    })
+}
 function loadOrderData() {
     select = 1;
+
     $('#list_data').datagrid({
         url: '/OrderInfo/OrderInfoList?rom=' + Math.random() + "&pid=" + pid,
         columns: [[
-            { field: 'CreateDate', title: '发布日期', width: 150, formatter: function (val) {
-                if (val != "")
-                    return new Date(val).Format("yyyy-MM-dd hh:mm");
-                else
-                    return "";
-            }
+            {
+                field: 'CreateDate', title: '发布日期', width: 150, formatter: function (val) {
+                    if (val != "")
+                        return new Date(val).Format("yyyy-MM-dd hh:mm");
+                    else
+                        return "";
+                }
             },
             { field: 'OrderNO', title: '工单编号', width: 200 },
             { field: 'PName', title: '站室', width: 100 },
@@ -174,33 +322,36 @@ function loadOrderData() {
                         return "";
                 }
             },
-            { field: 'Priority', title: '优先级', width: 100, formatter: function (val) {
-                if (val == 1)
-                    return "一般";
-                else if (val == 2)
-                    return "高";
-                else if (val == 3)
-                    return "很高";
-            }
+            {
+                field: 'Priority', title: '优先级', width: 100, formatter: function (val) {
+                    if (val == 1)
+                        return "一般";
+                    else if (val == 2)
+                        return "高";
+                    else if (val == 3)
+                        return "很高";
+                }
             },
-            { field: 'OrderState', title: '状态', width: 100, formatter: function (val) {
-                if (val == 0)
-                    return "待接收";
-                else if (val == 1)
-                    return "已受理";
-                else if (val == 2)
-                    return "已完成";
-            }
+            {
+                field: 'OrderState', title: '状态', width: 100, formatter: function (val) {
+                    if (val == 0)
+                        return "待接收";
+                    else if (val == 1)
+                        return "已受理";
+                    else if (val == 2)
+                        return "已完成";
+                }
             },
-            { field: 'IsQualified', title: '是否合格', width: 100, formatter: function (val) {
+            {
+                field: 'IsQualified', title: '是否合格', width: 100, formatter: function (val) {
 
-                if (val == 0)
-                    return "<b style='color:red;'>不合格</b>";
-                else if (val == 1)
-                    return "<b style='color:green;'>合格</b>";
-                else
-                    return "";
-            }
+                    if (val == 0)
+                        return "<b style='color:red;'>不合格</b>";
+                    else if (val == 1)
+                        return "<b style='color:green;'>合格</b>";
+                    else
+                        return "";
+                }
             },
             { field: 'CheckInfo', title: '检查情况', width: 200 },
             { field: 'Rectification', title: '整改措施', width: 200 }
@@ -237,16 +388,16 @@ function loadExperimentData() {
     $('#list_data').datagrid({
         url: '/OrderInfo/OrderInfoList?rom=' + Math.random() + "&pid=" + pid,
         columns: [[
-            { field: 'OrderID', title: '序号', width: 50},
+            { field: 'OrderID', title: '序号', width: 50 },
             { field: 'OrderNO', title: '工单编号', width: 200 },
             { field: 'OrderContent', title: '实验内容', width: 1100 },
-            { field: 'PlanDate', title: '实验日期', width: 200}
+            { field: 'PlanDate', title: '实验日期', width: 200 }
         ]],
         pageSize: 10
     });
 }
 
-    var Request = new Object();
+var Request = new Object();
 Request = GetRequest();
 var pid = 6, sid = 0;
 if (Request['pid'] != null)
