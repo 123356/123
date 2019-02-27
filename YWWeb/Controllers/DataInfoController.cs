@@ -376,13 +376,84 @@ namespace YWWeb.Controllers
             }
         }
 
-        public JsonResult GetTaskJson(int pid = 1)
-        {           
+        //public JsonResult GetTaskJson(jqDataTableParameter tableParam, int did, int cid, int tdid, int pid = 1)
+        //{
+        //    #region 2.0 加载分页数据
+        //    List<t_V_RealTimeTab> DataSource = VRealTimeDataDAL.getInstance().GetTagIdDetail(99999, 1, pid, cid, tdid, did).ToList();
+        //    //1.0 首先获取datatable提交过来的参数
+        //    string echo = tableParam.sEcho;  //用于客户端自己的校验
+        //    int dataStart = tableParam.iDisplayStart;//要请求的该页第一条数据的序号
+        //    int pageSize = tableParam.iDisplayLength == -1 ? DataSource.Count : tableParam.iDisplayLength;//每页容量（=-1表示取全部数据）
+        //    string search = tableParam.sSearch;
+        //    int i = tableParam.iSortingCols;
+        //    string columns = tableParam.sColumns;
+        //    string sortCol = tableParam.iSortCol_0;
+        //    string sortDir = tableParam.sSortDir_0;
+        //    var data = DataSource.Skip<t_V_RealTimeTab>(dataStart)
+        //                         .Take(pageSize).ToList();
+        //    return Json(new
+        //    {
+        //        //sEcho = echo,
+        //        iTotalRecords = DataSource.Count,
+        //        iTotalDisplayRecords = DataSource.Count,
+        //        aaData = data
+        //    }, JsonRequestBehavior.AllowGet);
+
+        //}
+
+
+        public JsonResult GetTaskJson(int did, int cid, int tdid, int pageSize, int pageNum, int pid = 1)
+        {
             #region 2.0 加载分页数据
-            List<t_V_RealTimeData> DataSource = VRealTimeDataDAL.getInstance().GetTagIdDetail(pid).ToList();
-            return Json(DataSource, JsonRequestBehavior.AllowGet);
-            #endregion
+            List<t_V_RealTimeTab> DataSource = VRealTimeDataDAL.getInstance().GetTagIdDetail(99999, 1, pid, cid, tdid, did).ToList();
+            //1.0 首先获取datatable提交过来的参数
+            //string echo = tableParam.sEcho;  //用于客户端自己的校验
+            //int dataStart = tableParam.iDisplayStart;//要请求的该页第一条数据的序号
+            //int pageSize = tableParam.iDisplayLength == -1 ? DataSource.Count : tableParam.iDisplayLength;//每页容量（=-1表示取全部数据）
+            //string search = tableParam.sSearch;
+            //int i = tableParam.iSortingCols;
+            //string columns = tableParam.sColumns;
+            //string sortCol = tableParam.iSortCol_0;
+            //string sortDir = tableParam.sSortDir_0;
+            var data = DataSource.Skip<t_V_RealTimeTab>((pageNum - 1) * pageSize)
+                                 .Take(pageSize).ToList();
+            return Json(new
+            {
+                //sEcho = echo,
+                iTotalRecords = DataSource.Count,
+                iTotalDisplayRecords = DataSource.Count,
+                aaData = data
+            }, JsonRequestBehavior.AllowGet);
+
         }
+
+
+
+        public JsonResult GetTagIdPV(int pid ,string tages)
+        {
+            List<t_V_RealTimePV> DataSource = VRealTimeDataDAL.getInstance().GetTagIdPV(pid, tages).ToList();
+       
+            return Json(DataSource, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        //public JsonResult GetTaskJson( int did, int cid, int tdid, int pid,int pageSize,int pagNum)
+        //{
+        //    #region 2.0 加载分页数据
+        //    List<t_V_RealTimeData> DataSource = VRealTimeDataDAL.getInstance().GetTagIdDetail(99999, 1, pid, cid, tdid, did).ToList();
+        //    var data = DataSource.Skip<t_V_RealTimeData>(pageSize* (pagNum - 1))
+        //                         .Take(pageSize).ToList();
+        //    return Json(new
+        //    {
+        //        //sEcho = echo,
+        //        iTotalRecords = DataSource.Count,
+        //        iTotalDisplayRecords = DataSource.Count,
+        //        aaData = data
+        //    }, JsonRequestBehavior.AllowGet);
+
+        //}
+
 
 
 
@@ -610,6 +681,6 @@ namespace YWWeb.Controllers
 
 
 
-
+        #endregion
     }
 }

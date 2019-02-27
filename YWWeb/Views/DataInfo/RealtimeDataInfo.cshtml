@@ -3,86 +3,95 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>站室实时数据</title>
-    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <!-- 表格-->
-    <link href="/Content/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
-    <link href="/Content/css/dataTables.bootstrap.css" rel="stylesheet">
-    <script src="/Content/js/jquery.dataTables.js"></script>
-    <script src="/Content/js/dataTables.bootstrap.js"></script>
-    <script src="/Content/UserJS/CommonUnit._jm.js"></script>
-    <link href="/Content/css/yw_table.css" rel="stylesheet">
-    <style type="text/css">
-        .align-center {
-            margin: 0 auto; /* 居中 这个是必须的，，其它的属性非必须 */
-            text-align: center; /* 文字等内容居中 */
+    <!-- <script src="/Content/UserJS/CommonUnit._jm.js"></script> -->
+
+    <link rel="stylesheet" href="~/Content/iview/dist/styles/iview.css">
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script src="~/Content/iview/dist/iview.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+
+
+    <style>
+        #app {
+            background: #efefef;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        th, td {
-            text-align: center
+        .ivu-table-tip {
+            overflow: hidden;
         }
+
+        .ivu-table {
+            overflow: auto;
+        }
+        .foot{
+
+        }
+        .ivu-table th {
+            background-color: #5BB09D;
+            color:#fff;
+            font-size:15px;
+        }
+        /* .ivu-form-item-label {
+            background: rgba(74,184,155,.2);
+            border-radius: 6px;
+            display: inline-block;
+            text-align: center;
+        }*/
+
+
+        .ivu-table-row-hover td, .ivu-table-row-highlight td {
+            background-color: rgba(91,176,157,.3) !important;
+        }
+        
+            
     </style>
+
 </head>
-
 <body>
+    <div id="app" ref="main">
+        <Row ref="head">
+            <i-form :label-width="100">
+                <i-col span="4" offset="1">
+                    <form-item label="类型：">
+                        <i-select v-model="DTID" v-on:on-change="tab" filterable>
+                            <i-option v-for="item in DeviceTypeNameList" :value="item.DTID" :key="item.DTID">{{ item.Name }}</i-option>
+                        </i-select>
+                    </form-item>
+                </i-col>
+                <i-col span="4" offset="2">
+                    <form-item label="设备名称：">
+                        <i-select v-model="DID" v-on:on-change="tab" filterable>
+                            <i-option v-for="item in DeviceNameList" :value="item.DID" :key="item.DID">{{ item.DeviceName }}</i-option>
+                        </i-select>
+                    </form-item>
+                </i-col>
+                <i-col span="4" offset="2">
+                    <form-item label="  回路/调度号：">
+                        <i-select v-model="CID" v-on:on-change="tab" filterable>
+                            <i-option v-for="item in CNameList" :value="item.CID" :key="item.CID">{{ item.CName }}</i-option>
+                        </i-select>
+                    </form-item>
+                </i-col>
+            </i-form>
+        </Row>
+        <i-table border :columns="columns" :data="data" :style="style.tab" :highlight-row="true" :loading="loading" ref="body">
 
-    <div style="background: #fff;">
-        <div class="project-list" style=" width:99%;padding-bottom:70px">
-            <table cellpadding="" cellspacing="" border="0" class="d_list">
-
-                <tr id="two">
-                    <td class="d_l_t">
-                        类别：
-                    </td>
-                    <td class="d_l_d">
-                        <input style="width: 180px; height: 26px;" id="DTID" />
-                    </td>
-                    <td class="d_l_t">
-                        设备名称：
-                    </td>
-                    <td class="d_l_d">
-                        <input style="width: 200px; height: 26px;" id="PID2" />
-                    </td>
-                    <td class="d_l_t">
-                        回路/调度号：
-                    </td>
-                    <td class="d_l_d">
-                        <input style="width: 200px; height: 26px;" id="PID3" />
-                    </td>
-                </tr>
-
-            </table>
-            <table id="datalist" class="table table-bordered data-table mydatatable">
-                <thead>
-                    <tr>
-                        <th width="15%">
-                            类别
-                        </th>
-                        <th width="20%">
-                            设备名称
-                        </th>
-                        <th width="15%">
-                            回路/调度号
-                        </th>
-                        <th width="15%">
-                            监测类型
-                        </th>
-                        <th width="15%">
-                            测值
-                        </th>
-                        <th width="5%">
-                            单位
-                        </th>
-                        <th width="20%">
-                            采集时间
-                        </th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <div id="graphwin" minimizable="false" maximizable="false" collapsible="false" closed="false" title="false"></div>
+        </i-table>
+        <div style="margin: 10px;overflow: hidden" ref="foot">
+            <div style="float: right;">
+                <Page :total="pageNumMax" :page-size="pageSize" :current="1" v-on:on-change="changePage"></Page>
+            </div>
         </div>
     </div>
 
+    <script src="~/Content/topo/js/mqtt.js"></script>
     <script src="~/Content/UserJS/RealtimeDataInfo._zc.js"></script>
 </body>
 </html>

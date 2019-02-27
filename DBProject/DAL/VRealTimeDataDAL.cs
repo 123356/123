@@ -32,12 +32,12 @@ namespace DAL
 
               
        
-        public IList<t_V_RealTimeData> GetTagIdDetail( int pid)
+        public IList<t_V_RealTimeTab> GetTagIdDetail(int pageSize, int nPage, int pid, int cid, int tdid, int did)
         {
-            IList<t_V_RealTimeData> data = new List<t_V_RealTimeData>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
+            IList<t_V_RealTimeTab> data = new List<t_V_RealTimeTab>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
             try
             {
-                data = _dbFactory.vRealTimeData.GetTagIdDetail(pid);
+                data = _dbFactory.vRealTimeData.GetTagIdDetail(pageSize, nPage, pid, cid, tdid, did);
             }
             catch (Exception ex)
             {
@@ -45,6 +45,23 @@ namespace DAL
             }
             return data;
         }
+
+
+        public IList<t_V_RealTimePV> GetTagIdPV(int pid, string tages)
+        {
+            IList<t_V_RealTimePV> data = new List<t_V_RealTimePV>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
+            try
+            {
+                data = _dbFactory.vRealTimeData.GetTagIdPV(pid, tages);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+
         public IList<t_V_RealTimeData1> GetRealTimeData1(int pageSize, int nPage,string dataTypeIDs,bool dataTypeInvert, int pid, int cid, int tdid, int did)
         {
             IList<t_V_RealTimeData1> data = new List<t_V_RealTimeData1>();// _hisDataDao.GetHisData(rows, page, DateTime.Now.AddDays(-3), DateTime.Now, pid);
