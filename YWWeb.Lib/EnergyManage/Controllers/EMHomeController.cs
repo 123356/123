@@ -994,18 +994,18 @@ namespace EnergyManage.Controllers
         #endregion
 
         #region 能源查询
-        public JsonResult GetEneryList(string time, string ksid,int did=0, int cotypeid=0)
+        public JsonResult GetEneryList(string time, string ksid, int uid,int did=0, int cotypeid=0)
         {
             List<enview> datas = new List<enview>();
             try
             {
                 string pids = GetPIDs();
-                IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ksid);
+                IList<t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().GetHistoryList(2, uid);
                 foreach (var item in list)
                 {
-                    if (!string.IsNullOrEmpty(item.cids.Trim()))
+                    if (!string.IsNullOrEmpty(item.addCid.Trim()))
                     {
-                        IList<t_V_EnerySelectView> list_data = DAL.EnerySelectViewDAL.getInstance().GetDatas(time, item.cids, pids, did, cotypeid);
+                        IList<t_V_EnerySelectView> list_data = DAL.EnerySelectViewDAL.getInstance().GetDatas(time, item.addCid, pids, did, cotypeid);
                         foreach(var it in list_data.GroupBy(p=>p.RecordTime))
                         {
                            
