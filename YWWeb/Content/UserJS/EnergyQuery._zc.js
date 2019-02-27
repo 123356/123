@@ -1,10 +1,10 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        loading:true,
-        UID:null,
+        loading: true,
+        UID: null,
         tableHeight: 0,
-        dateType:0,
+        dateType: 0,
         tableCol: [
             {
                 title: '时间',
@@ -32,7 +32,7 @@
                 align: 'center',
                 key: 'TypeName',
             },
-            
+
         ],
         tableData: [],
         searchForm: {
@@ -43,7 +43,7 @@
         },
         typeList: [],
         departMentList: [],
-        deviceList:[]
+        deviceList: []
     },
     methods: {
         //类型下拉框
@@ -62,7 +62,7 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-           
+
             this.$http({
                 url: "/energyManage/EMSetting/GetHistoryList",
                 method: "post",
@@ -78,16 +78,16 @@
         },
         //设备下拉框
         getDeviceCombox: function () {
-            
+
             var that = this
             this.$http({
                 url: '/energyManage/EMHome/GetDeviceCombox',
                 method: 'post',
             }).then(function (res) {
                 that.deviceList = res.data
-             }).catch(function (e) {
-                 
-                 throw new ReferenceError(e.message)
+            }).catch(function (e) {
+
+                throw new ReferenceError(e.message)
             })
         },
         //查询
@@ -107,8 +107,8 @@
             }).then(function (res) {
                 that.loading = false
                 that.tableData = res.data
-                }).catch(function (e) {
-                    that.loading = false
+            }).catch(function (e) {
+                that.loading = false
                 throw new ReferenceError(e.message)
             })
         },
@@ -118,7 +118,7 @@
                 return temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate()
             }
             return ""
-            
+
         },
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
@@ -129,7 +129,7 @@
         var that = this
         this.setHeight()
         setInterval(function () {
-            that.tableHeight = $(".bottomView .con").height() 
+            that.tableHeight = $(".bottomView .con").height()
         }, 100)
         this.getCollectDevTypeList()
         this.getDepartMentList()
@@ -137,7 +137,7 @@
         this.getEneryList()
     },
     mounted: function () {
-        
+
     }
 })
 

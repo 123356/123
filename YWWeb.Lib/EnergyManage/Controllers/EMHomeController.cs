@@ -1050,5 +1050,6 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        
     }
 }

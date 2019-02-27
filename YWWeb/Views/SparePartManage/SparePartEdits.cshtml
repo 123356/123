@@ -11,61 +11,51 @@
     <table cellpadding="" cellspacing="" border="0" class="d_list">
         <tr>
             <td class="d_l_t">
-                备件编码：
-            </td>
-            <td class="d_l_d" >
-                <input id="SparePartCode" name="SparePartCode" missingmessage="备件编码必填项！" class="easyui-validatebox"
-                    style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                <input id="SparePartID" type="hidden" />
-            </td>
-             <td class="d_l_t">
-                备件名称：
+                编码：
             </td>
             <td class="d_l_d">
-                <input id="SparePartName" name="SparePartName" missingmessage="备件名称必填项！" class="easyui-validatebox"
-                    style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="DeviceCode" name="DeviceCode" missingmessage="编码必填项！" class="easyui-validatebox"
+                       style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="ID" type="hidden" />
+            </td>
+            <td class="d_l_t">
+                名称：
+            </td>
+            <td class="d_l_d">
+                <input id="DeviceName" name="DeviceName" missingmessage="名称必填项！" class="easyui-validatebox"
+                       style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
             </td>
         </tr>
         <tr>
             <td class="d_l_t">
-                库存数量：
+                柜设备：
             </td>
             <td class="d_l_d">
-               <input id="StockCount" name="StockCount" class="easyui-validatebox" style="width: 250px;" />
+                <select id="DID" style="width: 260px;" name="DID"></select>
             </td>
             <td class="d_l_t">
-                系统编码：
+                站名称：
             </td>
             <td class="d_l_d">
-                <input id="EadoCode" name="EadoCode" class="easyui-validatebox" style="width: 250px;" />
+                <select id="PID" name="PID" class="easyui-combobox" style="width: 260px;"></select>
             </td>
         </tr>
         <tr>
             <td class="d_l_t">
-                供应商名称：
+                型号：
             </td>
             <td class="d_l_d">
-                <select id="SupplierID" style="width: 260px;" >
-                </select>
+                <input id="DeviceModel" name="DeviceModel" missingmessage="名称必填项！" data-options="required:true" class="easyui-validatebox" style="width: 250px;" /><b class="RStar">&nbsp*</b>
             </td>
-            @*<td class="d_l_t">
-                使用状态：
-            </td>
-            <td class="d_l_d">
-                <select id="UseState" class="easyui-combobox" style="width: 260px;">
-                    <option value="0">正常使用</option>
-                    <option value="1">暂停使用</option>
-                </select>
-            </td>*@
-        </tr>
-        <tr>
             <td class="d_l_t">
-                备注：
+                厂家：
             </td>
-            <td class="d_l_d" colspan="3">
-                <textarea id="Remarks" class="easyui-validatebox" style="height: 50px; width: 632px;"></textarea>
+            <td class="d_l_d">
+                <input id="Manufactor" name="Manufactor" class="easyui-validatebox" missingmessage="名称必填项！" data-options="required:true" style="width: 250px;" /><b class="RStar">&nbsp*</b>
             </td>
         </tr>
+
+
     </table>
     <div style="text-align: center; padding-top: 20px;">
         <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
@@ -76,6 +66,6 @@
     <script type="text/javascript">
         var sparepartid=@Html.Raw(Request.QueryString["sparepartid"]);
     </script>
-    <script src="~/Content/UserJS/SparePartEdits._jm.js"></script>
+    <script src="~/Content/UserJS/SparePartEdits._jm.js?v=1.09"></script>
 </body>
 </html>

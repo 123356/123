@@ -1,6 +1,6 @@
 ﻿//生成左边菜单
 var did = 0, pid = 0;
-if (mid == 21) {
+if (mid == 21 ||mid ==211) { //mid=211 :生命周期
     //$("#leftmenu").css("display", "block");
    // $(".tab_menu").css("margin-left", "210px");
     $(".tab_mainbox").css("margin-left", "0px");

@@ -695,6 +695,20 @@ namespace YWWeb.Controllers
             string strjson = sbAccord.ToString();
             return Content(strjson);
         }
+        //站室设备列表 json
+        [Login]
+        public JsonResult StationDeviceTreeJson(int pid, string typeName)
+        {
+            string addType = "";
+            if (typeName != "")
+            {
+                addType = "dt.Name like '%" + typeName + "%'";
+            }
+            string strsql = "select DID,DeviceName,dt.Name TypeName, OrderBy from t_DM_DeviceInfo d join t_CM_DeviceType dt on d.DTID=dt.DTID join t_CM_PDRInfo p on d.PID=p.PID where (d.pid=" + pid + " or parentid=" + pid + ") and " + addType + "and d.DTID!=8  order by TypeName, OrderBy";
+
+            List<DeviceType> list = bll.ExecuteStoreQuery<DeviceType>(strsql).ToList();
+            return Json(list);
+        }
         //站室传感器列表
         [Login]
         public ActionResult StationPointsType(int pid)
@@ -5234,6 +5248,70 @@ namespace YWWeb.Controllers
         {
             public string name { get; set; }
             public decimal? value { get; set; }
+        }
+        #endregion
+
+        #region 元器件
+        public JsonResult GetElementList(string name,int pid=0, int page=1, int rows=10)
+        {
+            IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name,pid, page, rows);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AddOrUpdateElement(IDAO.Models.t_DM_ElementDevice model)
+        {
+            int n = 0;
+            if (model.ID > 0)
+            {
+                IDAO.Models.t_DM_ElementDevice info = DAL.ElementDeviceDAL.getInstance().GetModelByID(model.ID);
+                info.DeviceCode = model.DeviceCode;
+                info.DeviceModel = model.DeviceModel;
+                info.DeviceName = model.DeviceName;
+                info.DID = model.DID;
+                info.DName = model.DName;
+                info.Manufactor = model.Manufactor;
+                info.PID = model.PID;
+                info.PName = model.PName;
+                n = DAL.ElementDeviceDAL.getInstance().Update(info);
+            }
+            else
+            {
+                IDAO.Models.t_DM_ElementDevice info = new IDAO.Models.t_DM_ElementDevice();
+                info.DeviceCode = model.DeviceCode;
+                info.DeviceModel = model.DeviceModel;
+                info.DeviceName = model.DeviceName;
+                info.DID = model.DID;
+                info.DName = model.DName;
+                info.Manufactor = model.Manufactor;
+                info.PID = model.PID;
+                info.PName = model.PName;
+                n = DAL.ElementDeviceDAL.getInstance().Add(info);
+            }
+            if (n >0)
+            {
+                return Json("ok", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("修改失败，请联系管理员", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult DeleteElementList(string id)
+        {
+            int n = DAL.ElementDeviceDAL.getInstance().Delete(id);
+            if (n > 0)
+            {
+                return Json("ok", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("删除失败，请联系管理员", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetElementModel(int id)
+        {
+            IDAO.Models.t_DM_ElementDevice info = DAL.ElementDeviceDAL.getInstance().GetModelByID(id);
+            return Json(info, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

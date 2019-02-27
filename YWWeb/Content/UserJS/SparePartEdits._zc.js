@@ -1,71 +1,118 @@
-﻿
+﻿//展示下拉框
+var pid = $.cookie("cookiepid")
+function loadPID() {
+    $("#PID").combobox({
+        url: "/BaseInfo/BindPDRInfo?showall=7",
+        valueField: 'PID',
+        textField: 'Name',
+        onLoadSuccess: function () {
+            var data = $('#PID').combobox('getData');
+            if (sparepartid == 0) {
+                if (data.length > 0) {
+                    $("#PID").combobox('select', data[0].PID);
+                }
+            } 
+        },
+        onSelect: function () {
+            var pid = $("#PID").combobox("getValue")
+            
+
+        }
+    });
+}
+//设备下拉框
+function loadDevice() {
+    $("#DID").combobox({
+        url: "/energyManage/EMHome/GetDeviceCombox",
+        valueField: 'DID',
+        textField: 'DeviceName',
+        onLoadSuccess: function () {
+            var data = $('#DID').combobox('getData');
+            if (sparepartid == 0) {
+                if (data.length > 0) {
+                    $("#DID").combobox('select', data[0].DID);
+                }
+            }
+            
+        },
+        onSelect: function () {
+            var did = $("#DID").combobox("getValue");
+
+        }
+    });
+}
+
+
+
 function loadInfo() {
     if (sparepartid > 0) {
-        $.post("/SparePartManage/SparePartInfoDetail", { "sparepartid": sparepartid }, function (data) {
-            var row = eval("(" + data + ")");
-            var sid = row.SparePartID;
-            $("#SparePartID").val(sid);
-            $("#SparePartCode").val(row.SparePartCode);
-            $("#SparePartName").val(row.SparePartName);
-            $("#StockCount").val(row.StockCount);
-            $("#SupplierID").combobox('setValue', row.SupplierID);
-
-            $("#EadoCode").val(row.EadoCode);
-            if(row.Remarks != null)
-                $("#Remarks").val(row.Remarks.replace(/<br\s*\>/g,"\n"));
-            else
-                $("#Remarks").val(row.Remarks);
+        $.post("/Home/GetElementModel", { "id": sparepartid }, function (data) {
+            $("#ID").val(sparepartid)
+            $("#DeviceCode").val(data.DeviceCode);
+            $("#SparePartCode").val(data.SparePartCode);
+            $("#DeviceName").val(data.DeviceName);
+            $("#DeviceModel").val(data.DeviceModel);
+            $("#DID").combobox('setValue', data.DID);
+            $("#PID").combobox('setValue', data.PID);
+            $("#Manufactor").val(data.Manufactor);
 
         });
     }
 }
-        
+
 $(function () {
-    loadSupplierInfo();
+    loadPID()
+    loadDevice()
     loadInfo();
 });
 
 function loadSupplierInfo() {
-    $("#SupplierID").combobox({
+    $("#DID").combobox({
         url: "/SupplierManage/BindSupplierInfo",
-        valueField: 'SupplierID',
+        valueField: 'DID',
         textField: 'SupplierName',
-        onLoadSuccess:function(data){
-            if(sparepartid=="undefined" || sparepartid==undefined)
-                $('#SupplierID').combobox('setValue',data[0].SupplierID)
+        onLoadSuccess: function (data) {
+            if (sparepartid == "undefined" || sparepartid == undefined)
+                $('#DID').combobox('setValue', data[0].DID)
         }
     });
 }
 
 function save() {
-    if ($("#SparePartCode").val() == "" || $("#SparePartName").val() == "" ) {
+    if ($("#DeviceCode").val() == "" || $("#DeviceName").val() == "" || $("#DeviceModel").val() == "" || $("#Manufactor").val() == "") {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }
+    var ID = $("#ID").val()
     var postData = {
-        SparePartID: $("#SparePartID").val(),
-        SparePartCode: $("#SparePartCode").val(),
-        SparePartName: $("#SparePartName").val(),
-        StockCount: $("#StockCount").val(),
-        SupplierID: $("#SupplierID").combobox('getValue'),
-
-        EadoCode: $("#EadoCode").val(),         
-        Remarks: $("#Remarks").val()
+        DeviceCode: $("#DeviceCode").val(),
+        DeviceName: $("#DeviceName").val(),
+        DeviceModel: $("#DeviceModel").val(),
+        DID: $("#DID").combobox('getValue'),
+        Manufactor: $("#Manufactor").val(),
+        PID: $("#PID").combobox('getValue')
     };
-    $.post("/SparePartManage/SaveSparePartInfo", postData, function (data) {
-        if (data == "ok1") {
-            $.messager.alert("提示", "备件信息编辑成功！", "info");
-            $("#SparePartID").val("");
-            $("#list_data").datagrid("reload");
-            $("#editwin").dialog("close");
-            $('#list_data').datagrid('uncheckAll');
-        }else if (data == "ok2") {
-            $.messager.alert("提示", "备件信息新增成功！", "info");
-            $("#SparePartID").val("");
-            $("#list_data").datagrid("reload");
-            $("#editwin").dialog("close");
-            $('#list_data').datagrid('uncheckAll');
-        }
+    if (ID) {
+        postData.ID = ID
+    }
+    $.post("/Home/AddOrUpdateElement", postData, function (data) {
+        
+        if (data == "ok") {
+            if (ID) {
+                $.messager.alert("提示", "信息编辑成功！", "info");
+                $("#DeviceCode").val("");
+                $("#list_data").datagrid("reload");
+                $("#editwin").dialog("close");
+                $('#list_data').datagrid('uncheckAll');
+            } else {
+                $.messager.alert("提示", "信息新增成功！", "info");
+                $("#DeviceCode").val("");
+                $("#list_data").datagrid("reload");
+                $("#editwin").dialog("close");
+                $('#list_data').datagrid('uncheckAll');
+            }
+            
+        } 
         else
             alert(data);
     });
