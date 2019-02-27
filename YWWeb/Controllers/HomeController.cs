@@ -5252,7 +5252,7 @@ namespace YWWeb.Controllers
         #endregion
 
         #region 元器件
-        public JsonResult GetElementList(string name,int pid, int page=1, int rows=10)
+        public JsonResult GetElementList(string name,int pid=0, int page=1, int rows=10)
         {
             IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name,pid, page, rows);
             return Json(list, JsonRequestBehavior.AllowGet);
