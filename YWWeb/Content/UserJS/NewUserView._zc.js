@@ -1,4 +1,5 @@
-﻿new Vue({
+﻿
+new Vue({
     el: '#userView',
     data: {
         loading: true,
@@ -273,7 +274,7 @@
                             that.createElecUsageChart(res.data)
                     }
                 })
-                .catch(function (res) {
+                .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
         },
@@ -298,7 +299,7 @@
                         that.createElecUsageChart(res.data)
                     }
                 })
-                .catch(function (res) {
+                .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
         },
