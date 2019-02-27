@@ -37,7 +37,7 @@ namespace DAO
             return ExecuteSqlCommand(sql);
         }
 
-        public IList<t_DM_ElementDevice> GetElementList(string name,int page,int rows)
+        public IList<t_DM_ElementDevice> GetElementList(string name,int pid,int page,int rows)
         {
             string sql = $@"select top {rows} a.*,b.DeviceName DName,c.Name PName from (select ROW_NUMBER () OVER (ORDER BY ID) RowNumber,* from t_DM_ElementDevice) a 
 
@@ -46,6 +46,8 @@ join t_DM_DeviceInfo b on a.DID=b.DID join	t_CM_PDRInfo c on a.PID=c.PID
 where a.RowNumber>{(page - 1) * rows}";
             if (!string.IsNullOrEmpty(name))
                 sql += " and a.DeviceName like '%" + name + "%'";
+            if (pid != 0)
+                sql += $" and a.PID ={pid}";
             return SQLQuery<t_DM_ElementDevice>(sql);
         }
 

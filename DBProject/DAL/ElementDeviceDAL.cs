@@ -28,12 +28,12 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_DM_ElementDevice> GetElementList(string name, int page, int rows)
+        public IList<t_DM_ElementDevice> GetElementList(string name,int pid, int page, int rows)
         {
             IList<t_DM_ElementDevice> data = new List<t_DM_ElementDevice>();
             try
             {
-                data = _dbFactory.elementDevice.GetElementList(name, page, rows);
+                data = _dbFactory.elementDevice.GetElementList(name, pid, page, rows);
             }
             catch (Exception ex)
             {
