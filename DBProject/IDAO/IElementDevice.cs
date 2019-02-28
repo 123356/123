@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface IElementDevice:IDAOBase,IDisposable
     {
-        IList<t_DM_ElementDevice> GetElementList(string name,int pid,int page,int rows);
+        IList<t_DM_ElementDevice> GetElementList(string name, int pid, int did, int page, int rows);
         int Add(t_DM_ElementDevice model);
         int Update(t_DM_ElementDevice model);
         int Delete(string id);
