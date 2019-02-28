@@ -47,55 +47,57 @@ namespace EnergyManage.Controllers
 
                 foreach (var item_userP in list_userP)
                 {
-                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
-                    string cids = "";
-                    foreach (var item_cir in list_cir)
+                    if (!string.IsNullOrEmpty(item_userP.addCid.Trim()))
                     {
-                        cids += item_cir.CID + ",";
-                    }
-                    if (cids != "")
-                        cids = cids.Substring(0, cids.Length - 1);
-                    else
-                        cids = "0";
-                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                    rate = list_data.Sum(p => p.Rate);
+                        IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
+                        string cids = "";
+                        foreach (var item_cir in list_cir)
+                        {
+                            cids += item_cir.CID + ",";
+                        }
+                        if (cids != "")
+                            cids = cids.Substring(0, cids.Length - 1);
+                        else
+                            cids = "0";
+                        IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
+                        rate = list_data.Sum(p => p.Rate);
 
-                    string lastTime = Convert.ToDateTime(time).AddYears(-1).ToString();
-                    IList<t_V_EneryView> list_data_last = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, lastTime);
-                    lasRate = list_data_last.Sum(p => p.Rate);
-                    lasrRate += lasRate;
-                    energyConsumption = list_data.Sum(p => p.Value);
-                    zongRate += rate;
-                    var group_list = list_data.GroupBy(p => p.Name);
-                    foreach (var item_group in group_list)
-                    {
-                        overView group_i = new overView();
-                        group_i.name = item_group.Key;
-                        group_i.value = item_group.Sum(p => p.Rate);
-                        view.keyValuePairs.Add(group_i);
-                    }
-                    var group_list_time = list_data.GroupBy(p => p.RecordTime);
-                    foreach (var item_group in group_list_time)
-                    {
-                        overView group_i = new overView();
-                        group_i.name = item_group.Key.ToString();
-                        group_i.value = item_group.Sum(p => p.Rate);
-                        view.keyValuePairs_Time.Add(group_i);
-                    }
+                        string lastTime = Convert.ToDateTime(time).AddYears(-1).ToString();
+                        IList<t_V_EneryView> list_data_last = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, lastTime);
+                        lasRate = list_data_last.Sum(p => p.Rate);
+                        lasrRate += lasRate;
+                        energyConsumption = list_data.Sum(p => p.Value);
+                        zongRate += rate;
+                        var group_list = list_data.GroupBy(p => p.Name);
+                        foreach (var item_group in group_list)
+                        {
+                            overView group_i = new overView();
+                            group_i.name = item_group.Key;
+                            group_i.value = item_group.Sum(p => p.Rate);
+                            view.keyValuePairs.Add(group_i);
+                        }
+                        var group_list_time = list_data.GroupBy(p => p.RecordTime);
+                        foreach (var item_group in group_list_time)
+                        {
+                            overView group_i = new overView();
+                            group_i.name = item_group.Key.ToString();
+                            group_i.value = item_group.Sum(p => p.Rate);
+                            view.keyValuePairs_Time.Add(group_i);
+                        }
 
-                    mianji += item_userP.unit_area;
-                    peos += item_userP.unit_people;
+                        mianji += item_userP.unit_area;
+                        peos += item_userP.unit_people;
 
+                    }
+                    view.rate = rate;
+                    view.energyConsumption = energyConsumption;
+                    list.Add(view);
+
+                    overView oview = new overView();
+                    oview.name = item_peizhi.Name;
+                    oview.value = rate;
+                    left_view.Add(oview);
                 }
-                view.rate = rate;
-                view.energyConsumption = energyConsumption;
-                list.Add(view);
-
-                overView oview = new overView();
-                oview.name = item_peizhi.Name;
-                oview.value = rate;
-                left_view.Add(oview);
-
             }
             decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
             decimal zduibi = 0;
