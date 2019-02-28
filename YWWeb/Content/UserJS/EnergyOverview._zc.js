@@ -120,7 +120,7 @@
             this.$http({
                 url: '/energyManage/EMHome/AddConfig',
                 method: 'post',
-                params: {
+                body: {
                     CollTypeID: this.addForm.CollTypeID,
                     EnerUserTypeID: this.addForm.EnerUserTypeID,
                     UID: this.uid,
