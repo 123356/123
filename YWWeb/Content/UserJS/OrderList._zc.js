@@ -297,3 +297,11 @@ function clearForm() {
     $(".easyui-datebox").datebox('setValue', "");
     $('.easyui-combobox').combobox('setValue', "");
 }
+
+$(document).ready(function() {
+    $("#PDRName").combobox({
+        onChange: function() {
+            window.dosearch();
+        }
+    })
+});
