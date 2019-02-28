@@ -10,26 +10,32 @@ function loadPID() {
             if (sparepartid == 0) {
                 if (data.length > 0) {
                     $("#PID").combobox('select', data[0].PID);
+                   // loadDevice(data[0].PID)
                 }
             } 
         },
         onSelect: function () {
             var pid = $("#PID").combobox("getValue")
-            
+            loadDevice(pid,0)
 
         }
     });
 }
 //设备下拉框
-function loadDevice() {
+function loadDevice(pid,type) {
     $("#DID").combobox({
-        url: "/energyManage/EMHome/GetDeviceCombox",
+        url: "/Home/StationDeviceTreeJson?pid=" + pid,
         valueField: 'DID',
         textField: 'DeviceName',
         onLoadSuccess: function () {
             var data = $('#DID').combobox('getData');
             if (sparepartid == 0) {
                 if (data.length > 0) {
+
+                    $("#DID").combobox('select', data[0].DID);
+                }
+            } else {
+                if (type == 0) {
                     $("#DID").combobox('select', data[0].DID);
                 }
             }
@@ -46,14 +52,18 @@ function loadDevice() {
 
 function loadInfo() {
     if (sparepartid > 0) {
+       // 
         $.post("/Home/GetElementModel", { "id": sparepartid }, function (data) {
+            loadDevice(data.PID,1)
             $("#ID").val(sparepartid)
             $("#DeviceCode").val(data.DeviceCode);
             $("#SparePartCode").val(data.SparePartCode);
             $("#DeviceName").val(data.DeviceName);
             $("#DeviceModel").val(data.DeviceModel);
-            $("#DID").combobox('setValue', data.DID);
+            
             $("#PID").combobox('setValue', data.PID);
+            $("#DID").combobox('setValue', data.DID);
+            
             $("#Manufactor").val(data.Manufactor);
 
         });
@@ -62,7 +72,7 @@ function loadInfo() {
 
 $(function () {
     loadPID()
-    loadDevice()
+   // loadDevice()
     loadInfo();
 });
 

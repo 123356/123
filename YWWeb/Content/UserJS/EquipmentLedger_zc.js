@@ -1,5 +1,8 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：运维 > 台账 > 设备台账 ");
 pid = $.cookie("cookiepid")
+if (pid == null) {
+    pid = $.cookie("noPid")
+}
 var did = null
 //测点类型列表
 function getBindValueType() {
@@ -32,6 +35,7 @@ function getTreeData(par) {
             if (data.length > 0) {
                 did = data[0].DID
                 loadDeviceInfo();
+                loadSparePartData()
             }
             for (var i = 0; i < par.length; i++) {
                 var temp = {
@@ -167,7 +171,7 @@ function lookDetail(bugid) {
 BuildLeftMenu();
 
 
-loadSparePartData()
+
 function callAway(tpid, tdid) {
     //did = tdid;
 
@@ -277,7 +281,7 @@ function loadSparePartData() {
             { field: 'Manufactor', title: '厂家', width: '20%' },
             { field: 'DName', title: '柜设备', width: '20%' },
             { field: 'PName', title: '站名称', width: '20%' },]],
-        queryParams: { "name": '',"pid":pid },
+        queryParams: { "name": '', "pid": pid, "did": did },
         rownumbers: true,
         pageSize: 15,
         pageList: [10, 15, 20, 30, 50],
@@ -432,3 +436,4 @@ $.post("/Home/GetCurrentNav", { "pid": pid }, function (data) {
     $("#currPosition", window.parent.document).html(currnav[0]);
     //$.cookie('eadonav', currnav[0], { expires: 7, path: '/' });
 });
+

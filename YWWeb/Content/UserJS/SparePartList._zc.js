@@ -5,7 +5,7 @@ $('#list_data').datagrid({
 })
 $('#list_data').datagrid({
     url: '/Home/GetElementList',
-    queryParams: { "name": '',"pid":pid },
+    queryParams: { "name": $("#sparepartname").val()},
     rownumbers: true,
     pageSize: 15,
     pageList: [10, 15, 20, 30, 50],

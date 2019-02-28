@@ -28,17 +28,18 @@
         </tr>
         <tr>
             <td class="d_l_t">
-                柜设备：
-            </td>
-            <td class="d_l_d">
-                <select id="DID" style="width: 260px;" name="DID"></select>
-            </td>
-            <td class="d_l_t">
                 站名称：
             </td>
             <td class="d_l_d">
                 <select id="PID" name="PID" class="easyui-combobox" style="width: 260px;"></select>
             </td>
+            <td class="d_l_t">
+                柜设备：
+            </td>
+            <td class="d_l_d">
+                <select id="DID" style="width: 260px;" name="DID"></select>
+            </td>
+
         </tr>
         <tr>
             <td class="d_l_t">
@@ -66,6 +67,6 @@
     <script type="text/javascript">
         var sparepartid=@Html.Raw(Request.QueryString["sparepartid"]);
     </script>
-    <script src="~/Content/UserJS/SparePartEdits._jm.js?v=1.09"></script>
+    <script src="~/Content/UserJS/SparePartEdits._jm.js?v=1.15"></script>
 </body>
 </html>
