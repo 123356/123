@@ -171,7 +171,6 @@ namespace YWWeb
             timer.AutoReset = true;
             timer.Enabled = true;
             timer.Interval = 3600000;
-            timer.Interval = 3600000;
             Console.Read();
         }
         public void InsertWeatherInfo(object sender, System.Timers.ElapsedEventArgs e)
