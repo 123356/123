@@ -157,10 +157,6 @@ $('#list_data').datagrid({
     url: 'empty.json'
 });
 function export1() {
-
-   
-
-
     dname = $("#selDID").combobox('getText');
      cname = $("#cname").val();
      pid = $("#SPID").combobox('getValue');
@@ -192,3 +188,13 @@ function export1() {
         }
     );
 }
+
+
+
+$(document).ready(function() {
+    $("#SPID").combobox({
+        onChange: function() {
+            window.dosearch();
+        }
+    })
+});
