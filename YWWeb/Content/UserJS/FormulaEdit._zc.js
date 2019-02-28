@@ -1,5 +1,4 @@
-﻿
-$(function () {
+﻿$(function() {
     $("#currPosition", window.top.document).html("当前位置：电力交易 > 公式编辑 ");
 
     loadSelectPDF(0);
@@ -18,12 +17,13 @@ function loadSelectPDF(pid, arr, arr1) {
             textField: 'Name',
             editable: true,
             width: 200,
-            onLoadSuccess: function () { //数据加载完毕事件
+            onLoadSuccess: function() { //数据加载完毕事件
                 var data = $('#pdf').combobox('getData');
                 if (data.length > 0) {
                     $("#pdf").combobox('select', pid);
                 }
-            }, onChange: function () {
+            },
+            onChange: function() {
                 loadSelectGsId($("#pdf").combobox('getValue'), arr, arr1);
             }
         });
@@ -33,13 +33,14 @@ function loadSelectPDF(pid, arr, arr1) {
             valueField: 'PID',
             textField: 'Name',
             editable: true,
-            onLoadSuccess: function () { //数据加载完毕事件
+            onLoadSuccess: function() { //数据加载完毕事件
                 var data = $('#pdfselect').combobox('getData');
                 if (data.length > 0) {
                     $("#pdfselect").combobox('select', data[0].PID);
                     Getis();
                 }
-            }, onChange: function (n, o) {
+            },
+            onChange: function(n, o) {
                 dosearch();
                 Getis();
             }
@@ -55,7 +56,7 @@ function loadSelectGs() {
         textField: 'cid_type_name',
         editable: true,
         width: 200,
-        onLoadSuccess: function () { //数据加载完毕事件
+        onLoadSuccess: function() { //数据加载完毕事件
             var data = $('#Name').combobox('getData');
             if (data.length > 0) {
                 $("#Name").combobox('select', data[0].PID);
@@ -63,22 +64,26 @@ function loadSelectGs() {
         }
     });
 }
+
 function loadSelectGsId(pid, arr, arr1) {
     $("#jiashu").combobox({
-        url: '/Es/CIDComboData?pid=' + pid, onlyLeafCheck: true, method: 'get', multiple: 'true',
+        url: '/Es/CIDComboData?pid=' + pid,
+        onlyLeafCheck: true,
+        method: 'get',
+        multiple: 'true',
         valueField: 'CID',
         textField: 'CName',
         editable: true,
         width: 600,
-        formatter: function (row) {
+        formatter: function(row) {
             var opts = $(this).combobox('options');
             return '<input type="checkbox" class="combobox-checkbox">' + row[opts.textField]
         },
-        onLoadSuccess: function () {
+        onLoadSuccess: function() {
             var opts = $(this).combobox('options');
             var target = this;
             var values = $(target).combobox('getValues');
-            $.map(values, function (value) {
+            $.map(values, function(value) {
                 var el = opts.finder.getEl(target, value);
                 el.find('input.combobox-checkbox')._propAttr('checked', true);
             })
@@ -87,38 +92,41 @@ function loadSelectGsId(pid, arr, arr1) {
                 var opts = $(this).combobox('options');
                 var target = this;
                 var values = $(target).combobox('getValues');
-                $.map(values, function (value) {
+                $.map(values, function(value) {
                     var el = opts.finder.getEl(target, value);
                     el.find('input.combobox-checkbox')._propAttr('checked', true);
                 })
             }
         },
-        onSelect: function (row) {
+        onSelect: function(row) {
             var opts = $(this).combobox('options');
             var el = opts.finder.getEl(this, row[opts.valueField]);
             el.find('input.combobox-checkbox')._propAttr('checked', true);
         },
-        onUnselect: function (row) {
+        onUnselect: function(row) {
             var opts = $(this).combobox('options');
             var el = opts.finder.getEl(this, row[opts.valueField]);
             el.find('input.combobox-checkbox')._propAttr('checked', false);
         }
     });
     $("#jianshu").combobox({
-        url: '/Es/CIDComboData?pid=' + pid, onlyLeafCheck: true, method: 'get', multiple: 'true',
+        url: '/Es/CIDComboData?pid=' + pid,
+        onlyLeafCheck: true,
+        method: 'get',
+        multiple: 'true',
         valueField: 'CID',
         textField: 'CName',
         editable: true,
         width: 600,
-        formatter: function (row) {
+        formatter: function(row) {
             var opts = $(this).combobox('options');
             return '<input type="checkbox" class="combobox-checkbox">' + row[opts.textField]
         },
-        onLoadSuccess: function () {
+        onLoadSuccess: function() {
             var opts = $(this).combobox('options');
             var target = this;
             var values = $(target).combobox('getValues');
-            $.map(values, function (value) {
+            $.map(values, function(value) {
                 var el = opts.finder.getEl(target, value);
                 el.find('input.combobox-checkbox')._propAttr('checked', true);
             })
@@ -127,19 +135,19 @@ function loadSelectGsId(pid, arr, arr1) {
                 var opts = $(this).combobox('options');
                 var target = this;
                 var values = $(target).combobox('getValues');
-                $.map(values, function (value) {
+                $.map(values, function(value) {
                     var el = opts.finder.getEl(target, value);
                     el.find('input.combobox-checkbox')._propAttr('checked', true);
                 })
             }
 
         },
-        onSelect: function (row) {
+        onSelect: function(row) {
             var opts = $(this).combobox('options');
             var el = opts.finder.getEl(this, row[opts.valueField]);
             el.find('input.combobox-checkbox')._propAttr('checked', true);
         },
-        onUnselect: function (row) {
+        onUnselect: function(row) {
             var opts = $(this).combobox('options');
             var el = opts.finder.getEl(this, row[opts.valueField]);
             el.find('input.combobox-checkbox')._propAttr('checked', false);
@@ -158,6 +166,7 @@ function dosearch() {
     });
     $('#list_data').datagrid('uncheckAll');
 }
+
 function add() {
     clearForm();
     $("#editwin").dialog({
@@ -168,12 +177,13 @@ function add() {
         maximizable: false, //最大化，默认false
         collapsible: false, //可折叠，默认false
         draggable: true, //可拖动，默认false
-        resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+        resizable: false //可缩放，即可以通脱拖拉改变大小，默认false
     });
     //添加时默认选择客户
     var pid = $("#pdfselect").combobox("getValue");
     loadSelectPDF(pid, "", "")
 }
+
 function edit() {
     var ids = [];
     var rows = $('#list_data').datagrid('getSelections');
@@ -183,8 +193,7 @@ function edit() {
     if (ids.length > 1) {
         $.messager.alert("提示", "编辑时只能选择一行数据！", "info");
         $('#list_data').datagrid('uncheckAll');
-    }
-    else {
+    } else {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
             console.log(row);
@@ -202,21 +211,20 @@ function edit() {
                 maximizable: false, //最大化，默认false
                 collapsible: false, //可折叠，默认false
                 draggable: true, //可拖动，默认false
-                resizable: false//可缩放，即可以通脱拖拉改变大小，默认false
+                resizable: false //可缩放，即可以通脱拖拉改变大小，默认false
             });
             $('#list_data').datagrid('uncheckAll');
-        }
-        else {
+        } else {
             $.messager.alert("提示", "请选择要编辑的行！", "info");
         }
     }
 }
+
 function save() {
     if ($("#Name").combobox("getValue") == "") {
         $.messager.alert("提示", "请选择公式名称！", "info");
         return false;
-    }
-    else if ($("#jiashu").combobox("getValues").length == 0) {
+    } else if ($("#jiashu").combobox("getValues").length == 0) {
         $.messager.alert("提示", "请选择加数！", "info");
         return false;
     }
@@ -233,37 +241,35 @@ function save() {
         id: $("#id").val(),
         //isUpload:openMsg
     };
-   // console.log(postData);
-    $.post("/ES/SaveGs", postData, function (data) {
+    // console.log(postData);
+    $.post("/ES/SaveGs", postData, function(data) {
         if (data == "OK") {
             $.messager.alert("提示", "操作成功！", "info");
             $("#editwin").dialog("close");
             $("#list_data").datagrid("reload");
             $('#list_data').datagrid('uncheckAll');
-        }
-        else
+        } else
             alert(data);
     });
 }
+
 function Delete() {
     var rows = $('#list_data').datagrid('getSelections');
     if (rows.length < 1) {
         $.messager.alert("提示", "请选择要删除的行！", "info");
-    }
-    else {
-        $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+    } else {
+        $.messager.confirm('提示', '你确定要删除选中的行？', function(r) {
             if (r) {
                 var ids = [];
                 for (var i = 0; i < rows.length; i++) {
                     ids.push(rows[i].id);
                 }
-                $.post("/ES/DeleteGs?Rnum=" + Math.random(), { "id": ids.join(',') }, function (data) {
+                $.post("/ES/DeleteGs?Rnum=" + Math.random(), { "id": ids.join(',') }, function(data) {
                     if (data == "OK") {
                         $.messager.alert("提示", "操作成功", "info");
                         $("#list_data").datagrid("reload");
                         $('#list_data').datagrid('uncheckAll');
-                    }
-                    else {
+                    } else {
                         $.messager.alert("提示", data, "info");
                     }
                 });
@@ -274,7 +280,7 @@ function Delete() {
 
 
 function clearForm() {
-    $(':input', editwin).each(function () {
+    $(':input', editwin).each(function() {
         var type = this.type;
         var tag = this.tagName.toLowerCase();
         if (type == 'text' || type == 'password' || tag == 'textarea' || type == 'hidden') {
@@ -284,15 +290,15 @@ function clearForm() {
 }
 
 function IsSave() {
-    $.messager.confirm('提示', '你确定要修改？', function (r) {
+    $.messager.confirm('提示', '你确定要修改？', function(r) {
         if (r) {
             var openMsg = 0;
             if ($('#cbkJiSuan').is(':checked'))
                 openMsg = 1;
             var pids = $("#pdfselect").combobox("getValue");
-            $.post("/ES/SaveisJisuan?Rnum=" + Math.random(), { "pid": pids, "isUpload": openMsg }, function (data) {
+            $.post("/ES/SaveisJisuan?Rnum=" + Math.random(), { "pid": pids, "isUpload": openMsg }, function(data) {
                 //if (data == "OK") {
-                    $.messager.alert("提示", data, "info");
+                $.messager.alert("提示", data, "info");
                 //else {
                 //    $.messager.alert("提示", data, "info");
                 //}
@@ -305,16 +311,24 @@ function IsSave() {
         }
     })
 }
+
 function Getis() {
-  
-            var pids = $("#pdfselect").combobox("getValue");
-            $.post("/ES/GetJisuan?Rnum=" + Math.random(), { "pid": pids }, function (data) {
-                if(data=="1"){
-                    $('#cbkJiSuan').prop("checked",true)
-                }else{
-                    $('#cbkJiSuan').prop("checked",false);
-                }
-            });
-        
-   
+
+    var pids = $("#pdfselect").combobox("getValue");
+    $.post("/ES/GetJisuan?Rnum=" + Math.random(), { "pid": pids }, function(data) {
+        if (data == "1") {
+            $('#cbkJiSuan').prop("checked", true)
+        } else {
+            $('#cbkJiSuan').prop("checked", false);
+        }
+    });
 }
+
+
+$(document).ready(function() {
+    $("#pdf").combobox({
+        onChange: function() {
+            window.dosearch();
+        }
+    })
+});
