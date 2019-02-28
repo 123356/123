@@ -14,7 +14,7 @@
 <body>
     <div id="userView">
         <Spin size="large" fix v-if="loading"></Spin>
-        <i-select class="userSelect" v-model="UnitID" v-on:on-change="selectChange">
+        <i-select class="userSelect" v-model="UnitID" v-on:on-change="selectChange" filterable>
             <i-option v-for="item in unitList" :value="item.UnitID" v-html="item.UnitName"></i-option>
         </i-select>
         <div class="container">
