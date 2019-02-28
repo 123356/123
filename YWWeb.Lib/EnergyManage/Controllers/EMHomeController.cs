@@ -252,8 +252,11 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(cidss))
                 {
                     cidss = cidss.Substring(0, cidss.Length - 1);
-                    list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
-                    zv = list_data_z.Sum(p => p.Rate);
+                    if (!string.IsNullOrEmpty(cidss.Trim()))
+                    {
+                        list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
+                        zv = list_data_z.Sum(p => p.Rate);
+                    }
                     TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
                     foreach (var item_p in list_userP)
                     {
@@ -268,7 +271,7 @@ namespace EnergyManage.Controllers
                         t.value.Add("Name", keshiNmae);
                         foreach (var item in TitleList)
                         {
-                            if (!string.IsNullOrEmpty(item_p.addCid))
+                            if (!string.IsNullOrEmpty(item_p.addCid.Trim()))
                             {
                                 IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_p.addCid, item.Type);
                                 string cids = "";
@@ -645,18 +648,21 @@ namespace EnergyManage.Controllers
                 IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.EnerUserTypeID);
                 foreach (var item_userP in list_userP)
                 {
-                    IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
-                    string cids = "";
-                    foreach (var item_cir in list_cir)
+                    if (!string.IsNullOrEmpty(item_userP.addCid.Trim()))
                     {
-                        cids += item_cir.CID + ",";
+                        IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(item_userP.addCid, item_peizhi.CollTypeID);
+                        string cids = "";
+                        foreach (var item_cir in list_cir)
+                        {
+                            cids += item_cir.CID + ",";
+                        }
+                        if (cids != "")
+                            cids = cids.Substring(0, cids.Length - 1);
+                        else
+                            cids = "0";
+                        IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
+                        rate += list_data.Sum(p => p.Rate);
                     }
-                    if (cids != "")
-                        cids = cids.Substring(0, cids.Length - 1);
-                    else
-                        cids = "0";
-                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                    rate += list_data.Sum(p => p.Rate);
                 }
                 overView group_i = new overView();
                 group_i.name = item_peizhi.Name;
