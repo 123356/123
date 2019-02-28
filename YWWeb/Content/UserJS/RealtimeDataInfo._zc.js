@@ -4,7 +4,7 @@
         pageNumMax: 0,
         pageSize: 0,
         pageNum: 1,
-        PID: 12,
+        PID: $.cookie('cookiepid'),
         DID: 0,
         CID: 0,
         DTID: 0,
@@ -23,7 +23,7 @@
             title: '类别',
             key: 'DeviceTypeName',
             align: 'center',
-            height: '40px'
+            height: '40px',
         }, {
             title: '设备名称',
             key: 'DeviceName',
@@ -40,7 +40,7 @@
         }, {
             title: '测值',
             key: 'PV',
-            align: 'center'
+            align: 'center',
         }, {
             title: '单位',
             key: 'Units',
@@ -48,9 +48,65 @@
         }, {
             title: '采集时间',
             key: 'RecTime',
-            align: 'center'
+            align: 'center',
         }],
-        data: []
+        data: [],
+    },
+    watch: {
+        newPV: {
+            handler: function(val, oldVal) {
+                var that = this;
+                if (oldVal.length == 0 || !oldVal[0]) {
+                    return
+                }
+                for (let i = 0; i < val.length; i++) {
+                    if (oldVal[i] != val[i]) {
+                        this.data[i].cellClassName.PV = 'activat';
+                        setTimeout(function() {
+                            that.data[i].cellClassName.PV = '';
+                        }, 700)
+
+                    }
+                }
+            },
+            deep: true,
+        },
+        newRecTime: {
+            handler: function(val, oldVal) {
+                var that = this;
+                if (oldVal.length == 0 || !oldVal[0]) {
+                    return
+                }
+                for (let i = 0; i < val.length; i++) {
+                    if (oldVal[i] != val[i]) {
+                        this.data[i].cellClassName.RecTime = "activat";
+                        setTimeout(function() {
+                            that.data[i].cellClassName.RecTime = "";
+                        }, 700)
+
+                    }
+                }
+            },
+            deep: true,
+        }
+    },
+    computed: {　　
+        newPV: function() {　　　　
+            for (var a = 0, arr = []; a < this.data.length; a++) {
+                if (this.data[a]) {
+                    arr.push(this.data[a].PV);
+                }
+            }
+            return arr;
+        },
+        newRecTime: function() {　　　　
+            for (var a = 0, arr = []; a < this.data.length; a++) {
+                if (this.data[a]) {
+                    arr.push(this.data[a].RecTime);
+                }
+            }
+            return arr;
+        },
     },
     methods: {
         changePage: function(e) {
@@ -60,7 +116,6 @@
         tab: function() {
             var that = this;
             that.loading = true;
-            // that.pageNum = 1;
             this.$http({
                 url: '/DataInfo/GetTaskJson',
                 method: 'Post',
@@ -77,11 +132,11 @@
                     arr.push(res.data.aaData[i].TagID);
                     res.data.aaData[i].PV = '';
                     res.data.aaData[i].RecTime = '';
+                    res.data.aaData[i].cellClassName = { PV: '', RecTime: '' }
                 }
                 that.data = res.data.aaData;
                 that.loading = false;
                 that.pageNumMax = res.data.iTotalRecords;
-
                 that.PV(arr.join(','));
             }).catch(function(e) {
                 throw new ReferenceError(e.message);
@@ -114,7 +169,6 @@
                     }
                 }
             }
-            this.$set(this.data, data);
         },
         merge1: function(data, pv) {
             for (var i = 0; i < data.length; i++) {
@@ -125,8 +179,6 @@
                     }
                 }
             }
-            window.data = data;
-            this.$set(this.data, data);
         },
         conversionDate: function(str) {
             var timetamp = new Date(parseInt(str));
@@ -175,7 +227,6 @@
             client.onMessageArrived = function(res) {
                 var payload = JSON.parse(res.payloadString);
                 var data = payload.content;
-                console.log(data)
                 if (!payload.type) {
                     return;
                 }

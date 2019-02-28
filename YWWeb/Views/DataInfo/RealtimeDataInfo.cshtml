@@ -49,7 +49,14 @@
         .ivu-table-row-hover td, .ivu-table-row-highlight td {
             background-color: rgba(91,176,157,.3) !important;
         }
-        
+        .activat {
+            background-color: rgba(91,176,157,.3) !important;
+            color: #000;
+        }
+        .ivu-table-border td .activat {
+            transition: all .7s !important;
+        }
+   
             
     </style>
 
@@ -81,6 +88,7 @@
                 </i-col>
             </i-form>
         </Row>
+
         <i-table border :columns="columns" :data="data" :style="style.tab" :highlight-row="true" :loading="loading" ref="body">
 
         </i-table>
@@ -91,6 +99,8 @@
         </div>
     </div>
 
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Content/js/jquery.cookie.js"></script>
     <script src="~/Content/topo/js/mqtt.js"></script>
     <script src="~/Content/UserJS/RealtimeDataInfo._zc.js"></script>
 </body>
