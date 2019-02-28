@@ -42,13 +42,11 @@
     },
     methods: {
         toAreaTree: function () {
-            console.log("跳转")
             location.href = '/EnergyManage/EMSetting/AreaTree'
         },
         //类型下拉框
         getCollectDevTypeList: function () {
             var that = this
-
             this.$http({
                 url: '/energyManage/EMHome/GetCollectDevTypeList',
                 method: 'get',
@@ -57,22 +55,10 @@
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
-
-
         },
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-
-            //wwn 2019 02 22
-            //this.$http({
-            //    url: '/energyManage/EMSetting/GetHistoryList',
-            //    method: 'get',
-            //}).then(function(res) {
-            //    that.departMentList = res.data
-            //}).catch(function(e) {
-            //    throw new ReferenceError(e.message)
-            //})
             this.$http({
                 url: "/energyManage/EMSetting/GetHistoryList",
                 method: "post",
@@ -81,21 +67,18 @@
                     item_type: 2
                 }
             }).then(function (res) {
-                console.log(res.data);
                 that.departMentList = res.data;
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
         },
-
         //删除能源
         deleteConfig: function (id) {
             var that = this
-
             this.$http({
                 url: '/energyManage/EMHome/DeleteConfig',
                 method: 'post',
-                params: {
+                body: {
                     ID: id
                 }
             })
@@ -110,13 +93,10 @@
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
-
-
         },
         //添加能源
         addConfig: function () {
             var that = this
-
             this.$http({
                 url: '/energyManage/EMHome/AddConfig',
                 method: 'post',
@@ -142,8 +122,6 @@
                     that.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
-
-
         },
         //数据加载
         getEneryOverView: function () {
@@ -155,21 +133,16 @@
                 month = "0" + month
             }
             time = time.getFullYear() + "-" + month
-
-
             this.$http({
                 url: '/energyManage/EMHome/GetEneryOverView',
                 method: 'post',
                 body: {
                     uid: this.uid,
                     time: time
-
                 }
             })
                 .then(function (res) {
                     if (res.data) {
-
-
                         for (var i = 0; i < res.data.list.length; i++) {
                             res.data.list[i].pieChart = "pie" + i
                             res.data.list[i].barChart = "bar" + i
@@ -191,8 +164,6 @@
                         } else {
                             this.left_viewIsShow = false
                         }
-
-
                         var temp = res.data.list
                         if (temp.length > 0) {
                             var timer = setInterval(function () {
@@ -204,25 +175,20 @@
                                         if (temp[i].keyValuePairs_Time.length > 0) {
                                             that.createModuleBarChart(temp[i].barChart, temp[i])
                                         }
-
                                     }
                                     clearInterval(timer)
                                 }
                             }, 100)
                         }
                     }
-                    this.loading = false
                 })
                 .catch(function (e) {
-
                     that.$Message.error('请求失败');
-                    this.loading = false
                     throw new ReferenceError(e.message)
                 })
-
-
-
-
+                .finally(function () {
+                    that.loading = false
+                })
         },
         closeModule: function (id) {
             var that = this
@@ -247,9 +213,7 @@
             var that = this
             this.$refs['addForm'].validate((valid) => {
                 if (valid) {
-                    console.log("success")
                     that.addConfig()
-
                 } else {
                     console.log("error")
                 }
@@ -270,12 +234,9 @@
                 serData = [
                     { value: budget, name: '预算剩余' },
                     { value: (budget - rate), name: '已用费用' },
-
                 ]
                 color = ['#f9b88c', '#58b9a3']
             }
-
-
             var option = {
                 tooltip: {
                     trigger: 'item',
@@ -289,7 +250,6 @@
                     radius: ['85%', '62%'],
                     avoidLabelOverlap: false,
                     hoverAnimation: false,
-
                     label: {
                         normal: {
                             show: true,
@@ -310,7 +270,6 @@
                                     fontSize: 18,
                                 }
                             },
-
                         },
                     },
                     labelLine: {
@@ -350,9 +309,7 @@
                         fontSize: 10
                     },
                     borderRadius: 0
-
                 },
-
                 series: [{
                     name: '费用比例',
                     type: 'pie',
@@ -388,7 +345,6 @@
             });
         },
         createModulePieChart: function (chart, data) {
-            console.log(data)
             for (var i = 0; i < data.keyValuePairs.length; i++) {
                 data.keyValuePairs[i].value = data.keyValuePairs[i].value.toFixed(2)
             }
@@ -422,8 +378,6 @@
                             }
 
                         },
-
-
                     },
                     labelLine: {
                         normal: {
@@ -436,7 +390,6 @@
             chart.setOption(option)
             window.addEventListener("resize", () => {
                 chart.resize();
-
             });
         },
         createModuleBarChart: function (data, data) {
@@ -557,17 +510,9 @@
         datePicekChange: function (e) {
             var time = e.substring(0, 7)
             this.month = time.split("-")[1]
-            console.log(time)
             this.curDate = time
             this.getEneryOverView()
         }
-
-
-
-
-
-
-
     },
     beforeMount: function () {
         var that = this
@@ -589,8 +534,5 @@
         this.getEneryOverView()
     },
     mounted: function () {
-
-
-
     }
 })

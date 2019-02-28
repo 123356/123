@@ -2,12 +2,12 @@
     el: "#app",
     data: {
         uid: null,
-        uName:null,
-        loading:true,
-        departmentID:null,
+        uName: null,
+        loading: true,
+        departmentID: null,
         analysisTableHeight: 0,
         analysisColumns: [],
-        analysisData:[],
+        analysisData: [],
         barChart: null,
         dateType: '1',
         piechart: null,
@@ -16,8 +16,7 @@
         curDate: '',
         pieShow: true,
         barShow: true,
-        loading:true,
-        
+        loading: true,
     },
     methods: {
         //获取能源类型
@@ -30,7 +29,7 @@
                 that.typeList = res.data
                 if (res.data.length > 0) {
                     that.curType = res.data[0].ID
-                   that.getBarData()
+                    that.getBarData()
                 }
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -62,13 +61,13 @@
                         that.pieShow = true
                         that.createPieChart(res.data)
                     } else {
-                        that.pieShow =false
+                        that.pieShow = false
                     }
-                
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         //表格数据
         getTableData: function () {
@@ -80,7 +79,7 @@
                     uid: that.uid,
                     DepartmentID: that.departmentID,
                     time: that.curDate,
-                    
+
                 }
             })
                 .then(function (res) {
@@ -94,11 +93,11 @@
                     ]
                     for (var i = 0; i < data.TitleList.length; i++) {
                         var dw = 'kW·h'
-                        if (data.TitleList[i].Type !=1) {
+                        if (data.TitleList[i].Type != 1) {
                             dw = 'm³'
                         }
                         var temp = {
-                            title: data.TitleList[i].Name+'('+dw+')',
+                            title: data.TitleList[i].Name + '(' + dw + ')',
                             align: 'center',
                             key: data.TitleList[i].Type
                         }
@@ -143,12 +142,14 @@
                         tempTable.push(data.table[i].value)
                     }
                     that.analysisData = tempTable
-                    that.loading = false
+
                 })
                 .catch(function (e) {
-                    
-                    that.loading = false
+
                     throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
                 })
         },
         //柱状图数据
@@ -179,10 +180,10 @@
                         that.barShow = false
                     }
                     console.log(that.barShow)
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         dateChange: function (e) {
             this.curDate = e
@@ -205,16 +206,16 @@
             var yName = 'kW·h';
             if (this.curType != '1') {
                 yName = 'm³';
-            } 
+            }
             var serData1 = new Array()
             for (var i = 0; i < data.list_r.list_this.length; i++) {
                 serData1.push(data.list_r.list_this[i].value)
-                
+
             }
             var serDataLast = new Array()
             for (var i = 0; i < data.list_r.list_last.length; i++) {
                 serDataLast.push(data.list_r.list_last[i].value)
-               
+
             }
             var option = {
                 tooltip: {
@@ -237,8 +238,8 @@
                         saveAsImage: { show: true },
                     },
                     itemSize: 10,
-                    itemGap:1
-                    
+                    itemGap: 1
+
                 },
                 legend: {
                     data: legendData,
@@ -253,7 +254,7 @@
                     bottom: '5%',
                     left: 30,
                     right: 20,
-                    top:'17%'
+                    top: '17%'
                 },
                 xAxis: [
                     {
@@ -285,8 +286,8 @@
                         type: 'value',
                         name: yName,
                         min: 0,
-                       
-                      
+
+
                         axisLabel: {
                             formatter: '{value}'
                         },
@@ -318,7 +319,7 @@
                         min: 0,
                         max: 25,
                         interval: 5,
-                        show:false,
+                        show: false,
                         axisLabel: {
                             formatter: '{value} °C'
                         },
@@ -350,16 +351,16 @@
                         type: 'bar',
                         color: "#53bda9",
                         data: serData1,
-                        
+
                     },
                     {
                         name: '昨日',
                         type: 'bar',
                         color: "#80c5e2",
                         data: serDataLast,
-                       
+
                     },
-                   
+
                 ],
                 dataZoom: [
                     {
@@ -372,7 +373,7 @@
             window.addEventListener("resize", () => {
                 barChart.resize()
             });
-            
+
         },
         createPieChart: function (data) {
             piechart = echarts.init(document.getElementById('piechart'));
@@ -380,15 +381,15 @@
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
             }
-            
+
             var option = {
                 title: {
-                    text: '分项用'+str,
-                    subtext:'预算：10万',
+                    text: '分项用' + str,
+                    subtext: '预算：10万',
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
-                        fontWeight:'normal'
+                        fontWeight: 'normal'
                     },
                     subtextStyle: {
                         fontSize: 10,
@@ -407,7 +408,7 @@
                         type: 'pie',
                         radius: '68%',
                         center: ['50%', '60%'],
-                        data:data,
+                        data: data,
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -452,7 +453,7 @@
     mounted: function () {
         //this.createbarChart()
         /*this.createBarAndLine()*/
-       
+
     }
 })
 

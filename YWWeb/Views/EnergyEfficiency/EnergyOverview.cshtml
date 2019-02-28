@@ -1,5 +1,7 @@
 ﻿@{
-    ViewBag.Title = "EnergyOverview";
+                /**/
+
+                ViewBag.Title = "EnergyOverview";
 }
 <!DOCTYPE html>
 <html>
@@ -11,16 +13,14 @@
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.03" />
     <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.20" />
-
 </head>
-<body >
+<body>
     <div id="EnergyOverview" style="padding:0">
         <Spin size="large" fix v-if="loading"></Spin>
         <div class="left flex-item">
             <div class="chartView">
                 <div class="item">
                     <div class="chartTitle">
-
                         <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" class="datePicker" v-on:on-change="datePicekChange"></date-picker>
                     </div>
                     <div class="main">
@@ -54,13 +54,9 @@
                             <button class="btn" v-on:click="toAreaTree">分项数据</button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
         </div>
-
         <div class="right flex-item EnergyModule">
             <!--能耗模块-->
             <div class="right-module" v-for="item in info.list">
@@ -87,7 +83,6 @@
                                 <c v-else>m³</c>
                             </span>
                         </p>
-
                     </div>
                     <div class="module-item pieChart">
                         <div v-if="item.keyValuePairs.length==0"><span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据</div>
@@ -103,9 +98,7 @@
             <div class="right-module addOptionModule">
                 <i-button class="btn addOptionBtn" type="default" icon="md-add" v-on:click="addModal1Visable=true">添加重点能源</i-button>
             </div>
-
         </div>
-
         <!--添加模态框-->
         <Modal v-model="addModal1Visable" class="iviewModal addEnergyModal" footer-hide="true" title="添加能源" v-on:on-visible-change="modalVisableChange">
             <i-form ref="addForm" :model="addForm" :rules="rules" style="width:100%" :label-width="90">
@@ -126,33 +119,23 @@
                             </form-item>
                         </td>
                     </tr>
-
                     <tr>
                         <td colspan="2" class="btnTd" style="padding-top:20px">
                             <button type="button" class="btn okBtn" v-on:click="addEnergy">添加</button>
                             <button type="button" class="btn cancelBtn" v-on:click="addModal1Visable=false">关闭</button>
                         </td>
                     </tr>
-
                 </table>
-
-
             </i-form>
         </Modal>
-
     </div>
-
-
-
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.67"></script>
-    
-    
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.68"></script>
 </body>
 </html>
 

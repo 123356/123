@@ -1,15 +1,15 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        loading:true,
+        loading: true,
         UID: null,
-        UName:null,
+        UName: null,
         listWidth: 0,
         chartHeight: 0,
         tableHeight: 0,
-        dateType:0,
+        dateType: 0,
         tableCol: [
-            
+
             {
                 title: '科室',
                 align: 'center',
@@ -39,11 +39,11 @@
                 key: 'avgV',
                 sortable: true
             },
-            
+
         ],
         tableData: [],
         barChart: null,
-        time:new Date()
+        time: new Date()
     },
     methods: {
         //获取数据
@@ -60,11 +60,13 @@
             .then(function (res) {
                 that.tableData = res.data
                 that.createBarChart(res.data)
-                that.loading = false
             })
             .catch(function (e) {
-                that.loading = false
+
                 throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
             })
         },
         dateChange: function () {
@@ -73,7 +75,7 @@
         },
         formaterDate: function () {
             var date = new Date(this.time)
-           date= date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+            date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
             return date
         },
         //创建图表
@@ -88,7 +90,7 @@
             var option = {
                 title: {
                     text: '12月电费能让消耗图(万元)',
-                    show:false,
+                    show: false,
                     left: 'center',
                     textStyle: {
                         color: '#757575',
@@ -197,10 +199,10 @@
             var that = this
             window.addEventListener("resize", () => {
                 barChart.resize();
-               
+
             });
         },
-       
+
         setHeight: function () {
             this.tableHeight = $(".main-item").height() - 35
             console.log("height")
@@ -213,18 +215,9 @@
         var that = this
         this.setHeight()
         setInterval(function () {
-            that.tableHeight = $(".main-item .con").height() 
+            that.tableHeight = $(".main-item .con").height()
         }, 100)
     },
     mounted: function () {
-     
-        
     }
-})
-
-
-$(function () {
-
-
-    
 })

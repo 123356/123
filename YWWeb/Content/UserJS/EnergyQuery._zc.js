@@ -62,7 +62,6 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-
             this.$http({
                 url: "/energyManage/EMSetting/GetHistoryList",
                 method: "post",
@@ -78,7 +77,6 @@
         },
         //设备下拉框
         getDeviceCombox: function () {
-
             var that = this
             this.$http({
                 url: '/energyManage/EMHome/GetDeviceCombox',
@@ -86,7 +84,6 @@
             }).then(function (res) {
                 that.deviceList = res.data
             }).catch(function (e) {
-
                 throw new ReferenceError(e.message)
             })
         },
@@ -105,11 +102,12 @@
                     ksid: [...that.searchForm.ksid].join(',').toString()
                 }
             }).then(function (res) {
-                that.loading = false
                 that.tableData = res.data
             }).catch(function (e) {
-                that.loading = false
                 throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
             })
         },
         formaterDate: function () {
@@ -118,7 +116,6 @@
                 return temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate()
             }
             return ""
-
         },
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
@@ -137,7 +134,6 @@
         this.getEneryList()
     },
     mounted: function () {
-
     }
 })
 

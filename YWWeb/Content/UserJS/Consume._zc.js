@@ -1,12 +1,12 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        loading:true,
-        uid:null,
+        loading: true,
+        uid: null,
         listWidth: 0,
         listHeight: 0,
         analysisTableHeight: 0,
-        dateType:'1',
+        dateType: '1',
         listColumns: [
             {
                 type: 'selection',
@@ -19,12 +19,12 @@
                 key: 'index',
                 render: (h, params) => {
                     var index = params.index + 1
-                    if (index<= 3) {
+                    if (index <= 3) {
                         return h('img', {
                             attrs: {
-                                src: '/Content/images/energyDifficiency/order' +index + '.png',
+                                src: '/Content/images/energyDifficiency/order' + index + '.png',
                                 style: 'width: 18px;height:24px;',
-                                class:'iconImg'
+                                class: 'iconImg'
                             },
                             on: {
                                 click: () => {
@@ -34,7 +34,7 @@
                     } else {
                         return h('div', {
                             attrs: {
-                                class:'orderNum',
+                                class: 'orderNum',
                                 style: 'width: 18px;height:18px;border-radius:50%;color:#fff;background:#9d9d9d;text-align:center;line-height:18px;margin:0 auto;font-size:1rem',
 
                             },
@@ -44,9 +44,9 @@
                             }
                         }, index)
                     }
-                    
+
                 }
-            
+
             },
             {
                 title: '名称',
@@ -75,13 +75,13 @@
             },
             {
                 title: '时间',
-                tooltip:true,
+                tooltip: true,
                 align: 'center',
                 key: 'RecordTime',
                 render: (h, params) => {
                     var time = params.row.RecordTime
                     var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
-                    var d = date.getFullYear() + "-" + (date.getMonth() +1)+ "-" + date.getDate()
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
                     return h('span',
                         {
                             attrs: {
@@ -120,12 +120,12 @@
                 align: 'center',
                 key: 'ActualEnergy',
                 sortable: true,
-                
+
             },
             {
                 title: '温度(°C)',
                 align: 'center',
-                width:80,
+                width: 80,
                 key: 'Temperature',
                 sortable: true
             },
@@ -148,11 +148,11 @@
                 align: 'center',
                 key: 'CName'
             },
-           /* {
-                title: '结论',
-                align: 'center',
-                key: 'result'
-            },*/
+            /* {
+                 title: '结论',
+                 align: 'center',
+                 key: 'result'
+             },*/
         ],
         analysisData: [],
         barAndLineChart: null,
@@ -163,7 +163,7 @@
         curCID: '',
         curEntype: 1,
         barShow: true,
-        lineShow:true
+        lineShow: true,
     },
     methods: {
         //异常列表
@@ -173,40 +173,37 @@
             this.$http({
                 url: '/energyManage/EMHome/GetExTable',
                 method: 'post',
-               /* params: {
-                    id:that.uid
-                }*/
+                /* params: {
+                     id:that.uid
+                 }*/
             })
-                .then(function (res) {
-                    var data = res.data
-                    if (data.length > 0) {
-                        for (var i = 0; i < data.length; i++) {
-                            if (i == 0) {
-                                data[i]._checked = true
-                            } else {
-                                data[i]._checked = false
-                            }
-                            data[i]._disabled = false
-                            data[i].index = i
-
-                        }
-                        var id = data[0].ID
-                        that.curCID = data[0].CID
-                        that.curSelectID = data[0].ID
-                        that.getTableList(data[0].ID)
-                        that.getBarData(data[0].CID)
-                        that.getLineData(data[0].CID)
-                    } else {
-                        that.loading = false
-                    }
-                    that.listData = data
-                    
-                   
-            })
-                .catch(function (e) {
-                    that.loading = false
-                throw new ReferenceError(e.message)
-            })
+           .then(function (res) {
+               var data = res.data
+               if (data.length > 0) {
+                   for (var i = 0; i < data.length; i++) {
+                       if (i == 0) {
+                           data[i]._checked = true
+                       } else {
+                           data[i]._checked = false
+                       }
+                       data[i]._disabled = false
+                       data[i].index = i
+                   }
+                   var id = data[0].ID
+                   that.curCID = data[0].CID
+                   that.curSelectID = data[0].ID
+                   that.getTableList(data[0].ID)
+                   that.getBarData(data[0].CID)
+                   that.getLineData(data[0].CID)
+               } 
+               that.listData = data
+           })
+           .catch(function (e) {
+               throw new ReferenceError(e.message)
+           })
+           .finally(function () {
+               that.loading = false
+           })
         },
         //异常分析表格
         getTableList: function (id) {
@@ -215,14 +212,13 @@
                 url: '/energyManage/EMHome/GetbugTable',
                 method: 'post',
                 body: {
-                    id:id
+                    id: id
                 }
             })
             .then(function (res) {
-                    if (res.data != "") {
-                        that.analysisData = res.data
-                    }
-                
+                if (res.data != "") {
+                    that.analysisData = res.data
+                }
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -241,27 +237,24 @@
                     TypeTime: that.dateType
                 }
             })
-                .then(function (res) {
-                    
-                    if (res.data) {
-                        if (res.data.name.length > 0) {
-                            that.barShow = true
-                            that.createBarAndLine(res.data)
-                        } else {
-                            barAndLineChart.clear()
-                            that.barShow = false
-                        }
-
+            .then(function (res) {
+                if (res.data) {
+                    if (res.data.name.length > 0) {
+                        that.barShow = true
                     } else {
-                        barAndLineChart.clear()
                         that.barShow = false
                     }
-                    that.loading = false
-           })
-           .catch(function (e) {
-               that.loading = false
-               throw new ReferenceError(e.message)
-           })
+                } else {
+                    that.barShow = false
+                }
+                that.createBarAndLine(res.data)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //折线图数据
         getLineData: function (cids) {
@@ -273,25 +266,23 @@
                     cids: cids,
                 }
             })
-                .then(function (res) {
-                    if (res.data) {
-                        if (res.data.shijivalue.length > 0) {
-                            that.lineShow = true
-                            that.createEnergyConLine(res.data)
-                        } else {
-                            lineChart.clear()
-                            that.lineShow = false
-                        }
+            .then(function (res) {
+                if (res.data) {
+                    if (res.data.shijivalue.length > 0) {
+                        that.lineShow = true
+                        that.createEnergyConLine(res.data)
                     } else {
                         lineChart.clear()
                         that.lineShow = false
                     }
-                    
-                    
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+                } else {
+                    lineChart.clear()
+                    that.lineShow = false
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         tableSelectChange: function (selection) {
             this.curSelectID = ''
@@ -300,74 +291,63 @@
                 barAndLineChart.clear()
                 lineChart.clear()
                 this.analysisData = []
-                this.barShow = false
+                //this.barShow = false
                 this.lineShow = false
-                return 
+                return
             }
-           
             this.curEntype = selection[0].CODID
             if (selection.length > 1) {
                 if (selection[1].CODID != selection[0].CODID) {
-                    
                     this.$Message.warning({
                         content: '请选择相同能源类型进行对比',
                         duration: 10,
                         closable: true
                     });
-
                     this.listData[selection[1].index]._checked = false
                     selection.splice(1, 1)
                 }
             }
-                
-
-                if (selection.length <= 2) {
-                    this.tableSelection = selection
-
-                }
-                if (this.tableSelection.length == 2) {
-                    this.$Modal.warning({
-                        title: '信息提示',
-                        content: '最多只能选择两项进行对比'
-                    });
-                    this.setSelectState(true)
+            if (selection.length <= 2) {
+                this.tableSelection = selection
+            }
+            if (this.tableSelection.length == 2) {
+                this.$Modal.warning({
+                    title: '信息提示',
+                    content: '最多只能选择两项进行对比'
+                });
+                this.setSelectState(true)
+            } else {
+                this.setSelectState(false)
+            }
+            //判断表头
+            if (selection[0].CODID == 1) {
+                this.analysisColumns[2].title = "电量(kW·h)"
+            } else if (selection[0].CODID == 2) {
+                this.analysisColumns[2].title = "水(m³)"
+            } else if (selection[0].CODID == 3) {
+                this.analysisColumns[2].title = "燃气(m³)"
+            }
+            for (var i = 0; i < selection.length; i++) {
+                if ((i + 1) == selection.length) {
+                    this.curSelectID += selection[i].ID + ""
+                    this.curCID += selection[i].CID + ""
                 } else {
-                    this.setSelectState(false)
+                    this.curSelectID += selection[i].ID + ","
+                    this.curCID += selection[i].CID + ","
                 }
-                //判断表头
-                if (selection[0].CODID == 1) {
-                    this.analysisColumns[2].title = "电量(kW·h)"
-                } else if (selection[0].CODID == 2) {
-                    this.analysisColumns[2].title = "水(m³)"
-                } else if (selection[0].CODID == 3) {
-                    this.analysisColumns[2].title = "燃气(m³)"
-                }
-
-
-                for (var i = 0; i < selection.length; i++) {
-                    if ((i + 1) == selection.length) {
-                        this.curSelectID += selection[i].ID + ""
-                        this.curCID += selection[i].CID + ""
-                    } else {
-                        this.curSelectID += selection[i].ID + ","
-                        this.curCID += selection[i].CID + ","
-                    }
-                }
-                this.getTableList(this.curSelectID)
-                this.getBarData(this.curCID)
-                this.getLineData(this.curCID)
-            
-            
-            
+            }
+            this.getTableList(this.curSelectID)
+            this.getBarData(this.curCID)
+            this.getLineData(this.curCID)
         },
 
         dateTypeChange: function (e) {
             this.dateType = e
-            this.getBarData(this.curCID )
+            this.getBarData(this.curCID)
         },
         onSelect: function (selection, row) {
             if (this.tableSelection.length < 3) {
-                this.listData[row.index]._checked=true
+                this.listData[row.index]._checked = true
             }
         },
         onSelectCancel: function (selection, row) {
@@ -384,50 +364,51 @@
                 }
             }
         },
-       
         //用电趋势图
         createBarAndLine: function (data) {
+            var legend = []
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
-            var legend = data.name
+            var legend = []
+            var seriesData = new Array()
             legend.push("温度")
             var yName = "kW·h"
             if (this.curEntype != 1) {
                 yName = "m³"
             }
             var color = ['#53bda9', '#7fc4e1', '#3ea19c',]
-            var seriesData = new Array()
-            for (var i = 0; i < data.list_line.length; i++) {
+            if (data.name.length > 0) {
+                legend = data.name
+                for (var i = 0; i < data.list_line.length; i++) {
+                    var tempData = data.list_line[i].list
+                    var dataArray = new Array()
+                    for (var j = 0; j < tempData.length; j++) {
+                        dataArray.push(tempData[i].value)
+                    }
+                    var temp = {
+                        name: data.list_line[i].name,
+                        type: 'bar',
+                        barMaxWidth: '15',
+                        color: color[i],
+                        data: dataArray
+                    }
+                    seriesData.push(temp)
+                }
+                seriesData.push(
+                    {
+                        name: '温度',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        smooth: true,
+                        symbol: 'none',//节点样式
+                        lineStyle: {
+                            color: '#53bda9',
+                            width: 1,
 
-                var tempData = data.list_line[i].list
-                var dataArray = new Array()
-                for (var j = 0; j < tempData.length; j++) {
-                    dataArray.push(tempData[i].value)
-                }
-                var temp = {
-                    name: data.list_line[i].name,
-                    type: 'bar',
-                    barMaxWidth: '15',
-                    color: color[i],
-                    data: dataArray
-                }
-                seriesData.push(temp)
+                        },
+                        data: data.tianqi
+                    }
+                )
             }
-            seriesData.push(
-                {
-                    name: '温度',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    smooth: true,
-                    symbol: 'none',//节点样式
-                    lineStyle: {
-                        color: '#53bda9',
-                        width: 1,
-
-                    },
-                    data: data.tianqi
-                }
-            )
-           
             var option = {
                 tooltip: {
                     trigger: 'axis',
@@ -449,8 +430,8 @@
                         saveAsImage: { show: true },
                     },
                     itemSize: 8,
-                    itemGap:1
-                    
+                    itemGap: 1
+
                 },
                 legend: {
                     data: legend,
@@ -462,7 +443,7 @@
                 },
                 color: ['#53bda9'],
                 grid: {
-                    bottom:50,
+                    bottom: 50,
                     left: 40,
                     right: 20
                 },
@@ -548,7 +529,6 @@
                                 color: '#9f9d9d'
                             }
                         },
-
                     }
                 ],
                 series: seriesData,
@@ -563,17 +543,17 @@
             window.addEventListener("resize", () => {
                 barAndLineChart.resize();
             });
-            
+
         },
         createEnergyConLine: function (data) {
             lineChart = echarts.init(document.getElementById('energyConLine'));
             var width = $(window).width()
-           
+
             var yName = "kW·h"
             if (this.curEntype != 1) {
                 yName = "m³"
             }
-          
+
             var option = option = {
 
                 tooltip: {
@@ -589,7 +569,7 @@
                 },
                 color: ['#53bda9', '#fa8033'],
                 grid: {
-                    top:50,
+                    top: 50,
                     left: 35,
                     right: 5,
                     bottom: 50,
@@ -605,7 +585,7 @@
                         saveAsImage: {}
                     },
                     itemSize: 8,
-                    itemGap:1
+                    itemGap: 1
                 },
                 xAxis: {
                     type: 'category',
@@ -693,54 +673,32 @@
                 lineChart.resize()
             });
         },
-        
-
-
-
-
-
-
-
-
-
-     
         setHeight: function () {
             this.listHeight = $(".left .list").height() - 21
-            this.analysisTableHeight = $(".right .bottom").height()-40
+            this.analysisTableHeight = $(".right .bottom").height() - 40
         }
     },
     beforeMount: function () {
         this.uid = $.cookie("enUID")
-
         var that = this
-       function setWidth2() {
+        function setWidth2() {
             var isScroll = $(".ivu-table-overflowY").length
             if (isScroll > 0) {
                 var width = $(".left .list").width()
                 that.listWidth = width + 17
             }
         }
-      
         setWidth2()
-        
         setInterval(function () {
             setWidth2()
             that.setHeight()
         }, 100)
         this.getLeftList()
-       
-       
+
+
     },
     mounted: function () {
         //用能列表默认第一行选中
         //this.$refs.tableSelect.$refs.tbody.objData[0]._isChecked = true
-        
-       
     }
-})
-
-$(function () {
-
-
-    
 })

@@ -9,19 +9,18 @@
     <title>能源查询</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.01"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.01" />
     <style type="text/css">
-        .minWidth{
-            min-width:180px
+        .minWidth {
+            min-width: 180px
         }
-        .ivu-tag .ivu-icon-ios-close{
-            display:inline-block !important
+        .ivu-tag .ivu-icon-ios-close {
+            display: inline-block !important
         }
     </style>
 </head>
 <body>
     <div id="app" class="noPaddingBottom" style="background:#fff;padding:0;margin:0">
-        <!--right s-->
         <div class="right allMain">
             <div class="topView main-item searchView">
                 <div class="module-title">
@@ -29,7 +28,7 @@
                     <i-button class="btn" v-on:click="getEneryList">查询</i-button>
                 </div>
                 <div class="con" style="flex:1">
-                    <i-form ref="searchForm" :model="searchForm"  style="width:100%;z-index:1500" :label-width="50" >
+                    <i-form ref="searchForm" :model="searchForm" style="width:100%;z-index:1500" :label-width="50">
                         <table class="formTable">
                             <tr>
                                 <td>
@@ -38,8 +37,8 @@
                                     </form-item>
                                 </td>
                                 <td>
-                                    <form-item label="设备" >
-                                        <i-select v-model="searchForm.did" :filterable="true" :clearable ="false" class="minWidth">
+                                    <form-item label="设备">
+                                        <i-select v-model="searchForm.did" :filterable="true" :clearable="false" class="minWidth">
                                             <i-option value=" ">全部</i-option>
                                             <i-option :value="item.DID" :key="item.DID" v-for="item in deviceList">{{item.DeviceName}}</i-option>
                                         </i-select>
@@ -54,18 +53,16 @@
                                 </td>
                                 <td>
                                     <form-item label="类型">
-                                        <i-select v-model="searchForm.cotypeid" :filterable="true" :clearable ="false" class="minWidth">
+                                        <i-select v-model="searchForm.cotypeid" :filterable="true" :clearable="false" class="minWidth">
                                             <i-option value=" ">全部</i-option>
                                             <i-option :value="item.ID" :key="item.ID" v-for="item in typeList">{{item.Name}}</i-option>
                                         </i-select>
                                     </form-item>
                                 </td>
                             </tr>
-                            
                         </table>
                     </i-form>
                 </div>
-               
             </div>
 
             <div class="bottomView main-item underFormView">
@@ -75,19 +72,16 @@
                 <div class="con">
                     <i-table :columns="tableCol" :data="tableData" :height="tableHeight" :loading="loading" border></i-table>
                 </div>
-                
             </div>
         </div>
-        <!--right e-->
     </div>
-
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/EnergyQuery._zc.js?v=1.23"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyQuery._zc.js?v=1.24"></script>
 </body>
 </html>
 

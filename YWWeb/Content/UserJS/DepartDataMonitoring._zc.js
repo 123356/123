@@ -2,17 +2,16 @@
     el: "#app",
     data: {
         uid: null,
-        uName:'',
+        uName: '',
         analysisTableHeight: 0,
         treeData: [],
         departFrameSrc: '',
-        
     },
     methods: {
         //tree data
         getTreeData: function () {
             var that = this
-           
+
             this.$http({
                 url: '/energyManage/EMSetting/GetTreeData',
                 method: 'POST',
@@ -32,27 +31,27 @@
                         }
                     }
                     that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
-                   /* if (res.data.children.length > 0) {
-                        that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res.data.children[0].id
-                        res.data.children[0].selected=true
-                    } else {
-                        that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
-                    }
-                    this.treeData = [
-                        {
-                            title: this.uName,
-                            id: this.uid,
-                            //selected: true,
-                            expand: true,//是否打开子节点
-                            children: that.traverseTree(res.data).children
-                        }
+                    /* if (res.data.children.length > 0) {
+                         that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res.data.children[0].id
+                         res.data.children[0].selected=true
+                     } else {
+                         that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
+                     }
+                     this.treeData = [
+                         {
+                             title: this.uName,
+                             id: this.uid,
+                             //selected: true,
+                             expand: true,//是否打开子节点
+                             children: that.traverseTree(res.data).children
+                         }
+ 
+                     ]*/
 
-                    ]*/
-                    
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         init: function (data) {
             var setting = {
@@ -71,36 +70,27 @@
                     onClick: nodeClick
                 }
             };
-
             var zNodes = data
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            function nodeClick(event,treeId, treeNode) {
+            function nodeClick(event, treeId, treeNode) {
                 $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id)
                 this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id
             }
         },
-       
-
         selectChange: function (res) {
             this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res[0].id
             document.getElementById('departFrame').contentWindow.location.reload(true);
         },
-       
-        
-
     },
     beforeMount: function () {
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")
-        
+
         this.getTreeData()
-       
     },
     mounted: function () {
-       
     }
 })
-
 function setScroll() {
     var treeWidth = $(".left").width()
     $(".left .treeList").width(treeWidth + 32)
@@ -112,5 +102,4 @@ $(function () {
         setScroll()
     };
 
-    
 })

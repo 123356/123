@@ -5,11 +5,11 @@ new Vue({
         loading: true,
         pieYearChart: null,
         elecUsageChart: null,
-        lineChart:null,
+        lineChart: null,
         unitList: [],
         UnitID: null,
         StationStateInfo: {},//运行状态
-        orderList:[],
+        orderList: [],
         alarmList: [],
         proInfo: {},
         PDFList: [],
@@ -18,8 +18,7 @@ new Vue({
         activeIndex: null,
         otherInfo: {},
         Sumload: null,
-        RatedCapacity:null
-        
+        RatedCapacity: null
     },
     methods: {
         //用户下拉框
@@ -75,13 +74,15 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    that.StationStateInfo = res.data
-                })
-                .catch(function (e) {
-                    that.loading = false
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                that.StationStateInfo = res.data
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //获取当日累计电量
         getThisDayPower: function () {
@@ -93,17 +94,18 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    if (res.data) {
-                        that.StationStateInfo.thisDayPower = res.data.thisDayPower
-                        that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
-                    }
-                    that.loading = false
-                })
-                .catch(function (e) {
-                    that.loading = false
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                if (res.data) {
+                    that.StationStateInfo.thisDayPower = res.data.thisDayPower
+                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //获取上月用电
         getLastMonthPower: function () {
@@ -115,17 +117,18 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    if (res.data) {
-                        that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
-                        that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
-                    }
-
-                })
-                .catch(function (e) {
-                    that.loading = false
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                if (res.data) {
+                    that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
+                    that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //获取当年累计电量
         getThisYearPower: function () {
@@ -137,19 +140,20 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    var data = null
-                    if (res.data) {
-                        data = res.data.thisPowerLastYear	
-                    }
-                    
-                   that.createPieYearChart(data)
+            .then(function (res) {
+                var data = null
+                if (res.data) {
+                    data = res.data.thisPowerLastYear
+                }
+                that.createPieYearChart(data)
 
-                })
-                .catch(function (e) {
-                    that.loading = false
-                    throw new ReferenceError(e.message)
-                })
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //消息通知
         getMessage: function () {
@@ -161,30 +165,30 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    var data = res.data
-                    if (data) {
-                        var tempOrder = new Array()
-                        var tempAlarm = new Array()
-                        for (var i = 0; i < data.order.length; i++) {
-                            tempOrder .push(data.order[i])
-                            if (tempOrder.length== 3) {
-                                break
-                            }
+            .then(function (res) {
+                var data = res.data
+                if (data) {
+                    var tempOrder = new Array()
+                    var tempAlarm = new Array()
+                    for (var i = 0; i < data.order.length; i++) {
+                        tempOrder.push(data.order[i])
+                        if (tempOrder.length == 3) {
+                            break
                         }
-                        for (var i = 0; i < data.Alarm.length; i++) {
-                            tempAlarm.push(data.Alarm[i])
-                            if (tempAlarm.length == 3) {
-                                break
-                            }
-                        }
-                        that.orderList = tempOrder
-                        that.alarmList = tempAlarm
                     }
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+                    for (var i = 0; i < data.Alarm.length; i++) {
+                        tempAlarm.push(data.Alarm[i])
+                        if (tempAlarm.length == 3) {
+                            break
+                        }
+                    }
+                    that.orderList = tempOrder
+                    that.alarmList = tempAlarm
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         //项目信息
         getProInfo: function () {
@@ -196,12 +200,12 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    that.proInfo = res.data
-                })
-                .catch(function (e) {
+            .then(function (res) {
+                that.proInfo = res.data
+            })
+            .catch(function (e) {
 
-                })
+            })
         },
         //获取配电房
         getPDF: function () {
@@ -213,16 +217,16 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    that.PDFList = res.data
-                    if (res.data.length > 0) {
-                        that.PID = res.data[0].PID
-                    }
-                    that.getBYQ()
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                that.PDFList = res.data
+                if (res.data.length > 0) {
+                    that.PID = res.data[0].PID
+                }
+                that.getBYQ()
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         tabChange: function (name) {
             console.log(name)
@@ -239,23 +243,22 @@ new Vue({
                     pid: this.PID
                 }
             })
-                .then(function (res) {
-                    that.BYQList = res.data
-                    if (res.data.length > 0) {
-                        that.activeIndex = res.data[0].C
-                    }
+            .then(function (res) {
+                that.BYQList = res.data
+                if (res.data.length > 0) {
+                    that.activeIndex = res.data[0].C
+                }
+                that.getLineData()
+                var timeset;
+                clearInterval(timeset);
+                timeset = setInterval(function () {
                     that.getLineData()
-                    var timeset;
-                    clearInterval(timeset);
-                    timeset = setInterval(function () {
-                        that.getLineData()
-                        that.getLXData()
-                    }, 60000)
-
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+                    that.getLXData()
+                }, 60000)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         //用电概况
         getUseEl: function () {
@@ -267,16 +270,16 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    if (res.data) {
-                        that.Sumload = res.data.Sumload
-                        that.RatedCapacity = res.data.RatedCapacity
-                            that.createElecUsageChart(res.data)
-                    }
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                if (res.data) {
+                    that.Sumload = res.data.Sumload
+                    that.RatedCapacity = res.data.RatedCapacity
+                    that.createElecUsageChart(res.data)
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         //轮询数据
         getLXData: function () {
@@ -288,20 +291,20 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-                .then(function (res) {
-                    if (res.data) {
-                        that.StationStateInfo.thisDayPower = res.data.thisDayPower
-                        that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
-                        that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
-                        that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
-                        that.Sumload = res.data.thisMonthOccupation
-                        that.RatedCapacity = res.data.RatedCapacity
-                        that.createElecUsageChart(res.data)
-                    }
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                if (res.data) {
+                    that.StationStateInfo.thisDayPower = res.data.thisDayPower
+                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
+                    that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
+                    that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
+                    that.Sumload = res.data.thisMonthOccupation
+                    that.RatedCapacity = res.data.RatedCapacity
+                    that.createElecUsageChart(res.data)
+                }
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
 
         barMenuClick: function (e) {
@@ -320,17 +323,15 @@ new Vue({
                     cid: null
                 }
             })
-                .then(function (res) {
-                   
-                    if (res.data.model) {
-                        that.otherInfo = res.data.model
-                    }
-                    that.createLineChart(res.data)
-                    
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            .then(function (res) {
+                if (res.data.model) {
+                    that.otherInfo = res.data.model
+                }
+                that.createLineChart(res.data)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         toPDFDetail: function () {
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
@@ -356,13 +357,12 @@ new Vue({
                 title: {
                     text: '占去年用电' + data + '%',
                     bottom: 0,
-                    x:'center',
+                    x: 'center',
                     textStyle: {  //标题文字设置
                         fontSize: '11',
                         fontWeight: 'normal',
                         color: '#666'
                     }
-
                 },
                 color: ['#3ab094', '#f3f2f0'],
                 series: [
@@ -372,11 +372,10 @@ new Vue({
                         radius: '60%',
                         center: ['50%', '40%'],
                         hoverAnimation: false,
-                        silent:true,
+                        silent: true,
                         data: [
                             { value: data, name: '当年累计' },
                             { value: (100 - data).toFixed(2), name: '去年累计' }
-
                         ],
                         itemStyle: {
                             normal: {
@@ -400,16 +399,12 @@ new Vue({
         //总负载率比例
         createElecUsageChart: function (data) {
             elecUsageChart = echarts.init(document.getElementById('elecUsageChart'));
-
             //var data = this.StationStateInfo
             var seriesData = new Array()
             var syzb = 0.0
             if (data.fuzaiView) {
-                
-
                 for (var i = 0; i < data.fuzaiView.length; i++) {
                     var color = ''
-
                     if (data.fuzaiView[i].zhanbiEvery < 75) {
                         color = '#3ab094'
                     } else if (data.fuzaiView[i].zhanbiEvery >= 75 && data.fuzaiView[i].zhanbiEvery < 80) {
@@ -441,19 +436,18 @@ new Vue({
                 title: {
                     text: '负载率比例',
                     x: 'center',
-                    bottom:0,
+                    bottom: 0,
                     textStyle: {  //标题文字设置
                         fontSize: '11',
                         fontWeight: 'normal',
                         color: '#666'
                     }
-
                 },
                 tooltip: {
                     trigger: 'item',
                     formatter: "{b} :<br/> {c}%",
                     textStyle: {
-                        fontSize:10
+                        fontSize: 10
                     },
                     position: ['0', '50%']
                 },
@@ -481,7 +475,6 @@ new Vue({
             };
             elecUsageChart.clear()
             elecUsageChart.setOption(option)
-
             window.addEventListener("resize", () => {
                 elecUsageChart.resize();
             });
@@ -513,7 +506,6 @@ new Vue({
                 series.push(item)
             }
             var option = {
-
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -523,7 +515,6 @@ new Vue({
                         }
                     },
                     posoition: ['50%', '50%'],
-
                     extraCssText: 'width:400px;'
                 },
                 color: ["#3ab094", "#c3a7cd", "#88a5cf"],
@@ -602,10 +593,8 @@ new Vue({
                 ],
                 series: series
             };
-
             lineChart.clear()
             lineChart.setOption(option)
-            
             window.addEventListener("resize", () => {
                 lineChart.resize();
             });
@@ -631,17 +620,12 @@ new Vue({
             $(".ivu-menu-light").scroll(function () {
                 if ($(".ivu-menu-light").scrollTop() > 0) {
                     $(".ivu-menu-light").width(w + 16)
-
-                } 
+                }
             });
-            
         }
     },
     beforeMount: function () {
-
         this.getUnitListData()
-
-
     },
     mounted: function () {
         this.setWidth()
@@ -649,10 +633,8 @@ new Vue({
         $(window).resize(function () {
             that.setWidth()
         });
-        
         this.initSwiper()
     },
     created: function () {
-       
     }
 })

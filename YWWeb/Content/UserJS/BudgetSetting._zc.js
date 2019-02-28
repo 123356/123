@@ -1,11 +1,11 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        loading:true,
+        loading: true,
         uid: null,
-        uName:null,
+        uName: null,
         height: 0,
-        width:0,
+        width: 0,
         num: 110,
         editIconShow: false,
         editDisable: true,
@@ -16,16 +16,16 @@
             GeneralBudget: 0,//计划能耗
             BudgetBalance: 0,//余量
             SurplusValue: 0,//剩余预算
-            
+
         },
         //各月能源预算总值
-        sumAllMonthData:0,
+        sumAllMonthData: 0,
         //各月能源预算
         allMonthData: [],
-        sumEnergyData:0,
+        sumEnergyData: 0,
         //各类型能源平均值
         energyData: [],
-        sumDepartBudgetData:0,
+        sumDepartBudgetData: 0,
         departBudgetData: [],
         departMoneyData: [],
         setForm: {
@@ -38,7 +38,7 @@
             waterPriceL3: null,
             useWater1: null,
             useWater2: null,
-            useWater3:null,
+            useWater3: null,
             gasPrice: null,
         },
         setPriceVisable: false,
@@ -61,7 +61,7 @@
             gasPrice: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
             ],
-            useWater1:[
+            useWater1: [
                 { required: true, type: 'number', message: '请输入用水量', trigger: 'change' },
             ],
         },
@@ -75,11 +75,11 @@
         isEdit: true,
         treeModalVisable: false,
         treeSelectList: [],
-        cotypeid: null ,//当前能源类型表格id
+        cotypeid: null,//当前能源类型表格id
         isAdd: false,//是否显示编辑部门按钮
         Area: 0,
         Bili: 0,
-        rightList:[]
+        rightList: []
     },
     methods: {
         //获取最左边数据
@@ -87,29 +87,28 @@
             var that = this
             var year = new Date(this.slectYear)
             this.$http.post(
-                 '/energyManage/EMHome/GetYearbugGetData',
-                //method: 'POST',
+                '/energyManage/EMHome/GetYearbugGetData',
                 {
                     uid: this.uid,
                     year: year.getFullYear()
                 }
             )
             .then(function (res) {
-                if (res.data!="no Data") {
+                if (res.data != "no Data") {
                     that.sumDataSet = res.data
                     that.getMonthBugGetbyYearID(res.data.ID)
                     that.sumAllMonthData = that.sumDataSet.SurplusValue
                     that.isInit = false
                 } else {
-                    that.loading = false
                     that.clearAllData()
                 }
-                
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
             })
-           
+            .finally(function () {
+                that.loading = false
+            })
         },
         //清空数据
         clearAllData: function () {
@@ -119,23 +118,23 @@
                 SurplusValue: 0,//剩余预算
             }
             this.sumAllMonthData = 0
-            this.allMonthData= []
+            this.allMonthData = []
             this.sumDepartBudgetData = 0
             this.departBudgetData = []
             this.departMoneyData = []
             this.curMonth = null
-            this.curEnType= null
+            this.curEnType = null
             this.everyMonthBalance = 0
             this.enTypeBalance = 0
             this.departBalance = 0
             this.departAvgBalance = 0
-            this.isInit=true
+            this.isInit = true
             this.isEdit = true
             this.treeSelectList = []
             this.isAdd = false
             this.cotypeid = null
             this.energyData = []
-            this.sumEnergyData =0
+            this.sumEnergyData = 0
         },
         //初始化table
         initTableData: function (data) {
@@ -145,48 +144,47 @@
                 method: 'POST',
                 body: data.params
             })
-            .then(function (res) {
-                if (res.data) {
-                    switch (data.index) {
-                        case 1:
-                            that.allMonthData = res.data
-                            that.everyMonthBalance = that.sumAllMonthData - that.totalComputation("allMonthData")
-                            that.getYearBugGetDataByMonth(res.data[0].ID)
-                            that.getRightData()
-                            that.sumEnergyData = res.data[0].MonthBudget//能源总预算
-                            break;
-                        case 2:
-                            that.energyData = res.data
-                            that.enTypeBalance = that.sumEnergyData - that.totalComputation("energyData")//能源当前余额
-                            that.getYearBugGetDataByType(res.data[0].ID)
-                            that.sumDepartBudgetData = res.data[0].GeneralBudget //科室总预算
-                            that.isAdd = true
-                            break;
-                        case 3:
-                            that.departBudgetData = res.data
-                            that.departBalance = that.sumDepartBudgetData - that.totalComputation("departBudgetData") //科室当前余额
-                            that.treeSelectList = res.data
-                            that.getYearBugGetDataBydepar()
-                            break;
-                        case 4:
-                            that.departMoneyData = res.data
-                            that.departAvgBalance = that.sumDepartBudgetData - that.totalComputation("departMoneyData") //科室当前余额
-                            break;
+                .then(function (res) {
+                    if (res.data) {
+                        switch (data.index) {
+                            case 1:
+                                that.allMonthData = res.data
+                                that.everyMonthBalance = that.sumAllMonthData - that.totalComputation("allMonthData")
+                                that.getYearBugGetDataByMonth(res.data[0].ID)
+                                that.getRightData()
+                                that.sumEnergyData = res.data[0].MonthBudget//能源总预算
+                                break;
+                            case 2:
+                                that.energyData = res.data
+                                that.enTypeBalance = that.sumEnergyData - that.totalComputation("energyData")//能源当前余额
+                                that.getYearBugGetDataByType(res.data[0].ID)
+                                that.sumDepartBudgetData = res.data[0].GeneralBudget //科室总预算
+                                that.isAdd = true
+                                break;
+                            case 3:
+                                that.departBudgetData = res.data
+                                that.departBalance = that.sumDepartBudgetData - that.totalComputation("departBudgetData") //科室当前余额
+                                that.treeSelectList = res.data
+                                that.getYearBugGetDataBydepar()
+                                break;
+                            case 4:
+                                that.departMoneyData = res.data
+                                that.departAvgBalance = that.sumDepartBudgetData - that.totalComputation("departMoneyData") //科室当前余额
+                                break;
+                        }
 
+                    } else {
+                        if (data.index == 2) {
+                            that.isAdd = false
+                        }
                     }
-                    that.loading = false
-                } else {
-                    if (data.index == 2) {
-                        that.isAdd = false
-                    }
-                    that.loading = false
-                }
-
-             })
+                })
                 .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
                     that.loading = false
-                 throw new ReferenceError(e.message)
-             })
+                })
         },
         //获取第一个表格数据
         getMonthBugGetbyYearID: function (id) {
@@ -241,11 +239,10 @@
             }
             this.initTableData(data)
         },
-        
+
         //获取树
         getTreeData: function () {
             var that = this
-
             this.$http({
                 url: '/energyManage/EMSetting/GetTreeData',
                 method: 'POST',
@@ -280,10 +277,9 @@
                     enable: false
                 },
                 callback: {
-                    onCheck:nodeCheck
+                    onCheck: nodeCheck
                 }
             };
-
             var zNodes = data
             var zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             var getNodes = zTree.getNodes()
@@ -304,8 +300,6 @@
                     that.changeTreeSelect(treeNode.id)
                 }
             }
-            
-            
         },
         //遍历树,设置默认选中节点
         traverseTree: function (zTree, node) {
@@ -324,7 +318,7 @@
                         }
                     }
                 }
-            } 
+            }
         },
         //取消选中树节点
         changeTreeSelect: function (id) {
@@ -345,7 +339,6 @@
                 eneruserids = [...eneruserids].join(',')
                 this.addEnUserBudget(eneruserids)
             }
-            
             this.treeModalVisable = false
         },
         //添加部门
@@ -356,13 +349,13 @@
                 method: 'POST',
                 params: {
                     cotypeid: this.cotypeid,
-                    eneryids : ids
+                    eneryids: ids
                 }
             })
             .then(function (res) {
-                    that.treeSelectList = []
-                    that.getYearBugGetDataByType(that.cotypeid)
-                    
+                that.treeSelectList = []
+                that.getYearBugGetDataByType(that.cotypeid)
+
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -372,7 +365,6 @@
             if (this.treeSelectList.length == 0) {
                 this.getTreeData()
             }
-            
         },
         showTreeModal: function () {
             this.treeModalVisable = true
@@ -393,7 +385,7 @@
                 this.editIconShow = true;
                 this.editDisable = false;
             }
-            
+
         },
         //验证预算是否合格
         checkBudget: function () {
@@ -411,10 +403,8 @@
         },
         //总计划能耗设置
         sumPlanChange: function (e) {
-            
             this.sumDataSet.SurplusValue = e - this.sumDataSet.BudgetBalance
             this.sumAllMonthData = this.sumDataSet.SurplusValue
-            
             this.everyMonthBalance = this.sumAllMonthData - this.totalComputation("allMonthData")
         },
         allowanceChange: function (e) {
@@ -469,9 +459,9 @@
                 body: data.params
             })
             .then(function (res) {
-                    if (res.data === "ok") {
-                        that.changeDataByType(data.index)
-                    }
+                if (res.data === "ok") {
+                    that.changeDataByType(data.index)
+                }
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -502,14 +492,14 @@
             var data = {
                 url: '/energyManage/EMHome/UpdateYearBudGet',
                 params: par,
-                index:0
+                index: 0
             }
             this.upadteOrAddData(data)
         },
-      
-        
+
+
         //编辑table
-        editTable: function (par,index,url) {
+        editTable: function (par, index, url) {
             var data = {
                 url: url,
                 params: par,
@@ -554,7 +544,7 @@
                     url = '/energyManage/EMHome/UpdateContypeBudget'
                     break;
                 case 3:
-                     //table3
+                    //table3
                     data.cotypeid = item.CollTypeID
                     data.eneruserid = item.EneryUserID
                     url = '/energyManage/EMHome/UpdateEnUserBudget'
@@ -566,8 +556,8 @@
                     url = '/energyManage/EMHome/UpdateDepEnUserBudget'
                     break;
             }
-            this.editTable(data,type,url)
-            
+            this.editTable(data, type, url)
+
         },
         monthClick: function (e) {
             this.curMonth = e.Month
@@ -587,8 +577,6 @@
             this.sumEnergyData = e
             var sumMOney = this.totalComputation("allMonthData")
             this.everyMonthBalance = (this.sumDataSet.SurplusValue - sumMOney)
-            //改变能源类型总预算值
-            
             //能源余额调整
             this.enTypeBalance = this.sumEnergyData - this.totalComputation("energyData")
         },
@@ -598,10 +586,8 @@
             this.enTypeBalance = (this.sumEnergyData - sumMOney)
             this.sumDepartBudgetData = e
             this.departBalance = this.sumDepartBudgetData - this.totalComputation("departBudgetData")
-
-
         },
-        departPlanChnage: function(e) {
+        departPlanChnage: function (e) {
             var sumMOney = this.totalComputation("departBudgetData")
             this.departBalance = (this.sumDepartBudgetData - sumMOney)
         },
@@ -627,14 +613,13 @@
                     data = this.departMoneyData
                     break;
             }
-            for (var i = 0; i < data.length;i++) {
-                if (type ==='allMonthData') {
+            for (var i = 0; i < data.length; i++) {
+                if (type === 'allMonthData') {
                     sum += parseFloat(data[i].MonthBudget)
                 } else {
                     sum += parseFloat(data[i].GeneralBudget)
                 }
             }
-           
             return sum
         },
         setPriceVisableChange: function (e) {
@@ -642,7 +627,7 @@
                 this.$refs['setForm'].resetFields()
             }
         },
-        
+
         setPrice: function () {
             this.$refs['setForm'].validate((valid) => {
                 if (valid) {
@@ -685,59 +670,57 @@
                     month: this.curMonth
                 }
             })
-            .then(function (res) {
+                .then(function (res) {
                     if (res.data) {
                         that.Area = res.data.top.Area
                         that.Bili = res.data.top.Bili
                         that.rightList = res.data.list
                     }
-                    
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
-
 
         setHeight: function () {
-            var itemHeight = $(".main .main-item").height()-45
+            var itemHeight = $(".main .main-item").height() - 45
             var titleH = $(".main .main-item .item-title").height()
             var footerH = $(".main .main-item .footer").height()
-            
+
             this.height = itemHeight - titleH - footerH
-            
-            
+
+
         },
         setWidth: function () {
-           
+
             var itemW = $(".BudgetSetting .main .main-item .con").width()
             //各月能源
-            
+
             $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(1)
             $(" .BudgetSetting .main .main-item .allMonthCon").width(itemW + 32)
             $(".BudgetSetting .main .main-item .allMonthCon").scroll(function () {
-                    $(" .BudgetSetting .main .main-item .allMonthCon").css("padding-right", "15px")
-                   
+                $(" .BudgetSetting .main .main-item .allMonthCon").css("padding-right", "15px")
+
             })
             //各部门用电预算
-           
+
             $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(1)
             $(" .BudgetSetting .main .main-item .departBudgetCon").width(itemW + 32)
             $(".BudgetSetting .main .main-item .departBudgetCon").scroll(function () {
-                    $(" .BudgetSetting .main .main-item .departBudgetCon").css("padding-right", "15px")
-                   
+                $(" .BudgetSetting .main .main-item .departBudgetCon").css("padding-right", "15px")
+
             })
             //各部门电费均摊
-           
+
             $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(1)
             $(" .BudgetSetting .main .main-item .departMoneyCon").width(itemW + 32)
             $(".BudgetSetting .main .main-item .departMoneyCon").scroll(function () {
-                    $(" .BudgetSetting .main .main-item .departMoneyCon").css("padding-right", "5px")
-                    
+                $(" .BudgetSetting .main .main-item .departMoneyCon").css("padding-right", "5px")
+
 
             })
-           
-           
+
+
 
 
         }
@@ -752,7 +735,6 @@
             this.isEdit = true
         }
         this.getYearbugGetData()
-        
         //this.getTreeData()
     },
     mounted: function () {
@@ -760,26 +742,17 @@
         this.setHeight()
         var that = this
         window.onresize = function () {
-           
             $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(0)
             that.setWidth()
             that.setHeight()
         };
-        
-
     }
 })
-
 $(".con table tbody").delegate("tr", "click", function () {
     $(".con table tbody tr td").removeClass("trActive")
     $(".con table tbody tr td .ivu-input-number-input").removeClass("activeColor")
     $(this).find("td").addClass("trActive")
     $(this).find(".ivu-input-number-input").addClass("activeColor")
-})
-$(function () {
-
-
-    
 })

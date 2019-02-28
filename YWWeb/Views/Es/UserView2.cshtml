@@ -15,10 +15,9 @@
     <div id="userView">
         <Spin size="large" fix v-if="loading"></Spin>
         <i-select class="userSelect" v-model="UnitID" v-on:on-change="selectChange">
-            <i-option v-for="item in unitList" :value="item.UnitID">{{item.UnitName}}</i-option>
+            <i-option v-for="item in unitList" :value="item.UnitID" v-html="item.UnitName"></i-option>
         </i-select>
         <div class="container">
-
             <div class="topView">
                 <div class="top_leftView">
                     <div class="swiperView boxStyle">
@@ -32,7 +31,6 @@
                                                 <p class="normal" v-html="StationStateInfo.Name==''?'--':StationStateInfo.Name">--</p>
                                                 <span class="littltInfo">正常<font v-html="StationStateInfo.NormalDays==null?'--':StationStateInfo.NormalDays">--</font>天</span>
                                             </div>
-
                                         </div>
                                         <div class="swiper-slide slide1 slide2">
                                             <div>
@@ -46,18 +44,15 @@
                                                 <p class="normal curPointer" v-html="StationStateInfo.Score==null?'--':StationStateInfo.Score" v-on:click="score">--</p>
                                                 <span class="littltInfo">配电室平均评分</span>
                                             </div>
-
                                         </div>
                                     </div>
                                     <!-- Add Pagination -->
                                     <div class="swiper-pagination" style="margin-bottom:-10px"></div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div class="statisticsView boxStyle">
-
                         <div class="item">
                             <div class="module">
                                 <div class="title"><i class="iconfont icon-lightningbshandian"></i>当日累计电量<span class="floatRight">(kW·h)</span></div>
@@ -70,11 +65,9 @@
                                             <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="StationStateInfo.thisDayOccupation!=0" />
                                         </span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                         <div class="item">
                             <div class="module">
                                 <div class="title"><i class="iconfont icon-lightningbshandian"></i>上月用电<span class="floatRight">(kW·h)</span></div>
@@ -87,11 +80,9 @@
                                             <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="StationStateInfo.thisMonthOccupation!=0" />
                                         </span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                         <div class="item">
                             <div class="module ">
                                 <div class="title"><i class="iconfont icon-lightningbshandian"></i>当年累计电量</div>
@@ -100,52 +91,41 @@
                                         <div class="chart" id="pieYearChart"></div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="top_RightView boxStyle">
                     <div class="module">
                         <div class="title"><i class="iconfont icon-lightningbshandian"></i>用电概况</div>
                         <div class="main center">
-
                             <div class="item">
                                 <div class="view">
                                     <p class="normal" v-html="Sumload==null?'--':Sumload">--</p>
                                     <span class="littltInfo">当前负荷(kW·h)</span>
                                 </div>
                             </div>
-
                             <div class="item">
                                 <div class="view">
                                     <p class="normal" v-html="RatedCapacity==null?'--':RatedCapacity+'%'">--</p>
                                     <span class="littltInfo">总负载率</span>
                                 </div>
                             </div>
-
                             <div class="item" style="height:100%">
                                 <div class="chart" id="elecUsageChart"></div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
-
             <div class="bottomView">
-
                 <div class="bottom_leftView boxStyle">
                     <div class="module">
                         <div class="title"><i class="iconfont icon-gaikuang"></i>配电室信息</div>
                         <Tabs size="small" v-on:on-click="tabChange" :value="PID">
                             <tab-pane :label="item.Name" :name="item.PID" v-for="item in PDFList"></tab-pane>
-
                         </Tabs>
                         <div class="main">
-
                             <div class="leftMenu">
                                 <i-menu theme="light" width="auto" v-bind:active-name="activeIndex" v-on:on-select="barMenuClick">
                                     <menu-group title="变压器">
@@ -154,43 +134,32 @@
                                     </menu-group>
                                 </i-menu>
                             </div>
-
                             <div class="rightMain">
                                 <div class="otherInfo">
-
                                     <div class="item">
                                         <div>
                                             <img src="~/Content/images/icon4/tran.png" class="iconImg" />变压器容量<font v-html="otherInfo.Capacity==null?'--':otherInfo.Capacity">--</font>kVA
                                         </div>
-
                                         <div>
                                             <img src="~/Content/images/icon4/elec.png" class="iconImg" />
                                             当前负荷<font v-html="otherInfo.gonglv==null?'--':otherInfo.gonglv">--</font>kVA
                                         </div>
-
                                         <div>
                                             <img src="~/Content/images/icon4/elecLoad.png" class="iconImg" />
                                             <font v-html="otherInfo.fuzailv==null?'--':otherInfo.fuzailv">--</font>%
                                             负载率
                                         </div>
-
                                         <div><i-buton class="btn" v-on:click="toPDFDetail">配电室详情</i-buton></div>
-
                                     </div>
-
                                 </div>
                                 <div class="chartView">
                                     <div class="chart" id="lineChart"></div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
                 </div>
-
-
-
                 <div class="bottom_rightView">
                     <div class="msgListView boxStyle">
                         <div class="module">
@@ -201,7 +170,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="proInfoView boxStyle">
                         <div class="module ">
                             <div class="title"><i class="iconfont icon-guidangxiangmu"></i>项目信息</div>
@@ -221,13 +189,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
-
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script src="~/Content/js/swiper.min.js"></script>
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
@@ -235,6 +200,6 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._zc.js?v=1.44"></script>
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._zc.js?v=1.45"></script>
 </body>
 </html>

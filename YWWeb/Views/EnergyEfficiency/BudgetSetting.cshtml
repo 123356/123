@@ -1,5 +1,7 @@
 ﻿@{
-    ViewBag.Title = "BudgetSetting";
+                /**/
+
+                ViewBag.Title = "BudgetSetting";
 }
 <!DOCTYPE html>
 <html>
@@ -17,7 +19,6 @@
             background: #53bda9;
             color: #fff !important;
         }
-
         .activeColor {
             color: #fff
         }
@@ -41,7 +42,6 @@
                     <i-button class="btn" icon="ios-cloud-download-outline">下载</i-button>-->
                 </div>
             </div>
-
         </div>
         <div class="main">
             <div class="main-item">
@@ -63,7 +63,6 @@
                         <h4>剩余预算(万元)</h4>
                         <p><input-number :min="0" v-model="sumDataSet.SurplusValue" style="border:none" :disabled="true" class="inputNum"></input-number></p>
                     </div>
-
                 </div>
             </div>
             <div class="main-item">
@@ -87,7 +86,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
                 <div class="footer">当前余额<font v-html="everyMonthBalance">--</font></div>
             </div>
@@ -110,7 +108,6 @@
 
                         </tbody>
                     </table>
-
                 </div>
                 <div class="footer">当前余额<font v-html="enTypeBalance">--</font></div>
             </div>
@@ -136,7 +133,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
                 <div class="footer">当前余额<font v-html="departBalance">--</font></div>
             </div>
@@ -173,9 +169,7 @@
                     <span class="dec">单位面积能耗</span>
                     <span class="subdec">绿地医院标准能耗5.0/㎡</span>
                     <p class="numtext"><font v-html="Bili">--</font></p>
-
                 </div>
-
                 <div class="module">
                     <p class="title"><img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />去年能源消耗</p>
                     <template v-for="item in rightList">
@@ -183,7 +177,6 @@
                         <p class="numtext"><font v-html="item.value">--</font></p>
                     </template>
                 </div>
-
             </div>
         </div>
 
@@ -257,26 +250,18 @@
                     </tr>
 
                     <tr>
-
                         <td colspan="3" class="btnTd">
                             <button type="button" class="btn okBtn" v-on:click="setPrice">添加</button>
                             <button type="button" class="btn cancelBtn" v-on:click="setPriceVisable=false">关闭</button>
                         </td>
                     </tr>
-
                 </table>
-
-
             </i-form>
         </Modal>
-
         <Modal v-model="treeModalVisable" class="iviewModal addEnergyModal treeModal" :closable="false" :mask-closable="false" v-on:on-ok="selectTreeOk" v-on:on-cancel="selectTreeCancel" title="科室选择" style="max-height:450px">
             <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
         </Modal>
-
-
     </div>
-
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script type="text/javascript" src="~/Content/js/jquery.ztree.core.js"></script>
     <script type="text/javascript" src="~/Content/js/jquery.ztree.excheck.js"></script>
