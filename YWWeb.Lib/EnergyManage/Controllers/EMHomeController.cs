@@ -350,57 +350,60 @@ namespace EnergyManage.Controllers
                 IList<t_V_EneryView> list_this = null;
                 IList<t_V_EneryView> list_last = null;
                 DateTime time_test = Convert.ToDateTime(time);
-                if (TypeTime == 1)
+                if (!string.IsNullOrEmpty(cidss.Trim()))
                 {
-                    for (var i = 0; i < 24; i++)
+                    if (TypeTime == 1)
                     {
-                        x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                        for (var i = 0; i < 24; i++)
+                        {
+                            x.Add(time_test.AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                        }
+                        string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+                        string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+                        list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t1, t2);
+                        string t3 = time_test.AddDays(-1).ToString("yyyy-MM-dd 00:00:00");
+                        string t4 = time_test.AddDays(-1).ToString("yyyy-MM-dd 23:59:59");
+                        for (var i = 0; i < 24; i++)
+                        {
+                            x2.Add(Convert.ToDateTime(t3).AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                        }
+                        list_last = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t3, t4);
                     }
-                    string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
-                    string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t1, t2);
-                    string t3 = time_test.AddDays(-1).ToString("yyyy-MM-dd 00:00:00");
-                    string t4 = time_test.AddDays(-1).ToString("yyyy-MM-dd 23:59:59");
-                    for (var i = 0; i < 24; i++)
+                    else if (TypeTime == 2)
                     {
-                        x2.Add(Convert.ToDateTime(t3).AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                        for (var i = 0; i < 31; i++)
+                        {
+                            x.Add(time_test.AddDays(1 - time_test.Day).AddDays(i).ToString());
+                        }
+                        string t1 = time_test.AddDays(1 - time_test.Day).ToString();
+                        string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
+                        list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t1, t2);
+                        string t3 = time_test.AddDays(1 - time_test.Day).AddMonths(-1).ToString();
+                        for (var i = 0; i < 31; i++)
+                        {
+                            x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString());
+                        }
+                        string t4 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).AddDays(-1).AddMonths(-1).ToString();
+                        list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t3, t4);
                     }
-                    list_last = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, type, t3, t4);
-                }
-                else if (TypeTime == 2)
-                {
-                    for (var i = 0; i < 31; i++)
+                    else if (TypeTime == 3)
                     {
-                        x.Add(time_test.AddDays(1 - time_test.Day).AddDays(i).ToString());
-                    }
-                    string t1 = time_test.AddDays(1 - time_test.Day).ToString();
-                    string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t1, t2);
-                    string t3 = time_test.AddDays(1 - time_test.Day).AddMonths(-1).ToString();
-                    for (var i = 0; i < 31; i++)
-                    {
-                        x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString());
-                    }
-                    string t4 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).AddDays(-1).AddMonths(-1).ToString();
-                    list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cidss, pids, type, t3, t4);
-                }
-                else if (TypeTime == 3)
-                {
-                    for (var i = 0; i < 12; i++)
-                    {
-                        x.Add(new DateTime(2018, 1, 1).AddMonths(i).ToString());
-                    }
-                    string t1 = new DateTime(2018, 1, 1).ToString();
-                    string t2 = new DateTime(2018, 12, 31).ToString();
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t1, t2);
+                        for (var i = 0; i < 12; i++)
+                        {
+                            x.Add(new DateTime(2018, 1, 1).AddMonths(i).ToString());
+                        }
+                        string t1 = new DateTime(2018, 1, 1).ToString();
+                        string t2 = new DateTime(2018, 12, 31).ToString();
+                        list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t1, t2);
 
-                    for (var i = 0; i < 12; i++)
-                    {
-                        x2.Add(new DateTime(2017, 1, 1).AddMonths(i).ToString());
+                        for (var i = 0; i < 12; i++)
+                        {
+                            x2.Add(new DateTime(2017, 1, 1).AddMonths(i).ToString());
+                        }
+                        string t3 = new DateTime(2017, 1, 1).ToString();
+                        string t4 = new DateTime(2017, 12, 31).ToString();
+                        list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
                     }
-                    string t3 = new DateTime(2017, 1, 1).ToString();
-                    string t4 = new DateTime(2017, 12, 31).ToString();
-                    list_last = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cidss, pids, type, t3, t4);
                 }
                 foreach (var item in x)
                 {
