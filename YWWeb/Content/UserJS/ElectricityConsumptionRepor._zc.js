@@ -147,7 +147,7 @@
         //获取每月天数
         getHours: function () {
             var arr = new Array()
-            for (var i = 0; i <24; i++) {
+            for (var i = 1; i <25; i++) {
                 if (i < 10) {
                     arr.push("0" + i + ":00")
                 } else {
