@@ -12,7 +12,7 @@
 }
 
 .d_l_h{text-align: center; background-color: #D7EBFF;height:27px;vertical-align:middle;border: solid 1px #ccc;}
-.d_l_d img {max-width:200px;max-height:200px; margin:5px;}
+.d_l_d img {max-width:200px;max-height:200px; margin:5px;background:#eee}
 .d_l_d_label{
     display:inline-block;
     width:80px;
@@ -30,6 +30,7 @@
         cursor: pointer;
         width:45%;
         height:25px;
+        background:#eee
     }
     .divicons:hover
     {
@@ -57,6 +58,7 @@
             width:33px;
             height:33px;
             line-height:33px;
+            background:#eee
         }
 .divicons1:hover
         {
