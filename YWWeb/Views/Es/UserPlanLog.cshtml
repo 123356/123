@@ -223,14 +223,14 @@
                 </td>
                 <td class="d_l_d">
                     <input id="plan" runat="server" name="BugLocation" missingmessage="计划用电必填项！"
-                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                           class="easyui-numberbox" precision="3" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
                     交易电价(元/MW·H)：
                 </td>
                 <td class="d_l_d">
                     <input id="jiaoyi" runat="server" name="BugLocation" missingmessage="计划用电必填项！"
-                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                           class="easyui-numberbox" precision="3"  style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
             </tr>
             <tr>
@@ -240,7 +240,7 @@
                 </td>
                 <td class="d_l_d">
                     <input id="extraTradePrice" runat="server" name="BugLocation" missingmessage="计划用电必填项！"
-                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" />
+                           class="easyui-numberbox" precision="3"  style="width: 195px;" data-options="required:true" />
                 </td>
             </tr>
             <tr>
@@ -248,7 +248,7 @@
                     备注：
                 </td>
                 <td class="d_l_d" colspan="3">
-                    <textarea id="remark" class="easyui-validatebox" style="height: 100px; width: 550px;"></textarea>
+                    <textarea id="remark" class="easyui-validatebox"  data-options="validType:'length[0,200]'" style="height: 100px; width: 550px;"></textarea>
                 </td>
             </tr>
         </table>

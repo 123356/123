@@ -118,6 +118,29 @@ function loadallot() {
 
     });
 }
+//表单验证
+$.extend($.fn.validatebox.defaults.rules, {
+    phoneNum: { //验证手机号  
+        validator: function (value, param) {
+            if (value != "") {
+                return /^1[3-8]+\d{9}$/.test(value);
+            }
+            return true
+        },
+        message: '请输入正确的手机号码。'
+    },
+
+    telNum: { //既验证手机号，又验证座机号
+        validator: function (value, param) {
+            if (value != "") {
+                return /(^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)|(^((\d3)|(\d{3}\-))?(1[358]\d{9})$)/.test(value);
+            }
+            return true
+        },
+        message: '请输入正确的电话号码。'
+    }
+})
+
 $(function () {
     $.ajaxSettings.async = false;
     loadSelectUnit("");
@@ -128,6 +151,7 @@ $(function () {
             $.messager.alert("提示", "请输入用户名！", "info");
             return false;
         }
+        
         else if ($("#Company").combobox("getText") == "") {
             $.messager.alert("提示", "请输入公司名称！", "info");
             return false;
@@ -140,8 +164,13 @@ $(function () {
             $.messager.alert("提示", "请输入Email！", "info");
             return false;
         }
+       
         else if ($("#Mobilephone").val() == "") {
             $.messager.alert("提示", "请输入移动电话！", "info");
+            return false;
+        }
+        if (!$("#editUserform").form('validate')) {
+            $.messager.alert("提示", "数据格式有误！", "info");
             return false;
         }
         var unitid = '';

@@ -186,16 +186,19 @@ new Vue({
         },
         rules: {
             ProjectName: [
-                { required: true, message: '请输入名称', trigger: 'blur' }
+                { required: true, message: '请输入名称', trigger: 'blur' },
+                { type: 'string', max: 20, message: '项目名称长度超出范围', trigger: 'blur' }
             ],
             ConNo: [
-                { required: true, message: '请输入编号', trigger: 'blur' }
+                { required: true, message: '请输入编号', trigger: 'blur' },
+                { type: 'string', max: 20, message: '编号长度超出范围', trigger: 'blur' }
             ],
             Type: [
                 { required: true, message: '请选择项目类型', trigger: 'change' }
             ],
             CtrName: [
-                { required: true, message: '请输入名称', trigger: 'blur' }
+                { required: true, message: '请输入名称', trigger: 'blur' },
+                { type: 'string', max: 20, message: '名称长度超出范围', trigger: 'blur' }
             ],
             ConMoneys: [
                 { required: true,  message: '请输入金额', trigger: 'blur' },
@@ -211,7 +214,8 @@ new Vue({
                 { required: true, type: 'number', message: '请选择区域', trigger: 'change' }
             ],
             Adress: [
-                { required: true, message: '请输入地址', trigger: 'blur' }
+                { required: true, message: '请输入地址', trigger: 'blur' },
+                { type: 'string', max: 100, message: '地址长度超出范围', trigger: 'blur' }
             ],
             Coordination: [
                 { required: true, validator: locationValidate, trigger: 'blur' }

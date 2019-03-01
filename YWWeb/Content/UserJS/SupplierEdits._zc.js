@@ -8,7 +8,7 @@ $.extend($.fn.validatebox.defaults.rules, {
             return true
         },
         message: '请输入正确的手机号码。'
-    },
+    }, 
 
     telNum: { //既验证手机号，又验证座机号
         validator: function (value, param) {

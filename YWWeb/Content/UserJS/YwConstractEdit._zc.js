@@ -305,6 +305,7 @@ $(function () {
             $.messager.alert("提示", "请输入合同名称！", "info");
             return false;
         }
+       
         if ($("#CtrName").val().indexOf("#") >= 0) {
             $.messager.alert("提示", "不能包含特殊字符#！", "info");
             return false;
@@ -313,6 +314,7 @@ $(function () {
             $.messager.alert("提示", "请输入运维客户！", "info");
             return false;
         }
+        
         else if ($("#CtrPName").val() == "") {
             $.messager.alert("提示", "请输入站名称！", "info");
             return false;
@@ -329,6 +331,7 @@ $(function () {
             $.messager.alert("提示", "请输入负责人员！", "info");
             return false;
         }
+        
         //else if (parseInt($("#dayCount").val())=="NaN") {
         //    $.messager.alert("提示", "请输入日常检修次数！", "info");
         //    return false;

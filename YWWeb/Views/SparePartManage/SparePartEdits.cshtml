@@ -14,16 +14,16 @@
                 编码：
             </td>
             <td class="d_l_d">
-                <input id="DeviceCode" name="DeviceCode" missingmessage="编码必填项！" class="easyui-validatebox"
-                       style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="DeviceCode" name="DeviceCode" maxlength="20" missingmessage="编码必填项！" class="easyui-validatebox"
+                       style="width: 250px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
                 <input id="ID" type="hidden" />
             </td>
             <td class="d_l_t">
                 名称：
             </td>
             <td class="d_l_d">
-                <input id="DeviceName" name="DeviceName" missingmessage="名称必填项！" class="easyui-validatebox"
-                       style="width: 250px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                <input id="DeviceName" name="DeviceName" maxlength="20" missingmessage="名称必填项！" class="easyui-validatebox"
+                       style="width: 250px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
             </td>
         </tr>
         <tr>
@@ -46,13 +46,13 @@
                 型号：
             </td>
             <td class="d_l_d">
-                <input id="DeviceModel" name="DeviceModel" missingmessage="名称必填项！" data-options="required:true" class="easyui-validatebox" style="width: 250px;" /><b class="RStar">&nbsp*</b>
+                <input id="DeviceModel" name="DeviceModel" missingmessage="名称必填项！" maxlength="20" data-options="required:true,validType:'length[1,20]'" class="easyui-validatebox" style="width: 250px;" /><b class="RStar">&nbsp*</b>
             </td>
             <td class="d_l_t">
                 厂家：
             </td>
             <td class="d_l_d">
-                <input id="Manufactor" name="Manufactor" class="easyui-validatebox" missingmessage="名称必填项！" data-options="required:true" style="width: 250px;" /><b class="RStar">&nbsp*</b>
+                <input id="Manufactor" name="Manufactor" class="easyui-validatebox" missingmessage="名称必填项！" maxlength="50" data-options="required:true,validType:'length[1,50]'" style="width: 250px;" /><b class="RStar">&nbsp*</b>
             </td>
         </tr>
 
@@ -67,6 +67,6 @@
     <script type="text/javascript">
         var sparepartid=@Html.Raw(Request.QueryString["sparepartid"]);
     </script>
-    <script src="~/Content/UserJS/SparePartEdits._jm.js?v=1.15"></script>
+    <script src="~/Content/UserJS/SparePartEdits._zc.js?v=1.15"></script>
 </body>
 </html>
