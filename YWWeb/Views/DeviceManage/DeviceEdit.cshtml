@@ -25,7 +25,7 @@
                         设备编码：
                     </td>
                     <td class="d_l_d">
-                        <input id="DeviceCode" name="DeviceCode" missingmessage="设备编码必填项！" class="easyui-validatebox" 
+                        <input id="DeviceCode" name="DeviceCode" missingmessage="设备编码必填项！" class="easyui-validatebox"  maxlength="20"
                             style="width: 200px;" data-options="required:true" />
                         <input id="DID" type="hidden" />
                         <input id="MainID" type="hidden" />
@@ -34,7 +34,7 @@
                         设备名称：
                     </td>
                     <td class="d_l_d">
-                        <input id="DeviceName" name="DeviceName" missingmessage="设备名称必填项！" class="easyui-validatebox"
+                        <input id="DeviceName" name="DeviceName" missingmessage="设备名称必填项！" class="easyui-validatebox" maxlength="20"
                             style="width: 200px;" data-options="required:true" />
                     </td>
                 </tr>
@@ -52,7 +52,7 @@
                         设备型号：
                     </td>
                     <td class="d_l_d">
-                        <input id="DeviceModel" name="DeviceModel" missingmessage="设备型号必填项！" class="easyui-validatebox"
+                        <input id="DeviceModel" name="DeviceModel" missingmessage="设备型号必填项！" class="easyui-validatebox" maxlength="20"
                             style="width: 200px;" data-options="required:true" />
                     </td>
                     <td class="d_l_t">
@@ -91,14 +91,14 @@
                         生产厂家：
                     </td>
                     <td class="d_l_d">
-                        <input id="MFactory" name="MFactory" missingmessage="生产厂家必填项！" class="easyui-validatebox"
+                        <input id="MFactory" name="MFactory" missingmessage="生产厂家必填项！" class="easyui-validatebox" maxlength="50"
                             style="width: 200px;" data-options="required:true" />
                     </td>
                     <td class="d_l_t">
                         出厂编号：
                     </td>
                     <td class="d_l_d">
-                        <input id="FactoryNumber" name="FactoryNumber" missingmessage="出厂编号必填项！" class="easyui-validatebox"
+                        <input id="FactoryNumber" name="FactoryNumber" missingmessage="出厂编号必填项！" class="easyui-validatebox" maxlength="20"
                             style="width: 200px;" data-options="required:true" />
                     </td>
                 </tr>
@@ -121,7 +121,7 @@
                         安装地点：
                     </td>
                     <td class="d_l_d">
-                        <input id="InstallAddr" name="InstallAddr" missingmessage="安装地点必填项！" class="easyui-validatebox"
+                        <input id="InstallAddr" name="InstallAddr" missingmessage="安装地点必填项！" class="easyui-validatebox" maxlength="50"
                             style="width: 200px;" data-options="required:true" />
                     </td>
                     <td class="d_l_t">
@@ -162,7 +162,7 @@
                         备注：
                     </td>
                     <td class="d_l_d" colspan="3">
-                        <textarea id="Remarks" class="easyui-validatebox" style="height: 80px; width: 660px;"></textarea>
+                        <textarea id="Remarks" class="easyui-validatebox" maxlength="200" style="height: 80px; width: 660px;"></textarea>
                     </td>
                 </tr>
             </table>
