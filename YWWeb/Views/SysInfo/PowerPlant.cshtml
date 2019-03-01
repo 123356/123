@@ -85,7 +85,7 @@
                     电站调度名称：
                 </td>
                 <td class="d_l_d">
-                    <input id="UnitName" runat="server" name="UnitName" missingmessage="必填项！" class="easyui-validatebox"
+                    <input id="UnitName" runat="server" maxlength="20" name="UnitName" missingmessage="必填项！" class="easyui-validatebox"
                            style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                     <input id="UnitID" type="hidden" />
                 </td>
@@ -93,7 +93,7 @@
                     装机容量(kVA)：
                 </td>
                 <td class="d_l_d">
-                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" missingmessage="必填项！" class="easyui-validatebox"
+                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" missingmessage="必填项！" class="easyui-numberbox" precision="3"
                            style="width: 200px;" data-options="required:true" />
                     <b class="RStar">&nbsp*</b>
                 </td>
@@ -103,7 +103,7 @@
                     联系人：
                 </td>
                 <td class="d_l_d" style="width:250px;">
-                    <input id="LinkMan" runat="server" name="LinkMan" missingmessage="必填项！" class="easyui-validatebox"
+                    <input id="LinkMan" runat="server" name="LinkMan" missingmessage="必填项！" class="easyui-validatebox" maxlength="20"
                            style="width: 200px;" data-options="required:true" />
                     <b class="RStar">&nbsp*</b>
                 </td>
@@ -146,7 +146,7 @@
                     所属公司名称：
                 </td>
                 <td class="d_l_d" style="width:250px;">
-                    <input id="companyName" runat="server" name="LinkPhone" missingmessage="必填项！"
+                    <input id="companyName" runat="server" name="LinkPhone" missingmessage="必填项！" maxlength="20"
                            class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
                     <b class="RStar">&nbsp*</b>
                 </td>
@@ -154,7 +154,7 @@
                     电厂性质：
                 </td>
                 <td class="d_l_d">
-                    <input id="Nature" runat="server" name="LinkAddress" missingmessage="必填项！"
+                    <input id="Nature" runat="server" name="LinkAddress" missingmessage="必填项！" maxlength="50"
                            class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
                     <b class="RStar">&nbsp*</b>
                 </td>
@@ -165,7 +165,7 @@
                     联系地址：
                 </td>
                 <td class="d_l_d" colspan="3" style="width:550px;">
-                    <input id="LinkAddress" runat="server" name="Email" missingmessage="必填项！" class="easyui-validatebox"
+                    <input id="LinkAddress" runat="server" name="Email" missingmessage="必填项！" class="easyui-validatebox" maxlength="100"
                            style="width: 500px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
             </tr>

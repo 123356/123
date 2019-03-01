@@ -80,7 +80,7 @@
                     角色名称：
                 </td>
                 <td class="d_l_d">
-                    <input id="RoleName" runat="server" name="RoleName" missingmessage="角色名必填项！" class="easyui-validatebox"
+                    <input id="RoleName" runat="server" name="RoleName" maxlength="20" missingmessage="角色名必填项！" class="easyui-validatebox"
                         style="width: 200px; height: 22px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                     <input id="RoleID" type="hidden" />
                 </td>
@@ -90,7 +90,7 @@
                     角色描述：
                 </td>
                 <td class="d_l_d">
-                    <textarea id="Remarks" class="easyui-validatebox" style="height: 100px; width: 200px;"></textarea>
+                    <textarea id="Remarks" class="easyui-validatebox" maxlength="200" style="height: 100px; width: 200px;"></textarea>
                 </td>
             </tr>
         </table>

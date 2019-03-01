@@ -222,8 +222,8 @@ function save() {
     else if ($("#PZ").combobox("getValue") == "") {
         $.messager.alert("提示", "请选择品种！", "info");
         return false;
-    }
-
+    } 
+   
     var PlanStr = "";
     var PlanArr = $("input[name='BugLocation']", $("#editwin3"));
     for (var i = 0; i < PlanArr.length; i++) {

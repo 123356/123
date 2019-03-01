@@ -93,6 +93,7 @@ function save() {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }
+    
     var ID = $("#ID").val()
     var postData = {
         DeviceCode: $("#DeviceCode").val(),

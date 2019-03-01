@@ -31,111 +31,108 @@
     </style>
 </head>
 <body>
-    <table cellpadding="" cellspacing="" border="0" class="d_list">
-        <tr>
-            <td class="d_l_t" style="width: 80px;">
-                用户名：
-            </td>
-            <td class="d_l_d">
-                <input id="UserName" runat="server" name="UserName" maxlength="20" missingmessage="用户名必填项！"
-                    class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
-                        class="RStar">&nbsp*</b>
-                <input id="UserID" type="hidden" />
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                公司名称：
-            </td>
-            <td class="d_l_d">
-                <select id="Company" style="width: 210px; height: 24px;">
-                </select><b class="RStar">&nbsp*</b>
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t" align="right">
-                显示LOGO：
-            </td>
-            <td class="d_l_d">
-                <input id="Menu_Img" type="hidden" runat="server" />
-                <img id="Img_Menu_Img" src="/Content/images/logo/ld_logo.png" width="40px" height="16px"
-                    runat="server" alt="" style="vertical-align: middle; padding-right: 10px;" />
-                <a href="javascript:" onclick="OpenIconList()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
-                    选择LOGO</a>
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                职位：
-            </td>
-            <td class="d_l_d">
-                <input id="Post" runat="server" name="Post" maxlength="20" class="easyui-validatebox"
-                    style="width: 200px; height: 24px;" />
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                所属班组：
-            </td>
-            <td class="d_l_d">
-                <input id="GroupName" runat="server" name="GroupName" maxlength="20" class="easyui-validatebox"
-                    style="width: 200px; height: 24px;" />
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                固定电话：
-            </td>
-            <td class="d_l_d">
-                <input id="Telephone" runat="server" maxlength="20" name="Telephone" missingmessage="固定电话必填项！"
-                    class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
-                        class="RStar">&nbsp*</b>
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                Email：
-            </td>
-            <td class="d_l_d">
-                <input id="Email" runat="server" maxlength="40" name="Email" missingmessage="Email必填项！"
-                    class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
-                        class="RStar">&nbsp*</b>
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                移动电话：
-            </td>
-            <td class="d_l_d">
-                <input id="Mobilephone" runat="server" maxlength="20" name="Mobilephone" missingmessage="移动电话必填项！"
-                    class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
-                        class="RStar">&nbsp*</b>
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                角色分配：
-            </td>
-            <td class="d_l_d" id="allot">
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                单位分配：
-            </td>
-            <td class="d_l_d">
-                <input style="width: 210px;" id="unitlist" />
-            </td>
-        </tr>
-        <tr>
-            <td class="d_l_t">
-                报警通知：
-            </td>
-            <td class="d_l_d">
-                <input type="checkbox" name="cbkAlarmMsg" id="cbkAlarmMsg" />短信通知
-            </td>
-        </tr>
-    </table>
+    <form id="editUserform">
+        <table cellpadding="" cellspacing="" border="0" class="d_list">
+            <tr>
+                <td class="d_l_t" style="width: 80px;">
+                    用户名：
+                </td>
+                <td class="d_l_d">
+                    <input id="UserName" runat="server" name="UserName" maxlength="20" missingmessage="用户名必填项！"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
+                    <input id="UserID" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    公司名称：
+                </td>
+                <td class="d_l_d">
+                    <select id="Company" style="width: 210px; height: 24px;"></select><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t" align="right">
+                    显示LOGO：
+                </td>
+                <td class="d_l_d">
+                    <input id="Menu_Img" type="hidden" runat="server" />
+                    <img id="Img_Menu_Img" src="/Content/images/logo/ld_logo.png" width="40px" height="16px"
+                         runat="server" alt="" style="vertical-align: middle; padding-right: 10px;" />
+                    <a href="javascript:" onclick="OpenIconList()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
+                        选择LOGO
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    职位：
+                </td>
+                <td class="d_l_d">
+                    <input id="Post" runat="server" name="Post" maxlength="20" class="easyui-validatebox" data-options="validType:'length[0,20]'"
+                           style="width: 200px; height: 24px;" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    所属班组：
+                </td>
+                <td class="d_l_d">
+                    <input id="GroupName" runat="server" name="GroupName" maxlength="20" class="easyui-validatebox"
+                           style="width: 200px; height: 24px;" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    固定电话：
+                </td>
+                <td class="d_l_d">
+                    <input id="Telephone" runat="server" maxlength="20" name="Telephone" missingmessage="固定电话必填项！"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" validType="telNum"/><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    Email：
+                </td>
+                <td class="d_l_d">
+                    <input id="Email" runat="server" maxlength="40" name="Email" missingmessage="Email必填项！"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true,validType:'length[1,40]'" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    移动电话：
+                </td>
+                <td class="d_l_d">
+                    <input id="Mobilephone" runat="server" maxlength="20" name="Mobilephone" missingmessage="移动电话必填项！"
+                           class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true"validType="phoneNum" /><b class="RStar">&nbsp*</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    角色分配：
+                </td>
+                <td class="d_l_d" id="allot"></td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    单位分配：
+                </td>
+                <td class="d_l_d">
+                    <input style="width: 210px;" id="unitlist" />
+                </td>
+            </tr>
+            <tr>
+                <td class="d_l_t">
+                    报警通知：
+                </td>
+                <td class="d_l_d">
+                    <input type="checkbox" name="cbkAlarmMsg" id="cbkAlarmMsg" />短信通知
+                </td>
+            </tr>
+        </table>
+    </form>
     <div style="text-align: center; padding-top: 20px;">
         <a href="javascript:;" id="btnSave" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">
             保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'"
@@ -152,6 +149,6 @@
         var userid=@Html.Raw(Request.QueryString["userid"]);
       
     </script>
-    <script src="~/Content/UserJS/UserEdit_jm.js"></script>
+    <script src="~/Content/UserJS/UserEdit_jm.js?v=1.06"></script>
 </body>
 </html>

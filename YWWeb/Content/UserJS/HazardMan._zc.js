@@ -212,6 +212,7 @@ function save() {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
     }
+    
     var postData = {
         PID: $("#PID").val(),
         PName: $("#PName").val(),

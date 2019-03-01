@@ -1355,10 +1355,12 @@
     <Content Include="Content\js\artDialog\skins\icons\question.png" />
     <Content Include="Content\js\artDialog\skins\icons\succeed.png" />
     <Content Include="Content\js\artDialog\skins\icons\warning.png" />
+    <Content Include="Content\js\babel.min.js" />
     <Content Include="Content\js\bootstrap-datepicker.js" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\boximg.js" />
+    <Content Include="Content\js\browser.min.js" />
     <Content Include="Content\js\dataTables.bootstrap.js" />
     <Content Include="Content\js\datepair.js" />
     <Content Include="Content\js\easySlider.js" />
@@ -1367,6 +1369,7 @@
     <Content Include="Content\js\echarts.min3.js" />
     <Content Include="Content\js\jquery.ztree.core.js" />
     <Content Include="Content\js\jquery.ztree.excheck.js" />
+    <Content Include="Content\js\polyfill.js" />
     <Content Include="Content\js\rule.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />

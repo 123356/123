@@ -97,8 +97,8 @@
                     单位名称：
                 </td>
                 <td class="d_l_d">
-                    <input id="UnitName" runat="server" name="UnitName" missingmessage="单位名称必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="UnitName" runat="server" name="UnitName" maxlength="20" missingmessage="单位名称必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
                     <input id="UnitID" type="hidden" />
                 </td>
                 <td class="d_l_t">
@@ -117,8 +117,8 @@
                     联系人：
                 </td>
                 <td class="d_l_d" style="width:250px;">
-                    <input id="LinkMan" runat="server" name="LinkMan" missingmessage="联系人必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" />
+                    <input id="LinkMan" runat="server" name="LinkMan" maxlength="20" missingmessage="联系人必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" />
                     <b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
@@ -136,8 +136,8 @@
                     Email：
                 </td>
                 <td class="d_l_d" style="width:250px;">
-                    <input id="Email" runat="server" name="Email" missingmessage="公司名称必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="Email" runat="server" name="Email" maxlength="20" missingmessage="公司名称必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
                     座机电话：
@@ -153,8 +153,8 @@
                     客服经理：
                 </td>
                 <td class="d_l_d" style="width:250px;">
-                    <input id="CSMMan" runat="server" name="CSMMan" missingmessage="客户经理必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    <input id="CSMMan" runat="server" name="CSMMan" maxlength="20" missingmessage="客户经理必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
                     客服电话：
@@ -193,8 +193,8 @@
                     联系地址：
                 </td>
                 <td class="d_l_d" colspan="3">
-                    <input id="LinkAddress" runat="server" name="LinkAddress" missingmessage="联系地址必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                    <input id="LinkAddress" runat="server" name="LinkAddress"maxlength="100" missingmessage="联系地址必填项！"
+                           class="easyui-validatebox" style="width: 200px;" data-options="required:true,validType:'length[1,100]'" />
                     <b class="RStar">&nbsp*</b>
                 </td>
             </tr>
@@ -203,14 +203,14 @@
                     基本电费容需计价方式(元/kVA/月或元/kW/月)：
                 </td>
                 <td class="d_l_d">
-                    <input id="EleCalWay" runat="server" name="EleCalWay" missingmessage="基本电费容需计价方式必填项！" class="easyui-validatebox"
+                    <input id="EleCalWay" runat="server" name="EleCalWay" missingmessage="基本电费容需计价方式必填项！" class="easyui-numberbox" precision="3"
                            style="width: 200px;" data-options="required:true" />
                 </td>
                 <td class="d_l_t">
                     对应政府目录电价水平(元/千瓦时)：
                 </td>
                 <td class="d_l_d">
-                    <input id="GovEleLevel" runat="server" name="GovEleLevel" missingmessage="对应政府目录电价水平（丰枯峰谷）必填项！" class="easyui-validatebox"
+                    <input id="GovEleLevel" runat="server" name="GovEleLevel" missingmessage="对应政府目录电价水平（丰枯峰谷）必填项！" class="easyui-numberbox" precision="3"
                            style="width: 200px;" data-options="required:true" />
                 </td>
             </tr>
@@ -219,15 +219,15 @@
                     偏差承担方式：
                 </td>
                 <td class="d_l_d">
-                    <input id="DeviationMode" runat="server" name="DeviationMode" missingmessage="偏差承担方式必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" />
+                    <input id="DeviationMode" runat="server" name="DeviationMode" maxlength="100" missingmessage="偏差承担方式必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,100]'" />
                 </td>
                 <td class="d_l_t">
                     装机容量描述：
                 </td>
                 <td class="d_l_d">
-                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" missingmessage="装机容量必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true" />
+                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" maxlength="200" missingmessage="装机容量必填项！" class="easyui-validatebox"
+                           style="width: 200px;" data-options="required:true,validType:'length[1,200]'" />
                 </td>
             </tr>
             <tr>
@@ -258,7 +258,7 @@
                     装机容量(kVA)：
                 </td>
                 <td class="d_l_d">
-                    <input id="InstalledCapacitys" runat="server" name="InstalledCapacitys" missingmessage="装机容量(kVA)必填项！" class="easyui-validatebox"
+                    <input id="InstalledCapacitys" runat="server" name="InstalledCapacitys" missingmessage="装机容量(kVA)必填项！" class="easyui-numberbox" precision="3"
                            style="width: 200px;" data-options="required:true" />
                     <b class="RStar">&nbsp*</b>
                 </td>
@@ -296,7 +296,7 @@
                     去年总用电量：
                 </td>
                 <td class="d_l_d" colspan="3">
-                    <input style="width: 210px;" id="LastYearPower" />
+                    <input style="width: 210px;" id="LastYearPower" class="easyui-numberbox" precision="3"/>
                 </td>
             </tr>
         </table>

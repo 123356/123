@@ -38,7 +38,7 @@
             </td>
             <td class="d_l_d">
                 <input id="CtrName" runat="server" name="CtrName" maxlength="20" 
-                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true,validType:'length[1,20]'" /><b
                         class="RStar">&nbsp*</b>
                 <input id="id" type="hidden" />
             </td>
@@ -47,7 +47,7 @@
             </td>
             <td class="d_l_d">
                 <input id="CtrAdmin" runat="server" name="CtrName" maxlength="20"
-                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                       class="easyui-validatebox" style="width: 200px; height: 24px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
                 <input id="id" type="hidden" />
             </td>
         </tr>
@@ -147,7 +147,7 @@
         </tr>
         <tr>
             <td class="d_l_t" colspan="4" style="height:60px; text-align: left;padding-left:20px;background-color:#fff">
-                <textarea id="CtrInfo" class="easyui-validatebox validatebox-text" style="height:60px;  width: 97%;"></textarea>
+                <textarea id="CtrInfo" class="easyui-validatebox validatebox-text" maxlength="200" data-options="validType:'length[0,200]'" style="height:60px;  width: 97%;"></textarea>
             </td>
         </tr>
         <tr>

@@ -122,7 +122,7 @@
                     站室名称
                 </td>
                 <td class="d_l_d">
-                    <input id="Name" runat="server" name="Name" missingmessage="站室名称必填项！" class="easyui-validatebox"
+                    <input id="Name" runat="server" name="Name" maxlength="20" missingmessage="站室名称必填项！" class="easyui-validatebox"
                            style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                     <input id="PID" type="hidden" />
                 </td>
@@ -166,7 +166,7 @@
                     运维联系人
                 </td>
                 <td class="d_l_d">
-                    <input id="OperationMan" runat="server" name="LinkMan" missingmessage="联系人必填项！" class="easyui-validatebox"
+                    <input id="OperationMan" runat="server" name="LinkMan" maxlength="20" missingmessage="联系人必填项！" class="easyui-validatebox"
                            style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
@@ -185,7 +185,7 @@
                     位置
                 </td>
                 <td class="d_l_d">
-                    <input id="Position" runat="server" name="Position" missingmessage="位置必填项！" class="easyui-validatebox"
+                    <input id="Position" runat="server" name="Position" missingmessage="位置必填项！" maxlength="100" class="easyui-validatebox"
                            style="width: 168px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
@@ -211,7 +211,7 @@
                     投运时间
                 </td>
                 <td class="d_l_d">
-                    <input class="easyui-datebox" style="width: 180px; height: 26px;" missingmessage="投运时间必填项！" id="ApplcationTime" />
+                    <input class="easyui-datebox" style="width: 180px; height: 26px;" editable="false" missingmessage="投运时间必填项！" id="ApplcationTime" />
                     <b class="RStar">&nbsp*</b>
                 </td>
                 <td class="d_l_t">
@@ -263,7 +263,7 @@
                 </td>
                 <td class="d_l_d" colspan="2">
                     <label class="d_l_d_label">户号</label>
-                    <input id="FamilyID" runat="server" name="FamilyID" missingmessage="户号必填项！" class="easyui-validatebox"
+                    <input id="FamilyID" runat="server" name="FamilyID" maxlength="20" missingmessage="户号必填项！" class="easyui-validatebox"
                            style="width: 148px;" data-options="required:true" />
                 </td>
               <!-- <td class="d_l_d">
@@ -301,7 +301,7 @@
                     备注
                 </td>
                 <td class="d_l_d" colspan="5">
-                    <textarea id="Remarks" class="easyui-validatebox textarea" style="height: 100px; width: 90%;"></textarea>
+                    <textarea id="Remarks" maxlength="200" class="easyui-validatebox textarea" style="height: 100px; width: 90%;"></textarea>
                 </td>
             </tr>
         </table>

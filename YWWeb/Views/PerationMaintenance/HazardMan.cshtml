@@ -113,8 +113,8 @@
                     缺陷部位：
                 </td>
                 <td class="d_l_d" colspan="3">
-                    <input id="BugLocation" runat="server" name="BugLocation" missingmessage="缺陷部位必填项！"
-                        class="easyui-validatebox" style="width: 500px;" data-options="required:true" /><b
+                    <input id="BugLocation" runat="server" name="BugLocation" missingmessage="缺陷部位必填项！" maxlength="50"
+                        class="easyui-validatebox" style="width: 500px;" data-options="required:true,validType:'length[1,50]'" /><b
                             class="RStar">&nbsp*</b>
                 </td>
             </tr>
@@ -123,7 +123,7 @@
                     缺陷描述：
                 </td>
                 <td class="d_l_d" colspan="3">
-                    <textarea id="BugDesc" class="easyui-validatebox" style="height: 100px; width: 500px;"></textarea>
+                    <textarea id="BugDesc" maxlength="200" class="easyui-validatebox" style="height: 100px; width: 500px;"></textarea>
                 </td>
             </tr>
         </table>

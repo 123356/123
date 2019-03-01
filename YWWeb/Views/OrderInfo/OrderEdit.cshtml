@@ -30,7 +30,7 @@
             </td>
             <td class="d_l_d">
                 <input id="OrderName" name="DeviceName" class="easyui-validatebox"
-                       style="width: 85%;" data-options="required:true" />
+                       style="width: 85%;" data-options="required:true,validType:'length[1,20]'" />
             </td>
             <td class="d_l_t">
                 工单类型：<b class="RStar">&nbsp*</b>
@@ -62,7 +62,7 @@
                 执行日期：<b class="RStar">&nbsp*</b>
             </td>
             <td class="d_l_d">
-                <input id="PlanDate" name="PlanDate" class="easyui-datebox" />
+                <input id="PlanDate" name="PlanDate" class="easyui-datebox" editable="false"/>
             </td>
             <td class="d_l_t">
                 优先级：<b class="RStar">&nbsp*</b>
@@ -80,7 +80,7 @@
                 工单说明：<b class="RStar">&nbsp*</b>
             </td>
             <td class="d_l_d" colspan="3">
-                <textarea id="OrderContent" class="easyui-validatebox" style="height: 60%; width: 97%;"></textarea>
+                <textarea id="OrderContent" class="easyui-validatebox" data-options="required:true,validType:'length[1,200]'"  style="height: 60%; width: 97%;"></textarea>
             </td>
         </tr>
         <tr>
@@ -398,6 +398,19 @@
             if ($("#OrderContent").val() == "") {
                 $.messager.alert("提示", "请填写工单内容！", "info");
                 return false;
+            }
+            if ($("#OrderContent").val() != "") {
+                if ($("#OrderContent").val().length > 200) {
+                    $.messager.alert("提示", "工单内容长度超出范围！", "info");
+                    return false;
+                }
+                
+            }
+            if ($("#Remarks").val().length > 200) {
+                if ($("#Remarks").val().length > 200) {
+                    $.messager.alert("提示", "备注内容长度超出范围！", "info");
+                    return false;
+                }
             }
 
             //读取工单内容

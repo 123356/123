@@ -41,7 +41,14 @@ function jsonp(url) {
 	}
 	
 	//七天天气图表
-	function createChart(data){
+function createChart(data) {
+    
+    if (!data || data.length < 1 || data == undefined) {
+        $(".weather").hide()
+        return
+    } else {
+        $(".weather").show()
+    }
 	    var chart = echarts.init(document.getElementById('weatherChart'));
 			var weeks = new Array();
 			var high = new Array();

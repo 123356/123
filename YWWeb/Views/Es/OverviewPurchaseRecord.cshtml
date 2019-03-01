@@ -71,96 +71,94 @@
 
     <div id="editwin" title="编辑计划信息" class="easyui-dialog" closed="true" style="width: 800px; height: 350px; padding: 5px;"
          minimizable="false" maximizable="false" collapsible="false">
-        <table cellpadding="" cellspacing="" border="0" class="d_list">
-            <tr>
-                <td class="d_l_t">
-                    年度：
-                </td>
-                <td class="d_l_d">
-                    <select id="year" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
-                    <b class="RStar">&nbsp*</b>
-                    <input id="id" type="hidden" />
-                </td>
-                <td class="d_l_t">
-                    月份：
-                </td>
-                <td class="d_l_d">
-                    <select id="month" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    购电量(MW·H)：
-                </td>
-                <td class="d_l_d">
-                    <input id="quantity" runat="server" name="BugLocation" missingmessage="购电量必填项！"
-                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                    <input id="id" type="hidden" />
-                </td>
-                <td class="d_l_t">
-                    售电方名称：
-                </td>
-                <td class="d_l_d">
-                    <input id="company" runat="server" name="BugLocation" 
-                           class="easyui-validatebox" style="width: 195px;" /><b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    品种：
-                </td>
-                <td class="d_l_d">
-                    <select id="PZ" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    交易电价(元/MW·H)：
-                </td>
-                <td class="d_l_d">
-                    <input id="jiaoyi" runat="server" name="BugLocation" missingmessage="购电量必填项！"
-                           class="easyui-validatebox" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    周：
-                </td>
-                <td class="d_l_d">
-                    <select id="Indexweek" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
-                    @*<b class="RStar">&nbsp*</b>*@
-                </td>
-                <td class="d_l_t">
-                    交易时间：
-                </td>
-                <td class="d_l_d">
-                    <input id="TradeTime" runat="server" name="TradeTime" missingmessage="购电量必填项！"
-                           class="easyui-datebox" style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    交易来源：
-                </td>
-                <td class="d_l_d">
-                    <select id="cbxSource" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                  
-                </td>
-                <td class="d_l_d">
-                    
-                </td>
-            </tr>
-        </table>
+        <form id="editForm">
+            <table cellpadding="" cellspacing="" border="0" class="d_list">
+                <tr>
+                    <td class="d_l_t">
+                        年度：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="year" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                        <b class="RStar">&nbsp*</b>
+                        <input id="id" type="hidden" />
+                    </td>
+                    <td class="d_l_t">
+                        月份：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="month" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                        <b class="RStar">&nbsp*</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        购电量(MW·H)：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="quantity" runat="server" name="BugLocation" missingmessage="购电量必填项！"
+                               class="easyui-numberbox" precision="3" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                        <input id="id" type="hidden" />
+                    </td>
+                    <td class="d_l_t">
+                        售电方名称：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="company" runat="server" name="BugLocation" maxlength="20" data-options="required:true,validType:'length[1,20]'"
+                               class="easyui-validatebox" style="width: 195px;" /><b class="RStar">&nbsp*</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        品种：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="PZ" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                        <b class="RStar">&nbsp*</b>
+                    </td>
+                    <td class="d_l_t">
+                        交易电价(元/MW·H)：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="jiaoyi" runat="server" name="BugLocation" missingmessage="购电量必填项！"
+                               class="easyui-numberbox" precision="3" style="width: 195px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        周：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="Indexweek" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                        @*<b class="RStar">&nbsp*</b>*@
+                    </td>
+                    <td class="d_l_t">
+                        交易时间：
+                    </td>
+                    <td class="d_l_d">
+                        <input id="TradeTime" runat="server" name="TradeTime" missingmessage="购电量必填项！" editable="fasle"
+                               class="easyui-datebox" style="width: 200px;" data-options="required:true" /><b class="RStar">&nbsp*</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="d_l_t">
+                        交易来源：
+                    </td>
+                    <td class="d_l_d">
+                        <select id="cbxSource" class="easyui-combobox" style="width: 200px; height: 26px;"></select>
+                        <b class="RStar">&nbsp*</b>
+                    </td>
+                    <td class="d_l_t"></td>
+                    <td class="d_l_d"></td>
+                </tr>
+            </table>
+        </form>
         <div style="text-align: center;">
             <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
                                                           data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
         </div>
     </div>
-    <script src="~/Content/UserJS/OverviewPurchaseRecord._jm.js"></script>
+    <script src="~/Content/UserJS/OverviewPurchaseRecord._jm.js?v=1.01"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 </body>
 </html>
