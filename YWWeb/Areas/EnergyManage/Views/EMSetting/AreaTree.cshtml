@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 
-    
 
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    @*<script type="text/javascript" src="~/Content/js/jquery-1.14.2.min.js"></script>*@
+    @*
+    <script type="text/javascript" src="~/Content/js/jquery-1.14.2.min.js"></script>*@
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
-
+    <script type="text/javascript" src="~/Content/js/echarts.min.js"></script>
 
     <link href="~/Content/d3/css/style.css" rel="stylesheet" />
     <script src="~/Content/d3/js/d3.js"></script>
@@ -44,16 +45,39 @@
         text {
             font-size: 16px;
         }
-        .electricity{
-            color:#ff6a00;
+
+        .electricity {
+            color: #ff6a00;
         }
+
+        #editwin {
+            display: flex;
+            flex-direction: row
+        }
+
+            #editwin .barChart {
+                height: 100%;
+                flex: 2;
+                overflow: hidden
+            }
+
+            #editwin .pieChart {
+                height: 100%;
+                flex: 1;
+                overflow: hidden
+            }
     </style>
 </head>
 <body>
     <div id="body"></div>
-
+    <div id="editwin" title="详情" class="easyui-window" closed="true" style="width: 900px;
+        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        <div class="barChart" id="barChart"></div>
+        <div class="pieChart" id="pieChart"></div>
+    </div>
 
     <script>
+
         var w = 1140,
             h = 600,
             x = d3.scale.linear().range([0, w]),
@@ -129,7 +153,7 @@
                     .append("svg:tspan")
                     .attr("x", text.attr("x"))
                     .attr("dy", "1em")
-                    .attr('fill','#333')
+                    .attr('fill', '#333')
                     .text(function (d) {
                         return d;
                     });
@@ -153,7 +177,7 @@
                     var t = g.transition()
                         .duration(d3.event.altKey ? 7500 : 750)
                         .attr("transform", function (d) {
-                            return "translate(" + x(d.y) + "," + y(d.x)  +")";
+                            return "translate(" + x(d.y) + "," + y(d.x) + ")";
                         });
 
                     t.select("rect")
@@ -175,11 +199,178 @@
                 }
             }
         })
-                //x最小 像素大小
-                //x最大 w/层数-文字个数*像素大小
+        //x最小 像素大小
+        //x最大 w/层数-文字个数*像素大小
 
-                //y最小 0+像素*2
-                //y最大 d.dx*ky-2*像素大小
+        //y最小 0+像素*2
+        //y最大 d.dx*ky-2*像素大小
     </script>
+
+    <script type="text/javascript">
+        function createBarChart() {
+            var barChart = echarts.init(document.getElementById('barChart'));
+            var option = {
+                title: {
+                    text: '北京恒扉嘉泰总用电量',
+                    subtext: '总用电量1212',
+                    left: 'center',
+                    textStyle: {
+                        color: '#757575',
+                        fontWeight: 'normal',
+                        fontSize: 12,
+                    },
+                    top: 0
+                },
+                color: ['#57b9a3'],
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: "{a}: <br/>-{b}:{c}",
+                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    position: ['50%', '50%']
+                },
+                //toolbox: {
+                //    feature: {
+                //        dataZoom: {
+                //            yAxisIndex: 'none'
+                //        },
+                //        dataView: { readOnly: false },
+                //        magicType: { type: ['line', 'bar'] },
+                //        restore: {},
+                //        saveAsImage: {}
+                //    },
+                //    itemSize: 9,
+                //    itemGap: 1,
+                //    right: 20
+                //},
+                grid: {
+                    top: '18%',
+                    left: '3%',
+                    right: 10,
+                    bottom: 45,
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57b9a3', //x轴线颜色
+                            width: '0.7'
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
+
+                    axisLabel: { //调整y轴的lable
+                        textStyle: {
+                            fontSize: 9, // 让字体变大
+                            color: '#9f9d9d'
+                        }
+                    },
+                }],
+                yAxis: [{
+                    type: 'value',
+                    name: 'kW·h',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57b9a3', //x轴线颜色
+                            width: '0.7'
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
+
+                    axisLabel: { //调整y轴的lable
+                        textStyle: {
+                            fontSize: 9, // 让字体变大
+                            color: '#9f9d9d'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#ededed'
+                        }
+                    },
+                }],
+                series: [{
+                    name: '总用电量',
+                    type: 'bar',
+                    barWidth: '50%',
+                    data: [12, 23, 11, 34, 22, 12, 23, 11, 34, 22, 12, 23, 11, 34, 22, 12, 23, 11, 34, 22,]
+                }],
+                dataZoom: [{
+                    type: 'inside'
+                }]
+            };
+            barChart.clear()
+            barChart.setOption(option)
+            window.addEventListener("resize", () => {
+                barChart.resize();
+            });
+        }
+
+        function createPieChart() {
+            var pieChart = echarts.init(document.getElementById('pieChart'));
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c}"
+                },
+                legend: {
+                    type: 'scroll',
+                    orient: 'vertical',
+                    right: 10,
+                    
+                    bottom: 50,
+                    data: ['建筑用电', '常规用电', '冷热站用电', '空调末端用电', '游泳池']
+                },
+                series: [
+                    {
+                        name: '用电量',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['30%', '50%'],
+                        label: {
+                            show:false
+                        },
+                        data: [
+                            { value: 335, name: '建筑用电' },
+                            { value: 310, name: '常规用电' },
+                            { value: 234, name: '冷热站用电' },
+                            { value: 135, name: '空调末端用电' },
+                            { value: 1548, name: '游泳池' },
+                            
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            pieChart.clear()
+            pieChart.setOption(option)
+            window.addEventListener("resize", () => {
+                pieChart.resize();
+            });
+        }
+
+
+        createBarChart()
+        createPieChart()
+    </script>
+
 </body>
 </html>
