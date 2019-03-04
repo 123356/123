@@ -4,7 +4,7 @@
 }
 
 @section HeadSpecificStyleSheetIncludes{
-
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/images/favicon.ico">
     <link href="/Content/js/artDialog/skins/blue.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
@@ -52,10 +52,10 @@
             width: 100px;
             margin-right: 20px;
             text-align: left;
-            top:-5px;
-            margin-top:-42px;
-            margin-right:30px;
-            float:right
+            top: -5px;
+            margin-top: -42px;
+            margin-right: 30px;
+            float: right
         }
 
             .sethint input {
@@ -70,10 +70,11 @@
                 margin-left: 5px;
                 color: #666;
                 font-weight: normal;
-                font-size:12px
+                font-size: 12px
             }
-        .weather{
-            display:none
+
+        .weather {
+            display: none
         }
     </style>
 }
@@ -124,9 +125,11 @@
                 console.log($.cookie("hintDate"))
                 $("#alarm_popups").hide()
             }
-            console.log(falg)
         })
-      
+        $("#alarm_content").click(function () {
+            $("#alarm_popups").hide()
+        })
+
     </script>
 
 </body>

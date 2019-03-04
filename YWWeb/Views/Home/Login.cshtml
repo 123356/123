@@ -91,6 +91,11 @@
             display:none
 
         }
+        #w font {
+            font-weight: 700;
+            color: #B3B3B3;
+            font-size:16px
+        }
     </style>
 
     <script src="~/AmazeUI-2.7.2/assets/js/jquery.min.js"></script>
@@ -217,10 +222,10 @@
 
         </div>
 
-        <div id="w" class="easyui-window" title="提示" collapsible="false" minimizable="false" maximizable="false" closable="false" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:400px;height:100px;padding:10px;">
+        <div id="w" class="easyui-window" title="提示" collapsible="false" minimizable="false" maximizable="false" closable="false" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:400px;height:140px;padding:10px;">
             <div class="tips_content" style="position: absolute;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);">
                 <!--暂不支持此浏览器,请使用Firefox浏览器登录！-->
-                暂不支持IE浏览器
+                <font>抱歉，系统暂不支持IE浏览器，建议使用chrome、火狐、360等浏览器。</font>
             </div>
         </div>
     </body>

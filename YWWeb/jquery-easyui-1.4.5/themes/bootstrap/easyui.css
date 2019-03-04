@@ -112,13 +112,13 @@
   border-color: #D4D4D4;
 }
 .panel-header {
-  background-color: #F2F2F2;
-  background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
-  background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
-  background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
-  background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#F2F2F2,GradientType=0);
+    background-color: #46b298;
+    /*background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+    background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+    background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+    background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#F2F2F2,GradientType=0);*/
 }
 .panel-body {
   background-color: #ffffff;
@@ -128,7 +128,7 @@
 .panel-title {
   font-size: 12px;
   font-weight: bold;
-  color: #777;
+  color: #fff;
   height: 16px;
   line-height: 16px;
 }
@@ -255,16 +255,16 @@
   border-color: #D4D4D4;
 }
 .window {
-  background-color: #F2F2F2;
-  background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
-  background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
-  background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
-  background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 20%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#F2F2F2,GradientType=0);
+    background-color: #40af94 !important;
+    /*background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
+    background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
+    background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
+    background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 20%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#F2F2F2,GradientType=0);*/
 }
 .window-proxy {
-  border: 1px dashed #D4D4D4;
+  /*border: 1px dashed #D4D4D4;*/
 }
 .window-proxy-mask,
 .window-mask {
@@ -474,26 +474,16 @@
   width: 32px;
 }
 .l-btn {
-  color: #444;
-  background: #f5f5f5;
-  background-repeat: repeat-x;
-  border: 1px solid #bbb;
-  background: -webkit-linear-gradient(top,#ffffff 0,#e6e6e6 100%);
-  background: -moz-linear-gradient(top,#ffffff 0,#e6e6e6 100%);
-  background: -o-linear-gradient(top,#ffffff 0,#e6e6e6 100%);
-  background: linear-gradient(to bottom,#ffffff 0,#e6e6e6 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);
-  -moz-border-radius: 5px 5px 5px 5px;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
+    color: #fff;
+    background: #40af94;
+    background-repeat: repeat-x;
+    padding:2px 5px;
+    border-radius: 2px;
 }
-.l-btn:hover {
-  background: #e6e6e6;
-  color: #00438a;
-  border: 1px solid #ddd;
-  filter: none;
-}
+    .l-btn:hover {
+        background: #46b298;
+        color: #fff;
+    }
 .l-btn-plain {
   background: transparent;
   border-width: 0;
@@ -722,12 +712,12 @@
   background: inherit;
 }
 .combobox-item-hover {
-  background-color: #e6e6e6;
-  color: #00438a;
+    background-color: #e6e6e6;
+    color: #40af94;
 }
 .combobox-item-selected {
-  background-color: #0081c2;
-  color: #fff;
+    background-color: #40af94;
+    color: #fff;
 }
 .combobox-icon {
   display: inline-block;
@@ -1361,7 +1351,7 @@
 }
 .datagrid-header-row,
 .datagrid-row {
-  height: 25px;
+  height: 40px !important;
 }
 .datagrid-header td,
 .datagrid-body td,
@@ -1547,13 +1537,13 @@
 }
 .datagrid-row-over,
 .datagrid-header td.datagrid-header-over {
-  background: #e6e6e6;
-  color: #00438a;
-  cursor: default;
+    background: #e6e6e6;
+    color: #46b298;
+    cursor: default;
 }
 .datagrid-row-selected {
-  background: #0081c2;
-  color: #fff;
+    background: #46b298;
+    color: #fff;
 }
 .datagrid-row-editing .textbox,
 .datagrid-row-editing .textbox-text {
@@ -1952,10 +1942,10 @@
   padding: 0;
 }
 .calendar-selected {
-  background-color: #0081c2;
-  color: #fff;
-  border: 1px solid #0070a9;
-  padding: 0;
+    background-color: #40af94;
+    color: #fff;
+    border: 1px solid #40af94;
+    padding: 0;
 }
 .datebox-calendar-inner {
   height: 180px;
@@ -2659,12 +2649,12 @@
   border-color: #D4D4D4;
 }
 .tree-node-hover {
-  background: #e6e6e6;
-  color: #00438a;
+    background: #e6e6e6;
+    color: #40af94;
 }
 .tree-node-selected {
-  background: #0081c2;
-  color: #fff;
+    background: #40af94;
+    color: #fff;
 }
 .tree-node-hidden {
   display: none;

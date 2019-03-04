@@ -251,7 +251,7 @@
     a{ text-decoration:none; cursor:pointer}
 /*查询区域标题*/
 .searchbar{padding:5px; width:99;color:#000; font-size:10pt; overflow:hidden; position:relative;}
-.searchrow{line-height:35px; height:35px; margin-right: 15px;}
+.searchrow{line-height:35px; height:35px; margin-right: 15px;display:inline-block;float:left}
 .searchbutton{ float:left;}
 .searchtitle{text-align:right; width:60px;}
 .searchcontent{text-align:left;width:140px;}
@@ -306,4 +306,13 @@
     width: 180px;
     height: 28px;
     border: 1px solid #b1b1b3;
+}
+
+.textbox {
+    height: 28px !important
+}
+
+.textbox-text {
+    height: 28px !important;
+    line-height: 28px !important
 }
