@@ -1558,306 +1558,306 @@ namespace YWWeb.Controllers
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public JsonResult GetStationStateByPid(int uid)
-        {
-            PdfState model = new PdfState();
-            try
-            {
-                //string uids = GetAllUnit();
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
-                var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-                //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-                var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
-                var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
-                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
-                List<int?> cidlist = new List<int?>();
-                string s = "";
-                foreach (var xssss in cidsss)
-                {
-                    s += xssss.cid + ",";
-                }
-                if (s != "")
-                {
-                    s = s.Substring(0, s.Length - 1);
-                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
-                }
-                if (list.Count() > 0)
-                {
-                    model.Name = "严重";
-                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
-                }
-                else
-                {
-                    var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
-                    int days = 0;
-                    if (list_yunxing.Count() > 0)
-                    {
-                        DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                        DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                        TimeSpan sp = end.Subtract(start);
-                        days = sp.Days;
-                    }
-                    else
-                    {
-                        if (pdflist.Count() > 0)
-                        {
-                            DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
-                            DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                            TimeSpan sp = end.Subtract(start);
-                            days = sp.Days;
-                        }
-                    }
-                    model.Name = "正常运行";
-                    model.NormalDays = days.ToString();
-                }
-                if (pdflist.Count() > 0)
-                {
-                    string checkDays = "--";
-                    DateTime start;
-                    DateTime end;
-                    var order = bll.t_PM_Order.Where(p => pidlist.Contains(p.PID) && p.OrderContent.Contains("检修试验") && p.OrderState == 0).OrderByDescending(p => p.AcceptedDate);
-                    if (order.Count() > 0)
-                    {
-                        start = Convert.ToDateTime(Convert.ToDateTime(order.FirstOrDefault().AcceptedDate).AddMonths(6).ToShortDateString());
-                        end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+        //public JsonResult GetStationStateByPid(int uid)
+        //{
+        //    PdfState model = new PdfState();
+        //    try
+        //    {
+        //        //string uids = GetAllUnit();
+        //        string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+        //        var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+        //        //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+        //        var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
+        //        var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
+        //        var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
+        //        List<int?> cidlist = new List<int?>();
+        //        string s = "";
+        //        foreach (var xssss in cidsss)
+        //        {
+        //            s += xssss.cid + ",";
+        //        }
+        //        if (s != "")
+        //        {
+        //            s = s.Substring(0, s.Length - 1);
+        //            cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+        //        }
+        //        if (list.Count() > 0)
+        //        {
+        //            model.Name = "严重";
+        //            model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+        //        }
+        //        else
+        //        {
+        //            var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
+        //            int days = 0;
+        //            if (list_yunxing.Count() > 0)
+        //            {
+        //                DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+        //                DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+        //                TimeSpan sp = end.Subtract(start);
+        //                days = sp.Days;
+        //            }
+        //            else
+        //            {
+        //                if (pdflist.Count() > 0)
+        //                {
+        //                    DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
+        //                    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+        //                    TimeSpan sp = end.Subtract(start);
+        //                    days = sp.Days;
+        //                }
+        //            }
+        //            model.Name = "正常运行";
+        //            model.NormalDays = days.ToString();
+        //        }
+        //        if (pdflist.Count() > 0)
+        //        {
+        //            string checkDays = "--";
+        //            DateTime start;
+        //            DateTime end;
+        //            var order = bll.t_PM_Order.Where(p => pidlist.Contains(p.PID) && p.OrderContent.Contains("检修试验") && p.OrderState == 0).OrderByDescending(p => p.AcceptedDate);
+        //            if (order.Count() > 0)
+        //            {
+        //                start = Convert.ToDateTime(Convert.ToDateTime(order.FirstOrDefault().AcceptedDate).AddMonths(6).ToShortDateString());
+        //                end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
 
-                    }
-                    else
-                    {
+        //            }
+        //            else
+        //            {
 
-                        //if (Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6) < DateTime.Now)
-                        //    start = DateTime.Now.AddMonths(6);
-                        //else
-                        //    start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6).ToShortDateString());
-                        if (pdflist.FirstOrDefault().ApplcationTime == null)
-                        {
-                            model.CheckDays = checkDays;
-                        }
-                        else
-                        {
-                            start = GetDatime(pdflist.FirstOrDefault().ApplcationTime.Value);
-                            end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                            TimeSpan sp = start.Subtract(end);
-                            checkDays = sp.Days.ToString();
-                            model.CheckDays = checkDays;
-                        }
-
-
-                    }
-
-                }
-                decimal SumScore = 0;
-                foreach (var item in pidlist)
-                {
-                    var sids = bll.t_CM_InstallRecord.Where(p => p.pid == item).Select(p => p.contentId).ToList();
-                    SumScore += Convert.ToDecimal(bll.t_CM_InstallType.Where(p => sids.Contains(p.id)).Sum(p => p.score));
-                }
-                model.Score = GetUnitScoreByUID(uid);
-
-                DateTime d = DateTime.Now.Date;
-                DateTime xd = DateTime.Now;
-                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (xzzz != null)
-                {
-                    model.thisDayPower = Math.Round(xzzz.Value, 2);
-                }
-                else
-                {
-                    model.thisDayPower = 0;
-                }
-                if (model.thisDayPower == null)
-                    model.thisDayPower = 0;
-                DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
-                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (lastDayPower != 0)
-                {
-                    model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
-                }
-                DateTime dgh = DateTime.Now.AddMonths(-1);
-                DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
-                var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (xsss != null)
-                {
-                    model.thisMonthPower = Math.Round(xsss.Value, 2);
-                }
-                else
-                {
-                    model.thisMonthPower = 0;
-                }
-                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
-
-                var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (lastMonthPower != 0)
-                {   
-                    model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
-                }
-                int dayy = DateTime.DaysInMonth(dgh.Year, dgh.Month);
-                // DateTime ddd = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, dayy);
-                DateTime ddd = DateTime.Now;
-                DateTime sddd = new DateTime(DateTime.Now.Year, 1, 1);
-                var sumYearPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= sddd && p.RecordTime <= ddd && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
-                var lastPower = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().LastYearPower;
-                model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
-                //List<int?> cids = GetcidByPID(pids);
+        //                //if (Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6) < DateTime.Now)
+        //                //    start = DateTime.Now.AddMonths(6);
+        //                //else
+        //                //    start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).AddMonths(6).ToShortDateString());
+        //                if (pdflist.FirstOrDefault().ApplcationTime == null)
+        //                {
+        //                    model.CheckDays = checkDays;
+        //                }
+        //                else
+        //                {
+        //                    start = GetDatime(pdflist.FirstOrDefault().ApplcationTime.Value);
+        //                    end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+        //                    TimeSpan sp = start.Subtract(end);
+        //                    checkDays = sp.Days.ToString();
+        //                    model.CheckDays = checkDays;
+        //                }
 
 
-                var cids = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.C != null && p.C != "").Select(p => p.C).ToList().ConvertAll<int?>(i => int.Parse(i));
-                var dbbb = bll.t_DM_CircuitInfo.Where(p => pidlist.Contains(p.PID)).Select(p => p.CID).ToList();
-                //总负载   
-                //model.Sumload = bll.t_EE_PowerQualityRealTime.Where(p => pidlist.Contains(p.PID) && cids.Contains(p.CID)).Sum(p => p.Power);
-                var z = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
-                model.RongL = z;
-                decimal? suml = 0;
-                foreach (var item in pidlist)
-                {
-                    var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == item && p.DTID == 3).ToList();
-                    foreach (var by in bianyaqilist)
-                    {
-                        if (!string.IsNullOrEmpty(by.C))
-                        {
-                            int ciddd = Convert.ToInt32(by.C);
-                            var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == item).FirstOrDefault();
-                            if (dbb != null)
-                            {
-                                int cid = dbb.CID;
-                                if (cid != 0)
-                                {
-                                    var ss = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                                    if (ss != null)
-                                    {
-                                        if (ss.Power != null)
-                                        {
-                                            suml += ss.Power;
-                                            anwyis m = new anwyis();
+        //            }
 
-                                            m.zhanbiEvery = ss.Power / z * 100;
-                                            if (Convert.ToDecimal(by.Z) != 0 && !string.IsNullOrEmpty(by.Z))
-                                                m.viewEvery = ss.Power / Convert.ToDecimal(by.Z) * 100;
-                                            m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault().Name + "_" + by.DeviceName;
-                                            model.fuzaiView.Add(m);
+        //        }
+        //        decimal SumScore = 0;
+        //        foreach (var item in pidlist)
+        //        {
+        //            var sids = bll.t_CM_InstallRecord.Where(p => p.pid == item).Select(p => p.contentId).ToList();
+        //            SumScore += Convert.ToDecimal(bll.t_CM_InstallType.Where(p => sids.Contains(p.id)).Sum(p => p.score));
+        //        }
+        //        model.Score = GetUnitScoreByUID(uid);
 
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        //        DateTime d = DateTime.Now.Date;
+        //        DateTime xd = DateTime.Now;
+        //        var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+        //        if (xzzz != null)
+        //        {
+        //            model.thisDayPower = Math.Round(xzzz.Value, 2);
+        //        }
+        //        else
+        //        {
+        //            model.thisDayPower = 0;
+        //        }
+        //        if (model.thisDayPower == null)
+        //            model.thisDayPower = 0;
+        //        DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+        //        DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
+        //        var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+        //        if (lastDayPower != 0)
+        //        {
+        //            model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
+        //        }
+        //        DateTime dgh = DateTime.Now.AddMonths(-1);
+        //        DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
+        //        var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+        //        if (xsss != null)
+        //        {
+        //            model.thisMonthPower = Math.Round(xsss.Value, 2);
+        //        }
+        //        else
+        //        {
+        //            model.thisMonthPower = 0;
+        //        }
+        //        DateTime lastssd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
 
-                    }
-                }
-                model.Sumload = suml;
-                var fuzai = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID) && dbbb.Contains(p.CID.Value) && p.RecordTime >= d && p.RecordTime <= xd).GroupBy(p => p.RecordTime).ToList();
-
-                decimal? maxfuzai = 0;
-                string maxT = "";
-                for (int i = 0; i < fuzai.Count(); i++)
-                {
-                    if (i == 0)
-                    {
-                        maxfuzai = fuzai[i].Sum(p => p.Power);
-                        maxT = fuzai[i].Key.ToString();
-                    }
-                    else
-                    {
-                        if (fuzai[i].Sum(p => p.Power) > maxfuzai)
-                        {
-                            maxfuzai = fuzai[i].Sum(p => p.Power);
-                            maxT = fuzai[i].FirstOrDefault().NeedPowerTime.ToString();
-                        }
-                    }
-                }
-                model.MaxLoad = maxfuzai;
-                model.maxTime = maxT;
-
-                //总负载率
-
-                if (z != 0 && z != null)
-                {
-                    model.RatedCapacity = Math.Round((model.Sumload / z * 100).Value, 2);
-                }
+        //        var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+        //        if (lastMonthPower != 0)
+        //        {   
+        //            model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
+        //        }
+        //        int dayy = DateTime.DaysInMonth(dgh.Year, dgh.Month);
+        //        // DateTime ddd = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, dayy);
+        //        DateTime ddd = DateTime.Now;
+        //        DateTime sddd = new DateTime(DateTime.Now.Year, 1, 1);
+        //        var sumYearPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= sddd && p.RecordTime <= ddd && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+        //        var lastPower = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().LastYearPower;
+        //        model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
+        //        //List<int?> cids = GetcidByPID(pids);
 
 
-                model.BianYacount = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).Count();
+        //        var cids = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.C != null && p.C != "").Select(p => p.C).ToList().ConvertAll<int?>(i => int.Parse(i));
+        //        var dbbb = bll.t_DM_CircuitInfo.Where(p => pidlist.Contains(p.PID)).Select(p => p.CID).ToList();
+        //        //总负载   
+        //        //model.Sumload = bll.t_EE_PowerQualityRealTime.Where(p => pidlist.Contains(p.PID) && cids.Contains(p.CID)).Sum(p => p.Power);
+        //        var z = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
+        //        model.RongL = z;
+        //        decimal? suml = 0;
+        //        foreach (var item in pidlist)
+        //        {
+        //            var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == item && p.DTID == 3).ToList();
+        //            foreach (var by in bianyaqilist)
+        //            {
+        //                if (!string.IsNullOrEmpty(by.C))
+        //                {
+        //                    int ciddd = Convert.ToInt32(by.C);
+        //                    var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == item).FirstOrDefault();
+        //                    if (dbb != null)
+        //                    {
+        //                        int cid = dbb.CID;
+        //                        if (cid != 0)
+        //                        {
+        //                            var ss = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == item && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+        //                            if (ss != null)
+        //                            {
+        //                                if (ss.Power != null)
+        //                                {
+        //                                    suml += ss.Power;
+        //                                    anwyis m = new anwyis();
 
-                model.Diancount = bll.t_CM_PointsInfo.Where(p => pidlist.Contains(p.PID)).Count();
+        //                                    m.zhanbiEvery = ss.Power / z * 100;
+        //                                    if (Convert.ToDecimal(by.Z) != 0 && !string.IsNullOrEmpty(by.Z))
+        //                                        m.viewEvery = ss.Power / Convert.ToDecimal(by.Z) * 100;
+        //                                    m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == item).FirstOrDefault().Name + "_" + by.DeviceName;
+        //                                    model.fuzaiView.Add(m);
 
-                //var xss = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
-                //var sss = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).GroupBy(p => p.PID);
-                //foreach (var it in sss)
-                //{
-                //    decimal? cc = bll.t_DM_DeviceInfo.Where(p => p.PID == it.Key && p.Z != "" && p.Z != null).Select(p => p.Z).ToList().ConvertAll<decimal>(i => decimal.Parse(i)).Sum(p => p);
-                //    if (cc == null)
-                //        cc = 0;
-                //    anwyis m = new anwyis();
-                //    if (cc != 0)
-                //    {
-                //        var xz = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == it.Key && cids.Contains(p.CID)).Sum(p => p.Power);
-                //        m.zhanbiEvery = Math.Round((xz / model.Sumload * 100).Value, 2);
-                //        m.viewEvery = xz / cc * 100;
-                //        m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == it.Key).FirstOrDefault().Name;
-                //        model.fuzaiView.Add(m);
-                //    }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
 
-                //}
+        //            }
+        //        }
+        //        model.Sumload = suml;
+        //        var fuzai = bll.t_EE_PowerQualityDaily.Where(p => pidlist.Contains(p.PID) && dbbb.Contains(p.CID.Value) && p.RecordTime >= d && p.RecordTime <= xd).GroupBy(p => p.RecordTime).ToList();
 
-                foreach (var iii in pidlist)
-                {
-                    decimal? sum2 = 0;
-                    pdfview pdf = new pdfview();
-                    var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == iii && p.DTID == 3).ToList();
-                    pdf.bianyaCount = bianyaqilist.Count();
-                    if (bianyaqilist.Count != 0)
-                    {
-                        var zj = bianyaqilist.Where(p => p.Z != "" && p.Z != null).Select(p => p.Z).ToList();
-                        if (zj.Count != 0)
-                            pdf.zhaungji = zj.ConvertAll<decimal?>(p => decimal.Parse(p)).Sum(p => p);
-                        else
-                            pdf.zhaungji = 0;
-                    }
+        //        decimal? maxfuzai = 0;
+        //        string maxT = "";
+        //        for (int i = 0; i < fuzai.Count(); i++)
+        //        {
+        //            if (i == 0)
+        //            {
+        //                maxfuzai = fuzai[i].Sum(p => p.Power);
+        //                maxT = fuzai[i].Key.ToString();
+        //            }
+        //            else
+        //            {
+        //                if (fuzai[i].Sum(p => p.Power) > maxfuzai)
+        //                {
+        //                    maxfuzai = fuzai[i].Sum(p => p.Power);
+        //                    maxT = fuzai[i].FirstOrDefault().NeedPowerTime.ToString();
+        //                }
+        //            }
+        //        }
+        //        model.MaxLoad = maxfuzai;
+        //        model.maxTime = maxT;
+
+        //        //总负载率
+
+        //        if (z != 0 && z != null)
+        //        {
+        //            model.RatedCapacity = Math.Round((model.Sumload / z * 100).Value, 2);
+        //        }
+
+
+        //        model.BianYacount = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).Count();
+
+        //        model.Diancount = bll.t_CM_PointsInfo.Where(p => pidlist.Contains(p.PID)).Count();
+
+        //        //var xss = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().InstalledCapacitys;
+        //        //var sss = bll.t_DM_DeviceInfo.Where(p => pidlist.Contains(p.PID) && p.DTID == 3).GroupBy(p => p.PID);
+        //        //foreach (var it in sss)
+        //        //{
+        //        //    decimal? cc = bll.t_DM_DeviceInfo.Where(p => p.PID == it.Key && p.Z != "" && p.Z != null).Select(p => p.Z).ToList().ConvertAll<decimal>(i => decimal.Parse(i)).Sum(p => p);
+        //        //    if (cc == null)
+        //        //        cc = 0;
+        //        //    anwyis m = new anwyis();
+        //        //    if (cc != 0)
+        //        //    {
+        //        //        var xz = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == it.Key && cids.Contains(p.CID)).Sum(p => p.Power);
+        //        //        m.zhanbiEvery = Math.Round((xz / model.Sumload * 100).Value, 2);
+        //        //        m.viewEvery = xz / cc * 100;
+        //        //        m.CName = bll.t_CM_PDRInfo.Where(p => p.PID == it.Key).FirstOrDefault().Name;
+        //        //        model.fuzaiView.Add(m);
+        //        //    }
+
+        //        //}
+
+        //        foreach (var iii in pidlist)
+        //        {
+        //            decimal? sum2 = 0;
+        //            pdfview pdf = new pdfview();
+        //            var bianyaqilist = bll.t_DM_DeviceInfo.Where(p => p.PID == iii && p.DTID == 3).ToList();
+        //            pdf.bianyaCount = bianyaqilist.Count();
+        //            if (bianyaqilist.Count != 0)
+        //            {
+        //                var zj = bianyaqilist.Where(p => p.Z != "" && p.Z != null).Select(p => p.Z).ToList();
+        //                if (zj.Count != 0)
+        //                    pdf.zhaungji = zj.ConvertAll<decimal?>(p => decimal.Parse(p)).Sum(p => p);
+        //                else
+        //                    pdf.zhaungji = 0;
+        //            }
                 
-                    foreach (var by in bianyaqilist)
-                    {
-                        if (!string.IsNullOrEmpty(by.C))
-                        {
-                            int ciddd = Convert.ToInt32(by.C);
-                            var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == iii).FirstOrDefault();
-                            if (dbb != null)
-                            {
-                                int cid = dbb.CID;
-                                if (cid != 0)
-                                {
-                                    var ss = bll.t_EE_PowerQualityDaily.Where(p => p.PID == iii && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                                    if (ss != null)
-                                    {
-                                        if (ss.Power != null)
-                                        {
-                                            sum2 += ss.Power;
-                                            anwyis v = new anwyis();
-                                            if (pdf.zhaungji != 0)
-                                                v.zhanbiEvery = Math.Round((ss.Power / pdf.zhaungji * 100).Value, 2);
-                                            v.CName = by.DeviceName;
-                                            pdf.fuzaiView.Add(v);
+        //            foreach (var by in bianyaqilist)
+        //            {
+        //                if (!string.IsNullOrEmpty(by.C))
+        //                {
+        //                    int ciddd = Convert.ToInt32(by.C);
+        //                    var dbb = bll.t_DM_CircuitInfo.Where(p => p.DID == ciddd && p.PID == iii).FirstOrDefault();
+        //                    if (dbb != null)
+        //                    {
+        //                        int cid = dbb.CID;
+        //                        if (cid != 0)
+        //                        {
+        //                            var ss = bll.t_EE_PowerQualityDaily.Where(p => p.PID == iii && p.CID == cid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+        //                            if (ss != null)
+        //                            {
+        //                                if (ss.Power != null)
+        //                                {
+        //                                    sum2 += ss.Power;
+        //                                    anwyis v = new anwyis();
+        //                                    if (pdf.zhaungji != 0)
+        //                                        v.zhanbiEvery = Math.Round((ss.Power / pdf.zhaungji * 100).Value, 2);
+        //                                    v.CName = by.DeviceName;
+        //                                    pdf.fuzaiView.Add(v);
 
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault() != null)
-                        pdf.PName = bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault().Name;
-                    pdf.pointCount = bll.t_CM_PointsInfo.Where(p => p.PID == iii).Count();
-                    if (pdf.zhaungji != 0)
-                        pdf.fuzailv = Math.Round((sum2 / pdf.zhaungji * 100).Value, 2);
-                    model.pdfList.Add(pdf);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return Json(model);
-        }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            if (bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault() != null)
+        //                pdf.PName = bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault().Name;
+        //            pdf.pointCount = bll.t_CM_PointsInfo.Where(p => p.PID == iii).Count();
+        //            if (pdf.zhaungji != 0)
+        //                pdf.fuzailv = Math.Round((sum2 / pdf.zhaungji * 100).Value, 2);
+        //            model.pdfList.Add(pdf);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return Json(model);
+        //}
 
 
         public JsonResult GetStationState(int uid)
@@ -1873,7 +1873,7 @@ namespace YWWeb.Controllers
                 if (list.Count() > 0)
                 {
                     model.Name = "严重";
-                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+                    model.NormalDays = "0";
                 }
                 else
                 {
