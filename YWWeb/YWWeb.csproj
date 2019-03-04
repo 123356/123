@@ -901,6 +901,7 @@
     <Content Include="Content\images\excelicon.png" />
     <Content Include="Content\images\exporticon.png" />
     <Content Include="Content\images\export_new.png" />
+    <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\f_menubg.png" />
     <Content Include="Content\images\f_menubgacvtive.png" />
     <Content Include="Content\images\g08.png" />
@@ -1355,12 +1356,10 @@
     <Content Include="Content\js\artDialog\skins\icons\question.png" />
     <Content Include="Content\js\artDialog\skins\icons\succeed.png" />
     <Content Include="Content\js\artDialog\skins\icons\warning.png" />
-    <Content Include="Content\js\babel.min.js" />
     <Content Include="Content\js\bootstrap-datepicker.js" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\boximg.js" />
-    <Content Include="Content\js\browser.min.js" />
     <Content Include="Content\js\dataTables.bootstrap.js" />
     <Content Include="Content\js\datepair.js" />
     <Content Include="Content\js\easySlider.js" />
@@ -1369,7 +1368,6 @@
     <Content Include="Content\js\echarts.min3.js" />
     <Content Include="Content\js\jquery.ztree.core.js" />
     <Content Include="Content\js\jquery.ztree.excheck.js" />
-    <Content Include="Content\js\polyfill.js" />
     <Content Include="Content\js\rule.js" />
     <Content Include="Content\js\gettemp.js" />
     <Content Include="Content\js\gettemp_jm.js" />
@@ -1814,9 +1812,13 @@
     <Content Include="Content\UserJS\RoomDataMonitoring._zc.js" />
     <Content Include="Content\UserJS\SensorList_jm.js" />
     <Content Include="Content\UserJS\SensorList_zc.js" />
+    <Content Include="Content\UserJS\ComponentsPartsEdit._jm.js" />
     <Content Include="Content\UserJS\SparePartEdits._jm.js" />
+    <Content Include="Content\UserJS\ComponentsParts._zc.js" />
     <Content Include="Content\UserJS\SparePartEdits._zc.js" />
+    <Content Include="Content\UserJS\ComponentsParts._jm.js" />
     <Content Include="Content\UserJS\SparePartList._jm.js" />
+    <Content Include="Content\UserJS\ComponentsPartsEdit._zc.js" />
     <Content Include="Content\UserJS\SparePartList._zc.js" />
     <Content Include="Content\UserJS\StandingFile._jm.js" />
     <Content Include="Content\UserJS\StandingFile._zc.js" />
@@ -2468,6 +2470,8 @@
     <Content Include="Views\EnergyEfficiency\EnergyQuery.cshtml" />
     <Content Include="Views\EnergyEfficiency\roomDataMonitoring.cshtml" />
     <Content Include="Views\EnergyEfficiency\EnergyPrice.cshtml" />
+    <Content Include="Views\SparePartManage\ComponentsParts.cshtml" />
+    <Content Include="Views\SparePartManage\ComponentsPartsEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
