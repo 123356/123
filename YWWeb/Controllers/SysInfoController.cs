@@ -570,8 +570,8 @@ namespace YWWeb.Controllers
             for (int i = 0; i < fileSystemInfos.Length; i++)
             {
                 FileInfo fsi = (FileInfo)fileSystemInfos[i];
-                if (rowCount >= rowbegin && rowCount < rowend)
-                {
+                //if (rowCount >= rowbegin && rowCount < rowend)
+                //{
                     strImg.Append("<div class=\"divicons\" title='" + fsi.Name + "'>");
                     strImg.Append(string.Concat(new string[]
                     {
@@ -580,13 +580,13 @@ namespace YWWeb.Controllers
                         "\" />"
                     }));
                     strImg.Append("</div>");
-                }
+                //}
                 rowCount++;
             }
             result = JsonConvert.SerializeObject(strImg.ToString());
             return Content(result);
         }
-
+        
         #region 系统日志
         [Login]
         public ActionResult LogList()

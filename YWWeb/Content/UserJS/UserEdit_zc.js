@@ -170,7 +170,7 @@ $(function () {
             return false;
         }
         if (!$("#editUserform").form('validate')) {
-            $.messager.alert("提示", "数据格式有误！", "info");
+            $.messager.alert("提示", "固定电话或手机号格式有误！", "info");
             return false;
         }
         var unitid = '';
