@@ -43,8 +43,6 @@ $.post("/PDRInfo/getStationInfo", function (data) {
             markerArr.push(arr[i])
         }
         if (arr[i].title == '1号_工程车') {
-            console.log("@@@@@@@22222")
-            console.log(arr[i])
             markerArr.push(arr[i])
 
             var lng = arr[i].point.split("|")[0]
@@ -176,11 +174,8 @@ var iwa = new Array();
 var g_showPDROk = 1;
 var changeMarkerArr = new Array()
 function addMarker() {
-    console.log(markerArr)
     for (var i = 0; i < markerArr.length; i++) {
-        console.log(markerArr[i])
         var a = markerArr[i];
-        //console.log(a);
         var b = a.point.split("|")[0];
         var c = a.point.split("|")[1];
         //var typeid = a.position;
@@ -218,7 +213,6 @@ function addMarker() {
     }, 1000)
     */
 
-    console.log(changeMarkerArr)
 }
 
 
@@ -226,7 +220,6 @@ function addMarker() {
 
 
 function showinfomessage(marker, point, data) {
-    console.log(data);
     var opts = {
         width: 320,
         height: 130,
@@ -452,7 +445,6 @@ function isInsidePolygon() {
 }
 //改变marker值
 function changeMarkerLocation(data) {
-    //console.log(changeMarkerArr)
    
     for (var i = 0; i < changeMarkerArr.length; i++) {
        // var lng = getRound(changeMarkerArr[i].point.lng);
@@ -479,7 +471,7 @@ function changeMarkerLocation(data) {
 //连接mqtt
 function mqtt() {
     
-    var wsbroker = "yw.ife360.com";
+    var wsbroker = "yw.ife360.com";//  59.110.153.200
     location.hostname; //mqtt websocket enabled broker ip
     var wsport = 15673; // 端口号
     //连接选项

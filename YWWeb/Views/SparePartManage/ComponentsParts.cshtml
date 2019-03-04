@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "备件列表";
+    YWWeb.Controllers.LoginAttribute loginbll = new YWWeb.Controllers.LoginAttribute();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SparePartList</title>
+    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+</head>
+<body>
+    <table id="list_data" style="width: auto;" idfield="SparePartID" pagination="true"
+        data-options="iconCls:'icon-save',rownumbers:true,pageSize:20,pageList:[10,15,20,30,50],toolbar:'#tb',method:'post',striped:true"
+        fitcolumns="true">
+        <thead>
+            <tr>
+                <th field='ID' checkbox="true">
+                </th>
+                <th field='DeviceCode' width="60px">
+                    编码
+                </th>
+                <th field='DeviceName' width="80px">
+                    名称
+                </th>
+                <th field='DeviceModel' width="60px">
+                    型号
+                </th>
+                <th field='Manufactor' width="60px">
+                    厂家
+                </th>
+                <th field='DName' width="100px">
+                    柜设备
+                </th>
+                <th field='PName' width="100px">
+                    站名称
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb" class="searchbar">
+        <div class="searchrow">
+            名称:
+            <input id="sparepartname" />
+        </div>
+        <div id="userbutton" class="searchbutton">
+        </div>
+    </div>
+
+    <script src="~/Content/UserJS/ComponentsParts._jm.js?v=1.0"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+    <div id="editwin" title="编辑备件信息" class="easyui-window" closed="true" style="width: 800px;
+        height: 320px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+    </div>
+</body>
+</html>

@@ -113,7 +113,7 @@
         formaterDate: function () {
             if (this.searchForm.time) {
                 var temp = new Date(this.searchForm.time)
-                return temp.getFullYear() + "-" + (temp.getMonth() + 1) + "-" + temp.getDate()
+                return temp.toLocaleDateString().replace(/\//g, "-") + " " 
             }
             return ""
         },

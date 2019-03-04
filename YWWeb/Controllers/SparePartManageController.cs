@@ -53,7 +53,16 @@ namespace YWWeb.Controllers
         {
             return View();
         }
-
+        [Login]
+        public ActionResult ComponentsPartsEdit()
+        {
+            return View();
+        }
+        [Login]
+        public ActionResult ComponentsParts()
+        {
+            return View();
+        }
 
         /// <summary>
         /// 获取备件列表

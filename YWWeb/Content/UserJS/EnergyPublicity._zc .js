@@ -75,7 +75,7 @@
         },
         formaterDate: function () {
             var date = new Date(this.time)
-            date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+            date = date.toLocaleDateString().replace(/\//g, "-") + " " 
             return date
         },
         //创建图表

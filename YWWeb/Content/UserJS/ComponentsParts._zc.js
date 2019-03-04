@@ -1,12 +1,25 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：运维 > 备件管理 > 设备备件 ");
+var pid = $.cookie("cookiepid")
 $('#list_data').datagrid({
     url: '/SparePartManage/SparePartInfoData?rom=' + Math.random()
 })
-
+$('#list_data').datagrid({
+    url: '/Home/GetElementList',
+    queryParams: { "name": $("#sparepartname").val() },
+    rownumbers: true,
+    pageSize: 15,
+    pageList: [10, 15, 20, 30, 50],
+    toolbar: '#tb',
+    method: 'post',
+    striped: true,
+    fitcolumns: true,
+    fit: true,
+    pagination: true
+})
 //查询
 function dosearch() {
     var sparepartname = $("#sparepartname").val();
-    $('#list_data').datagrid('load', { "SparePartName": sparepartname });
+    $('#list_data').datagrid('load', { "name": sparepartname });
     $('#list_data').datagrid('uncheckAll');
 }
 
@@ -27,7 +40,7 @@ function edit() {
     var ids = [];
     var rows = $('#list_data').datagrid('getSelections');
     for (var i = 0; i < rows.length; i++) {
-        ids.push(rows[i].SparePartID);
+        ids.push(rows[i].ID);
     }
 
     if (ids.length == 0) {
@@ -36,7 +49,7 @@ function edit() {
     else if (ids.length == 1) {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
-            editFrame(row.SparePartID);
+            editFrame(row.ID);
         }
     }
     else {
@@ -50,7 +63,7 @@ function editFrame(sparepartid) {
         modal: true,
         draggable: true, //可拖动，默认false  
         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false 
-        href: '/SparePartManage/SparePartEdits?sparepartid=' + sparepartid,
+        href: '/SparePartManage/ComponentsPartsEdit?sparepartid=' + sparepartid,
         onClose: function () {
             $('#list_data').datagrid('reload');
             $('#list_data').datagrid('uncheckAll');
@@ -70,10 +83,10 @@ function Delete() {
             if (r) {
                 var ids = [];
                 for (var i = 0; i < rows.length; i++) {
-                    ids.push(rows[i].SparePartID);
+                    ids.push(rows[i].ID);
                 }
-                $.post("/SparePartManage/DeleteSparePartInfo?Rnum=" + Math.random(), { "sparepartid": ids.join(',') }, function (data) {
-                    if (data == "OK") {
+                $.post("/Home/DeleteElementList", { "id": ids.join(',') }, function (data) {
+                    if (data == "ok") {
                         dosearch();
                     }
                     else {
