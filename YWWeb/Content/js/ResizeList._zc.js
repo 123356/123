@@ -157,7 +157,12 @@ var vm = new Vue({
             var that = this;
             var wsbroker = "59.110.153.200";
             location.hostname;
+            // if (location.protocol == "https:") {
+            //     var wsport = 15673;
+            // } else {
             var wsport = 15675;
+            // }
+
             //连接选项
             var client;
             var options = {
@@ -194,14 +199,16 @@ var vm = new Vue({
                 }, 10000);
             };
             client.onMessageArrived = function(res) {
-                data = JSON.parse(res.payloadString);
-                res = JSON.parse(data.content);
-                console.log('接收');
-                console.log(res)
-                if (res.statu == 1 && data.type == 1) {
-                    vm.$Message.success("配置成功");
-                } else if (res.statu == 1 && data.type == 1) {
-                    vm.$Message.error("配置失败");
+                    data = JSON.parse(res.payloadString);
+                    res = JSON.parse(data.content);
+                    console.log('接收');
+                    console.log(res)
+                    if (res.statu == 1 && data.type == 1) {
+                        vm.$Message.success("配置成功");
+                    } else if (res.statu == 1 && data.type == 1) {
+                        vm.$Message.error("配置失败");
+                    };
+
                     if (res.PointType == "DTU_CTR_TMP") { //空调
                         that.assist.RefrigerationHeat = parseInt(res.modelStatu) == 1 ? 1 : 0;
                         that.value.DTU_CTR_TMP.modelStatu = parseInt(res.modelStatu) == 0 ? 0 : 1;
@@ -214,15 +221,14 @@ var vm = new Vue({
                         that.value['DTU_DI'].value = parseInt(res.pv);
                         vm.$Message.success("读取成功");
                     }
-                };
-                //发送
-                that.send = function(data) {
-                    console.log('发送');
-                    console.log(data);
-                    var message = new Paho.MQTT.Message(data);
-                    message.destinationName = '/ny/control/' + window.pid;
-                    client.send(message);
                 }
+                //发送
+            that.send = function(data) {
+                console.log('发送');
+                console.log(data);
+                var message = new Paho.MQTT.Message(data);
+                message.destinationName = '/ny/control/' + window.pid;
+                client.send(message);
             }
         }
     }
