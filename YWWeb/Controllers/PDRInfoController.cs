@@ -3002,10 +3002,13 @@ FROM(SELECT     t1.RecTime, t1.PID, t1.TagID, t1.PV, t1.AlarmStatus, t1.AlarmLim
             Dictionary<int, sj> obj = new Dictionary<int, sj>();
             foreach (var item in list)
             {
-                sj b = new sj();
-                b.PV = Convert.ToDecimal(item.PV);
-                b.Remarks = item.Remarks;
-                obj.Add(item.TagID, b);
+                if (!obj.Keys.Contains(item.TagID))
+                {
+                    sj b = new sj();
+                    b.PV = Convert.ToDecimal(item.PV);
+                    b.Remarks = item.Remarks;
+                    obj.Add(item.TagID, b);
+                }
             }
             //var result = list.Select(p => new { p.TagID, p.PV, p.Remarks });
             //string strjson = JsonConvert.SerializeObject(result);
