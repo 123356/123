@@ -79,6 +79,7 @@ function loadMenuList() {
     function ClickColor() {
 
         $("#collapase-nav-1 li a").on('click', function () {
+            $("#collapase-nav-1 li a").attr("style", "background-color:#232d37;color: #868E8E;;")
               $(this).attr("style", "background-color:#33404c;color: #40af94;")
           })
           
