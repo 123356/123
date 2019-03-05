@@ -218,11 +218,13 @@ function getPowerQualityData_SSQX() {
         //if (DataJson.CName.length == 0) {
         //    $("#userCharts1").html("暂无数据");
         //} else {
-            HourYdlGraph_SSQX(DataJson);
+        
+        HourYdlGraph_SSQX(DataJson);
         //}
     });
 }
 function HourYdlGraph_SSQX(DataJson) {
+    
     var Series = [];
     console.log(DataJson);
     if (DataJson.xAxis != '') {
@@ -347,11 +349,11 @@ function HourYdlGraph_SSQX(DataJson) {
                 type: "category",
                 boundaryGap: false,
                 data: DataJson.xAxis.split(','),
-                axisLabel: {
-                    show: true,
-                    formatter: "{value}"
-                    //interval: 0 0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
-                }
+                //axisLabel: {
+                //    show: true,
+                //    formatter: "{value}"
+                //    //interval: 0 0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+                //}
             }],
             yAxis: [{
                 name: "KW‧H",
