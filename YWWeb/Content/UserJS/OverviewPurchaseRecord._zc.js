@@ -354,10 +354,10 @@ function edit() {
         if (row) {
             console.log(row);
             loadSelectPZ(row.categoryID);
-            $("#quantity").val(row.quantity);
+            $("#quantity").numberbox('setValue',row.quantity);
             $("#company").val(row.company);
             $("#id").val(row.id)
-            $("#jiaoyi").val(row.trade_price);
+            $("#jiaoyi").numberbox('setValue', row.trade_price);
             $("#year").combobox("setValue", row.year);
             $("#month").combobox("setValue", row.month);
             $("#Indexweek").combobox("setValue", row.Indexweek),

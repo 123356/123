@@ -184,19 +184,20 @@ function edit() {
             $("#Email").val(row.Email);
             loadProvince(row.UnitProvince, row.UnitCity);
             $("#LinkAddress").val(row.LinkAddress);
-            $("#EleCalWay").val(row.EleCalWay);
-            $("#GovEleLevel").val(row.GovEleLevel);
+            $("#EleCalWay").numberbox('setValue', row.EleCalWay);
+            $("#GovEleLevel").numberbox('setValue', row.GovEleLevel);
             $("#DeviationMode").val(row.DeviationMode);
             $("#InstalledCapacity").val(row.InstalledCapacity);
-            $("#InstalledCapacitys").val(row.InstalledCapacitys);
+            $("#InstalledCapacitys").numberbox('setValue', InstalledCapacitys)
             $("#IndustryID").combobox("setValue", row.IndustryID);
             $("#Loss").val(row.Loss),
             $("#LossAdd").val(row.LossAdd),
             $("#CSMMan").val(row.CSMMan),
             $("#CSMPhone").val(row.CSMPhone),
             //$("#SpareBase").val(row.SpareBase)
-            $("#Coordination").val(row.Coordination);
-            $("#LastYearPower").val(row.LastYearPower);
+                $("#Coordination").val(row.Coordination);
+           
+            $("#LastYearPower").numberbox('setValue',row.LastYearPower);
             $("#ProjectType").combobox("setValue", row.ProjectType);
             $("#editwin").dialog({
                 closed: false,

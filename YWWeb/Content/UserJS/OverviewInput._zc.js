@@ -526,11 +526,11 @@ function edit() {
             $("#year").combobox("setValue", row.year);
             $("#month").combobox("setValue", row.month);
             $("#PZ").combobox("setValue", row.categoryID);
-            $("#plan").val(row.plan);
+            $("#plan").numberbox('setValue',row.plan);
             $("#remark").val(row.remark);
             $("#id").val(row.id)
-            $("#jiaoyi").val(row.trade_price);
-            $("#extraTradePrice").val(row.extraTradePrice)
+            $("#jiaoyi").numberbox('setValue', row.trade_price);
+            $("#extraTradePrice").numberbox('setValue', row.extraTradePrice);
             $("#editwin").dialog({
                 closed: false,
                 top: ($(window).height() - 300) * 0.5,

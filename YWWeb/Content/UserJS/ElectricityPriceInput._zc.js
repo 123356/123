@@ -97,12 +97,12 @@ function edit() {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
             loadSelectUnit(row.unid);
-            $("#trade_price").val(row.trade_price),
-            $("#trade_num").val(row.trade_num),
-            $("#catalog_price").val(row.catalog_price);
+            $("#trade_price").numberbox('setValue',row.trade_price),
+            $("#trade_num").numberbox('setValue', row.trade_num),
+            $("#catalog_price").numberbox('setValue', row.catalog_price),
             getMDate(row.trade_time, 'trade_time'),
-            $("#id").val(row.id)
-            $("#pc_save_cost").val(row.pc_save_cost);
+                $("#id").val(row.id)
+            $("#pc_save_cost").numberbox('setValue', row.pc_save_cost),
             $("#editwin").dialog({
                 closed: false,
                 top: ($(window).height() - 300) * 0.5,

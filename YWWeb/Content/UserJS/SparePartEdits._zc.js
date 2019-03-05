@@ -7,7 +7,7 @@ function loadInfo() {
             $("#SparePartID").val(sid);
             $("#SparePartCode").val(row.SparePartCode);
             $("#SparePartName").val(row.SparePartName);
-            $("#StockCount").val(row.StockCount);
+            $("#StockCount").numberbox('setValue',row.StockCount);
             $("#SupplierID").combobox('setValue', row.SupplierID);
 
             $("#EadoCode").val(row.EadoCode);
