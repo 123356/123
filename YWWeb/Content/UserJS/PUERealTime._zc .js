@@ -104,15 +104,11 @@
                             if (this.curPid == node.children[i].id) {
                                 this.curPname = node.children[i].text
                             }
-
                         }
                     }
                     this.foreachTree(node.children[i]);
-
-
                 }
             }
-
         },
         //获取数据
         getRealTimePUEData: function () {
@@ -164,10 +160,6 @@
                              pieChart.clear()
                          }
                      }
-                    
-                     
-                     
-                     
                  }
                  that.loading = false
             })
@@ -296,14 +288,11 @@
                         }
                     }
                 };
-
-
             lineChart.clear()
             lineChart.setOption(option)
             window.addEventListener("resize", () => {
                 lineChart.resize();
             });
-            
         },
         //仪表盘
         createGauge: function (data) {
@@ -469,26 +458,9 @@
              });
 
         },
-
-     
     },
     beforeMount: function () {
-       
         this.getStation()
-      //  this.getRealTimePUEData()
-        
-        
-       
-       
-    },
-    mounted: function () {
-       
-        
     }
 })
 
-$(function () {
-
-
-    
-})

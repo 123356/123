@@ -8,7 +8,8 @@ function checkDidenable(ModuleID, obj) {
             disenalble = " am-btn am-btn-default am-disabled ";
             break;
         }
-    return disenalble;
+        return disenalble;
+    }
 }
 //分配按钮
 function loadMenuList() {
@@ -74,14 +75,11 @@ function loadMenuList() {
         ClickColor();
     });
 
-}
-function ClickColor() {
-  
-  /*  $("#collapase-nav-1 li a").on('click', function () {
-        
-        $("#collapase-nav-1 li").find("a").attr("style", "background-color:#36414e;border: #36414e;")
-        $(this).attr("style", "background-color:#40af94; border: #40af94;color:#fff")
-       
-    })
-    */
-}
+    }
+    function ClickColor() {
+
+        $("#collapase-nav-1 li a").on('click', function () {
+              $(this).attr("style", "background-color:#33404c;color: #40af94;")
+          })
+          
+    }
