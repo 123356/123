@@ -155,13 +155,18 @@ var vm = new Vue({
         },
         mqtt() {
             var that = this;
-            var wsbroker = "59.110.153.200";
-            location.hostname;
+            var wsport, wsbroker;
             if (location.protocol == "https:") {
-                var wsport = 15673;
+                wsport = 15673;
+                wsbroker = "yw.ife360.com";
             } else {
-                var wsport = 15675;
+                wsport = 15675;
+                wsbroker = "59.110.153.200";
             }
+
+            console.log(wsport)
+
+            console.log(wsbroker)
 
             //连接选项
             var client;
