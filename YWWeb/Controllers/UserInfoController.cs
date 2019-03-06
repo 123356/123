@@ -99,7 +99,7 @@ namespace YWWeb.Controllers
             {
                 string PDRList = HomeController.GetPID(CurrentUser.UNITList);
                 //SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND t_CM_Constract.CtrCom='北京公司'
-                string sql = "SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND PID IN(" + PDRList + ") and t_CM_Constract.Type=1  ORDER BY createDate DESC,id DESC";
+                string sql = "SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND PID IN(" + PDRList + ") and t_CM_Constract.ConType=1  ORDER BY createDate DESC,id DESC";
                 List<Constract> list = bll.ExecuteStoreQuery<Constract>(sql).ToList();
                 if (!string.IsNullOrEmpty(CtrName))
                 {
@@ -220,25 +220,31 @@ namespace YWWeb.Controllers
         {
             //SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND t_CM_Constract.id=1
             string strJson = "";
-            string sql = "SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND t_CM_Constract.id=" + id;
-            List<Constract> listPDRinfo = bll.ExecuteStoreQuery<Constract>(sql).ToList();
-            if (listPDRinfo != null && listPDRinfo.Count > 0)
+            try
             {
-                //SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.* FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=92 AND orderType='检修试验' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id
-                List<t_CM_ConstractInfo> rc = bll.ExecuteStoreQuery<t_CM_ConstractInfo>("SELECT * FROM t_CM_ConstractInfo WHERE constractId=" + id + " AND orderType='日常巡检'").ToList();
-                if (rc.Count > 0)
+                string sql = "SELECT t_CM_Constract.* ,t_CM_PDRInfo.Name as CtrPName FROM  t_CM_Constract,t_CM_PDRInfo WHERE t_CM_Constract.CtrPid =t_CM_PDRInfo.PID AND t_CM_Constract.id=" + id;
+                List<Constract> listPDRinfo = bll.ExecuteStoreQuery<Constract>(sql).ToList();
+                if (listPDRinfo != null && listPDRinfo.Count > 0)
                 {
-                    listPDRinfo.First().rcTemplateIds = rc[0].TemplateIds;
+                    //SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.* FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=92 AND orderType='检修试验' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id
+                    List<t_CM_ConstractInfo> rc = bll.ExecuteStoreQuery<t_CM_ConstractInfo>("SELECT * FROM t_CM_ConstractInfo WHERE constractId=" + id + " AND orderType='日常巡检'").ToList();
+                    if (rc.Count > 0)
+                    {
+                        listPDRinfo.First().rcTemplateIds = rc[0].TemplateIds;
+                    }
+                    List<t_CM_ConstractInfo> sy = bll.ExecuteStoreQuery<t_CM_ConstractInfo>("SELECT * FROM t_CM_ConstractInfo WHERE constractId=" + id + " AND orderType='检修试验'").ToList();
+                    if (sy.Count > 0)
+                    {
+                        listPDRinfo.First().syTemplateIds = sy[0].TemplateIds;
+                    }
+                    List<CstrOrder> tci = bll.ExecuteStoreQuery<CstrOrder>("SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.*,t_CM_CstrOrder.id as id1 FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=" + id + " AND orderType='日常巡检' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id").ToList();
+                    List<CstrOrder> tci2 = bll.ExecuteStoreQuery<CstrOrder>("SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.*,t_CM_CstrOrder.id as id1 FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=" + id + " AND orderType='检修试验' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id").ToList();
+                    List<t_PM_Order> allOrders = bll.ExecuteStoreQuery<t_PM_Order>("SELECT * FROM t_PM_Order WHERE PID =" + listPDRinfo.First().CtrPid).ToList();
+                    strJson = JsonConvert.SerializeObject(new ConstractInfoc(listPDRinfo.First(), tci, tci2, allOrders));
                 }
-                List<t_CM_ConstractInfo> sy = bll.ExecuteStoreQuery<t_CM_ConstractInfo>("SELECT * FROM t_CM_ConstractInfo WHERE constractId=" + id + " AND orderType='检修试验'").ToList();
-                if (sy.Count > 0)
-                {
-                    listPDRinfo.First().syTemplateIds = sy[0].TemplateIds;
-                }
-                List<CstrOrder> tci = bll.ExecuteStoreQuery<CstrOrder>("SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.*,t_CM_CstrOrder.id as id1 FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=" + id + " AND orderType='日常巡检' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id").ToList();
-                List<CstrOrder> tci2 = bll.ExecuteStoreQuery<CstrOrder>("SELECT t_CM_ConstractInfo.*,t_CM_CstrOrder.*,t_CM_CstrOrder.id as id1 FROM t_CM_ConstractInfo,t_CM_CstrOrder WHERE constractId=" + id + " AND orderType='检修试验' AND constractId=CtrId AND CtrInfoId=t_CM_ConstractInfo.id").ToList();
-                List<t_PM_Order> allOrders = bll.ExecuteStoreQuery<t_PM_Order>("SELECT * FROM t_PM_Order WHERE PID =" + listPDRinfo.First().CtrPid).ToList();
-                strJson = JsonConvert.SerializeObject(new ConstractInfoc(listPDRinfo.First(), tci, tci2, allOrders));
+            }catch(Exception ex)
+            {
+                throw ex;
             }
             return Content(strJson);
         }
@@ -526,7 +532,7 @@ namespace YWWeb.Controllers
                         constract.person = info.person;
                         constract.dateFixCount = info.dateFixCount;
                         constract.testFixCount = info.testFixCount;
-                        constract.Type = 1;
+                        constract.ConType = 1;
                         bll.t_CM_Constract.AddObject(constract);
                         bll.SaveChanges();
                         List<t_CM_Constract> dd = bll.t_CM_Constract.Where(c => c.CtrName == info.CtrName).ToList();
@@ -548,6 +554,7 @@ namespace YWWeb.Controllers
                     constract.person = info.person;
                     constract.dateFixCount = info.dateFixCount;
                     constract.testFixCount = info.testFixCount;
+                    constract.ConType = 1;
                     bll.t_CM_Constract.AddObject(constract);
                     bll.SaveChanges();
                     List<t_CM_Constract> dd = bll.t_CM_Constract.Where(c => c.CtrName == info.CtrName).ToList();

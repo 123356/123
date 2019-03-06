@@ -4377,7 +4377,7 @@ namespace YWWeb.Controllers
                         constract.testFixCount = info.testFixCount;
                         constract.UID = info.UID;
                         constract.Type = info.Type;
-                        constract.ConType = 3;
+                        constract.ConType = 4;
                         constract.LinkMan = info.LinkMan;
                         constract.Tel = info.Tel;
                         constract.AddUserID = CurrentUser.UserID;
@@ -4420,7 +4420,7 @@ namespace YWWeb.Controllers
                         constract.personids = info.personids;
                         constract.dateFixCount = info.dateFixCount;
                         constract.testFixCount = info.testFixCount;
-                        constract.ConType = 3;
+                        constract.ConType = 4;
                         constract.LinkMan = info.LinkMan;
 
                         constract.Type = info.Type;
@@ -4472,7 +4472,7 @@ namespace YWWeb.Controllers
                     constract.dateFixCount = info.dateFixCount;
                     constract.testFixCount = info.testFixCount;
                     constract.UID = info.UID;
-                    constract.ConType = 3;
+                    constract.ConType = 4;
                     constract.LinkMan = info.LinkMan;
                     constract.Tel = info.Tel;
                     constract.Type = info.Type;
@@ -4585,7 +4585,7 @@ namespace YWWeb.Controllers
                 return Content("");
             }
             str = str.Substring(0, str.Length - 1);
-            string sql = "SELECT  a.ID,a.ProjectName,a.Type,a.Adress,a.Type,c.UserName as ProjectManager,a.Tel,b.UnitName as CtrPName,a.Coordination FROM  t_CM_Constract a inner join t_CM_Unit b on a.UID =b.UnitID inner join t_CM_UserInfo c on a.ProjectManager=c.UserID where a.AddUserID IN (" + str + ")";
+            string sql = "SELECT  a.ID,a.ProjectName,a.Type,a.Adress,a.Type,c.UserName as ProjectManager,a.Tel,b.UnitName as CtrPName,a.Coordination FROM  t_CM_Constract a inner join t_CM_Unit b on a.UID =b.UnitID inner join t_CM_UserInfo c on a.ProjectManager=c.UserID where a.AddUserID IN (" + str + ") and ConType=4";
             List<ProJectMap> listPDRinfo = bll.ExecuteStoreQuery<ProJectMap>(sql).ToList();
             return Json(listPDRinfo, JsonRequestBehavior.AllowGet);
         }
@@ -4772,7 +4772,7 @@ namespace YWWeb.Controllers
             {
                 string sql = "";
                 if (CurrentUser.RoleID == 1)
-                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID ORDER BY createDate DESC,id DESC";
+                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where ConType=4 ORDER BY createDate DESC,id DESC";
                 else
                 {
                     string str = "";
@@ -4803,7 +4803,7 @@ namespace YWWeb.Controllers
                         return Content("");
                     }
                     str = str.Substring(0, str.Length - 1);
-                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where t_CM_Constract.AddUserID IN(" + str + ")  ORDER BY createDate DESC,id DESC";
+                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where t_CM_Constract.AddUserID IN(" + str + ") and ConType=4  ORDER BY createDate DESC,id DESC";
                 }
                 List<Constract> list = bll.ExecuteStoreQuery<Constract>(sql).ToList();
                 if (!string.IsNullOrEmpty(proName))

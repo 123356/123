@@ -91,7 +91,7 @@ namespace YWWeb.Controllers
                     {
                         return Content("");
                     }
-                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where t_CM_Constract.AddUserID IN(" + str + ")  ORDER BY createDate DESC,id DESC";
+                    sql = "SELECT t_CM_Constract.* ,t_CM_Unit.UnitName as CtrPName FROM  t_CM_Constract left join t_CM_Unit on t_CM_Constract.UID= t_CM_Unit.UnitID where t_CM_Constract.AddUserID IN(" + str + ") and ConType=3  ORDER BY createDate DESC,id DESC";
                 }
                 List<Constract> list = bll.ExecuteStoreQuery<Constract>(sql).ToList();
                 if (!string.IsNullOrEmpty(CtrName))
