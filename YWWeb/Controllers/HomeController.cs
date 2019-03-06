@@ -1059,6 +1059,21 @@ namespace YWWeb.Controllers
             }
             return "";
         }
+        public JsonResult GetNavMenuList()
+        {
+            try
+            {
+                int UserID = CurrentUser.UserID;
+                string sql = "select * from t_CM_Module where Target='Nav' and ModuleID in (select ModuleID from t_CM_RoleRight where RoleID in (select RoleID from t_CM_UserRoles where UserID=" + UserID + ")) and ParentID=0 order by SN";
+                var list = bll.ExecuteStoreQuery<t_CM_Module>(sql);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+        }
         public JsonResult GetThirdMenuInfo2(int mid)
         {
             StringBuilder sbMenu = new StringBuilder();
@@ -1689,7 +1704,7 @@ namespace YWWeb.Controllers
 
                 var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                 if (lastMonthPower != 0)
-                {   
+                {
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
                 }
                 int dayy = DateTime.DaysInMonth(dgh.Year, dgh.Month);
@@ -1814,7 +1829,7 @@ namespace YWWeb.Controllers
                         else
                             pdf.zhaungji = 0;
                     }
-                
+
                     foreach (var by in bianyaqilist)
                     {
                         if (!string.IsNullOrEmpty(by.C))
@@ -1943,7 +1958,7 @@ namespace YWWeb.Controllers
                 }
                 model.Score = GetUnitScoreByUID(uid);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -1956,7 +1971,7 @@ namespace YWWeb.Controllers
             {
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-              
+
                 var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
                 List<int?> cidlist = new List<int?>();
                 string s = "";
@@ -1990,7 +2005,8 @@ namespace YWWeb.Controllers
                 {
                     model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -2004,7 +2020,7 @@ namespace YWWeb.Controllers
             {
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-           
+
                 var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
                 List<int?> cidlist = new List<int?>();
                 string s = "";
@@ -2036,7 +2052,8 @@ namespace YWWeb.Controllers
                 {
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -2057,7 +2074,7 @@ namespace YWWeb.Controllers
                 var lastPower = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().LastYearPower;
                 model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -2389,7 +2406,7 @@ namespace YWWeb.Controllers
                 {
                     var pids = s.PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                     list = bll.t_CM_PDRInfo.Where(p => pids.Contains(p.PID)).ToList();
-                }    
+                }
             }
             return Json(list);
         }
@@ -5049,7 +5066,7 @@ namespace YWWeb.Controllers
         //    }
         //    return Json("ok",JsonRequestBehavior.AllowGet);
         //}
-        
+
 
 
 
@@ -5252,9 +5269,9 @@ namespace YWWeb.Controllers
         #endregion
 
         #region 元器件
-        public JsonResult GetElementList(string name,int pid=0,int did=0, int page=1, int rows=10)
+        public JsonResult GetElementList(string name, int pid = 0, int did = 0, int page = 1, int rows = 10)
         {
-            IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name,pid,did, page, rows);
+            IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name, pid, did, page, rows);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public JsonResult AddOrUpdateElement(IDAO.Models.t_DM_ElementDevice model)
@@ -5286,7 +5303,7 @@ namespace YWWeb.Controllers
                 info.PName = model.PName;
                 n = DAL.ElementDeviceDAL.getInstance().Add(info);
             }
-            if (n >0)
+            if (n > 0)
             {
                 return Json("ok", JsonRequestBehavior.AllowGet);
             }

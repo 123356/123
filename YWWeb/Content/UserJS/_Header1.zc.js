@@ -19,12 +19,12 @@ var alarmAllInfo = "";
 var timesInfos = "";
 var contep = "";
 var timeTicket1;
-
+getNavMenus();
 clearInterval(timeTicket);
 timeTicket = setInterval(function () {
     alarmState();
     //alarmSysState();
-   
+
     getOrderState();
     showAlarmWindow();
     //getOrderTimes();
@@ -65,11 +65,11 @@ function showAlarmWindow() {
     var sArarmTem = "", sArarmMp3Name = "";
 
     if (alarmInf.length > 0) {
-        sArarmTem = sArarmTem  + alarmInf;
+        sArarmTem = sArarmTem + alarmInf;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/alarm.mp3")//报警
-        
-      $("#alarmDetail").attr("href","/AlarmManage/Index?pid=0")
+
+        $("#alarmDetail").attr("href", "/AlarmManage/Index?pid=0")
     } else {
         sArarmMp3Name += "0";
     }
@@ -82,19 +82,19 @@ function showAlarmWindow() {
         sArarmMp3Name += "0";
     }
     if (alarmInfBug.length > 0) {
-        sArarmTem = sArarmTem  + alarmInfBug;
+        sArarmTem = sArarmTem + alarmInfBug;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/bug.mp3")//隐患
-       
-         $("#alarmDetail").attr("href", "/PerationMaintenance/HazardMan")
+
+        $("#alarmDetail").attr("href", "/PerationMaintenance/HazardMan")
     } else {
         sArarmMp3Name += "0";
     }
     if (timesInfos.length > 0) {
-        sArarmTem = sArarmTem  + timesInfos;
+        sArarmTem = sArarmTem + timesInfos;
         sArarmMp3Name += "1";
         playList.push("/Content/wav/constract.mp3")//合同
-       
+
         $("#alarmDetail").attr("href", "/PerationMaintenance/Index?mid=437")
     } else {
         sArarmMp3Name += "0";
@@ -122,11 +122,11 @@ function showAlarmWindow() {
 
     var cookiDate = $.cookie("hintDate")
     if (cookiDate != null || cookiDate != undefined) {
-      var   hintDate = new Date(cookiDate)
+        var hintDate = new Date(cookiDate)
 
         //console.log("cookieDate:" + hintDate.getFullYear() + "-" + (hintDate.getMonth() + 1) + "-" + hintDate.getDate() + " " + hintDate.getHours() + ":" + hintDate.getMinutes() + ":" + hintDate.getSeconds())
         var curDate = new Date()
-       // console.log("curDate:" + curDate.getFullYear() + "-" + (curDate.getMonth() + 1) + "-" + curDate.getDate() + " " + curDate.getHours() + ":" + curDate.getMinutes() + ":" + curDate.getSeconds())
+        // console.log("curDate:" + curDate.getFullYear() + "-" + (curDate.getMonth() + 1) + "-" + curDate.getDate() + " " + curDate.getHours() + ":" + curDate.getMinutes() + ":" + curDate.getSeconds())
         var time = curDate.getTime() - hintDate.getTime()
         time = Math.floor(time / (60 * 1000))
         console.log("相差时间：" + time)
@@ -150,12 +150,12 @@ function showAlarmWindow() {
     }
 
 
-    
+
     $("#alarm_content").html($(sArarmTem));
 }
 var i = -1
 function play(audio) {
-    $("#setHint").attr("checked",false)
+    $("#setHint").attr("checked", false)
     $(".alarm_popups_box").fadeIn();
     playm(audio)
 }
@@ -168,7 +168,7 @@ function playm(audio) {
         return;
     }
     audio.src = playList[i];
-    
+
     audio.play();
     audio.onended = function () {
         playm(audio)
@@ -271,6 +271,63 @@ function getOrderState() {
         objs = null;
     }, "text");
 }
+function getNavMenus() {
+    $.post("/Home/GetNavMenuList", function (data) {
+        console.log(data);
+        var ht = '<li class="am-text-sm tpl-header-navbar-welcome">'
+            + '<dl>'
+            + '<dt>'
+            + '<a>欢迎您, <span> ' + UserName+'</span><i class="am-icon-chevron-down" style="transform:rotate(0deg);font-size:18px;font-weight: bold;"></i> </a>'
+            + '</dt>'
+            + '<dd>'
+            + '<p class="tb" style=""></p>'
+            + '<p onclick="chgPwd()" style="margin-top:-10px">修改密码</p>'
+            + '<p onclick="LoginOut()">退出</p>'
+            + '</dd>'
+            + '</dl >'
+            + '</li>';
+        $.each(data, function (i, v) {
+            if (v.ModuleName == "工单") {
+                ht += '<li class="am-dropdown tpl-dropdown" data-am-dropdown>'
+                    + '<a href = "' + v.Location + '" target = "main_frame" >'
+                    + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'
+                    + '<i class="iconfont icon-order" id="orderIcon"></i>'
+                    + '</a>'
+                    + '</li>';
+            } else if (v.ModuleName=="隐患") {
+                ht += '<li class="am-dropdown tpl-dropdown" data-am-dropdown>'
+                    + '<a href = "' + v.Location + '" target = "main_frame" >'
+                    + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'
+                    + '<i class="iconfont icon-yinhuandianwei" id="orderIcon"></i>'
+                    + '</a>'
+                    + '</li>';
+            } else if (v.ModuleName == "报警") {
+                ht += '<li class="am-text-sm">'
+                    + '<a href = "' + v.Location + '" target="main_frame">'
+                    + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'
+                    + '<i class="iconfont icon-real-time-alarm" id="alarmIcon"></i>'
+                    + '</a>'
+                    + '</li>';
+            }
+        })
+        ht += '<li class="am-text-sm" style="display: inline">'
+            + '<p style = "text-align:left; color:#fff;padding:12px 10px 10px 20px;opacity:0.8;margin:0;font-size:10px;line-height:33px;width:140px" id = "curTIme" >'
+            + '<time class="curTIme">00.00  00:00</time>'
+            + '</p>'
+            + '</li>';
+        $("#navs").html(ht);
+        $(".theme-black .am-fr a").on("click", function () {
+            $("#collapase-nav-1 li").find("a").attr("style", "background-color:#262a35;border: #262a35;")
+            $(".theme-black .am-fr a").css("background", "none");
+            $(this).css("background", "#40ae95").css("color", "#fff");
+        })
+        $(" .tpl-header-navbar-welcome dl").hover(function () {
+            $(this).find("dd").fadeIn()
+        }, function () {
+            $(this).find("dd").fadeOut()
+        })
+    })
+}
 $(document).ready(function () {
     //报警窗           
     $(".alarm_popups_btn input").click(function () {
@@ -278,26 +335,26 @@ $(document).ready(function () {
         audio.pause();
     });
     $('.alarm_popups_box h3').mousedown(
-    function (event) {
-        var isMove = true;
-        var dlgLeft = $('div.alarm_popups_box').offset().left;
-        var dlgTop = $('div.alarm_popups_box').offset().top;
-        var downX = event.pageX;
-        var downY = event.pageY;
-        $(document).mousemove(function (event) {
-            var moveX = event.pageX;
-            var moveY = event.pageY;
-            if (isMove) {
-                var obj = $('div.alarm_popups_box');
-                $('div.alarm_popups_box').offset({ left: dlgLeft + (moveX - downX), top: dlgTop + (moveY - downY) });
+        function (event) {
+            var isMove = true;
+            var dlgLeft = $('div.alarm_popups_box').offset().left;
+            var dlgTop = $('div.alarm_popups_box').offset().top;
+            var downX = event.pageX;
+            var downY = event.pageY;
+            $(document).mousemove(function (event) {
+                var moveX = event.pageX;
+                var moveY = event.pageY;
+                if (isMove) {
+                    var obj = $('div.alarm_popups_box');
+                    $('div.alarm_popups_box').offset({ left: dlgLeft + (moveX - downX), top: dlgTop + (moveY - downY) });
+                }
             }
+            ).mouseup(
+                function () {
+                    isMove = false;
+                }
+            );
         }
-    ).mouseup(
-    function () {
-        isMove = false;
-    }
-    );
-    }
     );
 
 });
