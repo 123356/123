@@ -391,7 +391,10 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetElectrMonth(string addCid, string delCid)
         {
-
+            if(addCid == "" && delCid == "")
+            {
+                return Json("无效参数");
+            }
 
 
             string pid = "", cid = "", str = "";
