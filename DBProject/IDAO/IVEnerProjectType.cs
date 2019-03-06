@@ -16,6 +16,6 @@ namespace IDAO
         IList<t_V_EnerProjectType> AddProjectTemplate(int unitID, int item_type);
         IList<t_V_EnerProjectType> GetHistoryList(int unitID, int item_type);
         IList<t_V_EnerProjectTypePower> GetCidsToElectricity(string pids, string cids);
-        IList<t_V_EnerProjectTypePower> GetElectrMonth(int pid, int cid);
+        IList<t_V_EnerProjectTypePower> GetElectrMonth(string pid, string cid);
     }
 }
