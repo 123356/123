@@ -1361,7 +1361,7 @@ namespace YWWeb.Controllers
                 foreach (var item in list)
                 {
                     List<int?> pids = bll.t_CM_PDRInfo.Where(p => p.UnitID == item.UnitID).Select(p => p.PID).Distinct().ToList().ConvertAll<int?>(i => i);
-                    var count = bll.t_AlarmTable_en.Where(p => pids.Contains(p.PID)).OrderByDescending(p => p.AlarmState).FirstOrDefault();
+                    var count = bll.t_AlarmTable_en.Where(p => pids.Contains(p.PID)&&p.AlarmState!=0).OrderByDescending(p => p.AlarmState).FirstOrDefault();
                     if (count != null)
                     {
                         item.isAlarm = count.AlarmState.Value;
@@ -1410,59 +1410,65 @@ namespace YWWeb.Controllers
             if (string.IsNullOrEmpty(UNITList))
                 return "";
             string str = "";
-            using (HomeController h = new HomeController())
+            try
             {
-
-                using (pdermsWebEntities bll = new pdermsWebEntities())
+                using (HomeController h = new HomeController())
                 {
 
-                    if (h.CurrentUser.RoleID == 1)
+                    using (pdermsWebEntities bll = new pdermsWebEntities())
                     {
-                        List<t_CM_PDRInfo> list = new List<t_CM_PDRInfo>();
-                        string strsql = "select * from  t_CM_PDRInfo";
-                        list = bll.ExecuteStoreQuery<t_CM_PDRInfo>(strsql).ToList();
-                        foreach (var item in list)
-                        {
-                            str += item.PID + ",";
-                        }
-                        if (!string.IsNullOrEmpty(str))
-                            str = str.Substring(0, str.Length - 1);
-                        return str;
-                    }
-                    else
-                    {
-                        if (Convert.ToBoolean(h.CurrentUser.IsAdmin))
-                        {
-                            string unlist = "";
-                            var Ulist = bll.t_CM_UserInfo.Where(p => p.UID == h.CurrentUser.UID).ToList();
-                            foreach (var item in Ulist)
-                            {
-                                if (!string.IsNullOrEmpty(item.UNITList))
-                                    unlist += item.UNITList + ",";
-                            }
-                            if (!string.IsNullOrEmpty(unlist))
-                                unlist = unlist.Substring(0, unlist.Length - 1);
 
-                            ustr = unlist;
+                        if (h.CurrentUser.RoleID == 1)
+                        {
+                            List<t_CM_PDRInfo> list = new List<t_CM_PDRInfo>();
+                            string strsql = "select * from  t_CM_PDRInfo";
+                            list = bll.ExecuteStoreQuery<t_CM_PDRInfo>(strsql).ToList();
+                            foreach (var item in list)
+                            {
+                                str += item.PID + ",";
+                            }
+                            if (!string.IsNullOrEmpty(str))
+                                str = str.Substring(0, str.Length - 1);
+                            return str;
                         }
                         else
                         {
-                            ustr = UNITList;
+                            if (Convert.ToBoolean(h.CurrentUser.IsAdmin))
+                            {
+                                string unlist = "";
+                                var Ulist = bll.t_CM_UserInfo.Where(p => p.UID == h.CurrentUser.UID).ToList();
+                                foreach (var item in Ulist)
+                                {
+                                    if (!string.IsNullOrEmpty(item.UNITList))
+                                        unlist += item.UNITList + ",";
+                                }
+                                if (!string.IsNullOrEmpty(unlist))
+                                    unlist = unlist.Substring(0, unlist.Length - 1);
+
+                                ustr = unlist;
+                            }
+                            else
+                            {
+                                ustr = UNITList;
+                            }
                         }
+
+
+
+                        var unitlist = bll.ExecuteStoreQuery<t_CM_Unit>("SELECT * FROM t_CM_Unit WHERE UnitID IN (" + ustr + ")").ToList();
+                        foreach (var item in unitlist)
+                        {
+                            if (!string.IsNullOrEmpty(item.PDRList))
+                                str += item.PDRList + ",";
+                        }
+                        if (!string.IsNullOrEmpty(str))
+                            str = str.Substring(0, str.Length - 1);
                     }
 
-
-
-                    var unitlist = bll.ExecuteStoreQuery<t_CM_Unit>("SELECT * FROM t_CM_Unit WHERE UnitID IN (" + ustr + ")").ToList();
-                    foreach (var item in unitlist)
-                    {
-                        if (!string.IsNullOrEmpty(item.PDRList))
-                            str += item.PDRList + ",";
-                    }
-                    if (!string.IsNullOrEmpty(str))
-                        str = str.Substring(0, str.Length - 1);
                 }
-
+            }catch(Exception ex)
+            {
+                throw ex;
             }
             return str;
         }
