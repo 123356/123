@@ -149,7 +149,7 @@
                 text.selectAll("tspan")
                     .data(function (d) {
                         console.log(d)
-                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + d.UsePower  ]
+                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + d.NeedPower  ]
                     })
                     .enter()
                     .append("svg:tspan")
@@ -169,6 +169,7 @@
 
 
                 function click(d) {
+                    console.log(d)
                     if (!d.children) {
                         return;
                     }

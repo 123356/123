@@ -387,19 +387,76 @@ namespace EnergyManage.Controllers
 
 
 
-        
 
-        public JsonResult GetElectrMonth(int pid, int cid)
+
+        public JsonResult GetElectrMonth(string addCid, string delCid)
         {
-            IList<IDAO.Models.t_V_EnerProjectTypePower> list = DAL.VEnerProjectTypeDAL.getInstance().GetElectrMonth(pid, cid);
+
+
+
+            string pid = "", cid = "", str = "";
+
+            if (addCid != "") {
+                str += addCid;
+            }
+            if (delCid != "")
+            {
+                str += delCid;
+            }
+            string[] array = str.Split(',');
+            for (var a = 0; a < array.Count(); a++)
+            {
+                if (array[a] == "")
+                {
+                    continue;
+                }
+                var arr = array[a].Split('-');
+                if (arr[0] != "")
+                    pid += arr[0] + ',';
+                if (arr[1] != "")
+                    cid += arr[1] + ',';
+            }
+
+
+
+           
+            pid = string.Join(",", pid.Split(',').Distinct().ToArray());
+            cid = string.Join(",", cid.Split(',').Distinct().ToArray());
+
+            if (pid != "")
+                pid = pid.Substring(0, pid.Length - 1);
+            if (cid != "")
+                cid = cid.Substring(0, cid.Length - 1);
+
+            List<IDAO.Models.t_V_EnerProjectTypePower> all = DAL.VEnerProjectTypeDAL.getInstance().GetElectrMonth(pid, cid).Distinct().ToList();
+
+
+
+            var list = all.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
+
+            for(var a = 0; a < all.Count(); a++)
+            {
+                for(var b = 0; b < list.Count(); b++)
+                {
+                    if(list[b].RecordTime == all[a].RecordTime)
+                    {
+                        if (addCid.IndexOf(all[a].PID+ "-" + all[a].CID)>0) {
+
+                            list[b].NeedPower += all[b].NeedPower;
+                            list[b].UsePower += all[b].UsePower;
+                        }
+                        else
+                        {
+                            list[b].NeedPower -= all[b].NeedPower;
+                            list[b].UsePower -= all[b].UsePower;
+                        }
+                    }
+                }
+            }
+
             return (Json(list, JsonRequestBehavior.AllowGet));
         }
 
-        //public JsonResult GetElectrFull(int pid, int cid)
-        //{
-        //    IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID(pid, cid);
-        //    return (Json(list, JsonRequestBehavior.AllowGet));
-        //}
 
 
         #endregion
