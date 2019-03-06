@@ -37,22 +37,164 @@ namespace EnergyManage.Controllers
         /// <returns></returns>
         public ActionResult GetTreeData(int unitID,int item_type,string unitName)
         {
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            IList<IDAO.Models.t_V_EnerPower> list;
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
             if (list.Count() == 0 && item_type==1)
             {
                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
             }
             Tree tree = new Tree();
             tree.id = 0;
             tree.name = unitName;
             tree.pId = -1;
             tree.children = new List<Tree>();
-                getTree(list, tree.children, 0);
+            getTree(list, tree.children, 0);
             string json = JsonConvert.SerializeObject(tree);
             return  Content(json);
         }
+
+
+
+        public ActionResult GetTreePower(int unitID, int item_type, string unitName)
+        {
+            IList<IDAO.Models.t_V_EnerPower> list;
+
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
+            if (list.Count() == 0 && item_type == 1)
+            {
+                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
+            }
+
+
+            var addstr = "";
+            var delstr = "";
+            for (var a = 0; a < list.Count(); a++) { 
+
+                var add = "";
+                var del = "";
+                if (list[a].addCid != null) {
+                     add = list[a].addCid.Replace(",", ";");
+                }
+                if (list[a].addCid != null)
+                {
+                     del = list[a].delCid.Replace(",", ";");
+                }
+
+            if (add != "" && add != null)
+                {
+                    addstr += add + ';';
+                }
+                else if (del != "" && del != null)
+                {
+                    delstr += del + ';';
+                }
+            }
+
+            IList<IDAO.Models.t_V_EnerProjectTypePower> cidList;
+            if (delstr.Length > 2 && addstr.Length > 2)
+            {
+                cidList = GetSplitCidStr(addstr + delstr.Substring(0, delstr.Length - 1));
+            }
+            else if (addstr.Length > 2)
+            {
+                cidList = GetSplitCidStr(addstr.Substring(0, addstr.Length - 1));
+            }
+            else if (delstr.Length > 2)
+            {
+                cidList = GetSplitCidStr(delstr.Substring(0, delstr.Length - 1));
+            }
+            else {
+                cidList = GetSplitCidStr("");
+            }
+
+
+
+            for (var a = 0; a < list.Count(); a++)
+            {
+                list[a].NeedPower = 0;
+                list[a].UsePower = 0;
+                if (cidList != null) { 
+                    for (var b = 0; b < cidList.Count(); b++) {
+                        if (list[a].addCid.Contains($"{cidList[b].PID}-{cidList[b].CID}"))
+                        {
+                            list[a].NeedPower += cidList[b].NeedPower;
+                            list[a].UsePower += cidList[b].UsePower;
+                        }
+                        else if (list[a].delCid.Contains($"{cidList[b].PID}-{cidList[b].CID}"))
+                        {
+                            list[a].NeedPower -= cidList[b].NeedPower;
+                            list[a].UsePower -= cidList[b].UsePower;
+                        }
+                    }
+                }
+                var add = list[a].addCid;
+                var del = list[a].delCid;
+                if (add != "" && add != null)
+                {
+                    addstr += add.Replace(",", ";") + ';';
+                }
+                else if (del != "" && del != null)
+                {
+                    delstr += del.Replace(",", ";") + ';';
+                }
+            }
+            //DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+            TreePower tree = new TreePower();
+            tree.id = 0;
+            tree.name = unitName;
+            tree.pId = -1;
+            tree.children = new List<TreePower>();
+            getPowerTree(list, tree.children, 0);
+            string json = JsonConvert.SerializeObject(tree);
+            return Content(json);
+        }
+
+
+
+        public IList<IDAO.Models.t_V_EnerProjectTypePower> GetSplitCidStr(string str) {
+            if (str == "") {
+                IList < IDAO.Models.t_V_EnerProjectTypePower > qwe = null;
+                return qwe;
+            }
+
+            string[] scid = str.Split(';');
+
+            string pids = "" ,
+                  cids = "";
+
+            for (var a = 0; a < scid.Count(); a++)
+            {
+                string[] arr  = scid[a].Split('-');
+                if(arr.Count() > 1)
+                {
+                    pids += arr[0] + ',';
+                    cids += arr[1] + ',';
+                }
+            }
+            pids = pids.Substring(0, pids.Length - 1);
+            cids = cids.Substring(0, cids.Length - 1);
+
+            string pid = string.Join(",", pids.Split(',').Distinct().ToArray());
+            string cid = string.Join(",", cids.Split(',').Distinct().ToArray());
+
+
+            //获取所有表的用电量
+
+            IList<IDAO.Models.t_V_EnerProjectTypePower> list = DAL.VEnerProjectTypeDAL.getInstance().GetCidsToElectricity(pid,cid);
+
+            return list;
+
+
+
+        }
+
+
+   
+  
+
+
         /// <summary>
         /// 返回该用户权限可见的单位列表
         /// </summary>
@@ -74,7 +216,7 @@ namespace EnergyManage.Controllers
         /// <summary>
         /// 拼接tree数据
         /// </summary>
-        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
+        public void getTree(IList<IDAO.Models.t_V_EnerPower> data, List<Tree> arr, int childID)
         {
             try
             {
@@ -99,6 +241,39 @@ namespace EnergyManage.Controllers
                 }
             }
             catch {
+            }
+        }
+
+
+        public void getPowerTree(IList<IDAO.Models.t_V_EnerPower> data, List<TreePower> arr, int childID)
+        {
+            try
+            {
+                for (var a = 0; a < data.Count(); a++)
+                {
+                    if (data[a].parent_id == childID)
+                    {
+                        TreePower tree = new TreePower();
+                        tree.id = data[a].child_id;
+                        tree.name = data[a].Name;
+                        tree.pId = data[a].parent_id;
+                        tree.addCid = data[a].addCid;
+                        tree.delCid = data[a].delCid;
+                        tree.note = data[a].unit_note;
+                        tree.head = data[a].unit_head;
+                        tree.area = data[a].unit_area;
+                        tree.people = data[a].unit_people;
+                        tree.UsePower = data[a].UsePower;
+                        tree.NeedPower = data[a].NeedPower;
+
+                        tree.children = new List<TreePower>();
+                        arr.Add(tree);
+                        getPowerTree(data, tree.children, tree.id);
+                    }
+                }
+            }
+            catch
+            {
             }
         }
         /// <summary>
@@ -171,10 +346,13 @@ namespace EnergyManage.Controllers
         }
 
 
-        
+        public class PidandCid {
+            public int pid { set; get; }
+            public string cid { set; get; }
+        }
 
 
-        public class Tree
+        public class TreeBasic
         {
             public int id { set; get; }
             public string name { set; get; }
@@ -185,9 +363,19 @@ namespace EnergyManage.Controllers
             public string delCid { set; get; }
             public int area { set; get; }
             public int people { set; get; }
+        }
+        public class  Tree : TreeBasic
+        {
             public List<Tree> children { set; get; }
         }
+       
+        public class TreePower: TreeBasic
+        {
+            public decimal UsePower { set; get; }
+            public decimal NeedPower { set; get; }
 
+            public List<TreePower> children { set; get; }
+        }
         #endregion
 
         #region

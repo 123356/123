@@ -12,8 +12,6 @@ namespace IDAO.Models
     [Serializable]
     public partial class t_V_EnerProjectType
     {
-
-
         public int id { get; set; }
         public string Name { get; set; }
         public string Remarks { get; set; }
@@ -27,5 +25,28 @@ namespace IDAO.Models
         public string delCid { get; set; }
         public int unit_area { get; set; }
         public int unit_people { get; set; }
-}
+    }
+
+    public partial class t_V_EnerPower: t_V_EnerProjectType
+    {
+        public decimal NeedPower { get; set; }
+        public decimal UsePower { get; set; }
+
+    }
+
+
+
+    /// <summary>
+    /// 用电量
+    /// </summary>
+    public partial class t_V_EnerProjectTypePower
+    {
+        public decimal UsePower { get; set; }
+        public decimal NeedPower { get; set; }
+        public DateTime RecordTime{get;set;}
+        public int PID { get; set; }
+        public int CID { get; set; }
+
+    }
+
 }

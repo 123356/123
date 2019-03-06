@@ -6,22 +6,14 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-
-
-    @Html.Partial("~/Views/Home/BaseHTML.cshtml")
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    @*
-    <script type="text/javascript" src="~/Content/js/jquery-1.14.2.min.js"></script>*@
+   @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script type="text/javascript" src="~/Content/js/jquery-1.14.2.min.js"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/echarts.min.js"></script>
 
     <link href="~/Content/d3/css/style.css" rel="stylesheet" />
     <script src="~/Content/d3/js/d3.js"></script>
     <script src="~/Content/d3/js/d3.layout.js"></script>
-
-
-
-
 
     <style scoped>
         #body {
@@ -33,10 +25,8 @@
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550659696106&di=348f69491485a56a5f1734e153a7090d&imgtype=0&src=http%3A%2F%2Fpic31.photophoto.cn%2F20140507%2F0009021159307625_b.jpg") no-repeat;
-            background-size: 100% 100%;
+            background:#ddd;
         }
-
 
         rect {
             fill-opacity: .9;
@@ -98,9 +88,10 @@
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
 
 
+        var clickInterval = 0;
         $.ajax({
             type: "post",
-            url: "/energyManage/EMSetting/GetTreeData",
+            url: "/energyManage/EMSetting/GetTreePower",
             data: {
                 unitID: data.UnitID,
                 item_type: 1,
@@ -118,7 +109,17 @@
                     .attr("transform", function (d) {
                         return "translate(" + x(d.y) + "," + y(d.x) + ")";
                     })
-                    .on("click", click);
+                    .on('click', click)
+                    .on('dblclick', function (d) {
+                        console.log('弹框')
+
+                        console.log(d)
+
+
+                        d3.event.stopPropagation();
+
+                    })
+                 
 
                 var kx = w / root.dx,
                     ky = h / 1;
@@ -147,7 +148,8 @@
 
                 text.selectAll("tspan")
                     .data(function (d) {
-                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + 123123]
+                        console.log(d)
+                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + d.UsePower  ]
                     })
                     .enter()
                     .append("svg:tspan")
@@ -160,6 +162,7 @@
 
                 d3.select(window)
                     .on("click", function () {
+                        console.log('点击空白')
                         click(root);
                     })
 

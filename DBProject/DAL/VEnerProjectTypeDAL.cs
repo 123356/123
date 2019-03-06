@@ -43,6 +43,37 @@ namespace DAL
             }
             return data;
         }
+
+
+        public IList<t_V_EnerPower> GetTreeData1(int unitID, int item_type)
+        {
+            IList<t_V_EnerPower> data = new List<t_V_EnerPower>();
+            try
+            {
+                data = _dbFactory.venerProjectType.GetTreeData1(unitID, item_type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+        
+
+        public IList<t_V_EnerProjectTypePower> GetCidsToElectricity(string pids, string cids)
+        {
+            IList<t_V_EnerProjectTypePower> data = new List<t_V_EnerProjectTypePower>();
+            try
+            {
+                data = _dbFactory.venerProjectType.GetCidsToElectricity(pids, cids);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
         /// <summary>
         /// 查列历史分项列表
         /// </summary>
