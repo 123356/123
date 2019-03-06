@@ -12,7 +12,9 @@
         reportInfo: null,
         userBtn: [],
         cruPname: '',
-        curTimeStr:''
+        curTimeStr: '',
+        monthTotal:[],
+        yearTotal:0
     },
     methods: {
         //获取站室信息
@@ -83,14 +85,46 @@
                     type:3
                 }
             })
-                .then(function (res) {
-                    that.info = res.data
-                    that.loading = false
+            .then(function (res) {
+                that.info = res.data
+                that.totalCom(res.data)
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                that.loading = false
+            })
+        },
+        //计算总额
+        totalCom: function (data) {
+            var monthTotal = []
+            var yearTotal = 0
+            var arr = []
+            for (var i in data) {
+                for (var j in data[i].list_data) {
+                    arr.push(data[i].list_data[j].Value)
+                    for (var n in data[i].list_data[j].Value) {
+                        yearTotal += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
+                    }
+                }
+            }
+            for (var h = 0; h < 12; h++) {
+                var count = 0
+                for (var i in arr) {
+                    for (var j in arr[i]) {
+                        if (h == j) {
+                            count += isNaN(parseFloat(arr[i][j])) ? 0 : parseFloat(arr[i][j])
+                        }
+                    }
+                }
+                monthTotal.push({
+                    "index": h,
+                    "val": count.toFixed(2)
                 })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                    that.loading = false
-                })
+            }
+            this.monthTotal = monthTotal
+            this.yearTotal = yearTotal.toFixed(2)
         },
         //打印
         openOrPrint: function () {

@@ -1,7 +1,7 @@
 ﻿new Vue({
     el: '#dayReport',
     data: {
-        loading:true,
+        loading: true,
         hours: [],
         info: [],
         PID: null,
@@ -14,7 +14,9 @@
         cruPname: '',
         curTimeStr: '',
         tdWidth: 0,
-        isHide:true
+        isHide: true,
+        dayTotal: 0,
+        hourTotal: []
     },
     methods: {
         //获取站室信息
@@ -88,17 +90,47 @@
                 }
             })
                 .then(function (res) {
-                    console.log(that.getDate())
                     that.info = res.data
-                    that.loading = false
-                    
-                    
+                    that.totalCom(res.data)
 
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
+                    
+                })
+                .finally(function () {
                     that.loading = false
                 })
+        },
+        totalCom: function (data) {
+            var dayTotal = 0
+            var hourTotal = []
+            var arr = []
+            for (var i in data) {
+                for (var j in data[i].list_data) {
+                    arr.push(data[i].list_data[j].Value)
+                    for (var n in data[i].list_data[j].Value) {
+                        dayTotal += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
+
+                    }
+                }
+            }
+            for (var h = 0; h < 24; h++) {
+                var count = 0
+                for (var i in arr) {
+                    for (var j in arr[i]) {
+                        if (h == j) {
+                            count += isNaN(parseFloat(arr[i][j])) ? 0 : parseFloat(arr[i][j])
+                        }
+                    }
+                }
+                hourTotal.push({
+                    "index": h,
+                    "val": count.toFixed(2)
+                })
+            }
+            this.dayTotal = dayTotal.toFixed(2)
+            this.hourTotal = hourTotal
         },
         //打印
         openOrPrint: function () {
@@ -144,14 +176,14 @@
                     break;
             }
         },
-        //获取每月天数
+        //获取每天小时数
         getHours: function () {
             var arr = new Array()
-            for (var i = 1; i <25; i++) {
+            for (var i = 1; i < 25; i++) {
                 if (i < 10) {
                     arr.push("0" + i + ":00")
                 } else {
-                    arr.push( i + ":00")
+                    arr.push(i + ":00")
                 }
             }
             this.hours = arr
@@ -176,11 +208,11 @@
             }
             return value.toFixed(2)
         },
-       
+
     },
     beforeMount: function () {
 
-        
+
         this.dateTime = new Date()
         this.curTimeStr = this.getDate()
         this.getHours()
@@ -188,7 +220,7 @@
         this.getStation()
     },
     mounted: function () {
-        
+
     },
     created: function () {
     }

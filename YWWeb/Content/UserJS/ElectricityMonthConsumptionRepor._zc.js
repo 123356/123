@@ -1,8 +1,8 @@
 ﻿new Vue({
     el: '#monthReport',
     data: {
-        loading:true,
-        days:[],
+        loading: true,
+        days: [],
         info: [],
         PID: null,
         dateTime: null,
@@ -12,7 +12,9 @@
         reportInfo: null,
         userBtn: [],
         cruPname: '',
-        curTimeStr:''
+        curTimeStr: '',
+        dayTotal: [],
+        monthTotal: 0
     },
     methods: {
         //获取站室信息
@@ -20,7 +22,7 @@
             var that = this
             this.$http({
                 url: '/BaseInfo/BindPDRInfo?showall=0',
-                method:'POST'
+                method: 'POST'
             })
                 .then(function (res) {
                     that.stationList = res.data
@@ -56,16 +58,16 @@
                 method: 'POST',
                 params: {
                     PID: this.PID,
-                    iType:0
+                    iType: 0
                 }
             })
                 .then(function (res) {
-                    
+
                     if (res.data.length > 0) {
                         that.userTypeList = res.data
                         that.userType = res.data[0].id
                     }
-                   
+
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -80,21 +82,54 @@
                 params: {
                     pid: this.PID,
                     Time: this.getDate(),
-                    type:2
+                    type: 2
                 }
             })
                 .then(function (res) {
                     that.info = res.data
-                    that.loading = false
+                    that.totalCom(res.data)
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
+                })
+                .finally(function () {
                     that.loading = false
                 })
         },
+        //计算总额
+        totalCom: function (data) {
+            var monthTotal = 0
+            var dayTotal = []
+            var arr = []
+            for (var i in data) {
+                for (var j in data[i].list_data) {
+                    arr.push(data[i].list_data[j].Value)
+                    for (var n in data[i].list_data[j].Value) {
+                        monthTotal += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
+
+                    }
+                }
+            }
+            for (var h = 0; h < this.days; h++) {
+                var count = 0
+                for (var i in arr) {
+                    for (var j in arr[i]) {
+                        if (h == j) {
+                            count += isNaN(parseFloat(arr[i][j])) ? 0 : parseFloat(arr[i][j])
+                        }
+                    }
+                }
+                dayTotal.push({
+                    "index": h,
+                    "val": count.toFixed(2)
+                })
+            }
+            this.dayTotal = dayTotal
+            this.monthTotal = monthTotal.toFixed(2)
+        },
         //打印
         openOrPrint: function () {
-          //  window.open('/ReportForms/ElectricityMonthConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
+            //  window.open('/ReportForms/ElectricityMonthConsumptionRepor?pid=' + this.PID + "&Time=" + this.getDate() + "&isHide=false", '_blank');
             window.print()
         },
         //导出
@@ -130,7 +165,7 @@
         userMenuClick: function (e) {
             switch (e) {
                 case 'dosearch()':
-                    this.loading=true
+                    this.loading = true
                     this.getReport()
                     break;
             }
@@ -138,7 +173,7 @@
         //获取每月天数
         getDays: function () {
             var curTime = new Date(this.dateTime)
-            var d = new Date(curTime.getFullYear(), curTime.getMonth()+1, 0);
+            var d = new Date(curTime.getFullYear(), curTime.getMonth() + 1, 0);
             var arr = new Array()
             for (var i = 1; i <= d.getDate(); i++) {
                 arr.push(i)
