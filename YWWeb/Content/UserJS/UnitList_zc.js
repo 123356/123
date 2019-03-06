@@ -188,7 +188,7 @@ function edit() {
             $("#GovEleLevel").numberbox('setValue', row.GovEleLevel);
             $("#DeviationMode").val(row.DeviationMode);
             $("#InstalledCapacity").val(row.InstalledCapacity);
-            $("#InstalledCapacitys").numberbox('setValue', InstalledCapacitys)
+            $("#InstalledCapacitys").numberbox('setValue', row.InstalledCapacitys)
             $("#IndustryID").combobox("setValue", row.IndustryID);
             $("#Loss").val(row.Loss),
             $("#LossAdd").val(row.LossAdd),
