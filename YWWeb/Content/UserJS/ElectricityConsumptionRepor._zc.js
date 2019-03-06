@@ -91,7 +91,7 @@
             })
                 .then(function (res) {
                     that.info = res.data
-                    that.totalCom(res.data)
+                    //that.totalCom(res.data)
 
                 })
                 .catch(function (e) {

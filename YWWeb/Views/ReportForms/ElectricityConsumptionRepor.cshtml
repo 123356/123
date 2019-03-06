@@ -136,7 +136,7 @@
 
         <div class="reportView">
             <div class="title">{{curTimeStr}} 日配电室能源统计表 (kW·h)</div>
-            <div class="stationName">&nbsp;{{cruPname}}<span style="float:right;margin-right:10px">总计：{{dayTotal}}</span></div>
+            <div class="stationName">&nbsp;{{cruPname}}@*<span style="float:right;margin-right:10px">总计：{{dayTotal}}</span>*@</div>
             <div class="row">
                 <div class="flex-item flex-1_5"></div>
                 <div class="flex-item flex-2"></div>
@@ -154,13 +154,13 @@
                 </div>
             </div>
             @* 新增总计 *@
-            <div class="row" v-if="dayTotal>0">
+            @*<div class="row" v-if="dayTotal>0">
                 <div class="flex-item flex-1_5"></div>
                 <div class="flex-item flex-2" style="justify-content:center">总计</div>
                 <div class="flex-item flex-24 noBorder">
                     <div class="flex-item flex-1 center" v-for="item in hourTotal">{{item.val}}</div>
                 </div>
-            </div>
+            </div>*@
             @* 新增总计 *@
         </div>
     </div>

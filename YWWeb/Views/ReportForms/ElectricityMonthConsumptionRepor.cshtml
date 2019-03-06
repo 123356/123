@@ -141,7 +141,7 @@
 
         <div class="reportView">
             <div class="title">{{curTimeStr}} 月配电室能源统计表 (kW·h)</div>
-            <div class="stationName">&nbsp;{{cruPname}} <span style="float:right;margin-right:10px">总计：{{monthTotal}}</span></div>
+            <div class="stationName">&nbsp;{{cruPname}} @*<span style="float:right;margin-right:10px">总计：{{monthTotal}}</span>*@</div>
             <div class="row">
                 <div class="flex-item flex-1_5"></div>
                 <div class="flex-item flex-2"></div>
@@ -159,13 +159,13 @@
                     </div>
                 </div>
             </div>
-            <div class="row" v-if="monthTotal>0">
+            @*<div class="row" v-if="monthTotal>0">
                 <div class="flex-item flex-1_5"></div>
                 <div class="flex-item flex-2"></div>
                 <div class="flex-item  noBorder" :style="{flex:days.length}">
                     <div class="flex-item flex-1 center" v-for="item in dayTotal">{{item.val}}</div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
     <script type="text/javascript">
