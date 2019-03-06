@@ -287,21 +287,21 @@ function getNavMenus() {
             + '</dl >'
             + '</li>';
         $.each(data, function (i, v) {
-            if (v.ModuleName == "工单") {
+            if (v.ModuleName.indexOf("工单")!=-1  ) {
                 ht += '<li class="am-dropdown tpl-dropdown" data-am-dropdown>'
                     + '<a href = "' + v.Location + '" target = "main_frame" >'
                     + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'
                     + '<i class="iconfont icon-order" id="orderIcon"></i>'
                     + '</a>'
                     + '</li>';
-            } else if (v.ModuleName=="隐患") {
+            } else if (v.ModuleName.indexOf("隐患") != -1) {
                 ht += '<li class="am-dropdown tpl-dropdown" data-am-dropdown>'
                     + '<a href = "' + v.Location + '" target = "main_frame" >'
                     + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'
                     + '<i class="iconfont icon-yinhuandianwei" id="orderIcon"></i>'
                     + '</a>'
                     + '</li>';
-            } else if (v.ModuleName == "报警") {
+            } else if (v.ModuleName.indexOf("报警") != -1) {
                 ht += '<li class="am-text-sm">'
                     + '<a href = "' + v.Location + '" target="main_frame">'
                     + '<span class="am-badge am-radius textBadge">' + v.ModuleName + '</span>'

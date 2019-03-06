@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>ModuleEdit</title>
     <style type="text/css">
-        .divicons
-        {
+        .divicons {
             float: left;
             border: solid 1px #ccc;
             margin: 5px;
@@ -16,18 +15,18 @@
             text-align: center;
             cursor: pointer;
         }
-        .divicons:hover
-        {
-            color: #FFF;
-            border: solid 1px #3399dd;
-            background: #2288cc;
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
-            background: linear-gradient(top, #33bbee, #2288cc);
-            background: -moz-linear-gradient(top, #33bbee, #2288cc);
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
-            text-shadow: -1px -1px 1px #1c6a9e;
-            font-weight: bold;
-        }
+
+            .divicons:hover {
+                color: #FFF;
+                border: solid 1px #3399dd;
+                background: #2288cc;
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc');
+                background: linear-gradient(top, #33bbee, #2288cc);
+                background: -moz-linear-gradient(top, #33bbee, #2288cc);
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+                text-shadow: -1px -1px 1px #1c6a9e;
+                font-weight: bold;
+            }
     </style>
 </head>
 <body>
@@ -37,7 +36,7 @@
                 模块名称：
             </td>
             <td class="d_l_d">
-                <input id="ModuleName" runat="server" name="ModuleName" maxlength="20" data-options="required:true" class="radius5" /><b class = "RStar">&nbsp*</b>
+                <input id="ModuleName" runat="server" name="ModuleName" maxlength="20" data-options="required:true" class="radius5" /><b class="RStar">&nbsp*</b>
                 <input id="ModuleID" type="hidden" />
             </td>
         </tr>
@@ -54,7 +53,7 @@
                 链接地址：
             </td>
             <td class="d_l_d">
-                <input id="Location" runat="server" name="Location" class="easyui-validatebox radius5" maxlength="50"/>
+                <input id="Location" runat="server" name="Location" class="easyui-validatebox radius5" maxlength="50" />
             </td>
         </tr>
         <tr>
@@ -64,9 +63,10 @@
             <td class="d_l_d">
                 <input id="Menu_Img" type="hidden" runat="server" />
                 <img id="Img_Menu_Img" src="/Content/Images/illustration.png" runat="server" alt=""
-                    style="vertical-align: middle; padding-right: 10px;" />
+                     style="vertical-align: middle; padding-right: 10px;" />
                 <a href="javascript:" onclick="OpenIconList()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">
-                    选择图标</a>
+                    选择图标
+                </a>
             </td>
         </tr>
         <tr>
@@ -87,22 +87,22 @@
                 序号：
             </td>
             <td class="d_l_d">
-                <input id="SN" name="SN" class="easyui-numberbox" data-options="required:true" /><b class = "RStar">&nbsp*</b>
+                <input id="SN" name="SN" class="easyui-numberbox" data-options="required:true" /><b class="RStar">&nbsp*</b>
             </td>
         </tr>
     </table>
     <div style="text-align:center;">
         <a href="javascript:" id="btnSave" onclick="save()" class="table_btn btn_style radius5" data-options="iconCls:'icon-ok'">保存</a>
-         <a href="javascript:" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'" onclick="$('#editwin').window('close');">关闭</a>
+        <a href="javascript:" class="table_btn1 btn_style radius5" data-options="iconCls:'icon-cancel'" onclick="$('#editwin').window('close');">关闭</a>
     </div>
     <div id="editWin" class="easyui-dialog" style="width: 750px; height: auto; padding: 10px 20px;
         left: 1000px; top: 150px; max-height:550px;" data-options="closed:true,buttons:'#dlg-buttons'"
-        title="系统图标">
+         title="系统图标">
         <div class="div-body" id="icon_data">
         </div>
     </div>
     <script type="text/javascript">
-        $('#parent').combotree({url: '/SysInfo/ModuleComboData',required: true});  
+        $('#parent').combotree({url: '/SysInfo/ModuleComboData',required: true});
         $(function () {
             loadUserInfo();
         });
@@ -143,10 +143,10 @@
             $('#editWin').dialog({
                 //title: title,
                 closed: false,
-                minimizable: false, //最小化，默认false  
-                maximizable: false, //最大化，默认false  
-                collapsible: false, //可折叠，默认false  
-                resizable: true//可缩放，即可以通脱拖拉改变大小，默认false  
+                minimizable: false, //最小化，默认false
+                maximizable: false, //最大化，默认false
+                collapsible: false, //可折叠，默认false
+                resizable: true//可缩放，即可以通脱拖拉改变大小，默认false
             });
         }
         function loadUserInfo() {
@@ -158,7 +158,7 @@
                 $("#parent").combotree("setValue", obj.ParentID);
                 $("#Img_Menu_Img").attr("src", '/Content/Images/menu/' + obj.Icon);
                 $("#Menu_Img").val(obj.Icon);
-                $("#Target").val(obj.Target);
+                $("#target").val(obj.Target);
                 $("#Location").val(obj.Location);
                 $("#SN").numberbox("setValue", obj.SN);
                 $("#ModuleID").val(obj.ModuleID);
@@ -172,4 +172,6 @@
         }
     </script>
 </body>
+
+
 </html>
