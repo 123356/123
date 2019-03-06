@@ -157,11 +157,11 @@ var vm = new Vue({
             var that = this;
             var wsbroker = "59.110.153.200";
             location.hostname;
-            // if (location.protocol == "https:") {
-            //     var wsport = 15673;
-            // } else {
-            var wsport = 15675;
-            // }
+            if (location.protocol == "https:") {
+                var wsport = 15673;
+            } else {
+                var wsport = 15675;
+            }
 
             //连接选项
             var client;
