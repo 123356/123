@@ -119,7 +119,7 @@ namespace DAL
             }
             return data;
         }
-        public IList<t_V_EnerProjectTypePower> GetElectrMonth(int pid, int cid)
+        public IList<t_V_EnerProjectTypePower> GetElectrMonth(string pid, string cid)
         {
             IList<t_V_EnerProjectTypePower> data = new List<t_V_EnerProjectTypePower>();
             try
