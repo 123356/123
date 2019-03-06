@@ -386,6 +386,22 @@ namespace EnergyManage.Controllers
 		}
 
 
+
+        
+
+        public JsonResult GetElectrMonth(int pid, int cid)
+        {
+            IList<IDAO.Models.t_V_EnerProjectTypePower> list = DAL.VEnerProjectTypeDAL.getInstance().GetElectrMonth(pid, cid);
+            return (Json(list, JsonRequestBehavior.AllowGet));
+        }
+
+        //public JsonResult GetElectrFull(int pid, int cid)
+        //{
+        //    IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID(pid, cid);
+        //    return (Json(list, JsonRequestBehavior.AllowGet));
+        //}
+
+
         #endregion
     }
 } 

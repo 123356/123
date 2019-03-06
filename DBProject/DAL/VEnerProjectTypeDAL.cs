@@ -119,5 +119,23 @@ namespace DAL
             }
             return data;
         }
+        public IList<t_V_EnerProjectTypePower> GetElectrMonth(int pid, int cid)
+        {
+            IList<t_V_EnerProjectTypePower> data = new List<t_V_EnerProjectTypePower>();
+            try
+            {
+                data = _dbFactory.venerProjectType.GetElectrMonth(pid, cid);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        
+
+
+
     }
 }

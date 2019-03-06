@@ -72,9 +72,13 @@ namespace DAO
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
 
+        public IList<t_V_EnerProjectTypePower> GetElectrMonth(int pid, int cid)
+        {
+            string sql = $"SELECT isnull(UsePower,0) UsePower,isnull(NeedPower,0) NeedPower,RecordTime,PID,CID FROM t_EE_PowerQualityMonthly WHERE PID ={pid}  AND CID ={cid} AND RecordTime>=DateAdd(d,-30,getdate())";
+            return SQLQuery<t_V_EnerProjectTypePower>(sql);
+        }
 
-
-
+        
 
 
         public DbSet<t_V_EnerProjectType> Datas { get; set; }
