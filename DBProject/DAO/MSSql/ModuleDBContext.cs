@@ -26,7 +26,7 @@ namespace DAO
 
         public IList<t_CM_Module> GetModules(string moduleIDS)
         {
-            string query = "select * from  t_CM_Module  where ModuleID in(" + moduleIDS + ");";
+            string query = "select * from  t_CM_Module  where ModuleID in(" + moduleIDS + ") and Target!='Nav'";
 
             return SQLQuery<t_CM_Module>(query);
 
