@@ -227,14 +227,14 @@
 .window {
     overflow: hidden;
     padding: 5px;
-    border-width: 1px;
-    border-style: solid;
+    /*border-width: 1px;
+    border-style: solid;*/
 }
 
-.window .window-header {
-    background: transparent;
-    padding: 0px 0px 6px 0px;
-}
+    .window .window-header {
+        background: #40af94;
+        padding: 5px 0px 6px 5px;
+    }
 
 .window .window-body {
     border-width: 1px;
@@ -261,7 +261,8 @@
 }
 
 .window .window-header .panel-tool {
-    right: 1px;
+    right: 10px;
+    top:60%
 }
 
 .window .window-header .panel-with-icon {
@@ -294,12 +295,13 @@
 .window,
 .window-shadow {
     position: absolute;
-    -moz-border-radius: 5px 5px 5px 5px;
+    /*-moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;*/
 }
 
 .window-shadow {
+    display:none!important;
     background: #ccc;
     -moz-box-shadow: 2px 2px 3px #cccccc;
     -webkit-box-shadow: 2px 2px 3px #cccccc;
@@ -309,11 +311,12 @@
 
 .window,
 .window .window-body {
-    border-color: #D4D4D4;
+    border-color: transparent;
 }
 
 .window {
-    background-color: #40af94 !important;
+    background-color: #fff !important;
+    padding:0px
     /*background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
     background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
     background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
@@ -332,7 +335,7 @@
 }
 
 .window .panel-footer {
-    border: 1px solid #D4D4D4;
+    /*border: 1px solid #D4D4D4;*/
     position: relative;
     top: -1px;
 }
@@ -390,9 +393,9 @@
 
 .dialog-toolbar,
 .dialog-button {
-    background: #F5F5F5;
+    /*background: #F5F5F5;
     border-width: 1px;
-    border-style: solid;
+    border-style: solid;*/
 }
 
 .dialog-toolbar {

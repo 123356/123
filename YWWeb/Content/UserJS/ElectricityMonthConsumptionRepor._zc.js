@@ -86,8 +86,21 @@
                 }
             })
                 .then(function (res) {
-                    that.info = res.data
-                    //that.totalCom(res.data)
+                    
+                    that.totalCom(res.data)
+                    var data = res.data
+                    for (var i in data) {
+                        for (var j in data[i].list_data) {
+                            var count = 0
+                            for (var n in data[i].list_data[j].Value) {
+                                count += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
+                            }
+                            data[i].list_data[j].count = count.toFixed(2)
+                        }
+                    }
+
+                    that.info = data
+                    
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -98,19 +111,15 @@
         },
         //计算总额
         totalCom: function (data) {
-            var monthTotal = 0
             var dayTotal = []
             var arr = []
             for (var i in data) {
                 for (var j in data[i].list_data) {
                     arr.push(data[i].list_data[j].Value)
-                    for (var n in data[i].list_data[j].Value) {
-                        monthTotal += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
-
-                    }
+                    
                 }
             }
-            for (var h = 0; h < this.days; h++) {
+            for (var h = 0; h < this.days.length; h++) {
                 var count = 0
                 for (var i in arr) {
                     for (var j in arr[i]) {
@@ -125,7 +134,7 @@
                 })
             }
             this.dayTotal = dayTotal
-            this.monthTotal = monthTotal.toFixed(2)
+            console.log(dayTotal)
         },
         //打印
         openOrPrint: function () {
