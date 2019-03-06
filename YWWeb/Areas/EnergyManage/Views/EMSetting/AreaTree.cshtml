@@ -112,9 +112,13 @@
                     .on('click', click)
                     .on('dblclick', function (d) {
                         console.log('弹框')
-
+                        var data = {
+                            pid: d.pId,
+                            cid:d.id
+                        }
+                        getElectrMonth(data)
                         console.log(d)
-
+                        $("#editwin").window("open")
 
                         d3.event.stopPropagation();
 
@@ -208,6 +212,38 @@
 
         //y最小 0+像素*2
         //y最大 d.dx*ky-2*像素大小
+
+        //弹框数据
+        function getElectrMonth(data) {
+            $.ajax({
+                type: "post",
+                url: "/energyManage/EMSetting/GetElectrMonth",
+                data: {
+                    pid: data.pid,
+                    cid: data.cid
+                },
+                success: function (res) {
+
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 
     <script type="text/javascript">
