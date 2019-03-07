@@ -179,7 +179,28 @@
 
 
                 function click(d) {
-                    console.log(d)
+                    console.log({
+                        addCid: d.addCid,
+                        delCid: d.delCid
+                    })
+                    $.ajax({
+                        type: "post",
+                        url: "/energyManage/EMSetting/GetElectrMonth",
+                        data: {
+                            addCid: d.addCid,
+                            delCid: d.delCid
+                        },
+                        success: function (res) {
+                            console.log(res)
+                        },
+                        error: function (e) {
+                            console.log(e)
+                        }
+                    })
+
+
+
+
                     if (!d.children) {
                         return;
                     }
@@ -213,6 +234,7 @@
                 }
             }
         })
+<<<<<<< HEAD
         //x最小 像素大小
         //x最大 w/层数-文字个数*像素大小
 
@@ -237,6 +259,8 @@
             })
         }
 
+=======
+>>>>>>> 68db3a5f28007d975a17fa0a27dea3cf8ecde240
 
 
 

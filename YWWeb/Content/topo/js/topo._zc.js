@@ -1,7 +1,8 @@
 "use strict";
+
 function Topo() {}
 Topo.prototype = {
-    init:function() {
+    init: function() {
         this.pid = $("#pid").html();
         this.orderNo = $("#orderNo").html() || 1;
         this.newCanvas();
@@ -37,6 +38,9 @@ Topo.prototype = {
             },
             success: function(res) {
                 res = res[0];
+                if (res.length) {
+                    return
+                }
                 that.__IP = $.base64.decode(res.IP);
                 that.__account = $.base64.decode(res.Account);
                 that.__password = $.base64.decode(res.Password);
@@ -44,7 +48,7 @@ Topo.prototype = {
                 that.LoadView(res.url, res.Path);
                 if (!that.isShowOrderTheTopo) {
                     that.orderNoList(res);
-                    //that.mqtt();
+                    that.mqtt();
                     that.isShowOrderTheTopo = true;
                 }
             },
@@ -377,7 +381,7 @@ Topo.prototype = {
         }
         that.stage.paint();
     },
-    mqtt: function() {
+    mqtt: function () {
         var that = this;
         var wsbroker = that.__IP;
         var wsport = parseInt(that.__port);
