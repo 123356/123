@@ -139,10 +139,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 type: "category",
                 boundaryGap: false,
                 data: DataJson.xAxis.split(','),
-                axisLabel: {
-                    show: true,
-                    formatter: "{value}"
-                }
+                
             }],
             yAxis: [{
                 //min: 173,

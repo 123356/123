@@ -3,9 +3,9 @@ var Request = new Object();
 Request = GetRequest();
 var pid = 1, sid = 0, p = 0, StartDate = "";
 StartDate = Request['StartDate'];
-if (Request['pid'] != null)
-    pid = Request['pid'];
-else
+//if (Request['pid'] != null)
+//    pid = Request['pid'];
+//else
     pid = $.cookie('cookiepid');
 if (null === pid) {
     pid = 1;
@@ -36,12 +36,14 @@ $("#PDRName").combobox({
     textField: 'Name',
     onLoadSuccess: function () {
         var data = $('#PDRName').combobox('getData');
+       
         if (data.length > 0 && pid > 0) {
             $("#PDRName").combobox('setValue', pid);
         }
         getReport($("#PDRName").combobox('getValue'));
     },
     onSelect: function (data) {
+        $.cookie("cookiepid", $("#PDRName").val())
         getReport($("#PDRName").combobox('getValue'))
     }
 });
