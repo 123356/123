@@ -49,6 +49,7 @@
             this.cruPname = val.label
             this.PID = val.value
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
+            this.getUserType();
         },
         //用户类型
         getUserType: function () {
@@ -58,14 +59,14 @@
                 method: 'POST',
                 params: {
                     PID: this.PID,
-                    iType:0
+                    iType:2
                 }
             })
                 .then(function (res) {
                     
                     if (res.data.length > 0) {
                         that.userTypeList = res.data
-                        that.userType = res.data[0].id
+                        that.userType = res.data[0].name
                     }
                    
                 })
@@ -82,7 +83,8 @@
                 params: {
                     pid: this.PID,
                     Time: new Date(this.year).getFullYear(),
-                    type:3
+                    type: 3,
+                    itemtype: this.userType
                 }
             })
                 .then(function (res) {
@@ -141,7 +143,7 @@
         },
         //导出
         ExcelPort: function () {
-            window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + new Date(this.year).getFullYear()+ "&isHide=false" + "&type=" + 3, '_blank');
+            window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + new Date(this.year).getFullYear() + "&isHide=false" + "&type=" + 3 + "&itemtype=" + this.userType, '_blank');
         },
         getUserBtn: function () {
             var that = this
