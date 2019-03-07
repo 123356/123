@@ -49,6 +49,7 @@
             this.cruPname = e.label
             this.PID = e.value
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
+            this.getUserType();
         },
         //用户类型
         getUserType: function () {
