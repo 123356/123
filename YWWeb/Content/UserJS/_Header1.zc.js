@@ -273,7 +273,6 @@ function getOrderState() {
 }
 function getNavMenus() {
     $.post("/Home/GetNavMenuList", function (data) {
-        console.log(data);
         var ht = '<li class="am-text-sm tpl-header-navbar-welcome">'
             + '<dl>'
             + '<dt>'

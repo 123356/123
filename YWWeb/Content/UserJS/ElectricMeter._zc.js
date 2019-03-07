@@ -150,7 +150,7 @@ function SaveForm() {
         }
     }
     else {
-        $.messager.alert("请输入必填项！");
+        $.messager.alert("提示", "请输入必填项！", "info");
     }
 }
 function restore() {
