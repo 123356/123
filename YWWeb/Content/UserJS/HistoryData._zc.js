@@ -50,7 +50,7 @@ function dosearch(index) {
     //dname = $("#selDID").combobox('getText');
     dname = $("#selDID").combobox('getValue');
     cname = $("#cname").val();
-    pid = $.cookie('cookiepid');
+    pid = $("#SPID").combobox('getValue');
     startdate = $('#StartDate').datebox('getValue');
     enddate = $('#EndDate').datebox('getValue');
     //typename = $("#cbType").combobox('getText');
@@ -76,9 +76,10 @@ $("#SPID").combobox({
     editable: false,
     onLoadSuccess: function (data) { //数据加载完毕事件
         if (hpid == undefined) {
-            if (data.length > 0) {
+            if ($.cookie('cookiepid') != null)
                 pid = $.cookie('cookiepid');
-            }
+            else
+                pid = data[0].PID;
         }
         else {
             pid = hpid;
@@ -154,7 +155,7 @@ function initCombCid(pid, did) {
     });
 }
 $('#list_data').datagrid({
-    url: 'empty.json'
+    url: ''
 });
 function export1() {
     dname = $("#selDID").combobox('getText');
@@ -191,7 +192,7 @@ function export1() {
 
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#SPID").combobox({
         onChange: function() {
             window.dosearch();

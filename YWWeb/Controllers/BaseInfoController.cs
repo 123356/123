@@ -108,6 +108,11 @@ namespace YWWeb.Controllers
             return Content(strJson);
         }
         //测点类型列表
+        public ActionResult BindValueType1(int did = -1, int showall = 0, int pid = 8) {
+            string strJson = "[{\"DTID\":\"0\",\"Name\":\"==全部==\"},{\"DTID\":\"1\",\"Name\":\"一般\"},{\"DTID\":\"2\",\"Name\":\"恢复\"},{\"DTID\":\"3\",\"Name\":\"报警\"},{\"DTID\":\"4\",\"Name\":\"危机\"}]";
+            return Content(strJson);
+
+        }
         public ActionResult BindValueType(int did = -1, int showall = 0, int pid = 8)
         {
             //string strsql = "select distinct DataTypeID,TypeName Name from V_DeviceInfoState_PDR1";
@@ -126,6 +131,7 @@ namespace YWWeb.Controllers
                 {
                     strJson = AddShowAll(list.Count, strJson, "DTID", "Name");
                 }
+
             }
             catch (Exception ex)
             {
