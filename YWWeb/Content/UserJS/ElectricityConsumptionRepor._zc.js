@@ -122,7 +122,9 @@
             for (var i in data) {
                 for (var j in data[i].list_data) {
                     arr.push(data[i].list_data[j].Value)
-                    dayTotal += isNaN(data[i].list_data[j].Value[j]) ? 0 : parseFloat(data[i].list_data[j].Value[j])
+                    for (var n in data[i].list_data[j].Value) {
+                        dayTotal += isNaN(parseFloat(data[i].list_data[j].Value[n])) ? 0 : parseFloat(data[i].list_data[j].Value[n])
+                    }
                 }
             }
             for (var h = 0; h < 24; h++) {
