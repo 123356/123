@@ -250,7 +250,7 @@ function save() {
         UnitCity: $("#UnitCity").combobox("getValue"),
         LinkAddress: $("#LinkAddress").val(),
         InstalledCapacity: $("#InstalledCapacity").val(),
-        InstalledCapacitys: $("#InstalledCapacitys").val(),
+        InstalledCapacitys: $("#InstalledCapacitys").numberbox("getValue"),
         EleCalWay: $("#EleCalWay").val(),
         GovEleLevel: $("#GovEleLevel").val(),
         DeviationMode: $("#DeviationMode").val(),
