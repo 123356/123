@@ -6,9 +6,71 @@ var  polyline = new BMap.Polygon([
     new BMap.Point(116.12371, 40.155131)//左上
 
 ], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+
+function getBoundary() {
+    var bdary = new BMap.Boundary();
+    bdary.get("北京", function (rs) { //获取行政区域
+
+        var EN_JW = "180, 90;"; //东北角
+        var NW_JW = "-180,  90;"; //西北角
+        var WS_JW = "-180, -90;"; //西南角
+        var SE_JW = "180, -90;"; //东南角
+
+        var count = rs.boundaries.length; //行政区域的点有多少个
+        var index = 0
+        if (count > 1) {
+            index = 1
+        } else if (count == 1) {
+            index = 0
+        }
+
+        //4.添加环形遮罩层
+        var ply1 = new BMap.Polygon(rs.boundaries[index] + SE_JW + SE_JW + WS_JW + NW_JW + EN_JW + SE_JW, {
+            strokeColor: "none",
+            fillColor: "rgb(0,0,0)",
+            fillOpacity: 0.5,
+            strokeOpacity: 0.5
+        }); //建立多边形覆盖物
+        powerMap.addOverlay(ply1);
+        
+
+        var ply = new BMap.Polygon(rs.boundaries[index], {
+            strokeWeight: 2,
+            strokeColor: "red",
+            fillColor: '',
+        }); //建立多边形覆盖物
+        powerMap.addOverlay(ply);
+        console.log(powerMap.getOverlays()[0].getPosition())
+        $.post("/PDRInfo/getStationInfo", function (data) {
+            var arrdata = data.split('$');
+            var arr = eval("(" + arrdata[0] + ")");
+            for (var i = 0; i < arr.length; i++) {
+
+                if (arr[i].title == '1号_移动电源箱') {
+                    markerArr.push(arr[i])
+                }
+                if (arr[i].title == '1号_工程车') {
+                    markerArr.push(arr[i])
+
+                    var lng = arr[i].point.split("|")[0]
+                    var lat = arr[i].point.split("|")[1]
+
+                    var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), ply);
+                    if (!re) {
+                        $("#hitnInfo").text("工程车超出范围")
+                        $("#alarmDyx").show()
+                    }
+
+                }
+            }
+        });
+    });
+}
+
+
 function createLine() {
-    
-    powerMap.addOverlay(polyline);
+    getBoundary()
+    //powerMap.addOverlay(polyline);
 }
 try {
     var geo = new jQuery.AMUI.Geolocation({
@@ -16,7 +78,6 @@ try {
         timeout: 5000,
         maximumAge: 60000
     });
-
     geo.get().then(function (position) {
         // 成功回调，position 为返回的位置对象
         x = position.coords.longitude;
@@ -31,34 +92,31 @@ catch (err) { }
 
 
 $.ajaxSettings.async = false;  //同步才能获取数据
-
-//获取站点数据
 var markerArr = new Array();
 $.post("/PDRInfo/getStationInfo", function (data) {
     var arrdata = data.split('$');
     var arr = eval("(" + arrdata[0] + ")");
     for (var i = 0; i < arr.length; i++) {
-        
+
         if (arr[i].title == '1号_移动电源箱') {
             markerArr.push(arr[i])
         }
         if (arr[i].title == '1号_工程车') {
             markerArr.push(arr[i])
 
-            var lng = arr[i].point.split("|")[0]
-            var lat = arr[i].point.split("|")[1]
-           
-            var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), polyline);
-                if (!re) {
-                    $("#hitnInfo").text("工程车超出范围")
-                    $("#alarmDyx").show()
-                }
-           
+            //var lng = arr[i].point.split("|")[0]
+            //var lat = arr[i].point.split("|")[1]
+
+            //var re = BMapLib.GeoUtils.isPointInPolygon(new BMap.Point(lng, lat), ply);
+            //if (!re) {
+            //    $("#hitnInfo").text("工程车超出范围")
+            //    $("#alarmDyx").show()
+            //}
+
         }
     }
-   
-   
 });
+
 
 if (x == undefined)
     x = 116.3;
@@ -98,7 +156,7 @@ function createMap() {
     //console.log(x+"--"+y)
     var powerMap = new BMap.Map("powerMap"); //在百度地图容器中创建一个地图
     var point = new BMap.Point(116.545725, 39.779821); //定义一个中心点坐标
-    powerMap.centerAndZoom(point, 20); //设定地图的中心点和坐标并将地图显示在地图容器中
+    powerMap.centerAndZoom(point, 10); //设定地图的中心点和坐标并将地图显示在地图容器中
     //map.setMapType(BMAP_HYBRID_MAP);
 
     // map.setMapStyle({ style: 'grayscale' });//grayscale
