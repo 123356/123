@@ -55,15 +55,15 @@ namespace YWWeb.Controllers
         public ActionResult OneGraph(string id)
         {
 
-            int[] pids = new int[] { 178,12 };
-
+           // int[] pids = new int[] { 178,12 };
+            int[] pids = new int[] { 1, 2,3,4,5,6,7,8,9,10,11,13,20,105,137,140,141,142,143,145,146,147,164,165,167,169 };
 
             if (id.Contains('_'))
             {
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
                 ViewData["orderNo"] = ids[1];
-                if (Array.IndexOf(pids, Convert.ToInt32(ids[0])) == -1)
+                if (Array.IndexOf(pids, Convert.ToInt32(ids[0])) != -1)
                 {
                     return View("OneGraph" + ids[0] + "_" + ids[1]);
                 }else
@@ -75,7 +75,7 @@ namespace YWWeb.Controllers
             {
                 string[] ids = id.Split('_');
                 ViewData["pid"] = ids[0];
-                if (Array.IndexOf(pids,Convert.ToInt32( ids[0])) == -1)
+                if (Array.IndexOf(pids,Convert.ToInt32( ids[0])) != -1)
                 {
                     return View("OneGraph" + id);
                 }else

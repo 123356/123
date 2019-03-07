@@ -1,5 +1,4 @@
 ﻿"use strict"
-
 function Layout() {
     this.boxleft = document.createElement("div");
     this.lineleft = document.createElement("div");
