@@ -43,7 +43,7 @@ namespace YWWeb.Controllers
         /// <param name="pid"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        public JsonResult getPowerQualityData(int pid, string Time, int type)
+        public JsonResult getPowerQualityData(int pid, string Time, int type, string itemtype)
         {
             //List<PowerData_SSQX> list = new List<PowerData_SSQX>();
             List<DevC> data = new List<DevC>();
@@ -74,7 +74,11 @@ namespace YWWeb.Controllers
 
                     if (!pid.Equals(""))
                     {
-                        strsql += " and a.pid=" + pid + " and a.pid=b.pid"; ;
+                        strsql += " and a.pid=" + pid + " and a.pid=b.pid";
+                    }
+                    if (!string.IsNullOrEmpty(itemtype) && itemtype != "全部")
+                    {
+                        strsql += " and b.ItemType=" + itemtype + "";
                     }
                     if (!string.IsNullOrEmpty(Time))
                     {
@@ -93,7 +97,7 @@ namespace YWWeb.Controllers
                                 //}
                                 //else
                                 //{
-                                    times.Add(new DateTime(year, month, day).AddHours(i));
+                                times.Add(new DateTime(year, month, day).AddHours(i));
                                 //}
                             }
                             strsql += " and  (Day(a.RecordTime)=" + day + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)!=0 or Day(a.RecordTime)=" + (day + 1) + " and Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "and DATEPART(hh,RecordTime)=0)";
@@ -151,7 +155,7 @@ namespace YWWeb.Controllers
                                     else
                                         mo.Value.Add("");
                                 }
-                                else if(type == 3)
+                                else if (type == 3)
                                 {
                                     var s = it.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).ToList();
                                     if (s.Count != 0)
@@ -256,7 +260,7 @@ namespace YWWeb.Controllers
         }
 
 
-        public ActionResult ExportData(int pid, string Time, int type)
+        public ActionResult ExportData(int pid, string Time, int type, string itemtype)
         {
             List<DevC> data = new List<DevC>();
             List<DateTime> times = new List<DateTime>();
@@ -287,6 +291,10 @@ namespace YWWeb.Controllers
                     if (!pid.Equals(""))
                     {
                         strsql += " and a.pid=" + pid + " and a.pid=b.pid"; ;
+                    }
+                    if (!string.IsNullOrEmpty(itemtype) && itemtype != "全部")
+                    {
+                        strsql += " and b.ItemType=" + itemtype + "";
                     }
                     if (!string.IsNullOrEmpty(Time))
                     {
@@ -327,11 +335,11 @@ namespace YWWeb.Controllers
                     strsql += "   ORDER BY a.CID,RecordTime";
 
                     var list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
-                    foreach (var item in list.OrderBy(p=>p.OrderBy).GroupBy(p => p.DeviceName))
+                    foreach (var item in list.OrderBy(p => p.OrderBy).GroupBy(p => p.DeviceName))
                     {
                         DevC model = new DevC();
                         model.DeviceName = item.Key;
-                        foreach (var it in item.OrderBy(p=>p.CID).GroupBy(p => p.CName))
+                        foreach (var it in item.OrderBy(p => p.CID).GroupBy(p => p.CName))
                         {
                             PowerView mo = new PowerView();
                             mo.Cname = it.Key;
@@ -366,7 +374,7 @@ namespace YWWeb.Controllers
                         }
                         data.Add(model);
                     }
-                    return ExportToExcel(data, type, times);
+                    return ExportToExcel(data, type, times,list);
                 }
             }
             catch (Exception e)
@@ -376,7 +384,7 @@ namespace YWWeb.Controllers
 
         }
 
-        public ActionResult ExportToExcel(List<DevC> list, int type, List<DateTime> times)
+        public ActionResult ExportToExcel(List<DevC> list, int type, List<DateTime> times,List<PowerData_SSQX> list_sm)
         {
             //var lstTitle = list.Select(p => new { p.CID, p.CName }).Distinct().ToList();
             //var listTime = list.Select(p => p.RecordTime).Distinct().ToList();
@@ -384,14 +392,15 @@ namespace YWWeb.Controllers
             var sbHtml = new StringBuilder();
             sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
             sbHtml.Append("<tr>");
-            sbHtml.Append("<td></td>");
-            sbHtml.Append("<td></td>");
+            sbHtml.Append("<td>柜号</td>");
+            sbHtml.Append("<td>回路名称</td>");
             foreach (var item in times)
             {
                 string ss = "";
                 if (type == 1)
                 {
-                    ss = item.AddHours(-1).ToString("HH:mm");
+                    ss = item.ToString("HH:mm");
+
                 }
                 else if (type == 2)
                 {
@@ -403,85 +412,77 @@ namespace YWWeb.Controllers
                 }
                 sbHtml.AppendFormat("<td style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25'>{0}</td>", ss);
             }
+            sbHtml.Append("<td>回路合计</td>");
             sbHtml.Append("</tr>");
             for (int i = 0; i < list.Count; i++)
             {
-                
+
                 decimal cc = list[i].list_data.Count;
+
                 sbHtml.Append("<tr>");
                 sbHtml.AppendFormat("<td rowspan=" + cc + ">{0}</td>", list[i].DeviceName);
                 foreach (var item in list[i].list_data)
                 {
+                    decimal ss = 0;
                     sbHtml.AppendFormat("<td>{0}</td>", item.Cname);
                     foreach (var it in item.Value)
                     {
                         sbHtml.AppendFormat("<td>{0}</td>", it);
+                        if (!string.IsNullOrEmpty(it))
+                            ss += Convert.ToDecimal(it);
                     }
+                    sbHtml.AppendFormat("<td>{0}</td>", ss + "");
                     sbHtml.Append("</tr>");
                 }
-                //    sbHtml.AppendFormat("<td>{0}</td>", ss);
-                //    foreach (var j in data[i])
-                //    {
-                //        sum += j.Aphase;
-                //        sbHtml.AppendFormat("<td>{0}</td>", j.Aphase);
-                //        itt++;
-                //    }
-                //    for (var ittt = itt; ittt <= lstTitle.Count(); ittt++)
-                //    {
-                //        sbHtml.AppendFormat("<td>{0}</td>", "0");
-                //    }
-                //    sbHtml.AppendFormat("<td>{0}</td>", sum);
-                //    sbHtml.Append("</tr>");
-                //}
-                //sbHtml.Append("<tr><td></td><td>最大值</td>");
-                //foreach (var item in lstTitle)
-                //{
-                //    var SumcV = list.Where(p => p.CID == item.CID && p.CName == item.CName).Max(p => p.Aphase);
-
-                //    sbHtml.AppendFormat("<td>{0}</td>", SumcV);
-                //}
-                //var group = list.GroupBy(p => p.RecordTime);
-                //decimal Max = 0;
-                //foreach (var item in group)
-                //{
-                //    if (Max < item.Sum(p => p.Aphase))
-                //    {
-                //        Max = item.Sum(p => p.Aphase);
-                //    }
-                //}
-                //sbHtml.AppendFormat("<td>{0}</td>", Max);
-                //sbHtml.Append("</tr>");
-                //sbHtml.Append("<tr><td></td><td>小计</td>");
-                //foreach (var item in lstTitle)
-                //{
-                //    var SumV = list.Where(p => p.CID == item.CID && p.CName == item.CName).Sum(p => p.Aphase);
-                //    sbHtml.AppendFormat("<td>{0}</td>", SumV);
-                //}
-                //sbHtml.AppendFormat("<td>{0}</td>", list.Sum(p => p.Aphase));
-                //sbHtml.Append("</tr>");
             }
-                sbHtml.Append("</table>");
-                string sss = sbHtml.ToString();
-                //第一种:使用FileContentResult
-                byte[] fileContents = Encoding.UTF8.GetBytes(sbHtml.ToString());
-                string fileName = "";
+
+            sbHtml.Append("<tr>");
+            sbHtml.AppendFormat("<td colspan='2' style='text-align:center;'>分时合计</td>");
+            decimal sv = 0;
+            for (int i = 0; i < times.Count; i++)
+            {
                 if (type == 1)
                 {
-                    //日
-                    fileName = "日报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour).ToList();
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sv += s.Sum(p => p.Aphase);
                 }
                 else if (type == 2)
                 {
-                    //月
-                    fileName = "月报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day).ToList();
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sv += s.Sum(p => p.Aphase);
                 }
                 else if (type == 3)
                 {
-                    //年
-                    fileName = "年报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).ToList();
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sv += s.Sum(p => p.Aphase);
                 }
-                return File(fileContents, "application/ms-excel", fileName + ".xls");
-            
+            }
+            sbHtml.AppendFormat("<td>{0}</td>", Math.Round(sv, 2) + "");
+            sbHtml.Append("</tr>");
+            sbHtml.Append("</table>");
+            string sss = sbHtml.ToString();
+            //第一种:使用FileContentResult
+            byte[] fileContents = Encoding.UTF8.GetBytes(sbHtml.ToString());
+            string fileName = "";
+            if (type == 1)
+            {
+                //日
+                fileName = "日报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            else if (type == 2)
+            {
+                //月
+                fileName = "月报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            else if (type == 3)
+            {
+                //年
+                fileName = "年报表数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            return File(fileContents, "application/ms-excel", fileName + ".xls");
         }
         #endregion
 
