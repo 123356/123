@@ -289,6 +289,10 @@
                     } else {
                         this.delCid = list;
                     }
+
+
+
+                    console.log(list)
                 },
                 //加载单位列表
                 loadUnitList: function () {
@@ -558,7 +562,6 @@
                 },
                 //添加节点
                 append(data, root) {
-                    console.log(111)
                     this.node = {};
                     this.node.parent_id = data.id;
                     this.treeParent = data;
@@ -604,7 +607,7 @@
                     }
                     this.addCid = this.PIDCIdToView(this.node.addCid);
                     this.delCid = this.PIDCIdToView(this.node.delCid);
-                    this.node.parent_id = node.parent;
+                    this.node.parent_id = data.pId;
                     this.node.id = node.node.id;
                     this.nodeEditTyped = "upd";
                     this.node.root = JSON.stringify(root);
@@ -617,6 +620,7 @@
                         this.node = root;
                     }
                     this.nodeEditTyped = "sea";
+                    console.log(this.addCid)
                     this.addCid = this.PIDCIdToView(this.node.addCid);
                     this.delCid = this.PIDCIdToView(this.node.delCid);
                 },
@@ -693,6 +697,9 @@
                         this.node.delCid = this.ViewToPIDCId(this.delCid);
                         var name = that.node.title;
 
+
+
+                        console.log(that.node.parent_id)
                         this.$http({
                             url: "/energyManage/EMSetting/UpdateTreeNode",
                             method: "post",
@@ -733,12 +740,13 @@
                 //cid字符串 转 视图
                 PIDCIdToView(str) {
                     if (str) {
+                        console.log(this.oldCidTree)
                         var str = str.split(',');
                         for (var a = 0, arr = []; a < str.length; a++) {
                             var q = str[a].split('-');
                             var obj = { pid: q[0], id: q[1] };
                             for (var b = 0; b < this.oldCidTree.length; b++) {
-                                if (this.oldCidTree[b].CID == obj.id) {
+                                if (this.oldCidTree[b].CID == obj.id && this.oldCidTree[b].PID == obj.pid) {
                                     obj.title = this.oldCidTree[b].CName;
                                     break;
                                 }

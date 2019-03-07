@@ -173,7 +173,28 @@
 
 
                 function click(d) {
-                    console.log(d)
+                    console.log({
+                        addCid: d.addCid,
+                        delCid: d.delCid
+                    })
+                    $.ajax({
+                        type: "post",
+                        url: "/energyManage/EMSetting/GetElectrMonth",
+                        data: {
+                            addCid: d.addCid,
+                            delCid: d.delCid
+                        },
+                        success: function (res) {
+                            console.log(res)
+                        },
+                        error: function (e) {
+                            console.log(e)
+                        }
+                    })
+
+
+
+
                     if (!d.children) {
                         return;
                     }
@@ -207,30 +228,6 @@
                 }
             }
         })
-        //x最小 像素大小
-        //x最大 w/层数-文字个数*像素大小
-
-        //y最小 0+像素*2
-        //y最大 d.dx*ky-2*像素大小
-
-        //弹框数据
-        function getElectrMonth(data) {
-            $.ajax({
-                type: "post",
-                url: "/energyManage/EMSetting/GetElectrMonth",
-                data: {
-                    pid: data.pid,
-                    cid: data.cid
-                },
-                success: function (res) {
-
-                },
-                error: function (e) {
-                    console.log(e)
-                }
-            })
-        }
-
 
 
 
