@@ -829,7 +829,7 @@ namespace YWWeb.Controllers
                 sType = "ItemType";
             }
 
-            string strsql = "select distinct " + sType + " as name FROM  t_DM_CircuitInfo" + " where pid=" + pid + " order by " + sType;
+            string strsql = "select distinct " + sType + " as name FROM  t_DM_CircuitInfo" + " where pid=" + pid + " and ItemType is not null and ItemType!=''  order by " + sType;
             List<CircuitTypeTemp> listTemp = bll.ExecuteStoreQuery<CircuitTypeTemp>(strsql).ToList();
 
             List<CircuitType> list = new List<CircuitType>();
