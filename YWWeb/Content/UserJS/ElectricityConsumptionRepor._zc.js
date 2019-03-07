@@ -121,7 +121,7 @@
             for (var i in data) {
                 for (var j in data[i].list_data) {
                     arr.push(data[i].list_data[j].Value)
-                    
+                    dayTotal += isNaN(data[i].list_data[j].Value[j]) ? 0 : parseFloat(data[i].list_data[j].Value[j])
                 }
             }
             for (var h = 0; h < 24; h++) {
@@ -138,6 +138,7 @@
                     "val": count.toFixed(2)
                 })
             }
+            this.dayTotal = dayTotal.toFixed(2)
             this.hourTotal = hourTotal
         },
         //打印

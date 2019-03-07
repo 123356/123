@@ -118,10 +118,10 @@
                 <date-picker type="year" style="width: 180px" v-model="year" :clearable="false" v-on:on-change="dateChange"></date-picker>
             </div>
             <div class="searchrow">
-                用户类型:
+                用电类型:
 
                 <i-select style="width:180px" v-model="userType">
-                    <i-option v-for="item in userTypeList" :value="item.id">{{item.name}}</i-option>
+                    <i-option v-for="item in userTypeList" :value="item.name">{{item.name}}</i-option>
                 </i-select>
             </div>
 
@@ -159,11 +159,11 @@
             </div>
 
             <div class="row" >
-                <div class="flex-item flex-2"></div>
-                <div class="flex-item flex-2" style="justify-content:center">分时合计</div>
+                @*<div class="flex-item flex-2"></div>*@
+                <div class="flex-item flex-2" style="justify-content:center;flex:4;">分时合计</div>
                 <div class="flex-item flex-12 noBorder" style="flex:14">
-                    <div class="flex-item flex-1 center" v-for="item in monthTotal">{{item.val}}</div>
-                    <div class="flex-item flex-2 center"></div>
+                    <div class="flex-item flex-1 center" v-for="item in monthTotal" >{{item.val}}</div>
+                    <div class="flex-item flex-2 center">{{yearTotal}}</div>
                 </div>
             </div>
 

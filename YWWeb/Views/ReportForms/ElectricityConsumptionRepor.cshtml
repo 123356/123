@@ -119,10 +119,10 @@
                 <date-picker type="date" style="width: 180px" v-model="dateTime" :clearable="false" v-on:on-change="dateChange"></date-picker>
             </div>
             <div class="searchrow">
-                用户类型:
+                用电类型:
 
                 <i-select style="width:180px" v-model="userType">
-                    <i-option v-for="item in userTypeList" :value="item.id">{{item.name}}</i-option>
+                    <i-option v-for="item in userTypeList" :value="item.name">{{item.name}}</i-option>
                 </i-select>
             </div>
 
@@ -152,19 +152,19 @@
                 <div class="flex-item flex-1_5 center"> {{item.DeviceName}}</div>
                 <div class="flex-item flex-26 noBorder outView heihgt100" style="flex:28">
                     <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data">
-                        <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
-                        <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
-                        <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.count}}</div>
+                        <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:2px">{{data.Cname==""?'--':data.Cname}}</div>
+                        <div class="flex-item flex-1 center" v-for="val in data.Value" >{{val}}</div>
+                        <div class="flex-item flex-2 center" style="overflow-x:hidden">{{data.count}}</div>
                     </div>
                 </div>
             </div>
             @* 新增总计 *@
             <div class="row" >
-                <div class="flex-item flex-1_5"></div>
-                <div class="flex-item flex-2" style="justify-content:center">分时合计</div>
+                @*<div class="flex-item flex-1_5"></div>*@
+                <div class="flex-item flex-2" style="justify-content:center;flex:3.5">分时合计</div>
                 <div class="flex-item flex-24 noBorder" style="flex:26">
-                    <div class="flex-item flex-1 center" v-for="item in hourTotal" >{{item.val}}</div>
-                    <div class="flex-item flex-2 center" ></div>
+                    <div class="flex-item flex-1 center" v-for="item in hourTotal" style="padding-right:0px">{{item.val}}</div>
+                    <div class="flex-item flex-2 center" style="overflow:hidden">{{dayTotal}}</div>
                 </div>
             </div>
             @* 新增总计 *@
@@ -172,4 +172,4 @@
     </div>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.25"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.26"></script>

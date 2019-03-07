@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link href="~/Content/TreeTable/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css?v=1.03" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/ElecReport.css?v=1.06" />
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
@@ -97,11 +97,13 @@
         .table2 tr:first-child td {
             border-top: 0
         }
+        
     </style>
     <style media="print" type="text/css">
         .noprint {
             visibility: hidden;
         }
+       
     </style>
 </head>
 <body>
@@ -123,10 +125,10 @@
                 <date-picker type="month" style="width: 180px" v-model="dateTime" :clearable="false" v-on:on-change="dateChange"></date-picker>
             </div>
             <div class="searchrow">
-                用户类型:
+                用电类型:
 
                 <i-select style="width:180px" v-model="userType">
-                    <i-option v-for="item in userTypeList" :value="item.id">{{item.name}}</i-option>
+                    <i-option v-for="item in userTypeList" :value="item.name">{{item.name}}</i-option>
                 </i-select>
             </div>
 
@@ -144,31 +146,31 @@
             <div class="stationName">&nbsp;{{cruPname}} @*<span style="float:right;margin-right:10px">总计：{{monthTotal}}</span>*@</div>
             <div class="row">
                 <div class="flex-item flex-1_5 center">柜号</div>
-                <div class="flex-item flex-2 center">回路名称</div>
+                <div class="flex-item flex-2 center"  >回路名称</div>
                 <div class="flex-item  noBorder" :style="{flex:days.length+2}">
                     <div class="flex-item flex-1 center" v-for="item in days">{{item}}</div>
-                    <div class="flex-item flex-2 center " style="overflow:hidden">
+                    <div class="flex-item flex-2 center " style="overflow:hidden;">
                         回路合计
                     </div>
                 </div>
             </div>
 
             <div class="row heihgt100" v-for='item in info' >
-                <div class="flex-item flex-1_5 center"> {{item.DeviceName}}</div>
+                <div class="flex-item flex-1_5 center" > {{item.DeviceName}}</div>
                 <div class="flex-item  noBorder outView monthFlex heihgt100" :style="{flex:days.length+4}">
                     <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data" >
-                        <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.Cname==""?'--':data.Cname}}</div>
-                        <div class="flex-item flex-1 center" v-for="val in data.Value" style="overflow:hidden">{{val}}</div>
-                        <div class="flex-item flex-2 center" style="padding-right:2px;overflow-x:hidden">{{data.count}}</div>
+                        <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:1.5px">{{data.Cname==""?'--':data.Cname}}</div>
+                        <div class="childPadding flex-item flex-1 center "  v-for="(val,index) in data.Value" >{{val}}</div>
+                        <div class="flex-item flex-2 center" style="overflow-x:hidden">{{data.count}}</div>
                     </div>
                 </div>
             </div>
             <div class="row" >
-                <div class="flex-item flex-1_5"></div>
-                <div class="flex-item flex-2 center" style="overflow:hidden">分时合计</div>
+                @*<div class="flex-item flex-1_5"></div>*@
+                <div class="flex-item flex-2 center" style="overflow:hidden;padding-right:1px;flex:3.5">分时合计</div>
                 <div class="flex-item  noBorder" :style="{flex:days.length+2}">
-                    <div class="flex-item flex-1 center" v-for="item in dayTotal">{{item.val}}</div>
-                    <div class="flex-item flex-2 center"></div>
+                    <div class="flex-item flex-1 center" v-for="item in dayTotal" style="padding-right:0px;overflow:hidden">{{item.val}}</div>
+                    <div class="flex-item flex-2 center">{{monthTotal}}</div>
                 </div>
             </div>
         </div>
@@ -182,7 +184,9 @@
                 $("#tb").show()
             }
         }
+        
+        
     </script>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityMonthConsumptionRepor._zc.js?v=1.38"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityMonthConsumptionRepor._zc.js?v=1.46"></script>

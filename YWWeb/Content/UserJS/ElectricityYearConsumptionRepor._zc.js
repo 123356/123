@@ -114,7 +114,7 @@
             for (var i in data) {
                 for (var j in data[i].list_data) {
                     arr.push(data[i].list_data[j].Value)
-                    
+                    yearTotal += isNaN(parseFloat(data[i].list_data[j].Value[j])) ? 0 : parseFloat(data[i].list_data[j].Value[j])
                 }
             }
             for (var h = 0; h < 12; h++) {

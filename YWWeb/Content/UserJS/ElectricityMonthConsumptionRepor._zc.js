@@ -101,22 +101,25 @@
 
                     that.info = data
                     
+                    
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
                     that.loading = false
+                    
                 })
         },
         //计算总额
         totalCom: function (data) {
+            var monthTotal = 0
             var dayTotal = []
             var arr = []
             for (var i in data) {
                 for (var j in data[i].list_data) {
                     arr.push(data[i].list_data[j].Value)
-                    
+                    monthTotal += isNaN(parseFloat(data[i].list_data[j].Value[j])) ? 0 : parseFloat(data[i].list_data[j].Value[j])
                 }
             }
             for (var h = 0; h < this.days.length; h++) {
@@ -134,7 +137,7 @@
                 })
             }
             this.dayTotal = dayTotal
-            console.log(dayTotal)
+            this.monthTotal = monthTotal.toFixed(2)
         },
         //打印
         openOrPrint: function () {
