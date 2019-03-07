@@ -382,7 +382,6 @@ Topo.prototype = {
         that.stage.paint();
     },
     mqtt: function () {
-        console.log(12312312)
         var that = this;
         var wsbroker = that.__IP;
         var wsport = parseInt(that.__port);
