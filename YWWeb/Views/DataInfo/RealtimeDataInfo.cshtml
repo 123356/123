@@ -67,21 +67,21 @@
             <i-form :label-width="100">
                 <i-col span="4" offset="1">
                     <form-item label="类型：">
-                        <i-select v-model="DTID" v-on:on-change="tab" filterable>
+                        <i-select v-model="DTID" v-on:on-change="tab(1)" filterable>
                             <i-option v-for="item in DeviceTypeNameList" :value="item.DTID" :key="item.DTID">{{ item.Name }}</i-option>
                         </i-select>
                     </form-item>
                 </i-col>
                 <i-col span="4" offset="2">
                     <form-item label="设备名称：">
-                        <i-select v-model="DID" v-on:on-change="tab" filterable>
+                        <i-select v-model="DID" v-on:on-change="tab(2)" filterable>
                             <i-option v-for="item in DeviceNameList" :value="item.DID" :key="item.DID">{{ item.DeviceName }}</i-option>
                         </i-select>
                     </form-item>
                 </i-col>
                 <i-col span="4" offset="2">
                     <form-item label="  回路/调度号：">
-                        <i-select v-model="CID" v-on:on-change="tab" filterable>
+                        <i-select v-model="CID" v-on:on-change="tab(3)" filterable>
                             <i-option v-for="item in CNameList" :value="item.CID" :key="item.CID">{{ item.CName }}</i-option>
                         </i-select>
                     </form-item>
