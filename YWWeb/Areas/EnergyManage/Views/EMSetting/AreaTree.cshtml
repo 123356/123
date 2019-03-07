@@ -112,15 +112,21 @@
                     .on('click', click)
                     .on('dblclick', function (d) {
                         console.log('弹框')
+                        console.log(d.addCid)
+                        console.log(d.delCid)
+
+
+                        d3.event.stopPropagation();
                         var data = {
-                            pid: d.pId,
-                            cid:d.id
+                            addCid: d.addCid,
+                            delCid: d.delCid
                         }
+                        console.log(data)
                         getElectrMonth(data)
                         console.log(d)
                         $("#editwin").window("open")
 
-                        d3.event.stopPropagation();
+                    
 
                     })
                  
@@ -219,8 +225,8 @@
                 type: "post",
                 url: "/energyManage/EMSetting/GetElectrMonth",
                 data: {
-                    pid: data.pid,
-                    cid: data.cid
+                    addCid:data.addCid,
+                    delCid:data.delCid
                 },
                 success: function (res) {
 
