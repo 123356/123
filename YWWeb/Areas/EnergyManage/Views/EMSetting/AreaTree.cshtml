@@ -56,6 +56,7 @@
                 flex: 1;
                 overflow: hidden
             }
+        
     </style>
 </head>
 <body>
@@ -113,8 +114,12 @@
                     .on('click', function (d) {
                         getElectrMonth({
                             addCid: d.addCid,
-                            delCid: d.delCid
+                            delCid: d.delCid,
+                            name: d.name,
+                            children: d.children
                         })
+                        
+                        $(".panel-title").text(d.name)
                         $("#editwin").window("open")
                         d3.event.stopPropagation();
                     })
@@ -173,7 +178,7 @@
                     x.domain([d.y, 1]).range([d.y ? 40 : 0, w]);
                     y.domain([d.x, d.x + d.dx]);
 
-                    var t = g.transition()
+                    var t = g.transition() 
                         .duration(d3.event.altKey ? 7500 : 750)
                         .attr("transform", function (d) {
                             return "translate(" + x(d.y) + "," + y(d.x) + ")";
@@ -200,14 +205,19 @@
         })
 
         function getElectrMonth(data) {
-            $.ajax({
+            $.ajax({ 
                 type: "post",
                 url: "/energyManage/EMSetting/GetElectrMonth",
                 data: {
-                    addCid: d.addCid,
-                    delCid: d.delCid
+                    addCid: data.addCid,
+                    delCid: data.delCid
                 },
                 success: function (res) {
+                    
+                    createBarChart(res, data.name)
+
+                    createPieChart(data.children)
+                    
                     console.log(res)
                 },
                 error: function (e) {
@@ -216,27 +226,36 @@
             })
         }
 
-
-
-
-
-
-
-
-
-
-
+       
+        function formatDate(val) {
+            if (val != null) {
+                var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                //月份为0-11，所以+1，月份小于10时补个0
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                return date.getFullYear() + "-" + month + "-" + currentDate;
+            }
+            return "";
+        }
 
 
     </script>
 
     <script type="text/javascript">
-        function createBarChart() {
+        function createBarChart(data,name) {
+            var xData = []
+            var yData = []
+            var count = 0
+            for (var i in data) {
+                xData.push(formatDate(data[i].RecordTime))
+                yData.push(data[i].UsePower)
+                count += data[i].UsePower
+            }
             var barChart = echarts.init(document.getElementById('barChart'));
             var option = {
                 title: {
-                    text: '北京恒扉嘉泰总用电量',
-                    subtext: '总用电量1212',
+                    text: name,
+                    subtext:  count,
                     left: 'center',
                     textStyle: {
                         color: '#757575',
@@ -248,7 +267,7 @@
                 color: ['#57b9a3'],
                 tooltip: {
                     trigger: 'axis',
-                    formatter: "{a}: <br/>-{b}:{c}",
+                    formatter: "{a}: <br/>{b}：{c}",
                     axisPointer: { // 坐标轴指示器，坐标轴触发有效
                         type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                     },
@@ -277,7 +296,7 @@
                 },
                 xAxis: [{
                     type: 'category',
-                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+                    data: xData,
 
                     axisLine: {
                         lineStyle: {
@@ -328,7 +347,7 @@
                     name: '总用电量',
                     type: 'bar',
                     barWidth: '50%',
-                    data: [12, 23, 11, 34, 22, 12, 23, 11, 34, 22, 12, 23, 11, 34, 22, 12, 23, 11, 34, 22,]
+                    data: yData
                 }],
                 dataZoom: [{
                     type: 'inside'
@@ -341,9 +360,35 @@
             });
         }
 
-        function createPieChart() {
+        function createPieChart(data) {
+            var subtext = ""
+            var legend = []
+            var series = []
+            var titleTop = 0
+            for (var i in data) {
+                legend.push(data[i].name)
+                series.push({
+                    name: data[i].name,
+                    value: data[i].UsePower.toFixed(2)
+                })
+            }
+            if (data.length==0) {
+                subtext = "暂无数据"
+                titleTop = '40%'
+            }
             var pieChart = echarts.init(document.getElementById('pieChart'));
             var option = {
+                title: {
+                    text: "分项用电",
+                    subtext: subtext,
+                    left: 'center',
+                    textStyle: {
+                        color: '#757575',
+                        fontWeight: 'normal',
+                        fontSize: 12,
+                    },
+                    top: titleTop
+                },
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c}"
@@ -354,7 +399,7 @@
                     right: 10,
                     
                     bottom: 50,
-                    data: ['建筑用电', '常规用电', '冷热站用电', '空调末端用电', '游泳池']
+                    data: legend
                 },
                 series: [
                     {
@@ -365,14 +410,7 @@
                         label: {
                             show:false
                         },
-                        data: [
-                            { value: 335, name: '建筑用电' },
-                            { value: 310, name: '常规用电' },
-                            { value: 234, name: '冷热站用电' },
-                            { value: 135, name: '空调末端用电' },
-                            { value: 1548, name: '游泳池' },
-                            
-                        ],
+                        data: series,
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -392,8 +430,7 @@
         }
 
 
-        createBarChart()
-        createPieChart()
+      
     </script>
 
 </body>
