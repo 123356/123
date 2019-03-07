@@ -111,71 +111,94 @@ function getReport(pid) {
     var result = "";
     var tcount = 0;
 
-    $.post("/AutoReport/getReport", { "pid": pid, "startdate": startdate }, function (data) {
-        //console.log(data)
-        var list = eval("(" + data + ")");
+    $.ajax({
+        url: "/AutoReport/getReport",
+        type: 'post',
+        data: {
+            "pid": pid,
+            "startdate": startdate
+        },
+        beforeSend: ajaxLoading,
+        success: function (data) {
+            var list = eval("(" + data + ")");
 
-        var title = "";
-        for (var i = 0; i < list.length; i++) {
-            tcount++;
-            if (tcount == 3) {
-                title += "</div>";
-                title += "<div class=\"col-md-12 column\">";
-                if (i < list.length - 1)
-                    title += "<p style=\"page-break-after:always;\"></p>";
-                tcount = 1;
+            var title = "";
+            for (var i = 0; i < list.length; i++) {
+                tcount++;
+                if (tcount == 3) {
+                    title += "</div>";
+                    title += "<div class=\"col-md-12 column\">";
+                    if (i < list.length - 1)
+                        title += "<p style=\"page-break-after:always;\"></p>";
+                    tcount = 1;
+                }
+                //if (tcount == 1) {
+                title += "<div class=\"col-md-6 column\"><table class=\"table table-condensed table-hover table-bordered\">";
+                //}
+
+                title += "<tr>\n" +
+                    "            <th rowspan='3'><br><h5 class=\"text-center\">时间\\参数</h5></th>\n" +
+                    "            <th colspan='8'>" + list[i].DeviceName + list[i].CName + "</th>\n" +
+                    "        </tr>\n" +
+                    "        <tr>\n" +
+                    "            <td colspan='3'>电压(kV)</td>\n" +
+                    "            <td colspan='3'>电流(A)</td>\n" +
+                    "            <td rowspan='2'>用电量(kW·h)</td>\n" +
+                    "            <td rowspan='2'>功率因数</td>\n" +
+                    "        </tr>\n" +
+                    "        <tr>\n" +
+                    "            <td>A</td>\n" +
+                    "            <td>B</td>\n" +
+                    "            <td>C</td>\n" +
+                    "            <td>A</td>\n" +
+                    "            <td>B</td>\n" +
+                    "            <td>C</td>\n" +
+                    "        </tr>";
+                // result = result + title;
+
+                //var m = 0;
+                for (var j = 0; j < list[i].list.length; j++) {
+                    if (j % 2 == 1)
+                        continue
+                    //m += formatValue(list[i].list[j].PowerConsumption);
+                    var item = "<tr>\n" +
+                        "            <td>" + formatTime(list[i].list[j].RecTime) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].VoltageA) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].VoltageB) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].VoltageC) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].CurrentA) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].CurrentB) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].CurrentC) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].PowerConsumption) + "</td>\n" +
+                        "            <td>" + formatValue(list[i].list[j].PowerFactor) + "</td>\n" +
+                        "        </tr>";
+                    title = title + item;
+                }
+                title += "</table></div>";
             }
-            //if (tcount == 1) {
-            title += "<div class=\"col-md-6 column\"><table class=\"table table-condensed table-hover table-bordered\">";
-            //}
-
-            title += "<tr>\n" +
-           "            <th rowspan='3'><br><h5 class=\"text-center\">时间\\参数</h5></th>\n" +
-           "            <th colspan='8'>" + list[i].DeviceName + list[i].CName + "</th>\n" +
-           "        </tr>\n" +
-           "        <tr>\n" +
-           "            <td colspan='3'>电压(kV)</td>\n" +
-           "            <td colspan='3'>电流(A)</td>\n" +
-           "            <td rowspan='2'>用电量(kW·h)</td>\n" +
-           "            <td rowspan='2'>功率因数</td>\n" +
-           "        </tr>\n" +
-           "        <tr>\n" +
-           "            <td>A</td>\n" +
-           "            <td>B</td>\n" +
-           "            <td>C</td>\n" +
-           "            <td>A</td>\n" +
-           "            <td>B</td>\n" +
-           "            <td>C</td>\n" +
-           "        </tr>";
-            // result = result + title;
-
-            //var m = 0;
-            for (var j = 0; j < list[i].list.length; j++) {
-                if (j % 2 == 1)
-                    continue
-                //m += formatValue(list[i].list[j].PowerConsumption);
-                var item = "<tr>\n" +
-               "            <td>" + formatTime(list[i].list[j].RecTime) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].VoltageA) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].VoltageB) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].VoltageC) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].CurrentA) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].CurrentB) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].CurrentC) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].PowerConsumption) + "</td>\n" +
-               "            <td>" + formatValue(list[i].list[j].PowerFactor) + "</td>\n" +
-               "        </tr>";
-                title = title + item;
+            //title += "<tr>\n" + "<td colspan='7' class=\"text-center\">总电量</td>\n" + "<td colspan='2'>" + m.toFixed(3) + "</td>\n" + "</tr>";
+            title += "</div>";
+            //console.log(title);
+            //$("#reporttable").html(title)
+            $("#realtempinfo1").html(title);
+            if (p == 2) {
+                printreport();
             }
-            title += "</table></div>";
+            ajaxLoadEnd()
+        },
+        error: function (e) {
+            ajaxLoadEnd()
         }
-        //title += "<tr>\n" + "<td colspan='7' class=\"text-center\">总电量</td>\n" + "<td colspan='2'>" + m.toFixed(3) + "</td>\n" + "</tr>";
-        title += "</div>";
-        //console.log(title);
-        //$("#reporttable").html(title)
-        $("#realtempinfo1").html(title);
-        if (p == 2) {
-            printreport();
-        }
-    });
+    })
+        
+        
+}
+
+function ajaxLoading() {
+    $("<div class=\"datagrid-mask\"></div>").css({ display: "block", width: "100%", height: $(window).height() }).appendTo("body");
+    $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候. . . ").appendTo("body").css({ display: "block",height:"auto", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2 });
+}
+function ajaxLoadEnd() {
+    $(".datagrid-mask").remove();
+    $(".datagrid-mask-msg").remove();
 }
