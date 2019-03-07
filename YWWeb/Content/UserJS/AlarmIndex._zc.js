@@ -138,7 +138,7 @@ $("#SPID").combobox({
 
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
-        url: "/BaseInfo/BindValueType?showall=1&pid=" + pid,
+        url: "/BaseInfo/BindValueType1?showall=1&pid=" + pid,
         valueField: 'DTID',
         textField: 'Name',
         editable: false,
