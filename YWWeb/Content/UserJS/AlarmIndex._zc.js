@@ -1,5 +1,4 @@
-﻿
-var pid = 0;
+﻿var pid = 0;
 
 var Request = GetRequest();
 if (Request['pid'] != null)
@@ -12,7 +11,7 @@ Startdate.setDate(Startdate.getDate() - 10);
 var DS = Startdate.getFullYear() + "-" + (Startdate.getMonth() + 1) + "-" + Startdate.getDate();
 $('#StartDate').datebox({
     value: DS,
-    onSelect: function () { //输入判断
+    onSelect: function() { //输入判断
         startdate = $('#StartDate').datebox('getValue');
         enddate = $('#EndDate').datebox('getValue');
         if (startdate > enddate) {
@@ -32,7 +31,7 @@ function ValueReset(value, row, index) {
 }
 $('#EndDate').datebox({
     value: '24:00',
-    onSelect: function () { //输入判断
+    onSelect: function() { //输入判断
         startdate = $('#StartDate').datebox('getValue');
         enddate = $('#EndDate').datebox('getValue');
         if (startdate > enddate) {
@@ -42,13 +41,13 @@ $('#EndDate').datebox({
 });
 $("#currPosition", window.parent.document).html("当前位置：报警 > 数据报警");
 $('#StartDate').datebox('calendar').calendar({
-    validator: function (date) {
+    validator: function(date) {
         var now = new Date();
         return date <= now;
     }
 });
 $('#EndDate').datebox('calendar').calendar({
-    validator: function (date) {
+    validator: function(date) {
         var now = new Date();
         return date <= now;
     }
@@ -68,23 +67,20 @@ function alarmExport() {
     if (ids.length > 1) {
         $.messager.alert("提示", "生成报警报告时只能选择一行数据！", "info");
         $('#list_data').datagrid('uncheckAll');
-    }
-    else {
+    } else {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
             var ajaxbg = top.$("#loading_background,#loading");
             ajaxbg.show();
-            $.post("/AlarmManage/ExportAlarmDoc?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function (data) {
+            $.post("/AlarmManage/ExportAlarmDoc?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function(data) {
                 if (data != "生成报警报告异常！") {
                     ajaxbg.hide();
                     window.open('http://' + window.location.host + data);
-                }
-                else {
+                } else {
                     $.messager.alert("提示", data, "info");
                 }
             });
-        }
-        else {
+        } else {
             $.messager.alert("提示", "请选择要生成报警报告的行！", "info");
         }
     }
@@ -99,24 +95,21 @@ function addBug() {
     if (ids.length > 1) {
         $.messager.alert("提示", "添加隐患时只能选择一行数据！", "info");
         $('#list_data').datagrid('uncheckAll');
-    }
-    else {
+    } else {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
-            $.messager.confirm('提示', '你确定要添加隐患？', function (r) {
+            $.messager.confirm('提示', '你确定要添加隐患？', function(r) {
                 if (r) {
-                    $.post("/AlarmManage/AddBugInfo?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function (data) {
+                    $.post("/AlarmManage/AddBugInfo?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function(data) {
                         if (data == "OKadd") {
                             $.messager.alert("提示", "添加隐患成功！", "info");
-                        }
-                        else {
+                        } else {
                             $.messager.alert("提示", data, "info");
                         }
                     });
                 }
             })
-        }
-        else {
+        } else {
             $.messager.alert("提示", "请选择要添加隐患的行！", "info");
         }
     }
@@ -127,13 +120,13 @@ $("#SPID").combobox({
     valueField: 'PID',
     editable: false,
     textField: 'Name',
-    onLoadSuccess: function () { //数据加载完毕事件
+    onLoadSuccess: function() { //数据加载完毕事件
 
         var data = $('#SPID').combobox('getData');
 
         $("#SPID").combobox('setValue', pid);
     },
-    onChange: function () {
+    onChange: function() {
         var selid = $("#SPID").combobox("getValue");
         loadDataTypeList(selid);
 
@@ -142,22 +135,24 @@ $("#SPID").combobox({
         }
     }
 });
+
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
         url: "/BaseInfo/BindValueType?showall=1&pid=" + pid,
         valueField: 'DTID',
         textField: 'Name',
         editable: false,
-        onLoadSuccess: function () { //数据加载完毕事件
+        onLoadSuccess: function() { //数据加载完毕事件
             var data = $('#cbType').combobox('getData');
             if (data.length > 0) {
                 $("#cbType").combobox('select', data[0].DTID);
             }
         },
-        onSelect: function () {
+        onSelect: function() {
             dosearch();
-        }
+        },
     });
+
 }
 //报警确认
 function recover() {
@@ -182,7 +177,7 @@ function recover() {
             top: ($(window).height() - 600) * 0.5,
             left: ($(window).width() - 800) * 0.5,
             href: url,
-            onClose: function () { dosearch(); }
+            onClose: function() { dosearch(); }
         });
         $('#editwin').window('open');
     }
@@ -201,7 +196,7 @@ function export1() {
     var typename = $("#cbType").combobox('getText');
     var ajaxbg = top.$("#loading_background,#loading");
     ajaxbg.show();
-    $.post("/AlarmManage/ExportAlarmData", { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename }, function (data) {
+    $.post("/AlarmManage/ExportAlarmData", { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename }, function(data) {
         ajaxbg.hide();
         window.open('http://' + window.location.host + data);
     });
@@ -222,18 +217,16 @@ function dosearch() {
         pageList: [10, 20, 30, 50],
         pageSize: 30,
         queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
-        rowStyler: function (index, row) {
+        rowStyler: function(index, row) {
             if (row.AlarmState == "1") {
                 return 'background-color:Yellow;color:#333;font-weight:bold;';
-            }
-            else if (row.AlarmState == "2") {
+            } else if (row.AlarmState == "2") {
                 return 'background-color:#ed9700;color:#fff;font-weight:bold;';
-            }
-            else if (row.AlarmState == "3") {
+            } else if (row.AlarmState == "3") {
                 return 'background-color:#b00000;color:#fff;font-weight:bold;';
             }
         },
-        onDblClickRow: function (rowIndex, rowData) {
+        onDblClickRow: function(rowIndex, rowData) {
             if (rowData) {
                 var str = JSON.stringify(rowData);
                 var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
@@ -243,7 +236,7 @@ function dosearch() {
                     top: ($(window).height() - 600) * 0.5,
                     left: ($(window).width() - 800) * 0.5,
                     href: url,
-                    onClose: function () { dosearch(); }
+                    onClose: function() { dosearch(); }
                 });
                 $('#editwin').window('open');
             }
@@ -302,8 +295,7 @@ function recovers() {
     var rows = $('#list_data').datagrid('getSelections');
     if (rows.length < 1) {
         $.messager.alert("提示", "请选择要确认的行！", "info");
-    }
-    else {
+    } else {
         for (var i = 0; i < rows.length; i++) {
             ids.push(rows[i].AlarmID);
         }
@@ -315,11 +307,12 @@ function recovers() {
             maximizable: false, //最大化，默认false  
             collapsible: false, //可折叠，默认false  
             draggable: true, //可拖动，默认false  
-            resizable: false//可缩放，即可以通脱拖拉改变大小，默认false 
+            resizable: false //可缩放，即可以通脱拖拉改变大小，默认false 
         });
         $("#Anum").html(ids.length);
     }
 }
+
 function querensAlarm() {
     var ids = [];
     var rows = $('#list_data').datagrid('getSelections');
@@ -344,8 +337,8 @@ function querensAlarm() {
 
     //去掉前后空格               
     AlarmTreatment = AlarmTreatment.replace(/(^\s*)|(\s*$)/g, "");
-    $.post("/AlarmManage/DelAlarmByIds", { "AlarmID": ids.join(','), "AlarmTreatment": AlarmTreatment }, function (data) {
-        $.messager.alert("提示",data, "info");
+    $.post("/AlarmManage/DelAlarmByIds", { "AlarmID": ids.join(','), "AlarmTreatment": AlarmTreatment }, function(data) {
+        $.messager.alert("提示", data, "info");
         $('#querens').window('close');
         dosearch();
     });

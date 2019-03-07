@@ -114,7 +114,29 @@ namespace YWWeb.Controllers
             try
             {
                 string PDRList = HomeController.GetPID(CurrentUser.UNITList);
-                string strquery = " 1=1";
+
+
+                string ALarmType = "";
+                if (dtid == 1)
+                {
+                    ALarmType = "and ALarmType='一般'";
+                }
+                else if (dtid == 2)
+                {
+                    ALarmType = "and ALarmType='恢复'";
+
+                }
+                else if (dtid == 3)
+                {
+                    ALarmType = "and ALarmType='报警'";
+
+                }
+                else if (dtid == 4)
+                {
+                    ALarmType = "and ALarmType='危机'";
+
+                }
+                string strquery = " 1=1" + ALarmType;
                 if (!startdate.Equals(""))
                     strquery = strquery + " and AlarmDateTime>='" + startdate + "'";
                 else
@@ -130,21 +152,18 @@ namespace YWWeb.Controllers
                     strquery = strquery + " and pid=" + pid;
                 else
                     strquery = strquery + " and pid in (" + PDRList + ")";
-               
+
                 //string strsql = "select a.*,b.Remarks as RArae from (select * from t_AlarmTable_en where " + strquery + " ) a left join t_CM_PointsInfo b on a.TagID=b.TagID   order by AlarmID desc";
+          
                 string strsql = "select count(*) totalRows from t_AlarmTable_en  where " + strquery;
                 List<RowCount> rowcount = bll.ExecuteStoreQuery<RowCount>(strsql).ToList();
                 string strJson = "{\"total\":0,\"rows\":[]}";
                 if (rowcount.Count > 0 && rowcount[0].totalRows > 0)
                 {
-                  
-
                     strsql = "select c.*,b.Remarks as RArae,b.单位 as Unit from (select top " + rows + " * from t_AlarmTable_en where " + strquery
                         + " and AlarmID not in(select alarmid from(select top " + rows * (page - 1) + " alarmid from t_AlarmTable_en  where " + strquery
                     + " order by AlarmID desc ) a) ) c left join t_CM_PointsInfo b on c.TagID=b.TagID  where 1=1";
 
-                    if (dtid > 0)
-                        strsql += " and b.DataTypeID=" + dtid;
                     strsql += " order by AlarmID desc";
                     List<AralmView> list = bll.ExecuteStoreQuery<AralmView>(strsql).ToList();
 
