@@ -253,7 +253,12 @@ new Vue({
                 clearInterval(timeset);
                 timeset = setInterval(function () {
                     that.getLineData()
-                    that.getLXData()
+                    that.getStationState()
+                    that.getThisDayPower()
+                    that.getUseEl()
+                    that.getLastMonthPower()
+                    that.getThisYearPower()
+                    //that.getLXData()
                 }, 60000)
             })
             .catch(function (e) {
