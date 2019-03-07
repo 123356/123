@@ -109,25 +109,14 @@
                     .attr("transform", function (d) {
                         return "translate(" + x(d.y) + "," + y(d.x) + ")";
                     })
-                    .on('click', click)
-                    .on('dblclick', function (d) {
-                        console.log('弹框')
-                        console.log(d.addCid)
-                        console.log(d.delCid)
-
-
-                        d3.event.stopPropagation();
-                        var data = {
+                   // .on('click', click)
+                    .on('click', function (d) {
+                        getElectrMonth({
                             addCid: d.addCid,
                             delCid: d.delCid
-                        }
-                        console.log(data)
-                        getElectrMonth(data)
-                        console.log(d)
+                        })
                         $("#editwin").window("open")
-
-                    
-
+                        d3.event.stopPropagation();
                     })
                  
 
@@ -158,7 +147,6 @@
 
                 text.selectAll("tspan")
                     .data(function (d) {
-                        console.log(d)
                         return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + d.NeedPower  ]
                     })
                     .enter()
@@ -179,27 +167,7 @@
 
 
                 function click(d) {
-                    console.log({
-                        addCid: d.addCid,
-                        delCid: d.delCid
-                    })
-                    $.ajax({
-                        type: "post",
-                        url: "/energyManage/EMSetting/GetElectrMonth",
-                        data: {
-                            addCid: d.addCid,
-                            delCid: d.delCid
-                        },
-                        success: function (res) {
-                            console.log(res)
-                        },
-                        error: function (e) {
-                            console.log(e)
-                        }
-                    })
-
-
-
+              
 
                     if (!d.children) {
                         return;
@@ -234,33 +202,23 @@
                 }
             }
         })
-<<<<<<< HEAD
-        //x最小 像素大小
-        //x最大 w/层数-文字个数*像素大小
 
-        //y最小 0+像素*2
-        //y最大 d.dx*ky-2*像素大小
-
-        //弹框数据
         function getElectrMonth(data) {
             $.ajax({
                 type: "post",
                 url: "/energyManage/EMSetting/GetElectrMonth",
                 data: {
-                    addCid:data.addCid,
-                    delCid:data.delCid
+                    addCid: d.addCid,
+                    delCid: d.delCid
                 },
                 success: function (res) {
-
+                    console.log(res)
                 },
                 error: function (e) {
                     console.log(e)
                 }
             })
         }
-
-=======
->>>>>>> 68db3a5f28007d975a17fa0a27dea3cf8ecde240
 
 
 
