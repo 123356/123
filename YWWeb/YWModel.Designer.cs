@@ -2292,22 +2292,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_CM_ShopTruck> t_CM_ShopTruck
-        {
-            get
-            {
-                if ((_t_CM_ShopTruck == null))
-                {
-                    _t_CM_ShopTruck = base.CreateObjectSet<t_CM_ShopTruck>("t_CM_ShopTruck");
-                }
-                return _t_CM_ShopTruck;
-            }
-        }
-        private ObjectSet<t_CM_ShopTruck> _t_CM_ShopTruck;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_PM_OneGraph> t_PM_OneGraph
         {
             get
@@ -2448,6 +2432,22 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_EE_WeatherDaily> _t_EE_WeatherDaily;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_CM_ShopTruck> t_CM_ShopTruck
+        {
+            get
+            {
+                if ((_t_CM_ShopTruck == null))
+                {
+                    _t_CM_ShopTruck = base.CreateObjectSet<t_CM_ShopTruck>("t_CM_ShopTruck");
+                }
+                return _t_CM_ShopTruck;
+            }
+        }
+        private ObjectSet<t_CM_ShopTruck> _t_CM_ShopTruck;
 
         #endregion
 
@@ -3566,14 +3566,6 @@ namespace YWWeb
         }
     
         /// <summary>
-        /// 用于向 t_CM_ShopTruck EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_CM_ShopTruck(t_CM_ShopTruck t_CM_ShopTruck)
-        {
-            base.AddObject("t_CM_ShopTruck", t_CM_ShopTruck);
-        }
-    
-        /// <summary>
         /// 用于向 t_PM_OneGraph EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTot_PM_OneGraph(t_PM_OneGraph t_PM_OneGraph)
@@ -3643,6 +3635,14 @@ namespace YWWeb
         public void AddTot_EE_WeatherDaily(t_EE_WeatherDaily t_EE_WeatherDaily)
         {
             base.AddObject("t_EE_WeatherDaily", t_EE_WeatherDaily);
+        }
+    
+        /// <summary>
+        /// 用于向 t_CM_ShopTruck EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_CM_ShopTruck(t_CM_ShopTruck t_CM_ShopTruck)
+        {
+            base.AddObject("t_CM_ShopTruck", t_CM_ShopTruck);
         }
 
         #endregion
@@ -28786,10 +28786,12 @@ namespace YWWeb
         /// 创建新的 t_EE_PowerReportConfig 对象。
         /// </summary>
         /// <param name="id">id 属性的初始值。</param>
-        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id)
+        /// <param name="isUpload">isUpload 属性的初始值。</param>
+        public static t_EE_PowerReportConfig Createt_EE_PowerReportConfig(global::System.Int32 id, global::System.Int32 isUpload)
         {
             t_EE_PowerReportConfig t_EE_PowerReportConfig = new t_EE_PowerReportConfig();
             t_EE_PowerReportConfig.id = id;
+            t_EE_PowerReportConfig.isUpload = isUpload;
             return t_EE_PowerReportConfig;
         }
 
@@ -28947,9 +28949,9 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> isUpload
+        public global::System.Int32 isUpload
         {
             get
             {
@@ -28964,8 +28966,8 @@ namespace YWWeb
                 OnisUploadChanged();
             }
         }
-        private Nullable<global::System.Int32> _isUpload;
-        partial void OnisUploadChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _isUpload;
+        partial void OnisUploadChanging(global::System.Int32 value);
         partial void OnisUploadChanged();
 
         #endregion
