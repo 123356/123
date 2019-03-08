@@ -1,0 +1,239 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
+    @Html.Partial("~/Views/Share/_Header_File.cshtml")
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+    <style type="text/css">
+        .offLineMapView {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: url("/Content/images/map.png");
+            background-repeat: no-repeat;
+            background-size: inherit
+        }
+
+        .mapImg {
+            width: 100%;
+            height: 100%;
+            z-index: 1000
+        }
+
+        .marker {
+            position: absolute;
+            top: 390px;
+            height: 50%;
+            z-index: 1200;
+            width: 22px;
+            height: 32px;
+            left: 608px;
+            cursor: pointer
+        }
+
+        .panel {
+            position: absolute;
+            width: 350px;
+            height: 175px;
+            background: #fff;
+            top: 210px;
+            left: 500px;
+            box-shadow: 2px 2px 3px #eee;
+            overflow: hidden;
+            padding: 10px;
+            display:none
+        }
+
+        .panel-header {
+            border-bottom: 1px solid #eee;
+            background: #fff;
+            color: #777;
+            height: auto;
+            padding-bottom: 5px
+        }
+
+            .panel-header i {
+                margin-right: 5px
+            }
+
+        p {
+            margin: 0
+        }
+
+        .panel-header .title {
+            display: flex;
+            flex-direction: row;
+        }
+
+            .panel-header .title span {
+                display: inline-block
+            }
+
+        .closeBtn {
+            float: right;
+            font-size: 12px;
+            cursor: pointer;
+            color: #ccc;
+            margin-top: -5px
+        }
+
+        .comName {
+            margin-right: 20px;
+            font-weight: bold;
+            flex: 3;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        a {
+            color: #3ab094;
+            text-decoration: underline
+        }
+
+        .detail {
+            margin-right: 5px
+        }
+
+        .state {
+            float: right;
+            margin-right: 5px;
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            padding-left: 10px
+        }
+
+        .address {
+            font-size: 11px
+        }
+
+        .panel-main {
+            padding: 5px 0px;
+            font-size: 11px;
+            color: #777;
+            line-height: 20px
+        }
+    </style>
+
+</head>
+<body>
+    <div class="offLineMapView" id="offLineMapView">
+        @*<img src="~/Content/images/map.png" class="mapImg"/>*@
+        <img :src="icon" class="marker" />
+        <div class="panel">
+            <div style="height:12px">
+                <i class="iconfont icon-guanbi closeBtn"></i>
+            </div>
+
+            <div class="panel-header">
+                <p class="title">
+                    <span class="comName"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><font v-html="info.UnitName==null?'--':info.UnitName"></font></span>
+                    <span><a href="#" v-on:click="toDetail" class="detail">详情</a></span>
+                    <span class="state" v-if="info.isAlarm==0">正常运行</span>
+                    <span class="state" v-if="info.isAlarm==1" style="color:#e0d21d">一般</span>
+                    <span class="state" v-if="info.isAlarm==2" style="color:#ef7200">严重</span>
+                    <span class="state" v-if="info.isAlarm==3" style="color:#cc0d0d">危急</span>
+                </p>
+                <p class="address">
+                    <span><i class="iconfont icon-location"></i><font v-html="info.LinkAddress==null?'--':info.LinkAddress"></font></span>
+                </p>
+            </div>
+            <div class="panel-main">
+                <p>电压等级：<font v-html="info.dianya==null?'--':info.dianya"></font></p>
+                <p>联系人：<font v-html="info.LinkMan==null?'--':info.LinkMan"></font></p>
+                <p>联系电话：<font v-html="info.LinkMobile==null?'--':info.LinkMobile"></font></p>
+                <p>
+                    <span style="margin-right:50px">客户经理：<font v-html="info.CSMMan==null?'--':info.CSMMan"></font></span>
+                    <span>电话：<font v-html="info.CSMPhone==null?'--':info.CSMPhone"></font></span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#offLineMapView',
+            data: {
+                info: {},
+                icon: '/Content/images/location_icon/2.png'
+            },
+            methods: {
+                //获取站信息
+                getUnitListData: function () {
+                    var that = this
+                    this.$http({
+                        url: '/Home/UnitListData',
+                        method: 'post'
+                    })
+                        .then(function (res) {
+                            var data = res.data
+                            for (var i in data) {
+                                if (data[i].UnitName == "大族环球") {
+                                    that.info = data[i]
+                                    break
+                                }
+                            }
+                        })
+                        .catch(function (e) {
+                            throw new ReferenceError(e.message)
+                        })
+                },
+                //实时报警状态
+                getUnitAlarm: function () {
+                    var that = this
+                    this.$http({
+                        url: '/Home/getUnitAlarm',
+                        method: 'post'
+                    })
+                        .then(function (res) {
+                            var data = res.data
+                            for (var i in data) {
+                                if (data[i].UnitName == "大族环球") {
+                                    that.info.isAlarm = data[i].isAlarm
+                                    if (data[i].isAlarm == 0) {
+                                        that.icon = '/Content/images/location_icon/2.png'
+                                    } else {
+                                        that.icon = '/Content/images/location_icon/' + data[i].isAlarm + '2.png'
+                                    }
+                                    break
+                                }
+                            }
+                        })
+                        .catch(function (e) {
+                            throw new ReferenceError(e.message)
+                        })
+                },
+                //详情
+                toDetail: function () {
+                    $.cookie('unitId', this.info.UnitID, { expires: 7, path: '/' });
+                    location.href = "/Es/UserView2?unitId=" + this.info.UnitID
+                }
+
+            },
+            beforeMount: function () {
+                console.log(navigator.onLine)
+                this.getUnitListData()
+                setInterval(this.getUnitAlarm,5000)
+                
+            }
+        })
+        $(".marker").hover(function () {
+            $(".panel").fadeIn('slow')
+        })
+        $(".closeBtn").click(function () {
+            $(".panel").fadeOut('slow')
+        })
+    </script>
+
+
+</body>
+</html>
