@@ -581,7 +581,7 @@
                                 url: "/energyManage/EMSetting/DeleteSupervisor",
                                 method: "post",
                                 body: {
-                                    parent_id: data.pId,
+                                    parent_id: node.parent,
                                     child_id: node.node.id,
                                     unit_id: that.UnitData.UnitID,
                                 }
