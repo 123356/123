@@ -64,6 +64,13 @@ namespace DAO
 
             return SQLQuery<t_CM_UserInfo>(sql);
         }
+
+        public IList<t_CM_UserInfo> GetUsersByUnits(string uids)
+        {
+            string sql = "SELECT * FROM t_CM_UserInfo WHERE (UNITList LIKE '" + uids + ",%' OR UNITList = '%," + uids + "' OR UNITList LIKE '%," + uids + ",%' OR UNITList = '" + uids + "')";
+            return SQLQuery<t_CM_UserInfo>(sql);
+        }
+
         public DbSet<t_CM_UserInfo> Datas { get; set; }
     }
 }

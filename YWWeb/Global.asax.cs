@@ -94,22 +94,38 @@ namespace YWWeb
         {
             int pid = (int)alarm.PID;
             //List<t_CM_UserInfo> userList = bll.ExecuteStoreQuery<t_CM_UserInfo>("SELECT * FROM t_CM_UserInfo WHERE (PDRList LIKE '" + pid + ",%' OR PDRList = '%," + pid + "' OR PDRList LIKE '%," + pid + ",%' OR PDRList = '" + pid + "')").ToList();
-            IList<IDAO.Models.t_CM_UserInfo> userList = UserInfoDAL.getInstance().GetUsers(pid);
-            if (userList == null || userList.Count <= 0) return;
-            for (int i = 0; i < userList.Count; i++)
+
+            IList<IDAO.Models.t_CM_Unit> unitlist = UnitDAL.getInstance().GetUnitListByPID(pid);
+            if (unitlist.Count() > 0)
             {
-                if (userList[i].OpenAlarmMsg == 1)
+                string uids = string.Empty;
+                foreach(var item in unitlist)
                 {
-                    //根据手机号查询该报警是否发过短信；
-                    List<t_Alarm_SMS> sendedList = bll.ExecuteStoreQuery<t_Alarm_SMS>("SELECT * FROM t_Alarm_SMS WHERE mobilephone='" + userList[i].Mobilephone + "' AND alarmId=" + alarm.AlarmID).ToList();
-                    if (sendedList == null || sendedList.Count <= 0)
+                    uids += item.UnitID + ",";
+                }
+                if (!string.IsNullOrEmpty(uids))
+                {
+                    uids = uids.Substring(0, uids.Length - 1);
+                    IList<IDAO.Models.t_CM_UserInfo> userList = UserInfoDAL.getInstance().GetUsersByUnits(uids);
+                    if (userList == null || userList.Count <= 0) return;
+                    for (int i = 0; i < userList.Count; i++)
                     {
-                        UtilsSms.smsAlarm(userList[i].Mobilephone, alarm);
-                        //INSERT INTO t_Alarm_SMS (alarmTime,alarmId,sendTime,mobilephone) VALUES ('2018-03-20 16:53:11',1522,'2018-03-20 16:53:11','15210091230')
-                        string insert = "INSERT INTO t_Alarm_SMS (alarmTime,alarmId,sendTime,mobilephone) VALUES ('" + alarm.AlarmDateTime + "'," + alarm.AlarmID + ",'" + DateTime.Now.ToString() + "','" + userList[i].Mobilephone + "')";
-                        bll.ExecuteStoreCommand(insert);
+                        if (userList[i].OpenAlarmMsg == 1)
+                        {
+                            //根据手机号查询该报警是否发过短信；
+                            List<t_Alarm_SMS> sendedList = bll.ExecuteStoreQuery<t_Alarm_SMS>("SELECT * FROM t_Alarm_SMS WHERE mobilephone='" + userList[i].Mobilephone + "' AND alarmId=" + alarm.AlarmID).ToList();
+                            if (sendedList == null || sendedList.Count <= 0)
+                            {
+                                UtilsSms.smsAlarm(userList[i].Mobilephone, alarm);
+                                //INSERT INTO t_Alarm_SMS (alarmTime,alarmId,sendTime,mobilephone) VALUES ('2018-03-20 16:53:11',1522,'2018-03-20 16:53:11','15210091230')
+                                string insert = "INSERT INTO t_Alarm_SMS (alarmTime,alarmId,sendTime,mobilephone) VALUES ('" + alarm.AlarmDateTime + "'," + alarm.AlarmID + ",'" + DateTime.Now.ToString() + "','" + userList[i].Mobilephone + "')";
+                                bll.ExecuteStoreCommand(insert);
+                            }
+                        }
                     }
                 }
+                 
+               
             }
             //Debug.WriteLine(DateTime.Now.ToString() + ",alarm.PID=" + alarm.PID);//c#打印输出信息
         }
