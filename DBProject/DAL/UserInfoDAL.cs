@@ -123,6 +123,20 @@ namespace DAL
             return data;
 
         }
+        public IList<t_CM_UserInfo> GetUsersByUnits(string uids)
+        {
+            IList<t_CM_UserInfo> data = new List<t_CM_UserInfo>();
+            try
+            {
+                data = _dbFactory.userInf.GetUsersByUnits(uids);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+
+        }
 
     }
 }

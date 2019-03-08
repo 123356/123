@@ -50,5 +50,19 @@ namespace DAL
             return data;
            
         }
+        public IList<t_CM_Unit> GetUnitListByPID(int pid)
+        {
+            IList<t_CM_Unit> data = new List<t_CM_Unit>();
+            try
+            {
+                data = _dbFactory.unit.GetUnitListByPID(pid);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+
+        }
     }
 }
