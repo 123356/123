@@ -150,9 +150,7 @@ Topo.prototype = {
         this.keyEvent()
     },
     history: function (obj) {
-        console.log(obj)
         if (obj) {
-            console.log(obj.config.translateX)
             this.scene.translateX = obj.config.translateX || 1;
             this.scene.translateY = obj.config.translateY || 1;
             this.scene.zoom(obj.config.scaleX, obj.config.scaleY);

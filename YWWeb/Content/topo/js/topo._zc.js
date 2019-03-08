@@ -383,8 +383,15 @@ Topo.prototype = {
     },
     mqtt: function () {
         var that = this;
-        var wsbroker = that.__IP;
-        var wsport = parseInt(that.__port);
+        var wsbroker ;
+        var wsport ;
+        if (location.protocol == "https:") {
+            wsbroker = "yw.ife360.com";
+            wsport = 15673;
+        } else {
+            wsbroker = that.__IP;
+            wsport = parseInt(that.__port);
+        }
         //连接选项
         var client;
         var options = {
