@@ -156,7 +156,7 @@ function showinfomessage(marker, point, data) {
 }
 function toDetail(data) {
     $.cookie('unitId', data, { expires: 7, path: '/' });
-    location.href = "/Es/UserView?unitId="+data
+    location.href = "/Es/UserView2?unitId="+data
 
 }
 
