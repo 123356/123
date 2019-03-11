@@ -198,7 +198,10 @@ function export1() {
     ajaxbg.show();
     $.post("/AlarmManage/ExportAlarmData", { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename }, function(data) {
         ajaxbg.hide();
-        window.open('http://' + window.location.host + data);
+
+        var protocolStr = document.location.protocol;
+
+        window.open(protocolStr + '//' + window.location.host + data);
     });
 }
 
