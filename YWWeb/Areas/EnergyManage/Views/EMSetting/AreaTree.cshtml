@@ -56,6 +56,10 @@
                 flex: 1;
                 overflow: hidden
             }
+        .chart {
+            margin-top: 60px;
+            margin-left: 60px;
+        }
         
     </style>
 </head>
@@ -68,9 +72,8 @@
     </div>
 
     <script>
-
-        var w = 1140,
-            h = 600,
+        var w = document.documentElement.scrollWidth-120,
+            h = document.documentElement.scrollHeight*.8 ,
             x = d3.scale.linear().range([0, w]),
             y = d3.scale.linear().range([0, h]);
 
@@ -84,7 +87,7 @@
 
         var partition = d3.layout.partition()
             .value(function (d) {
-                return d.size;
+                return d.UsePower+3
             });
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
 
@@ -103,24 +106,15 @@
                     return;
                 }
                 res = res.replace(/{/g, `{"size":1,`);
-                var root = JSON.parse(res);
+                var root = JSON.parse(res).children[0];
                 var g = vis.selectAll("g")
                     .data(partition.nodes(root))
                     .enter().append("svg:g")
                     .attr("transform", function (d) {
                         return "translate(" + x(d.y) + "," + y(d.x) + ")";
-                    })
-                   // .on('click', click)
-                    .on('click', function (d) {
-                        getElectrMonth({
-                            addCid: d.addCid,
-                            delCid: d.delCid,
-                            name: d.name,
-                            children: d.children
-                        })
-                        
-                        $(".panel-title").text(d.name)
-                        $("#editwin").window("open")
+                    }).on('click', click)
+                    .on('dblclick', function (d) {
+                        getElectrMonth(d)
                         d3.event.stopPropagation();
                     })
                  
@@ -137,6 +131,8 @@
                         return d.children.length ? "parent" : "child";
                     });
 
+               
+
                 var text = g.append("svg:text")
                     .attr("dy", ".35em")
                     .style("opacity", function (d) {
@@ -144,15 +140,20 @@
                     })
                     .attr("x", 0)
                     .attr("y", 0)
+                    .attr("class","qwe")
                     .attr("transform", transform)
                     .text(function (d) {
                         return d.name;
                     })
 
 
+                $('.qwe').on('click', function () {
+                        console.log(123)
+                })
+
                 text.selectAll("tspan")
                     .data(function (d) {
-                        return d.electricity ? ["实际用电：" + d.name] : ["总用电量：" + d.NeedPower  ]
+                        return ["总用电量：" + d.UsePower]
                     })
                     .enter()
                     .append("svg:tspan")
@@ -162,6 +163,11 @@
                     .text(function (d) {
                         return d;
                     });
+
+
+                text.on("click", function () {
+                    console.log(d3.event);
+                });
 
                 d3.select(window)
                     .on("click", function () {
@@ -204,20 +210,21 @@
             }
         })
 
-        function getElectrMonth(data) {
+        function getElectrMonth(d) {
+            console.log(d.name)
+            $(".panel-title").text("用电详情——" + d.name);
+            $("#editwin").window("open")
+
             $.ajax({ 
                 type: "post",
-                url: "/energyManage/EMSetting/GetElectrMonth",
+                url: "/energyManage/EMSetting/GetTreePowerMonth",
                 data: {
-                    addCid: data.addCid,
-                    delCid: data.delCid
+                    addCid: d.addCid,
+                    delCid: d.delCid
                 },
                 success: function (res) {
-                    
-                    createBarChart(res, data.name)
-
-                    createPieChart(data.children)
-                    
+                    createBarChart(res, d.name)
+                    createPieChart(d.children)
                     console.log(res)
                 },
                 error: function (e) {
@@ -243,9 +250,10 @@
 
     <script type="text/javascript">
         function createBarChart(data,name) {
-            var xData = []
-            var yData = []
-            var count = 0
+            var xData = [];
+            var yData = [];
+            var count = 0;
+            data = data.reverse();
             for (var i in data) {
                 xData.push(formatDate(data[i].RecordTime))
                 yData.push(data[i].UsePower)
@@ -254,7 +262,7 @@
             var barChart = echarts.init(document.getElementById('barChart'));
             var option = {
                 title: {
-                    text: name,
+                    text: name +"--当月用电",
                     subtext:  count,
                     left: 'center',
                     textStyle: {

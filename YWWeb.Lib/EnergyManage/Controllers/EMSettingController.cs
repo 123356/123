@@ -37,12 +37,12 @@ namespace EnergyManage.Controllers
         /// <returns></returns>
         public ActionResult GetTreeData(int unitID,int item_type,string unitName)
         {
-            IList<IDAO.Models.t_V_EnerPower> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
+            IList<IDAO.Models.t_V_EnerProjectType> list;
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
             if (list.Count() == 0 && item_type==1)
             {
                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
             }
             Tree tree = new Tree();
             tree.id = 0;
@@ -54,141 +54,6 @@ namespace EnergyManage.Controllers
             return  Content(json);
         }
 
-
-
-        public ActionResult GetTreePower(int unitID, int item_type, string unitName)
-        {
-            IList<IDAO.Models.t_V_EnerPower> list;
-
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData1(unitID, item_type);
-            }
-
-
-            var addstr = "";
-            var delstr = "";
-            for (var a = 0; a < list.Count(); a++) { 
-
-                var add = "";
-                var del = "";
-                if (list[a].addCid != null) {
-                     add = list[a].addCid.Replace(",", ";");
-                }
-                if (list[a].addCid != null)
-                {
-                     del = list[a].delCid.Replace(",", ";");
-                }
-
-            if (add != "" && add != null)
-                {
-                    addstr += add + ';';
-                }
-                else if (del != "" && del != null)
-                {
-                    delstr += del + ';';
-                }
-            }
-
-            IList<IDAO.Models.t_V_EnerProjectTypePower> cidList;
-            if (delstr.Length > 2 && addstr.Length > 2)
-            {
-                cidList = GetSplitCidStr(addstr + delstr.Substring(0, delstr.Length - 1));
-            }
-            else if (addstr.Length > 2)
-            {
-                cidList = GetSplitCidStr(addstr.Substring(0, addstr.Length - 1));
-            }
-            else if (delstr.Length > 2)
-            {
-                cidList = GetSplitCidStr(delstr.Substring(0, delstr.Length - 1));
-            }
-            else {
-                cidList = GetSplitCidStr("");
-            }
-
-
-
-            for (var a = 0; a < list.Count(); a++)
-            {
-                list[a].NeedPower = 0;
-                list[a].UsePower = 0;
-                if (cidList != null) { 
-                    for (var b = 0; b < cidList.Count(); b++) {
-                        if (list[a].addCid.Contains($"{cidList[b].PID}-{cidList[b].CID}"))
-                        {
-                            list[a].NeedPower += cidList[b].NeedPower;
-                            list[a].UsePower += cidList[b].UsePower;
-                        }
-                        else if (list[a].delCid.Contains($"{cidList[b].PID}-{cidList[b].CID}"))
-                        {
-                            list[a].NeedPower -= cidList[b].NeedPower;
-                            list[a].UsePower -= cidList[b].UsePower;
-                        }
-                    }
-                }
-                var add = list[a].addCid;
-                var del = list[a].delCid;
-                if (add != "" && add != null)
-                {
-                    addstr += add.Replace(",", ";") + ';';
-                }
-                else if (del != "" && del != null)
-                {
-                    delstr += del.Replace(",", ";") + ';';
-                }
-            }
-            //DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-            TreePower tree = new TreePower();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<TreePower>();
-            getPowerTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            return Content(json);
-        }
-
-
-
-        public IList<IDAO.Models.t_V_EnerProjectTypePower> GetSplitCidStr(string str) {
-            if (str == "") {
-                IList < IDAO.Models.t_V_EnerProjectTypePower > qwe = null;
-                return qwe;
-            }
-
-            string[] scid = str.Split(';');
-
-            string pids = "" ,
-                  cids = "";
-
-            for (var a = 0; a < scid.Count(); a++)
-            {
-                string[] arr  = scid[a].Split('-');
-                if(arr.Count() > 1)
-                {
-                    pids += arr[0] + ',';
-                    cids += arr[1] + ',';
-                }
-            }
-            pids = pids.Substring(0, pids.Length - 1);
-            cids = cids.Substring(0, cids.Length - 1);
-
-            string pid = string.Join(",", pids.Split(',').Distinct().ToArray());
-            string cid = string.Join(",", cids.Split(',').Distinct().ToArray());
-
-
-            //获取所有表的用电量
-
-            IList<IDAO.Models.t_V_EnerProjectTypePower> list = DAL.VEnerProjectTypeDAL.getInstance().GetCidsToElectricity(pid,cid);
-
-            return list;
-
-
-
-        }
 
 
    
@@ -216,7 +81,7 @@ namespace EnergyManage.Controllers
         /// <summary>
         /// 拼接tree数据
         /// </summary>
-        public void getTree(IList<IDAO.Models.t_V_EnerPower> data, List<Tree> arr, int childID)
+        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
         {
             try
             {
@@ -234,8 +99,10 @@ namespace EnergyManage.Controllers
                         tree.head = data[a].unit_head;
                         tree.area = data[a].unit_area;
                         tree.people = data[a].unit_people;
+                        tree.UsePower = data[a].UsePower;
+                        tree.NeedPower = data[a].NeedPower;
                         tree.children = new List<Tree>();
-                        arr.Add(tree);
+                         arr.Add(tree);
                         getTree(data, tree.children, tree.id);
                     }
                 }
@@ -245,37 +112,6 @@ namespace EnergyManage.Controllers
         }
 
 
-        public void getPowerTree(IList<IDAO.Models.t_V_EnerPower> data, List<TreePower> arr, int childID)
-        {
-            try
-            {
-                for (var a = 0; a < data.Count(); a++)
-                {
-                    if (data[a].parent_id == childID)
-                    {
-                        TreePower tree = new TreePower();
-                        tree.id = data[a].child_id;
-                        tree.name = data[a].Name;
-                        tree.pId = data[a].parent_id;
-                        tree.addCid = data[a].addCid;
-                        tree.delCid = data[a].delCid;
-                        tree.note = data[a].unit_note;
-                        tree.head = data[a].unit_head;
-                        tree.area = data[a].unit_area;
-                        tree.people = data[a].unit_people;
-                        tree.UsePower = data[a].UsePower;
-                        tree.NeedPower = data[a].NeedPower;
-
-                        tree.children = new List<TreePower>();
-                        arr.Add(tree);
-                        getPowerTree(data, tree.children, tree.id);
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
         /// <summary>
         /// 添加节点
         /// </summary>
@@ -352,7 +188,7 @@ namespace EnergyManage.Controllers
         }
 
 
-        public class TreeBasic
+        public class Tree
         {
             public int id { set; get; }
             public string name { set; get; }
@@ -363,18 +199,9 @@ namespace EnergyManage.Controllers
             public string delCid { set; get; }
             public int area { set; get; }
             public int people { set; get; }
-        }
-        public class  Tree : TreeBasic
-        {
-            public List<Tree> children { set; get; }
-        }
-       
-        public class TreePower: TreeBasic
-        {
             public decimal UsePower { set; get; }
             public decimal NeedPower { set; get; }
-
-            public List<TreePower> children { set; get; }
+            public List<Tree> children { set; get; }
         }
         #endregion
 
@@ -386,82 +213,125 @@ namespace EnergyManage.Controllers
 		}
 
 
-
-
-
-        public JsonResult GetElectrMonth(string addCid, string delCid)
+        /// <summary>
+        /// 查询当天累计用电
+        /// </summary>
+        /// <param name="unitID"></param>
+        /// <param name="item_type"></param>
+        /// <param name="unitName"></param>
+        /// <returns></returns>
+        public ActionResult GetTreePower(int unitID, int item_type, string unitName)
         {
-            if(addCid == "" && delCid == "")
+            IList<IDAO.Models.t_V_EnerProjectType> list;
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            if (list.Count() == 0 && item_type == 1)
+            {
+                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            }
+            string all = "" ;
+            for(var a = 0; a < list.Count(); a++)
+            {
+                if (!string.IsNullOrEmpty(list[a].addCid))
+                    all += list[a].addCid + ",";
+                if (!string.IsNullOrEmpty(list[a].delCid))
+                    all += list[a].delCid+",";
+            }
+            all = all.Substring(0, all.Length - 1);
+
+            string[] arr;
+            string pid="", cid="";
+            arr = all.Split(',');
+
+            for (var a = 0; a < arr.Count(); a++)
+            {
+                var arr1 = arr[a].Split('-');
+                pid += arr1[0] + ',';
+                cid += arr1[1] + ',';
+            }
+            pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
+            cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
+
+            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
+            for (var a = 0; a < power.Count(); a++) {
+                for (var b = 0; b < list.Count(); b++) {
+                    if (list[b].addCid.Contains($"{power[a].PID}-{power[a].CID}")) {
+                        list[b].UsePower += power[a].UsePower;
+                        list[b].NeedPower += power[a].NeedPower;
+                    }
+                    if (list[b].delCid.Contains($"{power[a].PID}-{power[a].CID}"))
+                    {
+                        list[b].UsePower -= power[a].UsePower;
+                        list[b].NeedPower -= power[a].NeedPower;
+                    }
+                }
+            }
+            Tree tree = new Tree();
+            tree.id = 0;
+            tree.name = unitName;
+            tree.pId = -1;
+            tree.children = new List<Tree>();
+            getTree(list, tree.children, 0);
+            string json = JsonConvert.SerializeObject(tree);
+            return Content(json);
+        }
+
+        /// <summary>
+        /// 查询当月用电量
+        /// </summary>
+        /// <param name="addCid"></param>
+        /// <param name="delCid"></param>
+        /// <returns></returns>
+        public ActionResult GetTreePowerMonth(string addCid, string delCid) {
+            if (addCid == "" && delCid == "")
             {
                 return Json("无效参数");
             }
-
-
-            string pid = "", cid = "", str = "";
-
-            if (addCid != "") {
-                str += addCid;
+            var all = "";
+            if (string.IsNullOrEmpty(addCid)) {
+                all = delCid; 
             }
-            if (delCid != "")
-            {
-                str += delCid;
+            else if (string.IsNullOrEmpty(delCid)) {
+                all = addCid;
             }
-            string[] array = str.Split(',');
-            for (var a = 0; a < array.Count(); a++)
-            {
-                if (array[a] == "")
-                {
-                    continue;
-                }
-                var arr = array[a].Split('-');
-                if (arr[0] != "")
-                    pid += arr[0] + ',';
-                if (arr[1] != "")
-                    cid += arr[1] + ',';
+            else {
+                all = addCid + "," + delCid;
+                all = string.Join(",", all.Split(',').Distinct().ToArray());
             }
-
-
-
-           
-            pid = string.Join(",", pid.Split(',').Distinct().ToArray());
-            cid = string.Join(",", cid.Split(',').Distinct().ToArray());
-
-            if (pid != "")
-                pid = pid.Substring(0, pid.Length - 1);
-            if (cid != "")
-                cid = cid.Substring(0, cid.Length - 1);
-
-            List<IDAO.Models.t_V_EnerProjectTypePower> all = DAL.VEnerProjectTypeDAL.getInstance().GetElectrMonth(pid, cid).Distinct().ToList();
-
-
-
-            var list = all.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
-
-            for(var a = 0; a < all.Count(); a++)
+            string[] arr;
+            string pid = "", cid = "";
+            arr = all.Split(',');
+            for (var a = 0; a < arr.Count(); a++)
             {
-                for(var b = 0; b < list.Count(); b++)
-                {
-                    if(list[b].RecordTime == all[a].RecordTime)
+                var arr1 = arr[a].Split('-');
+                pid += arr1[0] + ',';
+                cid += arr1[1] + ',';
+            }
+            pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
+            cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
+            List<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid).Distinct().ToList();
+            var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
+            for (var a = 0; a < list.Count(); a++) {
+                list[a].UsePower = 0;
+                list[a].NeedPower = 0;
+                for (var b = 0; b < power.Count(); b++) {
+                    if (list[a].RecordTime == power[b].RecordTime)
                     {
-                        if (addCid.IndexOf(all[a].PID+ "-" + all[a].CID)>0) {
-
-                            list[b].NeedPower += all[b].NeedPower;
-                            list[b].UsePower += all[b].UsePower;
-                        }
-                        else
+                        if (addCid.Contains($"{list[a].PID}-{list[a].CID}"))
                         {
-                            list[b].NeedPower -= all[b].NeedPower;
-                            list[b].UsePower -= all[b].UsePower;
+                            list[a].UsePower += power[b].UsePower;
+                            list[a].NeedPower += power[b].UsePower;
+                        }
+                        if (delCid.Contains($"{list[a].PID}-{list[a].CID}"))
+                        {
+                            list[a].UsePower -= power[b].UsePower;
+                            list[a].NeedPower -= power[b].UsePower;
                         }
                     }
                 }
             }
-
-            return (Json(list, JsonRequestBehavior.AllowGet));
+            return Json(list);
         }
-
-
-
         #endregion
     }
 } 

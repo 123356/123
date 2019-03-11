@@ -25,38 +25,22 @@ namespace IDAO.Models
         public string delCid { get; set; }
         public int unit_area { get; set; }
         public int unit_people { get; set; }
-    }
-
-    public partial class t_V_EnerPower: t_V_EnerProjectType
-    {
         public decimal NeedPower { get; set; }
         public decimal UsePower { get; set; }
-
     }
+
 
 
 
     /// <summary>
     /// 用电量
     /// </summary>
-    public partial class t_V_EnerProjectTypePower
+    public partial class t_V_EnerPower
     {
         public decimal UsePower { get; set; }
         public decimal NeedPower { get; set; }
         public DateTime RecordTime{get;set;}
         public int PID { get; set; }
         public int CID { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

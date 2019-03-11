@@ -24,41 +24,19 @@ namespace DAO
               .HasKey(t => new { t.child_id});
             base.OnModelCreating(modelBuilder);
         }
-
-
         public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = "SELECT * FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
+            string sql = "SELECT *,0.0 NeedPower,0.0 UsePower FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
-
-        public IList<t_V_EnerPower> GetTreeData1(int unitId, int item_type)
-        {
-            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = "SELECT *,0.0 NeedPower,0.0 UsePower FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
-            return SQLQuery<t_V_EnerPower>(sql);
-        }
-
-
         public IList<t_V_EnerProjectType> UpdateRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid,int updateTypeID,int unit_area,int unit_people)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = $"UPDATE t_EE_EnerUserProject  SET unit_head = '{unit_head}',unit_note = '{unit_note}',addCid='{addCid}',delCid='{delCid}',child_id='{updateTypeID}',unit_area={unit_area},unit_people={unit_people}  output inserted.*,inserted.parent_id id,inserted.unit_note Name,inserted.parent_id item_type,inserted.unit_note Remarks  WHERE parent_id = {parent_id} and child_id={child_id} and unit_id={unit_id}";
+            string sql = $"UPDATE t_EE_EnerUserProject  SET unit_head = '{unit_head}',unit_note = '{unit_note}',addCid='{addCid}',delCid='{delCid}',child_id='{updateTypeID}',unit_area={unit_area},unit_people={unit_people}  output inserted.*,inserted.parent_id id,inserted.unit_note Name,inserted.parent_id item_type,inserted.unit_note Remarks,0.0 NeedPower,0.0 UsePower  WHERE parent_id = {parent_id} and child_id={child_id} and unit_id={unit_id}";
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
-
-
- 
-        public IList<t_V_EnerProjectTypePower> GetCidsToElectricity(string pids, string cids)
-        {
-            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            var sql = $"SELECT isnull(UsePower,0) UsePower,isnull(NeedPower,0) NeedPower,RecordTime,PID,CID FROM t_EE_PowerQualityMonthly WHERE PID in({pids})  AND CID in({cids}) AND RecordTime>=DateAdd(d,-3,getdate())";
-            return SQLQuery<t_V_EnerProjectTypePower>(sql);
-        }
-
-
-
+      
         public IList<t_V_EnerProjectType> AddProjectTemplate(int unitId, int item_type)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
@@ -68,16 +46,30 @@ namespace DAO
 
         public IList<t_V_EnerProjectType> GetHistoryList(int item_type, int unitId)
         {
-            string sql = "SELECT * FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
+            string sql = "SELECT * ,0.0 NeedPower,0.0 UsePower  FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
 
-        public IList<t_V_EnerProjectTypePower> GetElectrMonth(string pid, string cid)
+        public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid)
         {
-            string sql = $"SELECT isnull(UsePower,0) UsePower,isnull(NeedPower,0) NeedPower,RecordTime,PID,CID FROM t_EE_PowerQualityMonthly WHERE PID in({pid})  AND CID in({cid}) AND RecordTime>=DateAdd(d,-30,getdate())";
-            return SQLQuery<t_V_EnerProjectTypePower>(sql);
+            DateTime startTime = DateTime.Now;
+            string star = startTime.ToString("yyyy-MM-dd 00:00:00.000");
+            startTime = startTime.AddDays(1);
+            string end = startTime.ToString("yyyy-MM-dd 00:00:00.000");
+
+            string sql = $"SELECT PID,CID,RecordTime , isnull(NeedPower,'0') as NeedPower, isnull(UsePower,'0') as UsePower  FROM t_EE_PowerQualityDaily WHERE pid in ({pid}) and cid in ({cid}) and RecordTime> '{star}' and RecordTime< '{end}'  order by RecordTime DESC";
+            return SQLQuery<t_V_EnerPower>(sql);
         }
-        
+
+        public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)
+        {
+            DateTime startTime = DateTime.Now;
+            string star = startTime.AddDays(1 - startTime.Day).ToString("yyyy-MM-dd 00:00:00.000");
+            startTime = startTime.AddDays(1);
+            string end = startTime.AddDays(1 - startTime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd 00:00:00.000");
+            string sql = $"SELECT PID,CID,RecordTime , isnull(NeedPower,'0') as NeedPower, isnull(UsePower,'0') as UsePower  FROM t_EE_PowerQualityMonthly WHERE pid in ({pid}) and cid in ({cid}) and RecordTime> '{star}' and RecordTime< '{end}'  order by RecordTime DESC";
+            return SQLQuery<t_V_EnerPower>(sql);
+        }
 
 
         public DbSet<t_V_EnerProjectType> Datas { get; set; }
