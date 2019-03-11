@@ -65,6 +65,11 @@
 </head>
 <body>
     <div id="body"></div>
+  
+    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:20px;cursor:pointer;">
+        查看详情
+    </u>
+
     <div id="editwin" title="详情" class="easyui-window" closed="true" style="width: 900px;
         height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
         <div class="barChart" id="barChart"></div>
@@ -72,8 +77,8 @@
     </div>
 
     <script>
-        var w = document.documentElement.scrollWidth-120,
-            h = document.documentElement.scrollHeight*.8 ,
+        var w = document.documentElement.scrollWidth - 120,
+            h = document.documentElement.scrollHeight * .8,
             x = d3.scale.linear().range([0, w]),
             y = d3.scale.linear().range([0, h]);
 
@@ -87,11 +92,14 @@
 
         var partition = d3.layout.partition()
             .value(function (d) {
-                return d.UsePower+3
+                return d.UsePower + 5
             });
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
 
-
+        $("#icon").on('click', function (e) {
+            getElectrMonth(window.d);
+            e.stopPropagation();
+        })
         var clickInterval = 0;
         $.ajax({
             type: "post",
@@ -109,19 +117,36 @@
                 var root = JSON.parse(res).children[0];
                 var g = vis.selectAll("g")
                     .data(partition.nodes(root))
-                    .enter().append("svg:g")
+                    .enter()
+                    .append("svg:g")
                     .attr("transform", function (d) {
                         return "translate(" + x(d.y) + "," + y(d.x) + ")";
-                    }).on('click', click)
-                    .on('dblclick', function (d) {
-                        getElectrMonth(d)
+                    })
+          
+                   .on('click', click)
+
+                    .on("mouseover", function (d) {
+                        $("#icon").hide()
+                        var position = $(this).children('text').position();
+
+
+                        $("#icon").fadeIn()
+                            .css("left", position.left+d.name.length*18)
+                            .css("top", position.top-8);
+                        window.d = d;
                         d3.event.stopPropagation();
                     })
-                 
+             
+
+
+                
+
+
+
+
 
                 var kx = w / root.dx,
                     ky = h / 1;
-
                 g.append("svg:rect")
                     .attr("width", root.dy * kx)
                     .attr("height", function (d) {
@@ -129,9 +154,8 @@
                     })
                     .attr("class", function (d) {
                         return d.children.length ? "parent" : "child";
-                    });
+                    })
 
-               
 
                 var text = g.append("svg:text")
                     .attr("dy", ".35em")
@@ -140,16 +164,13 @@
                     })
                     .attr("x", 0)
                     .attr("y", 0)
-                    .attr("class","qwe")
                     .attr("transform", transform)
                     .text(function (d) {
                         return d.name;
                     })
 
 
-                $('.qwe').on('click', function () {
-                        console.log(123)
-                })
+
 
                 text.selectAll("tspan")
                     .data(function (d) {
@@ -165,17 +186,25 @@
                     });
 
 
-                text.on("click", function () {
-                    console.log(d3.event);
-                });
 
                 d3.select(window)
                     .on("click", function () {
+                       // $(".panel-tool-close").click();
                         click(root);
                     })
 
 
                 function click(d) {
+                    $('#icon').hide();
+                    var that = this;
+                    setTimeout(function () {
+                        $('#icon').show();
+                        var position = $(that).children('text').position();
+                        console.log(position)
+                        $("#icon").fadeIn()
+                            .css("left", position.left + d.name.length * 18)
+                            .css("top", position.top - 8);
+                    },800)
                     if (!d.children) {
                         return;
                     }
@@ -184,7 +213,7 @@
                     x.domain([d.y, 1]).range([d.y ? 40 : 0, w]);
                     y.domain([d.x, d.x + d.dx]);
 
-                    var t = g.transition() 
+                    var t = g.transition()
                         .duration(d3.event.altKey ? 7500 : 750)
                         .attr("transform", function (d) {
                             return "translate(" + x(d.y) + "," + y(d.x) + ")";
@@ -211,11 +240,9 @@
         })
 
         function getElectrMonth(d) {
-            console.log(d.name)
             $(".panel-title").text("用电详情——" + d.name);
-            $("#editwin").window("open")
 
-            $.ajax({ 
+            $.ajax({
                 type: "post",
                 url: "/energyManage/EMSetting/GetTreePowerMonth",
                 data: {
@@ -223,9 +250,13 @@
                     delCid: d.delCid
                 },
                 success: function (res) {
+                   
+                    $("#editwin").window("open")
                     createBarChart(res, d.name)
                     createPieChart(d.children)
-                    console.log(res)
+
+
+                 
                 },
                 error: function (e) {
                     console.log(e)
@@ -233,7 +264,7 @@
             })
         }
 
-       
+
         function formatDate(val) {
             if (val != null) {
                 var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
@@ -245,15 +276,17 @@
             return "";
         }
 
-
     </script>
-
     <script type="text/javascript">
-        function createBarChart(data,name) {
+        function createBarChart(data, name) {
             var xData = [];
             var yData = [];
             var count = 0;
-            data = data.reverse();
+            try {
+                data = data.reverse();
+            } catch{
+                data = [];
+            }
             for (var i in data) {
                 xData.push(formatDate(data[i].RecordTime))
                 yData.push(data[i].UsePower)
@@ -262,8 +295,8 @@
             var barChart = echarts.init(document.getElementById('barChart'));
             var option = {
                 title: {
-                    text: name +"--当月用电",
-                    subtext:  count,
+                    text: name + "--当月用电",
+                    subtext: count,
                     left: 'center',
                     textStyle: {
                         color: '#757575',
@@ -281,31 +314,15 @@
                     },
                     position: ['50%', '50%']
                 },
-                //toolbox: {
-                //    feature: {
-                //        dataZoom: {
-                //            yAxisIndex: 'none'
-                //        },
-                //        dataView: { readOnly: false },
-                //        magicType: { type: ['line', 'bar'] },
-                //        restore: {},
-                //        saveAsImage: {}
-                //    },
-                //    itemSize: 9,
-                //    itemGap: 1,
-                //    right: 20
-                //},
+
                 grid: {
                     top: '18%',
-                    left: '3%',
-                    right: 10,
                     bottom: 45,
                     containLabel: true
                 },
                 xAxis: [{
                     type: 'category',
                     data: xData,
-
                     axisLine: {
                         lineStyle: {
                             color: '#57b9a3', //x轴线颜色
@@ -380,7 +397,7 @@
                     value: data[i].UsePower.toFixed(2)
                 })
             }
-            if (data.length==0) {
+            if (data.length == 0) {
                 subtext = "暂无数据"
                 titleTop = '40%'
             }
@@ -405,7 +422,7 @@
                     type: 'scroll',
                     orient: 'vertical',
                     right: 10,
-                    
+
                     bottom: 50,
                     data: legend
                 },
@@ -416,7 +433,7 @@
                         radius: '50%',
                         center: ['30%', '50%'],
                         label: {
-                            show:false
+                            show: false
                         },
                         data: series,
                         itemStyle: {
@@ -438,7 +455,7 @@
         }
 
 
-      
+
     </script>
 
 </body>
