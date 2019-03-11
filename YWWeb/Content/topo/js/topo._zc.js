@@ -81,8 +81,11 @@ Topo.prototype = {
     //加载编号列表
     orderNoList: function(res) {
         var that = this;
+        if (res.OrderNoList.length <= 1) {
+            return;
+        }
         var ul = document.createElement('ul');
-        ul.className = "titleUl"
+        ul.className = "titleUl";
         for (var a = 0, arr = []; a < res.OrderNoList.length; a++) {
             arr.push(`<li class='titleli' data-path='${res.OrderNoList[a].Path}'>${res.OrderNoList[a].Name}</li>`);
         }
