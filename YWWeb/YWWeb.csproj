@@ -1117,6 +1117,7 @@
     <Content Include="Content\images\logo\hfjt.png" />
     <Content Include="Content\images\logo\nyyh.png" />
     <Content Include="Content\images\logo\pinpin.png" />
+    <Content Include="Content\images\map.png" />
     <Content Include="Content\images\menubg - 副本.png" />
     <Content Include="Content\images\menubg.png" />
     <Content Include="Content\images\menubg1.png" />
@@ -1184,6 +1185,19 @@
     <Content Include="Content\images\nhss.png" />
     <Content Include="Content\images\nhxj.png" />
     <Content Include="Content\images\notice.png" />
+    <Content Include="Content\images\offLineMap\18_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\19_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\20_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\21_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\22_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\24_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\25_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\26_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\27_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\28_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\29_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\34_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\36_offLineMap.png" />
     <Content Include="Content\images\pageleft.png" />
     <Content Include="Content\images\pageright.png" />
     <Content Include="Content\images\page_location.png" />
@@ -2488,6 +2502,7 @@
     <Content Include="Views\EnergyEfficiency\EnergyPrice.cshtml" />
     <Content Include="Views\SparePartManage\ComponentsParts.cshtml" />
     <Content Include="Views\SparePartManage\ComponentsPartsEdit.cshtml" />
+    <Content Include="Views\Home\OfflineMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

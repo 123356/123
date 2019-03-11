@@ -18,7 +18,7 @@
             position: relative;
             background: url("/Content/images/map.png");
             background-repeat: no-repeat;
-            background-size: inherit
+            background-size: cover
         }
 
         .mapImg {
@@ -29,13 +29,15 @@
 
         .marker {
             position: absolute;
-            top: 390px;
+            /*top: 50%;*/
             height: 50%;
             z-index: 1200;
             width: 22px;
             height: 32px;
-            left: 608px;
-            cursor: pointer
+            /*left: 50%;*/
+            cursor: pointer;
+            /*margin-top:-16px;
+            margin-left:-11px*/
         }
 
         .panel {
@@ -121,6 +123,11 @@
             color: #777;
             line-height: 20px
         }
+        .labeltext{
+            position:absolute;
+            display:inline-block;
+            color:#777
+        }
     </style>
 
 </head>
@@ -128,6 +135,7 @@
     <div class="offLineMapView" id="offLineMapView">
         @*<img src="~/Content/images/map.png" class="mapImg"/>*@
         <img :src="icon" class="marker" />
+        <label class="labeltext" v-html="info.UnitName==null?'--':info.UnitName"></label>
         <div class="panel">
             <div style="height:12px">
                 <i class="iconfont icon-guanbi closeBtn"></i>
@@ -164,7 +172,8 @@
             el: '#offLineMapView',
             data: {
                 info: {},
-                icon: '/Content/images/location_icon/2.png'
+                icon: '/Content/images/location_icon/2.png',
+                
             },
             methods: {
                 //获取站信息
@@ -176,16 +185,38 @@
                     })
                         .then(function (res) {
                             var data = res.data
-                            for (var i in data) {
-                                if (data[i].UnitName == "大族环球") {
-                                    that.info = data[i]
-                                    break
-                                }
+                            if (data.length == 1) {
+                                that.info = data[0]
+                                $(".offLineMapView").css("background", "url('/Content/images/offLineMap/" + data[0].UnitID + "_offLineMap.png')")
+                                that.setPosition()
                             }
+                            //for (var i in data) {
+                            //    if (data[i].UnitName == "北人展馆中心") {
+                            //        that.info = data[i]
+                            //        console.log("背景图片：")
+                            //        console.log(data[i].UnitID)
+                            //        $(".offLineMapView").css("background", "url('/Content/images/offLineMap/" + data[i].UnitID + "_offLineMap.png')")
+                            //        that.setPosition()
+                            //        break
+                            //    }
+                            //}
                         })
                         .catch(function (e) {
                             throw new ReferenceError(e.message)
                         })
+                },
+                setPosition: function () {
+                   
+                    var height = $(".offLineMapView").height()
+                    var width = $(".offLineMapView").width()
+                    //标注位置
+                    $(".marker").css("top", height / 2 - 16).css("left", width / 2 - 11)
+                    //label位置
+                    $(".labeltext").css("top", height / 2 + 14).css("left", width / 2 -22)
+                    var obj = document.getElementsByClassName("marker")
+                    //悬浮框位置
+                    $(".panel").css("top", obj[0].offsetTop - 185).css("left", obj[0].offsetLeft - 150)
+
                 },
                 //实时报警状态
                 getUnitAlarm: function () {
@@ -197,7 +228,7 @@
                         .then(function (res) {
                             var data = res.data
                             for (var i in data) {
-                                if (data[i].UnitName == "大族环球") {
+                                if (data[i].UnitID == that.info.UnitID) {
                                     that.info.isAlarm = data[i].isAlarm
                                     if (data[i].isAlarm == 0) {
                                         that.icon = '/Content/images/location_icon/2.png'
