@@ -16,7 +16,8 @@
         initSelectShow: true,
         isInitLine: true,
         isInitGauge: true,
-        isInitBar:true
+        isInitBar: true,
+        PID:null
     },
     methods: {
         openSelect: function (e) {
@@ -29,6 +30,7 @@
             $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
             this.getRealTimePUEData()
         },
+       
         renderContent(h, { root, node, data }) {
             var disabled = false
             if (data.id == 0) {
@@ -42,50 +44,104 @@
                 },
                 attrs: {
                     selected: data.id == that.curPid,
-                    disabled: disabled
+                    //disabled: disabled
                 },
                 props: {
                     value: data.id
+                },
+                on: {
+                    click: () => {
+                        alert("444444444")
+                       
+                    }
                 }
             }, data.text)
         },
-        //获取站
-        getStation: function () {
+        //下拉框
+        getSelectTree: function () {
             var that = this
-            this.$http({
-                url: '/Home/ComboTreeMenu?type=1',
-                method: 'post'
-            })
-                .then(function (res) {
-                    var data = res.data
-                    if ($.cookie('cookiepid') > 0) {
-                        that.curPid = $.cookie('cookiepid')
-
+            $("#leftmenuSpace").html("<div class='leftmenu' id='leftmenu'><div class='leftmenu_content'><div class='leftmenu_search leftmenu_search_padding'><input data-options='lines:true' style='width: 200px; height: 30px;' id='StationID' /></div><div><ul class='one' id='menuinfo'></ul></div></div></div>");
+            $('#StationID').combotree({
+                url: '/Home/ComboTreeMenu',
+                multiple: false,
+                editable: true,
+                panelMinHeight: 400,
+                onBeforeSelect: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                        return false;
                     }
-                    var arr = new Array()
-                    for (var i = 1; i < data.length; i++) {
-                        arr.push(data[i])
-                    }
-                    var temp = new Array()
-                    temp.push(
-                        {
-                            id: -1,
-                            text: '全部',
-                            expand: true,
-                            children: arr
-                        }
-                    )
-                    that.foreachTree(temp[0])
-                    that.treeData = temp
-                    that.getRealTimePUEData()
-                    setInterval(function () {
+                },
+                onClick: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combo('showPanel');
+                    } else {
+                        console.log(node)
+                        that.PID = node.id
+                        $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
                         that.getRealTimePUEData()
-                    }, 60000)
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+                    }
+                },
+                onLoadSuccess: function (node, data) {
+                  that.PID = $.cookie('cookiepid');
+                    // DST(pid);
+                    if (that.PID != undefined && null != that.PID) {
+                        $("#StationID").combotree("setValue", that.PID);
+                    }
+                    else {
+                        if (null != data && data.length > 0) {
+                            var bfound = false;
+                            for (var i = 0; i < data[0].children.length && false == bfound; i++) {
+                                for (var j = 0; j < data[0].children[i].children.length && false == bfound; j++) {
+                                   that.PID = data[0].children[i].children[j].id;
+                                    $("#StationID").combotree("setValue", that.PID);
+                                    $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
+                                    bfound = true;
+                                }
+                            }
+                        }
+                    }
+                    that.getRealTimePUEData()
+                }
+            })
         },
+        //获取站
+        //getStation: function () {
+        //    var that = this
+        //    this.$http({
+        //        url: '/Home/ComboTreeMenu?type=1',
+        //        method: 'post'
+        //    })
+        //        .then(function (res) {
+        //            var data = res.data
+        //            if ($.cookie('cookiepid') > 0) {
+        //                that.curPid = $.cookie('cookiepid')
+
+        //            }
+        //            var arr = new Array()
+        //            for (var i = 1; i < data.length; i++) {
+        //                arr.push(data[i])
+        //            }
+        //            var temp = new Array()
+        //            temp.push(
+        //                {
+        //                    id: -1,
+        //                    text: '全部',
+        //                    expand: true,
+        //                    children: arr
+        //                }
+        //            )
+        //            that.foreachTree(temp[0])
+        //            that.treeData = temp
+        //            that.getRealTimePUEData()
+        //            setInterval(function () {
+        //                that.getRealTimePUEData()
+        //            }, 60000)
+        //        })
+        //        .catch(function (e) {
+        //            throw new ReferenceError(e.message)
+        //        })
+        //},
         //遍历树
         foreachTree: function (node) {
             if (!node) {
@@ -116,8 +172,8 @@
             this.$http({
                 url: '/Home/GetRealTimePUEData',
                 method: 'POST',
-                params: {
-                    pid: this.curPid
+                body: {
+                    pid: this.PID
                 }
                 
             })
@@ -460,7 +516,11 @@
         },
     },
     beforeMount: function () {
-        this.getStation()
+       
+       // this.getStation()
+    },
+    mounted: function () {
+        this.getSelectTree()
     }
 })
 
