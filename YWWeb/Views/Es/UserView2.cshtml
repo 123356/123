@@ -39,7 +39,9 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide slide1">
                                             <div>
-                                                <p class="normal" v-html="StationStateInfo.Name==''?'--':StationStateInfo.Name" id="sattionName">--</p>
+                                                <p class="normal" 
+                                                   :style='{color:StationStateInfo.Name=="严重"&&StationStateInfo.Name!=""?"#f3773d":"#42a68e"}'
+                                                   v-html="StationStateInfo.Name==''?'--':StationStateInfo.Name" id="sattionName">--</p>
                                                 <span class="littltInfo">正常 <font v-html="StationStateInfo.NormalDays==null?'--':StationStateInfo.NormalDays" id="NormalDays">--</font>天</span>
                                             </div>
                                         </div>
@@ -204,7 +206,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._zc.js?v=1.13"></script>
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._zc.js?v=1.19"></script>
     
 </body>
 </html>
