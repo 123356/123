@@ -149,8 +149,8 @@
                 
             </div>
             <div class="row heihgt100" v-for='item in info'>
-                <div class="flex-item flex-1_5 center"> {{item.DeviceName}}</div>
-                <div class="flex-item flex-26 noBorder outView heihgt100" style="flex:28">
+                <div class="flex-item flex-1_5 center pHeight"> {{item.DeviceName}}</div>
+                <div class="flex-item flex-26 heihgt100 noBorder outView cHeight" style="flex:28;">
                     <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data">
                         <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:2px">{{data.Cname==""?'--':data.Cname}}</div>
                         <div class="flex-item flex-1 center" v-for="val in data.Value" >{{val}}</div>
@@ -172,4 +172,8 @@
     </div>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.30"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityConsumptionRepor._zc.js?v=1.47"></script>
+<script type="text/javascript">
+   
+
+</script>

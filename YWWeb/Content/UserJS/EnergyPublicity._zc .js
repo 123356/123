@@ -22,7 +22,7 @@
                 sortable: true
             },
             {
-                title: '面积(㎡)',
+                title: '建筑面积(㎡)',
                 align: 'center',
                 key: 'unit_area',
                 sortable: true

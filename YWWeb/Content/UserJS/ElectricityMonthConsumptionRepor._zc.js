@@ -110,8 +110,20 @@
                 })
                 .finally(function () {
                     that.loading = false
-                    
+                    that.setHeight()
                 })
+        },
+        setHeight: function () {
+            $(".pHeight").each(function () {
+                var pHeight = $(this).context.clientHeight
+                var cHeight = $(this).parent().find(".cHeight").height()
+                if (pHeight > cHeight) {
+                    $(this).parent().find(".cHeight").height(pHeight + 1)
+                } else {
+                    $(this).parent().find(".cHeight").css("height", "100%")
+                }
+
+            })
         },
         //计算总额
         totalCom: function (data) {

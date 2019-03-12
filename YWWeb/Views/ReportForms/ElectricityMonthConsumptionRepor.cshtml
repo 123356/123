@@ -156,8 +156,8 @@
             </div>
 
             <div class="row heihgt100" v-for='item in info' >
-                <div class="flex-item flex-1_5 center" > {{item.DeviceName}}</div>
-                <div class="flex-item  noBorder outView monthFlex heihgt100" :style="{flex:days.length+4}">
+                <div class="flex-item flex-1_5 center pHeight" > {{item.DeviceName}}</div>
+                <div class="flex-item  noBorder outView monthFlex heihgt100 cHeight" :style="{flex:days.length+4}">
                     <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data" >
                         <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:1.5px">{{data.Cname==""?'--':data.Cname}}</div>
                         <div class="childPadding flex-item flex-1 center "  v-for="(val,index) in data.Value" >{{val}}</div>
@@ -189,4 +189,4 @@
     </script>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/ElectricityMonthConsumptionRepor._zc.js?v=1.46"></script>
+<script type="text/javascript" src="~/Content/UserJS/ElectricityMonthConsumptionRepor._zc.js?v=1.47"></script>
