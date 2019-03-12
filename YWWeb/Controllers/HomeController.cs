@@ -1893,12 +1893,15 @@ namespace YWWeb.Controllers
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-                var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
+                var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0 && p.AlarmState != 1).OrderByDescending(p => p.AlarmDateTime);
                 var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
                 if (list.Count() > 0)
                 {
                     model.Name = "严重";
-                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+                    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    TimeSpan sp = end.Subtract(start);
+                    model.NormalDays = sp.Days + "";
                 }
                 else
                 {
@@ -1981,36 +1984,34 @@ namespace YWWeb.Controllers
             {
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
-
-                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
-                List<int?> cidlist = new List<int?>();
-                string s = "";
-                foreach (var xssss in cidsss)
-                {
-                    s += xssss.cid + ",";
-                }
-                if (s != "")
-                {
-                    s = s.Substring(0, s.Length - 1);
-                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
-                }
-
                 DateTime d = DateTime.Now.Date;
                 DateTime xd = DateTime.Now;
-                var xzzz = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (xzzz != null)
-                {
-                    model.thisDayPower = Math.Round(xzzz.Value, 2);
-                }
-                else
-                {
-                    model.thisDayPower = 0;
-                }
-                if (model.thisDayPower == null)
-                    model.thisDayPower = 0;
                 DateTime lastsd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 DateTime lasted = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour - 1, 0, 0);
-                var lastDayPower = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                decimal thisDayPower = 0;
+                decimal lastDayPower = 0;
+                foreach (var pid in pidlist)
+                {
+                    var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && p.pid == pid).ToList();
+                    List<int?> cidlist = new List<int?>();
+                    string s = "";
+                    foreach (var xssss in cidsss)
+                    {
+                        s += xssss.cid + ",";
+                    }
+                    if (s != "")
+                    {
+                        s = s.Substring(0, s.Length - 1);
+                        cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                    }
+                    var thisshuju = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= d && p.RecordTime <= xd && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    if (thisshuju != null)
+                        thisDayPower += thisshuju.Value;
+                    var lastshuju = bll.t_EE_PowerQualityDaily.Where(p => p.RecordTime >= lastsd && p.RecordTime <= lasted && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    if (lastshuju != null)
+                        lastDayPower += lastshuju.Value;
+                }
+                model.thisDayPower = Math.Round(thisDayPower, 2);
                 if (lastDayPower != 0)
                 {
                     model.thisDayOccupation = Math.Round(Convert.ToDecimal(model.thisDayPower / lastDayPower * 100), 2);
@@ -2031,33 +2032,35 @@ namespace YWWeb.Controllers
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 
-                var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && pidlist.Contains(p.pid)).ToList();
-                List<int?> cidlist = new List<int?>();
-                string s = "";
-                foreach (var xssss in cidsss)
-                {
-                    s += xssss.cid + ",";
-                }
-                if (s != "")
-                {
-                    s = s.Substring(0, s.Length - 1);
-                    cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
-                }
+              
                 DateTime d = DateTime.Now.Date;
                 DateTime dgh = DateTime.Now.AddMonths(-1);
                 DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
-                var xsss = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == dd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
-                if (xsss != null)
+                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, dgh.Month, 1); ;
+                decimal thisMonthPower = 0;
+                decimal lastMonthPower = 0;
+                foreach (var pid in pidlist)
                 {
-                    model.thisMonthPower = Math.Round(xsss.Value, 2);
+                    var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && p.pid == pid).ToList();
+                    List<int?> cidlist = new List<int?>();
+                    string s = "";
+                    foreach (var xssss in cidsss)
+                    {
+                        s += xssss.cid + ",";
+                    }
+                    if (s != "")
+                    {
+                        s = s.Substring(0, s.Length - 1);
+                        cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                    }
+                    var thisshuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == dd.Month && p.RecordTime.Value.Year == dd.Year && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    if (thisshuju != null)
+                        thisMonthPower += thisshuju.Value;
+                    var lastshuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    if (lastshuju != null)
+                        lastMonthPower += lastshuju.Value;
                 }
-                else
-                {
-                    model.thisMonthPower = 0;
-                }
-                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
-
-                var lastMonthPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && pidlist.Contains(p.PID) && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                model.thisMonthPower = Math.Round(thisMonthPower, 2);
                 if (lastMonthPower != 0)
                 {
                     model.thisMonthOccupation = Math.Round(Convert.ToDecimal(model.thisMonthPower / lastMonthPower * 100), 2);
@@ -2078,11 +2081,33 @@ namespace YWWeb.Controllers
             {
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+
                 DateTime ddd = DateTime.Now;
                 DateTime sddd = new DateTime(DateTime.Now.Year, 1, 1);
-                var sumYearPower = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= sddd && p.RecordTime <= ddd && pidlist.Contains(p.PID)).Sum(p => p.UsePower);
+                decimal sumYearPower = 0;
+                foreach (var pid in pidlist)
+                {
+                    var cidsss = bll.t_EE_PowerReportConfig.Where(p => p.cid_type_id == 12 && p.pid == pid).ToList();
+                    List<int?> cidlist = new List<int?>();
+                    string s = "";
+                    foreach (var xssss in cidsss)
+                    {
+                        s += xssss.cid + ",";
+                    }
+                    if (s != "")
+                    {
+                        s = s.Substring(0, s.Length - 1);
+                        cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
+                    }
+                    var shuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime >= sddd && p.RecordTime <= ddd && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    if (shuju != null)
+                        sumYearPower += shuju.Value;
+                }
                 var lastPower = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().LastYearPower;
-                model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
+                if (lastPower != 0)
+                {
+                    model.thisPowerLastYear = Math.Round(Convert.ToDecimal(sumYearPower / lastPower * 100), 2);
+                }
             }
             catch (Exception ex)
             {
