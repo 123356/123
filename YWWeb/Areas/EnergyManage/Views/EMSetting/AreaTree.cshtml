@@ -66,7 +66,7 @@
 <body>
     <div id="body"></div>
   
-    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:20px;cursor:pointer;">
+    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:16px;cursor:pointer;">
         查看详情
     </u>
 
@@ -132,7 +132,7 @@
 
                         $("#icon").fadeIn()
                             .css("left", position.left+d.name.length*18)
-                            .css("top", position.top-8);
+                            .css("top", position.top-5);
                         window.d = d;
                         d3.event.stopPropagation();
                     })
@@ -200,7 +200,9 @@
                     setTimeout(function () {
                         $('#icon').show();
                         var position = $(that).children('text').position();
-                        console.log(position)
+                        if (!position) {
+                            return;
+                        }
                         $("#icon").fadeIn()
                             .css("left", position.left + d.name.length * 18)
                             .css("top", position.top - 8);
@@ -241,7 +243,6 @@
 
         function getElectrMonth(d) {
             $(".panel-title").text("用电详情——" + d.name);
-
             $.ajax({
                 type: "post",
                 url: "/energyManage/EMSetting/GetTreePowerMonth",
@@ -250,13 +251,9 @@
                     delCid: d.delCid
                 },
                 success: function (res) {
-                   
-                    $("#editwin").window("open")
-                    createBarChart(res, d.name)
-                    createPieChart(d.children)
-
-
-                 
+                    $("#editwin").window("open");
+                    createBarChart(res, d.name);
+                    createPieChart(d.children);
                 },
                 error: function (e) {
                     console.log(e)
@@ -282,20 +279,18 @@
             var xData = [];
             var yData = [];
             var count = 0;
-            try {
-                data = data.reverse();
-            } catch{
-                data = [];
-            }
+            data = data.reverse();
             for (var i in data) {
-                xData.push(formatDate(data[i].RecordTime))
+                var str = formatDate(data[i].RecordTime);
+                xData.push(str.substr(str.length - 2, 2))
                 yData.push(data[i].UsePower)
                 count += data[i].UsePower
             }
             var barChart = echarts.init(document.getElementById('barChart'));
+            console.log(xData)
             var option = {
                 title: {
-                    text: name + "--当月用电",
+                    text: `${formatDate(data[0].RecordTime).substr(5, 2)}月—累计用电量`,
                     subtext: count,
                     left: 'center',
                     textStyle: {
@@ -404,7 +399,7 @@
             var pieChart = echarts.init(document.getElementById('pieChart'));
             var option = {
                 title: {
-                    text: "分项用电",
+                    text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
                     subtext: subtext,
                     left: 'center',
                     textStyle: {
