@@ -316,7 +316,9 @@
 
 .window {
     background-color: #fff !important;
-    padding:0px
+    padding:0px;
+    box-shadow:2px 3px 4px #eee
+    
     /*background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
     background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
     background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 20%);
@@ -3419,7 +3421,7 @@
     border-color: transparent;
     background: transparent;
     filter: none;
-    color: #0088CC;
+    color: #40af94;
 }
 
 .menu-active {

@@ -76,6 +76,7 @@ new Vue({
             })
             .then(function (res) {
                 that.StationStateInfo = res.data
+                
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -606,15 +607,18 @@ new Vue({
             //轮播
             var swiper = new Swiper('.swiper1', {
                 //spaceBetween: 3000,
-                loop: true,
+                loop: false,
                 autoplay: true,//可选选项，自动滑动
                 delay: 5000,
                 speed: 1500,
+                observer: true,
+                observeParents: true,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
             });
+           
         },
         setWidth: function () {
             $(".ivu-menu-light").scrollTop(1)
@@ -638,5 +642,6 @@ new Vue({
         this.initSwiper()
     },
     created: function () {
+       
     }
 })

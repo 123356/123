@@ -85,6 +85,7 @@
                 .then(function (res) {
                     if (res.data > 0) {
                         that.$Message.success('删除成功');
+                        
                         that.getEneryOverView()
                     } else {
                         that.$Message.warning('删除失败');
@@ -162,6 +163,9 @@
                             this.creatEnergyMoneyChart(res.data)
                             this.left_viewIsShow = true
                         } else {
+                            $('#energyMoneyChart').html('<span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据');
+                            $('#energyMoneyChart').removeAttr('_echarts_instance_');
+                            
                             this.left_viewIsShow = false
                         }
                         var temp = res.data.list
@@ -294,6 +298,7 @@
                 legend.push(data.left_view[i].name)
             }
             var option = {
+               
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b}: {c}万<br/> ({d}%)"

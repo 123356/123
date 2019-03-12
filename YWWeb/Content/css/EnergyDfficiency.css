@@ -393,9 +393,13 @@ html {
             margin-top: 5px;
 
         }
-.chart{
-    width:100%;
-    height:100%
+.chart {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 /*预算设置*/
 .BudgetSetting{
