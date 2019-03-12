@@ -149,13 +149,13 @@
                                                     <label for="name">名称</label>
                                                     <i-input type="text" :id="'name'" v-model="node.title" :disabled="nodeEditTyped == 'sea'">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="area">面积</label>
+                                                    <i-input type="text" :id="'area'" v-model="node.area" :disabled="nodeEditTyped == 'sea'">
+                                                </div>
                                                 <div class="form-group" v-show="treeType==2">
                                                     <label for="head">负责人</label>
                                                     <i-input type="text" :id="'head'" v-model="node.head" :disabled="nodeEditTyped == 'sea'">
-                                                </div>
-                                                <div class="form-group" v-show="treeType==1">
-                                                    <label for="area">面积</label>
-                                                    <i-input type="text" :id="'area'" v-model="node.area" :disabled="nodeEditTyped == 'sea'">
                                                 </div>
                                                 <div class="form-group" v-show="treeType==1">
                                                     <label for="people">人数</label>
