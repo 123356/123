@@ -112,7 +112,7 @@ namespace YWWeb.Controllers
                             int days = DateTime.DaysInMonth(year, month);
                             for (int i = 0; i < days; i++)
                             {
-                                times.Add(new DateTime(year, 1, 1).AddDays(i));
+                                times.Add(new DateTime(year, month, 1).AddDays(i));
                             }
                             strsql += " and  Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "";
                         }
@@ -318,7 +318,7 @@ namespace YWWeb.Controllers
                             int days = DateTime.DaysInMonth(year, month);
                             for (int i = 0; i < days; i++)
                             {
-                                times.Add(new DateTime(year, 1, 1).AddDays(i));
+                                times.Add(new DateTime(year, month, 1).AddDays(i));
                             }
                             strsql += " and  Month(a.RecordTime)=" + month + " and Year(a.RecordTime)=" + year + "";
                         }

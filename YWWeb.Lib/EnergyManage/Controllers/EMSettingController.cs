@@ -178,6 +178,18 @@ namespace EnergyManage.Controllers
         public JsonResult DeleteSupervisor(int parent_id,int child_id,int unit_id)
         {
             IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteSupervisor(parent_id, child_id, unit_id);
+            try {
+                if (list.Count() > 0) {
+                    for (var a = 0; a < list.Count(); a++) {
+                        DeleteSupervisor(list[a].child_id, -1, unit_id);
+                    }
+                }
+            }
+            catch
+            {
+                return Json("数据异常", JsonRequestBehavior.AllowGet);
+            }
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -285,7 +297,7 @@ namespace EnergyManage.Controllers
         public ActionResult GetTreePowerMonth(string addCid, string delCid) {
             if (addCid == "" && delCid == "")
             {
-                return Json("无效参数");
+                return Json(new List<int>());
             }
             var all = "";
             if (string.IsNullOrEmpty(addCid)) {
@@ -309,7 +321,7 @@ namespace EnergyManage.Controllers
             }
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
-            List<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid).Distinct().ToList();
+            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
             var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
             for (var a = 0; a < list.Count(); a++) {
                 list[a].UsePower = 0;
@@ -320,12 +332,12 @@ namespace EnergyManage.Controllers
                         if (addCid.Contains($"{list[a].PID}-{list[a].CID}"))
                         {
                             list[a].UsePower += power[b].UsePower;
-                            list[a].NeedPower += power[b].UsePower;
+                            list[a].NeedPower += power[b].NeedPower;
                         }
                         if (delCid.Contains($"{list[a].PID}-{list[a].CID}"))
                         {
                             list[a].UsePower -= power[b].UsePower;
-                            list[a].NeedPower -= power[b].UsePower;
+                            list[a].NeedPower -= power[b].NeedPower;
                         }
                     }
                 }

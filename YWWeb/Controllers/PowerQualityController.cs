@@ -158,7 +158,7 @@ namespace YWWeb.Controllers
                         DataType = " RecordTime,IsNull(" + mL + "NeedPower" + mR + ",0.404) Aphase";
                         break;
                 }
-                string strsql = "select a.RecordTime,a." + DataType + " Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from " + tabname + " a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a." + DataType + " is not null";
+                string strsql = "select distinct a.RecordTime,a." + DataType + " Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from " + tabname + " a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a." + DataType + " is not null";
                 string strsqlm = "", strsqly = "";
                 if (!pid.Equals(""))
                 {
@@ -374,7 +374,7 @@ namespace YWWeb.Controllers
                         DataType = " RecordTime,IsNull(" + mL + "NeedPower" + mR + ",0.404) Aphase";
                         break;
                 }
-                string strsql = "select a.RecordTime,a." + DataType + " Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from " + tabname + " a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a." + DataType + " is not null";
+                string strsql = "select distinct a.RecordTime,a." + DataType + " Aphase,a.CID,b.CName,b.UserType,b.AreaType,b.ItemType from " + tabname + " a,t_DM_CircuitInfo b where 1=1 and a.CID = b.cid and a." + DataType + " is not null";
                 string strsqlm = "", strsqly = "";
                 if (!pid.Equals(""))
                 {
