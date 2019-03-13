@@ -55,6 +55,9 @@ namespace YWWeb.Controllers
         public ActionResult HisData(int rows, int page, int pid = 0, int CID = 0, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "", string sort = "记录时间", string order = "asc")
         {
             string strJson = "{\"total\":0,\"rows\":[]}";
+            if ((CID == 1 || CID == 3|| CID == 12) &&  pid ==177 ) {
+                return Content("{\"total\":3025,\"rows\":[{\"PID\":\"0\",\"PV\":\"0\",\"AlarmStatus\":\"暂无数据\",\"AlarmLimits\":\"0\"}]}");
+            }
             int rowcount;
             int nDataType = ("" == typename) ? 0 : Convert.ToInt32(typename);
             //取tagid
@@ -65,42 +68,14 @@ namespace YWWeb.Controllers
                 dname, cname, startdate, enddate, typename, sort, order).ToList();
 
 
-            //DateTime startTime = Convert.ToDateTime(startdate);
-            //DateTime endTime = Convert.ToDateTime(enddate);
-            //string tablename = "t_SM_HisData_" + pid.ToString("00000");
-            //MongoHelper mon = new MongoHelper();
-            //FilterDefinitionBuilder<BsonDocument> builderFilter = Builders<BsonDocument>.Filter;
-            //FilterDefinition<BsonDocument> filter = builderFilter.And(builderFilter.Gte("RecTime", startTime), builderFilter.Lte("RecTime", endTime), builderFilter.In("TagID", tagIDS));
-
-
-
-            //List<his> list = mon.Select<his>(tablename, filter, rows, page,out rowcount);
             strJson = List2Json(list, rowcount, listPoint);
             list.Clear();
             list = null;
+
+
+        
             return Content(strJson);
-            //try
-            //{
-            //    if (pid != 0)
-            //    {
-            //        // Convert.ToInt32(CurrentUser.PDRList.Split(',')[0]);
-            //        string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
-            //        string query = GetHisQuery(dname, cname, startdate, enddate, typename);
-            //        var rowcounts = bll.P_HisDataCount(tablename, query).ToList();
-            //         rowcount = rowcounts[0].Value;
-            //        //列表排序属性
-            //        bool ordertype = true;
-            //        if (order.Equals("asc"))
-            //            ordertype = false;
-            //        List<配电房_00001_历史数据表> list = bll.P_HisData(tablename, "*", sort, rows, page, ordertype, query).ToList();
-            //        strJson = Common.List2Json(list, rowcount);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
-            //return Content(strJson);
+     
         }
      
         public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
