@@ -67,5 +67,7 @@ namespace DAOMongoDB
         public IDeviceInfo deviceInfo => throw new NotImplementedException();
 
         public IElementDevice elementDevice => throw new NotImplementedException();
+
+        public IEneryReportFrom eneryReportFrom => throw new NotImplementedException();
     }
 }

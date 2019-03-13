@@ -69,5 +69,7 @@ namespace DAO
         public IDeviceInfo deviceInfo => new DeviceInfoDBContext();
 
         public IElementDevice elementDevice => new ElementDeviceDBContext();
+
+        public IEneryReportFrom eneryReportFrom => new EneryReportFromDBContext();
     }
 }

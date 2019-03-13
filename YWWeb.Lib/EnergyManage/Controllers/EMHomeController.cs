@@ -229,7 +229,7 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetEneryTable(int uid, int DepartmentID, string time = "2018-11")
+        public JsonResult GetEneryTable(int uid, int DepartmentID = 0, string time = "2018-11")
         {
             List<table> table = new List<table>();
             string pids = GetPIDs();
@@ -1064,6 +1064,158 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        
+        #region 能源报告
+        public JsonResult GetEnFromData(int type, DateTime time, int uid, int DepartmentID = 0, int page = 1, int rows = 10)
+        {
+
+            List<table> table = new List<table>();
+            try
+            {
+                IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
+                string pids = GetPIDs();
+                var config = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
+                if (type == 1)
+                {
+                    string t1 = time.ToString("yyyy-MM-dd 00:00:00");
+                    string t2 = time.ToString("yyyy-MM-dd 23:59:59");
+                    string t3 = Convert.ToDateTime(time).AddMonths(-1).ToString("yyyy-MM-dd 00:00:00");
+                    string t4 = Convert.ToDateTime(time).AddMonths(-1).ToString("yyyy-MM-dd 23:59:59");
+                    string cidss = "";
+                    var cidList = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
+                    foreach (var item in cidList)
+                    {
+                        if (!string.IsNullOrEmpty(item.addCid))
+                            cidss += item.addCid + ",";
+                    }
+                    
+                    Dictionary<int, string> cpids = GetCId(cidss.Trim(','));
+                   // if (!string.IsNullOrEmpty(cidss))
+                    {
+                        var data = DAL.EneryReportFromDAL.getInstance().GetDayFormDatas(cpids, t1, t2);
+                        var LastData = DAL.EneryReportFromDAL.getInstance().GetDayFormDatas(cpids, t3, t4);
+                        foreach (var xi in data.GroupBy(p => p.RecordTime))
+                        {
+                            table t = new table();
+                            t.value.Add("Time", xi.Key.ToString());
+                            foreach (var xt in xi.GroupBy(p => p.TypeName))
+                            {
+                                t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
+                                t.value.Add("同比上月"+xt.Key, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            }
+                            t.value.Add("总费用", xi.Sum(p => p.Value) + "");
+                            t.value.Add("总同比上月", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
+                            table.Add(t);
+                        }
+                    }
+                }
+
+                else if (type == 2)
+                {
+
+                    string t1 = time.AddDays(1 - time.Day).ToString();
+                    string t2 = time.AddDays(1 - time.Day).AddMonths(1).AddDays(-1).ToString();
+                    string t3 = time.AddDays(1 - time.Day).AddYears(-1).ToString();
+                    string t4 = time.AddDays(1 - time.Day).AddMonths(1).AddDays(-1).AddYears(-1).ToString();
+                   
+                        string cidss = "";
+                        var cidList = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
+                        foreach (var item in cidList)
+                        {
+                            if (!string.IsNullOrEmpty(item.addCid))
+                                cidss += item.addCid + ",";
+                        }
+                        Dictionary<int, string> cpids = GetCId(cidss.Trim(','));
+                        
+
+                            var data = DAL.EneryReportFromDAL.getInstance().GetMonthFormDatas(cpids, t1, t2);
+                            var LastData = DAL.EneryReportFromDAL.getInstance().GetMonthFormDatas(cpids, t3, t4);
+                            foreach (var xi in data.GroupBy(p => p.RecordTime))
+                            {
+                                table t = new table();
+                                t.value.Add("Time", xi.Key.ToString());
+                                foreach (var xt in xi.GroupBy(p => p.TypeName))
+                                {
+                                    t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
+                                    t.value.Add("同比上月"+xt.Key, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                                }
+                                t.value.Add("总费用", xi.Sum(p => p.Value) + "");
+                                t.value.Add("总同比上月", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
+                                table.Add(t);
+                            }
+                        
+                    
+                }
+                else if (type == 3)
+                {
+
+                    string t1 = time.ToString("yyyy-01-01");
+                    string t2 = time.ToString("yyyy-12-31");
+                    string t3 = Convert.ToDateTime(time).AddYears(-1).ToString("yyyy-01-01");
+                    string t4 = Convert.ToDateTime(time).AddYears(-1).ToString("yyyy-12-31");
+                    
+                        string cidss = "";
+                        var cidList = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
+                        foreach (var item in cidList)
+                        {
+                            if (!string.IsNullOrEmpty(item.addCid))
+                                cidss += item.addCid + ",";
+                        }
+                        Dictionary<int, string> cpids = GetCId(cidss.Trim(','));
+                        
+
+                            var data = DAL.EneryReportFromDAL.getInstance().GetDatGetYearFormDatasas(cpids, t1, t2);
+                            var LastData = DAL.EneryReportFromDAL.getInstance().GetDatGetYearFormDatasas(cpids, t3, t4);
+                            foreach (var xi in data.GroupBy(p => p.RecordTime))
+                            {
+                                table t = new table();
+                                t.value.Add("Time", xi.Key.ToString());
+                                foreach (var xt in xi.GroupBy(p => p.TypeName))
+                                {
+                                    t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
+                                    t.value.Add("同比上年"+xt.Key, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                                }
+                                t.value.Add("总费用", xi.Sum(p => p.Value) + "");
+                                t.value.Add("总同比上年", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
+                                table.Add(t);
+                            }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(table, JsonRequestBehavior.AllowGet);
+        }
+
+        public Dictionary<int, string> GetCId(string stringCid)
+        {
+            Dictionary<int,string> data = new Dictionary<int,string>();
+            string cids = string.Empty;
+            string pids = string.Empty;
+            if (!string.IsNullOrEmpty(stringCid.Trim()))
+            {
+                var s = stringCid.Split(',');
+                foreach (var i in s)
+                {
+                    var x = i.Split('-');
+                    List<string> cidList = new List<string>();
+                    if(data.Keys.Contains(Convert.ToInt32(x[0])))
+                    {
+                        data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
+                    }
+                    else
+                    {
+                        data.Add(Convert.ToInt32(x[0]), x[1]);
+                    }
+                }
+            }
+            return data;
+        }
+        public class jichu
+        {
+           
+        }
+        #endregion
     }
 }

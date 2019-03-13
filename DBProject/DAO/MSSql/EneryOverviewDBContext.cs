@@ -54,8 +54,9 @@ on  CONVERT(varchar(5), b.CID)=d.addCid join
 
  t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
-
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+            if (type != 0)
+                sql += " and b.coolect_dev_type={type}";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
@@ -67,8 +68,9 @@ on  CONVERT(varchar(5), b.CID)=d.addCid join
 
  t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
-
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+            if (type != 0)
+                sql += " and b.coolect_dev_type={type}";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
@@ -80,8 +82,10 @@ on  CONVERT(varchar(5), b.CID)=d.addCid join
 
  t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and b.coolect_dev_type={type} and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
 
+            if (type != 0)
+                sql += " and b.coolect_dev_type={type}";
             return SQLQuery<t_V_EneryView>(sql);
         }
         public DbSet<t_V_EneryView> Datas { get; set; }

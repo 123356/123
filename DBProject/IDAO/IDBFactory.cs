@@ -41,5 +41,6 @@ namespace IDAO
         IDeviceInfo deviceInfo { get; }
 
         IElementDevice elementDevice { get; }
+        IEneryReportFrom eneryReportFrom { get; }
     }
 }
