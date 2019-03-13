@@ -721,6 +721,7 @@
     <Content Include="Content\calendar\js\calendar.js" />
     <Content Include="Content\calendar\js\calendar_core.js" />
     <Content Include="Content\calendar\js\jquery.min.js" />
+    <Content Include="Content\css\AreaTreeEdit.css" />
     <Content Include="Content\css\ElecReport.css" />
     <Content Include="Content\css\bootstrapStyle\bootstrapStyle.css" />
     <Content Include="Content\css\bootstrapStyle\img\bootstrap.gif" />
@@ -745,7 +746,6 @@
     <Content Include="Content\css\modalForm.css" />
     <Content Include="Content\css\newUserView.css" />
     <Content Include="Content\css\onepub.css" />
-    <Content Include="Content\css\OrganizeAreaTreeEdit.css" />
     <Content Include="Content\css\pingmiantu.css" />
     <Content Include="Content\css\pingmiantu1.css" />
     <Content Include="Content\css\pingmiantu10.css" />
@@ -831,6 +831,9 @@
     <Content Include="Content\css\yicituLow1_2.css" />
     <Content Include="Content\css\yw_table.css" />
     <Content Include="Content\css\zoomify.css" />
+    <Content Include="Content\d3\css\style.css" />
+    <Content Include="Content\d3\js\d3.js" />
+    <Content Include="Content\d3\js\d3.layout.js" />
     <Content Include="Content\GetMap\Css\public.css" />
     <Content Include="Content\GetMap\getMapPointXY.html" />
     <Content Include="Content\GetMap\Js\clipboard.min.js" />
@@ -1343,6 +1346,7 @@
     <Content Include="Content\iview\dist\locale\zh-TW.js" />
     <Content Include="Content\iview\dist\styles\fonts\ionicons.svg" />
     <Content Include="Content\iview\dist\styles\iview.css" />
+    <Content Include="Content\js\AreaTreeEdit.js" />
     <Content Include="Content\js\artDialog\artDialog.js" />
     <Content Include="Content\js\artDialog\artDialog.source.js" />
     <Content Include="Content\js\artDialog\iframeTools.source.js" />
@@ -1416,6 +1420,7 @@
     <Content Include="Content\js\vue.js" />
     <Content Include="Content\js\vue.min.js" />
     <Content Include="Content\js\weather.js" />
+    <Content Include="Content\js\zoomify - 复制.js" />
     <Content Include="Content\js\zoomify.js" />
     <Content Include="Content\js\zrender\esl.js" />
     <Content Include="Content\js\zrender\zrender-original.js" />

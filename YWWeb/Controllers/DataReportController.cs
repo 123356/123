@@ -66,16 +66,10 @@ namespace YWWeb.Controllers
             string tagIDS = string.Join(",", listPoint.Select(c => c.TagID).ToArray());
             List<t_SM_HisData> list = HisDataDAL.getInstance().GetHisData(out rowcount, rows, page, pid, tagIDS,
                 dname, cname, startdate, enddate, typename, sort, order).ToList();
-
-
             strJson = List2Json(list, rowcount, listPoint);
             list.Clear();
             list = null;
-
-
-        
             return Content(strJson);
-     
         }
      
         public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
