@@ -323,12 +323,13 @@ namespace EnergyManage.Controllers
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
             var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
-
-
+            List<IDAO.Models.t_V_EnerPower> json  = new List<IDAO.Models.t_V_EnerPower>();
             for (var a = 0; a < list.Count(); a++)
             {
-                list[a].UsePower = 0;
-                list[a].NeedPower = 0;
+                IDAO.Models.t_V_EnerPower obj = new IDAO.Models.t_V_EnerPower();
+                obj.RecordTime = list[a].RecordTime;
+                obj.UsePower = 0;
+                obj.NeedPower = 0;
                 var RecordTime = list[a].RecordTime;
                 for (var b = 0; b < power.Count(); b++)
                 {
@@ -336,18 +337,19 @@ namespace EnergyManage.Controllers
                     {
                         if (addCid.Contains($"{power[b].PID}-{power[b].CID}"))
                         {
-                            list[a].UsePower += power[b].UsePower;
-                            list[a].NeedPower += power[b].NeedPower;
+                            obj.UsePower += power[b].UsePower;
+                            obj.NeedPower += power[b].NeedPower;
                         }
                         if (delCid.Contains($"{power[b].PID}-{power[b].CID}"))
                         {
-                            list[a].UsePower -= power[b].UsePower;
-                            list[a].NeedPower -= power[b].NeedPower;
+                            obj.UsePower -= power[b].UsePower;
+                            obj.NeedPower -= power[b].NeedPower;
                         }
                     }
                 }
+                json.Add(obj);
             }
-            return Json(list);
+            return Json(json);
         }
         #endregion
     }
