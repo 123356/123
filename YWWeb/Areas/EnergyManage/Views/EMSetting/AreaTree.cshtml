@@ -207,9 +207,9 @@
                             .css("left", position.left + d.name.length * 18)
                             .css("top", position.top - 8);
                     },800)
-                    if (!d.children) {
-                        return;
-                    }
+                    //if (!d.children) {
+                    //    return;
+                    //}
                     kx = (d.y ? w - 40 : w) / (1 - d.y);
                     ky = h / d.dx;
                     x.domain([d.y, 1]).range([d.y ? 40 : 0, w]);
@@ -290,7 +290,7 @@
             console.log(xData)
             var option = {
                 title: {
-                    text: `${formatDate(data[0].RecordTime).substr(5, 2)}月—累计用电量`,
+                    text: `${new Date().getMonth()}月—累计用电量`,
                     subtext: count,
                     left: 'center',
                     textStyle: {
@@ -425,7 +425,7 @@
                     {
                         name: '用电量',
                         type: 'pie',
-                        radius: '50%',
+                        radius: ['30%', '50%'],
                         center: ['30%', '50%'],
                         label: {
                             show: false

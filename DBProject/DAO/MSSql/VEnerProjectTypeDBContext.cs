@@ -64,11 +64,12 @@ namespace DAO
         public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)
         {
             DateTime startTime = DateTime.Now;
+
             string star = startTime.AddDays(1 - startTime.Day).ToString("yyyy-MM-dd 00:00:00.000");
             startTime = startTime.AddDays(1);
             string end = startTime.AddDays(1 - startTime.Day).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd 00:00:00.000");
-            string sql = $"SELECT  PID,CID,RecordTime , isnull(NeedPower,'0') as NeedPower, isnull(UsePower,'0') as UsePower  FROM t_EE_PowerQualityMonthly WHERE pid in ({pid}) and cid in ({cid}) and RecordTime> '{star}' and RecordTime< '{end}'  order by RecordTime DESC";
-            return SQLQuery<t_V_EnerPower>(sql);//DISTINCT
+            string sql = $"SELECT DISTINCT PID,CID,RecordTime , isnull(NeedPower,'0') as NeedPower, isnull(UsePower,'0') as UsePower  FROM t_EE_PowerQualityMonthly WHERE pid in ({pid}) and cid in ({cid}) and RecordTime>= '{star}' and RecordTime<= '{end}'  order by RecordTime DESC";
+            return SQLQuery<t_V_EnerPower>(sql);
         }
 
 

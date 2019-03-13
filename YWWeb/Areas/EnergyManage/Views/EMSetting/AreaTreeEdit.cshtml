@@ -577,20 +577,29 @@
                         title: '提示',
                         content: `<p>确认删除节点 - <span style="color:#FF534D;font-weight:800">${data.title}</span></p>`,
                         onOk: () => {
+                            console.log(root)
+                            console.log(node)
+                            console.log(data.pId)
+
                             this.$http({
                                 url: "/energyManage/EMSetting/DeleteSupervisor",
                                 method: "post",
                                 body: {
-                                    parent_id: node.parent,
-                                    child_id: node.node.id,
+                                    parent_id: data.pId,
+                                    child_id: data.id,
                                     unit_id: that.UnitData.UnitID,
                                 }
                             }).then(function (res) {
-                                const parentKey = root.find(el => el === node).parent;
-                                const parent = root.find(el => el.nodeKey === parentKey).node;
-                                const index = parent.children.indexOf(data);
-                                parent.children.splice(index, 1);
-                                this.$Message.success("删除成功");
+                                if (res) {
+                                    this.$Message.success("删除成功");
+                                } else {
+                                    this.$Message.error("删除失败");
+                                }
+                                    const parentKey = root.find(el => el === node).parent;
+                                    const parent = root.find(el => el.nodeKey === parentKey).node;
+                                    const index = parent.children.indexOf(data);
+                                    parent.children.splice(index, 1);
+
                             })
                                 .catch(function (e) {
                                     this.$Message.error("数据异常");

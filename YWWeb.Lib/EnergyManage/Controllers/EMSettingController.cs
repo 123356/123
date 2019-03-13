@@ -323,18 +323,23 @@ namespace EnergyManage.Controllers
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
             var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
-            for (var a = 0; a < list.Count(); a++) {
+
+
+            for (var a = 0; a < list.Count(); a++)
+            {
                 list[a].UsePower = 0;
                 list[a].NeedPower = 0;
-                for (var b = 0; b < power.Count(); b++) {
-                    if (list[a].RecordTime == power[b].RecordTime)
+                var RecordTime = list[a].RecordTime;
+                for (var b = 0; b < power.Count(); b++)
+                {
+                    if (RecordTime == power[b].RecordTime)
                     {
-                        if (addCid.Contains($"{list[a].PID}-{list[a].CID}"))
+                        if (addCid.Contains($"{power[b].PID}-{power[b].CID}"))
                         {
                             list[a].UsePower += power[b].UsePower;
                             list[a].NeedPower += power[b].NeedPower;
                         }
-                        if (delCid.Contains($"{list[a].PID}-{list[a].CID}"))
+                        if (delCid.Contains($"{power[b].PID}-{power[b].CID}"))
                         {
                             list[a].UsePower -= power[b].UsePower;
                             list[a].NeedPower -= power[b].NeedPower;
