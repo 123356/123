@@ -1,8 +1,13 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：状态 > 历史 > 曲线报表 ");
-var firstOpen = 0, canAdd = 0;
-var pid = 0, did = 0, cid = 0;
+var firstOpen = 0,
+    canAdd = 0;
+var pid = 0,
+    did = 0,
+    cid = 0;
 var datestart, dateend;
-var graphtype = 6, getPoinType = 0, IsZoom = 0;
+var graphtype = 6,
+    getPoinType = 0,
+    IsZoom = 0;
 
 var Request = new Object();
 Request = GetRequest();
@@ -14,23 +19,22 @@ else
 $('#time').removeClass('curve_switchactive');
 $('#one').addClass('curve_switchactive');
 //显示隐藏曲线表格
-$(".curve_toggle").click(function () {
+$(".curve_toggle").click(function() {
     $(".curve_table table").slideToggle("slow");
     $(this).toggleClass("curve_toggles");
 });
-$('.GraphType').click(function () {
+$('.GraphType').click(function() {
     datestart = '';
     dateend = '';
     IsZoom = 0;
     graphtype = $("input[name='GraphType']:checked").val();
     if (graphtype == 144 || graphtype == 707) {
         getPoinType = 1;
-    }
-    else
+    } else
         getPoinType = 0;
     lockaway();
 });
-$("#AlarmLine").change(function () {
+$("#AlarmLine").change(function() {
     DoSearch();
 });
 
@@ -41,7 +45,7 @@ function initCombCid(pid, did) {
         valueField: 'cid',
         textField: 'cname',
         editable: false,
-        onSelect: function (data) {
+        onSelect: function(data) {
             if (data.cid == 0) {
                 cid = 0;
             } else {
@@ -49,7 +53,7 @@ function initCombCid(pid, did) {
             }
             loadpoint();
         },
-        onLoadSuccess: function (data) {
+        onLoadSuccess: function(data) {
             for (var item in data[0]) {
                 if (item == 'cid') {
                     $("#SCID").combobox('select', data[0][item]);
@@ -62,19 +66,18 @@ function initCombCid(pid, did) {
 
 $("#SPID").combotree({
     url: "/BaseInfo/PdrDevComboTreeMenuByPID?pid=" + pid,
-    onClick: function (node) {
+    onClick: function(node) {
         if (!$(this).tree('isLeaf', node.target)) {
             $('#SPID').combo('showPanel');
             $('#SPID').combotree('tree').tree("expand", node.target); //展开
-        }
-        else {
+        } else {
             pid = node.id.split('_')[0];
             did = node.id.split('_')[1];
             initCombCid(pid, did);
             $.cookie('cookiepid', pid, { expires: 7, path: '/' });
         }
     },
-    onLoadSuccess: function (data) {
+    onLoadSuccess: function(data) {
         $('#SPID').combotree('tree').tree("collapseAll");
         var roots = $('#SPID').combotree('tree').tree('getRoots');
         var Index = 0;
@@ -93,25 +96,25 @@ $("#SPID").combotree({
 });
 
 function loadpoint() {
-    var ids = '', tid = '';
+    var ids = '',
+        tid = '';
     //绑定树
     //$('#DataTypeParams').combobox("clear");
-    $('#DataTypeParams').combotree
-    ({
+    $('#DataTypeParams').combotree({
         url: '/BaseInfo/DataTypeParamsByCircuit?pid=' + pid + '&did=' + did + '&cid=' + cid,
         multiple: true,
-        onBeforeSelect: function (node) {
+        onBeforeSelect: function(node) {
             if (!$(this).tree('isLeaf', node.target)) {
                 $('#DataTypeParams').combotree('tree').tree("expand", node.target); //展开
                 return false;
             }
         },
-        onClick: function (node) {
+        onClick: function(node) {
             if (!$(this).tree('isLeaf', node.target)) {
                 $('#DataTypeParams').combo('showPanel');
             }
         },
-        onCheck: function (node, checked) {
+        onCheck: function(node, checked) {
             var typecount = getSelectedType($("#DataTypeParams").combotree("getValues"));
             //至少选择一个测点
             if (typecount == 0) {
@@ -135,18 +138,19 @@ function loadpoint() {
                 //不选中当前的节点
             }
         },
-        onLoadSuccess: function (data) {
-            $.post("/BaseInfo/SelectPoints", { "pid": pid, "did": did, "cid": cid }, function (data) {
+        onLoadSuccess: function(data) {
+            $.post("/BaseInfo/SelectPoints", { "pid": pid, "did": did, "cid": cid }, function(data) {
                 $('#DataTypeParams').combotree('tree').tree("collapseAll");
                 $("#DataTypeParams").combotree("setValues", data);
                 DoSearch();
             });
         },
-        onLoadError: function (data) {
+        onLoadError: function(data) {
             $('#canvas').html("<div id='HisCharts' style = 'color: White;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
         }
     });
 }
+
 function lockaway() {
     $('#scroll').fadeOut();
     totaltype = $("input[name='GraphType']:checked").val();
@@ -156,13 +160,13 @@ function lockaway() {
     if (totaltype == 6 || totaltype == 72) {
         $('#time').removeClass('curve_switchactive');
         $('#one').addClass('curve_switchactive');
-    }
-    else {
+    } else {
         $('#one').removeClass('curve_switchactive');
         $('#time').addClass('curve_switchactive');
     }
     GetGraphData();
 }
+
 function unlock() {
     //            $('#StartDate').datebox().datebox('calendar').calendar({
     //                validator: function (date) {
@@ -181,7 +185,7 @@ function unlock() {
     //                }
     //            });
     $('#StartDate').datebox({
-        onSelect: function () { //输入判断
+        onSelect: function() { //输入判断
             datestart = $('#StartDate').datebox('getValue');
             dateend = $('#EndDate').datebox('getValue');
             if (datestart > dateend) {
@@ -191,7 +195,7 @@ function unlock() {
         }
     });
     $('#EndDate').datebox({
-        onSelect: function () { //输入判断
+        onSelect: function() { //输入判断
             datestart = $('#StartDate').datebox('getValue');
             dateend = $('#EndDate').datebox('getValue');
             if (datestart > dateend) {
@@ -205,45 +209,60 @@ function unlock() {
     $('#time').addClass('curve_switchactive');
     canAdd = 1;
 }
+
+var click = 0;
+var timer;
+
 function DoSearch() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        click = 0;
+        $('.readonly').removeClass('readonly');
+    }, 1000);
+    if (click) {
+        $('#btnHour').addClass('readonly');
+        return;
+    }
+    click = 1;
+
     datestart = $('#StartDate').datebox('getValue');
     dateend = $('#EndDate').datebox('getValue');
     if (datestart == "" && canAdd == 1) {
         $.messager.alert("提示", "请选择开始日期！", "info");
-    }
-    else if (dateend == "" && canAdd == 1) {
+    } else if (dateend == "" && canAdd == 1) {
         $.messager.alert("提示", "请选择结束日期！", "info");
-    }
-    else if (CompareTime(datestart, dateend) > 90) {
+    } else if (CompareTime(datestart, dateend) > 90) {
         $.messager.alert("提示", "时间请选择小于90天！", "info");
-    }
-    else if (canAdd == 1) {
+    } else if (canAdd == 1) {
         var aDate, oDate1, oDate2, iDays
         aDate = datestart.split("-");
-        oDate1 = new Date(datestart);     //转换为12-18-2002格式
+        oDate1 = new Date(datestart); //转换为12-18-2002格式
         aDate = dateend.split("-");
         oDate2 = new Date(dateend);
-        iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+        iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
         if (iDays < 8) {
             $('#time').removeClass('curve_switchactive');
             $('#one').addClass('curve_switchactive');
             getPoinType = 0;
             IsZoom = 1;
-        }
-        else {
+        } else {
             $('#one').removeClass('curve_switchactive');
             $('#time').addClass('curve_switchactive');
             getPoinType = 1;
         }
         GetGraphData();
-    }
-    else
+
+    } else
         GetGraphData();
+
+
+
 }
 //对比开始和结束时间
 function CompareTime(start, end) {
     var result = 0;
-    var a = start, b = end;
+    var a = start,
+        b = end;
     s = a.split("-");
     e = b.split("-");
     var daya = new Date();
@@ -261,7 +280,13 @@ function CompareTime(start, end) {
 //定义历史曲线变量值
 var ajaxbg = top.$("#loading_background,#loading");
 //top.$("#loading_background,#loading").html("<img src='/Content/Images/loading.gif' style='vertical-align: middle;'>&nbsp<span>数据量较大，请耐心等待。点击取消提示</span>  ");
-var Json = "", xAxisFormat = [], yAxisFormat = [], LegendData = [], SeriesData = [], Colors = [];
+var Json = "",
+    xAxisFormat = [],
+    yAxisFormat = [],
+    LegendData = [],
+    SeriesData = [],
+    Colors = [];
+
 function GetGraphData() {
     //请求前先清空
     Json = [], xAxisFormat = [], yAxisFormat = [], LegendData = [], SeriesData = [], Histagid = "";
@@ -278,27 +303,33 @@ function GetGraphData() {
     len = arrtagid.length;
     for (var j = 0; j < len; j++) {
         if (arrtagid[j].indexOf('_') > 0) {
-            tagid = arrtagid[j].split('_')[1];        //曲线TagID
-            Histagid += tagid + ',';                    //曲线TagID,数组
+            tagid = arrtagid[j].split('_')[1]; //曲线TagID
+            Histagid += tagid + ','; //曲线TagID,数组
         }
     }
-    $.post("/Graphs/GetGraphs2", { "pid": pid, "Graphtype": graphtype, "PoinType": getPoinType, "TagIDs": Histagid, "startdatetime": datestart, "enddatetime": dateend }, function (data) {
+    $.post("/Graphs/GetGraphs2", { "pid": pid, "Graphtype": graphtype, "PoinType": getPoinType, "TagIDs": Histagid, "startdatetime": datestart, "enddatetime": dateend }, function(data) {
+        // window.Json = "",
+        //     window.xAxisFormat = [],
+        //     window.yAxisFormat = [],
+        //     window.LegendData = [],
+        //     window.SeriesData = [],
+        //     window.Colors = [];
+
         var dataJson = eval("(" + data + ")");
         Json = dataJson;
         if (dataJson.xLength < 1) {
             ajaxbg.hide();
             $('#canvas').html("<div id='HisGraphCharts' style = 'color:#fff;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
             return false;
-        }
-        else {
+        } else {
             $('#canvas').html("<div id='HisGraphCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;'>");
             SetGraphOption();
         }
     });
 
 }
+
 function SetGraphOption() {
-   // console.log(Json);
     var Xarr = Json.xAxis.split(',');
 
     for (i = 0; i < Xarr.length; i++) {
@@ -313,12 +344,18 @@ function SetGraphOption() {
         else
             xAxisFormat.push(ym[1] + '-' + ym[2] + ' ' + hm[0] + ':' + hm[1]);
     }
-    var exDataTypeID = 0, index = 0, yMax = Json.Max[0], yMin = Json.Min[0], aValue = 0, yMax1 = Json.Max[1], yMin1 = Json.Min[1], aValue1 = 0;
+    var exDataTypeID = 0,
+        index = 0,
+        yMax = Json.Max[0],
+        yMin = Json.Min[0],
+        aValue = 0,
+        yMax1 = Json.Max[1],
+        yMin1 = Json.Min[1],
+        aValue1 = 0;
     if (Json.AlarmValue.length > 1) {
         aValue = Json.AlarmValue[0];
         aValue1 = Json.AlarmValue[1];
-    }
-    else
+    } else
         aValue = Json.AlarmValue[0];
 
     if ($("#AlarmLine").attr("checked") == 'checked' && aValue > yMax && aValue < 2000) {
@@ -341,7 +378,7 @@ function SetGraphOption() {
                 type: 'value',
                 index: 0,
                 axisLabel: {
-                    formatter: function (v) { return parseInt(v) },
+                    formatter: function(v) { return parseInt(v) },
                     textStyle: { color: '#fff' }
                 },
                 splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed' } },
@@ -351,14 +388,13 @@ function SetGraphOption() {
             });
             exDataTypeID = Json.Graph[j].DataTypeID;
             index++;
-        }
-        else if (Json.Graph[j].DataTypeID != exDataTypeID && Json.Graph[j].DataTypeID != 24 && index != 0) {
+        } else if (Json.Graph[j].DataTypeID != exDataTypeID && Json.Graph[j].DataTypeID != 24 && index != 0) {
             yAxisFormat.push({
                 name: Json.Graph[j].Position + '(' + Json.Graph[j].单位 + ')',
                 type: 'value',
                 index: 1,
                 axisLabel: {
-                    formatter: function (v) { return parseInt(v) },
+                    formatter: function(v) { return parseInt(v) },
                     textStyle: { color: '#fff' }
                 },
                 splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed' } },
@@ -372,23 +408,17 @@ function SetGraphOption() {
         var Graphcolor = "";
         if (Json.Graph[j].Remarks == Json.Graph[0].Remarks) {
             Colors = "yellow";
-        }
-        else if (Json.Graph[j].Remarks == Json.Graph[1].Remarks) {
+        } else if (Json.Graph[j].Remarks == Json.Graph[1].Remarks) {
             Colors = "#90EE90";
-        }
-        else if (Json.Graph[j].Remarks == Json.Graph[2].Remarks) {
+        } else if (Json.Graph[j].Remarks == Json.Graph[2].Remarks) {
             Colors = "#F08080";
-        }
-        else if (Json.Graph[j].Remarks == Json.Graph[3].Remarks) {
+        } else if (Json.Graph[j].Remarks == Json.Graph[3].Remarks) {
             Colors = "yellow";
-        }
-        else if (Json.Graph[j].Remarks == Json.Graph[4].Remarks) {
+        } else if (Json.Graph[j].Remarks == Json.Graph[4].Remarks) {
             Colors = "#90EE90";
-        }
-        else if (Json.Graph[j].Remarks == Json.Graph[5].Remarks) {
+        } else if (Json.Graph[j].Remarks == Json.Graph[5].Remarks) {
             Colors = "#F08080";
-        }
-        else {
+        } else {
             Colors = "#ffa500", "#40e0d0", "#ee90ff", "#ff6347", "#7b68ee", "#7b68ee", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0";
         }
         var Datas = eval("[" + Json.Graph[j].置1说明 + "]");
@@ -412,12 +442,13 @@ function SetGraphOption() {
                     normal: {
                         label: {
                             show: true,
-                            color: '#000000',//气泡中字体颜色
+                            color: '#000000', //气泡中字体颜色
                         }
                     }
                 },
                 data: [{ type: 'max', name: '最大值' },
-                         { type: 'min', name: '最小值' }]
+                    { type: 'min', name: '最小值' }
+                ]
             },
 
         });
@@ -428,10 +459,10 @@ function SetGraphOption() {
     //Colors = ["#cd5c5c", "#ffa500", "#40e0d0", "#ee90ff", "#ff6347", "#7b68ee", "#7b68ee", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"]
     Colors[Json.Count] = "rgb(255,0,0)";
     ajaxbg.hide();
-    //console.log(SeriesData);
     BuildGraphVeiw();
 
 }
+
 function BuildGraphVeiw() {
     var currSeriesData = "";
     currSeriesData = SeriesData;
@@ -486,8 +517,7 @@ function BuildGraphVeiw() {
             bottom: '3%',
             containLabel: true
         },
-        xAxis: [
-        {
+        xAxis: [{
             type: 'category',
             boundaryGap: false,
             axisLabel: { textStyle: { color: '#fff' } },
@@ -503,6 +533,7 @@ function BuildGraphVeiw() {
     // 为echarts对象加载数据 
     myHisChart.setOption(option);
     myHisChart.on('datazoom', CheckZoom);
+
     function CheckZoom(param) {
         var s = param.batch[0].startValue;
         var e = param.batch[0].endValue;
@@ -515,10 +546,10 @@ function BuildGraphVeiw() {
 
         var aDate, oDate1, oDate2, iDays
         aDate = datestart.split("-");
-        oDate1 = new Date(datestart);     //转换为12-18-2002格式
+        oDate1 = new Date(datestart); //转换为12-18-2002格式
         aDate = dateend.split("-");
         oDate2 = new Date(dateend);
-        iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数
+        iDays = parseInt(Math.abs(oDate2 - oDate1) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
 
         if (iDays < 8 && IsZoom == 0 && (graphtype == 144 || graphtype == 707)) {
             $('#GraphTypezdy').attr('checked', 'checked');

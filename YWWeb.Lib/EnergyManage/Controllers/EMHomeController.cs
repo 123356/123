@@ -42,6 +42,7 @@ namespace EnergyManage.Controllers
                     rightView view = new rightView();
                     view.name = item_peizhi.Name;
                     view.ID = item_peizhi.ID;
+                    view.DepName = item_peizhi.DepName;
                     budget = list_budgets.Where(p => p.CollTypeID == item_peizhi.CollTypeID).Sum(p => p.GeneralBudget);
                     view.budget = budget;
                     IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.EnerUserTypeID);
@@ -160,6 +161,7 @@ namespace EnergyManage.Controllers
             public decimal energyConsumption { get; set; }
             public decimal budget { get; set; }
             public int ID { get; set; }
+            public string DepName { get; set; }
 
         }
         public JsonResult AddConfig(t_EE_enTypeConfig model)
