@@ -1729,8 +1729,6 @@
     <Content Include="Content\UserJS\ProjectList._jm.js" />
     <Content Include="Content\UserJS\ProjectOverview._jm.js" />
     <Content Include="Content\UserJS\ProLog._jm.js" />
-    <Content Include="Content\UserJS\PUEHistory._jm.js" />
-    <Content Include="Content\UserJS\PUERealTime._jm .js" />
     <Content Include="Content\UserJS\PUERealTime._zc .js" />
     <Content Include="Content\UserJS\PUEHistory._zc.js" />
     <Content Include="Content\UserJS\Consume._zc.js" />
