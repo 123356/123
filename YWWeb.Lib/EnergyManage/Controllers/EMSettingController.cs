@@ -264,8 +264,12 @@ namespace EnergyManage.Controllers
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
 
+
+         
+
+
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
-            for (var a = 0; a < power.Count(); a++) {
+                for (var a = 0; a < power.Count(); a++) {
                 for (var b = 0; b < list.Count(); b++) {
                     if (list[b].addCid.Contains($"{power[a].PID}-{power[a].CID}")) {
                         list[b].UsePower += power[a].UsePower;
@@ -324,6 +328,8 @@ namespace EnergyManage.Controllers
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
             var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
             List<IDAO.Models.t_V_EnerPower> json  = new List<IDAO.Models.t_V_EnerPower>();
+
+
             for (var a = 0; a < list.Count(); a++)
             {
                 IDAO.Models.t_V_EnerPower obj = new IDAO.Models.t_V_EnerPower();

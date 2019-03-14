@@ -92,7 +92,7 @@
 
         var partition = d3.layout.partition()
             .value(function (d) {
-                return d.UsePower + 5
+                return parseInt(d.UsePower) + 3
             });
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
 
@@ -124,7 +124,6 @@
                     })
           
                    .on('click', click)
-
                     .on("mouseover", function (d) {
                         $("#icon").hide()
                         var position = $(this).children('text').position();
@@ -174,7 +173,7 @@
 
                 text.selectAll("tspan")
                     .data(function (d) {
-                        return ["总用电量：" + d.UsePower]
+                        return ["总用电量：" + d.UsePower.toFixed(2)]
                     })
                     .enter()
                     .append("svg:tspan")
@@ -195,6 +194,15 @@
 
 
                 function click(d) {
+                    console.log(d)
+                    if (window.id == d.id) {
+                        click(root);
+
+                        return 
+                    } else {
+                        window.id = d.id;
+                    }
+
                     $('#icon').hide();
                     var that = this;
                     setTimeout(function () {
@@ -207,11 +215,10 @@
                             .css("left", position.left + d.name.length * 18)
                             .css("top", position.top - 8);
                     },800)
-                    //if (!d.children) {
-                    //    return;
-                    //}
+              
                     kx = (d.y ? w - 40 : w) / (1 - d.y);
                     ky = h / d.dx;
+
                     x.domain([d.y, 1]).range([d.y ? 40 : 0, w]);
                     y.domain([d.x, d.x + d.dx]);
 
@@ -283,15 +290,16 @@
             for (var i in data) {
                 var str = formatDate(data[i].RecordTime);
                 xData.push(str.substr(str.length - 2, 2))
-                yData.push(data[i].UsePower)
-                count += data[i].UsePower
+                yData.push(data[i].UsePower.toFixed(2))
+                count += data[i].UsePower;
+              
             }
             var barChart = echarts.init(document.getElementById('barChart'));
             console.log(xData)
             var option = {
                 title: {
                     text: `${new Date().getMonth()}月—累计用电量`,
-                    subtext: count,
+                    subtext: Math.floor(count * 100) / 100+"  kW·h",
                     left: 'center',
                     textStyle: {
                         color: '#757575',
@@ -381,12 +389,12 @@
         }
 
         function createPieChart(data) {
-            var subtext = ""
-            var legend = []
-            var series = []
-            var titleTop = 0
+            var subtext = "";
+            var series = [];
+            var titleTop = 0;
+            var allPower = 0;
             for (var i in data) {
-                legend.push(data[i].name)
+                allPower += data[i].UsePower;
                 series.push({
                     name: data[i].name,
                     value: data[i].UsePower.toFixed(2)
@@ -411,24 +419,15 @@
                 },
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c}"
-                },
-                legend: {
-                    type: 'scroll',
-                    orient: 'vertical',
-                    right: 10,
-
-                    bottom: 50,
-                    data: legend
+                    formatter: "{c}"+"  kW·h"
                 },
                 series: [
                     {
-                        name: '用电量',
                         type: 'pie',
-                        radius: ['30%', '50%'],
-                        center: ['30%', '50%'],
+                        radius: ['40%', '60%'],
+                        center: ['50%', '55%'],
                         label: {
-                            show: false
+                            show: true
                         },
                         data: series,
                         itemStyle: {
@@ -437,7 +436,7 @@
                                 shadowOffsetX: 0,
                                 shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
-                        }
+                        },
                     }
                 ]
             };
