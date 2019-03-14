@@ -70,7 +70,9 @@ namespace DAO
 
         public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid)
         {
-            string sql = $"select * from t_EE_EnerUserProject where unit_id={uid} and parent_id={parid}";
+            string sql = $"select * from t_EE_EnerUserProject where unit_id={uid}";
+            if (parid != 0)
+                sql += $" and parent_id={parid}";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 

@@ -133,7 +133,7 @@ namespace YWWeb.Controllers
                 }
                 else if (dtid == 4)
                 {
-                    ALarmType = "and ALarmType='危机'";
+                    ALarmType = "and ALarmType='危急'";
 
                 }
                 string strquery = " 1=1" + ALarmType;

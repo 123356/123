@@ -1,489 +1,191 @@
- function Organization() {
-     this.PIDTree = {};
- };
- Organization.prototype = {
-     //返回可查看的单位列表
-     loadUnitList: function() {
-         var that = this;
-         $.ajax({
-             type: "post",
-             url: "/energyManage/EMSetting/GetUnitList",
-             data: {},
-             success: function(res) {
-                 try {
-                     var globalUnitID = JSON.parse($.cookie('unitID')).id || res[0].UnitID;
-                 } catch {
-                     var globalUnitID = res[0].UnitID;
-                     $.cookie('unitID', JSON.stringify({
-                         id: res[0].UnitID,
-                         name: res[0].UnitName
-                     }), {
-                         expires: 1
-                     });
-                     that.loadOrganizationTree();
-                 }
-                 for (var a = 0, arr = []; a < res.length; a++) {
-                     if (globalUnitID == res[a].UnitID) {
-                         arr.push(
-                             `<option value="${res[a].UnitID}" selected = "selected" data-pids="${res[a].PDRList}">${res[a].UnitName}</option>`
-                         );
-                     } else {
-                         arr.push(
-                             `<option value="${res[a].UnitID}" data-pids="${res[a].PDRList}">${res[a].UnitName}</option>`
-                         );
-                     }
-                 }
-                 $('#unitList').html(arr.join(''));
-                 var pids = $("#unitList").find("option:selected").attr('data-pids');
-                 if (pids) {
-                     that.loadModalTree(pids)
-                 } else {
-                     alert('该单位没有站室');
-                 }
-             }
-         })
-     },
-     //返回之前添加的区域  加载到输入框的联想
-     loadAreaed: function() {
-         var that = this;
-         $.ajax({
-             type: "post",
-             url: "/energyManage/EMSetting/GetHistoryList",
-             data: {
-                 item_type: that.treeType
-             },
-             success: function(res) {
-                 for (var a = 0, arr = []; a < res.length; a++) {
-                     arr.push(`<option value="${res[a].Name}" data-id="${res[a].id}">`);
-                 }
-                 $('#areaedList').html(arr.join(""));
-             }
-         })
-
-     },
-     //加载模态框树
-     loadModalTree: function(pids) {
-         var that = this;
-         $.ajax({
-             type: "post",
-             url: "/energyManage/EMSetting/GetCidTree",
-             data: {
-                 pids: pids
-             },
-             success: function(res) {
-                 var treeList = [];
-                 that.cidData = res;
-                 that.remakeTree(res, treeList);
-                 if (treeList.length == 0) {
-                     $('.nometer').show();
-                     $('#meterztree').hide();
-                 } else {
-                     $('.nometer').hide();
-                     $('#meterztree').show();
-                     $('#meterztree').html("");
-                     that.allocationTreeData(treeList);
-                 }
-                 $('#myModalLabel ').html(JSON.parse($.cookie('unitID')).name);
-             }
-         })
-     },
-     //改造树结构
-     remakeTree: function(arr, treeList) {
-         var pid = -1,
-             cid = -1,
-             did = -1;
-         for (var a = 0; a < arr.length; a++) {
-             if (pid != arr[a].PID + '_p') {
-                 pid = arr[a].PID + '_p';
-                 if (treeList.length == 0) {
-                     var pdr = {
-                         name: arr[a].Name,
-                         id: pid,
-                         type: 'pid',
-                         pId: 0,
-                         open: true,
-                         nocheck: true
-                     }
-                 } else {
-                     var pdr = {
-                         name: arr[a].Name,
-                         id: pid,
-                         type: 'pid',
-                         pId: treeList[0].id,
-                         nocheck: true
-                     }
-                 }
-                 treeList.push(pdr);
-             } else if (pid == arr[a].PID + '_p' && did != arr[a].DID + '_d') {
-                 did = arr[a].DID + '_d';
-                 treeList.push({
-                     name: arr[a].DeviceName,
-                     id: did,
-                     type: 'did',
-                     pId: pid,
-                     nocheck: true
-                 });
-                 treeList.push({
-                     name: arr[a].CName,
-                     id: arr[a].CID + '_c',
-                     type: 'cic',
-                     pId: did
-                 });
-             } else if (pid == arr[a].PID + '_p' && did == arr[a].DID + '_d') {
-                 treeList.push({
-                     name: arr[a].CName,
-                     id: arr[a].CID + '_c',
-                     type: 'cic',
-                     pId: did
-                 });
-             }
-         }
-     },
-     //加载事件
-     loadEvents: function() {
-         var that = this;
-         $("#unitList").on('change', function() {
-             $.cookie('unitID', JSON.stringify({
-                 id: $("#unitList").val(),
-                 name: $("#unitList").find("option:selected").text()
-             }), {
-                 expires: 1
-             });
-         })
-
-         //点击修改
-         $('.updatet').on('click', function() {
-             $('.right').fadeIn();
-             that.editType = "upd";
-             $('#title').html("修改");
-         })
-
-         //点击模态框确定或取消
-         $('.getselect').on('click', function() {
-             var arr;
-             $('.checkbox_true_full').removeClass("chk");
-             var treeObj = $.fn.zTree.getZTreeObj("meterztree");
-             arr = treeObj.getCheckedNodes();
-             for (var a = 0; a < arr.length; a++) {
-                 var id = arr[a].id.substring(0, arr[a].id.indexOf('_'));
-                 var html = `<span class="meter" data-id="${id}">${arr[a].name}<i class="close">×</i></span>`;
-                 if (that.morefun && $('.reduction').html().indexOf(`data-id="${id}"`) == -1) {
-                     $('.reduction').append(html);
-                 } else if ($('.addition').html().indexOf(`data-id="${id}"`) == -1) {
-                     $('.addition').append(html);
-                 }
-             }
-
-
-
-             //$.fn.zTree.getZTreeObj("meterztree").checkAllNodes(false);
-         })
-
-         //重置选中按钮
-         $('div.form-control').on('click', function() {
-             var treeObj = $.fn.zTree.getZTreeObj('meterztree');
-
-             that.morefun = this.className.indexOf('addition') > -1 ? false : true;
-             treeObj.checkAllNodes(false);
-         })
-
-         //点击查询
-         $('.readt').on('click', function() {
-                 var pids = $("#unitList").find("option:selected").attr('data-pids')
-                 that.loadOrganizationTree();
-                 that.loadModalTree(pids);
-                 $('#title').html("查看");
-             })
-             //点击删除
-         $('.deletet').on('click', function() {
-                 if ($.fn.zTree.getZTreeObj("Organization").getSelectedNodes().length != 0) {
-                     that.editType = 'del';
-                     $('#title').html("删除");
-                     that.editType = 'del';
-                     var zreeobj = $.fn.zTree.getZTreeObj("Organization");
-                     var select = zreeobj.getSelectedNodes();
-                     $.ajax({
-                         type: "post",
-                         url: "/energyManage/EMSetting/DeleteSupervisor",
-                         data: {
-                             parent_id: select[0].pId,
-                             unit_id: JSON.parse($.cookie('unitID')).id,
-                             child_id: select[0].id
-                         },
-                         success: function(res) {
-                             if (res.length > 0) {
-                                 zreeobj.removeNode(select[0]);
-                             }
-                         }
-                     })
-                     $('.right').fadeOut();
-                 }
-             })
-             //点击新增
-         $('.createt').on('click', function() {
-                 if ($.fn.zTree.getZTreeObj("Organization").getSelectedNodes().length != 0) {
-                     $('.right').fadeIn();
-                     that.editType = 'add';
-                     $('#title').html("新建");
-                 }
-             })
-             //点击确定
-         $('.saveupdate').on('click', function() {
-                 var add = [];
-                 var del = [];
-                 for (var a = 0; a < $('.addition .meter').length; a++) {
-                     add.push($('.addition .meter')[a].getAttribute('data-id'));
-                 }
-                 for (var a = 0; a < $('.reduction .meter').length; a++) {
-                     del.push($('.reduction .meter')[a].getAttribute('data-id'));
-                 }
-                 $('.addition').attr('data-id', add.join(','));
-                 $('.reduction').attr('data-id', del.join(','));
-
-
-                 if (that.editType == 'add') { //添加
-                     that.createNode();
-                 } else if (that.editType == 'upd') { //修改
-                     that.updatetNode();
-                 }
-             })
-             //点击表的关闭按钮
-         $('.addition,.reduction').on('click', '.close', function() {
-             $(this).parent('.meter').remove();
-         })
-         $('.offOut').on('click', function() {
-             $('.right').fadeOut();
-         })
-     },
-     //新增节点
-     createNode: function() {
-         if (!$("#name").val()) {
-             alert("名称不可为空。");
-             return;
-         }
-         var zreeobj = $.fn.zTree.getZTreeObj("Organization");
-         var select = zreeobj.getSelectedNodes();
-         if (select.length == 0) {
-             alert('选中一个节点')
-         }
-         if (zreeobj.getNodesByParam("name", $('#name').val(), null).length > 0) {
-             alert('节点不可重复添加');
-             return
-         }
-         var nodes = zreeobj.getNodes();
-         for (var a = 0; a < nodes.length; a++) {
-             if (nodes[a].name == $('#name').val()) {
-                 alert('不能添加重复节点')
-                 return
-             }
-
-         }
-
-
-         var data = {
-             parent_id: select[0].id || 0,
-             unit_id: JSON.parse($.cookie('unitID')).id,
-             unit_head: $("#officer").val() || "",
-             unit_note: $('#note').val() || "",
-             addCid: $('.addition').attr('data-id') || "",
-             delCid: $('.reduction').attr('data-id') || "",
-             item_type: this.treeType,
-             Name: $("#name").val(),
-             id: parseInt($(`option[value=${$("#name").val()}]`).attr('data-id')) || 0,
-             unit_area: $('#area').val() || 0,
-             unit_people: $('#people').val() || 0
-         }
-         $.ajax({
-             type: "post",
-             url: "/energyManage/EMSetting/AddTreeNode",
-             data: data,
-             success: function(res) {
-                 if (res.length > 0) {
-                     var newNodes = {
-                         id: res[0].child_id,
-                         name: data.Name,
-                         children: [],
-                         addCid: res[0].addCid,
-                         delCid: res[0].delCid,
-                         head: res[0].unit_head,
-                         note: res[0].unit_note,
-                         area: res[0].unit_area,
-                         people: res[0].unit_people
-                     };
-                     var zTree = $.fn.zTree.getZTreeObj("Organization");
-                     var nodeList = zTree.getSelectedNodes();
-                     zTree.expandNode(nodeList[0], true);
-                     var znodes = zreeobj.addNodes(select[0], newNodes, true);
-                     alert('添加成功');
-                 }
-             }
-         });
-
-     },
-     //修改节点
-     updatetNode: function() {
-         var treeObj = $.fn.zTree.getZTreeObj("Organization");
-         var nodes = treeObj.getSelectedNodes();
-         if (nodes.length > 0) {
-             var data = {
-                 parent_id: nodes[0].pId,
-                 unit_head: $('#officer').val(),
-                 unit_note: $('#note').val(),
-                 addCid: $('.addition').attr('data-id') || "",
-                 delCid: $('.reduction').attr('data-id') || "",
-                 item_type: this.treeType,
-                 Name: $('#name').val(),
-                 id: nodes[0].id,
-                 unit_id: JSON.parse($.cookie('unitID')).id,
-                 unit_area: $('#area').val(),
-                 unit_people: $('#people').val(),
-             }
-             $.ajax({
-                 type: "post",
-                 url: "/energyManage/EMSetting/UpdateTreeNode",
-                 data: data,
-                 success: function(res) {
-                     nodes[0].name = data.Name;
-                     nodes[0].officer = data.unit_head;
-                     nodes[0].note = data.unit_note;
-                     nodes[0].addCid = data.addCid;
-                     nodes[0].delCid = data.delCid;
-                     nodes[0].area = data.unit_area;
-                     nodes[0].people = data.unit_people;
-                     treeObj.updateNode(nodes[0]);
-                 }
-             })
-         }
-     },
-     //配置站室内树
-     allocationTreeData: function(data) {
-         var setting = {
-             view: {
-                 selectedMulti: false
-             },
-             check: {
-                 enable: true,
-                 chkStyle: 'checkbox',
-                 radioType: "all",
-                 chkboxType: {
-                     "Y": "s",
-                     "N": "s"
-                 }
-             },
-             data: {
-                 simpleData: {
-                     enable: true,
-                     idKey: "id",
-                     pIdKey: "pId",
-                     rootPId: 0
-                 }
-             },
-             edit: {}
-         };
-         var zNodes = data
-
-         function setCheck() {
-             setting.check.chkStyle = $("#r1").attr("checked") ? "checkbox" : "checkbox";
-             setting.check.enable = (!$("#disablechk").attr("checked"));
-             $.fn.zTree.init($("#meterztree"), setting, zNodes);
-         }
-         $(document).ready(function() {
-             $.fn.zTree.init($("#meterztree"), setting, zNodes);
-             setCheck();
-             $("#r1").bind("change", setCheck);
-             $("#r2").bind("change", setCheck);
-             $("#disablechk").bind("change", setCheck);
-         });
-     },
-     //配置组织树
-     allocationOrganization: function(data) {
-         var that = this;
-         var setting = {
-             view: {
-                 selectedMulti: false
-             },
-             check: {
-                 enable: false,
-                 chkStyle: 'checkbox',
-                 radioType: "all",
-             },
-             callback: {
-                 beforeClick: zTreeBeforeClick
-             }
-         };
-
-         function zTreeBeforeClick(treeId, treeNode, clickFlag) {
-             $('.right').fadeIn();
-             $('#name').val(treeNode.name);
-             $('#officer').val(treeNode.head);
-             $('#note').val(treeNode.note);
-             $('.addition').html(that.GetCidView(treeNode.addCid)) //.attr('data-id', treeNode.addCid);
-             $('.reduction').html(that.GetCidView(treeNode.delCid)) //.attr('data-id', treeNode.delCid);
-             $('#area').val(treeNode.area || "");
-             $('#people').val(treeNode.people || "");
-         }
-         var zNodes = data;
-         $.fn.zTree.init($("#Organization"), setting, zNodes);
-     },
-     GetCidView: function(ids) {
-         var that = this;
-         console.log(ids)
-         if (ids && that.cidData) {
-             var cid = that.cidData;
-             var id = ids.split(",").map(Number);
-             for (var a = 0, arr = []; a < cid.length; a++) {
-                 if ($.inArray(cid[a].CID, id) > -1) {
-                     arr.push(
-                         `<span class="meter" data-id="${cid[a].CID}">${cid[a].CName}<i class="close">×</i></span>`
-                     );
-                 }
-             }
-             return arr.join("");
-         }
-     },
-     //加载组织树
-     loadOrganizationTree: function() {
-         var that = this;
-         var unit = JSON.parse($.cookie('unitID'))
-         $.ajax({
-             type: "post",
-             url: "/energyManage/EMSetting/GetTreeData",
-             data: {
-                 unitID: JSON.parse($.cookie('unitID')).id,
-                 item_type: that.treeType,
-                 unitName: unit.name
-             },
-             success: function(res) {
-                 var arr = [];
-                 res = JSON.parse(res);
-                 res.open = true;
-                 arr.push(res);
-                 that.allocationOrganization(arr);
-             }
-         })
-     },
-
-
-
-
-
-     //初始化
-     init: function() {
-         var search = location.search;
-         this.treeType = search.substring(search.indexOf('=') + 1);
-         if ($.cookie('unitID')) {
-             this.loadOrganizationTree();
-         }
-         this.loadUnitList();
-         this.loadEvents();
-         this.loadAreaed();
-
-     },
- };
-
-
-
- $(function() {
-     var organization = new Organization();
-     organization.init();
- });
+var vm = new Vue({
+    el: '#app',
+    data: { nodeEditTyped: 'sea', value2: '1', theme1: 'light', treeType: 1, untiList: null, node: { title: "", addCid: "", delCid: "", area: 0, people: 0, note: "", head: "" }, modal1: false, subitemTree: [], areaTree: [], UnitData: {}, cidEdit: null, cidTree: [], addCid: "", delCid: "", buttonProps: { type: 'default', size: 'small', }, show: true, typeHistory: [] },
+    methods: {
+        changeTab: function() { if (this.treeType == 1) { this.getSubitemTree() } else { this.getAreaTree() } },
+        handleClose(id, type) { if (type == 'add') { for (var a = 0; a < this.addCid.length; a++) { if (this.addCid[a].id == id) { this.addCid.splice(a, 1); break } } } else { for (var a = 0; a < this.delCid.length; a++) { if (parseInt(this.delCid[a].id) == id) { this.delCid.splice(a, 1); break } } } },
+        ModalonOk: function() {
+            if (this.cidEdit == 'add') { this.oldCidSelectedAdd = this.addCid } else { this.oldCidSelectedDel = this.delCid }
+            for (key in this.oldCidTree) { this.oldCidTree[key].checked = false }
+            this.cidTree = this.finishCidData(this.oldCidTree)
+        },
+        ModalonCancel: function() {
+            if (this.cidEdit == 'add') { this.addCid = this.oldCidSelectedAdd } else { this.delCid = this.oldCidSelectedDel }
+            for (key in this.oldCidTree) { this.oldCidTree[key].checked = false }
+            this.cidTree = this.finishCidData(this.oldCidTree)
+        },
+        showCidModel: function(d) {
+            var that = this;
+            this.modal1 = true;
+            this.cidEdit = d;
+            var addCid = this.ViewToPIDCId(this.addCid);
+            var delCid = this.ViewToPIDCId(this.delCid);
+            if (d == "add") { this.oldCidSelectedAdd = this.addCid } else { this.oldCidSelectedDel = this.delCid }
+            for (key in this.oldCidTree) { if (d == "add" && addCid.indexOf(`${this.oldCidTree[key].PID}-${this.oldCidTree[key].CID}`) > -1) { this.oldCidTree[key].checked = true } if (d == "del" && delCid.indexOf(`${this.oldCidTree[key].PID}-${this.oldCidTree[key].CID}`) > -1) { this.oldCidTree[key].checked = true } }
+            this.cidTree = this.finishCidData(this.oldCidTree)
+        },
+        selectedCidNode: function(data) { this.cidselect = data; var list = []; for (var a = 0; a < data.length; a++) { if (data[a].type == 'cid') { list.push({ pid: data[a].pid, id: parseInt(data[a].id), title: data[a].title }) } } if (this.cidEdit == 'add') { this.addCid = list } else { this.delCid = list } },
+        loadUnitList: function() {
+            var that = this;
+            this.$http({ url: "/energyManage/EMSetting/GetUnitList", method: "post", body: {} }).then(function(res) {
+                if (!$.cookie('UnitData')) {
+                    this.UnitData = res.data[0];
+                    $.cookie('UnitData', JSON.stringify(res.data[0]), { expires: 7, path: '/' });
+                    this.getSubitemTree();
+                    this.getPDRList()
+                }
+                this.untiList = res.data
+            }).catch(function(e) {})
+        },
+        changeUnitID: function(e) {
+            for (var a = 0; a < this.untiList.length; a++) {
+                if (this.untiList[a].UnitID == e) {
+                    this.UnitData = this.untiList[a];
+                    $.cookie('UnitData', JSON.stringify(this.untiList[a]), { expires: 7, path: '/' })
+                }
+            }
+            if (this.treeType == 1) { this.getSubitemTree() } else { this.getAreaTree() }
+            this.getPDRList()
+        },
+        getSubitemTree: function() {
+            var that = this;
+            this.$http({ url: "/energyManage/EMSetting/GetTreeData", method: "post", body: { unitID: that.UnitData.UnitID, item_type: 1, unitName: that.UnitData.UnitName } }).then(function(res) { that.subitemTree = that.strNameToTitle(res.data) }).catch(function(e) {})
+        },
+        strNameToTitle: function(data) {
+            var str = JSON.stringify(data);
+            str = str.replace(/name/g, "title").replace(`,"children":[]`, "").replace(/{/g, `{"expand":"true",`);
+            var arr = [];
+            arr.push(JSON.parse(str));
+            arr[0].render = (h, { root, node, data }) => { return h('span', { style: { display: 'inline-block', width: '100%' } }, [h('span', [h('Icon', { props: { type: 'ios-folder-outline' }, style: { marginRight: '8px' } }), h('span', data.title)]), h('span', { style: { display: 'inline-block', float: 'right', marginRight: '32px' } }, [h('Button', { props: Object.assign({}, this.buttonProps, { icon: 'ios-add', type: 'primary' }), style: { marginRight: '8px' }, on: { click: () => { this.append(data, root) } } }), h('Button', { props: Object.assign({}, this.buttonProps, { icon: 'ios-search-outline', type: 'primary' }), on: { click: () => { this.search(data) } } }), ])]) };
+            arr[0].selected = true;
+            return arr
+        },
+        getAreaTree: function() {
+            var that = this;
+            this.$http({ url: "/energyManage/EMSetting/GetTreeData", method: "post", body: { unitID: that.UnitData.UnitID, item_type: 2, unitName: that.UnitData.UnitName } }).then(function(res) { that.areaTree = that.strNameToTitle(res.data) }).catch(function(e) {})
+        },
+        getPDRList: function() {
+            var that = this;
+            if (!that.UnitData.PDRList) { return }
+            this.$http({ url: "/energyManage/EMSetting/GetCidTree", method: "post", body: { pids: that.UnitData.PDRList, } }).then(function(res) {
+                that.oldCidTree = res.data;
+                that.cidTree = that.finishCidData(res.data)
+            }).catch(function(e) {})
+        },
+        finishCidData: function(data) {
+            var tree = [];
+            for (var a = 0, pid = -1, cid = -1, did = -1; a < data.length; a++) {
+                if (pid != data[a].PID) {
+                    tree.push({ title: data[a].Name, type: 'pid', id: data[a].PID + "_p", children: [{ title: data[a].DeviceName, type: 'did', id: data[a].DID + "_d", children: [{ title: data[a].CName, type: 'cid', id: data[a].CID + "_c", children: [], pid: data[a].PID, expand: data[a].expand || false, checked: data[a].checked || false, }] }] });
+                    pid = data[a].PID;
+                    did = data[a].DID;
+                    cid = data[a].CID
+                } else if (pid == data[a].PID && did != data[a].DID) {
+                    var pidlen = tree.length - 1;
+                    tree[pidlen].children.push({ title: data[a].DeviceName, type: 'did', id: data[a].DID + "_d", children: [{ title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID, expand: data[a].expand || false, checked: data[a].checked || false, }] });
+                    did = data[a].DID;
+                    cid = data[a].CID
+                } else if (pid == data[a].PID && did == data[a].DID) {
+                    var pidlen = tree.length - 1;
+                    var didlen = tree[pidlen].children.length - 1;
+                    tree[pidlen].children[didlen].children.push({ title: data[a].CName, type: 'cid', id: data[a].CID + "_c", pid: data[a].PID, expand: data[a].expand || false, checked: data[a].checked || false, })
+                }
+            }
+            return tree
+        },
+        renderContent(h, { root, node, data }) { var that = this; return h('span', { style: { display: 'inline-block', width: '100%' } }, [h('span', [h('Icon', { props: { type: 'ios-paper-outline' }, style: { marginRight: '8px' } }), h('span', data.title)]), h('span', { style: { display: 'inline-block', float: 'right', marginRight: '32px' } }, [h('Button', { props: Object.assign({}, that.buttonProps, { icon: 'ios-add' }), style: { marginRight: '8px' }, on: { click: () => { that.append(data, root) } } }), h('Button', { props: Object.assign({}, that.buttonProps, { icon: 'ios-remove' }), style: { marginRight: '8px' }, on: { click: () => { that.remove(root, node, data) } } }), h('Button', { props: Object.assign({}, that.buttonProps, { icon: 'ios-build-outline' }), style: { marginRight: '8px' }, on: { click: () => { that.update(root, node, data) } } }), h('Button', { props: Object.assign({}, that.buttonProps, { icon: 'ios-search-outline' }), on: { click: () => { that.search(root, node, data) } } }), ])]) },
+        append(data, root) {
+            this.node = {};
+            this.node.parent_id = data.id;
+            this.treeParent = data;
+            this.nodeEditTyped = "add";
+            this.addCid = [];
+            this.delCid = [];
+            this.node.root = JSON.stringify(root)
+        },
+        remove(root, node, data) {
+            var that = this;
+            this.$Modal.confirm({
+                title: '提示',
+                content: `<p>确认删除节点-<span style="color:#FF534D;font-weight:800">${data.title}</span></p>`,
+                onOk: () => {
+                    this.$http({ url: "/energyManage/EMSetting/DeleteSupervisor", method: "post", body: { parent_id: data.pId, child_id: data.id, unit_id: that.UnitData.UnitID, } }).then(function(res) {
+                        if (res.data.length) { this.$Message.success("删除成功") } else { this.$Message.error("删除失败") }
+                        const parentKey = root.find(el => el === node).parent;
+                        const parent = root.find(el => el.nodeKey === parentKey).node;
+                        const index = parent.children.indexOf(data);
+                        parent.children.splice(index, 1)
+                    }).catch(function(e) { this.$Message.error("数据异常") })
+                },
+            })
+        },
+        update(root, node, data) {
+            if (data) { this.node = data } else { this.node = root }
+            this.addCid = this.PIDCIdToView(this.node.addCid);
+            this.delCid = this.PIDCIdToView(this.node.delCid);
+            this.node.parent_id = data.pId;
+            this.node.id = node.node.id;
+            this.nodeEditTyped = "upd";
+            this.node.root = JSON.stringify(root)
+        },
+        search(root, node, data) {
+            if (data) { this.node = data } else { this.node = root }
+            this.nodeEditTyped = "sea";
+            this.addCid = this.PIDCIdToView(this.node.addCid);
+            this.delCid = this.PIDCIdToView(this.node.delCid)
+        },
+        submitForm() {
+            var that = this;
+            if (!this.node.title) { this.$Message.warning("节点名称不能为空"); return }
+            if (that.node.area && !/^[0-9]+.?[0-9]*$/.test(that.node.area)) { this.$Message.warning("面积请输入数字"); return }
+            if (that.node.people && !/^[0-9]+.?[0-9]*$/.test(that.node.people)) { this.$Message.warning("人数请输入数字"); return }
+            if (this.nodeEditTyped == 'add') {
+                if (this.node.root && this.node.root.indexOf(`"${that.node.title}"`) > 0) { this.$Message.warning("节点不能循环绑定"); return }
+                delete this.node.root;
+                this.node.addCid = this.ViewToPIDCId(this.addCid);
+                this.node.delCid = this.ViewToPIDCId(this.delCid);
+                var name = that.node.title;
+                this.$http({ url: "/energyManage/EMSetting/AddTreeNode", method: "post", body: { parent_id: that.node.parent_id, unit_id: that.UnitData.UnitID, unit_head: that.node.head, unit_note: that.node.note, addCid: that.node.addCid || "", delCid: that.node.delCid || "", item_type: that.treeType, Name: name, id: -1, unit_area: that.node.area || 0, unit_people: that.node.people || 0, } }).then(function(res) {
+                    if (res.data.length) {
+                        const children = this.treeParent.children || [];
+                        children.push({ title: name, area: res.data[0].unit_area || 0, people: res.data[0].unit_people || 0, id: res.data[0].child_id, head: res.data[0].unit_head, note: res.data[0].unit_note, addCid: res.data[0].addCid || "", delCid: res.data[0].delCid || "", expand: true });
+                        this.$set(this.treeParent, 'children', children);
+                        this.$Message.success("添加成功")
+                    } else { this.$Message.error("添加失败") }
+                }).catch(function(e) { this.$Message.error("数据异常") })
+            } else if (this.nodeEditTyped == 'upd') {
+                this.node.addCid = this.ViewToPIDCId(this.addCid);
+                this.node.delCid = this.ViewToPIDCId(this.delCid);
+                var name = that.node.title;
+                this.$http({ url: "/energyManage/EMSetting/UpdateTreeNode", method: "post", body: { parent_id: that.node.parent_id, unit_id: that.UnitData.UnitID, unit_head: that.node.head, unit_note: that.node.note, addCid: that.node.addCid || "", delCid: that.node.delCid || "", item_type: that.treeType, Name: name, id: that.node.id, unit_area: that.node.area, unit_people: that.node.people, } }).then(function(res) { if (res.data.length) { this.$Message.success("修改成功") } else { this.$Message.error("修改失败") } }).catch(function(e) { this.$Message.error("数据异常") })
+            }
+        },
+        ViewToPIDCId(arr) { if (arr != undefined || arr.length > 0) { for (var a = 0, list = []; a < arr.length; a++) { list[a] = arr[a].pid + "-" + arr[a].id } return list.join(',') } else { return "" } },
+        PIDCIdToView(str) {
+            if (str) {
+                var str = str.split(',');
+                for (var a = 0, arr = []; a < str.length; a++) {
+                    var q = str[a].split('-');
+                    var obj = { pid: q[0], id: q[1] };
+                    for (var b = 0; b < this.oldCidTree.length; b++) { if (this.oldCidTree[b].CID == obj.id && this.oldCidTree[b].PID == obj.pid) { obj.title = this.oldCidTree[b].CName; break } }
+                    arr.push(obj)
+                }
+                return arr
+            } else { return "" }
+        },
+    },
+    updated: function() {
+        this.$nextTick(() => {
+            this.$refs.side_menu.updateOpened();
+            this.$refs.side_menu.updateActiveName()
+        })
+    },
+    beforeMount: function() {
+        if ($.cookie('UnitData')) {
+            this.UnitData = JSON.parse($.cookie('UnitData'));
+            this.getSubitemTree();
+            this.getPDRList()
+        }
+        this.loadUnitList()
+    }
+})

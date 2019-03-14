@@ -67,6 +67,7 @@
     <Compile Include="IElementDevice.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
+    <Compile Include="IEneryReportFrom.cs" />
     <Compile Include="IEnerySelectView.cs" />
     <Compile Include="IEneryUsreBudget.cs" />
     <Compile Include="IenTypeConfig.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />
+    <Compile Include="Models\t_V_EneryReportFrom.cs" />
     <Compile Include="Models\t_V_EnerySelectView.cs" />
     <Compile Include="Models\t_V_EneryView.cs" />
     <Compile Include="Models\t_V_HisData.cs" />

@@ -1,158 +1,77 @@
-html {
-    background: #fff;
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    padding: 8px 30px;
-    flex-grow: 1;
-}
-
-.title {
-    display: flex;
-    height: 60px;
-    padding-left: 30px;
-}
-
-.edit {
-    min-width: 48%;
-    display: flex;
-    align-items: center;
-}
-
-.edit>* {
-    margin-right: 15px;
-}
-
-.main {
-    height: 90%;
-    position: relative;
-    margin: 30px;
-}
-
-.right {
-    width: 40%;
-    min-width: 450px;
+#app {
+    background: #efefef;
     position: absolute;
-    right: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    top: 0px;
-    border: 1px solid #999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
+
+.layout {
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.layout-logo {
+    width: 100px;
+    height: 30px;
+    background: #5b6270;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+}
+
+.layout-nav {
+    width: 420px;
+    margin: 0 auto;
+    margin-right: 20px;
+}
+
+.ivu-layout.ivu-layout-has-sider {
     height: 100%;
 }
 
-.left {
-    border: 1px solid #999;
-    height: 100%;
+.ivu-layout-sider {
     overflow: hidden;
 }
 
-.right {
-    display: none;
-}
-
-.edit .form-control {
-    width: 150px;
-    display: inline-block;
-}
-
-.right {
-    padding: 8px 30px;
-}
-
-div.form-control {
+.ivu-layout-sider-children {
     overflow-y: auto;
-    height: 150px;
-    display: inline-block;
+    width: 110%;
 }
 
-.more {
-    display: inline-block !important;
-    position: relative;
-    right: 0px;
-    top: -5px;
+.ivu-card-body {
+    height: 700px;
 }
 
-.btn.btn-default {
-    background: #fff;
-    border-color: #ced4da;
+.ivu-card-body {
+    overflow: hidden;
 }
 
-.btn-default:hover {
-    background: #999;
-}
-
-button.close {
-    position: absolute;
-    right: 10px;
-}
-
-.right .btn {
-    width: 130px;
-}
-
-.meter .close {
-    cursor: pointer;
-    display: inline-block;
-    margin-left: 7px;
-}
-
-.meter:hover {
-    background: #999;
-}
-
-.nometer {
-    display: none;
-}
-
-.meter {
-    padding: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
+.cidbox {
+    min-height: 94px;
+    border: 1px solid #dcdee2;
+    border-radius: 4px;
+    color: #35383c;
     background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    margin: .3rem;
-    display: inline-block;
-    line-height: 30px;
+    cursor: pointer;
 }
 
-.modal-body {
-    background: #F0F6E4;
+.ivu-modal {
+    top: 0;
 }
 
-#Organization * {
-    font-size: 18px;
-}
-
-.left {
-    background: #F0F6E4;
-    border-radius: 7px;
-}
-
-.right {
-    background: #fff;
-    border-radius: 0px 7px 7px 0px;
-    border-right-style: dotted !important;
-}
-
-.right_body {
-    height: 85%;
-    overflow-y: auto;
-    border-top: 1px dashed #ddd;
-    border-bottom: 1px dashed #ddd;
-    padding: 10px 5px;
-    margin: 10px 5px;
-    width: 111%;
-    padding-right: 15%;
-}
-
-.right_foot {
-    height: 40px;
-    display: flex;
-    justify-content: space-around;
+.ivu-input[disabled], fieldset[disabled] .ivu-input {
+    background-color: #F5F6EB;
+    opacity: 1;
+    cursor: not-allowed;
+    color: #000;
 }
