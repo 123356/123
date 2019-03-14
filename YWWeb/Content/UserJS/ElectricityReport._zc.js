@@ -1,99 +1,209 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        UID: null,
+        UName: null,
+        time: null,
         tableHeight: 0,
-        dateType:0,
-        tableCol: [
-            {
-                title: '2019年新源医院能源消耗周报表',
-                align: 'center',
-                children: [
-                    {
-                        title: '日期',
-                        align: 'center',
-                        key: 'dateTime',
-                    },
-                    {
-                        title: '报表类型',
-                        align: 'center',
-                        key: 'reportType',
-                    },
-                    {
-                        title: '用电量(kW·h)',
-                        align: 'center',
-                        key: 'elec',
-                    },
-                    {
-                        title: '同比上月%',
-                        align: 'center',
-                        key: 'elecTb',
-                    },
-                    {
-                        title: '用水(m³)',
-                        align: 'center',
-                        key: 'water',
-                    },
-                    {
-                        title: '同比上月%',
-                        align: 'center',
-                        key: 'waterTb',
-                    },
-                    {
-                        title: '总计费用(万)',
-                        align: 'center',
-                        key: 'money',
-                    },
-                    {
-                        title: '同比上月%',
-                        align: 'center',
-                        key: 'moneyTb',
-                    },
-                ]
-            },
-
-
-            
-            
-        ],
-        tableData: [
-            { dateTime: '1月2日', reportType: '内科能耗周报表', elec: 100, elecTb: 3, water: 120, waterTb: 5, money: 12, moneyTb: 4 },
-            { dateTime: '1月2日', reportType: '内科能耗周报表', elec: 100, elecTb: 3, water: 120, waterTb: 5, money: 12, moneyTb: 4 },
-            { dateTime: '1月3日', reportType: '内科能耗周报表', elec: 100, elecTb: 3, water: 120, waterTb: 5, money: 12, moneyTb: 4 },
-        ],
-        reportType: [
-            { name: 0, type: '总报表' }, { name: 1,type: '科室报表' },
-        ],
-        departmentList: [
-            { id: 0, name: '眼科' }, { id: 1, name: '内科' }, { id: 2, name: '外科' }
-        ],
+        dateType: 1,
+        tableCol: [],
+        tableData: [],
+        departmentList: [],
         curDateType: 'date',
         curReportType: 0,
-        closable:true,
-        curDepart:0,
-        
+        closable: true,
+        curDepart: 0,
+        treeData: [],
+        isUnitSelect: 0,
+        departName: null,
+        title:''
     },
     methods: {
+        //设置树下拉框
+        getSelectTree: function () {
+            var arr = []
+            arr.push(this.treeData)
+            var that = this
+            $("#leftmenuSpace").html("<div class='leftmenu' id='leftmenu'><div class='leftmenu_content'><div class='leftmenu_search leftmenu_search_padding'><input data-options='lines:true' style='width: 200px; height: 30px;' id='StationID' /></div><div><ul class='one' id='menuinfo'></ul></div></div></div>");
+            $('#StationID').combotree({
+                data: arr,
+                panelMinHeight: 300,
+                onBeforeSelect: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                        return false;
+                    }
+                },
+                onClick: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combo('showPanel');
+                       
+                    } else {
+                        that.isUnitSelect = node.id
+                        that.getTableData()
+                    }
+                },
+                onLoadSuccess: function (node, data) {
+                    $("#StationID").combotree("setValue", that.isUnitSelect);
+
+                    that.getTableData()
+                  
+                }
+            })
+        },
+        dateChange: function () {
+            this.getTableData()
+        },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            node.text = node.name
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    if (!node.children[i].children) {
+                        node.children[i].text = node.children[i].name
+                    }
+                    this.foreachTree(node.children[i]);
+                }
+            } else {
+                if (node.id != 0 && this.isUnitSelect == 0) {
+                    this.isUnitSelect = node.id
+                    this.departName = node.name
+                }
+            }
+        },
+        // tree data
+        getTreeData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMSetting/GetTreeData',
+                method: 'POST',
+                params: {
+                    unitID: that.UID,
+                    item_type: 2,
+                    unitName: that.UName
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    that.foreachTree(data)
+                    that.treeData = data
+                    that.getSelectTree()
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
+        //设置table头
+        setTableTitle: function (data) {
+            var that = this
+           
+            
+            var type = ""
+            switch (this.curDateType) {
+                case 1:
+                    type = "日"
+                    break
+                case 2:
+                    type = "月"
+                    break
+                case 3:
+                    type = "年"
+                    break
+            }
+           
+            this.title = this.formaterDate() + this.UName + this.departName + type + "报表"
+            var arr = [
+                {
+                    title: '时间',
+                    align: 'center',
+                    key:'Time'
+                }
+            ]
+            var keys = Object.keys(data)
+            var values = Object.values(data)
+            console.log(keys)
+            console.log(values)
+           
+            for (var i in keys) {
+                    var temp = {
+                        title: values[i],
+                        align: 'center',
+                        key: keys[i],
+                    }
+                    arr.push(temp)
+                
+            }
+            
+            this.tableCol = arr
+            console.log(this.tableCol)
+        },
+        //获取报表数据
+        getTableData: function () {
+            var that = this
+
+            this.$http({
+                url: '/energyManage/EMHome/GetEnFromData',
+                method: 'post',
+                body: {
+                    uid: that.UID,
+                    time: that.formaterDate(),
+                    type: that.dateType,
+                    DepartmentID: that.isUnitSelect,
+                    //uid: 9,
+                    //time: '2019-03',
+                    //type: 2,
+                    //DepartmentID: 381,
+                }
+            })
+                .then(function (res) {
+                    var arr = []
+                    for (var i in res.data.table) {
+                        arr.push(res.data.table[i].value)
+                    }
+                    that.tableData = arr
+                    that.setTableTitle(res.data.TitleName)
+                })
+                .catch(function (e) {
+
+                })
+                .finally(function () {
+
+                })
+        },
+        formaterDate: function () {
+            var date = new Date(this.time)
+            date = date.toLocaleDateString().replace(/\//g, "-") 
+            return date
+        },
+        //打印  or 导出
+        openOrPrint: function () {
+
+            this.$refs.table.exportCsv({
+                filename: '能源报告'
+            });
+            //window.print()
+
+
+        },
         dateTypeChange: function (e) {
-            console.log(e)
             var that = this
             switch (parseInt(e)) {
                 case 0:
                     that.curDateType = 'date'
-                    //that.tableCol[0].children[3].title = '同比昨日%'
-                    
-                    console.log(that.curDateType)
                     break;
                 case 1:
                     this.curDateType = 'date'
-                    console.log(that.curDateType)
+
                     break;
                 case 2:
                     that.curDateType = 'month'
-                    console.log(that.curDateType)
                     break
                 case 3:
                     that.curDateType = 'year'
-                    console.log(that.curDateType)
+
                     break;
             }
         },
@@ -101,30 +211,21 @@
 
         },
         dropdownClick: function (e) {
-            console.log(e)
             this.curReportType = e
         },
-
-        setHeight: function () {
-            this.tableHeight = $(".bottomView").height() 
-            console.log("height")
-        }
     },
     beforeMount: function () {
+        
+        this.UID = $.cookie("enUID")
+        this.UName = $.cookie("enUName")
+        this.time = new Date()
         var that = this
-        this.setHeight()
         setInterval(function () {
-            that.tableHeight = $(".bottomView .con").height() 
+            that.tableHeight = $(".bottomView .con").height()-45
         }, 100)
+        this.getTreeData()
+
     },
     mounted: function () {
-        
     }
-})
-
-
-$(function () {
-
-
-    
 })

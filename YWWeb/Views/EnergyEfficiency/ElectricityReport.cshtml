@@ -9,55 +9,69 @@
     <title>能源报告</title>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css"  href="~/Content/css/EnergyDfficiency.css?v=1.01"/>
-</head>
-<body>
-    <div id="app" class="noPaddingBottom" style="background:#fff;padding:0;margin:0">
-        
-        <!--right s-->
-        <div class="right allMain">
-            <div class="bottomView main-item">
-                <div class="module-title">
-                    <img src="~/Content/images/energyDifficiency/fx.png" class="icon" />
-                    <Dropdown trigger="click" style="margin-right:15px" v-on:on-click="dropdownClick">
-                        <span>
-                            报表类型
-                            <Icon type="md-arrow-dropdown" size="25" />
-                        </span>
-                        <dropdown-menu slot="list" v-for="item in reportType">
-                            <dropdown-item :name="item.name">{{item.type}}</dropdown-item>
-                        </dropdown-menu>
-                    </Dropdown>
-                    <i-select style="width:100px" v-model="curDepart" placeholder="科室" v-on:on-change="departmentChange" v-show="curReportType==1">
-                        <i-option :value="item.id" v-for="item in departmentList">{{item.name}}</i-option>
-                        
-                    </i-select>
-                    <i-select style="width:100px" v-model="curDateType" placeholder="日期类型" v-on:on-change="dateTypeChange">
-                        <i-option value="date">日报表</i-option>
-                        <i-option value="month">月报表</i-option>
-                        <i-option value="year">年报表</i-option>
-                    </i-select>
-                    <date-picker :type="curDateType" style="width: 160px;font-size:12px" placeholder="请选择时间"></date-picker>
-
-                    <i-button icon="ios-print-outline" class="btn">打印</i-button>
-                </div>
-                <div class="con">
-                    
-                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border></i-table>
-                </div>
-                
-            </div>
-        </div>
-        <!--right e-->
-    </div>
-
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.25" />
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
+    <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="~/jquery-easyui-1.4.5/themes/bootstrap/easyui.css" />
+    
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    <script  type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.09"></script>
+    <style type="text/css">
+        .tree-icon {
+            display: none
+        }
+        .tableTitle {
+            text-align: center;
+            font-weight: bold;
+            line-height: 40px;
+            font-size: 16px;
+            border: 1px solid #e8eaec;
+            border-bottom: 1px;
+            background: #f8f8f9
+        }
+    </style>
+    <style media="print" type="text/css">
+        .noprint {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="noPaddingBottom" style="background:#fff;padding:0;margin:0">
+        <!--right s-->
+        <div class="right allMain">
+            <div class="bottomView main-item">
+                <div class="module-title noprint">
+                    <img src="~/Content/images/energyDifficiency/fx.png" class="icon" />
+                    <div id="leftmenuSpace" style="display:inline-block"></div>
+
+                    <i-select style="width:100px" v-model="dateType" placeholder="日期类型" v-on:on-change="dateTypeChange">
+                        <i-option value=1>日报表</i-option>
+                        <i-option value=2>月报表</i-option>
+                        <i-option value=3>年报表</i-option>
+                    </i-select>
+                    <date-picker :type="curDateType" v-model="time" style="width: 160px;font-size:12px" placeholder="请选择时间" v-on:on-change="dateChange"></date-picker>
+
+                    <i-button icon="ios-print-outline" class="btn" v-on:click="openOrPrint">导出</i-button>
+                </div>
+                <div class="con " id="printCon">
+                    <div class="tableTitle">
+                        {{title}}
+                    </div>
+                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border style="width:100%"></i-table>
+                </div>
+                @*<div style="margin-top:10px;text-align:right" class="noprint">
+                    <Page :total="40" size="small" show-total show-elevator show-sizer />
+                </div>*@
+            </div>
+        </div>
+        <!--right e-->
+    </div>
+    <script type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.151"></script>
 </body>
 </html>
 
