@@ -14,5 +14,6 @@ namespace IDAO.Models
         public int CollTypeID { get; set; }
         public int EnerUserTypeID { get; set; }
         public string Name { get; set; }
+        public string DepName { get; set; }
     }
 }

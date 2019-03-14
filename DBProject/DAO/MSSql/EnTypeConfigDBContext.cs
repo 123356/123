@@ -38,7 +38,8 @@ namespace DAO
 
         public IList<t_EE_enTypeConfig> GetenConig(int uid,string depid="0")
         {
-            string sql = $"select a.*,b.Name from t_EE_enTypeConfig a join t_DM_CollectDevType b on a.CollTypeID=b.ID  where UID={uid}";
+            string sql = $@"select a.*,b.Name,c.Name as DepName from t_EE_enTypeConfig a join t_DM_CollectDevType b on a.CollTypeID=b.ID join t_EE_EnerUserType c  
+on a.EnerUserTypeID=c.id where UID={uid}";
             if (depid != "0")
                 sql += $" and EnerUserTypeID in({depid})";
 

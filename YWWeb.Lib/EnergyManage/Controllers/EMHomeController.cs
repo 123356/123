@@ -1153,13 +1153,25 @@ namespace EnergyManage.Controllers
                     {
                         table t = new table();
                         t.value.Add("Time", xi.Key.ToString());
+                        int i = 0;
                         foreach (var xt in xi.GroupBy(p => p.TypeName))
                         {
-                            t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
-                            t.value.Add("同比上月" + xt.Key, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            if (!TitleName.Keys.Contains("thisData" + i))
+                            {
+                                TitleName.Add("thisData" + i, "用" + xt.Key + "量");
+                            }
+
+                            t.value.Add("thisData" + i, xi.Sum(p => p.Value) + "");
+                            if (!TitleName.Keys.Contains("LastMonthData" + i))
+                            {
+                                TitleName.Add("LastMonthData" + i, "上月同比" + xt.Key);
+                            }
+                            t.value.Add("LastMonthData" + i, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            i++;
                         }
-                        t.value.Add("总费用", xi.Sum(p => p.Value) + "");
-                        t.value.Add("总同比上月", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
+
+                        t.value.Add("SumRate", xi.Sum(p => p.Value) + "");
+                        t.value.Add("SumBiLi", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
                         table.Add(t);
                     }
 
@@ -1189,13 +1201,25 @@ namespace EnergyManage.Controllers
                     {
                         table t = new table();
                         t.value.Add("Time", xi.Key.ToString());
+                        int i = 0;
                         foreach (var xt in xi.GroupBy(p => p.TypeName))
                         {
-                            t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
-                            t.value.Add("同比上年" + xt.Key, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            if (!TitleName.Keys.Contains("thisData" + i))
+                            {
+                                TitleName.Add("thisData" + i, "用" + xt.Key + "量");
+                            }
+
+                            t.value.Add("thisData" + i, xi.Sum(p => p.Value) + "");
+                            if (!TitleName.Keys.Contains("LastMonthData" + i))
+                            {
+                                TitleName.Add("LastMonthData" + i, "上月同比" + xt.Key);
+                            }
+                            t.value.Add("LastMonthData" + i, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            i++;
                         }
-                        t.value.Add("总费用", xi.Sum(p => p.Value) + "");
-                        t.value.Add("总同比上年", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
+
+                        t.value.Add("SumRate", xi.Sum(p => p.Value) + "");
+                        t.value.Add("SumBiLi", LastData.Where(p => p.RecordTime == xi.Key).Sum(p => p.Value) + "");
                         table.Add(t);
                     }
 
