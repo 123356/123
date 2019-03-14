@@ -1,5 +1,4 @@
-﻿
-//yct
+﻿//yct
 //did:设备id；mid:模块id，用户记录返回目标；pid:站室id
 function deviceinfo(sid, did) {
     var fullurl = "/DeviceManage/Index?did=" + did + "&pid=" + pid + "&sid=" + sid;
@@ -22,10 +21,10 @@ function showMain(pid) {
 }
 //开关状态监测
 function loadPointsInfo_kg() {
-
-    $.post("/PDRInfo/getSwitchInfo_kg", { "pid": pid }, function (data) {
+    //123
+    $.post("/PDRInfo/getSwitchInfo_kg", { "pid": pid }, function(data) {
         var arrswitch = eval("(" + data + ")");
-        $.each(arrswitch, function (i) {
+        $.each(arrswitch, function(i) {
             var sImg = "off";
             if (arrswitch[i].PV == 0)
                 sImg = "off";
@@ -39,32 +38,39 @@ function loadPointsInfo_kg() {
         });
     });
 }
+
 function loadPointsInfo(dids) {
     //ajaxbg.show();
     //    $(".page_content").css('background-image', "url(/Content/yicitu/p" + pid + ".png)");
     //    $(".alertmenu").hide();
     //    $("#p" + pid).show();
-    $.post("/PDRInfo/GetMaxTemp", { "pid": pid, "dids": dids }, function (data) {
+    $.post("/PDRInfo/GetMaxTemp", { "pid": pid, "dids": dids }, function(data) {
+        atable = null;
         var pointsjson = eval("(" + data + ")");
         var listarr = pointsjson.split('$');
         var jsonlist = listarr[0].split(',');
         var formheight = document.documentElement.clientHeight;
         var formWidth = document.documentElement.clientWidth;
-        var divtop = 0, divheight = 0, divleft = 0, divWidth = 0;
+        var divtop = 0,
+            divheight = 0,
+            divleft = 0,
+            divWidth = 0;
         var alarmcolor = ['33cc33', 'ffff00', 'ff6633', 'ff0000'];
 
         for (var rcount = 0; rcount < jsonlist.length; rcount++) {
             var countjsoin = jsonlist[rcount];
             var pointinfo = countjsoin.split('|');
-            var adid = pointinfo[0], amaxtemp = pointinfo[1], atable = pointinfo[2];
+            var adid = pointinfo[0],
+                amaxtemp = pointinfo[1],
+                atable = pointinfo[2];
             //$("#d" + adid).html(amaxtemp);
             var imgurl = $(".w" + adid).css("background-image"); //获取背景图
-            if (typeof (imgurl) == "undefined") {
+            if (typeof(imgurl) == "undefined") {
                 continue;
             }
 
             var dstate = pointinfo[3]; //获取设备状态
-            if (dstate != "0" && dstate != "")//更改背景图片
+            if (dstate != "0" && dstate != "") //更改背景图片
             {
                 //防止重复刷新
                 if (imgurl.indexOf("_1") < 0 && imgurl.indexOf("_2") < 0 && imgurl.indexOf("_3") < 0) {
@@ -100,37 +106,44 @@ function loadPointsInfo(dids) {
         for (var acount = 0; acount < alarmarr.length; acount++) {
             var alarmjson = alarmarr[acount];
             var alarminfo = alarmjson.split(':');
-            var tid = alarminfo[0], stateid = alarminfo[1];
+            var tid = alarminfo[0],
+                stateid = alarminfo[1];
             $("#page" + tid).css("background-color", "#" + alarmcolor[stateid]);
             $("#cpage" + tid).css("background-color", "#" + alarmcolor[stateid]);
         }
     });
 }
+
 function loadPointsInfoByCid(dids) {
-    $.post("/PDRInfo/GetMaxTempByCID", { "pid": pid, "cids": dids }, function (data) {
+    $.post("/PDRInfo/GetMaxTempByCID", { "pid": pid, "cids": dids }, function(data) {
         var pointsjson = eval("(" + data + ")");
         var listarr = pointsjson.split('$');
         var jsonlist = listarr[0].split(',');
         var formheight = document.documentElement.clientHeight;
         var formWidth = document.documentElement.clientWidth;
-        var divtop = 0, divheight = 0, divleft = 0, divWidth = 0;
+        var divtop = 0,
+            divheight = 0,
+            divleft = 0,
+            divWidth = 0;
         var alarmcolor = ['33cc33', 'ffff00', 'ff6633', 'ff0000'];
 
         for (var rcount = 0; rcount < jsonlist.length; rcount++) {
             var countjsoin = jsonlist[rcount];
             var pointinfo = countjsoin.split('|');
-            var adid = pointinfo[0], amaxtemp = pointinfo[1], atable = pointinfo[2];
+            var adid = pointinfo[0],
+                amaxtemp = pointinfo[1],
+                atable = pointinfo[2];
 
             //console.log("atable=====" + atable);
 
             //$("#d" + adid).html(amaxtemp);
             var imgurl = $(".w" + adid).css("background-image"); //获取背景图
-            if (typeof (imgurl) == "undefined") {
+            if (typeof(imgurl) == "undefined") {
                 continue;
             }
 
             var dstate = pointinfo[3]; //获取设备状态
-            if (dstate != "0" && dstate != "")//更改背景图片
+            if (dstate != "0" && dstate != "") //更改背景图片
             {
                 //防止重复刷新
                 if (imgurl.indexOf("_1") < 0 && imgurl.indexOf("_2") < 0 && imgurl.indexOf("_3") < 0) {
@@ -162,7 +175,8 @@ function loadPointsInfoByCid(dids) {
         for (var acount = 0; acount < alarmarr.length; acount++) {
             var alarmjson = alarmarr[acount];
             var alarminfo = alarmjson.split(':');
-            var tid = alarminfo[0], stateid = alarminfo[1];
+            var tid = alarminfo[0],
+                stateid = alarminfo[1];
             $("#page" + tid).css("background-color", "#" + alarmcolor[stateid]);
             $("#cpage" + tid).css("background-color", "#" + alarmcolor[stateid]);
         }
@@ -170,7 +184,7 @@ function loadPointsInfoByCid(dids) {
 }
 
 function loadHighOrLowPoint() {
-    if (typeof (graphType) == "undefined") {
+    if (typeof(graphType) == "undefined") {
         loadPointsInfo(OGdid);
     } else if (graphType == "low") {
         loadPointsInfoByCid(OGdid);
@@ -184,14 +198,14 @@ loadPointsInfo_kg();
 //实时更新一次图数据
 var timeTicket;
 clearInterval(timeTicket);
-timeTicket = setInterval(function () {
+timeTicket = setInterval(function() {
     //loadHighOrLowPoint();
     loadPointsInfo_kg();
 }, 2000);
 
 var timeTicket_Val;
 clearInterval(timeTicket_Val);
-timeTicket_Val = setInterval(function () {
+timeTicket_Val = setInterval(function() {
     loadHighOrLowPoint();
     //loadPointsInfo_kg();
 }, 10000);
@@ -212,4 +226,3 @@ if (window.screen.availWidth < 1920) {
     $("body").css({ "-webkit-transform": "scale(" + mul + ")", "margin-top": "-7em", "width": "auto" });
     $(".ycmain").css({ "left": "-" + leftMul + "px" });
 }
-
