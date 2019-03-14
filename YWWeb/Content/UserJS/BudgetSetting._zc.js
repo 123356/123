@@ -81,6 +81,11 @@
         Bili: 0,
         rightList: []
     },
+    filters: {
+        toFIxed2: function (e) {
+            return e.toFixed(2)
+        }
+    },
     methods: {
         //获取最左边数据
         getYearbugGetData: function () {
@@ -283,6 +288,14 @@
             var zNodes = data
             var zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             var getNodes = zTree.getNodes()
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var nodes = treeObj.transformToArray(treeObj.getNodes());
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                if (nodes[i].isParent) {
+                    treeObj.setChkDisabled(nodes[i], true);
+                }
+            }
+
             if (this.departBudgetData.length != 0) {
                 this.traverseTree(zTree, getNodes[0])
             }
@@ -741,13 +754,17 @@
         this.setWidth()
         this.setHeight()
         var that = this
+        $(".lastOverflow").width($(".last-main-item").width() + 50)
         window.onresize = function () {
             $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(0)
+            console.log($(".last-main-item").width() )
+            $(".lastOverflow").width($(".last-main-item").width() + 50)
             that.setWidth()
             that.setHeight()
         };
+        
     }
 })
 $(".con table tbody").delegate("tr", "click", function () {
@@ -755,4 +772,5 @@ $(".con table tbody").delegate("tr", "click", function () {
     $(".con table tbody tr td .ivu-input-number-input").removeClass("activeColor")
     $(this).find("td").addClass("trActive")
     $(this).find(".ivu-input-number-input").addClass("activeColor")
+
 })

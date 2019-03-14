@@ -43,12 +43,8 @@
                     <date-picker type="year" v-on:on-change="dateChange" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
                 </p>
                 <div class="btnView">
-                    <i-button class="btn" icon="ios-create-outline" v-on:click="edit" :disabled="!isEdit" v-html="editName">编辑</i-button>
+                    <i-button class="btn" icon="ios-create-outline" v-on:click="edit"  v-html="editName">编辑</i-button>
                     <i-button class="btn" icon="ios-settings-outline" v-on:click="showSetPriceModal" v-show="false">能源单价设置</i-button>
-                    <!-- <i-button class="btn" icon="ios-settings-outline" ref="test" v-on:click="test">测试{{count}}</i-button>
-                                   <i-button class="btn" icon="ios-cloud-upload" v-on:click="upload">历史上传</i-button>
-                    <input type="file" id="uploadFile" style="display:none" />
-                    <i-button class="btn" icon="ios-cloud-download-outline">下载</i-button>-->
                 </div>
             </div>
         </div>
@@ -96,7 +92,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="footer">当前余额<font v-html="everyMonthBalance">--</font></div>
+                <div class="footer">当前余额<font>{{everyMonthBalance | toFIxed2}}</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title">
@@ -118,7 +114,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="footer">当前余额<font v-html="enTypeBalance">--</font></div>
+                <div class="footer">当前余额<font>{{enTypeBalance | toFIxed2}}</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title" style="position:relative">
@@ -143,7 +139,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="footer">当前余额<font v-html="departBalance">--</font></div>
+                <div class="footer">当前余额<font>{{departBalance | toFIxed2}}</font></div>
             </div>
             <div class="main-item">
                 <div class="item-title">
@@ -170,21 +166,27 @@
                 <div class="footer">调整余额<font v-html="departAvgBalance">--</font></div>
             </div>
             <div class="main-item last-main-item">
-                <div class="module">
-                    <p class="title"><img src="~/Content/images/energyDifficiency/pie.png" />其它参考数据</p>
-                    <span class="dec">建筑面积</span>
-                    <p class="numtext"><font v-html="Area">--</font>㎡</p>
+                <div style="height:100%;overflow-y:auto" class="lastOverflow">
 
-                    <span class="dec">单位面积能耗</span>
-                    <span class="subdec">绿地医院标准能耗5.0/㎡</span>
-                    <p class="numtext"><font v-html="Bili">--</font></p>
-                </div>
-                <div class="module">
-                    <p class="title"><img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />去年能源消耗</p>
-                    <template v-for="item in rightList">
-                        <span class="typeName"><font v-html="item.name">--</font>/万元</span>
-                        <p class="numtext"><font v-html="item.value">--</font></p>
-                    </template>
+
+                    <div class="module">
+                        <p class="title"><img src="~/Content/images/energyDifficiency/pie.png" />其它参考数据</p>
+                        <span class="dec">建筑面积</span>
+                        <p class="numtext"><font v-html="Area">--</font>㎡</p>
+
+                        <span class="dec">单位面积能耗</span>
+                        <p class="numtext"><font v-html="Bili">--</font></p>
+                    </div>
+                    <div class="module">
+                        <p class="title"><img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />去年能源消耗</p>
+
+                        <template v-for="item in rightList">
+                            <span class="typeName"><font v-html="item.name">--</font>/万元</span>
+                            <p class="numtext"><font v-html="item.value">--</font></p>
+                        </template>
+
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -272,7 +274,7 @@
         </Modal>
     </div>
     
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.11"></script>
 </body>
 </html>
 
