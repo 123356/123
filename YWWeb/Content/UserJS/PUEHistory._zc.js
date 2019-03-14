@@ -123,15 +123,28 @@
         },
         //获取数据
         getPUEDataByTime: function () {
-            var that = this
+            var that = this;
+
+
+
+            console.log({
+                totaltype: this.curType,
+                datestart: this.fromatDate(this.selectDate[0]),
+                dateend: this.fromatDate(this.selectDate[1]),
+                pid: parseInt(this.PID)
+            })
+
+      
+
+
             this.$http({
                 url: '/Home/GetPUEDataByTime',
-                type: 'POST',
+                method: 'POST',
                 body: {
                     totaltype: this.curType,
                     datestart: this.fromatDate(this.selectDate[0]),
                     dateend: this.fromatDate(this.selectDate[1]),
-                    pid: this.PID
+                    pid: parseInt(this.PID)
                 }
             })
                 .then(function (res) {
