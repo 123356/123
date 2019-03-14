@@ -43,10 +43,10 @@ function JumpPage(v) {
         Index = 1;
     }
     document.getElementById("Index").value = Index;
-    dosearch(Index);
+    dosearch();
 }
 
-function dosearch(index) {
+function dosearch() {
     //dname = $("#selDID").combobox('getText');
     dname = $("#selDID").combobox('getValue');
     cname = $("#cname").val();
@@ -61,11 +61,12 @@ function dosearch(index) {
         return;
     }
     Page = $('.pagingnumber  option:selected').val();
-    Index = index || 1;
-    document.getElementById("Index").value = Index; // 更新dom结构数据
+    //Index = index || 1;
+    //document.getElementById("Index").value = Index; // 更新dom结构数据
     $('#list_data').datagrid({
         url: '/DataReport/HisData?rom=' + Math.random(),
-        queryParams: { "rows": Page, "page": Index, "pid": pid, "CID": cid, "dname": dname, "cname": cname, "startdate": startdate, "enddate": enddate, "typename": typename }
+        //"rows": Page, "page": Index,
+        queryParams: {  "pid": pid, "CID": cid, "dname": dname, "cname": cname, "startdate": startdate, "enddate": enddate, "typename": typename }
     });
 }
 
@@ -89,6 +90,7 @@ $("#SPID").combobox({
         if (docount == 0)
             loadDeviceList(pid);
         docount == 0;
+        dosearch()
     },
     onSelect: function (data) {
         pid = data.PID;
@@ -127,7 +129,7 @@ function loadDataType(did) {
             if (data.length > 0) {
                 $("#cbType").combobox('select', data[0].DataTypeID);
             }
-            dosearch();
+           
         }
     });
 }
@@ -146,17 +148,21 @@ function initCombCid(pid, did) {
            
         },
         onLoadSuccess: function (data) {
+           
             for (var item in data[0]) {
                 if (item == 'cid') {
                     $("#selCID").combobox('select', data[0][item]);
                 }
-            }           
+            }     
+            dosearch()
         }
     });
 }
+
 $('#list_data').datagrid({
     url: ''
 });
+
 function export1() {
     dname = $("#selDID").combobox('getText');
      cname = $("#cname").val();
