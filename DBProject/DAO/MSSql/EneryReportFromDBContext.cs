@@ -38,9 +38,13 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate
                     sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
                 else
                     sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
                 i++;
             }
-            sql += ") order by RecordTime";
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryReportFrom>(sql);
         }
 
@@ -58,9 +62,13 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
                     sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
                 else
                     sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
                 i++;
             }
-            sql += ") order by RecordTime";
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryReportFrom>(sql);
         }
 
@@ -78,10 +86,13 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
                 else
                     sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
                 i++;
             }
-            sql += ") order by RecordTime";
-            
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryReportFrom>(sql);
         }
     }
