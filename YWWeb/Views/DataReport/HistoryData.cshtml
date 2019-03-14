@@ -7,23 +7,86 @@
     <meta name="viewport" content="width=device-width" />
     <title>HistoryData</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
+    <script src="~/Content/js/jquery.tabs.js" type="text/javascript"></script>
+    <script src="~/Content/UserJS/tab._jm.js" type="text/javascript"></script>
     <style type="text/css">
-    .searchrow i{padding-right:10px; font-style:normal;}    
-   	.paging { height:30px; width:100%; background:#555; border:1px solid #222; font-size:12px; color:#fff; position:fixed; left:0px; bottom:0px;}
-	.paging span { display:block; height:30px; padding:2px; float:left;}
-	.paging select, .paging input { outline:none; resize:none; border:none; padding:0; -moz-border-radius: 5px; -webkit-border-radius: 5px;  border-radius:5px;}
-	.paging select { width:50px; height:25px; min-height:inherit;}
-	.paging input { width:30px; height:25px; min-height :inherit; line-height:20px; text-align:center; margin:0px 5px; }
-	.homepage a, .previouspage a, .nextpage a, .lastpage a { display:block; width:8px; height:12px; margin:6px; background:url(../content/images/pagination_icons.png) no-repeat;}
-	.homepage a { background-position:0 0;}
-	.previouspage a { background-position:-16px 0;}
-	.nextpage a { background-position:-32px 0;}
-	.lastpage a { background-position:-48px 0;}
-       
+        .searchrow i {
+            padding-right: 10px;
+            font-style: normal;
+        }
+
+        .paging {
+            height: 30px;
+            width: 100%;
+            background: #555;
+            border: 1px solid #222;
+            font-size: 12px;
+            color: #fff;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+        }
+
+            .paging span {
+                display: block;
+                height: 30px;
+                padding: 2px;
+                float: left;
+            }
+
+            .paging select, .paging input {
+                outline: none;
+                resize: none;
+                border: none;
+                padding: 0;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+            }
+
+            .paging select {
+                width: 50px;
+                height: 25px;
+                min-height: inherit;
+            }
+
+            .paging input {
+                width: 30px;
+                height: 25px;
+                min-height: inherit;
+                line-height: 20px;
+                text-align: center;
+                margin: 0px 5px;
+            }
+
+        .homepage a, .previouspage a, .nextpage a, .lastpage a {
+            display: block;
+            width: 8px;
+            height: 12px;
+            margin: 6px;
+            background: url(../content/images/pagination_icons.png) no-repeat;
+        }
+
+        .homepage a {
+            background-position: 0 0;
+        }
+
+        .previouspage a {
+            background-position: -16px 0;
+        }
+
+        .nextpage a {
+            background-position: -32px 0;
+        }
+
+        .lastpage a {
+            background-position: -48px 0;
+        }
     </style>
 </head>
 <body>
-    <table id="list_data" style="width: auto;" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#Histb',method:'post',striped:true"
+
+    <table id="list_data" style="width: auto;" pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#Histb',method:'post',striped:true"
            fitcolumns="true">
         <thead>
             <tr>
@@ -45,7 +108,7 @@
                 <th field='Remarks' width="30px">
                     描述
                 </th>
-                <th field='PV' sortable="true" width="30px">
+                <th field='PV'  width="30px">
                     测量值
                 </th>
                 @*<th field='报警限值' width="30px">
@@ -60,8 +123,8 @@
             </tr>
         </thead>
     </table>
-    <div class="paging">
-        <span class="pagingnumber"><select><option>10</option><option selected="selected">20</option></select></span>
+    <div class="paging" style="display:none">
+        <span class="pagingnumber"><select><option>10</option><option selected="selected">20</option><option>50</option></select></span>
         <span class="homepage"><a onclick="JumpPage(-9999)" style=" cursor:pointer"></a></span>
         <span class="previouspage"><a onclick="JumpPage(-1)" style=" cursor:pointer"></a></span>
         <span>第<input type="text" id="Index" />页</span>
@@ -87,7 +150,7 @@
             </i>@*<i>
                 监测类型：
                 <input id="cname" style="width: 120px;" />
-            </i>*@ 
+            </i>*@
             <i>
                 起始时间：
                 <input id="StartDate" style="width: 120px; height: 26px;" />
@@ -104,8 +167,8 @@
         </div>
 
     </div>
-    
-    <script src="~/Content/UserJS/HistoryData._jm.js?v=1.10"></script>
+
+    <script src="~/Content/UserJS/HistoryData._jm.js?v=1.22"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 </body>
 </html>
