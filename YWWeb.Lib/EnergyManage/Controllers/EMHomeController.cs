@@ -1096,7 +1096,7 @@ namespace EnergyManage.Controllers
                         foreach (var xi in data.GroupBy(p => p.RecordTime))
                         {
                             table t = new table();
-                            t.value.Add("Time", xi.Key.ToString());
+                            t.value.Add("日期", xi.Key.ToString());
                             foreach (var xt in xi.GroupBy(p => p.TypeName))
                             {
                                 t.value.Add(xt.Key, xi.Sum(p => p.Value) + "");
