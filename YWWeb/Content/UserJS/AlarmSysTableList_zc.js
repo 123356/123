@@ -80,7 +80,6 @@ new Vue({
             })
             .then(function (res) {
                 that.rooms = res.data
-                console.log(res.data)
                 
             })
             .catch(function (e) {
@@ -119,12 +118,21 @@ new Vue({
         dosearch:function(){
             this.getTableData()
         },
+        formaterDate: function (time) {
+            var date = new Date(time)
+            date = date.toLocaleDateString().replace(/\//g, "-") 
+            return date
+        },
         //导出
-        export1:function(){
+        export1: function () {
             this.$http({
                 url: "/AlarmManage/ExportAlarmSysTableData",
                 methods: 'post',
-                params: this.searchForm
+                params :{
+                    pid: this.searchForm.pid,
+                    startdate: this.formaterDate(this.searchForm.startdate),
+                    enddate: this.formaterDate(this.searchForm.enddate)
+                }
             })
             .then(function (res) {
                 window.open('http://' + window.location.host + res.data);
