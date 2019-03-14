@@ -10,7 +10,7 @@ namespace IDAO.Models
     {
         public int ID { get; set; }
         public decimal Value { get; set; }
-        public string Name { get; set; }
+        //public string Name { get; set; }
         public decimal Rate { get; set; }
 
         //public int Type { get; set; }

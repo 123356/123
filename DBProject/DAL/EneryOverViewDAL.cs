@@ -129,14 +129,53 @@ namespace DAL
             }
             return data;
         }
-
-
-        public IList<t_V_EneryView> GetLookDatas(string cids, string pids, string time)
+        public IList<t_V_EneryView> GetDayDatasByTime(Dictionary<int,string> cpids, int type, string startTime, string endTime)
         {
             IList<t_V_EneryView> data = new List<t_V_EneryView>();
             try
             {
-                data = _dbFactory.eneryOverView.GetLookDatas(cids, pids, time);
+                data = _dbFactory.eneryOverView.GetDayDatasByTime(cpids, type, startTime, endTime);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+        public IList<t_V_EneryView> GetMonthDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetMonthDatasByTime(cpids,type, startTime, endTime);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+        public IList<t_V_EneryView> GetYearDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetYearDatasByTime(cpids, type, startTime, endTime);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+
+        public IList<t_V_EneryView> GetLookDatas(Dictionary<int,string> cpids, string time)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetLookDatas(cpids, time);
             }
             catch (Exception ex)
             {

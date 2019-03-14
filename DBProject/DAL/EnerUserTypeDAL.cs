@@ -74,5 +74,18 @@ namespace DAL
             }
             return data;
         }
+        public IList<t_EE_EnerUserType> GetItemName(string addcid)
+        {
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
+            try
+            {
+                data = _dbFactory.enerUserType.GetItemName(addcid);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace DAO
               .HasKey(t => new { t.QID });
             base.OnModelCreating(modelBuilder);
         }
-        public IList<t_V_EnerySelectView> GetDatas(string time, string cids, string pids, int did, int cotypeid)
+        public IList<t_V_EnerySelectView> GetDatas(string time, Dictionary<int, string> cpids, int did, int cotypeid)
         {
             string sql = $@"select a.RecordTime,d.DeviceName,c.Name,a.QID,a.UserPowerRate from t_EE_PowerQualityMonthly a 
 join t_DM_CircuitInfo b on a.CID = b.CID
@@ -32,15 +32,20 @@ join t_DM_DeviceInfo d on b.DID = d.DID
 where a.UserPowerRate is not null and a.UserPowerRate!=0";
             if (!string.IsNullOrEmpty(time))
             {
-                sql += $" and a.RecordTime='{time}'";
+                sql += $" and a.RecordTime='{Convert.ToDateTime(time).ToString("yyyy-MM-dd")}'";
             }
-            if (!string.IsNullOrEmpty( cids))
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
             {
-                sql += $" and a.CID IN ({cids})";
-            }
-            if (!string.IsNullOrEmpty(cids))
-            {
-                sql += $" and a.PID IN ({pids})";
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
             }
             if (did != 0)
             {
