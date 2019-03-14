@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface ICircuitInfo:IDAOBase,IDisposable
     {
-        IList<t_DM_CircuitInfo> GetCID(string cids, int type);
+        IList<t_DM_CircuitInfo> GetCID(Dictionary<int, string> cpids, int type);
 
         IList<t_DM_CircuitInfo> GetCIDByCIDS(string cids);
     }

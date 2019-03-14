@@ -28,12 +28,12 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_V_EnerySelectView> GetDatas(string time, string cids,string pids, int did = 0, int cotypeid = 0)
+        public IList<t_V_EnerySelectView> GetDatas(string time, Dictionary<int,string> cpids, int did = 0, int cotypeid = 0)
         {
             IList<t_V_EnerySelectView> data = new List<t_V_EnerySelectView>();
             try
             {
-                data = _dbFactory.enerySelectView.GetDatas(time, cids, pids, did, cotypeid);
+                data = _dbFactory.enerySelectView.GetDatas(time, cpids, did, cotypeid);
             }
             catch (Exception ex)
             {

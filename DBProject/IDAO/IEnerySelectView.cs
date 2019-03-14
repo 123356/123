@@ -9,6 +9,6 @@ namespace IDAO
 {
     public interface IEnerySelectView:IDAOBase,IDisposable
     {
-        IList<t_V_EnerySelectView> GetDatas(string time, string cids,string pids, int did,  int cotypeid);
+        IList<t_V_EnerySelectView> GetDatas(string time, Dictionary<int,string> cpids, int did,  int cotypeid);
     }
 }

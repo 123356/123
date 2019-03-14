@@ -26,68 +26,170 @@ namespace DAO
 
         public IList<t_V_EneryView> GetDatas(string cids, string pids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
 
-on  CONVERT(varchar(5), b.CID)=d.addCid join
 
- t_EE_EnerUserType c on d.child_id=c.id
 
 where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
 
-        public IList<t_V_EneryView> GetLookDatas(string cids, string pids, string time)
+        public IList<t_V_EneryView> GetLookDatas(Dictionary<int,string> cpids, string time)
         {
             string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,a.CID,CONVERT(varchar(10),RecordTime, 120) as Name,CONVERT(varchar(10),RecordTime, 120) as CName  from t_EE_PowerQualityMonthly a
 
-where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
+
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
 
         public IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
 
-on  CONVERT(varchar(5), b.CID)=d.addCid join
 
- t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate is not null and UsePower is not null";
             if (type != 0)
-                sql += " and b.coolect_dev_type={type}";
+                sql += $" and b.coolect_dev_type={type}";
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
         public IList<t_V_EneryView> GetYearDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CIDjoin t_EE_EnerUserProject d 
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CIDjoin t_EE_EnerUserProject d 
 
 on  CONVERT(varchar(5), b.CID)=d.addCid join
 
  t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
             if (type != 0)
-                sql += " and b.coolect_dev_type={type}";
+                sql += $" and b.coolect_dev_type={type}";
+
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
         public IList<t_V_EneryView> GetDayDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name,b.CName,a.CID  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID join t_EE_EnerUserProject d 
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID
 
-on  CONVERT(varchar(5), b.CID)=d.addCid join
 
- t_EE_EnerUserType c on d.child_id=c.id
 
-where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
 
             if (type != 0)
-                sql += " and b.coolect_dev_type={type}";
+                sql += $" and b.coolect_dev_type={type}";
+
+            sql += " order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
+
+        public IList<t_V_EneryView> GetDayDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID
+
+
+
+where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
+
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+
+            if (type != 0)
+                sql += $" and b.coolect_dev_type={type}";
+
+            sql += " order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
+
+        public IList<t_V_EneryView> GetMonthDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+
+
+
+where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
+
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+
+            if (type != 0)
+                sql += $" and b.coolect_dev_type={type}";
+
+            sql += " order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
+
+        public IList<t_V_EneryView> GetYearDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+
+
+
+where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
+
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+
+            if (type != 0)
+                sql += $" and b.coolect_dev_type={type}";
+
+            sql += " order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
+
         public DbSet<t_V_EneryView> Datas { get; set; }
     }
 }

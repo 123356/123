@@ -28,12 +28,12 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_DM_CircuitInfo> GetCID(string cids,int type)
+        public IList<t_DM_CircuitInfo> GetCID(Dictionary<int, string> cpids, int type)
         {
             IList<t_DM_CircuitInfo> data = new List<t_DM_CircuitInfo>();
             try
             {
-                data = _dbFactory.circuitinfo.GetCID(cids, type);
+                data = _dbFactory.circuitinfo.GetCID(cpids, type);
             }
             catch (Exception ex)
             {
