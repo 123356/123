@@ -426,8 +426,27 @@
                         type: 'pie',
                         radius: ['40%', '60%'],
                         center: ['50%', '55%'],
+                        avoidLabelOverlap: false,
+                        hoverAnimation: false,
                         label: {
-                            show: true
+                            show: true,
+                            normal: {
+                                show: true,
+                                position: 'center',
+                                formatter: [
+
+                                    '{b|' + allPower.toFixed(2) + '}',
+                                ].join('\n'),
+                                rich: {
+                                  
+                                    b: {
+                                        color: '#525252',
+                                        lineHeight: 30,
+                                        fontSize: 18,
+                                    }
+                                },
+                            },
+                                
                         },
                         data: series,
                         itemStyle: {
