@@ -146,9 +146,22 @@ var vm = new Vue({
                 this.node.delCid = this.ViewToPIDCId(this.delCid);
                 var name = that.node.title;
                 this.$http({ url: "/energyManage/EMSetting/AddTreeNode", method: "post", body: { parent_id: that.node.parent_id, unit_id: that.UnitData.UnitID, unit_head: that.node.head, unit_note: that.node.note, addCid: that.node.addCid || "", delCid: that.node.delCid || "", item_type: that.treeType, Name: name, id: -1, unit_area: that.node.area || 0, unit_people: that.node.people || 0, } }).then(function(res) {
+                    console.log(this.treeParent.children[0])
+
                     if (res.data.length) {
                         const children = this.treeParent.children || [];
-                        children.push({ title: name, area: res.data[0].unit_area || 0, people: res.data[0].unit_people || 0, id: res.data[0].child_id, head: res.data[0].unit_head, note: res.data[0].unit_note, addCid: res.data[0].addCid || "", delCid: res.data[0].delCid || "", expand: true });
+                        children.push({
+                            pId: res.data[0].parent_id,
+                            title: name,
+                            area: res.data[0].unit_area || 0,
+                            people: res.data[0].unit_people || 0,
+                            id: res.data[0].child_id,
+                            head: res.data[0].unit_head,
+                            note: res.data[0].unit_note,
+                            addCid: res.data[0].addCid || "",
+                            delCid: res.data[0].delCid || "",
+                            expand: true
+                        });
                         this.$set(this.treeParent, 'children', children);
                         this.$Message.success("添加成功")
                     } else { this.$Message.error("添加失败") }
