@@ -182,7 +182,7 @@ clearInterval(timeTicket);
 timeTicket = setInterval(function() {
     //loadHighOrLowPoint();
     loadPointsInfo_kg();
-}, 2000);
+}, 5000);
 
 var timeTicket_Val;
 clearInterval(timeTicket_Val);
