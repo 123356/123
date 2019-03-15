@@ -28,55 +28,6 @@ namespace DAL
             }
             return _DataDal;
         }
-
-
-
-
-        //public IList<t_V_EneryView> GetEneryPowerOverview(int uid)
-        //{
-        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
-        //    try
-        //    {
-        //        data = _dbFactory.eneryOverView.GetEneryPowerOverview(uid);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //    return data;
-
-        //}
-        //public IList<t_V_EneryView> GetEneryWaterOverview(int uid)
-        //{
-        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
-        //    try
-        //    {
-        //        data = _dbFactory.eneryOverView.GetEneryWaterOverview(uid);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //    return data;
-
-        //}
-        //public IList<t_V_EneryView> GetEneryGasOverview(int uid)
-        //{
-        //    IList<t_V_EneryView> data = new List<t_V_EneryView>();
-        //    try
-        //    {
-        //        data = _dbFactory.eneryOverView.GetEneryGasOverview(uid);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //    return data;
-
-        //}
         public IList<t_V_EneryView> GetDatas(string cids,string pids,string time)
         {
             IList<t_V_EneryView> data = new List<t_V_EneryView>();
@@ -176,6 +127,20 @@ namespace DAL
             try
             {
                 data = _dbFactory.eneryOverView.GetLookDatas(cpids, time);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public IList<t_V_EneryView> GetMonthDatas(Dictionary<int, string> cpids, string time)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetMonthDatas(cpids, time);
             }
             catch (Exception ex)
             {
