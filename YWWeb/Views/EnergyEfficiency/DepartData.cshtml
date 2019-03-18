@@ -24,9 +24,12 @@
             <div class="top">
                 <div class="right-top-left flex-1">
                     <div class="module-title">
-                        <img src="~/Content/images/energyDifficiency/fxjg.png" class="icon" />
-                        <span>{{uName}}</span>
-                        <div class="datePicekerView">
+                        <div style="display:inline-block">
+                            <img src="~/Content/images/energyDifficiency/fxjg.png" class="icon" />
+                            <span v-html="uName">--</span>
+                        </div>
+                        
+                        <div class="datePicekerView"  style="display:inline-block;position:inherit">
                             <date-picker v-model="curDate" type="month" size="small" v-on:on-change="dateChange"></date-picker>
                         </div>
                     </div>
@@ -34,7 +37,7 @@
                         <div class="chart flex-1 noData" v-if="!pieShow">暂无数据</div>
                         <div class="chart flex-1" id="piechart" :style="{display:pieShow?'block':'none',width:'100%',height:'100%'}"></div>
                         <div class="flex-4" style="overflow:hidden">
-                            <i-table border :columns="analysisColumns" :data="analysisData" :height="analysisTableHeight"></i-table>
+                            <i-table border :columns="analysisColumns" :data="analysisData" :height="analysisTableHeight" :no-data-text="noDataText" style="overflow-x:hidden"></i-table>
                         </div>
                     </div>
 
@@ -69,7 +72,7 @@
 
 
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/DepartData._jm.js?v=1.12"></script>
+    <script type="text/javascript" src="~/Content/UserJS/DepartData._jm.js?v=1.18"></script>
 </body>
 </html>
 

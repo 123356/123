@@ -73,8 +73,10 @@
             var zNodes = data
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             function nodeClick(event, treeId, treeNode) {
-                $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id)
+                $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id )
                 this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id
+                sessionStorage.setItem("isParent", treeNode.isParent)
+                
             }
         },
         selectChange: function (res) {

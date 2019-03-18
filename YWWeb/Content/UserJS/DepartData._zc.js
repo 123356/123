@@ -17,6 +17,7 @@
         pieShow: true,
         barShow: true,
         loading: true,
+        noDataText:"暂无数据",
     },
     methods: {
         //获取能源类型
@@ -56,7 +57,6 @@
                 }
             })
                 .then(function (res) {
-                    console.log(res.data.length)
                     if (res.data.length > 0) {
                         that.pieShow = true
                         that.createPieChart(res.data)
@@ -142,6 +142,7 @@
                         tempTable.push(data.table[i].value)
                     }
                     that.analysisData = tempTable
+                   
 
                 })
                 .catch(function (e) {
@@ -176,10 +177,8 @@
                             that.barShow = false
                         }
                     } else {
-                        console.log("为false")
                         that.barShow = false
                     }
-                    console.log(that.barShow)
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -432,6 +431,11 @@
         }
     },
     beforeMount: function () {
+        var isParent = sessionStorage.getItem("isParent")
+        if (isParent == "false") {
+            this.noDataText = "无子项数据"
+        }
+        
         this.departmentID = window.location.search.split("=")[1]
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")

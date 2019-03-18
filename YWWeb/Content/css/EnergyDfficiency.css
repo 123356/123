@@ -1131,7 +1131,8 @@ html {
 .datePicekerView {
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
+    z-index:3000 !important;
 }
             .datePicekerView .ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper{
                 height:22px;
@@ -1187,8 +1188,30 @@ html {
         height:45px
 
     }
-    @media screen and (max-width: 1300px) {
-        .BudgetSetting .header .ivu-input{
+.datePicker .ivu-input {
+    height: 28px
+}
+.inlineBlock{
+    display:inline-block
+}
+.userBtn {
+    color: #fff;
+    background: #54beaa;
+    font-size: 1.2rem;
+    padding: 4px 10px;
+    margin-top: 2px;
+    border:0px
+    
+}
+.tree-icon {
+    display: none !important
+}
+.userBtn:hover {
+    background: #54beaa;
+    color:#fff
+}
+@media screen and (max-width: 1300px) {
+    .BudgetSetting .header .ivu-input{
                     font-size:1.6rem
                 }
                 .allMain .searchView {
