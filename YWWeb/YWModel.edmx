@@ -768,6 +768,7 @@
           <Property Name="CSMPhone" Type="varchar" MaxLength="20" />
           <Property Name="ProjectType" Type="int" />
           <Property Name="LastYearPower" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ArchitectureArea" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="t_CM_UnitProjectType">
           <Key>
@@ -5881,6 +5882,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="CSMPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ProjectType" Type="Int32" />
           <Property Name="LastYearPower" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ArchitectureArea" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="t_ES_UsePlanChange">
           <Key>
@@ -8588,6 +8590,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_Unit">
             <EntityTypeMapping TypeName="YWModel.t_CM_Unit">
               <MappingFragment StoreEntitySet="t_CM_Unit">
+                <ScalarProperty Name="ArchitectureArea" ColumnName="ArchitectureArea" />
                 <ScalarProperty Name="LastYearPower" ColumnName="LastYearPower" />
                 <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
                 <ScalarProperty Name="CSMPhone" ColumnName="CSMPhone" />

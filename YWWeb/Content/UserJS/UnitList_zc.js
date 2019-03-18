@@ -46,7 +46,7 @@ $("#IndustryID").combobox({
         var data = $('#IndustryID').combobox('getData');
         console.log(data[0].IndustryName);
         if (data.length > 0) {
-            $("#IndustryID").combobox('select', data[0].IndustryID);
+            $("#IndustryID").combobox('setValue', data[0].IndustryID);
         }
     }
 });
@@ -81,7 +81,7 @@ function loadSelectPDR(arr) {
                 var el = opts.finder.getEl(target, value);
                 el.find('input.combobox-checkbox')._propAttr('checked', true);
             })
-            if (arr != ""&&arr!=null) {
+            if (arr != "" && arr != null) {
                 $("#pdflist").combobox("setValues", arr.split(','));
                 var opts = $(this).combobox('options');
                 var target = this;
@@ -191,13 +191,14 @@ function edit() {
             $("#InstalledCapacitys").numberbox('setValue', row.InstalledCapacitys)
             $("#IndustryID").combobox("setValue", row.IndustryID);
             $("#Loss").val(row.Loss),
-            $("#LossAdd").val(row.LossAdd),
-            $("#CSMMan").val(row.CSMMan),
-            $("#CSMPhone").val(row.CSMPhone),
-            //$("#SpareBase").val(row.SpareBase)
+                $("#LossAdd").val(row.LossAdd),
+                $("#CSMMan").val(row.CSMMan),
+                $("#CSMPhone").val(row.CSMPhone),
+                //$("#SpareBase").val(row.SpareBase)
                 $("#Coordination").val(row.Coordination);
-           
-            $("#LastYearPower").numberbox('setValue',row.LastYearPower);
+            $("#ArchitectureArea").numberbox('setValue', row.ArchitectureArea)
+
+            $("#LastYearPower").numberbox('setValue', row.LastYearPower);
             $("#ProjectType").combobox("setValue", row.ProjectType);
             $("#editwin").dialog({
                 closed: false,
@@ -216,25 +217,93 @@ function edit() {
         }
     }
 }
+function check(id, msg) {
+    if ($("#" + id).val() == "") {
+        $.messager.alert("提示", msg, "info");
+        $(".tabs li:eq(0) a").addClass("tabsBk")
+        return false
+    }
+    return true
+}
+
+function valiate() {
+    var reg = /^1\d{10}$/;
+    var regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+    if (!check("UnitName", "请填写单位名称！")) {
+        return
+    }
+    if (!check("LinkMan", "请填写联系人！")) {
+        return
+    }
+    if (!check("LinkMobile", "请填写联系手机号！")) {
+        return
+    } else {
+        if (reg.test($("#LinkMobile").val()) == false) {
+            $.messager.alert("提示", "请填写正确的联系手机！", "info");
+            return false;
+        }
+        
+    }
+
+
+    if (!check("LinkPhone", "请填写座机电话！")) {
+        return
+    }
+
+    
+    if ($("#Email").val()!=""&& regex.test($("#Email").val()) == false ) {
+        $.messager.alert("提示", "请填写正确的邮箱格式！", "info");
+        return false;
+    }
+
+
+    if (!check("CSMMan", "请填写客服经理！")) {
+        return
+    }
+    if (!check("CSMPhone", "请填写客服电话！")) {
+        return
+    } else {
+        if (reg.test($("#CSMPhone").val()) == false) {
+            $.messager.alert("提示", "请填写正确的客服电话！", "info");
+            return false;
+        }
+    }
+    if (!check("LinkAddress", "请填写联系地址！")) {
+        return 
+    }
+
+
+
+    console.log($("#UnitProvince").combobox("getValue"))
+    console.log($("#UnitCity").combobox("getValue") )
+    console.log($("#IndustryID").combotree("getText") )
+    if ($("#UnitProvince").combobox("getValue") == "") {
+        $.messager.alert("提示", "请选择所属省份", "info");
+        $(".tabs li:eq(0) a").addClass("tabsBk")
+        return false
+    }
+    if ($("#UnitCity").combobox("getValue") == "") {
+        $.messager.alert("提示", "请选择所属区域", "info");
+        $(".tabs li:eq(0) a").addClass("tabsBk")
+        return false
+    }
+    
+
+    if (!check("Coordination", "请填写地图坐标！")) {
+        return 
+    }
+
+
+    return true
+}
+
+
 
 function save() {
     var reg = /^1\d{10}$/;
     var regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
-    if ($("#UnitName").val() == "" || $("#LinkMan").val() == "" || $("#CSMMan").val() == "" || $("#InstalledCapacitys").val() == "" || $("#IndustryID").combotree("getText") == "" || $("#LinkPhone").val() == "" || $("#LinkAddress").val() == "" || $("#UnitProvince").combobox("getValue") == "0" || $("#UnitCity").combobox("getValue") == "0" || $("#Coordination").val() == "") {
-        $.messager.alert("提示", "请填写必填项目！", "info");
-        return false;
-    }
-    else if (reg.test($("#LinkMobile").val()) == false) {
-        $.messager.alert("提示", "请填写正确的联系手机！", "info");
-        return false;
-    }
-    else if (reg.test($("#CSMPhone").val()) == false) {
-        $.messager.alert("提示", "请填写正确的客服电话！", "info");
-        return false;
-    }
-    else if (regex.test($("#Email").val()) == false) {
-        $.messager.alert("提示", "请填写正确的邮箱格式！", "info");
-        return false;
+    if (!valiate()) {
+        return
     }
     var pdrid = '';
     pdrid = $("#pdflist").combobox("getValues");
@@ -261,10 +330,11 @@ function save() {
         CSMPhone: $("#CSMPhone").val(),
         //SpareBase: $("#SpareBase").val(),
         Coordination: $("#Coordination").val(),
-        Type:1,
+        Type: 1,
         PDRList: pdrid.join(','),
         ProjectType: $("#ProjectType").combobox("getValue"),
         LastYearPower: $("#LastYearPower").val(),
+        ArchitectureArea: $("#ArchitectureArea").val(),
     };
     $.post("/SysInfo/SaveUnit", postData, function (data) {
         if (data == "OKadd") {
@@ -311,7 +381,7 @@ function Delete() {
 function dosearch() {
     var uname = $("#unitname").val();
     var uman = $("#linkman").val();
-    $('#list_data').datagrid('load', { "unitname": uname, "linkman": uman ,"type":1});
+    $('#list_data').datagrid('load', { "unitname": uname, "linkman": uman, "type": 1 });
     $('#list_data').datagrid('uncheckAll');
 }
 $('#list_data').datagrid({
