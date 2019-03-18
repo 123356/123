@@ -39,8 +39,41 @@
         Peozhanbi: null,
         LPeozhanbi: null,
         zongBudget: null,
+        initSelectShow: true,
+        unitDepartName:null,
     },
     methods: {
+        openSelect: function (e) {
+            if (e) {
+                this.initSelectShow = false
+            }
+        },
+        checkStation: function (e) {
+        },
+       
+        renderContent(h, { root, node, data }) {
+           
+            var disabled = false
+            var that = this
+            return h('Option', {
+                style: {
+                    display: 'inline-block',
+                    margin: '5px'
+                },
+                attrs: {
+                    selected: data.id == that.addForm.EnerUserTypeID,
+                    //disabled: disabled
+                },
+                props: {
+                    value: data.id
+                },
+                on: {
+                    click: () => {
+                    }
+                }
+            }, data.name)
+        },
+
         toAreaTree: function () {
             location.href = '/EnergyManage/EMSetting/AreaTree'
         },
@@ -59,19 +92,27 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
+            
             this.$http({
-                url: "/energyManage/EMSetting/GetHistoryList",
+                url: "/energyManage/EMSetting/GetTreeData",
                 method: "post",
                 body: {
-                    unitID: parseInt(that.uid),
-                    item_type: 2
+                    unitID: that.uid,
+                    item_type: 2,
+                    unitName: that.Uname
                 }
             }).then(function (res) {
-                that.departMentList = res.data;
+                if (res.data.children.length > 0) {
+                    that.addForm.EnerUserTypeID = res.data.children[0].id
+                    that.unitDepartName = res.data.children[0].name
+                }
+                
+                that.departMentList = res.data.children	
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
         },
+    
         //删除能源
         deleteConfig: function (id) {
             var that = this
@@ -97,21 +138,23 @@
         },
         //添加能源
         addConfig: function () {
+            
             var that = this
             this.$http({
-                url: '/energyManage/EMHome/AddConfig',
+                url: '/energymanage/emhome/addconfig',
                 method: 'post',
                 body: {
-                    CollTypeID: this.addForm.CollTypeID,
-                    EnerUserTypeID: this.addForm.EnerUserTypeID,
-                    UID: this.uid,
+                    colltypeid: this.addForm.CollTypeID,
+                    enerusertypeid: this.addForm.EnerUserTypeID,
+                    uid: this.uid,
 
                 }
             })
                 .then(function (res) {
-                    if (res.data > 0) {
-                        that.$Message.success('添加成功');
+                    if (res.data == 1) {
                         that.addModal1Visable = false
+                        that.$Message.success('添加成功');
+                        
 
                         that.getEneryOverView()
                     } else {

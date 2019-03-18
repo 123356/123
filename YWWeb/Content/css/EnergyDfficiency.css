@@ -957,7 +957,7 @@ html {
     width:600px !important
 }
 .addEnergyModal .ivu-modal-body {
-    height: 250px;
+    height: 270px;
 }
 .setPriceModal .ivu-modal {
     width: 550px !important
@@ -1487,3 +1487,12 @@ html {
               
  }
 
+
+
+@media print {
+    body {
+        zoom:0.628
+    }
+
+  
+}
