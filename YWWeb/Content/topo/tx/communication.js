@@ -21,7 +21,6 @@ Layout.prototype = {
         this.dragline($(this.lineright), 'right');
         this.resize();
         this.adaptive();
- 
     },
     //加载class 添加节点  class 给定默认样式
     creatBox: function() {
