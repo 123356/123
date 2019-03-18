@@ -435,7 +435,7 @@
         if (isParent == "false") {
             this.noDataText = "无子项数据"
         }
-        
+        sessionStorage.getItem("isParent",true)
         this.departmentID = window.location.search.split("=")[1]
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")
