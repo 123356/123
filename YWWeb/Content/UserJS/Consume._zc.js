@@ -239,7 +239,7 @@
             })
             .then(function (res) {
                 if (res.data) {
-                    if (res.data.name.length > 0) {
+                    if (res.data.name) {
                         that.barShow = true
                     } else {
                         that.barShow = false
@@ -272,11 +272,11 @@
                         that.lineShow = true
                         that.createEnergyConLine(res.data)
                     } else {
-                        lineChart.clear()
+                        
                         that.lineShow = false
                     }
                 } else {
-                    lineChart.clear()
+                    
                     that.lineShow = false
                 }
             })
@@ -669,6 +669,7 @@
                     }
                 ]
             };
+            lineChart.clear()
             lineChart.setOption(option)
             window.addEventListener("resize", () => {
                 lineChart.resize()
