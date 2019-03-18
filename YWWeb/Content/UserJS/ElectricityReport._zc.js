@@ -102,7 +102,7 @@
            
             
             var type = ""
-            switch (this.curDateType) {
+            switch (this.dateType) {
                 case 1:
                     type = "日"
                     break
@@ -124,8 +124,6 @@
             ]
             var keys = Object.keys(data)
             var values = Object.values(data)
-            console.log(keys)
-            console.log(values)
            
             for (var i in keys) {
                     var temp = {
@@ -138,7 +136,6 @@
             }
             
             this.tableCol = arr
-            console.log(this.tableCol)
         },
         //获取报表数据
         getTableData: function () {
@@ -164,7 +161,12 @@
                         arr.push(res.data.table[i].value)
                     }
                     that.tableData = arr
-                    that.setTableTitle(res.data.TitleName)
+                    if (res.data) {
+                        that.setTableTitle(res.data.TitleName)
+                    } else {
+                        that.tableCol = []
+                    }
+                    
                 })
                 .catch(function (e) {
 
@@ -175,7 +177,14 @@
         },
         formaterDate: function () {
             var date = new Date(this.time)
-            date = date.toLocaleDateString().replace(/\//g, "-") 
+            if (this.dateType == 1) {
+                date = date.toLocaleDateString().replace(/\//g, "-")
+            } else if (this.dateType == 2) {
+                date = date.getFullYear() + "-" + (date.getMonth() + 1)
+            } else {
+                date = date.getFullYear()
+            }
+           
             return date
         },
         //打印  or 导出
@@ -206,6 +215,7 @@
 
                     break;
             }
+            this.getTableData()
         },
         departmentChange: function (e) {
 
