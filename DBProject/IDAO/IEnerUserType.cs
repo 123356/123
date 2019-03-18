@@ -12,7 +12,7 @@ namespace IDAO
     /// </summary>
     public interface IEnerUserType : IDAOBase, IDisposable
     {
-        IList<t_EE_EnerUserType> GetComobxList();
+        IList<t_EE_EnerUserType> GetComobxList(int itemType);
         IList<t_EE_EnerUserType> CheckHistory(string Name, int item_type);
         IList<t_EE_EnerUserType> AddHistory(string Name, int item_type);
         IList<t_EE_EnerUserType> GetItemName(string addcid);
