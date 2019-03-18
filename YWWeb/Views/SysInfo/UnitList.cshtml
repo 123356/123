@@ -10,6 +10,15 @@
     <script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>
     <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript" charset="gb2312" language="javascript"></script>
     <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .tabs-panels {
+            border: 1px solid #eee;
+            border-top: 0px
+        }
+        .tabsBk{
+            background:rgba(255, 0, 0,0.1) !important
+        }
+    </style>
 </head>
 <body>
     <table id="list_data" style="width: auto; height: 780px; width: 100%"
@@ -90,223 +99,246 @@
         </div>
     </div>
     <div id="editwin" title="编辑单位信息" class="easyui-dialog" closed="true" style="width: 750px;
-        height: auto; padding: 10px;" minimizable="false" maximizable="false" collapsible="false">
-        <table cellpadding="" cellspacing="" border="0" class="d_list">
-            <tr>
-                <td class="d_l_t">
-                    单位名称：
-                </td>
-                <td class="d_l_d">
-                    <input id="UnitName" runat="server" name="UnitName" maxlength="20" missingmessage="单位名称必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
-                    <input id="UnitID" type="hidden" />
-                </td>
-                <td class="d_l_t">
-                    公司Logo：<br />
-                    @*<span id="Logo"></span>*@
-                    <input id="UnitLogo" type="hidden" />
-                </td>
-                <td class="d_l_d">
-                    <input id="image_upload" class="fileupload" name="image_upload" type="file" multiple="multiple" />
-                    <div id="imageQueue" class="fileQueue" style="float:left;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    联系人：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="LinkMan" runat="server" name="LinkMan" maxlength="20" missingmessage="联系人必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    联系手机：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="LinkMobile" runat="server" name="LinkMobile" missingmessage="联系手机必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true"
-                           onkeyup='this.value=this.value.replace(/\D/gi,"")' />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    Email：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="Email" runat="server" name="Email" maxlength="20" missingmessage="公司名称必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    座机电话：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="LinkPhone" runat="server" name="LinkPhone" missingmessage="座机电话必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    客服经理：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="CSMMan" runat="server" name="CSMMan" maxlength="20" missingmessage="客户经理必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    客服电话：
-                </td>
-                <td class="d_l_d" style="width:250px;">
-                    <input id="CSMPhone" runat="server" name="CSMPhone" missingmessage="客服电话必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    所属省份：
-                </td>
-                <td class="d_l_d">
-                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitProvince" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    所属地区：
-                </td>
-                <td class="d_l_d">
-                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitCity" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    行业：
-                </td>
-                <td class="d_l_d">
-                    <input class="easyui-combotree" style="width: 200px; height: 26px;" id="IndustryID" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    联系地址：
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <input id="LinkAddress" runat="server" name="LinkAddress"maxlength="100" missingmessage="联系地址必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true,validType:'length[1,100]'" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    基本电费容需计价方式(元/kVA/月或元/kW/月)：
-                </td>
-                <td class="d_l_d">
-                    <input id="EleCalWay" runat="server" name="EleCalWay" missingmessage="基本电费容需计价方式必填项！" class="easyui-numberbox" precision="3"
-                           style="width: 200px;" data-options="required:true" />
-                </td>
-                <td class="d_l_t">
-                    对应政府目录电价水平(元/千瓦时)：
-                </td>
-                <td class="d_l_d">
-                    <input id="GovEleLevel" runat="server" name="GovEleLevel" missingmessage="对应政府目录电价水平（丰枯峰谷）必填项！" class="easyui-numberbox" precision="3"
-                           style="width: 200px;" data-options="required:true" />
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    偏差承担方式：
-                </td>
-                <td class="d_l_d">
-                    <input id="DeviationMode" runat="server" name="DeviationMode" maxlength="100" missingmessage="偏差承担方式必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,100]'" />
-                </td>
-                <td class="d_l_t">
-                    装机容量描述：
-                </td>
-                <td class="d_l_d">
-                    <input id="InstalledCapacity" runat="server" name="InstalledCapacity" maxlength="200" missingmessage="装机容量必填项！" class="easyui-validatebox"
-                           style="width: 200px;" data-options="required:true,validType:'length[1,200]'" />
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    损耗系数（K1）：
-                </td>
-                <td class="d_l_d">
-                    <input id="Loss" runat="server" name="DeviationMode"
-                           style="width: 200px;" data-options="required:true" />
-                </td>
-                <td class="d_l_t">
-                    扣减系数（K2）：
-                </td>
-                <td class="d_l_d">
-                    <input id="LossAdd" runat="server" name="LossAdd"
-                           style="width: 200px;" data-options="required:true" />
-                </td>
-            </tr>
-            <tr>
-                @*<td class="d_l_t">
-                        富余基数：
-                    </td>
-                    <td class="d_l_d">
-                        <input id="SpareBase" runat="server" name="SpareBase"
-                               style="width: 200px;" data-options="required:true" />
-                    </td>*@
-                <td class="d_l_t">
-                    装机容量(kVA)：
-                </td>
-                <td class="d_l_d">
-                    <input id="InstalledCapacitys" runat="server" name="InstalledCapacitys" missingmessage="装机容量(kVA)必填项！" class="easyui-numberbox" precision="0"
-                           style="width: 200px;" data-options="required:true" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-                <td class="d_l_t">
-                    用户类型：
-                </td>
-                <td class="d_l_d">
-                    <input id="ProjectType" runat="server" name="InstalledCapacitys" missingmessage="用户类型必填项！" class="easyui-combotree"
-                           style="width: 200px;" data-options="required:true" />
-                    <b class="RStar">&nbsp*</b>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    地图坐标：
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <input id="Coordination" runat="server" name="Coordination" missingmessage="地图坐标必填项！"
-                           class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
-                    <a href="~/Content/GetMap/getMapPointXY.html" target="_blank" class="table_btn1 btn_style radius5">
-                        &nbsp;取坐标&nbsp;
-                    </a> <b class="RStar">&nbsp*</b>（如：113.191932|22.232813）
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    站室分配：
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <input style="width: 210px;" id="pdflist" />
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                    去年总用电量：
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <input style="width: 210px;" id="LastYearPower" class="easyui-numberbox" precision="3"/>
-                </td>
-            </tr>
-        </table>
+        max-height: 600px; padding: 10px; overflow-y:auto;overflow-x:hidden" minimizable="false" maximizable="false">
+
+
+        <div id="tt" class="easyui-tabs" style="width:100%;height:auto;">
+            <div title="单位信息" style="padding:20px;display:none;">
+                <table cellpadding="" cellspacing="" border="0" class="d_list" style="display:block">
+                    <tr>
+                        <td class="d_l_t">
+                            单位名称：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="UnitName" runat="server" name="UnitName" maxlength="20" missingmessage="单位名称必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
+                            <input id="UnitID" type="hidden" />
+                        </td>
+                        <td class="d_l_t">
+                            公司Logo：<br />
+                            @*<span id="Logo"></span>*@
+                            <input id="UnitLogo" type="hidden" />
+                        </td>
+                        <td class="d_l_d">
+                            <input id="image_upload" class="fileupload" name="image_upload" type="file" multiple="multiple" />
+                            <div id="imageQueue" class="fileQueue" style="float:left;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            联系人：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="LinkMan" runat="server" name="LinkMan" maxlength="20" missingmessage="联系人必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="required:true,validType:'length[1,20]'" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                        <td class="d_l_t">
+                            联系手机：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="LinkMobile" runat="server" name="LinkMobile" missingmessage="联系手机必填项！"
+                                   class="easyui-validatebox" style="width: 200px;" data-options="required:true"
+                                   onkeyup='this.value=this.value.replace(/\D/gi,"")' />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            Email：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="Email" runat="server" name="Email" maxlength="20" missingmessage="公司名称必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="validType:'length[1,20]'" />
+                        </td>
+                        <td class="d_l_t">
+                            座机电话：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="LinkPhone" runat="server" name="LinkPhone" missingmessage="座机电话必填项！"
+                                   class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            客服经理：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="CSMMan" runat="server" name="CSMMan" maxlength="20" missingmessage="客户经理必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="required:true,validType:'length[1,20]'" /><b class="RStar">&nbsp*</b>
+                        </td>
+                        <td class="d_l_t">
+                            客服电话：
+                        </td>
+                        <td class="d_l_d" style="width:250px;">
+                            <input id="CSMPhone" runat="server" name="CSMPhone" missingmessage="客服电话必填项！"
+                                   class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            所属省份：
+                        </td>
+                        <td class="d_l_d">
+                            <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitProvince" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                        <td class="d_l_t">
+                            所属地区：
+                        </td>
+                        <td class="d_l_d">
+                            <input class="easyui-combotree" style="width: 200px; height: 26px;" id="UnitCity" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            行业：
+                        </td>
+                        <td class="d_l_d">
+                            <input class="easyui-combotree" style="width: 200px; height: 26px;" id="IndustryID" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                        <td class="d_l_t">
+                            联系地址：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input id="LinkAddress" runat="server" name="LinkAddress" maxlength="100" missingmessage="联系地址必填项！"
+                                   class="easyui-validatebox" style="width: 200px;" data-options="required:true,validType:'length[1,100]'" />
+                            <b class="RStar">&nbsp*</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td class="d_l_t">
+                            装机容量(kVA)：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="InstalledCapacitys" runat="server" name="InstalledCapacitys" missingmessage="装机容量(kVA)必填项！" class="easyui-numberbox" precision="0"
+                                   style="width: 210px;" />
+
+                        </td>
+                        <td class="d_l_t">
+                            装机容量描述：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="InstalledCapacity" runat="server" name="InstalledCapacity" maxlength="200" missingmessage="装机容量必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="validType:'length[1,200]'" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            地图坐标：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input id="Coordination" runat="server" name="Coordination" missingmessage="地图坐标必填项！"
+                                   class="easyui-validatebox" style="width: 200px;" data-options="required:true" />
+                            <a href="~/Content/GetMap/getMapPointXY.html" target="_blank" class="table_btn1 btn_style radius5">
+                                &nbsp;取坐标&nbsp;
+                            </a> <b class="RStar">&nbsp*</b>（如：113.191932|22.232813）
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            站室分配：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input style="width: 210px;" id="pdflist" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            去年总用电量：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input style="width: 210px;" id="LastYearPower" class="easyui-numberbox" precision="3" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div title="售电信息" style="overflow:auto;padding:20px;display:none;">
+                <table cellpadding="" cellspacing="" border="0" class="d_list">
+                    <tr>
+                        <td class="d_l_t">
+                            基本电费容需计价方式(元/kVA/月或元/kW/月)：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="EleCalWay" runat="server" name="EleCalWay" missingmessage="基本电费容需计价方式必填项！" class="easyui-numberbox" precision="3"
+                                   style="width: 210px;"  />
+                        </td>
+                        <td class="d_l_t">
+                            对应政府目录电价水平(元/千瓦时)：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="GovEleLevel" runat="server" name="GovEleLevel" missingmessage="对应政府目录电价水平（丰枯峰谷）必填项！" class="easyui-numberbox" precision="3"
+                                   style="width: 210px;"  />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            偏差承担方式：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="DeviationMode" runat="server" name="DeviationMode" maxlength="100" missingmessage="偏差承担方式必填项！" class="easyui-validatebox"
+                                   style="width: 200px;" data-options="validType:'length[1,100]'" />
+                        </td>
+                        <td class="d_l_t">
+                            用户类型：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="ProjectType" runat="server" name="InstalledCapacitys" missingmessage="用户类型必填项！" class="easyui-combotree"
+                                   style="width: 210px;" />
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="d_l_t">
+                            损耗系数（K1）：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="Loss" runat="server" name="DeviationMode"
+                                   style="width: 200px;"  />
+                        </td>
+                        <td class="d_l_t">
+                            扣减系数（K2）：
+                        </td>
+                        <td class="d_l_d">
+                            <input id="LossAdd" runat="server" name="LossAdd"
+                                   style="width: 200px;" />
+                        </td>
+                    </tr>
+                  
+                    
+                </table>
+            </div>
+            <div title="建筑信息" style="padding:20px;display:none;">
+                <table cellpadding="" cellspacing="" border="0" class="d_list" >
+                    <tr>
+                        <td class="d_l_t">
+                            建筑总面积：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input style="width: 210px;" id="ArchitectureArea" class="easyui-numberbox" precision="3" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        
         <div style="text-align: center;">
             <a href="javascript:;" id="btnSave" onclick="save()" class="table_btn btn_style radius5"
                data-options="iconCls:'icon-ok'">保存</a> <a href="javascript:;" class="table_btn1 btn_style radius5"
                                                           data-options="iconCls:'icon-cancel'" onclick="$('#editwin').dialog('close');">关闭</a>
         </div>
     </div>
-    <script src="~/Content/UserJS/UnitList_jm.js?v=1.10"></script>
+    <script src="~/Content/UserJS/UnitList_jm.js?v=1.26"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 </body>
 </html>
