@@ -64,5 +64,19 @@ namespace DAL
             return data;
 
         }
+
+        public t_CM_Unit GetUnitModelByID(int uid)
+        {
+            t_CM_Unit data = new t_CM_Unit();
+            try
+            {
+                data = _dbFactory.unit.GetUnitModelByID(uid);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }

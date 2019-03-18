@@ -26,15 +26,21 @@ namespace DAO
 
         public IList<t_CM_Unit> GetUnitList(string pids)
         {
-            string sql = "select UnitID,UnitName,PDRList from t_CM_Unit where t_CM_Unit.UnitID in("+ pids + ")";
+            string sql = "select UnitID,UnitName,PDRList,ArchitectureArea from t_CM_Unit where t_CM_Unit.UnitID in(" + pids + ")";
 
             return SQLQuery<t_CM_Unit>(sql);
         }
 
         public IList<t_CM_Unit> GetUnitListByPID(int pid)
         {
-            string sql = "SELECT UnitID,UnitName,PDRList FROM t_CM_Unit WHERE(PDRList LIKE '" + pid + ",%' OR PDRList = '%," + pid + "' OR PDRList LIKE '%," + pid + ",%' OR PDRList = '" + pid + "')";
+            string sql = "SELECT UnitID,UnitName,PDRList,ArchitectureArea FROM t_CM_Unit WHERE(PDRList LIKE '" + pid + ",%' OR PDRList = '%," + pid + "' OR PDRList LIKE '%," + pid + ",%' OR PDRList = '" + pid + "')";
             return SQLQuery<t_CM_Unit>(sql);
+        }
+
+        public t_CM_Unit GetUnitModelByID(int uid)
+        {
+            string sql = "select UnitID,UnitName,PDRList,ArchitectureArea from t_CM_Unit where t_CM_Unit.UnitID=" + uid;
+            return SQLQuery<t_CM_Unit>(sql).FirstOrDefault();
         }
 
         public DbSet<t_CM_Unit> Datas { get; set; }

@@ -30,6 +30,12 @@ namespace EnergyManage.Controllers
             {
                 //根据权限读取PID;
                 string pids = GetPIDs();
+
+                t_CM_Unit unit = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
+                if (unit != null)
+                {
+                    mianji = Convert.ToDecimal(unit.ArchitectureArea);
+                }
                 IList<t_EE_CollTypeBudget> list_budgets = DAL.CollTypeBudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
                 IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -95,7 +101,7 @@ namespace EnergyManage.Controllers
                                 view.keyValuePairs_Time.Add(group_i);
                             }
 
-                            mianji += item_userP.unit_area;
+                            //mianji += item_userP.unit_area;
                             peos += item_userP.unit_people;
 
                         }
@@ -643,7 +649,7 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetRightData(int uid, int year, int month)
+        public JsonResult GetRightData(int uid, int year, int month=1)
         {
             string pids = GetPIDs();
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -651,7 +657,6 @@ namespace EnergyManage.Controllers
             var time = new DateTime(year, month, 1).ToString("yyyy-MM");
 
             List<overView> list = new List<overView>();
-            decimal zongRate = 0;
             foreach (var item_peizhi in list_peizhi)
             {
                 decimal rate = 0;
@@ -678,23 +683,35 @@ namespace EnergyManage.Controllers
                 overView group_i = new overView();
                 group_i.name = item_peizhi.Name;
                 group_i.value = rate;
-                zongRate += rate;
                 list.Add(group_i);
             }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
 
-            var pdrl = DAL.PDRInfoDAL.getInstance().GetPDRList(pids).Sum(p => p.build_area);
 
+        public JsonResult GetLastYearArea(int uid,int year)
+        {
+            var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
+            decimal rate = 0;
+            foreach(var item in list_dep)
+            {
+                var cpids = GetCId(item.addCid);
+                var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, year.ToString());
+                rate += data.Sum(p => p.Rate);
+            }
+            t_CM_Unit unit = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
+            decimal mianji = 0;
+            if (unit != null)
+                mianji = Convert.ToDecimal(unit.ArchitectureArea);
             decimal bili = 0;
-            if (pdrl != 0)
-                bili = Math.Round(zongRate / pdrl, 2);
-
+            if (mianji != 0)
+                bili = Math.Round(rate / mianji, 2);
             var top = new
             {
-                Area = pdrl,
+                Area = mianji,
                 Bili = bili
             };
-
-            return Json(new { top, list }, JsonRequestBehavior.AllowGet);
+            return Json(top, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetYearBugGetDataByType(int coid)
         {

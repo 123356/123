@@ -15,5 +15,6 @@ namespace IDAO.Models
         public int UnitID { get; set; }
         public string UnitName { get; set; }
         public string PDRList { get; set; }
+        public string ArchitectureArea { get; set; }
     }
 }

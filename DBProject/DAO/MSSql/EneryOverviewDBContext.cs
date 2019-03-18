@@ -37,7 +37,7 @@ where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 
 
         public IList<t_V_EneryView> GetLookDatas(Dictionary<int,string> cpids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,a.CID,CONVERT(varchar(10),RecordTime, 120) as Name,CONVERT(varchar(10),RecordTime, 120) as CName  from t_EE_PowerQualityMonthly a
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,a.CID,CONVERT(varchar(10),RecordTime, 120) as Name,CONVERT(varchar(10),RecordTime, 120) as CName  from t_EE_PowerQualityDaily a
 
 where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
 
@@ -210,7 +210,15 @@ where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not nu
             sql += " order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
+        public IList<t_V_EneryView> GetYearBudgetDatas(string cids, string pids, string time)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
 
+
+
+where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(4),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
         public DbSet<t_V_EneryView> Datas { get; set; }
     }
 }

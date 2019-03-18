@@ -12,5 +12,7 @@ namespace IDAO
         IList<t_CM_Unit> GetUnitList(string unitList);
 
         IList<t_CM_Unit> GetUnitListByPID(int pid);
+
+        t_CM_Unit GetUnitModelByID(int uid);
     }
 }
