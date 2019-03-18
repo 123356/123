@@ -77,6 +77,27 @@
     </div>
 
     <script>
+
+        var arr = [];
+        var all = 0;
+
+        function deepTraversal(node) {
+            let nodes = [];
+            if (node != null) {
+                nodes.push[node];
+                let childrens = node.children;
+                if (node.children.length== 0) {
+                    arr.push(node.UsePower)
+                }
+                for (let i = 0; i < childrens.length; i++)
+                    deepTraversal(childrens[i]);
+
+
+            }
+            return nodes;
+        }
+
+
         var w = document.documentElement.scrollWidth - 120,
             h = document.documentElement.scrollHeight * .8,
             x = d3.scale.linear().range([0, w]),
@@ -92,9 +113,26 @@
 
         var partition = d3.layout.partition()
             .value(function (d) {
-                return parseInt(d.UsePower) + 3
+                //var size;
+                //for (var a in arr) {
+                //    if (arr[a] == d.UsePower) {
+                //        size = a;
+                //    }    
+                //}
+                //console.log(parseInt(size) + 1)
+                //return d.UsePower//parseInt(size)+1
+
+                var size = parseInt(d.UsePower);
+                if (size > all / 10) {
+                    size = size;
+
+                } else {
+                    size = all / 10;
+                }
+                return size;
             });
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
+
 
         $("#icon").on('click', function (e) {
             getElectrMonth(window.d);
@@ -113,8 +151,30 @@
                 if (!res) {
                     return;
                 }
+
+
                 res = res.replace(/{/g, `{"size":1,`);
+
+
+
+
                 var root = JSON.parse(res).children[0];
+                deepTraversal(JSON.parse(res).children[0]);
+
+                all = eval(arr.join("+"));
+
+
+
+
+               
+
+
+
+
+
+
+
+
                 var g = vis.selectAll("g")
                     .data(partition.nodes(root))
                     .enter()
@@ -131,7 +191,7 @@
 
                         $("#icon").fadeIn()
                             .css("left", position.left+d.name.length*18)
-                            .css("top", position.top-5);
+                            .css("top", position.top-3);
                         window.d = d;
                         d3.event.stopPropagation();
                     })
@@ -173,7 +233,7 @@
 
                 text.selectAll("tspan")
                     .data(function (d) {
-                        return ["总用电量：" + d.UsePower.toFixed(2)]
+                        return ["总用电量：" + d.UsePower.toFixed(2)+  'kW·h']
                     })
                     .enter()
                     .append("svg:tspan")
