@@ -260,9 +260,8 @@
                     }
                 },
                 dataZoom: [{
-                    //startValue: '01-06 14:00'
-                }, {
-                    type: 'inside'
+                    type: 'inside',
+                    realtime: true,
                 }],
                 visualMap: {
                     top: 10,
@@ -290,6 +289,7 @@
                     name: '历史PUE',
                     type: 'line',
                     data: y,
+                    areaStyle: {},
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
