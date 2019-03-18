@@ -104,11 +104,11 @@
 
                     that.getMonthBugGetbyYearID(res.data.ID)
                     that.sumAllMonthData = that.sumDataSet.SurplusValue
-                    that.getLastYearArea()
                     that.isInit = false
                 } else {
                     that.clearAllData()
                 }
+                that.getLastYearArea()
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -686,8 +686,8 @@
             })
                 .then(function (res) {
                     if (res.data) {
-                        that.Area = res.data.top.Area
-                        that.Bili = res.data.top.Bili
+                        that.Area = res.data.Area
+                        that.Bili = res.data.Bili
                     }
                 })
                 .catch(function (e) {

@@ -117,6 +117,21 @@ namespace EnergyManage.Controllers
                         left_view.Add(oview);
                     }
                 }
+                
+                foreach(var item in list)
+                {
+                    List<overView> ttt = new List<overView>();
+                    foreach (var iii in item.keyValuePairs.GroupBy(p => p.name))
+                    {
+                        overView it = new overView();
+                        it.name = iii.Key;
+                        it.value = iii.Sum(p => p.value);
+                        ttt.Add(it);
+                    }
+                    item.keyValuePairs = ttt;
+                }
+
+              
                 decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
                 decimal zduibi = 0;
                 if (lasrRate != 0)
@@ -1297,20 +1312,23 @@ namespace EnergyManage.Controllers
             Dictionary<int, string> data = new Dictionary<int, string>();
             string cids = string.Empty;
             string pids = string.Empty;
-            if (!string.IsNullOrEmpty(stringCid.Trim()))
+            if (!string.IsNullOrEmpty(stringCid))
             {
-                var s = stringCid.Split(',');
-                foreach (var i in s)
+                if (!string.IsNullOrEmpty(stringCid.Trim()))
                 {
-                    var x = i.Split('-');
-                    List<string> cidList = new List<string>();
-                    if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                    var s = stringCid.Split(',');
+                    foreach (var i in s)
                     {
-                        data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
-                    }
-                    else
-                    {
-                        data.Add(Convert.ToInt32(x[0]), x[1]);
+                        var x = i.Split('-');
+                        List<string> cidList = new List<string>();
+                        if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                        {
+                            data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
+                        }
+                        else
+                        {
+                            data.Add(Convert.ToInt32(x[0]), x[1]);
+                        }
                     }
                 }
             }
