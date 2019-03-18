@@ -45,7 +45,7 @@ namespace DAO
 
         public IList<t_EE_EnerUserType> GetItemName(string addcid)
         {
-            string sql = $"select Name,id,item_type from t_EE_EnerUserProject a join t_EE_EnerUserType b on a.child_id=b.id where a.addCid='{addcid}' and b.item_type=1";
+            string sql = $"select Name,id,item_type from t_EE_EnerUserProject a join t_EE_EnerUserType b on a.child_id=b.id where  (a.addCid LIKE '{ addcid},%' OR addCid = '%,{ addcid}' OR addCid LIKE '%,{addcid},%' OR addCid = '{addcid}') and b.item_type=1";
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
 

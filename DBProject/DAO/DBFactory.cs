@@ -73,6 +73,7 @@ namespace DAO
         public IEneryReportFrom eneryReportFrom => new EneryReportFromDBContext();
 
         public IAlarmConfig pueError => new AlarmConfigDBContext();
+        public IEnergyAnnConfig energyAnnConfig => new EnergyAnnConfigDBContext();
 
     }
 }

@@ -29,7 +29,7 @@ namespace DAO
 join t_DM_CircuitInfo b on a.CID = b.CID
 join t_DM_CollectDevType c on b.coolect_dev_type = c.ID
 join t_DM_DeviceInfo d on b.DID = d.DID
-where a.UserPowerRate is not null and a.UserPowerRate!=0";
+where a.UserPowerRate is not null and a.UsePower!=0";
             if (!string.IsNullOrEmpty(time))
             {
                 sql += $" and a.RecordTime='{Convert.ToDateTime(time).ToString("yyyy-MM-dd")}'";
