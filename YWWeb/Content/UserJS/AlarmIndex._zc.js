@@ -217,8 +217,8 @@ function dosearch() {
     //$('#list_data').datagrid('uncheckAll');
     $('#list_data').datagrid({
         url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
-        pageList: [10, 20, 30, 50],
-        pageSize: 30,
+        //pageList: [10, 20, 30, 50],
+        //pageSize: 30,
         queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
         rowStyler: function(index, row) {
             if (row.AlarmState == "1") {
