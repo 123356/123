@@ -26,6 +26,7 @@ namespace IDAO
         IenTypeConfig typeconfig { get; }
         ICollecDevType collecdevtype { get; }
 		IVEnerProjectType venerProjectType { get; }
+        IAlarmConfig pueError { get; }
         ICircuitInfo circuitinfo { get; }
         IExEnergy exEnergy { get; }
         IYearBudget yearBudget { get; }

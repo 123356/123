@@ -85,6 +85,7 @@
     <Compile Include="IHisData.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="IEnerUserType.cs" />
+    <Compile Include="IAlarmConfig.cs" />
     <Compile Include="IVDeviceInfoState_PDR1.cs" />
     <Compile Include="IVEnerProjectType.cs" />
     <Compile Include="IYearBudget.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\t_EE_YearBudget.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
+    <Compile Include="Models\t_EE_AlarmConfig.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />
     <Compile Include="Models\t_V_EneryReportFrom.cs" />
     <Compile Include="Models\t_V_EnerySelectView.cs" />

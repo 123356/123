@@ -119,6 +119,7 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        
         public ActionResult PowerInfoMap()
         {
             return View();
