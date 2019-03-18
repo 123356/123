@@ -109,26 +109,30 @@
     </div>
 
     <script type="text/javascript">
-        $(".closeBtn").click(function () {
-
-            $("#alarm_popups").fadeOut("slow")
+        $(".closeBtn").on('click',function () {
+            $("#alarm_popups").fadeOut("slow");
+            console.log(window.audio)
+            window.audio.pause();
         })
-        $(".alarm_popups_btn a").click(function () {
-
-            $("#alarm_popups").hide()
+        $(".alarm_popups_btn a").on('click',function () {
+            $("#alarm_popups").hide();
+            window.audio.pause();
         })
-        $("#setHint").click(function () {
+        $("#setHint").on('click',function () {
             var falg = $("#setHint").is(':checked')
             if (falg) {
                 var cookiDate = new Date()
                 $.cookie("hintDate", cookiDate, { expires: 1 })
-                console.log($.cookie("hintDate"))
-                $("#alarm_popups").hide()
+                $("#alarm_popups").hide();
+                window.audio.pause();
             }
         })
-        $("#alarm_content").click(function () {
-            $("#alarm_popups").hide()
+        $("#alarm_content").on('click',function () {
+            $("#alarm_popups").hide();
+            window.audio.pause();
         })
+
+      
 
     </script>
 

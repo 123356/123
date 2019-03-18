@@ -190,6 +190,27 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
             return SQLQuery<t_V_EneryView>(sql);
         }
 
+        public IList<t_V_EneryView> GetMonthDatas(Dictionary<int, string> cpids, string time)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                else
+                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+            sql += " order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
+
         public DbSet<t_V_EneryView> Datas { get; set; }
     }
 }

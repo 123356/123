@@ -1,5 +1,5 @@
 ﻿
-new Vue({
+var vm = new Vue({
     el: '#userView',
     data: {
         loading: true,
@@ -95,10 +95,10 @@ new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
+                .then(function (res) {
                 if (res.data) {
-                    that.StationStateInfo.thisDayPower = res.data.thisDayPower
-                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
+                    that.StationStateInfo.thisDayPower = res.data.thisDayPower;
+                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation;
                 }
             })
             .catch(function (e) {
@@ -230,7 +230,6 @@ new Vue({
             })
         },
         tabChange: function (name) {
-            console.log(name)
             this.PID = name
             this.getBYQ()
         },
@@ -303,6 +302,7 @@ new Vue({
                     that.Sumload = res.data.thisMonthOccupation
                     that.RatedCapacity = res.data.RatedCapacity
                     that.createElecUsageChart(res.data)
+
                 }
             })
             .catch(function (e) {

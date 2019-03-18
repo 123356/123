@@ -456,7 +456,6 @@ namespace EnergyManage.Controllers
             List<title> TitleList = new List<title>();
             string pids = GetPIDs();
             IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
-            string childs = "";
             string cidss = "";
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList();
             foreach (var item in list_userP)
@@ -467,25 +466,24 @@ namespace EnergyManage.Controllers
             if (!string.IsNullOrEmpty(cidss))
             {
                 cidss = cidss.Substring(0, cidss.Length - 1);
+                Dictionary<int, string> cpids = GetCId(cidss);
                 IList<t_EE_enTypeConfig> listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
                 TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
                 if (!string.IsNullOrEmpty(cidss.Trim()))
                 {
-                    IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
+                    IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
                     foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
                     {
                         table t = new table();
                         t.value.Add("time", item.Key.ToString());
                         decimal mianji = 0;
                         decimal renliu = 0;
-
-
                         foreach (var it in TitleList)
                         {
                             decimal v = 0;
                             string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
                             string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
-                            IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cidss, pids, it.Type, t1, t2);
+                            IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Type, t1, t2);
                             v = list_this.Sum(p => p.Value);
                             t.value.Add(it.Type + "", v + "");
 

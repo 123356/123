@@ -366,6 +366,7 @@
         },
         //用电趋势图
         createBarAndLine: function (data) {
+            console.log(data);
             var legend = []
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
             var legend = []
@@ -382,7 +383,7 @@
                     var tempData = data.list_line[i].list
                     var dataArray = new Array()
                     for (var j = 0; j < tempData.length; j++) {
-                        dataArray.push(tempData[i].value)
+                        dataArray.push(tempData[j].value)
                     }
                     var temp = {
                         name: data.list_line[i].name,

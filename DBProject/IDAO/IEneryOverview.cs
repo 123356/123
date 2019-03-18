@@ -11,6 +11,7 @@ namespace IDAO
     {
         IList<t_V_EneryView> GetDatas(string cids, string pids, string month);
 
+        IList<t_V_EneryView> GetMonthDatas(Dictionary<int,string> cpids, string month);
         IList<t_V_EneryView> GetLookDatas(Dictionary<int, string> cpids, string month);
         IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime);
 

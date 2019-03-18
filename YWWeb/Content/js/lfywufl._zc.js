@@ -2,7 +2,6 @@
 //did:设备id；mid:模块id，用户记录返回目标；pid:站室id
 function deviceinfo(sid, did) {
     var fullurl = "/DeviceManage/Index?did=" + did + "&pid=" + pid + "&sid=" + sid;
-
     myWindow = window.open(fullurl, '', 'width=1200,height=1000,toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     myWindow.focus();
 }
@@ -10,8 +9,6 @@ function deviceinfo(sid, did) {
 //did:设备id；mid:模块id，用户记录返回目标；pid:站室id
 function circuitInfo(sid, cid) {
     var fullurl = "/DeviceManage/Index?cid=" + cid + "&pid=" + pid + "&sid=" + sid;
-    //$("#maincontent", top.document.body).attr("src", fullurl); main_frame
-    // $("#main_frame", top.document.body).attr("src", fullurl);
 }
 //返回主页调用
 function showMain(pid) {
@@ -21,7 +18,6 @@ function showMain(pid) {
 }
 //开关状态监测
 function loadPointsInfo_kg() {
-    //123
     $.post("/PDRInfo/getSwitchInfo_kg", { "pid": pid }, function(data) {
         var arrswitch = eval("(" + data + ")");
         $.each(arrswitch, function(i) {
@@ -32,18 +28,12 @@ function loadPointsInfo_kg() {
                 sImg = "on";
             if (arrswitch[i].TagID == 245)
                 var ww = "url(/Content/yicitu/switch_" + sImg + "_2.png)";
-
             $("#t" + arrswitch[i].TagID).css("background-image", "url(/Content/yicitu/switch_" + sImg + "_2.png)");
-
         });
     });
 }
 
 function loadPointsInfo(dids) {
-    //ajaxbg.show();
-    //    $(".page_content").css('background-image', "url(/Content/yicitu/p" + pid + ".png)");
-    //    $(".alertmenu").hide();
-    //    $("#p" + pid).show();
     $.post("/PDRInfo/GetMaxTemp", { "pid": pid, "dids": dids }, function(data) {
         atable = null;
         var pointsjson = eval("(" + data + ")");
@@ -83,7 +73,7 @@ function loadPointsInfo(dids) {
                 //                imgurl = imgurl.replace("http://" + window.location.host, "").replace(".", "_" + pointinfo[3] + ".");
                 //                $(".w" + adid).css("background-image", imgurl); //赋值
             }
-
+            console.log(atable)
             $("#t" + adid).html(atable);
             //弹窗自动定位
 
@@ -95,12 +85,6 @@ function loadPointsInfo(dids) {
 
             divWidth = $("#t" + adid).width();
             divleft = $(".w" + adid).position().left;
-            if (divleft < divWidth) {
-                // $("#t" + adid).css("left", divleft + "px");
-            } else {
-                // $("#t" + adid).css("left", "-200px");
-            }
-
         }
         var alarmarr = listarr[1].split(',');
         for (var acount = 0; acount < alarmarr.length; acount++) {
@@ -134,9 +118,6 @@ function loadPointsInfoByCid(dids) {
                 amaxtemp = pointinfo[1],
                 atable = pointinfo[2];
 
-            //console.log("atable=====" + atable);
-
-            //$("#d" + adid).html(amaxtemp);
             var imgurl = $(".w" + adid).css("background-image"); //获取背景图
             if (typeof(imgurl) == "undefined") {
                 continue;
@@ -201,7 +182,7 @@ clearInterval(timeTicket);
 timeTicket = setInterval(function() {
     //loadHighOrLowPoint();
     loadPointsInfo_kg();
-}, 2000);
+}, 5000);
 
 var timeTicket_Val;
 clearInterval(timeTicket_Val);
