@@ -249,7 +249,13 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(list[a].delCid))
                     all += list[a].delCid+",";
             }
-            all = all.Substring(0, all.Length - 1);
+            if (all.Length > 1) {
+                all = all.Substring(0, all.Length - 1);
+            }
+            else
+            {
+                return Json("没有查到数据");
+            }
 
             string[] arr;
             string pid="", cid="";
