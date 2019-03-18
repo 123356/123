@@ -155,6 +155,15 @@ namespace EnergyManage.Controllers
                     LPeozhanbi,
                     zongBudget
                 };
+                List<overView> xxxx = new List<overView>();
+                foreach(var xxx in left_view.GroupBy(p=>p.name))
+                {
+                    overView m = new overView();
+                    m.name = xxx.Key;
+                    m.value = xxx.Sum(p => p.value);
+                    xxxx.Add(m);
+                }
+                left_view = xxxx;
                 return Json(new { list_zong, left_view, list, list_bottom }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
