@@ -1829,6 +1829,7 @@ namespace YWWeb.Controllers
                         Unit.Nature = info.Nature;
                         Unit.ProjectType = info.ProjectType;
                         Unit.LastYearPower = info.LastYearPower;
+                        Unit.ArchitectureArea = info.ArchitectureArea;
                         bll.ObjectStateManager.ChangeObjectState(Unit, EntityState.Modified);
                         bll.SaveChanges();
                         Common.InsertLog("单位管理", CurrentUser.UserName, "编辑单位信息[" + Unit.UnitName + "]");

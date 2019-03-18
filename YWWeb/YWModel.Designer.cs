@@ -18282,6 +18282,30 @@ namespace YWWeb
         private Nullable<global::System.Decimal> _LastYearPower;
         partial void OnLastYearPowerChanging(Nullable<global::System.Decimal> value);
         partial void OnLastYearPowerChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ArchitectureArea
+        {
+            get
+            {
+                return _ArchitectureArea;
+            }
+            set
+            {
+                OnArchitectureAreaChanging(value);
+                ReportPropertyChanging("ArchitectureArea");
+                _ArchitectureArea = StructuralObject.SetValidValue(value, true, "ArchitectureArea");
+                ReportPropertyChanged("ArchitectureArea");
+                OnArchitectureAreaChanged();
+            }
+        }
+        private global::System.String _ArchitectureArea;
+        partial void OnArchitectureAreaChanging(global::System.String value);
+        partial void OnArchitectureAreaChanged();
 
         #endregion
 
