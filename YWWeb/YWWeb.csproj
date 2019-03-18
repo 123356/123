@@ -1420,7 +1420,6 @@
     <Content Include="Content\js\vue.js" />
     <Content Include="Content\js\vue.min.js" />
     <Content Include="Content\js\weather.js" />
-    <Content Include="Content\js\zoomify - 复制.js" />
     <Content Include="Content\js\zoomify.js" />
     <Content Include="Content\js\zrender\esl.js" />
     <Content Include="Content\js\zrender\zrender-original.js" />
@@ -1661,6 +1660,8 @@
     <Content Include="Content\topo\img\symbols\ground.png" />
     <Content Include="Content\topo\img\symbols\switch.png" />
     <Content Include="Content\topo\img\symbols\text.png" />
+    <Content Include="Content\topo\iview\styles\fonts\ionicons.svg" />
+    <Content Include="Content\topo\iview\styles\iview.css" />
     <Content Include="Content\topo\js\editor._jm.js" />
     <Content Include="Content\topo\js\editor._zc.js" />
     <Content Include="Content\topo\js\jquery.base64.js" />
@@ -1671,6 +1672,9 @@
     <Content Include="Content\topo\js\palette_config.js" />
     <Content Include="Content\topo\js\topo._jm.js" />
     <Content Include="Content\topo\js\topo._zc.js" />
+    <Content Include="Content\topo\tx\communication.js" />
+    <Content Include="Content\topo\tx\communica_config.js" />
+    <Content Include="Content\topo\tx\topo.js" />
     <Content Include="Content\TreeTable\css\images\file.gif" />
     <Content Include="Content\TreeTable\css\images\folder.png" />
     <Content Include="Content\TreeTable\css\images\minus.gif" />
@@ -1729,6 +1733,8 @@
     <Content Include="Content\UserJS\EnergyPublicity._zc .js" />
     <Content Include="Content\UserJS\EnergyQuery._jm.js" />
     <Content Include="Content\UserJS\EnergyQuery._zc.js" />
+    <Content Include="Content\UserJS\ErrorPue._jm.js" />
+    <Content Include="Content\UserJS\ErrorPue._zc.js" />
     <Content Include="Content\UserJS\NewUserView._jm.js" />
     <Content Include="Content\UserJS\NewUserView._zc.js" />
     <Content Include="Content\UserJS\ProjectList._jm.js" />
@@ -2147,6 +2153,8 @@
     <Content Include="Content\iview\dist\styles\fonts\ionicons.woff" />
     <Content Include="Areas\EnergyManage\Views\EMSetting\OrganizeAreaTreeEdit.cshtml" />
     <Content Include="Content\UserJS\RealtimeDataInfo._jm.js.rej" />
+    <Content Include="Content\topo\iview\styles\fonts\ionicons.ttf" />
+    <Content Include="Content\topo\iview\styles\fonts\ionicons.woff" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2512,6 +2520,8 @@
     <Content Include="Views\SparePartManage\ComponentsParts.cshtml" />
     <Content Include="Views\SparePartManage\ComponentsPartsEdit.cshtml" />
     <Content Include="Views\Home\OfflineMap.cshtml" />
+    <Content Include="Views\SysInfo\CommunicaEdit.cshtml" />
+    <Content Include="Views\SysInfo\ErrorPUE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

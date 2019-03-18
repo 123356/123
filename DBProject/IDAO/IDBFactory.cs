@@ -42,5 +42,8 @@ namespace IDAO
 
         IElementDevice elementDevice { get; }
         IEneryReportFrom eneryReportFrom { get; }
+        IEnergyAnnConfig energyAnnConfig { get; }
+        IAlarmConfig pueError { get; }
+
     }
 }

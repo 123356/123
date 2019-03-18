@@ -5,137 +5,94 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>点表管理</title>
+    <title>统计报警设置</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script src="~/Content/uplaodfy/jquery.uploadifive.js" type="text/javascript"></script>
     <link href="~/Content/uplaodfy/uploadifive.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <table id="list_data" class="easyui-datagrid" style="width: auto;" idfield="TagID"
-        pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
-        fitcolumns="true" fit="true" singleselect="true">
+           pagination="true" data-options="iconCls:'icon-save',rownumbers:true,pageSize:50,pageList:[10,20,50],toolbar:'#tb',method:'post',striped:true"
+           fitcolumns="true" fit="true" singleselect="true">
         <thead>
             <tr>
-                <th field=' ' checkbox="true">
+                <th field=' ' checkbox="true"> </th>
+                <th data-options="field:'PID',width:80">
+                    站室编号
                 </th>
-                <th data-options="field:'数据类型',width:50,editor:'text'" editor="{type:'combobox',options:{valueField:'value',textField:'text', data:[{value: 'AI',text: 'AI' }, {value: 'DI',text: 'DI'}],required:true}}">
-                    数据类型
+                <th data-options="field:'TypeName',width:80,editor:'text'" 
+                    editor="{type:'combobox',options:{valueField:'ABCID',textField:'ABCName', url: '/BaseInfo/BindABCPhase?row=' + Math.random(),required:true }}">
+                    类型名称
                 </th>
-                <th data-options="field:'中文描述',width:80,editor:'text'" editor="{type:'validatebox',options:{required:true}}">
-                    中文描述
+                <th data-options="field:'LimitH1',width:50,editor:'numberbox'">
+                    高报1
                 </th>
-                <th data-options="field:'TagName',width:80,editor:'text'" editor="{type:'validatebox',options:{required:true}}">
-                    测点名称
+                <th data-options="field:'LimitH2',width:50,editor:'numberbox'" >
+                    高报2
                 </th>
-                <th data-options="field:'TagID',width:50">
-                    点编号
+                <th data-options="field:'LimitH3',width:50,editor:'numberbox'" >
+                    高报3
                 </th>
-                <th data-options="field:'实时库索引',width:50">
-                    实时库索引
+                <th data-options="field:'LimitL1',width:50,editor:'numberbox'">
+                    低报1
                 </th>
-                <th data-options="field:'PID',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    站编号
+                <th data-options="field:'LimitL2',width:50,editor:'numberbox'">
+                    低报2
                 </th>
-                <th data-options="field:'通信地址',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    通信地址
+                <th data-options="field:'LimitL3',width:50,editor:'numberbox'">
+                    低报3
                 </th>
-                <th data-options="field:'工程下限',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    工程下限
-                </th>
-                <th data-options="field:'工程上限',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    工程上限
-                </th>
-                <th data-options="field:'报警上限1',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警上限1
-                </th>
-                <th data-options="field:'报警上限2',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警上限2
-                </th>
-                <th data-options="field:'报警上限3',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警上限3
-                </th>
-                <th data-options="field:'报警下限1',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警下限1
-                </th>
-                <th data-options="field:'报警下限2',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警下限2
-                </th>
-                <th data-options="field:'报警下限3',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    报警下限3
-                </th> 
-                <th data-options="field:'报警死区',width:50,editor:'text'" editor="{type:'validatebox',options:{required:true}}">
-                    报警死区
-                </th>
-                <th data-options="field:'DID',width:50,editor:'numberbox'" editor="{type:'validatebox',options:{required:true}}">
-                    所属设备号
-                </th>
-                <th data-options="field:'DataTypeID',width:50,editor:'numberbox'" editor="{type:'combobox',options:{valueField:'DataTypeID',textField:'Name', url: '/BaseInfo/BindtValueType?row=' + Math.random(),required:true }}">
-                    数据类型ID
-                </th>
-                <th data-options="field:'Position',width:80,editor:'text'" editor="{type:'validatebox',options:{required:true}}">
-                    测点位置
-                </th>
-                <th data-options="field:'MPID',width:50,editor:'numberbox'" editor="{type:'combobox',options:{valueField:'MPID',textField:'Name', url: '/BaseInfo/BindMonitorPosition?row=' + Math.random(),required:true }}">
-                    监测位置
-                </th>
-                <th data-options="field:'PIOID',width:50,editor:'numberbox'" editor="{type:'combobox',options:{valueField:'PIOID',textField:'Name', url: '/BaseInfo/BindPointIO?row=' + Math.random(),required:true }}">
-                    进出线ID
-                </th>
-                <th data-options="field:'ABCID',width:50,editor:'numberbox'" editor="{type:'combobox',options:{valueField:'ABCID',textField:'ABCName', url: '/BaseInfo/BindABCPhase?row=' + Math.random(),required:true }}">
-                    ABC相ID
-                </th>
-                <th data-options="field:'Remarks',width:120,editor:'text'" editor="{type:'validatebox',options:{required:true}}">
-                    备注
-                </th>
-               
-               
+
             </tr>
         </thead>
     </table>
     <form method="post" action="" id="searchform">
-    <div id="tb" class="searchbar">
-        <div class="searchrow">
-            站室：<select id="SPID" style="width: 200px; height: 26px;">
-            </select>
-            点编号：
-            <input id="tagname" />
-            中文描述：
-            <input id="chinesedesc" />
-        </div>
-        <div id="userbutton" class="searchbutton">
+        <div id="tb" class="searchbar">
+            <div class="searchrow">
+                站室：<select id="SPID" style="width: 200px; height: 26px;"></select>
+          
+            </div>
+            <div id="userbutton" class="searchbutton">
 
-        </div>
-    <div id="uploadwin" title="导入测点表" class="easyui-dialog" closed="true" style="width: 600px;
+            </div>
+            <div id="uploadwin" title="导入测点表" class="easyui-dialog" closed="true" style="width: 600px;
         height: 300px; padding: 20px;" minimizable="false" maximizable="false" collapsible="false">
-        <table cellpadding="" cellspacing="" border="0" class="d_list">
-            <tr>
-                <td class="d_l_t">
-                    上传资料：
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple" />
-                    <div id="fileQueue" class="fileQueue">
-                    </div>
-                    <div id="div_files">
-                    </div>
-                    <div style="display: none" id="kill">
-                        114514</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="d_l_t">
-                </td>
-                <td class="d_l_d" colspan="3">
-                    <a title="导 入" onclick="ImportFile();" class="table_btn1 btn_style radius5">导 入</a>                        
-                    <input type="checkbox" id="Cover" />覆盖导入
-                </td>
-            </tr>
-        </table>
-        <div id = "msg"></div>
-    </div>
+                <table cellpadding="" cellspacing="" border="0" class="d_list">
+                    <tr>
+                        <td class="d_l_t">
+                            上传资料：
+                        </td>
+                        <td class="d_l_d" colspan="3">
+                            <input id="file_upload" class="fileupload" name="file_upload" type="file" multiple="multiple" />
+                            <div id="fileQueue" class="fileQueue">
+                            </div>
+                            <div id="div_files">
+                            </div>
+                            <div style="display: none" id="kill">
+                                114514
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="d_l_t"></td>
+                        <td class="d_l_d" colspan="3">
+                            <a title="导 入" onclick="ImportFile();" class="table_btn1 btn_style radius5">导 入</a>
+                            <input type="checkbox" id="Cover" />覆盖导入
+                        </td>
+                    </tr>
+                </table>
+                <div id="msg"></div>
+            </div>
     </form>
-    <script src="~/Content/UserJS/PointsList_jm.js"></script>
+  
+    <script type="text/javascript" src="~/Content/UserJS/ErrorPue._zc.js"></script>
     <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
+
+
+
+
+    @*<script type="text/javascript" src="~/Content/UserJS/ErrorPue._jm.js"></script>*@
+
 </body>
 </html>

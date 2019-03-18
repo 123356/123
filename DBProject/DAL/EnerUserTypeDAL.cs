@@ -61,12 +61,12 @@ namespace DAL
             return data;
         }
 
-        public IList<t_EE_EnerUserType> GetComobxList()
+        public IList<t_EE_EnerUserType> GetComobxList(int itemType)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.GetComobxList();
+                data = _dbFactory.enerUserType.GetComobxList(itemType);
             }
             catch (Exception ex)
             {

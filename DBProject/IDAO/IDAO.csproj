@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DBCacheFactoryManager.cs" />
     <Compile Include="DBFactoryManager.cs" />
+    <Compile Include="IAlarmConfig.cs" />
     <Compile Include="IAlarmTable_en.cs" />
     <Compile Include="IBudget.cs" />
     <Compile Include="ICircuitInfo.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="IDepartmentalApportionment.cs" />
     <Compile Include="IDeviceInfo.cs" />
     <Compile Include="IElementDevice.cs" />
+    <Compile Include="IEnergyAnnConfig.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
     <Compile Include="IEneryReportFrom.cs" />
@@ -110,9 +112,11 @@
     <Compile Include="Models\t_DM_CollectDevType.cs" />
     <Compile Include="Models\t_DM_DeviceInfo.cs" />
     <Compile Include="Models\t_DM_ElementDevice.cs" />
+    <Compile Include="Models\t_EE_AlarmConfig.cs" />
     <Compile Include="Models\t_EE_Budget.cs" />
     <Compile Include="Models\t_EE_CollTypeBudget.cs" />
     <Compile Include="Models\t_EE_DepartmentalApportionment.cs" />
+    <Compile Include="Models\t_EE_EnergyAnnConfig.cs" />
     <Compile Include="Models\t_EE_EnerUserProject.cs" />
     <Compile Include="Models\t_EE_EnerUserType.cs" />
     <Compile Include="Models\t_EE_EneryUsreBudget.cs" />

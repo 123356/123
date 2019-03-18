@@ -71,5 +71,9 @@ namespace DAO
         public IElementDevice elementDevice => new ElementDeviceDBContext();
 
         public IEneryReportFrom eneryReportFrom => new EneryReportFromDBContext();
+
+        public IAlarmConfig pueError => new AlarmConfigDBContext();
+        public IEnergyAnnConfig energyAnnConfig => new EnergyAnnConfigDBContext();
+
     }
 }
