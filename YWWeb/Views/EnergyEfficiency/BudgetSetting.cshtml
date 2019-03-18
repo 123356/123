@@ -182,7 +182,7 @@
 
                         <template v-for="item in rightList">
                             <span class="typeName"><font v-html="item.name">--</font>/万元</span>
-                            <p class="numtext"><font v-html="item.value">--</font></p>
+                            <p class="numtext">{{item.value==null?'--':item.value|toFIxed2}}</p>
                         </template>
 
 
@@ -274,7 +274,7 @@
         </Modal>
     </div>
     
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.11"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.14"></script>
 </body>
 </html>
 

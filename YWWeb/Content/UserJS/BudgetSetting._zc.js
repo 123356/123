@@ -101,8 +101,10 @@
             .then(function (res) {
                 if (res.data != "no Data") {
                     that.sumDataSet = res.data
+
                     that.getMonthBugGetbyYearID(res.data.ID)
                     that.sumAllMonthData = that.sumDataSet.SurplusValue
+                    that.getLastYearArea()
                     that.isInit = false
                 } else {
                     that.clearAllData()
@@ -670,7 +672,28 @@
                 this.isEdit = true
             }
         },
-
+        //右侧面积数据
+        getLastYearArea: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetLastYearArea',
+                method: 'POST',
+                params: {
+                    uid: this.uid,
+                    year: new Date(this.slectYear).getFullYear(),
+                   
+                }
+            })
+                .then(function (res) {
+                    if (res.data) {
+                        that.Area = res.data.top.Area
+                        that.Bili = res.data.top.Bili
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
         //最右侧数据
         getRightData: function () {
             var that = this
@@ -685,9 +708,7 @@
             })
                 .then(function (res) {
                     if (res.data) {
-                        that.Area = res.data.top.Area
-                        that.Bili = res.data.top.Bili
-                        that.rightList = res.data.list
+                        that.rightList = res.data
                     }
                 })
                 .catch(function (e) {
