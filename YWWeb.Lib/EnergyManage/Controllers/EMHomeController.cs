@@ -607,12 +607,18 @@ namespace EnergyManage.Controllers
 
         #region 能源异常
 
-        public JsonResult GetExTable()
+        public JsonResult GetExTable(int uid)
         {
-            string pids = GetPIDs();
-
-            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas(pids);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            var model = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
+            if (model != null)
+            {
+                IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExDatas(model.PDRList);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("No Data", JsonRequestBehavior.AllowGet);
+            }
         }
         public JsonResult GetExData(string cids, int type, int TypeTime)
         {
@@ -1233,11 +1239,19 @@ namespace EnergyManage.Controllers
             public string DeviceName { get; set; }
 
         }
-        public JsonResult GetDeviceCombox()
+        public JsonResult GetDeviceCombox(int uid)
         {
-            string pids = GetPIDs();
-            IList<t_DM_DeviceInfo> list = DAL.DeviceInfoDAL.getInstance().GetDeviceCombox(pids);
-            return Json(list, JsonRequestBehavior.AllowGet);
+           // string pids = GetPIDs();
+            var model = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
+            if (model != null)
+            {
+                IList<t_DM_DeviceInfo> list = DAL.DeviceInfoDAL.getInstance().GetDeviceCombox(model.PDRList);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("No Data", JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
         #region 能源报告
