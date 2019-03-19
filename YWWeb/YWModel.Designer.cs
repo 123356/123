@@ -14034,6 +14034,30 @@ namespace YWWeb
         private Nullable<global::System.DateTime> _CoordinationTime;
         partial void OnCoordinationTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnCoordinationTimeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CBWaterDay
+        {
+            get
+            {
+                return _CBWaterDay;
+            }
+            set
+            {
+                OnCBWaterDayChanging(value);
+                ReportPropertyChanging("CBWaterDay");
+                _CBWaterDay = StructuralObject.SetValidValue(value, "CBWaterDay");
+                ReportPropertyChanged("CBWaterDay");
+                OnCBWaterDayChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CBWaterDay;
+        partial void OnCBWaterDayChanging(Nullable<global::System.Int32> value);
+        partial void OnCBWaterDayChanged();
 
         #endregion
 

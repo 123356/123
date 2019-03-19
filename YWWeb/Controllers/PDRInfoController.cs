@@ -2706,6 +2706,7 @@ namespace YWWeb.Controllers
                         pdrinfo.DeviationMode = info.DeviationMode;
                         pdrinfo.UnitID = info.UnitID;
                         pdrinfo.ApplcationTime = info.ApplcationTime;
+                        pdrinfo.CBWaterDay = info.CBWaterDay;
                         bll.ObjectStateManager.ChangeObjectState(pdrinfo, EntityState.Modified);
                         bll.SaveChanges();
                         Common.InsertLog("站室管理", CurrentUser.UserName, "编辑站室信息[" + pdrinfo.Name + "]");

@@ -541,6 +541,7 @@
           <Property Name="heating_area" Type="float" />
           <Property Name="cool_area" Type="float" />
           <Property Name="build_cool_type" Type="int" />
+          <Property Name="CBWaterDay" Type="int" />
         </EntityType>
         <EntityType Name="t_CM_PDRPointStatu">
           <Key>
@@ -4656,6 +4657,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="ApplcationTime" Type="DateTime" Precision="3" />
           <Property Name="isUpload" Type="Int32" />
           <Property Name="CoordinationTime" Type="DateTime" Precision="3" />
+          <Property Name="CBWaterDay" Type="Int32" />
           </EntityType>
         <EntityType Name="t_CM_BugInfo">
           <Key>
@@ -7275,6 +7277,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_PDRInfo">
             <EntityTypeMapping TypeName="YWModel.t_CM_PDRInfo">
               <MappingFragment StoreEntitySet="t_CM_PDRInfo">
+                <ScalarProperty Name="CBWaterDay" ColumnName="CBWaterDay" />
                 <ScalarProperty Name="CoordinationTime" ColumnName="CoordinationTime" />
                 <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="ApplcationTime" ColumnName="ApplcationTime" />
