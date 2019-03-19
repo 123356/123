@@ -92,7 +92,7 @@
                         }
                     ]
                     for (var i = 0; i < data.TitleList.length; i++) {
-                        var dw = 'kW·h'
+                        var dw = '万元'
                         if (data.TitleList[i].Type != 1) {
                             dw = 'm³'
                         }
