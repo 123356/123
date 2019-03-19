@@ -30,18 +30,19 @@ namespace EnergyManage.Controllers
             string cids = "";
             foreach (var dep in DepList)
             {
-                cids += dep.addCid + ",";
+                if (dep.addCid != null && !string.IsNullOrEmpty(dep.addCid.Trim()))
+                    cids += dep.addCid + ",";
             }
             if (cids != "")
                 cids = cids.Trim(',');
             Dictionary<int, string> cpids = GetCId(cids);
 
-            var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, time);
+            var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
             if (data.Count() != 0)
             {
                 zongRate = data.Sum(p => p.Rate);
             }
-            var dataLast = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, lastTime);
+            var dataLast = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(lastTime).ToString("yyyy-MM"));
             if (dataLast.Count() != 0)
             {
                 lasrRate = dataLast.Sum(p => p.Rate);
@@ -154,20 +155,20 @@ namespace EnergyManage.Controllers
                                     if (DAL.EnerUserTypeDAL.getInstance().GetItemName(item.Key + "-" + it).FirstOrDefault() != null)
                                     {
                                         Name = DAL.EnerUserTypeDAL.getInstance().GetItemName(item.Key + "-" + it).FirstOrDefault().Name;
-                                        IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(it, item.Key + "", time);
+                                        IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(it, item.Key + "", Convert.ToDateTime(time).ToString("yyyy-MM"));
                                         rate += list_data.Sum(p => p.Rate);
                                         overView group_i = new overView();
                                         group_i.name = Name;
                                         group_i.value = list_data.Sum(p => p.Rate);
                                         view.keyValuePairs.Add(group_i);
-                                        IList<t_V_EneryView> list_data_last = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, item.Key + "", lastTime);
+                                        IList<t_V_EneryView> list_data_last = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, item.Key + "", Convert.ToDateTime(lastTime).ToString("yyyy-MM"));
                                         lasRate += list_data_last.Sum(p => p.Rate);
                                     }
                                 }
                                 pidsss += item.Key + ",";
                             }
                             pidsss = pidsss.Trim(',');
-                            var group_list_time = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pidsss, time).GroupBy(p => p.RecordTime);
+                            var group_list_time = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pidsss, Convert.ToDateTime(time).ToString("yyyy-MM")).GroupBy(p => p.RecordTime);
                             lasrRate += lasRate;
                             zongRate += rate;
                             foreach (var item_group in group_list_time)
@@ -566,10 +567,14 @@ namespace EnergyManage.Controllers
             string cidss = "";
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
             var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
+            decimal mianji = 0;
+            decimal renliu = 0;
             foreach (var item in list_userP)
             {
                 if (!string.IsNullOrEmpty(item.addCid))
                     cidss += item.addCid + ",";
+                mianji += item.unit_area;
+                renliu += item.unit_people;
             }
             if (!string.IsNullOrEmpty(cidss))
             {
@@ -586,8 +591,7 @@ namespace EnergyManage.Controllers
                     {
                         table t = new table();
                         t.value.Add("time", item.Key.ToString());
-                        decimal mianji = 0;
-                        decimal renliu = 0;
+                       
                         foreach (var it in item.OrderBy(p=>p.coolect_dev_type).GroupBy(p=>p.coolect_dev_type))
                         {
                             decimal v = 0;
@@ -814,10 +818,13 @@ namespace EnergyManage.Controllers
         {
             var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
             decimal rate = 0;
+
+            string t1 = year.ToString("yyyy-01-01");
+            string t2 = year.ToString("yyyy-12-31");
             foreach (var item in list_dep)
             {
                 var cpids = GetCId(item.addCid);
-                var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, year.ToString());
+                var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cpids, 0, t1, t2);
                 rate += data.Sum(p => p.Rate);
             }
             t_CM_Unit unit = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
