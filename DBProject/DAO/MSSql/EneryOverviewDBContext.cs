@@ -132,7 +132,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
 
         public IList<t_V_EneryView> GetMonthDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,a.coolect_dev_type,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
 
 
 
