@@ -1,4 +1,13 @@
-﻿new Vue({
+﻿var validateLadderValue = function (rule, value, callback) {
+    if (!value) {
+        return callback(new Error("请输入阶梯范围"));
+    } else if (!/^([0-9]{1,}),([0-9]{1,})$/.test(value)) {
+        return callback(new Error("请正确输入阶梯范围"))
+    } else {
+        callback();
+    }
+};
+new Vue({
     el: "#app",
     data: {
         setPriceVisable: false,
@@ -34,7 +43,8 @@
                 { required: true, type: 'number', message: '请选择阶梯', trigger: 'change' },
             ],
             LadderValue: [
-                { required: true, message: '请输入阶梯范围', trigger: 'blur' },
+                { validator: validateLadderValue, trigger: 'blur' }
+                //{ required: true, message: '请输入阶梯范围', trigger: 'blur' },
             ],
             Price: [
                 { required: true, type: 'number', message: '请输入单价', trigger: 'change' },
@@ -140,6 +150,39 @@
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
+                })
+        },
+        //判断是否已经存在
+        isExists: function () {
+            var that = this
+            this.$http({
+                url: "/energyManage/EMHome/GetPriceListModel",
+                method: 'post',
+                body: {
+                    uid: this.setForm.UID,
+                    colltypeid: this.setForm.CollTypeID,
+                    level: this.Ladder,
+                }
+            })
+                .then(function (res) {
+                    if (res.data == "yes") {
+                        that.$Modal.confirm({
+                            title: '提示',
+                            content: '<p>数据已存在，是否覆盖？</p>',
+                            onOk: () => {
+                                that.editPrice()
+                            },
+                            onCancel: () => {
+                                that.setPriceVisable = false
+                                that.curSelection = []
+                            }
+                        });
+                    } else {
+                        that.editPrice()
+                    }
+                })
+                .catch(function (e) {
+                   
                 })
         },
         //编辑电价
@@ -273,7 +316,8 @@
             var that = this
             this.$refs['setForm'].validate((valid) => {
                 if (valid) {
-                    that.editPrice()
+                    that.isExists()
+                    //that.editPrice()
 
                 } else {
                     console.log("error")
@@ -290,7 +334,6 @@
             var wH = $(".tableMain").height()
             var h = wH - headerH 
             this.height = h - 35
-            console.log(this.height)
         }
     },
     beforeMount: function () {
@@ -308,11 +351,4 @@
         
 
     }
-})
-
-
-$(function () {
-
-
-    
 })

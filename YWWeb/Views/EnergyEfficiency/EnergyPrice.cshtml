@@ -107,7 +107,7 @@
                         </td>
                         <td>
                             <form-item label="阶梯范围" prop="LadderValue">
-                                <i-input placeholder="请输入阶梯范围" v-model="setForm.LadderValue"></i-input>
+                                <i-input placeholder="格式:100,200" v-model="setForm.LadderValue"></i-input>
                             </form-item>
                         </td>
                        
@@ -122,9 +122,7 @@
                         </td>
 
                     </tr>
-                   
                     <tr>
-
                         <td colspan="2" class="btnTd">
                             <button type="button" class="btn okBtn" v-on:click="setPrice">保存</button>
                             <button type="button" class="btn cancelBtn" v-on:click="setPriceVisable=false">关闭</button>
@@ -138,7 +136,7 @@
         </Modal>
 
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyPrice._jm.js?v=1.19"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyPrice._jm.js?v=1.23"></script>
 </body>
 </html>
 

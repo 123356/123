@@ -31,14 +31,14 @@ function loadTypeName(TypeID) {
 var nUploadPID = -1;
 function uploadImage(cname) {
     var i = 1;
-    
+
     $('#' + cname + "_upload").uploadifive({
         'auto': false,
         'removeCompleted': true,
         'buttonText': '浏  览',                    //按钮文本
         'buttonClass': 'uploadifive-button',
         'uploadScript': '/PDRInfo/Upload2',          //处理文件上传Action
-       'queueID': cname + 'Queue',                //队列的ID
+        'queueID': cname + 'Queue',                //队列的ID
         'multi': true,                             //是否为多选，默认为true
         'fileSizeLimit': 1024,                   //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
         'fileType': 'image/*',
@@ -46,7 +46,7 @@ function uploadImage(cname) {
         'queueSizeLimit': 3,
         'simUploadLimit': 1,
         //int fk_id, string ctype = "file", string modules = "matter",/UploadFiles/PDR/pdr1_1.jpg)
-        'formData': { "fk_id": 1,'i':-1,'pid':-1},
+        'formData': { "fk_id": 1, 'i': -1, 'pid': -1 },
         'onUploadComplete': function (file, data) {
             //alert("i=" + i + "" + data)
             //$.messager.alert("提示", "上传成功！","info");
@@ -57,25 +57,29 @@ function uploadImage(cname) {
         'onUpload': function (file) {
             i = 1;
             $('#file_upload').data('uploadifive').settings.formData = { "fk_id": 1, 'i': i, 'pid': nUploadPID };
-           
+
         },
         'onUploadFile': function (file) {
             //$('#file_upload').data('uploadifive').settings.formData = { "fk_id": 1, 'i': i, 'pid': nUploadPID };
         },
         'onQueueComplete': function () {
             //alert("上传成功!");
-            $.messager.alert("提示", "图片上传成功！", "info");
+            // $.messager.alert("提示", "图片上传成功！", "info");
         },
         onFallback: function () {
-            alert("该浏览器无法使用!");
+            $.messager.alert("提示", "该浏览器无法使用！", "info");
+
         },
         'onError': function (errorType) {
-            if(errorType!='QUEUE_LIMIT_EXCEEDED')
-                alert('图片上传失败。The error was: ' + errorType);
+            if (errorType != 'QUEUE_LIMIT_EXCEEDED')
+                $.messager.alert("提示", "图片上传失败The error was:！" + errorType, "info");
+            //alert('图片上传失败。The error was: ' + errorType);
         },
-         'onUploadStart' : function(file) {
-        alert('Starting to upload ' + file.name);
-    }
+        'onUploadStart': function (file) {
+            $.messager.alert("提示", "'Starting to upload" + file.name, "info");
+
+            //  alert('Starting to upload ' + file.name);
+        }
     });
 }
 
@@ -132,7 +136,6 @@ $("#IndID").combobox({
     editable: false,
     onLoadSuccess: function () {
         var data = $('#IndID').combobox('getData');
-        console.log(data[0].IndName);
         if (data.length > 0) {
             $("#IndID").combobox('select', data[0].IndID);
         }
@@ -160,7 +163,6 @@ $("#VID").combobox({
     editable: false,
     onLoadSuccess: function () {
         var data = $('#VID').combobox('getData');
-        console.log(data[0].VName);
         if (data.length > 0) {
             $("#VID").combobox('select', data[0].VID);
         }
@@ -186,7 +188,6 @@ $("#VoltageID").combobox({
     editable: false,
     onLoadSuccess: function () {
         var data = $('#VoltageID').combobox('getData');
-        console.log(data[0].VoltageName);
         if (data.length > 0) {
             $("#VoltageID").combobox('select', data[0].VoltageID);
         }
@@ -209,110 +210,27 @@ $(function () {
     loadSelectMont();
     uploadImage('file');
 })
-
+function getDays() {
+    var data = [{ value: '1', text: '01' }, { value: '2', text: '02' }, { value: '3', text: '03' }, { value: '4', text: '04' }, { value: '5', text: '05' }, { value: '6', text: '06' }, { value: '7', text: '07' }, { value: '8', text: '08' }, { value: '9', text: '09' }, { value: '10', text: '10' }, { value: '11', text: '11' }, { value: '12', text: '12' }, { value: '13', text: '13' }, { value: '14', text: '14' }, { value: '15', text: '15' }, { value: '16', text: '16' }, { value: '17', text: '17' }, { value: '18', text: '18' }, { value: '19', text: '19' }, { value: '20', text: '20' }, { value: '21', text: '21' }, { value: '22', text: '22' }, { value: '23', text: '23' }, { value: '24', text: '24' }, { value: '25', text: '25' }, { value: '26', text: '26' }, { value: '27', text: '27' }, { value: '28', text: '28' }, { value: '29', text: '29' }, { value: '30', text: '30' }, { value: '31', text: '31' }]
+    return data
+}
 //加载月份
 function loadSelectMont() {
+    //电费抄表日
     $('#CBPeriodBegin').combobox({
         valueField: 'value',
         textField: 'text',
         editable: false,
         width: 200,
-        data: [
-             {
-                 value: '1',
-                 text: '01'
-             }, {
-                 value: '2',
-                 text: '02'
-             }, {
-                 value: '3',
-                 text: '03'
-             }, {
-                 value: '4',
-                 text: '04'
-             }, {
-                 value: '5',
-                 text: '05'
-             }, {
-                 value: '6',
-                 text: '06'
-             }, {
-                 value: '7',
-                 text: '07'
-             }, {
-                 value: '8',
-                 text: '08'
-             }, {
-                 value: '9',
-                 text: '09'
-             }, {
-                 value: '10',
-                 text: '10'
-             }, {
-                 value: '11',
-                 text: '11'
-             }, {
-                 value: '12',
-                 text: '12'
-             }, {
-                 value: '13',
-                 text: '13'
-             }, {
-                 value: '14',
-                 text: '14'
-             }, {
-                 value: '15',
-                 text: '15'
-             }, {
-                 value: '16',
-                 text: '16'
-             }, {
-                 value: '17',
-                 text: '17'
-             }, {
-                 value: '18',
-                 text: '18'
-             }, {
-                 value: '19',
-                 text: '19'
-             }, {
-                 value: '20',
-                 text: '20'
-             }, {
-                 value: '21',
-                 text: '21'
-             }, {
-                 value: '22',
-                 text: '22'
-             }, {
-                 value: '23',
-                 text: '23'
-             }, {
-                 value: '24',
-                 text: '24'
-             }, {
-                 value: '25',
-                 text: '25'
-             }, {
-                 value: '26',
-                 text: '26'
-             }, {
-                 value: '27',
-                 text: '27'
-             }, {
-                 value: '28',
-                 text: '28'
-             }, {
-                 value: '29',
-                 text: '29'
-             }, {
-                 value: '30',
-                 text: '30'
-             }, {
-                 value: '31',
-                 text: '31'
-             }
-        ]
+        data: getDays()
+    });
+    //水费抄表日
+    $('#CBWaterDay').combobox({
+        valueField: 'value',
+        textField: 'text',
+        editable: false,
+        width: 200,
+        data: getDays()
     });
 }
 
@@ -390,7 +308,7 @@ function add() {
         draggable: true, //可拖动，默认false  
         resizable: true//可缩放，即可以通脱拖拉改变大小，默认false 
     });
-    
+
 }
 function edit() {
     var ids = [];
@@ -405,7 +323,6 @@ function edit() {
     else {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
-            console.log(row);
             $("#PID").val(row.PID);
             $("#EadoCode").html(row.EadoCode);
             $("#Name").val(row.Name);
@@ -429,8 +346,9 @@ function edit() {
             $("#VoltageID").combobox("setValue", row.VoltageID);
             //$("#BigIndTypeID").combobox("setValue", row.BigIndTypeID);
             $("#CBPeriodBegin").combobox("setValue", row.CBPeriodBegin);
-            var DD  = formatDate(row.ApplcationTime, 'yyyy-MM-dd');
-            $("#ApplcationTime").datebox("setValue",DD);
+            var DD = formatDate(row.ApplcationTime, 'yyyy-MM-dd');
+            $("#ApplcationTime").datebox("setValue", DD);
+            $("#CBWaterDay").combobox("setValue", row.CBWaterDay);
             $("#editwin").dialog({
                 closed: false,
                 top: ($(window).height() - 600) * 0.5,
@@ -442,7 +360,7 @@ function edit() {
                 draggable: true, //可拖动，默认false  
                 resizable: false//可缩放，即可以通脱拖拉改变大小，默认false 
             });
-            
+
             $('#list_data').datagrid('uncheckAll');
         }
         else {
@@ -451,7 +369,7 @@ function edit() {
     }
 }
 function save() {
-    
+
     if ($("#Name").val() == "" || $("#CompanyName").combotree("getText") == "" || $("#VoltageID").combotree("getText") == "" || $("#OperationMan").val() == "" || $("#OperationTel").val() == "" || $("#Position").val() == "" || $("#Coordination").val() == "" || $("#AreaID").combotree("getValue") == "0" || $("#TypeID").combobox("getValue") == "0" || $("#AreaID").combobox("getValue") == "0") {
         $.messager.alert("提示", "请填写必填项目！", "info");
         return false;
@@ -481,7 +399,8 @@ function save() {
         //BigIndTypeID: $("#BigIndTypeID").combobox("getValue"),
         CBPeriodBegin: $("#CBPeriodBegin").combobox("getValue"),
         UnitID: $("#CompanyName").combobox("getValue"),
-        ApplcationTime: $("#ApplcationTime").datebox("getValue")
+        ApplcationTime: $("#ApplcationTime").datebox("getValue"),
+        CBWaterDay: $("#CBWaterDay").combobox("getValue")
     };
     $.post("/PDRInfo/SavePDRInfo", postData, function (data_r) {
         var str1 = JSON.parse(data_r);
@@ -503,11 +422,11 @@ function save() {
             $("#editwin").dialog("close");
             $('#list_data').datagrid({
                 url: '/PDRInfo/PDRListData?rom=' + Math.random(),
-                cache:false
+                cache: false
             });
         }
         else
-            alert(data);
+            $.messager.alert("提示", data, "info");
     });
 }
 function Delete() {
