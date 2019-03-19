@@ -146,8 +146,8 @@ namespace EnergyManage.Controllers
                 decimal LPeozhanbi = 0;
                 if (mianji * peos != 0)
                 {
-                    Peozhanbi = zongRate / (mianji * peos);
-                    LPeozhanbi = lasrRate / (mianji * peos);
+                    Peozhanbi = Math.Round(zongRate / (mianji * peos), 2);
+                    LPeozhanbi = Math.Round(lasrRate / (mianji * peos), 2);
                 }
                 var list_bottom = new
                 {
@@ -560,8 +560,8 @@ namespace EnergyManage.Controllers
             else if (TypeTime == 3)
             {
 
-                string t1 = new DateTime(2018, 1, 1).ToString();
-                string t2 = new DateTime(2018, 12, 31).ToString();
+                string t1 = new DateTime(time_test.Year, 1, 1).ToString();
+                string t2 = new DateTime(time_test.Year, 12, 31).ToString();
                 list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
             }
 
@@ -1057,7 +1057,7 @@ namespace EnergyManage.Controllers
             try
             {
                 int n = 0;
-                var info = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(model.UID, model.UserID);
+                var info = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(model.UID, CurrentUser.UserID);
                 if (info != null)
                 {
                     info.UID = model.UID;
@@ -1084,6 +1084,18 @@ namespace EnergyManage.Controllers
                 throw ex;
             }
         }
+        public JsonResult GetLookEneryConfig(int uid)
+        {
+            try
+            {
+                var info = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(uid,CurrentUser.UserID);
+                return Json(info, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
         public class LookView
         {
             public string Name { get; set; }
@@ -1096,7 +1108,7 @@ namespace EnergyManage.Controllers
         #endregion
 
         #region 能源查询
-        public JsonResult GetEneryList(string time, string ksid, int uid = 0, int did = 0, int cotypeid = 0)
+        public JsonResult GetEneryList(string time, string ksid, int uid = 0, int did = 0, int cotypeid = 0,int page=1,int rows=10)
         {
             List<enview> datas = new List<enview>();
             try
@@ -1318,30 +1330,37 @@ namespace EnergyManage.Controllers
 
         public Dictionary<int, string> GetCId(string stringCid)
         {
+
             Dictionary<int, string> data = new Dictionary<int, string>();
-            string cids = string.Empty;
-            string pids = string.Empty;
-            if (!string.IsNullOrEmpty(stringCid))
+            try
             {
-                if (!string.IsNullOrEmpty(stringCid.Trim()))
+                string cids = string.Empty;
+                string pids = string.Empty;
+                if (!string.IsNullOrEmpty(stringCid))
                 {
-                    var s = stringCid.Split(',');
-                    foreach (var i in s)
+                    if (!string.IsNullOrEmpty(stringCid.Trim()))
                     {
-                        var x = i.Split('-');
-                        List<string> cidList = new List<string>();
-                        if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                        var s = stringCid.Split(',');
+                        foreach (var i in s)
                         {
-                            data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
-                        }
-                        else
-                        {
-                            data.Add(Convert.ToInt32(x[0]), x[1]);
+                            var x = i.Split('-');
+                            List<string> cidList = new List<string>();
+                            if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                            {
+                                data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
+                            }
+                            else
+                            {
+                                data.Add(Convert.ToInt32(x[0]), x[1]);
+                            }
                         }
                     }
                 }
+                return data;
+            }catch(Exception ex)
+            {
+                throw ex;
             }
-            return data;
         }
         public class jichu
         {
