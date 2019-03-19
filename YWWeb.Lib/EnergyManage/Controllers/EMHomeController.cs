@@ -565,6 +565,7 @@ namespace EnergyManage.Controllers
             IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
             string cidss = "";
             IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
+            var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
             foreach (var item in list_userP)
             {
                 if (!string.IsNullOrEmpty(item.addCid))
@@ -574,26 +575,32 @@ namespace EnergyManage.Controllers
             {
                 cidss = cidss.Substring(0, cidss.Length - 1);
                 Dictionary<int, string> cpids = GetCId(cidss);
-                IList<t_EE_enTypeConfig> listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
-                TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
+
+
+
                 if (!string.IsNullOrEmpty(cidss.Trim()))
                 {
                     IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
-                    foreach (var item in list_data_z.GroupBy(p => p.RecordTime))
+                    
+                    foreach (var item in list_data_z.Where(p=>p.coolect_dev_type!=null).GroupBy(p => p.RecordTime))
                     {
                         table t = new table();
                         t.value.Add("time", item.Key.ToString());
                         decimal mianji = 0;
                         decimal renliu = 0;
-                        foreach (var it in TitleList)
+                        foreach (var it in item.OrderBy(p=>p.coolect_dev_type).GroupBy(p=>p.coolect_dev_type))
                         {
                             decimal v = 0;
                             string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
                             string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
-                            IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Type, t1, t2);
+                            IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
                             v = list_this.Sum(p => p.Value);
-                            t.value.Add(it.Type + "", v + "");
-
+                            t.value.Add(it.Key + "", v + "");
+                            title ttt = new title();
+                            ttt.Type = it.Key.Value;
+                            ttt.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name;
+                            if (!TitleList.Select(p=>p.Type).Contains(ttt.Type))
+                                      TitleList.Add(ttt);
                         }
                         t.value.Add("area", mianji + "");
                         t.value.Add("people", renliu + "");
@@ -602,6 +609,13 @@ namespace EnergyManage.Controllers
                 }
             }
             return Json(new { TitleList, table });
+
+
+         
+
+
+
+
         }
         #endregion
 
