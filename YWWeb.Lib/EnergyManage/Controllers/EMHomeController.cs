@@ -16,6 +16,80 @@ namespace EnergyManage.Controllers
             return View();
         }
         #region 能源总览
+
+        public JsonResult GetZongData(int uid, string time)
+        {
+            decimal zongRate = 0;
+            decimal lasrRate = 0;
+            decimal mianji = 0;
+            decimal peos = 0;
+            int year = Convert.ToDateTime(time).Year;
+            int month = Convert.ToDateTime(time).Month;
+            string lastTime = Convert.ToDateTime(time).AddYears(-1).ToString();
+            var DepList = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
+            string cids = "";
+            foreach (var dep in DepList)
+            {
+                cids += dep.addCid + ",";
+            }
+            if (cids != "")
+                cids = cids.Trim(',');
+            Dictionary<int, string> cpids = GetCId(cids);
+
+            var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, time);
+            if (data.Count() != 0)
+            {
+                zongRate = data.Sum(p => p.Rate);
+            }
+            var dataLast = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, lastTime);
+            if (dataLast.Count() != 0)
+            {
+                lasrRate = dataLast.Sum(p => p.Rate);
+            }
+            decimal zduibi = 0;
+            if (lasrRate != 0)
+                zduibi = Math.Round(zongRate / lasrRate, 2) * 100;
+            IList<t_EE_CollTypeBudget> list_budgets = DAL.CollTypeBudgetDAL.getInstance().GetBudgetByID(uid, year, month);
+            decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
+            var list_zong = new
+            {
+                zongRate,
+                zongBudget,
+                zduibi
+            };
+            List<overView> left_view = new List<overView>();
+            var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
+            foreach (var item in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
+            {
+                overView m = new overView();
+                m.name = TypeList.Where(p => p.ID == item.Key).FirstOrDefault().Name;
+                m.value = item.Sum(p => p.Rate);
+                left_view.Add(m);
+            }
+
+            t_CM_Unit unit = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
+            if (unit != null)
+            {
+                mianji = Convert.ToDecimal(unit.ArchitectureArea);
+            }
+            peos = DepList.Sum(p => p.unit_people);
+            decimal Peozhanbi = 0;
+            decimal LPeozhanbi = 0;
+            if (mianji * peos != 0)
+            {
+                Peozhanbi = Math.Round(zongRate / (mianji * peos), 2);
+                LPeozhanbi = Math.Round(lasrRate / (mianji * peos), 2);
+            }
+            var list_bottom = new
+            {
+                Peozhanbi,
+                LPeozhanbi,
+                zongBudget
+            };
+            return Json(new { list_zong, left_view, list_bottom }, JsonRequestBehavior.AllowGet);
+        }
+
+
         public JsonResult GetEneryOverView(int uid, string time)
         {
             List<overView> left_view = new List<overView>();
@@ -26,6 +100,7 @@ namespace EnergyManage.Controllers
             decimal peos = 0;
             int year = Convert.ToDateTime(time).Year;
             int month = Convert.ToDateTime(time).Month;
+
             try
             {
                 //根据权限读取PID;
@@ -117,8 +192,8 @@ namespace EnergyManage.Controllers
                         left_view.Add(oview);
                     }
                 }
-                
-                foreach(var item in list)
+
+                foreach (var item in list)
                 {
                     List<overView> ttt = new List<overView>();
                     foreach (var iii in item.keyValuePairs.GroupBy(p => p.name))
@@ -131,7 +206,7 @@ namespace EnergyManage.Controllers
                     item.keyValuePairs = ttt;
                 }
 
-              
+
                 decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
                 decimal zduibi = 0;
                 if (lasrRate != 0)
@@ -156,7 +231,7 @@ namespace EnergyManage.Controllers
                     zongBudget
                 };
                 List<overView> xxxx = new List<overView>();
-                foreach(var xxx in left_view.GroupBy(p=>p.name))
+                foreach (var xxx in left_view.GroupBy(p => p.name))
                 {
                     overView m = new overView();
                     m.name = xxx.Key;
@@ -1025,7 +1100,7 @@ namespace EnergyManage.Controllers
                 {
                     foreach (var ittt in list_config.EneryUserTypeID.Split(','))
                     {
-                        IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ittt,uid);
+                        IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ittt, uid);
                         foreach (var item in list)
                         {
                             if (!string.IsNullOrEmpty(item.cids.Trim()))
@@ -1088,10 +1163,10 @@ namespace EnergyManage.Controllers
         {
             try
             {
-                var info = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(uid,CurrentUser.UserID);
+                var info = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(uid, CurrentUser.UserID);
                 return Json(info, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -1108,7 +1183,7 @@ namespace EnergyManage.Controllers
         #endregion
 
         #region 能源查询
-        public JsonResult GetEneryList(string time, string ksid, int uid = 0, int did = 0, int cotypeid = 0,int page=1,int rows=10)
+        public JsonResult GetEneryList(string time, string ksid, int uid = 0, int did = 0, int cotypeid = 0, int page = 1, int rows = 10)
         {
             List<enview> datas = new List<enview>();
             try
@@ -1357,7 +1432,8 @@ namespace EnergyManage.Controllers
                     }
                 }
                 return data;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }

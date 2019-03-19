@@ -22,5 +22,7 @@ namespace IDAO.Models
         public int CID { get; set; }
 
         public string CName { get; set; }
+        public int? coolect_dev_type { get; set; }
+        
     }
 }
