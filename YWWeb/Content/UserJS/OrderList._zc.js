@@ -136,6 +136,12 @@ $('#list_data').datagrid({
         else {
             $.messager.alert("提示", "请选择要查看的工单！", "info");
         }
+    },
+    onLoadSuccess: function (data) {
+        if (data.total > 0) return;
+        var body = $(this).data().datagrid.dc.body2;
+        var width = body.width();
+        body.find('table tbody').append('<tr>center><td align="center" width = ' + width + ' style="height: 40px; text-align:center;border: 0px solid ;" colspan=' + 12 + '>暂无数据!</td></center></tr>');
     }
 });
 $('#uname').combobox({

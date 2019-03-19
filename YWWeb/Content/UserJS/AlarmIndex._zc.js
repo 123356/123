@@ -164,14 +164,12 @@ function recover() {
         alert("请选取一条记录进行处理！")
         return;
     }
-    console.log(rows)
     for (var i = 0; i < rows.length; i++) {
         ids.push(rows[i].AlarmID);
     }
     if (rows[0].AlarmID) {
         var str = JSON.stringify(rows[0]);
         var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
-        console.log(str)
         $('#editwin').window({
             modal: true,
             top: ($(window).height() - 600) * 0.5,
@@ -211,7 +209,6 @@ function dosearch() {
     var startdate = $('#StartDate').datebox('getValue');
     var enddate = $('#EndDate').datebox('getValue') + ' 23:59:59';
     var dtid = $("#cbType").combobox('getValue');
-    console.log(dtid);
     //$('#list_data').datagrid({pageNumber:1});
     //$('#list_data').datagrid('reload', { "pid": pid,"dtid":dtid, "startdate": startdate, "enddate": enddate });
     //$('#list_data').datagrid('uncheckAll');
@@ -220,6 +217,7 @@ function dosearch() {
         //pageList: [10, 20, 30, 50],
         //pageSize: 30,
         queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
+      
         rowStyler: function(index, row) {
             if (row.AlarmState == "1") {
                 return 'background-color:Yellow;color:#333;font-weight:bold;';
@@ -233,7 +231,6 @@ function dosearch() {
             if (rowData) {
                 var str = JSON.stringify(rowData);
                 var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
-                console.log(str)
                 $('#editwin').window({
                     modal: true,
                     top: ($(window).height() - 600) * 0.5,
@@ -243,6 +240,13 @@ function dosearch() {
                 });
                 $('#editwin').window('open');
             }
+        },
+        onLoadSuccess: function (data) {
+            if (data.total > 0) return;
+            var body = $(this).data().datagrid.dc.body2;
+            var width = body.width();
+
+            body.find('table tbody').append('<tr>center><td align="center" width = ' + width + ' style="height: 40px; text-align:center;border: 0px solid ;" colspan=' + 12 + '>暂无数据!</td></center></tr>');
         }
     });
     $('#list_data').datagrid('uncheckAll');
