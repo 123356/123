@@ -820,8 +820,8 @@ namespace EnergyManage.Controllers
             var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
             decimal rate = 0;
 
-            string t1 = year.ToString("yyyy-01-01");
-            string t2 = year.ToString("yyyy-12-31");
+            string t1 =new DateTime(year,1,1).ToString("yyyy-MM-dd");
+            string t2 = new DateTime(year, 12, 31).ToString("yyyy-MM-dd");
             foreach (var item in list_dep)
             {
                 var cpids = GetCId(item.addCid);
@@ -1102,6 +1102,20 @@ namespace EnergyManage.Controllers
             }
             return Json(n, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetPriceListModel(int uid = 0, int colltypeid = 0, int level = 0, int page = 1, int rows = 15)
+        {
+            int total = 0;
+            IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(out total, uid, colltypeid, level, page, rows);
+            if (total > 0)
+            {
+                return Json("yes", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("no", JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         public JsonResult DeleteEneryPrice(int ID)
         {
