@@ -8,11 +8,11 @@
         analysisTableHeight: 0,
         dateType: '1',
         listColumns: [
-            {
-                type: 'selection',
-                width: 20,
-                align: 'center',
-            },
+            //{
+            //    type: 'selection',
+            //    width: 20,
+            //    align: 'center',
+            //},
             {
                 title: '排名',
                 align: 'center',
@@ -164,6 +164,8 @@
         curEntype: 1,
         barShow: true,
         lineShow: true,
+        rowClickSelection: [],
+        switchState:false
     },
     methods: {
         //异常列表
@@ -173,37 +175,52 @@
             this.$http({
                 url: '/energyManage/EMHome/GetExTable',
                 method: 'post',
-                /* params: {
-                     id:that.uid
-                 }*/
+                 body: {
+                     uid:that.uid
+                 }
             })
-           .then(function (res) {
-               var data = res.data
-               if (data.length > 0) {
-                   for (var i = 0; i < data.length; i++) {
-                       if (i == 0) {
-                           data[i]._checked = true
-                       } else {
-                           data[i]._checked = false
-                       }
-                       data[i]._disabled = false
-                       data[i].index = i
-                   }
-                   var id = data[0].ID
-                   that.curCID = data[0].CID
-                   that.curSelectID = data[0].ID
-                   that.getTableList(data[0].ID)
-                   that.getBarData(data[0].CID)
-                   that.getLineData(data[0].CID)
-               } 
-               that.listData = data
-           })
-           .catch(function (e) {
-               throw new ReferenceError(e.message)
-           })
-           .finally(function () {
-               that.loading = false
-           })
+                .then(function (res) {
+                    var data = res.data
+                    if (data.length > 0) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            if (i == 0) {
+                                data[i]._checked = true
+                            } else {
+                                data[i]._checked = false
+                            }
+                            data[i]._disabled = false
+                            data[i].index = i
+                        }
+                        var id = data[0].ID
+                        that.curCID = data[0].CID
+                        that.curSelectID = data[0].ID
+                        that.getTableList(data[0].ID)
+                        that.getBarData(data[0].CID)
+                        that.getLineData(data[0].CID)
+                    }
+                    that.listData = data
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                    $(".ivu-table-tbody .ivu-table-row:eq(0)").addClass("ivu-table-row-highlight")
+                })
+        },
+        switchChange: function (e) {
+            this.switchState = e
+            if (e) {
+                this.listColumns.unshift({
+                    type: 'selection',
+                    width: 20,
+                    align: 'center',
+                })
+            } else {
+                this.listColumns.splice(0, 1)
+                $(".ivu-table-tbody .ivu-table-row:eq(0)").addClass("ivu-table-row-highlight")
+            }
         },
         //异常分析表格
         getTableList: function (id) {
@@ -215,14 +232,14 @@
                     id: id
                 }
             })
-            .then(function (res) {
-                if (res.data != "") {
-                    that.analysisData = res.data
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                .then(function (res) {
+                    if (res.data != "") {
+                        that.analysisData = res.data
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         //柱状图数据
         getBarData: function (cids) {
@@ -237,24 +254,24 @@
                     TypeTime: that.dateType
                 }
             })
-            .then(function (res) {
-                if (res.data) {
-                    if (res.data.name) {
-                        that.barShow = true
+                .then(function (res) {
+                    if (res.data) {
+                        if (res.data.name) {
+                            that.barShow = true
+                        } else {
+                            that.barShow = false
+                        }
                     } else {
                         that.barShow = false
                     }
-                } else {
-                    that.barShow = false
-                }
-                that.createBarAndLine(res.data)
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                    that.createBarAndLine(res.data)
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         //折线图数据
         getLineData: function (cids) {
@@ -266,25 +283,28 @@
                     cids: cids,
                 }
             })
-            .then(function (res) {
-                if (res.data) {
-                    if (res.data.shijivalue.length > 0) {
-                        that.lineShow = true
-                        that.createEnergyConLine(res.data)
+                .then(function (res) {
+                    if (res.data) {
+                        if (res.data.shijivalue.length > 0) {
+                            that.lineShow = true
+                            that.createEnergyConLine(res.data)
+                        } else {
+
+                            that.lineShow = false
+                        }
                     } else {
-                        
+
                         that.lineShow = false
                     }
-                } else {
-                    
-                    that.lineShow = false
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         tableSelectChange: function (selection) {
+            this.tableSelect(selection)
+        },
+        tableSelect: function (selection) {
             this.curSelectID = ''
             this.curCID = ''
             if (selection.length == 0) {
@@ -340,7 +360,6 @@
             this.getBarData(this.curCID)
             this.getLineData(this.curCID)
         },
-
         dateTypeChange: function (e) {
             this.dateType = e
             this.getBarData(this.curCID)
@@ -352,6 +371,17 @@
         },
         onSelectCancel: function (selection, row) {
             this.listData[row.index]._checked = false
+        },
+        rowCLick: function (row, index) {
+            //this.listData[index]._checked = !this.listData[index]._checked
+            if (!this.switchState) {
+                this.curSelectID = row.ID
+                this.curCID = row.CID
+                this.getTableList(this.curSelectID)
+                this.getBarData(this.curCID)
+                this.getLineData(this.curCID)
+            }
+            
         },
         setSelectState: function (isDisable) {
             for (var i = 0; i < this.listData.length; i++) {
@@ -366,7 +396,6 @@
         },
         //用电趋势图
         createBarAndLine: function (data) {
-            console.log(data);
             var legend = []
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
             var legend = []

@@ -1212,6 +1212,15 @@ html {
     background: #54beaa;
     color:#fff
 }
+.switchVIew {
+    float: right
+}
+
+    .switchVIew label {
+        font-size: 14px;
+        font-weight: normal;
+        margin-right: 5px
+    }
 @media screen and (max-width: 1300px) {
     .BudgetSetting .header .ivu-input{
                     font-size:1.6rem

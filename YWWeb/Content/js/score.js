@@ -1,4 +1,4 @@
-var unitId = $.cookie("unitId")
+var unitId = $.cookie("enUID")
 
 $(function () {
 

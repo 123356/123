@@ -36,6 +36,14 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult DistributionRoomOutLineReport()
+        {
+            return View();
+        }
+        public ActionResult BuildingEnergyConReport()
+        {
+            return View();
+        }
         #region 用电量报表
         /// <summary>
         /// 用电量报表
