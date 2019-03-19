@@ -43,9 +43,103 @@
         ],
         tableData: [],
         barChart: null,
-        time: new Date()
+        time: new Date(),
+        DID: null,//科室ID
+        isUnitSelect: 0,
+        departName: null,
+        treeData: [],
+        userButtons: [],
+        EneryUserTypeID: '',//部门id
     },
     methods: {
+        //设置树下拉框
+        getSelectTree: function () {
+            var arr = []
+            arr.push(this.treeData)
+            var that = this
+            $("#leftmenuSpace").html("<div class='leftmenu' id='leftmenu'><div class='leftmenu_content'><div class='leftmenu_search leftmenu_search_padding'><input data-options='lines:true' style='width: 200px; height: 30px;' id='StationID' /></div><div><ul class='one' id='menuinfo'></ul></div></div></div>");
+            $('#StationID').combotree({
+                data: arr,
+                multiple: true,
+                editable: true,
+                panelMinHeight: 300,
+                onBeforeSelect: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                        return false;
+                    }
+                },
+                onClick: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combo('showPanel');
+
+                    } else {
+                        that.isUnitSelect = node.id
+
+                    }
+
+                },
+                onChange: function (newvla, oldval) {
+
+                    that.EneryUserTypeID = newvla
+
+                },
+
+                onLoadSuccess: function (node, data) {
+                    if (that.EneryUserTypeID) {
+                        $("#StationID").combotree("setValue", that.EneryUserTypeID.split(','));
+                    } else {
+                        $("#StationID").combotree("setValue", that.isUnitSelect);
+                        that.EneryUserTypeID = that.isUnitSelect
+                    }
+                   
+
+
+                }
+            })
+        },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            node.text = node.name
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    if (!node.children[i].children) {
+                        node.children[i].text = node.children[i].name
+                    }
+                    this.foreachTree(node.children[i]);
+                }
+            } else {
+                if (node.id != 0 && this.isUnitSelect == 0) {
+                    this.isUnitSelect = node.id
+                    this.departName = node.name
+                }
+            }
+        },
+        // tree data
+        getTreeData: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMSetting/GetTreeData',
+                method: 'POST',
+                params: {
+                    unitID: that.UID,
+                    item_type: 2,
+                    unitName: that.UName
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    that.foreachTree(data)
+                    that.treeData = data
+                    that.getSelectTree()
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
         //获取数据
         getEneryView: function () {
             var that = this
@@ -57,17 +151,17 @@
                     time: that.formaterDate()
                 }
             })
-            .then(function (res) {
-                that.tableData = res.data
-                that.createBarChart(res.data)
-            })
-            .catch(function (e) {
+                .then(function (res) {
+                    that.tableData = res.data
+                    that.createBarChart(res.data)
+                })
+                .catch(function (e) {
 
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         dateChange: function () {
             this.loading = true
@@ -75,7 +169,7 @@
         },
         formaterDate: function () {
             var date = new Date(this.time)
-            date = date.toLocaleDateString().replace(/\//g, "-") + " " 
+            date = date.toLocaleDateString().replace(/\//g, "-") + " "
             return date
         },
         //创建图表
@@ -122,7 +216,7 @@
                     right: 20,
                 },
                 grid: {
-                    top: 60,
+                    top: 30,
                     left: 0,
                     right: 0,
                     bottom: 10,
@@ -205,7 +299,69 @@
 
         setHeight: function () {
             this.tableHeight = $(".main-item").height() - 35
-            console.log("height")
+        },
+        //操作按钮
+        getUserBtn: function () {
+            var that = this
+            var url = window.location.pathname;
+            this.$http({
+                url: '/SysInfo/UserButtonList2',
+                method: 'post',
+                params: {
+                    CurrUrl: url
+                }
+            })
+                .then(function (res) {
+                    that.userButtons = res.data
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
+        userBtnClick: function (method) {
+            switch (method) {
+                case "SaveForm()":
+                    this.save()
+                    break
+            }
+        },
+        //保存权限
+        save: function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/AddOrUpdateLookConfig',
+                method: 'POST',
+                body: {
+                    UID: this.UID,
+                    EneryUserTypeID: [...this.EneryUserTypeID].join(',')
+                }
+            })
+            .then(function (res) {
+                that.$Message.success('保存成功');
+            })
+            .catch(function (e) {
+                that.$Message.success('保存失败');
+                throw new ReferenceError(e.message)
+            })
+        },
+        //获取权限
+        getLookEneryConfig : function () {
+            var that = this
+            this.$http({
+                url: '/energyManage/EMHome/GetLookEneryConfig',
+                method: 'POST',
+                body: {
+                    uid: this.UID,
+                }
+            })
+                .then(function (res) {
+                    that.EneryUserTypeID = res.data.EneryUserTypeID
+                    that.getTreeData()
+            })
+            .catch(function (e) {
+               
+                throw new ReferenceError(e.message)
+            })
         }
     },
     beforeMount: function () {
@@ -217,7 +373,10 @@
         setInterval(function () {
             that.tableHeight = $(".main-item .con").height()
         }, 100)
+        this.getLookEneryConfig()
     },
     mounted: function () {
+       
+        this.getUserBtn()
     }
 })
