@@ -1098,7 +1098,7 @@ namespace EnergyManage.Controllers
                     m.Ladder = model.Ladder;
                     m.LadderValue = model.LadderValue;
                     m.Price = model.Price;
-                    n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(model);
+                    n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(m);
                 }
                 else
                 {
@@ -1113,7 +1113,7 @@ namespace EnergyManage.Controllers
                 m.Ladder = model.Ladder;
                 m.LadderValue = model.LadderValue;
                 m.Price = model.Price;
-                n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(model);
+                n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(m);
             }
             return Json(n, JsonRequestBehavior.AllowGet);
         }
