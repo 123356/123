@@ -193,7 +193,7 @@
             this.$refs.table.exportCsv({
                 filename: '能源报告'
             });
-            //window.print()
+            window.print()
 
 
         },

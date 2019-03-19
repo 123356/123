@@ -113,7 +113,7 @@
                 throw new ReferenceError(e.message)
             })
         },
-    
+        
         //删除能源
         deleteConfig: function (id) {
             var that = this
@@ -166,15 +166,47 @@
                     throw new ReferenceError(e.message)
                 })
         },
+        //获取左侧总览数据
+        getZongData: function () {
+            var that = this
+            var time = new Date(this.curDate)
+            var month = time.getMonth() + 1
+            time = time.getFullYear() + "-" + month
+            this.$http({
+                url: '/energyManage/EMHome/GetZongData',
+                method: 'POST',
+                body: {
+                    uid: this.uid,
+                    time: time
+                }
+            })
+                .then(function (res) {
+                    var data = res.data
+                    that.creatPowerChart(data)
+                    that.zduibi = data.list_zong.zduibi
+                    that.sumBudget = res.data.list_zong.zongBudget
+                    if (data.left_view.length > 0) {
+                        that.creatEnergyMoneyChart(res.data)
+                        that.left_viewIsShow = true
+                    } else {
+                        $('#energyMoneyChart').html('<span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据');
+                        $('#energyMoneyChart').removeAttr('_echarts_instance_');
+                        that.left_viewIsShow = false
+                    }
+                    that.Peozhanbi = data.list_bottom.Peozhanbi.toFixed(2)
+                    that.LPeozhanbi = data.list_bottom.LPeozhanbi
+                    that.zongBudget = data.list_bottom.zongBudget
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
         //数据加载
         getEneryOverView: function () {
             var that = this
             this.loading = true
             var time = new Date(this.curDate)
             var month = time.getMonth() + 1
-            if (month < 10) {
-                month = "0" + month
-            }
             time = time.getFullYear() + "-" + month
             this.$http({
                 url: '/energyManage/EMHome/GetEneryOverView',
@@ -194,22 +226,6 @@
                             res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
                         }
                         this.info = res.data
-                        this.sumBudget = res.data.list_zong.zongBudget
-                        this.zduibi = res.data.list_zong.zduibi
-                        this.Peozhanbi = res.data.list_bottom.Peozhanbi.toFixed(2)
-                        this.LPeozhanbi = res.data.list_bottom.LPeozhanbi
-                        this.zongBudget = res.data.list_bottom.zongBudget
-                        this.bottomInfo = res.data.list_bottom
-                        that.creatPowerChart(res.data)
-                        if (res.data.left_view.length > 0) {
-                            this.creatEnergyMoneyChart(res.data)
-                            this.left_viewIsShow = true
-                        } else {
-                            $('#energyMoneyChart').html('<span><Icon type="md-cloud-outline" size="20" style="margin-right:5px" /></span>暂无数据');
-                            $('#energyMoneyChart').removeAttr('_echarts_instance_');
-                            
-                            this.left_viewIsShow = false
-                        }
                         var temp = res.data.list
                         if (temp.length > 0) {
                             var timer = setInterval(function () {
@@ -229,7 +245,6 @@
                     }
                 })
                 .catch(function (e) {
-                    that.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
@@ -579,6 +594,7 @@
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getEneryOverView()
+        this.getZongData()
     },
     mounted: function () {
     }

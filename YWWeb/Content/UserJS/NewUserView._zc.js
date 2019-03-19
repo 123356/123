@@ -29,11 +29,12 @@ var vm = new Vue({
                 method: 'post'
             })
                 .then(function (res) {
-                    if ($.cookie("unitId") != null) {
-                        that.UnitID = parseInt($.cookie("unitId"))
+                    if ($.cookie("enUID") != null) {
+                        that.UnitID = parseInt($.cookie("enUID"))
                     } else {
                         if (res.data.length > 0) {
                             that.UnitID = res.data[0].UnitID
+                            $.cookie('unitId', res.data[0].UnitID, { expires: 7, path: '/' });
                         }
                     }
                     that.unitList = res.data
