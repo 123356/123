@@ -1088,7 +1088,22 @@ namespace EnergyManage.Controllers
             int n = 0;
             if (model.ID <= 0)
             {
-                n = DAL.PriceEneryDAL.getInstance().InserPriceEnery(model);
+                int total = 0;
+                IList<t_EE_PriceEnery> list = DAL.PriceEneryDAL.getInstance().GetPriceEneryBy(out total, model.UID, model.CollTypeID, model.Ladder, 1, 1);
+                if (total > 0)
+                {
+                    t_EE_PriceEnery m = list[0];
+                    m.UID = model.UID;
+                    m.CollTypeID = model.CollTypeID;
+                    m.Ladder = model.Ladder;
+                    m.LadderValue = model.LadderValue;
+                    m.Price = model.Price;
+                    n = DAL.PriceEneryDAL.getInstance().UpdatePriceEnery(model);
+                }
+                else
+                {
+                    n = DAL.PriceEneryDAL.getInstance().InserPriceEnery(model);
+                }
             }
             else
             {
