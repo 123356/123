@@ -498,7 +498,7 @@
                     right: 20
                 },
                 grid: {
-                    top: 25,
+                    top: 28,
                     left: '3%',
                     right: 0,
                     bottom: 0,

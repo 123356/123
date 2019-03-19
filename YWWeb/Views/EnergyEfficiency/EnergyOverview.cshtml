@@ -1,6 +1,6 @@
 ﻿@{
 
-                ViewBag.Title = "EnergyOverview";
+    ViewBag.Title = "EnergyOverview";
 }
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.03" />
     <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.21" />
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
-   
+
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
@@ -42,7 +42,7 @@
                         <span><font v-html="month">--</font>月能源费用比例</span>
                     </div>
                     <div class="main" style="height:85%;display:flex;flex-direction:row;justify-content:center;align-items:center;">
-                        <div class="chart" id="energyMoneyChart"  ></div>
+                        <div class="chart" id="energyMoneyChart"></div>
                     </div>
                 </div>
                 <div class="item lastItem">
@@ -117,9 +117,9 @@
                         <td>
                             <form-item label="科室" class="moneyView">
                                 @*<i-select v-model="addForm.EnerUserTypeID">
-            <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
-        </i-select>*@
-                                <i-select class="pidSelect" v-model="addForm.EnerUserTypeID" v-on:on-open-change="openSelect" v-on:on-change="checkStation" >
+                                        <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
+                                    </i-select>*@
+                                <i-select class="pidSelect" v-model="addForm.EnerUserTypeID" v-on:on-open-change="openSelect" v-on:on-change="checkStation">
                                     <i-option :value="addForm.EnerUserTypeID" v-show="initSelectShow">{{unitDepartName}}</i-option>
                                     <Tree :data="departMentList"
                                           empty-text="暂无数据"
@@ -145,7 +145,7 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.124"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.125"></script>
 </body>
 </html>
 
