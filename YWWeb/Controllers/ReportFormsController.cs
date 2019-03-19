@@ -581,7 +581,7 @@ namespace YWWeb.Controllers
             sbHtml.Append("<td colspan='2' style='font-size:14px;text-align:center;background-color: #DCE0E2; font-weight:bold;'>回路名称</td>");
             foreach (var item in lstTitle)
             {
-                sbHtml.AppendFormat("<td style='font-size:14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25' colspan='7'>{0}</td>", item.CID + "号回路" + item.CName);
+                sbHtml.AppendFormat("<td style='font-size:14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25' colspan='7'>{0}</td>", item.CName);
             }
             sbHtml.Append("</tr>");
             sbHtml.Append("<tr>");
