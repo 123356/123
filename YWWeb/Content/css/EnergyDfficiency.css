@@ -650,17 +650,18 @@ html {
         }
             .BudgetSetting .main .con .ivu-input-number,.BudgetSetting .main .con .ivu-input-number-input {
                 background: transparent;
-                max-width:100px !important
+                /*max-width:100px !important*/
             }
         .BudgetSetting .main .con .conModule .ivu-input-number-disabled .ivu-input-number-input {
             color: #40ae93;
             font-size: 2.2rem
         }
         .BudgetSetting .main .con .conModule .inputNum{
-            width:100px
+            /*width:100px*/
         }
         .BudgetSetting .main .con .conModule .ivu-input-number, .BudgetSetting .main .con .conModule .ivu-input-number-input {
-            max-width: 100px !important;
+            /*max-width: 100px !important;*/
+            width:100%!important;
             font-size: 2.2rem;
             color: #40ae93;
         }
@@ -1138,7 +1139,8 @@ html {
                 height:22px;
                 font-size:1rem !important;
                 padding:0 10px;
-                font-weight:normal
+                font-weight:normal;
+                    
             }
 .setPriceModal .ivu-input-number {
     width: 160px !important

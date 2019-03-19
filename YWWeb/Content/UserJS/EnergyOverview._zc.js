@@ -42,6 +42,7 @@
         initSelectShow: true,
         unitDepartName:null,
     },
+    
     methods: {
         openSelect: function (e) {
             if (e) {
@@ -154,8 +155,6 @@
                     if (res.data == 1) {
                         that.addModal1Visable = false
                         that.$Message.success('添加成功');
-                        
-
                         that.getEneryOverView()
                     } else {
                         that.$Message.warning('添加失败');
@@ -197,7 +196,7 @@
                         this.info = res.data
                         this.sumBudget = res.data.list_zong.zongBudget
                         this.zduibi = res.data.list_zong.zduibi
-                        this.Peozhanbi = res.data.list_bottom.Peozhanbi
+                        this.Peozhanbi = res.data.list_bottom.Peozhanbi.toFixed(2)
                         this.LPeozhanbi = res.data.list_bottom.LPeozhanbi
                         this.zongBudget = res.data.list_bottom.zongBudget
                         this.bottomInfo = res.data.list_bottom
@@ -446,7 +445,7 @@
             var yData = new Array()
             for (var i = 0; i < data.keyValuePairs_Time.length; i++) {
                 xData.push(data.keyValuePairs_Time[i].name.split(" ")[0].split("/")[2])
-                yData.push(data.keyValuePairs_Time[i].value)
+                yData.push(data.keyValuePairs_Time[i].value.toFixed(2))
             }
             chart = echarts.init(document.getElementById(chart));
             var option = {
@@ -514,7 +513,7 @@
                 }],
                 yAxis: [{
                     type: 'value',
-                    name: 'kW·h',
+                    name: '万元',
                     axisLine: {
                         lineStyle: {
                             color: '#57b9a3', //x轴线颜色
