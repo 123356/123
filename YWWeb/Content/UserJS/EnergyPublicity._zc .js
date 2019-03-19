@@ -338,6 +338,7 @@
             })
             .then(function (res) {
                 that.$Message.success('保存成功');
+                that.getEneryView()
             })
             .catch(function (e) {
                 that.$Message.success('保存失败');

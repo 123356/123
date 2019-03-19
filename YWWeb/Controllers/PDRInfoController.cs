@@ -432,7 +432,7 @@ namespace YWWeb.Controllers
                 else
                 {
                     sbtable.Append("<div class=\"col-md-12 column\">");
-                    sbtable.Append("<h3 class=\"text-center\">无监测数据！</h3>");
+                    sbtable.Append("<h3 class=\"text-center\">不在系统检测范围内！</h3>");
                     sbtable.Append("</div>");
                 }
 
@@ -927,7 +927,7 @@ namespace YWWeb.Controllers
                 else
                 {
                     sbtable.Append("<div class=\"col-md-12 column\">");
-                    sbtable.Append("<h3 class=\"text-center\">无监测数据！</h3>");
+                    sbtable.Append("<h3 class=\"text-center\">不在系统检测范围内！</h3>");
                     sbtable.Append("</div>");
                 }
 
