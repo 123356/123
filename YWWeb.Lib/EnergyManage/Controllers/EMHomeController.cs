@@ -341,87 +341,43 @@ namespace EnergyManage.Controllers
         public JsonResult GetEneryTable(int uid, int DepartmentID = 0, string time = "2018-11")
         {
             List<table> table = new List<table>();
-            string pids = GetPIDs();
-            IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID);
-            string childs = "";
-            string cidss = "";
-            IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
-
-            foreach (var item in list_userP)
-            {
-                childs += item.child_id + ",";
-                if (!string.IsNullOrEmpty(item.addCid))
-                    cidss += item.addCid + ",";
-            }
             List<title> TitleList = new List<title>();
-            IList<t_EE_enTypeConfig> listconfig = null;
-            if (!string.IsNullOrEmpty(childs))
+            try
             {
-                childs = childs.Substring(0, childs.Length - 1);
-                listconfig = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, childs);
-                IList<t_V_EneryView> list_data_z = null;
-                decimal zv = 0;
-                if (!string.IsNullOrEmpty(cidss))
+                string pids = GetPIDs();
+                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID);
+                string childs = "";
+                string cidss = "";
+                IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
+                var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
+                foreach (var item in list_userP)
                 {
-                    cidss = cidss.Substring(0, cidss.Length - 1);
-                    if (!string.IsNullOrEmpty(cidss.Trim()))
+                    table t = new table();
+                    var sss = list_keshi.Where(p => p.id == item.child_id).FirstOrDefault();
+                    string keshiNmae = "";
+                    if (sss != null)
+                        keshiNmae = sss.Name;
+                    t.value.Add("ID", item.child_id + "");
+                    t.value.Add("Name", keshiNmae);
+                    Dictionary<int, string> cpids = GetCId(item.addCid);
+                    var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
+                    foreach(var dd in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
                     {
-                        list_data_z = DAL.EneryOverViewDAL.getInstance().GetDatas(cidss, pids, time);
-                        zv = list_data_z.Sum(p => p.Rate);
+                        t.value.Add(dd.Key + "", dd.Sum(p => p.Rate) + "");
+                        title ttt = new title();
+                        ttt.Type = dd.Key.Value;
+                        ttt.Name = TypeList.Where(p => p.ID == dd.Key).FirstOrDefault().Name;
+                        if (!TitleList.Select(p => p.Type).Contains(ttt.Type))
+                            TitleList.Add(ttt);
+
                     }
-                    TitleList = listconfig.Select(p => new title { Type = p.CollTypeID, Name = p.Name }).Distinct().ToList();
-                    foreach (var item_p in list_userP)
-                    {
-                        table t = new table();
-
-                        var sss = list_keshi.Where(p => p.id == item_p.child_id).FirstOrDefault();
-                        string keshiNmae = "";
-                        if (sss != null)
-                            keshiNmae = sss.Name;
-
-                        t.value.Add("ID", item_p.child_id + "");
-                        t.value.Add("Name", keshiNmae);
-                        foreach (var item in TitleList)
-                        {
-                            if (!string.IsNullOrEmpty(item_p.addCid.Trim()))
-                            {
-                                Dictionary<int, string> cpids = GetCId(item_p.addCid);
-                                IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(cpids, item.Type);
-                                string cids = "";
-                                foreach (var item_cir in list_cir)
-                                {
-                                    cids += item_cir.CID + ",";
-                                }
-                                if (cids != "")
-                                    cids = cids.Substring(0, cids.Length - 1);
-                                else
-                                    cids = "0";
-                                if (!string.IsNullOrEmpty(cids))
-                                {
-                                    IList<t_V_EneryView> list_data = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, pids, time);
-                                    decimal v = list_data.Sum(p => p.Rate);
-                                    if (zv != 0)
-                                        v = Math.Round(v / zv, 2) * 100;
-                                    else
-                                        v = 0;
-
-                                    t.value.Add(item.Type + "", v + "");
-                                }
-                                else
-                                {
-                                    t.value.Add(item.Type + "", "0");
-                                }
-                            }
-                            else
-                            {
-                                t.value.Add(item.Type + "", "0");
-                            }
-                        }
-                        table.Add(t);
-                    }
+                    table.Add(t);
                 }
+                return Json(new { TitleList, table });
+            }catch(Exception ex)
+            {
+                throw ex;
             }
-            return Json(new { TitleList, table });
         }
 
         public class title
@@ -596,10 +552,11 @@ namespace EnergyManage.Controllers
                         foreach (var it in item.OrderBy(p=>p.coolect_dev_type).GroupBy(p=>p.coolect_dev_type))
                         {
                             decimal v = 0;
-                            string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
-                            string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
-                            IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
-                            v = list_this.Sum(p => p.Value);
+                            //string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
+                            //string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
+                            //IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
+                            
+                            v = it.Sum(p => p.Rate);
                             t.value.Add(it.Key + "", v + "");
                             title ttt = new title();
                             ttt.Type = it.Key.Value;
@@ -1306,7 +1263,7 @@ namespace EnergyManage.Controllers
         }
         #endregion
         #region 能源报告
-        public JsonResult GetEnFromData(int type, DateTime time, int uid, int DepartmentID = 0, int page = 1, int rows = 10)
+        public JsonResult GetEnFromData(int type, string time, int uid, int DepartmentID = 0, int page = 1, int rows = 10)
         {
             List<table> table = new List<table>();
             Dictionary<string, string> TitleName = new Dictionary<string, string>();
@@ -1318,8 +1275,8 @@ namespace EnergyManage.Controllers
                 var config = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid, DepartmentID + "");
                 if (type == 1)
                 {
-                    string t1 = time.ToString("yyyy-MM-dd 00:00:00");
-                    string t2 = time.ToString("yyyy-MM-dd 23:59:59");
+                    string t1 = Convert.ToDateTime(time).ToString("yyyy-MM-dd 00:00:00");
+                    string t2 = Convert.ToDateTime(time).ToString("yyyy-MM-dd 23:59:59");
                     string t3 = Convert.ToDateTime(time).AddMonths(-1).ToString("yyyy-MM-dd 00:00:00");
                     string t4 = Convert.ToDateTime(time).AddMonths(-1).ToString("yyyy-MM-dd 23:59:59");
                     string cidss = "";
@@ -1366,10 +1323,10 @@ namespace EnergyManage.Controllers
                 else if (type == 2)
                 {
 
-                    string t1 = time.AddDays(1 - time.Day).ToString();
-                    string t2 = time.AddDays(1 - time.Day).AddMonths(1).AddDays(-1).ToString();
-                    string t3 = time.AddDays(1 - time.Day).AddYears(-1).ToString();
-                    string t4 = time.AddDays(1 - time.Day).AddMonths(1).AddDays(-1).AddYears(-1).ToString();
+                    string t1 = Convert.ToDateTime(time).AddDays(1 - Convert.ToDateTime(time).Day).ToString();
+                    string t2 = Convert.ToDateTime(time).AddDays(1 - Convert.ToDateTime(time).Day).AddMonths(1).AddDays(-1).ToString();
+                    string t3 = Convert.ToDateTime(time).AddDays(1 - Convert.ToDateTime(time).Day).AddYears(-1).ToString();
+                    string t4 = Convert.ToDateTime(time).AddDays(1 - Convert.ToDateTime(time).Day).AddMonths(1).AddDays(-1).AddYears(-1).ToString();
 
                     string cidss = "";
                     var cidList = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
@@ -1414,10 +1371,10 @@ namespace EnergyManage.Controllers
                 else if (type == 3)
                 {
 
-                    string t1 = time.ToString("yyyy-01-01");
-                    string t2 = time.ToString("yyyy-12-31");
-                    string t3 = Convert.ToDateTime(time).AddYears(-1).ToString("yyyy-01-01");
-                    string t4 = Convert.ToDateTime(time).AddYears(-1).ToString("yyyy-12-31");
+                    string t1 = new DateTime(Convert.ToInt32(time), 1, 1).ToString("yyyy-01-01");
+                    string t2 = new DateTime(Convert.ToInt32(time), 12, 31).ToString("yyyy-12-31");
+                    string t3 = new DateTime(Convert.ToInt32(time), 1, 1).AddYears(-1).ToString("yyyy-01-01");
+                    string t4 = new DateTime(Convert.ToInt32(time), 12, 31).AddYears(-1).ToString("yyyy-12-31");
 
                     string cidss = "";
                     var cidList = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
@@ -1448,7 +1405,7 @@ namespace EnergyManage.Controllers
                             {
                                 TitleName.Add("LastMonthData" + i, "上月同比" + xt.Key);
                             }
-                            t.value.Add("LastMonthData" + i, LastData.Where(p => p.RecordTime == xi.Key && p.TypeName == xt.Key).Sum(p => p.Value) + "");
+                            t.value.Add("LastMonthData" + i, LastData.Where(p => p.RecordTime == xi.Key.AddYears(-1) && p.TypeName == xt.Key).Sum(p => p.Value) + "");
                             i++;
                         }
 

@@ -45,9 +45,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not n
             foreach (KeyValuePair<int, string> item in cpids)
             {
                 if (i == 0)
-                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}))";
                 else
-                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}))";
                 if (cpids.Count() == (i + 1))
                 {
                     sql += ")";
@@ -171,9 +171,9 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
             foreach (KeyValuePair<int, string> item in cpids)
             {
                 if (i == 0)
-                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
                 else
-                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key} and b.PID={item.Key}))";
                 if (cpids.Count() == (i + 1))
                 {
                     sql += ")";
@@ -196,9 +196,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not nu
             foreach (KeyValuePair<int, string> item in cpids)
             {
                 if (i == 0)
-                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
                 else
-                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
                 if (cpids.Count() == (i + 1))
                 {
                     sql += ")";
