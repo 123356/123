@@ -489,15 +489,16 @@ namespace EnergyManage.Controllers
                         string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
                         for (var i = 0; i < 31; i++)
                         {
-                            x.Add(Convert.ToDateTime(t1).AddDays(1 - time_test.Day).AddDays(i).ToString());
+                            x.Add(Convert.ToDateTime(t1).AddDays(i).ToString("yyyy-MM-dd"));
                         }
                         list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cpids, type, t1, t2);
                         string t3 = time_test.AddDays(1 - time_test.Day).AddMonths(-1).ToString();
+                        string t4 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).AddMonths(-1).ToString();
                         for (var i = 0; i < 31; i++)
                         {
-                            x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString());
+                            x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString("yyyy-MM-dd"));
                         }
-                        string t4 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).AddDays(-1).AddMonths(-1).ToString();
+                       
                         list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cpids, type, t3, t4);
                     }
                     else if (TypeTime == 3)
