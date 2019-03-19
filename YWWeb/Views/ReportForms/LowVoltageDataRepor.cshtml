@@ -14,9 +14,10 @@
         #pzhtml td {
             text-align: center;
         }
+       
     </style>
 </head>
-<body>
+<body style="background:#fff">
     <div id="tb" class="searchbar">
 
         <div class="searchrow">
@@ -190,19 +191,19 @@
                 }
                 $("#CTitle").html(str)
                 console.log(data);
-                var Hhtml = " <tr style='background-color:#051b39;color:white '><th colspan='2'>回路名称</th>";
+                var Hhtml = " <tr style='background-color:#eee;color:#333 '><th colspan='2'>回路名称</th>";
                 $.each(data.Cname, function (index, val) {
                     Hhtml += " <th colspan='7'>" + val.CName + "</th>";
                 })
                 Hhtml += "</tr>"
                 Hhtml += "<tr>"
-                Hhtml += " <th rowspan='2'  style='background-color:#051b39;color:white'>序号</th><th rowspan='2'  style='background-color:#051b39;color:white '>时间</th>";
+                Hhtml += " <th rowspan='2'  style='background-color:#eee;color:#333'>序号</th><th rowspan='2'  style='background-color:#eee;color:#333 '>时间</th>";
                 $.each(data.Cname, function (index, val) {
                     $.each(obj, function (ind, va) {
                         if (ind != 2) {
-                            Hhtml += " <th colspan='3'  style='background-color:#051b39;color:white '>" + va + "</th>";
+                            Hhtml += " <th colspan='3'  style='background-color:#eee;color:#333 '>" + va + "</th>";
                         } else {
-                            Hhtml += " <th  style='background-color:#051b39;color:white '>" + va + "</th>";
+                            Hhtml += " <th  style='background-color:#eee;color:#333 '>" + va + "</th>";
                         }
                     })
                 })
@@ -211,7 +212,7 @@
                 $.each(data.Cname, function (index1, val1) {
 
                     $.each(obj1, function (ind, va) {
-                        Hhtml += " <th  style='background-color:#909193;color:white '>" + va + "</th>";
+                        Hhtml += " <th  style='background-color:#eee;color:#333 '>" + va + "</th>";
                     })
 
                 })

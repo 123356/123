@@ -238,11 +238,8 @@ function HourYdlGraph_SSQX(DataJson) {
             var arr = []
             for (var j = 0; j < temp.length; j++) {
                 arr.push(parseFloat(temp[j]).toFixed(2))
-                //temp[j] = parseFloat(temp[j]).toFixed(2)
 
             }
-
-            console.log(arr)
             Series.push({
                 name: DataJson.CName[i],
                 type: "line",
@@ -271,7 +268,6 @@ function HourYdlGraph_SSQX(DataJson) {
                 },
             });
         }
-        console.log(Series)
         var option = {
             title: {
                 show: false,
