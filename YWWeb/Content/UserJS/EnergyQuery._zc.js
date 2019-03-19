@@ -81,6 +81,9 @@
             this.$http({
                 url: '/energyManage/EMHome/GetDeviceCombox',
                 method: 'post',
+                body: {
+                    uid: this.UID
+                }
             }).then(function (res) {
                 that.deviceList = res.data
             }).catch(function (e) {
