@@ -293,8 +293,8 @@
                 color = ['#f9b88c']
             } else {
                 serData = [
-                    { value: budget, name: '预算剩余' },
-                    { value: (budget - rate), name: '已用费用' },
+                    { value: budget-rate, name: '预算剩余' },
+                    { value: rate, name: '已用费用' },
                 ]
                 color = ['#f9b88c', '#58b9a3']
             }
@@ -316,8 +316,8 @@
                             show: true,
                             position: 'center',
                             formatter: [
-                                '{a|总费用}',
-                                '{b|' + rate + '}'
+                                '{a|总预算}',
+                                '{b|' + budget + '}'
                             ].join('\n'),
                             rich: {
                                 a: {
