@@ -1696,6 +1696,8 @@
     <Content Include="Content\uplaodfy\uploadifive.css" />
     <Content Include="Content\uplaodfy\uploadify.css" />
     <Content Include="Content\uplaodfy\uploadify.swf" />
+    <Content Include="Content\UserJS\AlarmConfig._jm.js" />
+    <Content Include="Content\UserJS\AlarmConfig._zc.js" />
     <Content Include="Content\UserJS\AlarmIndex._jm.js" />
     <Content Include="Content\UserJS\AlarmIndex._zc.js" />
     <Content Include="Content\UserJS\AlarmMain_jm.js" />
@@ -1733,8 +1735,6 @@
     <Content Include="Content\UserJS\EnergyPublicity._zc .js" />
     <Content Include="Content\UserJS\EnergyQuery._jm.js" />
     <Content Include="Content\UserJS\EnergyQuery._zc.js" />
-    <Content Include="Content\UserJS\ErrorPue._jm.js" />
-    <Content Include="Content\UserJS\ErrorPue._zc.js" />
     <Content Include="Content\UserJS\NewUserView._jm.js" />
     <Content Include="Content\UserJS\NewUserView._zc.js" />
     <Content Include="Content\UserJS\ProjectList._jm.js" />
@@ -2522,6 +2522,7 @@
     <Content Include="Views\Home\OfflineMap.cshtml" />
     <Content Include="Views\SysInfo\CommunicaEdit.cshtml" />
     <Content Include="Views\SysInfo\ErrorPUE.cshtml" />
+    <Content Include="Views\SysInfo\AlarmConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

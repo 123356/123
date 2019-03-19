@@ -84,7 +84,7 @@ namespace YWWeb.Controllers
             return View();
         }
         //PUE报警
-        public ActionResult ErrorPUE()
+        public ActionResult AlarmConfig()
         {
             return View();
         }
@@ -602,7 +602,6 @@ namespace YWWeb.Controllers
         /// <returns></returns>
         public JsonResult GetPueAlarm(int pid = -1)
         {
-            string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
             IList<IDAO.Models.t_EE_AlarmConfig> list = DAL.AlarmConfigDAL.getInstance().GetPueAlarm(pid);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -616,7 +615,6 @@ namespace YWWeb.Controllers
         /// <returns></returns>
         public JsonResult GetAlarmType()
         {
-            string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
             IList<IDAO.Models.t_EE_AlarmType> list = DAL.AlarmConfigDAL.getInstance().GetAlarmType();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -629,90 +627,50 @@ namespace YWWeb.Controllers
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public ActionResult SavePueError(t_CM_PointsInfo info)
+        public ActionResult SavePueError(IDAO.Models.t_EE_AlarmConfig alarm)
         {
-            string result = "OK";
             try
             {
-                List<t_CM_PointsInfo> list = bll.t_CM_PointsInfo.Where(p => p.TagName == info.TagName && p.TagID != info.TagID && p.PID == info.PID).ToList();
-                if (list.Count > 0)
-                    result = "此测点已存在，请重新录入！ ";
-                else
+                alarm.TypeId = -1;
+                IList<IDAO.Models.t_EE_AlarmType> type = DAL.AlarmConfigDAL.getInstance().GetAlarmType();
+                for (var a = 0; a < type.Count(); a++)
                 {
-                    info.Remarks = info.Remarks.Trim();
-                    info.TagName = info.TagName.Trim();
-                    if (info.TagID > 0)
+                    if (type[a].TypeName == alarm.TypeName)
                     {
-                        t_CM_PointsInfo pointsinfo = bll.t_CM_PointsInfo.Where(r => r.TagID == info.TagID).First();
-                        pointsinfo.ABCID = info.ABCID;
-                        pointsinfo.DataTypeID = info.DataTypeID;
-                        pointsinfo.DID = info.DID;
-                        pointsinfo.MPID = info.MPID;
-                        pointsinfo.PIOID = info.PIOID;
-                        pointsinfo.PID = info.PID;
-                        pointsinfo.CID = info.CID;
-                        pointsinfo.Position = info.Position;
-                        pointsinfo.TagName = info.TagName;
-                        pointsinfo.报警上限1 = info.报警上限1;
-                        pointsinfo.报警上限2 = info.报警上限2;
-                        pointsinfo.报警上限3 = info.报警上限3;
-                        pointsinfo.传感器SN编码 = info.传感器SN编码;
-                        pointsinfo.工程上限 = info.工程上限;
-                        pointsinfo.工程下限 = info.工程下限;
-                        pointsinfo.实时库索引 = info.实时库索引;
-                        pointsinfo.数据类型 = info.数据类型;
-                        pointsinfo.通信地址 = info.通信地址;
-                        pointsinfo.中文描述 = info.中文描述;
-                        pointsinfo.变比 = info.变比;
-                        pointsinfo.系数 = info.系数;
-                        pointsinfo.报警下限1 = info.报警下限1;
-                        pointsinfo.报警下限2 = info.报警下限2;
-                        pointsinfo.报警下限3 = info.报警下限3;
-
-                        if (info.Remarks != null)
-                            pointsinfo.Remarks = Server.HtmlEncode(info.Remarks).Replace("\n", "<br>");
-                        else
-                            pointsinfo.Remarks = info.Remarks;
-
-                        bll.ObjectStateManager.ChangeObjectState(pointsinfo, EntityState.Modified);
-                        bll.SaveChanges();
-                        Common.InsertLog("点表管理", CurrentUser.UserName, "编辑点表信息[" + pointsinfo.TagName + "]");
-                        result = "OKedit";
+                        alarm.TypeId = type[a].TypeId;
+                        break;
+                    }
+                }
+                if (alarm.TypeId == -1)
+                {
+                    return Json("报警类型无效");
+                }
+                //增加
+                if (alarm.ID == -1)
+                {
+                    IList<IDAO.Models.t_EE_AlarmConfig> after = DAL.AlarmConfigDAL.getInstance().GetPueAlarmAfter(alarm);
+                    if (after.Count > 0)
+                    {
+                        return Json("操作错误，同一站室报警类型不可重复。");
                     }
                     else
                     {
-                        info.实时库索引 = 0;
-                        info.例外报告死区 = 0.1;
-                        info.码值下限 = 0;
-                        info.码值上限 = 125;
-                        info.报警定义 = 1;
-                        info.分组 = 1;
-                        info.初始值 = 0;
-                        info.最大间隔时间 = 30;
-                        info.小信号切除值 = 0;
-                        info.报警级别 = 0;
-                        info.报警方式 = 1;
-                        info.速率报警限制 = 0;
-                        info.UseState = 0;
-                        if (info.Remarks != null)
-                            info.Remarks = info.Remarks.Replace("\n", "<br>");
-                        else
-                            info.Remarks = info.Remarks;
-                        bll.t_CM_PointsInfo.AddObject(info);
-                        bll.SaveChanges();
-
-                        Common.InsertLog("点表管理", CurrentUser.UserName, "新增点表信息[" + info.TagName + "]");
-                        result = "OKadd" + "," + info.TagID;// +"," + info.实时库索引;
+                        //加
+                        IList<IDAO.Models.t_EE_AlarmConfig> list = DAL.AlarmConfigDAL.getInstance().AppendAlarm(alarm);
+                        return Json("OKadd");
                     }
-                    //updatePointStatu((int)info.PID);
+                }
+                //修改
+                else
+                {
+                    IList<IDAO.Models.t_EE_AlarmConfig> list = DAL.AlarmConfigDAL.getInstance().UpdataeAlarm(alarm);
+                    return Json("OKedit");
                 }
             }
             catch (Exception ex)
             {
-                result = ex.ToString();
-                result = "出错了！";
+                return Json("后台异常");
             }
-            return Content(result);
         }
 
 
@@ -724,39 +682,17 @@ namespace YWWeb.Controllers
         /// <param name="PID"></param>
         /// <param name="tagIDS"></param>
         /// <returns></returns>
-        public ActionResult DeleteAlarm(int PID, int[] tagIDS)
+        public ActionResult DeleteAlarm(IDAO.Models.t_EE_AlarmConfig alarm)
         {
-            string result = "OK";
             try
             {
-                if (tagIDS.Length > 0)
-                {
-                    string ids = tagIDS[0].ToString();
-                    for (int i = 1; i < tagIDS.Length; i++)
-                        ids += "," + tagIDS[i].ToString();
-                    string strsql = "delete from t_CM_PointsInfo where TagID in (" + ids + ")";
-                    int docount = bll.ExecuteStoreCommand(strsql, null);
-                    string userName = "错误用户？";
-                    if (null != CurrentUser)
-                        userName = CurrentUser.UserName;
-
-                    //删除实时表中相应的点
-                    string tablename = "t_SM_RealTimeData_" + PID.ToString("00000");
-                    strsql = "delete from " + tablename + " where TagID in (" + ids + ")";
-                    bll.ExecuteStoreCommand(strsql, null);
-                    //
-                    Common.InsertLog("点表管理", userName, "删除点表信息[" + ids + "]");
-                   // updatePointStatu(PID);
-                    result = "OK";
-                }
-
+                IList<IDAO.Models.t_EE_AlarmConfig> list = DAL.AlarmConfigDAL.getInstance().DeleteAlarm(alarm);
+                return Json("OK");
             }
             catch (Exception ex)
             {
-                result = ex.ToString();
-                result = "出错了！";
+                return Json("出错了！");
             }
-            return Content(result);
         }
 
  
