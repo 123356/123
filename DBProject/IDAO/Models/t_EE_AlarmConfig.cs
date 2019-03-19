@@ -12,7 +12,7 @@ namespace IDAO.Models
     [Serializable]
     public partial class t_EE_AlarmType
     {
-        public int TypeId { get; set; }
+        public int? TypeId { get; set; }
         public string TypeName { get; set; }
     }
 

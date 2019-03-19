@@ -21,25 +21,25 @@
                     站室编号
                 </th>
                 <th data-options="field:'TypeName',width:80,editor:'text'" 
-                    editor="{type:'combobox',options:{valueField:'ABCID',textField:'ABCName', url: '/BaseInfo/BindABCPhase?row=' + Math.random(),required:true }}">
+                    editor="{type:'combobox',options:{valueField:'TypeName',textField:'TypeName', url: '/SysInfo/GetAlarmType?row=' + Math.random(),required:true }}">
                     类型名称
                 </th>
-                <th data-options="field:'LimitH1',width:50,editor:'numberbox'">
+                <th data-options="field:'LimitH1',width:50,editor:'text'">
                     高报1
                 </th>
-                <th data-options="field:'LimitH2',width:50,editor:'numberbox'" >
+                <th data-options="field:'LimitH2',width:50,editor:'text'">
                     高报2
                 </th>
-                <th data-options="field:'LimitH3',width:50,editor:'numberbox'" >
+                <th data-options="field:'LimitH3',width:50,editor:'text'">
                     高报3
                 </th>
-                <th data-options="field:'LimitL1',width:50,editor:'numberbox'">
+                <th data-options="field:'LimitL1',width:50,editor:'text'">
                     低报1
                 </th>
-                <th data-options="field:'LimitL2',width:50,editor:'numberbox'">
+                <th data-options="field:'LimitL2',width:50,editor:'text'">
                     低报2
                 </th>
-                <th data-options="field:'LimitL3',width:50,editor:'numberbox'">
+                <th data-options="field:'LimitL3',width:50,editor:'text'">
                     低报3
                 </th>
 
@@ -85,14 +85,14 @@
             </div>
     </form>
   
-    <script type="text/javascript" src="~/Content/UserJS/ErrorPue._zc.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/AlarmConfig._zc.js"></script>
     <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 
 
 
 
-    @*<script type="text/javascript" src="~/Content/UserJS/ErrorPue._jm.js"></script>*@
+    @*<script type="text/javascript" src="~/Content/UserJS/._jm.js"></script>*@
 
 </body>
 </html>

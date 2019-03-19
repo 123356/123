@@ -38,9 +38,9 @@ where a.UserPowerRate is not null and a.UsePower!=0";
             foreach (KeyValuePair<int, string> item in cpids)
             {
                 if (i == 0)
-                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" and (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key}";
                 else
-                    sql += $" or a.CID in({ item.Value}) and a.PID in ({ item.Key})";
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
                 if (cpids.Count() == (i + 1))
                 {
                     sql += ")";
