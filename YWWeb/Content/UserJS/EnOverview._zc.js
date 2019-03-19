@@ -15,8 +15,8 @@ function getPowerQualityData_PM() {
         case 0:
             num = 2;
             titleBar = "昨天用电分项排名";
-            t1='昨天';
-            t2='上月同期';
+            t1 = '昨天';
+            t2 = '上月同期';
             break;
         case 1:
             num = 14;
@@ -103,7 +103,7 @@ function PowerQualityData_PM(DataJson) {
     myChart3.clear();
     myChart3.setOption(option3);
 }
-    
+
 
 
 
@@ -114,7 +114,7 @@ function getPowerQualityData_FX() {
     myChart2.clear();
     totaltype = $("input[name='GraphType']:checked").val();
     //console.log(totaltype)
-    var num=0;
+    var num = 0;
     switch (parseInt(totaltype)) {
         case 0:
             num = 3;//昨天总用电 饼图；
@@ -218,54 +218,60 @@ function getPowerQualityData_SSQX() {
         //if (DataJson.CName.length == 0) {
         //    $("#userCharts1").html("暂无数据");
         //} else {
-        
+
         HourYdlGraph_SSQX(DataJson);
         //}
     });
 }
 function HourYdlGraph_SSQX(DataJson) {
-    
+
     var Series = [];
-    console.log(DataJson);
+
     if (DataJson.xAxis != '') {
         $('#Error').hide();
         $("#userCharts1").show();
         //$('#Error').css('display', 'none');
         //$('#cavans').css('display', '');
+
         for (i = 0; i < DataJson.yData.length; i++) {
             var temp = DataJson.yData[i].split(",")
+            var arr = []
             for (var j = 0; j < temp.length; j++) {
-                temp[j] = parseFloat(temp[j]).toFixed(2)
+                arr.push(parseFloat(temp[j]).toFixed(2))
+                //temp[j] = parseFloat(temp[j]).toFixed(2)
+
             }
-            console.log(temp)
+
+            console.log(arr)
             Series.push({
                 name: DataJson.CName[i],
                 type: "line",
-                stack: "总量",                    
+                stack: DataJson.CName[i],                    
                 smooth: true,
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: "default"
-                        }
-                    }
-                },
-                data:temp,
+                areaStyle: {},
+                //itemStyle: {
+                //    normal: {
+                //        areaStyle: {
+                //            type: "default"
+                //        }
+                //    }
+                //},
+                data: arr,
                 markPoint: {
                     data: [
                         {
-                            type: 'max', name: '最大值',
-                            
+                            type: 'max', name: '最大值'
+
                         },
                         {
-                            type: 'min', name: '最小值',
-                            
+                            type: 'min', name: '最小值'
+
                         }
                     ]
                 },
             });
         }
-            
+        console.log(Series)
         var option = {
             title: {
                 show: false,
@@ -343,7 +349,7 @@ function HourYdlGraph_SSQX(DataJson) {
                     return table;
                 }
             },
-            calculable: true,
+            //calculable: true,
             xAxis: [{
                 name: "Time",
                 type: "category",
@@ -358,10 +364,10 @@ function HourYdlGraph_SSQX(DataJson) {
             yAxis: [{
                 name: "KW‧H",
                 type: "value",
-                axisLabel: {
-                    show: true,
-                    formatter: "{value}"
-                }
+                //axisLabel: {
+                //    show: true,
+                //    formatter: "{value}"
+                //}
             }, ],
             dataZoom: [{
                 type: 'inside',
@@ -402,7 +408,7 @@ function lock() {
     getPowerQualityData_FX();
 }
 
-function loadStationName(){
+function loadStationName() {
     //查询站室名称
     $('#StationName').combotree({
         url: '/Home/ComboTreeMenu?type=1',
@@ -435,17 +441,17 @@ function loadStationName(){
         onLoadSuccess: function (data) {
             var gpid = $.cookie('cookiepid');
             //演示
-            if(null!=gpid)                    
+            if (null != gpid)
                 pid = gpid;
             else
-                pid=gpid=1;
+                pid = gpid = 1;
             if (gpid != undefined) {
                 $("#StationName").combotree("setValue", gpid);
             }
             loadCircuitType(pid);
             lock();
         }
-    });   
+    });
 }
 
 function loadCircuitType(pid) {
@@ -455,7 +461,7 @@ function loadCircuitType(pid) {
         valueField: 'id',
         textField: 'name',
         editable: false,
-        onLoadSuccess: function (data) { 
+        onLoadSuccess: function (data) {
         },
         onSelect: function (data) {
             if (data.id == 0) {
@@ -474,7 +480,7 @@ function loadCircuitType(pid) {
         valueField: 'id',
         textField: 'name',
         editable: false,
-        onLoadSuccess: function (data) { 
+        onLoadSuccess: function (data) {
         },
         onSelect: function (data) {
             if (data.id == 0) {
@@ -492,7 +498,7 @@ function loadCircuitType(pid) {
         valueField: 'id',
         textField: 'name',
         editable: false,
-        onLoadSuccess: function (data) { 
+        onLoadSuccess: function (data) {
         },
         onSelect: function (data) {
             if (data.id == 0) {
