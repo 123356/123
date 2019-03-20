@@ -3,6 +3,7 @@
     data: {
         loading: true,
         UID: null,
+        Uname:'',
         tableHeight: 0,
         dateType: 0,
         tableCol: [
@@ -43,7 +44,14 @@
         },
         typeList: [],
         departMentList: [],
-        deviceList: []
+        deviceList: [],
+        isUnitSelect: 0,
+        departName: null,
+        treeData: [],
+        page: 1,
+        rows: 20,
+        total:0
+
     },
     methods: {
         //类型下拉框
@@ -59,18 +67,76 @@
                 throw new ReferenceError(e.message)
             })
         },
+        getSelectTree: function () {
+            var arr = []
+            arr.push(this.treeData)
+            var that = this
+            $("#leftmenuSpace").html("<div class='leftmenu' id='leftmenu'><div class='leftmenu_content'><div class='leftmenu_search leftmenu_search_padding'><input data-options='lines:true' style='width: 200px; height: 30px;' id='StationID' /></div><div><ul class='one' id='menuinfo'></ul></div></div></div>");
+            $('#StationID').combotree({
+                data: arr,
+                multiple: true,
+                editable: true,
+                panelMinHeight: 300,
+                onBeforeSelect: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combotree('tree').tree("expand", node.target); //展开
+                        return false;
+                    }
+                },
+                onClick: function (node) {
+                    if (!$(this).tree('isLeaf', node.target)) {
+                        $('#StationID').combo('showPanel');
+
+                    } else {
+                        that.isUnitSelect = node.id
+                    }
+
+                },
+                onChange: function (newvla, oldval) {
+                    that.searchForm.ksid = newvla
+                },
+                onLoadSuccess: function (node, data) {
+                },
+              
+            })
+        },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            node.text = node.name
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    if (!node.children[i].children) {
+                        node.children[i].text = node.children[i].name
+                    }
+                    this.foreachTree(node.children[i]);
+                }
+            } else {
+                if (node.id != 0 && this.isUnitSelect == 0) {
+                    this.isUnitSelect = node.id
+                    this.departName = node.name
+                }
+            }
+        },
         //科室下拉框
         getDepartMentList: function () {
             var that = this
             this.$http({
-                url: "/energyManage/EMSetting/GetHistoryList",
+                url: "/energyManage/EMSetting/GetTreeData",
                 method: "post",
                 body: {
                     unitID: that.UID,
-                    item_type: 2
+                    item_type: 2,
+                    unitName: that.Uname
                 }
             }).then(function (res) {
                 that.departMentList = res.data
+                var data = res.data
+                that.foreachTree(data)
+                that.treeData = data
+                that.getSelectTree()
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
@@ -102,16 +168,28 @@
                     time: that.formaterDate(),
                     did: that.searchForm.did,
                     cotypeid: that.searchForm.cotypeid,
-                    ksid: [...that.searchForm.ksid].join(',').toString()
+                    ksid: [...that.searchForm.ksid].join(',').toString(),
+                    page: that.page,
+                    rows: that.rows,
+                    
                 }
             }).then(function (res) {
-                that.tableData = res.data
+                that.tableData = res.data.datas
+                that.total = res.data.total
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
             .finally(function () {
                 that.loading = false
             })
+        },
+        pageChange: function (e) {
+            this.page = e
+            this.getEneryList()
+        },
+        sizeChange: function (e) {
+            this.rows = e
+            this.getEneryList()
         },
         formaterDate: function () {
             if (this.searchForm.time) {
@@ -126,11 +204,13 @@
     },
     beforeMount: function () {
         this.UID = $.cookie("enUID")
+        this.Uname = $.cookie("enUName")
         var that = this
-        this.setHeight()
-        setInterval(function () {
+        that.tableHeight = $(".bottomView .con").height()-30
+       
+        window.addEventListener("resize", () => {
             that.tableHeight = $(".bottomView .con").height()
-        }, 100)
+        });
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getDeviceCombox()
