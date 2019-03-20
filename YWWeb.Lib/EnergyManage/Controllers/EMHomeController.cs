@@ -335,7 +335,36 @@ namespace EnergyManage.Controllers
                 oview.value = item.Sum(p => p.Rate);
                 list.Add(oview);
             }
-            return Json(list, JsonRequestBehavior.AllowGet);
+            decimal DepBudget = 0;
+            var yearBuget = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, time.Year);
+            if (yearBuget.Count() != 0)
+            {
+                var yearb = yearBuget[0].ID;
+                var month = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearb);
+                if (month.Count() != 0)
+                {
+                    var monthb = month.Where(p => p.Month == time.Month).FirstOrDefault();
+                    if (monthb != null)
+                    {
+                        var monthid = monthb.ID;
+                        var cotype = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
+                        if (cotype.Count() != 0)
+                        {
+                            var coid = cotype.Select(p => p.ID).ToList();
+                            foreach (var item in coid)
+                            {
+                                var depB = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(item, DepartmentID);
+                                if (depB != null)
+                                {
+                                    DepBudget += depB.GeneralBudget;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+            return Json(new { list, DepBudget }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetEneryTable(int uid, int DepartmentID = 0, string time = "2018-11")
@@ -361,7 +390,7 @@ namespace EnergyManage.Controllers
                     t.value.Add("Name", keshiNmae);
                     Dictionary<int, string> cpids = GetCId(item.addCid);
                     var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
-                    foreach(var dd in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
+                    foreach (var dd in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
                     {
                         t.value.Add(dd.Key + "", dd.Sum(p => p.Rate) + "");
                         title ttt = new title();
@@ -374,7 +403,8 @@ namespace EnergyManage.Controllers
                     table.Add(t);
                 }
                 return Json(new { TitleList, table });
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -454,7 +484,7 @@ namespace EnergyManage.Controllers
                         {
                             x2.Add(Convert.ToDateTime(t3).AddDays(i).ToString("yyyy-MM-dd"));
                         }
-                       
+
                         list_last = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cpids, type, t3, t4);
                     }
                     else if (TypeTime == 3)
@@ -543,26 +573,26 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(cidss.Trim()))
                 {
                     IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
-                    
-                    foreach (var item in list_data_z.Where(p=>p.coolect_dev_type!=null).GroupBy(p => p.RecordTime))
+
+                    foreach (var item in list_data_z.Where(p => p.coolect_dev_type != null).GroupBy(p => p.RecordTime))
                     {
                         table t = new table();
                         t.value.Add("time", item.Key.ToString());
-                       
-                        foreach (var it in item.OrderBy(p=>p.coolect_dev_type).GroupBy(p=>p.coolect_dev_type))
+
+                        foreach (var it in item.OrderBy(p => p.coolect_dev_type).GroupBy(p => p.coolect_dev_type))
                         {
                             decimal v = 0;
                             //string t1 = item.Key.ToString("yyyy-MM-dd 00:00:00");
                             //string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
                             //IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
-                            
+
                             v = it.Sum(p => p.Rate);
                             t.value.Add(it.Key + "", v + "");
                             title ttt = new title();
                             ttt.Type = it.Key.Value;
                             ttt.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name;
-                            if (!TitleList.Select(p=>p.Type).Contains(ttt.Type))
-                                      TitleList.Add(ttt);
+                            if (!TitleList.Select(p => p.Type).Contains(ttt.Type))
+                                TitleList.Add(ttt);
                         }
                         t.value.Add("area", mianji + "");
                         t.value.Add("people", renliu + "");
@@ -573,7 +603,7 @@ namespace EnergyManage.Controllers
             return Json(new { TitleList, table });
 
 
-         
+
 
 
 
@@ -777,7 +807,7 @@ namespace EnergyManage.Controllers
             var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
             decimal rate = 0;
 
-            string t1 =new DateTime(year,1,1).ToString("yyyy-MM-dd");
+            string t1 = new DateTime(year, 1, 1).ToString("yyyy-MM-dd");
             string t2 = new DateTime(year, 12, 31).ToString("yyyy-MM-dd");
             foreach (var item in list_dep)
             {
@@ -1249,7 +1279,7 @@ namespace EnergyManage.Controllers
         }
         public JsonResult GetDeviceCombox(int uid)
         {
-           // string pids = GetPIDs();
+            // string pids = GetPIDs();
             var model = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
             if (model != null)
             {
