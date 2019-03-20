@@ -410,6 +410,27 @@ namespace EnergyManage.Controllers
             }
         }
 
+        private string FindNode(int uid, int depid)
+        {
+            //接受返回的节点
+            string ret = null;
+
+            var m = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, depid);
+            if (m.Count != 0)
+            {
+                foreach (var item in m)
+                {
+                    FindNode(uid, item.child_id);
+                }
+            }
+            else
+            {
+
+            }
+            return ret;
+        }
+
+
         public class title
         {
 
@@ -767,7 +788,7 @@ namespace EnergyManage.Controllers
             string pids = GetPIDs();
             IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
 
-            var time = new DateTime(year-1, month, 1).ToString("yyyy-MM");
+            var time = new DateTime(year - 1, month, 1).ToString("yyyy-MM");
             var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
             List<overView> list = new List<overView>();
 
@@ -806,11 +827,11 @@ namespace EnergyManage.Controllers
                     list.Add(group_i);
                 }
             }
-            
 
-           
-              
-            
+
+
+
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -1262,25 +1283,17 @@ namespace EnergyManage.Controllers
             {
                 string pids = GetPIDs();
                 IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ksid, uid);
-                string cidss = "";
                 foreach (var item in list)
                 {
-                    if (!string.IsNullOrEmpty(item.cids.Trim()))
-                        cidss += item.cids + ",";
-                }
-                if (!string.IsNullOrEmpty(cidss))
-                {
-                    cidss = cidss.TrimEnd(',');
-                    Dictionary<int, string> cpids = GetCId(cidss);
-                    IList<t_V_EnerySelectView> list_data = DAL.EnerySelectViewDAL.getInstance().GetDatas(time, cpids, did, cotypeid);
-                    foreach (var item in list_data.GroupBy(p => p.Name))
+                    if (item.cids != null && !string.IsNullOrEmpty(item.cids.Trim()))
                     {
-                        foreach (var it in item.GroupBy(p => p.RecordTime))
-                        {
+                        Dictionary<int, string> cpids = GetCId(item.cids);
+                        IList<t_V_EnerySelectView> list_data = DAL.EnerySelectViewDAL.getInstance().GetDatas(time, cpids, did, cotypeid);
 
+                        foreach (var it in list_data.GroupBy(p => p.RecordTime))
+                        {
                             foreach (var i in it.GroupBy(p => p.DeviceName))
                             {
-
                                 foreach (var ii in i.GroupBy(p => p.Name))
                                 {
                                     enview m = new enview();
@@ -1288,13 +1301,12 @@ namespace EnergyManage.Controllers
                                     m.DeviceName = i.Key;
                                     m.TypeName = ii.Key;
                                     m.DValue = ii.Sum(p => p.UserPowerRate);
-                                    m.Name = item.Key;
+                                    m.Name = item.Name;
                                     datas.Add(m);
                                 }
                             }
                         }
                     }
-
                 }
             }
             catch (Exception ex)
