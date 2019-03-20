@@ -19,7 +19,8 @@
                 title: '能耗费用(万元)',
                 align: 'center',
                 key: 'DValue',
-                sortable: true
+                sortable: true,
+                sortType: "desc"
             },
             {
                 title: '建筑面积(㎡)',
@@ -92,7 +93,7 @@
                         $("#StationID").combotree("setValue", that.isUnitSelect);
                         that.EneryUserTypeID = that.isUnitSelect
                     }
-                   
+                    that.getEneryView()
 
 
                 }
@@ -140,15 +141,21 @@
                     throw new ReferenceError(e.message)
                 })
         },
+        //显示数据
+        showInfo: function () {
+            this.getEneryView()
+        },
         //获取数据
         getEneryView: function () {
+           
             var that = this
             this.$http({
                 url: '/energyManage/EMHome/GetEneryView',
                 method: 'post',
                 body: {
                     uid: that.UID,
-                    time: that.formaterDate()
+                    time: that.formaterDate(),
+                    depids: [...that.EneryUserTypeID].join(',')
                 }
             })
                 .then(function (res) {
@@ -368,7 +375,7 @@
     beforeMount: function () {
         this.UID = $.cookie("enUID")
         this.UName = $.cookie("enUName")
-        this.getEneryView()
+      //  this.getEneryView()
         var that = this
         this.setHeight()
         setInterval(function () {

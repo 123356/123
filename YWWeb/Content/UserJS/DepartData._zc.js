@@ -17,7 +17,8 @@
         pieShow: true,
         barShow: true,
         loading: true,
-        noDataText:"暂无数据",
+        noDataText: "暂无数据",
+        DepBudget:0,//饼图预算
     },
     methods: {
         //获取能源类型
@@ -57,12 +58,14 @@
                 }
             })
                 .then(function (res) {
-                    if (res.data.length > 0) {
+                    if (res.data.list.length > 0) {
                         that.pieShow = true
-                        that.createPieChart(res.data)
+                        that.createPieChart(res.data.list)
+
                     } else {
                         that.pieShow = false
                     }
+                    that.DepBudget = res.data.DepBudget
 
                 })
                 .catch(function (e) {
@@ -379,12 +382,13 @@
             var str = ''
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
+                data[i].value = data[i].value.toFixed(2)
             }
 
             var option = {
                 title: {
                     text: '分项用' + str,
-                    subtext: '预算：10万',
+                    subtext: '预算：' + this.DepBudget +'万',
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
