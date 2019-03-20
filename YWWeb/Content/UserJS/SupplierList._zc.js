@@ -1,6 +1,8 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：运维 > 备件管理 > 供应商 ");
 $('#list_data').datagrid({
-    url: '/SupplierManage/SupplierInfoData?rom=' + Math.random()
+    url: '/SupplierManage/SupplierInfoData?rom=' + Math.random(),
+    queryParams: { "pid": $.cookie('cookiepid') }
+    //123
 })
 
 //查询
@@ -34,14 +36,12 @@ function edit() {
 
     if (ids.length == 0) {
         $.messager.alert("提示", "请选择要编辑的行！", "info");
-    }
-    else if (ids.length == 1) {
+    } else if (ids.length == 1) {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
             editFrame(row.SupplierID);
         }
-    }
-    else {
+    } else {
         $.messager.alert("提示", "编辑时只能选择一行数据！", "info");
         $('#list_data').datagrid('uncheckAll');
     }
@@ -53,7 +53,7 @@ function editFrame(supplierid) {
         draggable: true, //可拖动，默认false  
         resizable: false, //可缩放，即可以通脱拖拉改变大小，默认false 
         href: '/SupplierManage/SupplierEdits?supplierid=' + supplierid,
-        onClose: function () {
+        onClose: function() {
             $('#list_data').datagrid('reload');
             $('#list_data').datagrid('uncheckAll');
         }
@@ -66,19 +66,17 @@ function Delete() {
     var rows = $('#list_data').datagrid('getSelections');
     if (rows.length < 1) {
         $.messager.alert("提示", "请选择要删除的行！", "info");
-    }
-    else {
-        $.messager.confirm('提示', '你确定要删除选中的行？', function (r) {
+    } else {
+        $.messager.confirm('提示', '你确定要删除选中的行？', function(r) {
             if (r) {
                 var ids = [];
                 for (var i = 0; i < rows.length; i++) {
                     ids.push(rows[i].SupplierID);
                 }
-                $.post("/SupplierManage/DeleteSupplierInfo?Rnum=" + Math.random(), { "supplierid": ids.join(',') }, function (data) {
+                $.post("/SupplierManage/DeleteSupplierInfo?Rnum=" + Math.random(), { "supplierid": ids.join(',') }, function(data) {
                     if (data == "OK") {
                         dosearch();
-                    }
-                    else {
+                    } else {
                         $.messager.alert("提示", data, "info");
                     }
                 });
