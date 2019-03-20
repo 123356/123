@@ -1133,16 +1133,18 @@ namespace EnergyManage.Controllers
         #endregion
 
         #region 能源公示
-        public JsonResult GetEneryView(int uid = 0, string time = "2018-11-25")
+        public JsonResult GetEneryView(string depids, int uid = 0, string time = "2018-11-25")
         {
             List<LookView> lookList = new List<LookView>();
             try
             {
                 string pids = GetPIDs();
-                var list_config = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(uid, CurrentUser.UserID);
-                if (list_config != null)
+
+                //var list_config = DAL.EnergyAnnConfigDAL.getInstance().GetenConig(uid, CurrentUser.UserID);
+                var deps = depids.Split(',');
+                if (deps.Count() != 0)
                 {
-                    foreach (var ittt in list_config.EneryUserTypeID.Split(','))
+                    foreach (var ittt in deps)
                     {
                         IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ittt, uid);
                         foreach (var item in list)
@@ -1164,6 +1166,7 @@ namespace EnergyManage.Controllers
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
