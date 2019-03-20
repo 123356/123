@@ -2,7 +2,8 @@
     el: "#app",
     data: {
         uid: null,
-        departmentID:null,
+        departmentID: null,
+        departName:null,
         analysisTableHeight:0,
         analysisColumns: [
             {
@@ -335,6 +336,7 @@
         this.uid = $.cookie("enUID")
         this.departmentID = this.getParURl("departmentID")
         this.curTime = this.getParURl("time")
+        this.departName = sessionStorage.getItem("curDepartName")
         var that = this
         setInterval(function () {
             that.setHeight()

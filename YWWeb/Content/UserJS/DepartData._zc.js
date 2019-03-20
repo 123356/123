@@ -119,7 +119,7 @@
 
                                     h('a', {
                                         attrs: {
-                                            href: '/EnergyEfficiency/RoomDataMonitoring?departmentID=' + params.row.ID + "&time=" + (tempdate.getFullYear() + "-" + month)
+                                            href: '/EnergyEfficiency/RoomDataMonitoring?departmentID=' + params.row.ID + "&time=" + (tempdate.getFullYear() + "-" + month) 
                                         },
                                         style: {
                                             textDecoration: 'none',
@@ -128,7 +128,7 @@
                                         },
                                         on: {
                                             click: () => {
-
+                                                sessionStorage.setItem("curDepartName", params.row.Name)
                                             }
                                         }
                                     }, '查看'),
