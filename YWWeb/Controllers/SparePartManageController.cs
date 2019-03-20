@@ -76,8 +76,6 @@ namespace YWWeb.Controllers
         public ActionResult SparePartInfoData(int rows, int page, string SparePartName = "", int pid = 0)
         {
             List<t_CM_SparePartInfo> list = null;
-            if (pid == 0)
-            {
                 string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
                 //string pdrlist = CurrentUser.PDRList;
                 List<int> resultlist = new List<string>(pdrlist.Split(',')).ConvertAll(i => int.Parse(i));
@@ -87,12 +85,12 @@ namespace YWWeb.Controllers
                 {
                     strsql += string.Format(" and SparePartName like '%{0}%'", SparePartName);
                 }
-
-
+                if (pid != 0) {
+                    strsql += string.Format($" and pid = {pid}");
+                }
                 strsql += " order by SparePartID ";
 
                 list = bll.ExecuteStoreQuery<t_CM_SparePartInfo>(strsql).ToList();
-            }
 
             string strJson = Common.List2Json(list, rows, page);
             return Content(strJson);
