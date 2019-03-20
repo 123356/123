@@ -5,7 +5,7 @@
         listHeight: 0,
         dateType: 0,
         activeIndex: 0,
-        frameSrc: '/EnergyEfficiency/EnergyOverview',
+        frameSrc: '',
         comList: [],
         unitID: null,
         selectedCom: 0,
@@ -50,9 +50,7 @@
                 if (that.unitID != null) {
                     if (that.thirdMenu.length > 0) {
                         that.frameSrc = that.thirdMenu[0].Location
-                    } else {
-                        that.frameSrc=""
-                    }
+                    } 
                 }
                 //console.log("that.frameSrc：" + that.frameSrc)
                 that.selectedCom = parseInt($.cookie("enUID"))

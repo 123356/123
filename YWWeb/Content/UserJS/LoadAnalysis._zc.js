@@ -71,7 +71,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 name: DataJson.CName[i],
                 type: "line",
                 barGap: 0,
-                stack: "总量",
+                stack: DataJson.CName[i],
                 smooth: true,
                 data: DataJson.yData[i].split(','),
                 markPoint: {
