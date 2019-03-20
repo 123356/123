@@ -55,6 +55,7 @@ where a.UserPowerRate is not null and a.UsePower!=0";
             {
                 sql += $" and c.ID={cotypeid}";
             }
+            sql += " order by RecordTime desc";
             return SQLQuery<t_V_EnerySelectView>(sql);
         }
     }

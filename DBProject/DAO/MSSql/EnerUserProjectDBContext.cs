@@ -64,7 +64,9 @@ namespace DAO
 
         public IList<t_EE_EnerUserProject> GetCidByUidAndIDepID(int uid, int depid)
         {
-            string sql = $"select * from t_EE_EnerUserProject where unit_id={uid} and child_id={depid}";
+            string sql = $"select * from t_EE_EnerUserProject where unit_id={uid}";
+            if (depid != 0)
+                sql += $" and child_id = {depid}";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 

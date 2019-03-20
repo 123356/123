@@ -37,7 +37,8 @@ where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(7),RecordTime, 
 
         public IList<t_V_EneryView> GetLookDatas(Dictionary<int,string> cpids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,a.CID,CONVERT(varchar(10),RecordTime, 120) as Name,CONVERT(varchar(10),RecordTime, 120) as CName,a.QID as coolect_dev_type  from t_EE_PowerQualityDaily a
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,a.CID,
+CONVERT(varchar(10),RecordTime, 120) as Name,CONVERT(varchar(10),RecordTime, 120) as CName,a.QID as coolect_dev_type from t_EE_PowerQualityDaily a
 
 where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
 
@@ -54,7 +55,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not n
                 }
                 i++;
             }
-            sql += " order by RecordTime";
+            sql += " order by RecordTime desc";
             return SQLQuery<t_V_EneryView>(sql);
         }
 
