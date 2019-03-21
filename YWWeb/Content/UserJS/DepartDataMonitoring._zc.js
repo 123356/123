@@ -25,9 +25,11 @@
                     res.data.open = true
                     that.init(res.data)
                     var did = null
+
                     if (res.data) {
                         if (res.data.children.length > 0) {
                             did = res.data.children[0].id
+                            sessionStorage.setItem('parentDepartName', res.data.children[0].name)
                         }
                     }
                     that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
@@ -73,21 +75,21 @@
             var zNodes = data
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             function nodeClick(event, treeId, treeNode) {
-                $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id )
+                $("#departFrame").attr("src", '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id)
                 this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + treeNode.id
                 sessionStorage.setItem("isParent", treeNode.isParent)
-                
+                sessionStorage.setItem('parentDepartName', treeNode.name)
             }
         },
         selectChange: function (res) {
             this.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res[0].id
+
             document.getElementById('departFrame').contentWindow.location.reload(true);
         },
     },
     beforeMount: function () {
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")
-
         this.getTreeData()
     },
     mounted: function () {

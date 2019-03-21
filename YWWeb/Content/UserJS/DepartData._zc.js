@@ -4,6 +4,7 @@
         uid: null,
         uName: null,
         loading: true,
+        deartmentName: '',
         departmentID: null,
         analysisTableHeight: 0,
         analysisColumns: [],
@@ -18,7 +19,7 @@
         barShow: true,
         loading: true,
         noDataText: "暂无数据",
-        DepBudget:0,//饼图预算
+        DepBudget: 0,//饼图预算
     },
     methods: {
         //获取能源类型
@@ -122,7 +123,7 @@
 
                                     h('a', {
                                         attrs: {
-                                            href: '/EnergyEfficiency/RoomDataMonitoring?departmentID=' + params.row.ID + "&time=" + (tempdate.getFullYear() + "-" + month) 
+                                            href: '/EnergyEfficiency/RoomDataMonitoring?departmentID=' + params.row.ID + "&time=" + (tempdate.getFullYear() + "-" + month)
                                         },
                                         style: {
                                             textDecoration: 'none',
@@ -145,7 +146,7 @@
                         tempTable.push(data.table[i].value)
                     }
                     that.analysisData = tempTable
-                   
+
 
                 })
                 .catch(function (e) {
@@ -253,7 +254,7 @@
                 },
                 color: ['#53bda9'],
                 grid: {
-                    bottom: '5%',
+                    bottom: '6%',
                     left: 30,
                     right: 20,
                     top: '17%'
@@ -380,15 +381,17 @@
         createPieChart: function (data) {
             piechart = echarts.init(document.getElementById('piechart'));
             var str = ''
+            var sumTotal = 0
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
                 data[i].value = data[i].value.toFixed(2)
+                sumTotal += parseFloat(data[i].value)
             }
 
             var option = {
                 title: {
-                    text: '分项用' + str,
-                    subtext: '预算：' + this.DepBudget +'万',
+                    text: this.deartmentName + '(' + str + ')',
+                    subtext: '预算：' + this.DepBudget + '万，总能耗：' + sumTotal.toFixed(2) + '万',
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -428,8 +431,6 @@
             });
 
         },
-
-
         setHeight: function () {
             this.analysisTableHeight = $(".top .right-top-left .con").height()
         }
@@ -439,7 +440,8 @@
         if (isParent == "false") {
             this.noDataText = "无子项数据"
         }
-        sessionStorage.getItem("isParent",true)
+        sessionStorage.getItem("isParent", true)
+        this.deartmentName = sessionStorage.getItem("parentDepartName")
         this.departmentID = window.location.search.split("=")[1]
         this.uid = $.cookie("enUID")
         this.uName = $.cookie("enUName")

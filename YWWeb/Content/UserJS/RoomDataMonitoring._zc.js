@@ -12,7 +12,7 @@
                 key: 'time'
             },
             {
-                title: '人流量(人)',
+                title: '人数(人)',
                 align: 'center',
                 width: 100,
                 key: 'people'
@@ -64,14 +64,28 @@
                     if (data.TitleList[i].Type != 1) {
                         dw = 'm³'
                     }
-                    this.analysisColumns.push(
-                        {
-                            title: data.TitleList[i].Name + '(' + dw + ')',
-                            align: 'center',
-                            key: data.TitleList[i].Type
-                        }
-                    )
+                    if (data.TitleList[i].Type.length > 1) {
+                        dw=''
+                    }
+                    if (dw == '') {
+                        this.analysisColumns.push(
+                            {
+                                title: data.TitleList[i].Name,
+                                align: 'center',
+                                key: data.TitleList[i].Type
+                            }
+                        )
+                    } else {
+                        this.analysisColumns.push(
+                            {
+                                title: data.TitleList[i].Name + '(' + dw + ')',
+                                align: 'center',
+                                key: data.TitleList[i].Type
+                            }
+                        )
+                    }
                    
+                    
                 }
                 var tempTable = new Array()
                 for (var i = 0; i < data.table.length; i++) {
@@ -124,10 +138,8 @@
                             that.barShow = false
                         }
                     } else {
-                        console.log("为false")
                         that.barShow = false
                     }
-                    console.log(that.barShow)
                 })
                 .catch(function (e) {
                     console.log(e)
