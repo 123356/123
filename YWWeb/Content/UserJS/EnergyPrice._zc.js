@@ -146,7 +146,13 @@ new Vue({
                 method: 'post',
             })
                 .then(function (res) {
-                    that.enTypeList = res.data
+                    var data = res.data
+                    for (var i in data) {
+                        if (data[i].Name.indexOf('电') != -1) {
+                            data.splice(i,1)
+                        }
+                    }
+                    that.enTypeList = data
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
