@@ -463,7 +463,15 @@
                     {
                         //name: '2012年',
                         type: 'bar',
-                        data: y
+                        data: y,
+                        itemStyle: {
+                            normal: {
+                                color: function (params) {
+                                    var colorList = ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'];
+                                    return colorList[params.dataIndex]
+                                }
+                            }
+                        }
                     }
                 ]
             };
