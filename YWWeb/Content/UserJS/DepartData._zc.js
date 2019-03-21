@@ -391,11 +391,11 @@
                     subtext: '预算：' + par.DepBudget + '万，总能耗：' + sumTotal.toFixed(2) + '万',
                     x: 'center',
                     textStyle: {
-                        fontSize: 10,
+                        fontSize: 13,
                         fontWeight: 'normal'
                     },
                     subtextStyle: {
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: 'normal'
                     }
                 },
