@@ -76,7 +76,6 @@
                     if (!$(this).tree('isLeaf', node.target)) {
                         $('#StationID').combo('showPanel');
                     } else {
-                        console.log(node)
                         that.PID = node.id
                         $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
                         that.getRealTimePUEData()
