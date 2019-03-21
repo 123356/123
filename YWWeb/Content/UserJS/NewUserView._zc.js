@@ -368,7 +368,8 @@ var vm = new Vue({
                         color: '#666'
                     }
                 },
-                color: ['#3ab094', '#f3f2f0'],
+                //color: ['#3ab094', '#f3f2f0'],
+                color: ['#3ab094', '#d5d5d5'],
                 series: [
                     {
                         name: '累计电量',
@@ -432,7 +433,7 @@ var vm = new Vue({
                     value: (100 - syzb).toFixed(2),
                     name: '可用容量',
                     itemStyle: {
-                        color: '#f5f5f5'
+                        color: '#d5d5d5'
                     }
                 })
             }
@@ -455,7 +456,8 @@ var vm = new Vue({
                     },
                     position: ['0', '50%']
                 },
-                color: ['#45a790', '#f3763c', '#f3f2f0'],
+                color: ['#45a790', '#f3763c', '#d5d5d5'],
+                //color: ['#45a790', '#f3763c', '#f3f2f0'],
                 series: [
                     {
                         name: '负载率比例',

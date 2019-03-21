@@ -39,7 +39,7 @@
                 </div>
                 <div class="item">
                     <div class="chartTitle">
-                        <span><font v-html="month">--</font>月能源费用比例</span>
+                        <span><font v-html="month">--</font>月 能源费用比例</span>
                     </div>
                     <div class="main" style="height:85%;display:flex;flex-direction:row;justify-content:center;align-items:center;">
                         <div class="chart" id="energyMoneyChart"></div>
@@ -47,10 +47,10 @@
                 </div>
                 <div class="item lastItem">
                     <div class="chartTitle">
-                        <span><font v-html="month">--</font>月万元每平米能耗</span>
+                        <span><font v-html="month">--</font>月  平米能耗</span>
                     </div>
                     <div class="main">
-                        <p><font v-html="Peozhanbi==undefined||Peozhanbi==null?'--':Peozhanbi">--</font><span class="dw">(万元/㎡)</span></p>
+                        <p style="text-align:center"><font v-html="Peozhanbi==undefined||Peozhanbi==null?'--':Peozhanbi">--</font><span class="dw">(万元/㎡)</span></p>
                         @*<div class="footer">
                             <div class="footer-item">预算(万)：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
                             <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
@@ -145,7 +145,7 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.127"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.128"></script>
 </body>
 </html>
 

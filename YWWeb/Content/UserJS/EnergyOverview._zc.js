@@ -40,20 +40,11 @@
         LPeozhanbi: null,
         zongBudget: null,
         initSelectShow: true,
-        unitDepartName:null,
+        unitDepartName: null,
     },
-    
+
     methods: {
-        openSelect: function (e) {
-            if (e) {
-                this.initSelectShow = false
-            }
-        },
-        checkStation: function (e) {
-        },
-       
         renderContent(h, { root, node, data }) {
-           
             var disabled = false
             var that = this
             return h('Option', {
@@ -74,7 +65,13 @@
                 }
             }, data.name)
         },
-
+        openSelect: function (e) {
+            if (e) {
+                this.initSelectShow = false
+            }
+        },
+        checkStation: function (e) {
+        },
         toAreaTree: function () {
             location.href = '/EnergyManage/EMSetting/AreaTree'
         },
@@ -93,7 +90,7 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-            
+
             this.$http({
                 url: "/energyManage/EMSetting/GetTreeData",
                 method: "post",
@@ -107,13 +104,13 @@
                     that.addForm.EnerUserTypeID = res.data.children[0].id
                     that.unitDepartName = res.data.children[0].name
                 }
-                
-                that.departMentList = res.data.children	
+
+                that.departMentList = res.data.children
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
         },
-        
+
         //删除能源
         deleteConfig: function (id) {
             var that = this
@@ -127,7 +124,7 @@
                 .then(function (res) {
                     if (res.data > 0) {
                         that.$Message.success('删除成功');
-                        
+
                         that.getEneryOverView()
                     } else {
                         that.$Message.warning('删除失败');
@@ -139,7 +136,7 @@
         },
         //添加能源
         addConfig: function () {
-            
+
             var that = this
             this.$http({
                 url: '/energymanage/emhome/addconfig',
@@ -291,9 +288,15 @@
                     { value: budget, name: '预算剩余' },
                 ]
                 color = ['#f9b88c']
-            } else {
+            } else if (budget - rate<0) {
                 serData = [
-                    { value: budget-rate, name: '预算剩余' },
+                    { value: rate, name: '已用费用' },
+                ]
+                color = ['#58b9a3']
+            }
+            else {
+                serData = [
+                    { value: budget - rate, name: '预算剩余' },
                     { value: rate, name: '已用费用' },
                 ]
                 color = ['#f9b88c', '#58b9a3']
@@ -328,7 +331,7 @@
                                 b: {
                                     color: '#525252',
                                     lineHeight: 30,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                 }
                             },
                         },
@@ -350,12 +353,14 @@
         creatEnergyMoneyChart: function (data) {
             energyMoneyChart = echarts.init(document.getElementById('energyMoneyChart'));
             var legend = new Array()
+            var sumTotal = 0
             for (var i = 0; i < data.left_view.length; i++) {
                 data.left_view[i].value = data.left_view[i].value.toFixed(2)
+                sumTotal += parseFloat(data.left_view[i].value)
                 legend.push(data.left_view[i].name)
             }
             var option = {
-               
+
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b}: {c}万<br/> ({d}%)"
@@ -379,18 +384,40 @@
                     radius: ['66%', '48%'],
                     avoidLabelOverlap: false,
                     hoverAnimation: false,
+                    //label: {
+                    //    normal: {
+                    //        show: false,
+                    //        position: 'center'
+                    //    },
+                    //    emphasis: {
+                    //        show: true,
+                    //        textStyle: {
+                    //            fontSize: '25',
+                    //            fontWeight: 'bold'
+                    //        }
+                    //    }
+                    //},
                     label: {
                         normal: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
                             show: true,
-                            textStyle: {
-                                fontSize: '25',
-                                fontWeight: 'bold'
-                            }
-                        }
+                            position: 'center',
+                            formatter: [
+                                '{a|总费用}',
+                                '{b|' + sumTotal.toFixed(2) + '}'
+                            ].join('\n'),
+                            rich: {
+                                a: {
+                                    color: '#525252',
+                                    lineHeight: 20,
+                                    fontSize: 14,
+                                },
+                                b: {
+                                    color: '#525252',
+                                    lineHeight: 30,
+                                    fontSize: 16,
+                                }
+                            },
+                        },
                     },
                     labelLine: {
                         normal: {
