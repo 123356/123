@@ -336,34 +336,7 @@ namespace EnergyManage.Controllers
                 list.Add(oview);
             }
             decimal DepBudget = 0;
-            var yearBuget = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, time.Year);
-            if (yearBuget.Count() != 0)
-            {
-                var yearb = yearBuget[0].ID;
-                var month = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearb);
-                if (month.Count() != 0)
-                {
-                    var monthb = month.Where(p => p.Month == time.Month).FirstOrDefault();
-                    if (monthb != null)
-                    {
-                        var monthid = monthb.ID;
-                        var cotype = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
-                        if (cotype.Count() != 0)
-                        {
-                            var coid = cotype.Select(p => p.ID).ToList();
-                            foreach (var item in coid)
-                            {
-                                var depB = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(item, DepartmentID);
-                                if (depB != null)
-                                {
-                                    DepBudget += depB.GeneralBudget;
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
+          
             return Json(new { list, DepBudget }, JsonRequestBehavior.AllowGet);
         }
 
@@ -394,7 +367,7 @@ namespace EnergyManage.Controllers
                     {
                         t.value.Add(dd.Key + "", dd.Sum(p => p.Rate) + "");
                         title ttt = new title();
-                        ttt.Type = dd.Key.Value;
+                        ttt.Type = dd.Key.Value + "";
                         ttt.Name = TypeList.Where(p => p.ID == dd.Key).FirstOrDefault().Name;
                         if (!TitleList.Select(p => p.Type).Contains(ttt.Type))
                             TitleList.Add(ttt);
@@ -402,6 +375,7 @@ namespace EnergyManage.Controllers
                     }
                     table.Add(t);
                 }
+                FindNode(uid, DepartmentID,Convert.ToDateTime( time));
                 return Json(new { TitleList, table });
             }
             catch (Exception ex)
@@ -410,22 +384,49 @@ namespace EnergyManage.Controllers
             }
         }
 
-        private string FindNode(int uid, int depid)
+        private string FindNode(int uid, int depid,DateTime time)
         {
             //接受返回的节点
             string ret = null;
-
+            decimal DepBudget = 0;
             var m = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, depid);
             if (m.Count != 0)
             {
                 foreach (var item in m)
                 {
-                    FindNode(uid, item.child_id);
+                    FindNode(uid, item.child_id,time);
                 }
             }
             else
             {
+                var yearBuget = DAL.YearBudgetDAL.getInstance().GetYearBudgetByID(uid, time.Year);
+                if (yearBuget.Count() != 0)
+                {
+                    var yearb = yearBuget[0].ID;
+                    var month = DAL.BudgetDAL.getInstance().GetMonthBudgetByYearID(yearb);
+                    if (month.Count() != 0)
+                    {
+                        var monthb = month.Where(p => p.Month == time.Month).FirstOrDefault();
+                        if (monthb != null)
+                        {
+                            var monthid = monthb.ID;
+                            var cotype = DAL.CollTypeBudgetDAL.getInstance().GetColltypeBudgetByMonthID(monthid);
+                            if (cotype.Count() != 0)
+                            {
+                                var coid = cotype.Select(p => p.ID).ToList();
+                                foreach (var item in coid)
+                                {
+                                    var depB = DAL.EneryUsreBudgetDAL.getInstance().GetenBudgetByeneyidAndCoID(item, depid);
+                                    if (depB != null)
+                                    {
+                                        DepBudget += depB.GeneralBudget;
+                                    }
+                                }
+                            }
+                        }
 
+                    }
+                }
             }
             return ret;
         }
@@ -434,7 +435,7 @@ namespace EnergyManage.Controllers
         public class title
         {
 
-            public int Type { get; set; }
+            public string Type { get; set; }
             public string Name { get; set; }
         }
         public class table
@@ -610,10 +611,38 @@ namespace EnergyManage.Controllers
                             v = it.Sum(p => p.Rate);
                             t.value.Add(it.Key + "", v + "");
                             title ttt = new title();
-                            ttt.Type = it.Key.Value;
+                            ttt.Type = it.Key.Value + "";
                             ttt.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name;
                             if (!TitleList.Select(p => p.Type).Contains(ttt.Type))
+                            {
                                 TitleList.Add(ttt);
+
+                                title ttt1 = new title();
+                                ttt1.Type = it.Key.Value + "d";
+                                ttt1.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "平均能耗/平米";
+                                TitleList.Add(ttt1);
+                                title ttt2 = new title();
+                                ttt2.Type = it.Key.Value + "L";
+                                ttt2.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "平均能耗/人流量";
+                                TitleList.Add(ttt2);
+                            }
+                            if (mianji != 0) {
+                                t.value.Add(it.Key + "d",Math.Round(v / mianji,2) + "");
+
+                            }
+                            else
+                            {
+                                t.value.Add(it.Key + "d",0.00+ "");
+                            }
+                            if (renliu != 0)
+                            {
+                                t.value.Add(it.Key + "L", Math.Round(v / renliu, 2) + "");
+
+                            }
+                            else
+                            {
+                                t.value.Add(it.Key + "L", 0.00 + "");
+                            }
                         }
                         t.value.Add("area", mianji + "");
                         t.value.Add("people", renliu + "");
