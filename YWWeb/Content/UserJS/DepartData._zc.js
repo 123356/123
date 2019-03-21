@@ -96,12 +96,10 @@
                         }
                     ]
                     for (var i = 0; i < data.TitleList.length; i++) {
-                        var dw = '万元'
-                        if (data.TitleList[i].Type != 1) {
-                            dw = 'm³'
-                        }
+                        
+                        
                         var temp = {
-                            title: data.TitleList[i].Name + '(' + dw + ')',
+                            title: data.TitleList[i].Name + '(万元)',
                             align: 'center',
                             key: data.TitleList[i].Type
                         }

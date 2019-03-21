@@ -111,7 +111,7 @@
                         <tbody>
                             <tr v-for="item in energyData" v-on:click="typeClick(item)">
                                 <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.CollTypeName">--</font></td>
-                                <td><input-number :min="1" v-model="item.GeneralBudget" size="small" v-on:on-change="EnPlanChange" v-on:on-blur="tableBlur(2,item)" style="border:none" :disabled="editDisable"></input-number></td>
+                                <td><input-number :min="0" v-model="item.GeneralBudget" size="small" v-on:on-change="EnPlanChange" v-on:on-blur="tableBlur(2,item)" style="border:none" :disabled="editDisable"></input-number></td>
                             </tr>
 
                         </tbody>
@@ -135,7 +135,7 @@
                             <tbody>
                                 <tr v-for="item in departBudgetData">
                                     <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.EName">--</font></td>
-                                    <td><input-number :min="1" v-model="item.GeneralBudget" size="small" v-on:on-change="departPlanChnage" v-on:on-blur="tableBlur(3,item)" style="border:none" :disabled="editDisable"></input-number></td>
+                                    <td><input-number :min="0" v-model="item.GeneralBudget" size="small" v-on:on-change="departPlanChnage" v-on:on-blur="tableBlur(3,item)" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
                             </tbody>
@@ -159,7 +159,7 @@
                             <tbody>
                                 <tr v-for="item in departMoneyData">
                                     <td><span v-if="editIconShow"><Icon type="ios-create-outline" class="icon" /></span><font v-html="item.EName">--</font></td>
-                                    <td><input-number :min="1" v-model="item.GeneralBudget" v-on:on-change="departAvgChange" v-on:on-blur="tableBlur(4,item)" size="small" style="border:none" :disabled="editDisable"></input-number></td>
+                                    <td><input-number :min="0" v-model="item.GeneralBudget" v-on:on-change="departAvgChange" v-on:on-blur="tableBlur(4,item)" size="small" style="border:none" :disabled="editDisable"></input-number></td>
                                 </tr>
 
                             </tbody>

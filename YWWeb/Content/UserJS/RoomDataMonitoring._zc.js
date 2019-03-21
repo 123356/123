@@ -60,14 +60,7 @@
                 var data = res.data
                 
                 for (var i = 0; i < data.TitleList.length; i++) {
-                    var dw = 'kW·h'
-                    if (data.TitleList[i].Type != 1) {
-                        dw = 'm³'
-                    }
                     if (data.TitleList[i].Type.length > 1) {
-                        dw=''
-                    }
-                    if (dw == '') {
                         this.analysisColumns.push(
                             {
                                 title: data.TitleList[i].Name,
@@ -78,7 +71,7 @@
                     } else {
                         this.analysisColumns.push(
                             {
-                                title: data.TitleList[i].Name + '(' + dw + ')',
+                                title: data.TitleList[i].Name + '(万元)',
                                 align: 'center',
                                 key: data.TitleList[i].Type
                             }
