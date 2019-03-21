@@ -61,7 +61,7 @@
                 .then(function (res) {
                     if (res.data.list.length > 0) {
                         that.pieShow = true
-                        that.createPieChart(res.data.list)
+                        that.createPieChart(res.data)
 
                     } else {
                         that.pieShow = false
@@ -378,7 +378,8 @@
             });
 
         },
-        createPieChart: function (data) {
+        createPieChart: function (par) {
+            var data = par.list
             piechart = echarts.init(document.getElementById('piechart'));
             var str = ''
             var sumTotal = 0
@@ -391,7 +392,7 @@
             var option = {
                 title: {
                     text: this.deartmentName + '(' + str + ')',
-                    subtext: '预算：' + this.DepBudget + '万，总能耗：' + sumTotal.toFixed(2) + '万',
+                    subtext: '预算：' + par.DepBudget + '万，总能耗：' + sumTotal.toFixed(2) + '万',
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
