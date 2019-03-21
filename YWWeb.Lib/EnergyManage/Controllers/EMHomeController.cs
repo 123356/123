@@ -337,6 +337,10 @@ namespace EnergyManage.Controllers
             }
             decimal DepBudget = 0;
           
+            
+             DepBudget += FindNode(uid, DepartmentID, Convert.ToDateTime(time), DepBudget);
+
+            
             return Json(new { list, DepBudget }, JsonRequestBehavior.AllowGet);
         }
 
@@ -375,7 +379,6 @@ namespace EnergyManage.Controllers
                     }
                     table.Add(t);
                 }
-                FindNode(uid, DepartmentID,Convert.ToDateTime( time));
                 return Json(new { TitleList, table });
             }
             catch (Exception ex)
@@ -384,17 +387,14 @@ namespace EnergyManage.Controllers
             }
         }
 
-        private string FindNode(int uid, int depid,DateTime time)
+        private decimal FindNode(int uid, int depid,DateTime time, decimal DepBudget)
         {
-            //接受返回的节点
-            string ret = null;
-            decimal DepBudget = 0;
             var m = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, depid);
             if (m.Count != 0)
             {
                 foreach (var item in m)
                 {
-                    FindNode(uid, item.child_id,time);
+                    DepBudget= FindNode(uid, item.child_id, time ,DepBudget);
                 }
             }
             else
@@ -421,6 +421,7 @@ namespace EnergyManage.Controllers
                                     {
                                         DepBudget += depB.GeneralBudget;
                                     }
+                                  
                                 }
                             }
                         }
@@ -428,7 +429,7 @@ namespace EnergyManage.Controllers
                     }
                 }
             }
-            return ret;
+            return DepBudget;
         }
 
 
