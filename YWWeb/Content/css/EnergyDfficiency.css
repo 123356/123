@@ -957,6 +957,17 @@ html {
 .addEnergyModal .ivu-modal{
     width:600px !important
 }
+.printModal .ivu-modal {
+    width:900px !important
+
+}
+.printModal .btn {
+    height: 30px;
+    padding: 0px 15px
+}
+.printModal .ivu-modal-body {
+    max-height: 600px
+}
 .addEnergyModal .ivu-modal-body {
     height: 270px;
 }
@@ -1032,7 +1043,8 @@ html {
        overflow:hidden;
        display:flex;
        flex-direction:column;
-       justify-content:space-around
+       justify-content:space-around;
+       margin-bottom:0px
 
 
     }
@@ -1062,7 +1074,7 @@ html {
             overflow:initial
         }
         .allMain .underFormView {
-            flex: 5
+            flex: 10
         }
     .allMain .searchView .ivu-form .ivu-form-item-label{
         font-size:1.2rem;
@@ -1226,10 +1238,14 @@ html {
 }
 
     .switchVIew label {
-        font-size: 14px;
-        font-weight: normal;
-        margin-right: 5px
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 5px;
+        color: #999a9c
     }
+.ivu-modal-header{
+    border-bottom:none
+}
 @media screen and (max-width: 1300px) {
     .BudgetSetting .header .ivu-input{
                     font-size:1.6rem
@@ -1532,10 +1548,10 @@ html {
 
 
 
-@media print {
+/*@media print {
     body {
         zoom:0.628
     }
 
   
-}
+}*/

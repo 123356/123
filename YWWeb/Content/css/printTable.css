@@ -1,0 +1,23 @@
+﻿.printTable th {
+    background: #f8f8f9
+}
+
+.printTable td, .printTable th {
+    border: 0.5px solid #e8eaec;
+    text-align: center;
+    border-collapse: collapse;
+    color: #333;
+    padding: 5px 2px
+}
+.printTable {
+    width:100%
+}
+.tableTitle {
+    text-align: center;
+    font-weight: bold;
+    line-height: 40px;
+    font-size: 16px;
+    border: 1px solid #e8eaec;
+    border-bottom: 1px;
+    background: #f8f8f9
+}

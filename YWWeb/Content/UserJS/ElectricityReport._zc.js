@@ -5,6 +5,7 @@
         UName: null,
         time: null,
         tableHeight: 0,
+        modalVisable: false,
         dateType: 1,
         tableCol: [],
         tableData: [],
@@ -16,7 +17,8 @@
         treeData: [],
         isUnitSelect: 0,
         departName: null,
-        title:''
+        title: '',
+        printTableData:[]
     },
     methods: {
         //设置树下拉框
@@ -116,11 +118,7 @@
            
             this.title = this.formaterDate() + this.UName + this.departName + type + "报表"
             var arr = [
-                {
-                    title: '时间',
-                    align: 'center',
-                    key:'Time'
-                }
+               
             ]
             var keys = Object.keys(data)
             var values = Object.values(data)
@@ -157,9 +155,13 @@
             })
                 .then(function (res) {
                     var arr = []
+                    var temp = []
                     for (var i in res.data.table) {
                         arr.push(res.data.table[i].value)
+                        temp.push(Object.values(res.data.table[i].value))
+                        
                     }
+                    that.printTableData= temp
                     that.tableData = arr
                     if (res.data) {
                         that.setTableTitle(res.data.TitleName)
@@ -189,13 +191,18 @@
         },
         //打印  or 导出
         openOrPrint: function () {
-
-            this.$refs.table.exportCsv({
-                filename: '能源报告'
-            });
-            window.print()
-
-
+            
+            $(".printDiv").html($("#printCon").html())
+            $("#printModal").jqprint({
+                debug: false,  //是否显示iframe查看效果
+                importCSS: true,
+                printContainer: true,
+                operaSupport: false
+            })
+           
+        },
+        ok: function () {
+            
         },
         dateTypeChange: function (e) {
             var that = this
