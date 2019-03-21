@@ -40,12 +40,12 @@ namespace EnergyManage.Controllers
             var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
             if (data.Count() != 0)
             {
-                zongRate = data.Sum(p => p.Rate);
+                zongRate = Math.Round(data.Sum(p => p.Rate) / 10000, 5);
             }
             var dataLast = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(lastTime).ToString("yyyy-MM"));
             if (dataLast.Count() != 0)
             {
-                lasrRate = dataLast.Sum(p => p.Rate);
+                lasrRate = Math.Round(dataLast.Sum(p => p.Rate) / 10000, 5);
             }
             decimal zduibi = 0;
             if (lasrRate != 0)
@@ -64,7 +64,7 @@ namespace EnergyManage.Controllers
             {
                 overView m = new overView();
                 m.name = TypeList.Where(p => p.ID == item.Key).FirstOrDefault().Name;
-                m.value = item.Sum(p => p.Rate);
+                m.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
                 left_view.Add(m);
             }
 
@@ -125,7 +125,7 @@ namespace EnergyManage.Controllers
                     view.name = item_peizhi.Name;
                     view.ID = item_peizhi.ID;
                     view.DepName = item_peizhi.DepName;
-                    budget = list_budgets.Where(p => p.CollTypeID == item_peizhi.CollTypeID).Sum(p => p.GeneralBudget);
+                    budget = FindNode(uid, item_peizhi.EnerUserTypeID, Convert.ToDateTime(time), 0);
                     view.budget = budget;
                     IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, item_peizhi.EnerUserTypeID);
 
@@ -159,7 +159,7 @@ namespace EnergyManage.Controllers
                                         rate += list_data.Sum(p => p.Rate);
                                         overView group_i = new overView();
                                         group_i.name = Name;
-                                        group_i.value = list_data.Sum(p => p.Rate);
+                                        group_i.value = Math.Round(list_data.Sum(p => p.Rate) / 10000, 5);
                                         view.keyValuePairs.Add(group_i);
                                         IList<t_V_EneryView> list_data_last = DAL.EneryOverViewDAL.getInstance().GetDatas(cids, item.Key + "", Convert.ToDateTime(lastTime).ToString("yyyy-MM"));
                                         lasRate += list_data_last.Sum(p => p.Rate);
@@ -175,7 +175,7 @@ namespace EnergyManage.Controllers
                             {
                                 overView group_i = new overView();
                                 group_i.name = item_group.Key.ToString();
-                                group_i.value = item_group.Sum(p => p.Rate);
+                                group_i.value = Math.Round(item_group.Sum(p => p.Rate)/10000, 5);
                                 view.keyValuePairs_Time.Add(group_i);
                             }
 
@@ -183,13 +183,13 @@ namespace EnergyManage.Controllers
                             peos += item_userP.unit_people;
 
                         }
-                        view.rate = rate;
+                        view.rate = Math.Round(rate / 10000, 5);
                         view.energyConsumption = energyConsumption;
                         list.Add(view);
 
                         overView oview = new overView();
                         oview.name = item_peizhi.Name;
-                        oview.value = rate;
+                        oview.value = Math.Round(rate / 10000, 5);
                         left_view.Add(oview);
                     }
                 }
@@ -231,15 +231,15 @@ namespace EnergyManage.Controllers
                     LPeozhanbi,
                     zongBudget
                 };
-                List<overView> xxxx = new List<overView>();
-                foreach (var xxx in left_view.GroupBy(p => p.name))
-                {
-                    overView m = new overView();
-                    m.name = xxx.Key;
-                    m.value = xxx.Sum(p => p.value);
-                    xxxx.Add(m);
-                }
-                left_view = xxxx;
+                //List<overView> xxxx = new List<overView>();
+                //foreach (var xxx in left_view.GroupBy(p => p.name))
+                //{
+                //    overView m = new overView();
+                //    m.name = xxx.Key;
+                //    m.value = xxx.Sum(p => p.value);
+                //    xxxx.Add(m);
+                //}
+                //left_view = xxxx;
                 return Json(new { list_zong, left_view, list, list_bottom }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -332,7 +332,7 @@ namespace EnergyManage.Controllers
             {
                 overView oview = new overView();
                 oview.name = item.Key;
-                oview.value = item.Sum(p => p.Rate);
+                oview.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
                 list.Add(oview);
             }
             decimal DepBudget = 0;
@@ -369,7 +369,7 @@ namespace EnergyManage.Controllers
                     var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
                     foreach (var dd in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
                     {
-                        t.value.Add(dd.Key + "", dd.Sum(p => p.Rate) + "");
+                        t.value.Add(dd.Key + "", Math.Round(dd.Sum(p => p.Rate) / 10000, 5) + "");
                         title ttt = new title();
                         ttt.Type = dd.Key.Value + "";
                         ttt.Name = TypeList.Where(p => p.ID == dd.Key).FirstOrDefault().Name;
@@ -535,7 +535,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    m.value = Math.Round(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate) / 10000, 5);
                     list_r.list_this.Add(m);
 
 
@@ -546,7 +546,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    m.value = Math.Round(list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate) / 10000, 5);
                     list_r.list_last.Add(m);
                 }
             }
@@ -609,7 +609,7 @@ namespace EnergyManage.Controllers
                             //string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
                             //IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
 
-                            v = it.Sum(p => p.Rate);
+                            v = Math.Round(it.Sum(p => p.Rate) / 10000, 5);
                             t.value.Add(it.Key + "", v + "");
                             title ttt = new title();
                             ttt.Type = it.Key.Value + "";
@@ -723,7 +723,7 @@ namespace EnergyManage.Controllers
 
                     overView mx = new overView();
                     DateTime d = Convert.ToDateTime(itemf);
-                    mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Rate);
+                    mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value);
                     m.list.Add(mx);
                 }
                 list_line.Add(m);
@@ -760,7 +760,7 @@ namespace EnergyManage.Controllers
             foreach (var item in x)
             {
                 DateTime d = Convert.ToDateTime(item);
-                shijivalue.Add(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate).ToString());
+                shijivalue.Add(list_this.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString());
             }
 
             return Json(new { x, shijivalue, budgetList }, JsonRequestBehavior.AllowGet);
@@ -1231,7 +1231,7 @@ namespace EnergyManage.Controllers
                                 var v = DAL.EneryOverViewDAL.getInstance().GetLookDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM-dd"));
                                 LookView m = new LookView();
                                 m.Name = item.Name;
-                                m.DValue = v.Sum(p => p.Rate);
+                                m.DValue = Math.Round(v.Sum(p => p.Rate) / 10000, 5);
                                 m.unit_area = item.unit_area;
                                 m.unit_people = item.unit_people;
                                 if (item.unit_people != 0)
@@ -1330,7 +1330,7 @@ namespace EnergyManage.Controllers
                                     m.RecordTime = it.Key.ToString();
                                     m.DeviceName = i.Key;
                                     m.TypeName = ii.Key;
-                                    m.DValue = ii.Sum(p => p.UserPowerRate);
+                                    m.DValue = Math.Round(ii.Sum(p => p.UserPowerRate) / 10000, 5);
                                     m.Name = item.Name;
                                     datas.Add(m);
                                 }
