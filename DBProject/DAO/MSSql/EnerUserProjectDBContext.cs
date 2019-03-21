@@ -75,6 +75,8 @@ namespace DAO
             string sql = $"select * from t_EE_EnerUserProject where unit_id={uid}";
             if (parid != 0)
                 sql += $" and parent_id={parid}";
+
+            sql += " order by child_id";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 

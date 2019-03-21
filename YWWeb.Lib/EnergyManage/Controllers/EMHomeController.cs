@@ -597,7 +597,7 @@ namespace EnergyManage.Controllers
                 {
                     IList<t_V_EneryView> list_data_z = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
 
-                    foreach (var item in list_data_z.Where(p => p.coolect_dev_type != null).GroupBy(p => p.RecordTime))
+                    foreach (var item in list_data_z.OrderByDescending(p=>p.RecordTime).Where(p => p.coolect_dev_type != null).GroupBy(p => p.RecordTime))
                     {
                         table t = new table();
                         t.value.Add("time", item.Key.ToString());
