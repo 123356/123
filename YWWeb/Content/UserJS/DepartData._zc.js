@@ -287,8 +287,6 @@
                         type: 'value',
                         name: yName,
                         min: 0,
-
-
                         axisLabel: {
                             formatter: '{value}'
                         },
@@ -314,48 +312,48 @@
                             }
                         },
                     },
-                    {
-                        type: 'value',
-                        name: '昨日',
-                        min: 0,
-                        max: 25,
-                        interval: 5,
-                        show: false,
-                        axisLabel: {
-                            formatter: '{value} °C'
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#cdcdcd',//x轴线颜色
-                                width: '0.7'
-                            },
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        splitLine: {
-                            show: false
-                        },
-                        axisLabel: { //调整y轴的lable  
-                            textStyle: {
-                                fontSize: 10,// 让字体变大
-                                color: '#9f9d9d'
-                            }
-                        },
+                    //{
+                    //    type: 'value',
+                    //    name: '昨日',
+                    //    min: 0,
+                    //    max: 25,
+                    //    interval: 5,
+                    //    show: false,
+                    //    axisLabel: {
+                    //        formatter: '{value} °C'
+                    //    },
+                    //    axisLine: {
+                    //        lineStyle: {
+                    //            color: '#cdcdcd',//x轴线颜色
+                    //            width: '0.7'
+                    //        },
+                    //    },
+                    //    axisTick: {
+                    //        show: false
+                    //    },
+                    //    splitLine: {
+                    //        show: false
+                    //    },
+                    //    axisLabel: { //调整y轴的lable  
+                    //        textStyle: {
+                    //            fontSize: 10,// 让字体变大
+                    //            color: '#9f9d9d'
+                    //        }
+                    //    },
 
-                    }
+                    //}
                 ],
                 series: [
 
                     {
-                        name: '今日',
+                        name: legendData[0],
                         type: 'bar',
                         color: "#53bda9",
                         data: serData1,
 
                     },
                     {
-                        name: '昨日',
+                        name: legendData[1],
                         type: 'bar',
                         color: "#80c5e2",
                         data: serDataLast,

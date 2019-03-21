@@ -294,14 +294,14 @@
                 series: [
 
                     {
-                        name: '今日',
+                        name: legendData[0],
                         type: 'bar',
                         color: "#53bda9",
                         data: serData1,
 
                     },
                     {
-                        name: '昨日',
+                        name: legendData[1],
                         type: 'bar',
                         color: "#80c5e2",
                         data: serDataLast,

@@ -63,7 +63,7 @@
                 }
             },
             {
-                title: '总比例',
+                title: '百分比',
                 align: 'center',
                 key: 'Proportion'
             },
@@ -324,7 +324,7 @@
                         closable: true
                     });
                     this.listData[selection[1].index]._checked = false
-                    selection.splice(1, 1)
+                    selection.splice(1,1)
                 }
             }
             if (selection.length <= 2) {
@@ -370,6 +370,7 @@
             }
         },
         onSelectCancel: function (selection, row) {
+            
             this.listData[row.index]._checked = false
         },
         rowCLick: function (row, index) {
@@ -377,6 +378,7 @@
             if (!this.switchState) {
                 this.curSelectID = row.ID
                 this.curCID = row.CID
+                this.curEntype = row.CODID
                 this.getTableList(this.curSelectID)
                 this.getBarData(this.curCID)
                 this.getLineData(this.curCID)
@@ -590,7 +592,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['实际', '预测'],
+                    data: ['实时', '预测'],
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -666,7 +668,7 @@
                 series: [
 
                     {
-                        name: '实际',
+                        name: '实时',
                         type: 'line',
                         smooth: true,
                         symbol: 'none',//节点样式

@@ -206,7 +206,7 @@
         this.UID = $.cookie("enUID")
         this.Uname = $.cookie("enUName")
         var that = this
-        that.tableHeight = $(".bottomView .con").height()-30
+        that.tableHeight = $(".bottomView .con").height()-50
        
         window.addEventListener("resize", () => {
             that.tableHeight = $(".bottomView .con").height()
