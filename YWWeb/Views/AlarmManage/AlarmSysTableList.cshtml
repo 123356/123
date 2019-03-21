@@ -60,7 +60,7 @@
                     </div>
                     <div id="tempBtn" style="display:none"></div>
                 </div>
-                <i-table :columns="alarmColumns" :data="alarmData" style="clear:both;margin-top:50px" :height="tableHeight" :loading="tableLoading"></i-table>
+                <i-table :columns="alarmColumns" :data="alarmData" style="clear:both;margin-top:50px" :height="tableHeight" :loading="tableLoading" no-data-text="暂无"></i-table>
                 <div class="pageView">
                     <Page :total="page.total" show-elevator show-sizer show-total size="small"
                           :page-size="page.size"
