@@ -1048,7 +1048,7 @@ html {
 
 
     .allMain .con .formTable{
-        width:100%;
+        width:auto;
         
     }
         .allMain .con .formTable .ivu-form-item {
@@ -1062,7 +1062,7 @@ html {
             overflow:initial
         }
         .allMain .underFormView {
-            flex: 4
+            flex: 5
         }
     .allMain .searchView .ivu-form .ivu-form-item-label{
         font-size:1.2rem;
@@ -1079,6 +1079,15 @@ html {
         justify-content:space-around;
        
     }
+.formTable .btn {
+    color: #fff;
+    background: #54beaa;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    float: right;
+    margin-top: -13px;
+    margin-left:10px
+}
     .departmentWatch{
         flex:7
     }
