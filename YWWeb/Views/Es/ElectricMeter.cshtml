@@ -78,7 +78,9 @@
                 <th data-options="field:'device_type',width:40,editor:'text'" @*editor="{type:'validatebox',options:{required:true}}"*@>
                     电表类型
                 </th>
-
+                <th data-options="field:'CoTypeName',width:50,editor:'text'" editor="{type:'combobox',options:{valueField:'ID',textField:'Name', url: '/energyManage/EMHome/GetCollectDevTypeList?row=' + Math.random(),required:true }}">
+                    水电气表类型
+                </th>
             </tr>
         </thead>
     </table>
@@ -435,15 +437,18 @@
                         collect_period: row.collect_period,
                         MultipleRate: row.MultipleRate,
                         collect_cld: row.collect_cld,
-                        Label: row.Label
+                        Label: row.Label,
+                        coolect_dev_type: row.CoTypeName
                     };
                     $.post("/Es/SaveEm", postData, function (data) {
                         if (data.indexOf("OKadd") >= 0) {
                             var arr = data.split(",");
                             var index = $('#list_data').datagrid('getRowIndex', row);
                             $('#list_data').datagrid('updateRow', { index: index, row: { ID: arr[1] } });
+                            $('#list_data').datagrid('reload');
                         }
                         else if (data == "OKedit") {
+                            $('#list_data').datagrid('reload');
                         }
                         else {
                             $.messager.alert("提示",data,"info");

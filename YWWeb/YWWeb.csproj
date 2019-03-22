@@ -2153,9 +2153,10 @@
     <Content Include="Content\iview\dist\locale\zh-TW.js.map" />
     <Content Include="Content\iview\dist\styles\fonts\ionicons.ttf" />
     <Content Include="Content\iview\dist\styles\fonts\ionicons.woff" />
-    <Content Include="Areas\EnergyManage\Views\EMSetting\OrganizeAreaTreeEdit.cshtml" />
     <Content Include="Content\topo\iview\styles\fonts\ionicons.ttf" />
     <Content Include="Content\topo\iview\styles\fonts\ionicons.woff" />
+    <Content Include="Areas\EnergyManage\Views\EMSetting\AreaTree.cshtml" />
+    <Content Include="Areas\EnergyManage\Views\EMSetting\AreaTreeEdit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

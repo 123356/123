@@ -1761,14 +1761,14 @@ namespace YWWeb.Controllers
 
                 // string pdrlist = CurrentUser.PDRList;
                 string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
-                string query = "select * from  t_DM_CircuitInfo where 1=1";
+                string query = "select *,t_DM_CollectDevType.Name as CoTypeName from  t_DM_CircuitInfo left join t_DM_CollectDevType on t_DM_CircuitInfo.coolect_dev_type=t_DM_CollectDevType.ID where 1=1";
                 if (pid > 0)
                     query = query + " and PID=" + pid;
                 if (!string.IsNullOrEmpty(cname))
                     query = query + " and CName like '%" + cname + "%'";
                 if (!string.IsNullOrEmpty(usertype))
                     query = query + " and UserType like '%" + usertype + "%'";
-                List<t_DM_CircuitInfo> list = bll.ExecuteStoreQuery<t_DM_CircuitInfo>(query).ToList();
+                List<CirView> list = bll.ExecuteStoreQuery<CirView>(query).ToList();
                 string strJson = Common.List2Json(list, rows, page);
                 return Content(strJson);
             }
@@ -1778,7 +1778,10 @@ namespace YWWeb.Controllers
                 return Content("");
             }
         }
-
+        public class CirView : t_DM_CircuitInfo
+        {
+            public string CoTypeName { get; set; }
+        }
         //保存电表信息
         [Login]
         public ActionResult SaveEm(t_DM_CircuitInfo info)
@@ -1814,6 +1817,7 @@ namespace YWWeb.Controllers
                         circuitInfo.MultipleRate = info.MultipleRate;
                         circuitInfo.collect_cld = info.collect_cld;
                         circuitInfo.Label = info.Label;
+                        circuitInfo.coolect_dev_type = info.coolect_dev_type;
                         bll.ObjectStateManager.ChangeObjectState(circuitInfo, EntityState.Modified);
                         bll.SaveChanges();
                         Common.InsertLog("电表管理", CurrentUser.UserName, "编辑电表信息[" + circuitInfo.CName + "]");

@@ -382,7 +382,7 @@ namespace YWWeb.Controllers
                         }
                         data.Add(model);
                     }
-                    return ExportToExcel(data, type, times,list);
+                    return ExportToExcel(data, type, times, list);
                 }
             }
             catch (Exception e)
@@ -392,7 +392,7 @@ namespace YWWeb.Controllers
 
         }
 
-        public ActionResult ExportToExcel(List<DevC> list, int type, List<DateTime> times,List<PowerData_SSQX> list_sm)
+        public ActionResult ExportToExcel(List<DevC> list, int type, List<DateTime> times, List<PowerData_SSQX> list_sm)
         {
             //var lstTitle = list.Select(p => new { p.CID, p.CName }).Distinct().ToList();
             //var listTime = list.Select(p => p.RecordTime).Distinct().ToList();
@@ -452,19 +452,19 @@ namespace YWWeb.Controllers
                 if (type == 1)
                 {
                     var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour).ToList();
-                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase), 2) + "");
                     sv += s.Sum(p => p.Aphase);
                 }
                 else if (type == 2)
                 {
                     var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day).ToList();
-                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase), 2) + "");
                     sv += s.Sum(p => p.Aphase);
                 }
                 else if (type == 3)
                 {
                     var s = list_sm.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).ToList();
-                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase),2) + "");
+                    sbHtml.AppendFormat("<td>{0}</td>", Math.Round(s.Sum(p => p.Aphase), 2) + "");
                     sv += s.Sum(p => p.Aphase);
                 }
             }
@@ -661,6 +661,577 @@ namespace YWWeb.Controllers
                 fileName = "高压进线回路日报表" + DateTime.Now.ToString("yyyyMMddHHmmss");
             }
             return File(fileContents, "application/ms-excel", fileName + ".xls");
+        }
+        #endregion
+
+        #region 能源统计报表
+        public ActionResult GetItemFrom(string itemids, string areaids, int uid, string time, string lables, int type)
+        {
+            List<RetnView> list_item = new List<RetnView>();
+            List<RetnView> list_area = new List<RetnView>();
+            List<DateTime> times = new List<DateTime>();
+            try
+            {
+                using (var bll = new pdermsWebEntities())
+                {
+                    if (type == 1)
+                    {
+                        string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(itemids))
+                            sql += " AND b.child_id IN(" + itemids + ")";
+                        var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                        int year = Convert.ToDateTime(time).Year;
+                        int month = Convert.ToDateTime(time).Month;
+                        int day = Convert.ToDateTime(time).Day;
+                        for (int i = 1; i <= 24; i++)
+                        {
+                            times.Add(new DateTime(year, month, day).AddHours(i));
+                        }
+                        foreach (var item in ItemData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += " and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month && p.RecordTime.Value.Day == times[i].Day && p.RecordTime.Value.Hour == times[i].Hour).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_item.Add(model);
+                            }
+                        }
+
+
+                        string sql_area = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(areaids))
+                            sql_area += " AND b.child_id IN(" + areaids + ")";
+                        var AreaData = bll.ExecuteStoreQuery<EnView>(sql_area);
+                        foreach (var item in AreaData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += "  and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month && p.RecordTime.Value.Day == times[i].Day && p.RecordTime.Value.Hour == times[i].Hour).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_area.Add(model);
+                            }
+                        }
+                    }
+                    else if (type == 2)
+                    {
+                        string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(itemids))
+                            sql += " AND b.child_id IN(" + itemids + ")";
+                        var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                        int year = Convert.ToDateTime(time).Year;
+                        int month = Convert.ToDateTime(time).Month;
+                        int days = DateTime.DaysInMonth(year, month);
+                        for (int i = 0; i < days; i++)
+                        {
+                            times.Add(new DateTime(year, month, 1).AddDays(i));
+                        }
+                        foreach (var item in ItemData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += " and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month && p.RecordTime.Value.Day == times[i].Day).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_item.Add(model);
+                            }
+                        }
+
+
+                        string sql_area = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(areaids))
+                            sql_area += " AND b.child_id IN(" + areaids + ")";
+                        var AreaData = bll.ExecuteStoreQuery<EnView>(sql_area);
+                        foreach (var item in AreaData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += "  and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month && p.RecordTime.Value.Day == times[i].Day).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_area.Add(model);
+                            }
+                        }
+
+                    }
+                    else if (type == 3)
+                    {
+
+
+                        string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(itemids))
+                            sql += " AND b.child_id IN(" + itemids + ")";
+                        var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            times.Add(new DateTime(int.Parse(time), 1, 1).AddMonths(i));
+                        }
+                        foreach (var item in ItemData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += " and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_item.Add(model);
+                            }
+                        }
+
+
+                        string sql_area = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                        if (!string.IsNullOrEmpty(areaids))
+                            sql_area += " AND b.child_id IN(" + areaids + ")";
+                        var AreaData = bll.ExecuteStoreQuery<EnView>(sql_area);
+                        foreach (var item in AreaData)
+                        {
+                            if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
+                            {
+                                Dictionary<int, string> cpids = GetCId(item.addCid);
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                if (!string.IsNullOrEmpty(time))
+                                    sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
+                                int index = 0;
+                                foreach (var cp in cpids)
+                                {
+                                    if (index == 0)
+                                        sqlD += "  and ((a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+                                    else
+                                        sqlD += " or (a.PID=" + cp.Key + " AND a.CID IN(" + cp.Value + "))";
+
+                                    if (index + 1 == cpids.Count)
+                                        sqlD += ")";
+                                }
+                                if (!string.IsNullOrEmpty(lables))
+                                {
+                                    var lalist = lables.Split(',').ToList();
+                                    for (int i = 0; i < lalist.Count; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            sqlD += " and ((b.Label='" + lalist[i] + "')";
+                                        }
+                                        else
+                                        {
+                                            sqlD += " or (b.Label='" + lalist[i] + "')";
+                                        }
+                                        if (i == lalist.Count - 1)
+                                            sqlD += ")";
+                                    }
+                                }
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var labless = listData.Select(p => p.Label).Distinct().ToList();
+                                string ll = "";
+                                foreach (var xxx in labless)
+                                {
+                                    ll += xxx + "、";
+                                }
+                                if (ll != "")
+                                    ll = ll.TrimEnd('、');
+                                RetnView model = new RetnView();
+                                model.name = getStrOrderBy(FindNode(uid, item.child_id, ""));
+                                model.Label = ll;
+                                for (int i = 0; i < times.Count; i++)
+                                {
+                                    var s = listData.Where(p => p.RecordTime.Value.Year == times[i].Year && p.RecordTime.Value.Month == times[i].Month).ToList();
+                                    if (s.Count != 0)
+                                        model.Value.Add(Math.Round(s.Sum(p => p.UsePower.Value), 2) + "");
+                                    else
+                                        model.Value.Add("");
+                                }
+                                list_area.Add(model);
+                            }
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(new { list_item, list_area }, JsonRequestBehavior.AllowGet);
+        }
+
+        public class Ev : t_EE_PowerQualityDaily
+        {
+            public string Label { get; set; }
+        }
+        public class EnView
+        {
+            public string Name { get; set; }
+            public string addCid { get; set; }
+            public int child_id { get; set; }
+        }
+
+        public class RetnView
+        {
+            public RetnView()
+            {
+                Value = new List<string>();
+            }
+            public string name { get; set; }
+            public string Label { get; set; }
+            public List<string> Value { get; set; }
+        }
+        public Dictionary<int, string> GetCId(string stringCid)
+        {
+
+            Dictionary<int, string> data = new Dictionary<int, string>();
+            try
+            {
+                string cids = string.Empty;
+                string pids = string.Empty;
+                if (!string.IsNullOrEmpty(stringCid))
+                {
+                    if (!string.IsNullOrEmpty(stringCid.Trim()))
+                    {
+                        var s = stringCid.Split(',');
+                        foreach (var i in s)
+                        {
+                            var x = i.Split('-');
+                            List<string> cidList = new List<string>();
+                            if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                            {
+                                data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
+                            }
+                            else
+                            {
+                                data.Add(Convert.ToInt32(x[0]), x[1]);
+                            }
+                        }
+                    }
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        private string FindNode(int uid, int depid, string Name)
+        {
+            var bll = new pdermsWebEntities();
+            string sql = "select a.Name,b.child_id,b.parent_id from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id = b.child_id where b.child_id =" + depid;
+            var m = bll.ExecuteStoreQuery<xxx>(sql).FirstOrDefault();
+            if (m != null)
+            {
+                if (m.parent_id != 0)
+                {
+                    Name += m.Name + "|";
+                    Name = FindNode(uid, m.parent_id, Name);
+                }
+                else
+                {
+                    Name += m.Name;
+                }
+
+            }
+            return Name;
+        }
+
+        private string getStrOrderBy(string str)
+        {
+            string s = "";
+            if (!string.IsNullOrEmpty(str))
+            {
+                List<string> list = new List<string>();
+                list = str.Split('|').ToList();
+                list.Reverse();
+                foreach (var item in list)
+                {
+                    s += item + "|";
+                }
+                s = s.TrimEnd('|');
+            }
+            return s;
+        }
+        public class xxx
+        {
+            public string Name { get; set; }
+            public int child_id { get; set; }
+            public int parent_id { get; set; }
+        }
+
+
+        public ActionResult GetLabelList(int uid)
+        {
+            try
+            {
+                var bll = new pdermsWebEntities();
+                var unit=  bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (unit != null)
+                {
+                    string sql = "select * from t_DM_CircuitInfo WHERE Label is not NULL and Label!=''";
+                    if(!string.IsNullOrEmpty(unit.PDRList))
+                    {
+                        sql += " AND PID IN(" + unit.PDRList + ")";
+                    }
+                    var list = bll.ExecuteStoreQuery<t_DM_CircuitInfo>(sql).ToList();
+                    var m = from v in list
+                            select new
+                            {
+                                v.Label
+                            };
+                    return Json(m.Distinct(), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("No Data", JsonRequestBehavior.AllowGet);
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
 
