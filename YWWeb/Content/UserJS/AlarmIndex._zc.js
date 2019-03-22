@@ -135,7 +135,12 @@ $("#SPID").combobox({
         }
     }
 });
-
+//报警确认状态
+$("#alarmState").combobox({
+    onChange: function (e) {
+        console.log(e)
+    }
+})
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
         url: "/BaseInfo/BindValueType1?showall=1&pid=" + pid,

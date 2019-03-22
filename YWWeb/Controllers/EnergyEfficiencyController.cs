@@ -112,6 +112,10 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult IntelligentLighting()
+        {
+            return View();
+        }
         //获取尖谷平峰方案列表
         [Login]
         public ActionResult PlanData(int pid, string stagename, int rows, int page)
