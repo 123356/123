@@ -17122,6 +17122,30 @@ namespace YWWeb
         private Nullable<global::System.Int32> _StockCount;
         partial void OnStockCountChanging(Nullable<global::System.Int32> value);
         partial void OnStockCountChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> pid
+        {
+            get
+            {
+                return _pid;
+            }
+            set
+            {
+                OnpidChanging(value);
+                ReportPropertyChanging("pid");
+                _pid = StructuralObject.SetValidValue(value, "pid");
+                ReportPropertyChanged("pid");
+                OnpidChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _pid;
+        partial void OnpidChanging(Nullable<global::System.Int32> value);
+        partial void OnpidChanged();
 
         #endregion
 
@@ -17506,6 +17530,30 @@ namespace YWWeb
         private global::System.String _Remarks;
         partial void OnRemarksChanging(global::System.String value);
         partial void OnRemarksChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, true, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private global::System.String _PID;
+        partial void OnPIDChanging(global::System.String value);
+        partial void OnPIDChanged();
 
         #endregion
 
@@ -22555,6 +22603,30 @@ namespace YWWeb
         private Nullable<global::System.Int32> _coolect_dev_type;
         partial void Oncoolect_dev_typeChanging(Nullable<global::System.Int32> value);
         partial void Oncoolect_dev_typeChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Label
+        {
+            get
+            {
+                return _Label;
+            }
+            set
+            {
+                OnLabelChanging(value);
+                ReportPropertyChanging("Label");
+                _Label = StructuralObject.SetValidValue(value, true, "Label");
+                ReportPropertyChanged("Label");
+                OnLabelChanged();
+            }
+        }
+        private global::System.String _Label;
+        partial void OnLabelChanging(global::System.String value);
+        partial void OnLabelChanged();
 
         #endregion
 
@@ -31905,6 +31977,30 @@ namespace YWWeb
         private global::System.String _PeopleCopied;
         partial void OnPeopleCopiedChanging(global::System.String value);
         partial void OnPeopleCopiedChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Approvers
+        {
+            get
+            {
+                return _Approvers;
+            }
+            set
+            {
+                OnApproversChanging(value);
+                ReportPropertyChanging("Approvers");
+                _Approvers = StructuralObject.SetValidValue(value, "Approvers");
+                ReportPropertyChanged("Approvers");
+                OnApproversChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Approvers;
+        partial void OnApproversChanging(Nullable<global::System.Int32> value);
+        partial void OnApproversChanged();
 
         #endregion
 

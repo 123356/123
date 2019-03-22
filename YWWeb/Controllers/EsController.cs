@@ -1813,6 +1813,7 @@ namespace YWWeb.Controllers
                         circuitInfo.collect_period = info.collect_period;
                         circuitInfo.MultipleRate = info.MultipleRate;
                         circuitInfo.collect_cld = info.collect_cld;
+                        circuitInfo.Label = info.Label;
                         bll.ObjectStateManager.ChangeObjectState(circuitInfo, EntityState.Modified);
                         bll.SaveChanges();
                         Common.InsertLog("电表管理", CurrentUser.UserName, "编辑电表信息[" + circuitInfo.CName + "]");

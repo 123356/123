@@ -45,13 +45,16 @@
                 <th data-options="field:'ItemType',width:80,editor:'text'" @*editor="{type:'validatebox',options:{required:true}}"*@>
                     用电设备分类
                 </th>
+                <th data-options="field:'Label',width:80,editor:'text'" @*editor="{type:'validatebox',options:{required:true}}"*@>
+                    标签
+                </th>
                 <th data-options="field:'MetersID',width:80,editor:'text'" @*editor="{type:'validatebox',options:{required:true}}"*@>
                     电表编码
                 </th>
-                <th data-options="field:'collect_port',width:50,editor:'numberbox'" @*editor="{type:'validatebox',options:{required:true}}*@">
+                <th data-options="field:'collect_port',width:50,editor:'numberbox'" @*editor="{type:'validatebox',options:{required:true}}*@ ">
                     电表数据采集端口
                 </th>
-                <th data-options="field:'collect_jzqno',width:80,editor:'numberbox'" @*editor="{type:'validatebox',options:{required:true}}*@">
+                <th data-options="field:'collect_jzqno',width:80,editor:'numberbox'" @*editor="{type:'validatebox',options:{required:true}}*@ ">
                     电表集中器编号
                 </th>
                 <th data-options="field:'collect_gy',width:50,editor:'numberbox'" @*editor="{type:'combobox',options:{valueField:'MPID',textField:'Name', url: '/BaseInfo/BindMonitorPosition?row=' + Math.random(),required:true }}*@ ">
@@ -75,6 +78,7 @@
                 <th data-options="field:'device_type',width:40,editor:'text'" @*editor="{type:'validatebox',options:{required:true}}"*@>
                     电表类型
                 </th>
+
             </tr>
         </thead>
     </table>
@@ -430,7 +434,8 @@
                         collect_cjq: row.collect_cjq,
                         collect_period: row.collect_period,
                         MultipleRate: row.MultipleRate,
-                        collect_cld: row.collect_cld
+                        collect_cld: row.collect_cld,
+                        Label: row.Label
                     };
                     $.post("/Es/SaveEm", postData, function (data) {
                         if (data.indexOf("OKadd") >= 0) {
