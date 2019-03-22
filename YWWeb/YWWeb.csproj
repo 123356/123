@@ -764,6 +764,7 @@
     <Content Include="Content\css\pingmiantu8.css" />
     <Content Include="Content\css\pingmiantu9.css" />
     <Content Include="Content\css\planpub.css" />
+    <Content Include="Content\css\printTable.css" />
     <Content Include="Content\css\projectOverview.css" />
     <Content Include="Content\css\proLog.css" />
     <Content Include="Content\css\score.css" />
@@ -1384,6 +1385,7 @@
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.min.js" />
     <Content Include="Content\js\echarts.min3.js" />
+    <Content Include="Content\js\jquery.AreaPrint.js" />
     <Content Include="Content\js\jquery.ztree.core.js" />
     <Content Include="Content\js\jquery.ztree.excheck.js" />
     <Content Include="Content\js\rule.js" />
