@@ -1074,7 +1074,7 @@ html {
             overflow:initial
         }
         .allMain .underFormView {
-            flex: 10
+            flex: 15
         }
     .allMain .searchView .ivu-form .ivu-form-item-label{
         font-size:1.2rem;
