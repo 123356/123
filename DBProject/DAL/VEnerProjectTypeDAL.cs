@@ -134,19 +134,29 @@ namespace DAL
                 data = _dbFactory.venerProjectType.PidCidGetArea(pid, cid);
 
 
-                data.ToList().Sort(delegate (t_V_EnerProjectType x, t_V_EnerProjectType y)
+                var dd = data.ToList();
+                dd.Sort( ( x,  y)=>
                 {
-                    return y.addCid.Length.CompareTo(x.addCid.Length);
+                    if (x.addCid.Length > y.addCid.Length)
+                    {
+                        return 1;
+                    }
+                    else if (x.addCid.Length < y.addCid.Length)
+                    {
+                        return -1;
+                    }
+                    else {
+                        return 0;
+
+                    }
                 });
 
-
-                for (var a = 0; a < data.Count(); a++) {
-                    var arr = data[a].addCid.Split(',');
-
+                for (var a = 0; a < dd.Count(); a++) {
+                    var arr = dd[a].addCid.Split(',');
                     for (var b = 0; b < arr.Count(); b++)
                     {
                         if (arr[b] == $"{pid}-{cid}") {
-                            res.Add(data[a]);
+                            res.Add(dd[a]);
                             return res;
                         }
                     }
