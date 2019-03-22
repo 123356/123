@@ -44,6 +44,7 @@ namespace IDAO
         IEneryReportFrom eneryReportFrom { get; }
         IEnergyAnnConfig energyAnnConfig { get; }
         IAlarmConfig pueError { get; }
+        IEPowerForeQuality powerForeQuality { get; }
 
     }
 }

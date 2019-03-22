@@ -116,14 +116,10 @@
         tab: function (a) {
             var that = this;
             if (a == 1) {
-
-
                 that.BindDevice();
                 that.Bind();
-
             } else if (a == 2) {
                 that.Bind();
-
             } 
 
 
@@ -198,9 +194,15 @@
         },
         mqtt: function () {
             var that = this;
-            var wsbroker = "59.110.153.200";
-            location.hostname;
-            var wsport = 15675;
+            var wsbroker,wsport 
+
+            if (location.protocol == "https:") {
+                wsbroker = "yw.ife360.com";
+                wsport = 15673;
+            } else {
+                wsbroker = "59.110.153.200";
+                wsport = 15675;
+            }
             //连接选项
             var client;
             var options = {
@@ -273,14 +275,14 @@
             })
 
         },
-        BindDevice: function (a,b) {
+        BindDevice: function (a,b ) {
             var that = this;
             this.$http({
                 url: '/DataInfo/BindDevice',
                 method: 'Post',
                 body: {
                     pid: a,
-                    DTID: b
+                    DTID: b||1
                 }
             }).then(function (res) {
                 that.DeviceNameList = res.data;
@@ -297,7 +299,7 @@
                 method: 'Post',
                 body: {
                     pid: that.PID,
-                    DID: that.DID,
+                    DID: that.DID || 1,
                     DTID: that.DTID || 1
                 }
             }).then(function (res) {
@@ -314,7 +316,6 @@
     beforeMount: function() {
         var that = this;
         that.progress = 0;
-       
         that.BindValueType(that.PID);
         that.BindDevice(that.PID, 1);
         that.Bind(that.PID,0,1);
@@ -328,7 +329,7 @@
         var timer = setInterval(function() {
 
             if (that.progress == 3) {
-                that.tab();
+               that.tab();
                 clearInterval(timer);
             }
         }, 500)

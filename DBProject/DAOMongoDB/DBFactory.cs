@@ -73,5 +73,8 @@ namespace DAOMongoDB
         public IEnergyAnnConfig energyAnnConfig => throw new NotImplementedException();
 
         public IAlarmConfig pueError => throw new NotImplementedException();
+
+        public IEPowerForeQuality powerForeQuality => throw new NotImplementedException();
+
     }
 }

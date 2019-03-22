@@ -467,5 +467,47 @@ namespace YWWeb
             public string sign { get; set; }
             public string format { get; set; }
         }
+
+
+
+
+
+
+
+        #region 用能异常
+
+        private void getEnergyDeviate()
+        {
+            var timer = new System.Timers.Timer();
+            timer.Elapsed += InEnergyDeviate;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+            //timer.Interval = 300000;
+            timer.Interval = 3000;
+            Console.Read();
+        }
+
+
+
+        private void InEnergyDeviate(object sender, System.Timers.ElapsedEventArgs e) {
+
+
+
+
+            //IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().GetSpecialQuality();
+
+
+
+
+
+        }
+
+
+
+
+
+        #endregion
+
+
     }
 }

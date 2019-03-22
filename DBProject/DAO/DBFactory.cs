@@ -75,5 +75,10 @@ namespace DAO
         public IAlarmConfig pueError => new AlarmConfigDBContext();
         public IEnergyAnnConfig energyAnnConfig => new EnergyAnnConfigDBContext();
 
+        public IEPowerForeQuality powerForeQuality => new PowerForeQualityDBContext();
+
+
+
+
     }
 }

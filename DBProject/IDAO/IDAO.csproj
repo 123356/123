@@ -67,6 +67,7 @@
     <Compile Include="IDeviceInfo.cs" />
     <Compile Include="IElementDevice.cs" />
     <Compile Include="IEnergyAnnConfig.cs" />
+    <Compile Include="IEPowerForeQuality.cs" />
     <Compile Include="IEnerUserProject..cs" />
     <Compile Include="IEneryOverview.cs" />
     <Compile Include="IEneryReportFrom.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Models\t_EE_EnerUserType.cs" />
     <Compile Include="Models\t_EE_EneryUsreBudget.cs" />
     <Compile Include="Models\t_EE_enTypeConfig.cs" />
+    <Compile Include="Models\t_EE_PowerForeQuality.cs" />
     <Compile Include="Models\t_EE_ExEnergy.cs" />
     <Compile Include="Models\t_EE_PriceEnery.cs" />
     <Compile Include="Models\t_EE_YearBudget.cs" />
