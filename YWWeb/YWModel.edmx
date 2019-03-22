@@ -697,9 +697,13 @@
           <Property Name="SoeDesc" Type="varchar" MaxLength="200" />
           <Property Name="HappenDate" Type="datetime" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“yw_db.dbo.t_CM_SparePartInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_CM_SparePartInfo">
           <Key>
             <PropertyRef Name="SparePartID" />
+            
+            
           </Key>
           <Property Name="SparePartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SparePartCode" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -709,6 +713,7 @@
           <Property Name="EadoCode" Type="nvarchar" MaxLength="50" />
           <Property Name="UseState" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
+          <Property Name="pid" Type="int" />
         </EntityType>
         <EntityType Name="t_CM_SubSysPDRInfo">
           <Key>
@@ -732,6 +737,7 @@
           <Property Name="SupplierAddress" Type="nvarchar" MaxLength="100" />
           <Property Name="UseState" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
+          <Property Name="PID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="t_CM_Unit">
           <Key>
@@ -1016,6 +1022,7 @@
           <Property Name="UpDateTime" Type="datetime" />
           <Property Name="ener_use_type" Type="int" />
           <Property Name="coolect_dev_type" Type="int" />
+          <Property Name="Label" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="t_DM_DeviceInfo">
           <Key>
@@ -1492,6 +1499,7 @@
           <Property Name="IsiNvoice" Type="int" />
           <Property Name="Reason" Type="nvarchar" MaxLength="255" />
           <Property Name="PeopleCopied" Type="nvarchar" MaxLength="255" />
+          <Property Name="Approvers" Type="int" />
         </EntityType>
         <EntityType Name="t_ES_ContractUsePlan">
           <Key>
@@ -2821,7 +2829,6 @@
           <EntitySet Name="t_CM_Score" EntityType="Self.t_CM_Score" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_ShopTruck" EntityType="Self.t_CM_ShopTruck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SOEInfo" EntityType="Self.t_CM_SOEInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="t_CM_SparePartInfo" EntityType="Self.t_CM_SparePartInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SubSysPDRInfo" EntityType="Self.t_CM_SubSysPDRInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SupplierInfo" EntityType="Self.t_CM_SupplierInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_Unit" EntityType="Self.t_CM_Unit" Schema="dbo" store:Type="Tables" />
@@ -2891,6 +2898,19 @@
           <EntitySet Name="t_Sys_City" EntityType="Self.t_Sys_City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_Sys_EquipmentCode" EntityType="Self.t_Sys_EquipmentCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_Sys_Promary" EntityType="Self.t_Sys_Promary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_CM_SparePartInfo" EntityType="Self.t_CM_SparePartInfo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[t_CM_SparePartInfo].[SparePartID] AS [SparePartID], 
+[t_CM_SparePartInfo].[SparePartCode] AS [SparePartCode], 
+[t_CM_SparePartInfo].[SparePartName] AS [SparePartName], 
+[t_CM_SparePartInfo].[SupplierID] AS [SupplierID], 
+[t_CM_SparePartInfo].[StockCount] AS [StockCount], 
+[t_CM_SparePartInfo].[EadoCode] AS [EadoCode], 
+[t_CM_SparePartInfo].[UseState] AS [UseState], 
+[t_CM_SparePartInfo].[Remarks] AS [Remarks], 
+[t_CM_SparePartInfo].[pid] AS [pid]
+FROM [dbo].[t_CM_SparePartInfo] AS [t_CM_SparePartInfo]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="t_DE_Report" EntityType="Self.t_DE_Report" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [t_DE_Report].[Xuhao] AS [Xuhao], 
@@ -4576,6 +4596,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Type="String" Name="SupplierAddress" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="UseState" />
           <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="t_CM_SparePartInfo">
           <Key>
@@ -4589,6 +4610,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Type="Int32" Name="UseState" />
           <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="StockCount" />
+          <Property Name="pid" Type="Int32" />
         </EntityType>
         <EntityType Name="t_PM_EmergencyPlan">
           <Key>
@@ -5839,6 +5861,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="IsiNvoice" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PeopleCopied" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Approvers" Type="Int32" />
         </EntityType>
         <EntityType Name="t_EE_PowerConfigInfo">
           <Key>
@@ -6358,6 +6381,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="ener_use_type" Type="Int32" />
           <Property Name="State" Type="Int32" />
           <Property Name="coolect_dev_type" Type="Int32" />
+          <Property Name="Label" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="t_EE_PUEDaily">
           <Key>
@@ -7224,6 +7248,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_SupplierInfo">
             <EntityTypeMapping TypeName="YWModel.t_CM_SupplierInfo">
               <MappingFragment StoreEntitySet="t_CM_SupplierInfo">
+                <ScalarProperty Name="PID" ColumnName="PID" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="UseState" ColumnName="UseState" />
                 <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
@@ -7239,6 +7264,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_CM_SparePartInfo">
             <EntityTypeMapping TypeName="YWModel.t_CM_SparePartInfo">
               <MappingFragment StoreEntitySet="t_CM_SparePartInfo">
+                <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="StockCount" ColumnName="StockCount" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="UseState" ColumnName="UseState" />
@@ -8551,6 +8577,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_ES_ContractTemplet">
             <EntityTypeMapping TypeName="YWModel.t_ES_ContractTemplet">
               <MappingFragment StoreEntitySet="t_ES_ContractTemplet">
+                <ScalarProperty Name="Approvers" ColumnName="Approvers" />
                 <ScalarProperty Name="PeopleCopied" ColumnName="PeopleCopied" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="IsiNvoice" ColumnName="IsiNvoice" />
@@ -9093,6 +9120,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySetMapping Name="t_DM_CircuitInfo">
             <EntityTypeMapping TypeName="YWModel.t_DM_CircuitInfo">
               <MappingFragment StoreEntitySet="t_DM_CircuitInfo">
+                <ScalarProperty Name="Label" ColumnName="Label" />
                 <ScalarProperty Name="coolect_dev_type" ColumnName="coolect_dev_type" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="ener_use_type" ColumnName="ener_use_type" />

@@ -1669,7 +1669,7 @@
     <Content Include="Content\topo\js\jquery.base64.js" />
     <Content Include="Content\topo\js\jquery.js" />
     <Content Include="Content\topo\js\jtopo._jm.js" />
-    <Content Include="Content\topo\js\jtopo_zc.js" />
+    <Content Include="Content\topo\js\jtopo._zc.js" />
     <Content Include="Content\topo\js\mqtt.js" />
     <Content Include="Content\topo\js\palette_config.js" />
     <Content Include="Content\topo\js\topo._jm.js" />
@@ -2154,7 +2154,6 @@
     <Content Include="Content\iview\dist\styles\fonts\ionicons.ttf" />
     <Content Include="Content\iview\dist\styles\fonts\ionicons.woff" />
     <Content Include="Areas\EnergyManage\Views\EMSetting\OrganizeAreaTreeEdit.cshtml" />
-    <Content Include="Content\UserJS\RealtimeDataInfo._jm.js.rej" />
     <Content Include="Content\topo\iview\styles\fonts\ionicons.ttf" />
     <Content Include="Content\topo\iview\styles\fonts\ionicons.woff" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

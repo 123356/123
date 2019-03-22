@@ -140,14 +140,15 @@ var vm = new Vue({
             if (that.node.area && !/^[0-9]+.?[0-9]*$/.test(that.node.area)) { this.$Message.warning("面积请输入数字"); return }
             if (that.node.people && !/^[0-9]+.?[0-9]*$/.test(that.node.people)) { this.$Message.warning("人数请输入数字"); return }
             if (this.nodeEditTyped == 'add') {
+                console.log(123)
                 if (this.node.root && this.node.root.indexOf(`"${that.node.title}"`) > 0) { this.$Message.warning("节点不能循环绑定"); return }
                 delete this.node.root;
                 this.node.addCid = this.ViewToPIDCId(this.addCid);
                 this.node.delCid = this.ViewToPIDCId(this.delCid);
                 var name = that.node.title;
-                this.$http({ url: "/energyManage/EMSetting/AddTreeNode", method: "post", body: { parent_id: that.node.parent_id, unit_id: that.UnitData.UnitID, unit_head: that.node.head, unit_note: that.node.note, addCid: that.node.addCid || "", delCid: that.node.delCid || "", item_type: that.treeType, Name: name, id: -1, unit_area: that.node.area || 0, unit_people: that.node.people || 0, } }).then(function(res) {
-                    console.log(this.treeParent.children[0])
-
+                this.$http({ url: "/energyManage/EMSetting/AddTreeNode", method: "POST", body: { parent_id: that.node.parent_id, unit_id: that.UnitData.UnitID, unit_head: that.node.head, unit_note: that.node.note, addCid: that.node.addCid || "", delCid: that.node.delCid || "", item_type: that.treeType, Name: name, id: -1, unit_area: that.node.area || 0, unit_people: that.node.people || 0, } }).then(function(res) {
+                    console.log(res)
+                    console.log("res.data.length")
                     if (res.data.length) {
                         const children = this.treeParent.children || [];
                         children.push({
@@ -165,7 +166,7 @@ var vm = new Vue({
                         this.$set(this.treeParent, 'children', children);
                         this.$Message.success("添加成功")
                     } else { this.$Message.error("添加失败") }
-                }).catch(function(e) { this.$Message.error("数据异常") })
+                })
             } else if (this.nodeEditTyped == 'upd') {
                 this.node.addCid = this.ViewToPIDCId(this.addCid);
                 this.node.delCid = this.ViewToPIDCId(this.delCid);

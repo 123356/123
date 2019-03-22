@@ -66,7 +66,14 @@ namespace DAO
 
         public IList<t_EE_AlarmConfig> GetPueAlarmAfter(t_EE_AlarmConfig alarm)
         {
-            string sql = $"SELECT *,null TypeName FROM t_EE_AlarmConfig WHERE PID={alarm.PID} AND TypeId={alarm.TypeId}";
+            string sql = "";
+            if (alarm.TypeId != null) {
+                 sql = $"SELECT *,null TypeName FROM t_EE_AlarmConfig WHERE PID={alarm.PID} AND TypeId={alarm.TypeId}";
+            } else if (alarm.TypeName != "") {
+                sql = $"SELECT* FROM t_EE_AlarmConfig a  INNER JOIN t_EE_AlarmType b" +
+                    $" ON a.TypeId = b.TypeId" +
+                    $" WHERE a.PID = {alarm.PID} AND b.TypeName = '{alarm.TypeName}'";
+            }
             return SQLQuery<t_EE_AlarmConfig>(sql);
         }
 
