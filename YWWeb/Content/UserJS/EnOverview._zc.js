@@ -243,7 +243,7 @@ function HourYdlGraph_SSQX(DataJson) {
             Series.push({
                 name: DataJson.CName[i],
                 type: "line",
-                stack: DataJson.CName[i],                    
+                stack: DataJson.CName[i],
                 smooth: true,
                 areaStyle: {},
                 //itemStyle: {
@@ -332,13 +332,13 @@ function HourYdlGraph_SSQX(DataJson) {
                         //组装表头
                         tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
                     });
-                    let table = '<div style="  display: block; width: 100%; overflow: auto; height: 270px;"><table border="1" style="margin-left:20px;border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>' + tdHeads + ' </tr>';
+                    let table = '<div style="  display: block; width: 100%; overflow: auto; height: 270px;overflow-x:hidden"><table border="1" style="border-collapse:collapse;font-size:14px;text-align:center;width:100%"><tbody><tr>' + tdHeads + ' </tr>';
                     for (let i = 0, l = axisData.length; i < l; i++) {
                         for (let j = 0; j < series.length; j++) {
                             //组装表数据
-                            tdBodys += '<td>'+series[j].data[i]+'</td>';
+                            tdBodys += '<td>' + series[j].data[i] + '</td>';
                         }
-                        table += '<tr><td style="padding: 0 10px">'+axisData[i]+'</td>'+tdBodys+'</tr>';
+                        table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
                         tdBodys = '';
                     }
                     table += '</tbody></table></div>';
@@ -364,7 +364,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 //    show: true,
                 //    formatter: "{value}"
                 //}
-            }, ],
+            },],
             dataZoom: [{
                 type: 'inside',
                 filterMode: 'filter'

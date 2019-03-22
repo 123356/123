@@ -8,6 +8,10 @@ html {
     font-size: 62.5% !important;
     background: #f3f4f6;
 }
+table {
+    -webkit-user-select: text;
+    user-select: text;
+}
 .noData{
     display:flex;
     justify-content:center;

@@ -34,7 +34,7 @@ var vm = new Vue({
                     } else {
                         if (res.data.length > 0) {
                             that.UnitID = res.data[0].UnitID
-                            $.cookie('unitId', res.data[0].UnitID, { expires: 7, path: '/' });
+                            $.cookie('enUID', res.data[0].UnitID, { expires: 7, path: '/' });
                         }
                     }
                     that.unitList = res.data
@@ -52,7 +52,7 @@ var vm = new Vue({
                 })
         },
         selectChange: function (e) {
-            $.cookie('unitId', e, { expires: 7, path: '/' });
+            $.cookie('enUID', e, { expires: 7, path: '/' });
             this.loading = true
             this.PID = null
             this.activeIndex = null
@@ -75,16 +75,16 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                that.StationStateInfo = res.data
-                
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                .then(function (res) {
+                    that.StationStateInfo = res.data
+
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         //获取当日累计电量
         getThisDayPower: function () {
@@ -97,17 +97,17 @@ var vm = new Vue({
                 }
             })
                 .then(function (res) {
-                if (res.data) {
-                    that.StationStateInfo.thisDayPower = res.data.thisDayPower;
-                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation;
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                    if (res.data) {
+                        that.StationStateInfo.thisDayPower = res.data.thisDayPower;
+                        that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation;
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         //获取上月用电
         getLastMonthPower: function () {
@@ -119,18 +119,18 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                if (res.data) {
-                    that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
-                    that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                .then(function (res) {
+                    if (res.data) {
+                        that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
+                        that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         //获取当年累计电量
         getThisYearPower: function () {
@@ -142,20 +142,20 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                var data = null
-                if (res.data) {
-                    data = res.data.thisPowerLastYear
-                }
-                that.createPieYearChart(data)
+                .then(function (res) {
+                    var data = null
+                    if (res.data) {
+                        data = res.data.thisPowerLastYear
+                    }
+                    that.createPieYearChart(data)
 
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
-            .finally(function () {
-                that.loading = false
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+                .finally(function () {
+                    that.loading = false
+                })
         },
         //消息通知
         getMessage: function () {
@@ -167,30 +167,30 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                var data = res.data
-                if (data) {
-                    var tempOrder = new Array()
-                    var tempAlarm = new Array()
-                    for (var i = 0; i < data.order.length; i++) {
-                        tempOrder.push(data.order[i])
-                        if (tempOrder.length == 3) {
-                            break
+                .then(function (res) {
+                    var data = res.data
+                    if (data) {
+                        var tempOrder = new Array()
+                        var tempAlarm = new Array()
+                        for (var i = 0; i < data.order.length; i++) {
+                            tempOrder.push(data.order[i])
+                            if (tempOrder.length == 3) {
+                                break
+                            }
                         }
-                    }
-                    for (var i = 0; i < data.Alarm.length; i++) {
-                        tempAlarm.push(data.Alarm[i])
-                        if (tempAlarm.length == 3) {
-                            break
+                        for (var i = 0; i < data.Alarm.length; i++) {
+                            tempAlarm.push(data.Alarm[i])
+                            if (tempAlarm.length == 3) {
+                                break
+                            }
                         }
+                        that.orderList = tempOrder
+                        that.alarmList = tempAlarm
                     }
-                    that.orderList = tempOrder
-                    that.alarmList = tempAlarm
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         //项目信息
         getProInfo: function () {
@@ -202,12 +202,12 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                that.proInfo = res.data
-            })
-            .catch(function (e) {
+                .then(function (res) {
+                    that.proInfo = res.data
+                })
+                .catch(function (e) {
 
-            })
+                })
         },
         //获取配电房
         getPDF: function () {
@@ -219,16 +219,16 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                that.PDFList = res.data
-                if (res.data.length > 0) {
-                    that.PID = res.data[0].PID
-                }
-                that.getBYQ()
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                .then(function (res) {
+                    that.PDFList = res.data
+                    if (res.data.length > 0) {
+                        that.PID = res.data[0].PID
+                    }
+                    that.getBYQ()
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         tabChange: function (name) {
             this.PID = name
@@ -244,24 +244,24 @@ var vm = new Vue({
                     pid: this.PID
                 }
             })
-            .then(function (res) {
-                that.BYQList = res.data
-                if (res.data.length > 0) {
-                    that.activeIndex = res.data[0].C
-                }
-                that.getLineData()
-                var timeset;
-                clearInterval(timeset);
-                timeset = setInterval(function () {
+                .then(function (res) {
+                    that.BYQList = res.data
+                    if (res.data.length > 0) {
+                        that.activeIndex = res.data[0].C
+                    }
                     that.getLineData()
-                    that.getThisDayPower()
-                    that.getUseEl()
-                    //that.getLXData()
-                }, 60000)
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                    var timeset;
+                    clearInterval(timeset);
+                    timeset = setInterval(function () {
+                        that.getLineData()
+                        that.getThisDayPower()
+                        that.getUseEl()
+                        //that.getLXData()
+                    }, 60000)
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         //用电概况
         getUseEl: function () {
@@ -273,16 +273,16 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                if (res.data) {
-                    that.Sumload = res.data.Sumload
-                    that.RatedCapacity = res.data.RatedCapacity
-                    that.createElecUsageChart(res.data)
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                .then(function (res) {
+                    if (res.data) {
+                        that.Sumload = res.data.Sumload
+                        that.RatedCapacity = res.data.RatedCapacity
+                        that.createElecUsageChart(res.data)
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         //轮询数据
         getLXData: function () {
@@ -294,21 +294,21 @@ var vm = new Vue({
                     uid: this.UnitID
                 }
             })
-            .then(function (res) {
-                if (res.data) {
-                    that.StationStateInfo.thisDayPower = res.data.thisDayPower
-                    that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
-                    that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
-                    that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
-                    that.Sumload = res.data.thisMonthOccupation
-                    that.RatedCapacity = res.data.RatedCapacity
-                    that.createElecUsageChart(res.data)
+                .then(function (res) {
+                    if (res.data) {
+                        that.StationStateInfo.thisDayPower = res.data.thisDayPower
+                        that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation
+                        that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
+                        that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
+                        that.Sumload = res.data.thisMonthOccupation
+                        that.RatedCapacity = res.data.RatedCapacity
+                        that.createElecUsageChart(res.data)
 
-                }
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                    }
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
 
         barMenuClick: function (e) {
@@ -327,15 +327,15 @@ var vm = new Vue({
                     cid: null
                 }
             })
-            .then(function (res) {
-                if (res.data.model) {
-                    that.otherInfo = res.data.model
-                }
-                that.createLineChart(res.data)
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                .then(function (res) {
+                    if (res.data.model) {
+                        that.otherInfo = res.data.model
+                    }
+                    that.createLineChart(res.data)
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         toPDFDetail: function () {
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
@@ -540,7 +540,33 @@ var vm = new Vue({
                         dataZoom: {
                             yAxisIndex: 'none'
                         },
-                        dataView: { readOnly: false },
+                        dataView: {
+                            readOnly: false,
+                            show: true,
+                            optionToContent: function (opt) {
+                                var axisData = opt.xAxis[0].data;
+                                var series = opt.series;
+                                var tdHeads = '<td  style="padding:0 10px">时间</td>';
+                                series.forEach(function (item) {
+                                    tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
+                                });
+                                var table = '<table border="1" style="border-collapse:collapse;font-size:14px;text-align:center;width:100%;margin-bottom:30px"><tbody><tr>' + tdHeads + '</tr>';
+                                var tdBodys = '';
+                                for (var i = 0, l = axisData.length; i < l; i++) {
+                                    for (var j = 0; j < series.length; j++) {
+                                        if (typeof (series[j].data[i]) == 'object') {
+                                            tdBodys += '<td>' + series[j].data[i].value + '</td>';
+                                        } else {
+                                            tdBodys += '<td>' + series[j].data[i] + '</td>';
+                                        }
+                                    }
+                                    table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
+                                    tdBodys = '';
+                                }
+                                table += '</tbody></table>';
+                                return table;
+                            }
+                        },
                         magicType: { type: ['line', 'bar'] },
                         restore: {},
                         saveAsImage: {}
@@ -554,7 +580,7 @@ var vm = new Vue({
                     top: 50,
                     left: '1%',
                     right: '26px',
-                    bottom: 60,
+                    bottom: 65,
                     containLabel: true
                 },
                 xAxis: [
@@ -621,7 +647,7 @@ var vm = new Vue({
                     clickable: true,
                 },
             });
-           
+
         },
         setWidth: function () {
             $(".ivu-menu-light").scrollTop(1)
@@ -645,6 +671,6 @@ var vm = new Vue({
         this.initSwiper()
     },
     created: function () {
-       
+
     }
 })

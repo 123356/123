@@ -76,11 +76,13 @@ function HourYdlGraph_SSQX(DataJson) {
                 borderColor: "#ccc"
             },
             grid: {
-                x: 54,
-                y: 50,
-                x2: 60,
-                y2: 60,
-                borderWidth: 0
+                top: 80,
+                left: 50,
+                right:50,
+                //y: 50,
+                //x2: 60,
+                //y2: 60,
+                //borderWidth: 0
             },
             toolbox: {
                 show: true,
@@ -98,7 +100,30 @@ function HourYdlGraph_SSQX(DataJson) {
                     },
                     dataView: {
                         show: true,
-                        readOnly: true
+                        readOnly: false,
+                        optionToContent: function (opt) {
+                            var axisData = opt.xAxis[0].data;
+                            var series = opt.series;
+                            var tdHeads = '<td  style="padding:0 10px">日期</td>';
+                            series.forEach(function (item) {
+                                tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
+                            });
+                            var table = '<table border="1" style="width:100%;border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>' + tdHeads + '</tr>';
+                            var tdBodys = '';
+                            for (var i = 0, l = axisData.length; i < l; i++) {
+                                for (var j = 0; j < series.length; j++) {
+                                    if (typeof (series[j].data[i]) == 'object') {
+                                        tdBodys += '<td>' + series[j].data[i].value + '</td>';
+                                    } else {
+                                        tdBodys += '<td>' + series[j].data[i] + '</td>';
+                                    }
+                                }
+                                table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
+                                tdBodys = '';
+                            }
+                            table += '</tbody></table>';
+                            return table;
+                        }
                     },
                     magicType: {
                         show: true,

@@ -59,7 +59,7 @@ function getMonthData_FX() {
     }, function (data) {
         //console.log(data);
         //var DataJson = JSON.parse(data);
-        PowerKehuIndustryData_FX(data.soure, data.month, data.goudian,data.table);
+        PowerKehuIndustryData_FX(data.soure, data.month, data.goudian, data.table);
         //GetTable(data.table, 'tablist1');
     });
 }
@@ -73,7 +73,7 @@ function formatDate(NewDtime, row, r) {
     var second = dt.getSeconds();
     return month + "-" + date;
 }
-function PowerKehuIndustryData_FX(DataJson, m, goudian,table) {
+function PowerKehuIndustryData_FX(DataJson, m, goudian, table) {
     var x = []
     var y1 = [];
     var y2 = [];
@@ -103,7 +103,7 @@ function PowerKehuIndustryData_FX(DataJson, m, goudian,table) {
             trigger: 'axis'
         },
         legend: {
-            data: ['实际用电量', '计划用电量','偏差率']
+            data: ['实际用电量', '计划用电量', '偏差率']
         },
         toolbox: {
             show: true,
@@ -111,7 +111,32 @@ function PowerKehuIndustryData_FX(DataJson, m, goudian,table) {
                 dataZoom: {
                     yAxisIndex: 'none'
                 },
-                dataView: { readOnly: false },
+                dataView: {
+                    readOnly: false,
+                    optionToContent: function (opt) {
+                        var axisData = opt.xAxis[0].data;
+                        var series = opt.series;
+                        var tdHeads = '<td  style="padding:0 10px">日期</td>';
+                        series.forEach(function (item) {
+                            tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
+                        });
+                        var table = '<table border="1" style="width:100%;border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>' + tdHeads + '</tr>';
+                        var tdBodys = '';
+                        for (var i = 0, l = axisData.length; i < l; i++) {
+                            for (var j = 0; j < series.length; j++) {
+                                if (typeof (series[j].data[i]) == 'object') {
+                                    tdBodys += '<td>' + series[j].data[i].value + '</td>';
+                                } else {
+                                    tdBodys += '<td>' + series[j].data[i] + '</td>';
+                                }
+                            }
+                            table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
+                            tdBodys = '';
+                        }
+                        table += '</tbody></table>';
+                        return table;
+                    }
+                },
                 magicType: { type: ['line', 'bar'] },
                 restore: {},
                 saveAsImage: {}
@@ -139,7 +164,7 @@ function PowerKehuIndustryData_FX(DataJson, m, goudian,table) {
                 name: '实际用电量',
                 type: 'line',
                 data: y1,
-                yAxisIndex:0,
+                yAxisIndex: 0,
                 //markPoint: {
                 //    data: [
                 //        { type: 'max', name: '最大值' },
@@ -198,11 +223,11 @@ function getLastMonthData_FX() {
         uid: $('#unitselect').combobox('getValue'),
         //pz: $('#pzselect').combobox('getValue')
     }, function (data) {
-        PowerKehuAreaData_FX(data.soure, data.month, data.goudian,data.table);
+        PowerKehuAreaData_FX(data.soure, data.month, data.goudian, data.table);
         //GetTable(data.table, 'tablist2')
     });
 }
-function PowerKehuAreaData_FX(DataJson, m, goudian,table) {
+function PowerKehuAreaData_FX(DataJson, m, goudian, table) {
     var x = []
     var y1 = [];
     var y2 = [];
@@ -240,7 +265,32 @@ function PowerKehuAreaData_FX(DataJson, m, goudian,table) {
                 dataZoom: {
                     yAxisIndex: 'none'
                 },
-                dataView: { readOnly: false },
+                dataView: {
+                    readOnly: false,
+                    optionToContent: function (opt) {
+                        var axisData = opt.xAxis[0].data;
+                        var series = opt.series;
+                        var tdHeads = '<td  style="padding:0 10px">日期</td>';
+                        series.forEach(function (item) {
+                            tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
+                        });
+                        var table = '<table border="1" style="width:100%;border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>' + tdHeads + '</tr>';
+                        var tdBodys = '';
+                        for (var i = 0, l = axisData.length; i < l; i++) {
+                            for (var j = 0; j < series.length; j++) {
+                                if (typeof (series[j].data[i]) == 'object') {
+                                    tdBodys += '<td>' + series[j].data[i].value + '</td>';
+                                } else {
+                                    tdBodys += '<td>' + series[j].data[i] + '</td>';
+                                }
+                            }
+                            table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
+                            tdBodys = '';
+                        }
+                        table += '</tbody></table>';
+                        return table;
+                    }
+                },
                 magicType: { type: ['line', 'bar'] },
                 restore: {},
                 saveAsImage: {}
@@ -362,7 +412,7 @@ function PowerKehuAreaData_FX(DataJson, m, goudian,table) {
 //                "<h4>" + val[0].UnitName + "</h4>";
 //            }
 //            $.each(val, function (i, v) {
-                    
+
 //                if (v.change_remark != null && v.change_remark != "")
 //                    if (i == 0) {
 //                        html += "<h5><span style='font-size:18px;'>说明：</span>" + v.change_remark + "</h5>"

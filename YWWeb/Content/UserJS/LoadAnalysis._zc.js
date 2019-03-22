@@ -35,27 +35,26 @@ function getPowerQualityData_SSQX() {
     });
 }
 
-function getPowerQualityData_SSQXS()
-{
+function getPowerQualityData_SSQXS() {
     $('#list_data').datagrid({
         url: '/PowerQuality/getPowerQualityData_SSQXS',
         pagination: true,
         queryParams:
-            {
-                "pid": pid,
-                "did": 0,
-                "cid": 0,
-                "totaltype": totaltype,//天用电量实时曲线
-                "datatypeid": datatypeid,
-                "datestart": "0",
-                "dateend": "0",
-                "aline": "0",
-                "eline": "0",
-                "userType": userType,
-                "areaType": areaType,
-                "itemType": itemType,
-                "gradeType": gradeType
-            }
+        {
+            "pid": pid,
+            "did": 0,
+            "cid": 0,
+            "totaltype": totaltype,//天用电量实时曲线
+            "datatypeid": datatypeid,
+            "datestart": "0",
+            "dateend": "0",
+            "aline": "0",
+            "eline": "0",
+            "userType": userType,
+            "areaType": areaType,
+            "itemType": itemType,
+            "gradeType": gradeType
+        }
     });
 
 }
@@ -128,7 +127,30 @@ function HourYdlGraph_SSQX(DataJson) {
                     },
                     dataView: {
                         show: true,
-                        readOnly: true
+                        readOnly: false,
+                        optionToContent: function (opt) {
+                            var axisData = opt.xAxis[0].data;
+                            var series = opt.series;
+                            var tdHeads = '<td  style="padding:0 10px">日期</td>';
+                            series.forEach(function (item) {
+                                tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
+                            });
+                            var table = '<table border="1" style="width:100%;border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>' + tdHeads + '</tr>';
+                            var tdBodys = '';
+                            for (var i = 0, l = axisData.length; i < l; i++) {
+                                for (var j = 0; j < series.length; j++) {
+                                    if (typeof (series[j].data[i]) == 'object') {
+                                        tdBodys += '<td>' + series[j].data[i].value + '</td>';
+                                    } else {
+                                        tdBodys += '<td>' + series[j].data[i] + '</td>';
+                                    }
+                                }
+                                table += '<tr><td style="padding: 0 10px">' + axisData[i] + '</td>' + tdBodys + '</tr>';
+                                tdBodys = '';
+                            }
+                            table += '</tbody></table>';
+                            return table;
+                        }
                     },
                     magicType: {
                         show: true,
@@ -151,7 +173,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 type: "category",
                 boundaryGap: false,
                 data: DataJson.xAxis.split(','),
-                
+
             }],
             yAxis: [{
                 name: "kW",
@@ -160,7 +182,7 @@ function HourYdlGraph_SSQX(DataJson) {
                     show: true,
                     formatter: "{value}"
                 }
-            }, ],
+            },],
             dataZoom: [{
                 type: 'inside',
                 filterMode: 'filter'
