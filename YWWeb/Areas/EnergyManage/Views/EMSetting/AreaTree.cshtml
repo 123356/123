@@ -25,7 +25,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            background:#ddd;
+            background: #fff;
         }
 
         rect {
@@ -33,7 +33,7 @@
         }
 
         text {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .electricity {
@@ -60,13 +60,28 @@
             margin-top: 60px;
             margin-left: 60px;
         }
+
+        rect.parent {
+            cursor: pointer;
+            fill: #CFCDCE;
+        }
+        rect {
+            fill: #EFEFEF;
+            stroke: #777777;
+        }
+
+        text {
+            color: #777777;
+        }
+        
+
         
     </style>
 </head>
 <body>
     <div id="body"></div>
   
-    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:16px;cursor:pointer;">
+    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:14px;cursor:pointer;">
         查看详情
     </u>
 
