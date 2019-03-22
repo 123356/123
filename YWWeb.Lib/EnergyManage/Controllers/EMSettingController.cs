@@ -218,6 +218,141 @@ namespace EnergyManage.Controllers
         #endregion
 
         #region
+
+        public void qwe() {
+                IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality();
+                if (powerForeQuality.Count() == 0)
+                {
+                    Console.WriteLine("预测和实际没有对应数据");
+                    return;
+                }
+                for (var a = 0; a < powerForeQuality.Count(); a++)
+                {
+                    IDAO.Models.t_EE_ExEnergy1 exEnergy = new IDAO.Models.t_EE_ExEnergy1();
+                    //异常占比
+                    if (powerForeQuality[a].ForeUsePower == 0)
+                    {
+                        Console.WriteLine("无效预测");
+                        return;
+                    }
+                    exEnergy.Proportion = powerForeQuality[a].UsePower / powerForeQuality[a].ForeUsePower *100;
+
+                    //查阈值
+                    exEnergy.ProportionValue = getProportionValue(powerForeQuality[a].PID, exEnergy.Proportion);
+                    if (exEnergy.ProportionValue == -1)
+                    {
+                        Console.WriteLine("阈值设置异常: 一个PID存在多个阈值设置");
+                        return;
+                    }
+                    else if (exEnergy.ProportionValue == -2)
+                    {
+                        Console.WriteLine("正常：异常占比在阈值区间内");
+                        return;
+                    }
+                    else if (exEnergy.ProportionValue == -3)
+                    {
+                        Console.WriteLine("阈值设置异常: 低报 >高报");
+                        return;
+                    }
+
+                    exEnergy.PID = powerForeQuality[a].PID;
+                    exEnergy.CID = powerForeQuality[a].CID;
+                    exEnergy.BudgetEnergy = powerForeQuality[a].UsePower;//预计用能
+                    exEnergy.ActualEnergy = powerForeQuality[a].ForeUsePower;//实际用能
+                    exEnergy.RecordTime = powerForeQuality[a].RecordTime;//时间
+
+                    //查科室
+                    IList<IDAO.Models.t_V_EnerProjectType> enerProjectType = DAL.VEnerProjectTypeDAL.getInstance().PidCidGetArea(powerForeQuality[a].PID, powerForeQuality[a].CID);
+                    if (enerProjectType.Count() == 0)
+                    {
+                        Console.WriteLine("没有查到相应科室");
+                        //return;
+                    }
+                    else
+                    {
+                        exEnergy.enerUserTypeID = enerProjectType[0].id; //区域ID
+                        exEnergy.People = enerProjectType[0].unit_people;  //人流量
+                        exEnergy.Area = enerProjectType[0].unit_area;  //建筑面积
+                    }
+
+                    //查CID其他内容
+                    IList<IDAO.Models.t_DM_CircuitInfoEnergy> circuitInfo = DAL.ExEnergyDAL.getInstance().getCircuitInfo(powerForeQuality[a].PID, powerForeQuality[a].CID, powerForeQuality[a].RecordTime);
+                    if (circuitInfo.Count() > 0)
+                    {
+                        exEnergy.CODID = circuitInfo[0].CODID;//用能类型ID
+                        exEnergy.Purpose = circuitInfo[0].Purpose;//用途
+                        exEnergy.Temperature = circuitInfo[0].Temperature;//温度
+                        exEnergy.DID = circuitInfo[0].DID;
+                    }
+                    //写入
+                    IList<IDAO.Models.t_EE_ExEnergy1> list = DAL.ExEnergyDAL.getInstance().InExDeviate(exEnergy);
+            }
+
+            //获取阈值
+         
+        }
+        public decimal getProportionValue(int pid, decimal proportion)
+        {
+            IDAO.Models.t_EE_AlarmConfig alarmobj = new IDAO.Models.t_EE_AlarmConfig();
+            alarmobj.PID = pid;
+            alarmobj.TypeName = "异常用能";
+            IList<IDAO.Models.t_EE_AlarmConfig> alarmConfig = DAL.AlarmConfigDAL.getInstance().GetPueAlarmAfter(alarmobj);
+            if (alarmConfig.Count() != 1)
+            {
+                return -1;
+            }
+            //低报 取最高
+            decimal[] LimitLarr = { (decimal)alarmConfig[0].LimitL1, (decimal)alarmConfig[0].LimitL2, (decimal)alarmConfig[0].LimitL3 };
+            decimal LimitL = LimitLarr.Max();
+            //高报 取非零最低
+            decimal LimitH = 0;
+            if (alarmConfig[0].LimitH1 == 0)
+            {
+                if (alarmConfig[0].LimitH2 == 0)
+                {
+                    LimitH = (decimal)alarmConfig[0].LimitH2;
+                }
+                else
+                {
+                    LimitH = (decimal)alarmConfig[0].LimitH3;
+                }
+            }
+            else
+            {
+                LimitH = (decimal)alarmConfig[0].LimitH1;
+            }
+            if (LimitL > LimitH)
+            {
+                return -3;
+            }
+            else if (proportion > LimitL && proportion < LimitH)
+            {
+                return -2;
+            }
+            else if (proportion < LimitL)
+            {
+                return LimitL;
+            }
+            else if (proportion > LimitH)
+            {
+                return LimitH;
+            }
+            else
+            {
+                return -2;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
         public JsonResult GetTageID( int pid, int cid )
 		{
 			IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
@@ -364,5 +499,13 @@ namespace EnergyManage.Controllers
             return Json(json);
         }
         #endregion
+
+
+
+
+
+    
+
+
     }
 } 

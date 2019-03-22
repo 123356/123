@@ -51,5 +51,31 @@ namespace DAL
                 throw ex;
             }
         }
+
+
+
+        public IList<t_DM_CircuitInfoEnergy> getCircuitInfo(int pid, int cid, DateTime time)
+        {
+            try
+            {
+                return _dbFactory.exEnergy.getCircuitInfo(pid, cid,time);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public IList<t_EE_ExEnergy1> InExDeviate(t_EE_ExEnergy1 err)
+        {
+            try
+            {
+                return _dbFactory.exEnergy.InExDeviate(err);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

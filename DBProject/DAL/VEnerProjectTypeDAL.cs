@@ -120,5 +120,56 @@ namespace DAL
         }
 
 
+
+
+
+
+
+        public IList<t_V_EnerProjectType> PidCidGetArea(int pid, int cid)
+        {
+            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
+            IList<t_V_EnerProjectType> res = new List<t_V_EnerProjectType>();
+            try
+            {
+                data = _dbFactory.venerProjectType.PidCidGetArea(pid, cid);
+
+
+                var dd = data.ToList();
+                dd.Sort( ( x,  y)=>
+                {
+                    if (x.addCid.Length > y.addCid.Length)
+                    {
+                        return 1;
+                    }
+                    else if (x.addCid.Length < y.addCid.Length)
+                    {
+                        return -1;
+                    }
+                    else {
+                        return 0;
+
+                    }
+                });
+
+                for (var a = 0; a < dd.Count(); a++) {
+                    var arr = dd[a].addCid.Split(',');
+                    for (var b = 0; b < arr.Count(); b++)
+                    {
+                        if (arr[b] == $"{pid}-{cid}") {
+                            res.Add(dd[a]);
+                            return res;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return res;
+        }
+
+
     }
 }

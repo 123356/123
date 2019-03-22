@@ -36,5 +36,37 @@ join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevTyp
 join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevType e on a.CODID = e.ID join t_CM_PDRInfo f on a.PID=F.PID where a.PID IN({pids}) and a.ID IN({id}) order by Proportion desc";
             return SQLQuery<t_EE_ExEnergy>(sql);
         }
+
+
+        public IList<t_DM_CircuitInfoEnergy> getCircuitInfo(int pid, int cid, DateTime time)
+        {
+            string date = time.ToString("yyyy-MM-dd hh:ff:mm.000");
+            string sql = $"SELECT TOP 1 a.DID DID,isnull(a.cName ,0) Purpose, isnull(a.coolect_dev_type ,0) CODI,b.ThisTemperatureValue Temperature FROM t_DM_CircuitInfo a " +
+                        $" JOIN t_EE_WeatherDaily b on 1 = 1" +
+                        $" WHERE a.pid = {pid} and a.cid = {cid} and b.RecordTime >='{date}' AND b.CityName = '北京'" ;
+            return SQLQuery<t_DM_CircuitInfoEnergy>(sql);
+        }
+
+
+
+
+
+        public IList<t_EE_ExEnergy1> InExDeviate(t_EE_ExEnergy1 ex)
+        {
+            string sql = $"INSERT INTO t_EE_ExEnergy(DID,PID,enerUserTypeID, CID, BudgetEnergy, ActualEnergy, Proportion, ProportionValue, People, Area, CODID, Purpose, Temperature, RecordTime,Conclusion) output inserted.*" +
+                        $" VALUES({ex.DID},{ex.PID},{ex.enerUserTypeID},{ex.CID},{ex.BudgetEnergy},{ex.ActualEnergy},{ex.Proportion},{ex.ProportionValue},{ex.People},{ex.Area},{ex.CODID},'{ex.Purpose}','{ex.Temperature}','{ex.RecordTime}','');";
+            return SQLQuery<t_EE_ExEnergy1>(sql);
+        }
+
+
+        
+
+
+
+
+
+
+
+
     }
 }

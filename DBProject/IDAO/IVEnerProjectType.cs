@@ -17,6 +17,12 @@ namespace IDAO
 
         IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid);
         IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid);
-        
+
+
+
+        IList<t_V_EnerProjectType> PidCidGetArea(int pid, int cid);
+
+
+
     }
 }
