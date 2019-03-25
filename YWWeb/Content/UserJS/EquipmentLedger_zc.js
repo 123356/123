@@ -203,10 +203,19 @@ function loadDeviceInfo() {
         $("#tMLID").html(info.MajorLevel);
         $("#tMFactory").html(info.MFactory);
         $("#tFactoryNumber").html(info.FactoryNumber);
-        $("#tUseDate").html(info.UseDate.split('T')[0]);
-        $("#tBuyTime").html(info.BuyTime.split('T')[0]);
-        $("#tLastMtcDate").html(info.LastMtcDate.split('T')[0]);
-        $("#tBuildDate").html(info.BuildDate.split('T')[0]);
+        if (info.UseDate) {
+            $("#tUseDate").html(info.UseDate.split('T')[0]);
+        }
+        if (info.BuyTime) {
+            $("#tBuyTime").html(info.BuyTime.split('T')[0]);
+        }
+        if (info.LastMtcDate) {
+            $("#tLastMtcDate").html(info.LastMtcDate.split('T')[0]);
+        }
+        if (info.BuildDate) {
+            $("#tBuildDate").html(info.BuildDate.split('T')[0]);
+        }
+        
         $("#tInstallAddr").html(info.InstallAddr);
         $("#tA").html(info.L + " A");
         $("#tN").html(info.K);
@@ -224,6 +233,7 @@ function loadDeviceInfo() {
             DT = "环境";
         else if (info.DTID == 6)
             DT = "光纤";
+        console.log("DT:"+DT)
         $("#tDT").html(DT);
         if (info.UseState == 0)
             UseState = "正常使用";
@@ -237,6 +247,8 @@ function loadDeviceInfo() {
 
 function loadBugData() {
     select = 1;
+    var h = $(".el_tab").height() - 71
+    $(".demo2").height(h)
     var type = $("input[name='BugState']:checked").val();
     var HS = "";
     if (type == 0)
@@ -248,14 +260,14 @@ function loadBugData() {
     $('#list_data').datagrid({
         url: '/PerationMaintenance/BugListData?rom=' + Math.random() + "&did=" + did + "&HandeSituation=" + HS,
         columns: [[
-            { field: 'PName', title: '站室名称', width: 200 },
-            { field: 'ReportDate', title: '报告时间', width: 150, formatter: function (value, row, index) { var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss'); return lDate } },
-            { field: 'ReportWay', title: '报告方式', width: 100 },
-            { field: 'BugLocation', title: '缺陷部位', width: 300 },
-            { field: 'BugDesc', title: '缺陷描述', width: 200 },
-            { field: 'HandeSituation', title: '处理情况', width: 200 },
-            { field: 'HandleDate', title: '处理时间', width: 200, formatter: function (value, row, index) { var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss'); return lDate } },
-            { field: 'BugID', field: 'BugID', width: 150, formatter: function (value, row, index) { return '<button class="page_table_but2" style="color:White" onclick="lookDetail(' + value + ');"><img src="../Content/Images/detailedicon.png" />详情</button>' } }
+            { field: 'PName', title: '站室名称', width: '15%' },
+            { field: 'ReportDate', title: '报告时间', width: '15%', formatter: function (value, row, index) { var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss'); return lDate } },
+            { field: 'ReportWay', title: '报告方式', width: '10%' },
+            { field: 'BugLocation', title: '缺陷部位', width: '10%' },
+            { field: 'BugDesc', title: '缺陷描述', width: '20%' },
+            { field: 'HandeSituation', title: '处理情况', width: '10%' },
+            { field: 'HandleDate', title: '处理时间', width: '9%', formatter: function (value, row, index) { var lDate = formatDate(value, 'yyyy-MM-dd hh:mm:ss'); return lDate } },
+            { field: 'BugID', field: 'BugID', width: '10%', formatter: function (value, row, index) { return '<button class="page_table_but2" style="color:White" onclick="lookDetail(' + value + ');"><img src="../Content/Images/detailedicon.png" />详情</button>' } }
         ]],
         rownumbers: true,
         pageSize: 15,
@@ -271,11 +283,12 @@ function loadBugData() {
 //元器件
 function loadSparePartData() {
     select = 0
-
+    var h = $(".el_tab").height() - 32
+    $(".demo2").height(h)
     $('#list_data').datagrid({
         url: '/Home/GetElementList',
         columns: [[
-            { field: 'DeviceCode', title: '编码', width: '10%' },
+            { field: 'DeviceCode', title: '编码', width: '9%' },
             { field: 'DeviceName', title: '名称', width: '20%' },
             { field: 'DeviceModel', title: '型号', width: '10%' },
             { field: 'Manufactor', title: '厂家', width: '20%' },
@@ -364,16 +377,18 @@ function loadOrderData() {
 }
 function loadSensorData() {
     select = 4;
+    var h = $(".el_tab").height() - 32
+    $(".demo2").height(h)
     $('#list_data').datagrid({
         url: '/State/PointsInfoData?rom=' + Math.random() + "&did=" + did,
         columns: [[
-            { field: 'DataTypeID', title: '传感器类型', width: 100 },
-            { field: '设备点名', title: '传感器型号', width: 300 },
-            { field: '版本号', title: '版本号', width: 150 },
-            { field: '通信地址', title: '信道', width: 150 },
-            { field: 'cname', title: '生产厂家', width: 200 },
-            { field: 'Remarks', title: '监测位置', width: 300 },
-            { field: '置0说明', title: '安装日期', width: 300 }
+            { field: 'DataTypeID', title: '传感器类型', width: '9%' },
+            { field: '设备点名', title: '传感器型号', width: '10%' },
+            { field: '版本号', title: '版本号', width: '10%' },
+            { field: '通信地址', title: '信道', width: '10%' },
+            { field: 'cname', title: '生产厂家', width: '20%' },
+            { field: 'Remarks', title: '监测位置', width: '30%' },
+            { field: '置0说明', title: '安装日期', width: '10%' }
         ]],
         queryParams: { "did": did, "tagname": "", "Position": "" },
         rownumbers: true,
@@ -389,13 +404,15 @@ function loadSensorData() {
 }
 function loadExperimentData() {
     select = 3;
+    var h = $(".el_tab").height() - 32
+    $(".demo2").height(h)
     $('#list_data').datagrid({
         url: '/OrderInfo/OrderInfoList?rom=' + Math.random() + "&pid=" + pid,
         columns: [[
-            { field: 'OrderID', title: '序号', width: 50 },
-            { field: 'OrderNO', title: '工单编号', width: 200 },
-            { field: 'OrderContent', title: '实验内容', width: 1100 },
-            { field: 'PlanDate', title: '实验日期', width: 200 }
+            { field: 'OrderID', title: '序号', width: '9%' },
+            { field: 'OrderNO', title: '工单编号', width: '20%' },
+            { field: 'OrderContent', title: '实验内容', width: '60%' },
+            { field: 'PlanDate', title: '实验日期', width: '10%' }
         ]],
         pageSize: 10
     });
