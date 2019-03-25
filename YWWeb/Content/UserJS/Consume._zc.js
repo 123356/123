@@ -165,7 +165,8 @@
         barShow: true,
         lineShow: true,
         rowClickSelection: [],
-        switchState:false
+        switchState: false,
+        curTime:null,
     },
     methods: {
         //异常列表
@@ -182,7 +183,7 @@
                 .then(function (res) {
                     var data = res.data
                     if (data.length > 0) {
-
+                        that.curTime = data[0].RecordTime
                         for (var i = 0; i < data.length; i++) {
                             if (i == 0) {
                                 data[i]._checked = true
@@ -217,9 +218,11 @@
                     width: 20,
                     align: 'center',
                 })
+                this.getLeftList()
             } else {
                 this.listColumns.splice(0, 1)
                 $(".ivu-table-tbody .ivu-table-row:eq(0)").addClass("ivu-table-row-highlight")
+               
             }
         },
         //异常分析表格
@@ -245,13 +248,18 @@
         getBarData: function (cids) {
             this.loading = true
             var that = this
+            var time = this.curTime
+            var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
+            var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
             this.$http({
                 url: '/energyManage/EMHome/GetExData',
                 method: 'post',
                 body: {
                     cids: cids,
                     type: that.curEntype,
-                    TypeTime: that.dateType
+                    TypeTime: that.dateType,
+                    uid: that.uid,
+                    time: d
                 }
             })
                 .then(function (res) {
@@ -329,12 +337,20 @@
             }
             if (selection.length <= 2) {
                 this.tableSelection = selection
+                
+                
             }
+           
             if (this.tableSelection.length == 2) {
-                this.$Modal.warning({
-                    title: '信息提示',
-                    content: '最多只能选择两项进行对比'
-                });
+                //this.$Modal.warning({
+                //    title: '信息提示',
+                //    content: '最多只能选择两项进行对比'
+                //});
+                if (selection[0].index > selection[1].index) {
+                    this.curTime = selection[1].RecordTime
+                } else {
+                    this.curTime = selection[0].RecordTime
+                }
                 this.setSelectState(true)
             } else {
                 this.setSelectState(false)
@@ -375,6 +391,7 @@
         },
         rowCLick: function (row, index) {
             //this.listData[index]._checked = !this.listData[index]._checked
+            this.curTime = row.RecordTime
             if (!this.switchState) {
                 this.curSelectID = row.ID
                 this.curCID = row.CID
