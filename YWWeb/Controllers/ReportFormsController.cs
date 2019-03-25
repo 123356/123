@@ -1223,12 +1223,22 @@ namespace YWWeb.Controllers
                         sql += " AND PID IN(" + unit.PDRList + ")";
                     }
                     var list = bll.ExecuteStoreQuery<t_DM_CircuitInfo>(sql).ToList();
-                    var m = from v in list
+                    List<string> LableList = new List<string>();
+                    string LableStr = "";
+                    foreach (var item in list)
+                    {
+                        if (!string.IsNullOrEmpty(item.Label) && item.Label.Trim() != "")
+                            LableStr += item.Label + ",";
+                    }
+                    if (LableStr != "")
+                        LableList = LableStr.Trim(',').Split(',').ToList().Distinct().ToList();
+
+                    var m = from n in LableList
                             select new
-                            {
-                                v.Label
-                            };
-                    return Json(m.Distinct(), JsonRequestBehavior.AllowGet);
+                    {
+                        Label = n
+                    };
+                    return Json(m, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
