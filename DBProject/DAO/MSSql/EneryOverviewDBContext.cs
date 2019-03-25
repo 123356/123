@@ -26,7 +26,7 @@ namespace DAO
 
         public IList<t_V_EneryView> GetDatas(string cids, string pids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 
 
 
@@ -62,7 +62,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{time}' and a.UserPowerRate is not n
 
         public IList<t_V_EneryView> GetMonthDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID and a.PID=b.PID)
 
 
 
@@ -75,7 +75,7 @@ where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and R
 
         public IList<t_V_EneryView> GetYearDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CID 
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID and a.PID=b.PID)
 
 
 
@@ -89,7 +89,7 @@ where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and R
 
         public IList<t_V_EneryView> GetDayDatasByTime(string cids, string pids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID and a.PID=b.PID)
 
 
 
@@ -104,7 +104,7 @@ where a.CID in({cids}) and a.PID in ({pids}) and RecordTime>='{startTime}' and R
 
         public IList<t_V_EneryView> GetDayDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 
 
 
@@ -133,7 +133,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
 
         public IList<t_V_EneryView> GetMonthDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 
 
 
@@ -162,7 +162,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
 
         public IList<t_V_EneryView> GetYearDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as Name,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 
 
 
@@ -191,7 +191,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
 
         public IList<t_V_EneryView> GetMonthDatas(Dictionary<int, string> cpids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null";
             int i = 0;
             foreach (KeyValuePair<int, string> item in cpids)
@@ -211,7 +211,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not nu
         }
         public IList<t_V_EneryView> GetYearBudgetDatas(string cids, string pids, string time)
         {
-            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,b.coolect_dev_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID)
 
 
 

@@ -76,10 +76,10 @@ namespace EnergyManage.Controllers
             peos = DepList.Sum(p => p.unit_people);
             decimal Peozhanbi = 0;
             decimal LPeozhanbi = 0;
-            if (mianji * peos != 0)
+            if (mianji != 0)
             {
-                Peozhanbi = Math.Round(zongRate / mianji, 2);
-                LPeozhanbi = Math.Round(lasrRate / mianji, 2);
+                Peozhanbi = Math.Round(zongRate / mianji, 5);
+                LPeozhanbi = Math.Round(lasrRate / mianji, 5);
             }
             var list_bottom = new
             {
@@ -620,15 +620,15 @@ namespace EnergyManage.Controllers
 
                                 title ttt1 = new title();
                                 ttt1.Type = it.Key.Value + "d";
-                                ttt1.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "平均能耗/平米";
+                                ttt1.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(万元/平米)";
                                 TitleList.Add(ttt1);
                                 title ttt2 = new title();
                                 ttt2.Type = it.Key.Value + "L";
-                                ttt2.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "平均能耗/人流量";
+                                ttt2.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(万元/人)";
                                 TitleList.Add(ttt2);
                             }
                             if (mianji != 0) {
-                                t.value.Add(it.Key + "d",Math.Round(v / mianji,2) + "");
+                                t.value.Add(it.Key + "d",Math.Round(v / mianji,5) + "");
 
                             }
                             else
@@ -637,7 +637,7 @@ namespace EnergyManage.Controllers
                             }
                             if (renliu != 0)
                             {
-                                t.value.Add(it.Key + "L", Math.Round(v / renliu, 2) + "");
+                                t.value.Add(it.Key + "L", Math.Round(v / renliu, 5) + "");
 
                             }
                             else
@@ -677,59 +677,69 @@ namespace EnergyManage.Controllers
                 return Json("No Data", JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult GetExData(string cids, int type, int TypeTime)
+        public JsonResult GetExData(string cids, int type, int TypeTime,string time,int uid)
         {
-            string pids = GetPIDs();
-            IList<t_V_EneryView> list_this = null;
-            DateTime time_test = DateTime.Now;
-            if (TypeTime == 1)
+            try
             {
-                string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
-                string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
-                list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
-            }
-            else if (TypeTime == 2)
-            {
+                string pids = "0";
+                var unit = DAL.UnitDAL.getInstance().GetUnitList(uid + "").FirstOrDefault();
+                if (unit != null && !string.IsNullOrEmpty(unit.PDRList))
+                    pids = unit.PDRList;
 
-                string t1 = time_test.AddDays(1 - time_test.Day).ToString();
-                string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
-                list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
-            }
-            else if (TypeTime == 3)
-            {
-
-                string t1 = new DateTime(time_test.Year, 1, 1).ToString();
-                string t2 = new DateTime(time_test.Year, 12, 31).ToString();
-                list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
-            }
-
-            List<view> list_line = new List<view>();
-            List<string> x = new List<string>();
-
-            List<string> name = new List<string>();
-
-            foreach (var item in list_this.GroupBy(p => p.RecordTime))
-            {
-                x.Add(item.Key.ToString());
-            }
-
-            foreach (var item in list_this.GroupBy(p => p.CName))
-            {
-                view m = new view();
-                name.Add(item.Key);
-                m.name = item.Key;
-                foreach (var itemf in x)
+                IList<t_V_EneryView> list_this = null;
+                if (TypeTime == 1)
+                {
+                    DateTime time_test = Convert.ToDateTime(time);
+                    string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+                    string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
+                }
+                else if (TypeTime == 2)
+                {
+                    DateTime time_test = Convert.ToDateTime(time);
+                    string t1 = time_test.AddDays(1 - time_test.Day).ToString();
+                    string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
+                }
+                else if (TypeTime == 3)
                 {
 
-                    overView mx = new overView();
-                    DateTime d = Convert.ToDateTime(itemf);
-                    mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value);
-                    m.list.Add(mx);
+                    string t1 = new DateTime(Convert.ToInt32(time), 1, 1).ToString();
+                    string t2 = new DateTime(Convert.ToInt32(time), 12, 31).ToString();
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
                 }
-                list_line.Add(m);
+
+                List<view> list_line = new List<view>();
+                List<string> x = new List<string>();
+
+                List<string> name = new List<string>();
+
+                foreach (var item in list_this.GroupBy(p => p.RecordTime))
+                {
+                    x.Add(item.Key.ToString());
+                }
+
+                foreach (var item in list_this.GroupBy(p => p.CName))
+                {
+                    view m = new view();
+                    name.Add(item.Key);
+                    m.name = item.Key;
+                    foreach (var itemf in x)
+                    {
+
+                        overView mx = new overView();
+                        DateTime d = Convert.ToDateTime(itemf);
+                        mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value);
+                        m.list.Add(mx);
+                    }
+                    list_line.Add(m);
+                }
+                List<string> tianqi = new List<string>();
+                return Json(new { name, x, list_line, tianqi }, JsonRequestBehavior.AllowGet);
+            }catch(Exception ex)
+            {
+                throw ex;
             }
-            List<string> tianqi = new List<string>();
-            return Json(new { name, x, list_line, tianqi }, JsonRequestBehavior.AllowGet);
         }
 
         public class view
