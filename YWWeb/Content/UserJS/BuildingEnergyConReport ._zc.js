@@ -177,14 +177,20 @@
                     }
                 }
             }).catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                    throw new ReferenceError(e.message)
+                }).finally(function () {
+                    this.getTreeData(1)
+                    this.getTreeData(2)
+                })
         },
         //单位下拉框change
         comChange: function (e) {
             this.UID = e.value
+            this.UnitName = e.label
             $.cookie("enUID", e.value, { expires: 7 })
             $.cookie("enUName", e.label, { expires: 7 })
+            this.getTreeData(1)
+            this.getTreeData(2)
         },
         dateChange: function () {
             this.curTimeStr = this.formaterDate()
@@ -202,7 +208,8 @@
                     this.dateTypeText = "year"
                     break
             }
-
+            this.curTimeStr = this.formaterDate()
+            
         },
         getTimes: function () {
             var arr = []
@@ -275,6 +282,7 @@
                 case 'dosearch()':
                     this.loading = true
                     this.getTimes()
+                    
                     this.getReport()
                     break;
             }
@@ -415,7 +423,7 @@
     },
     mounted: function () {
         //获取用电分项、组织区域树
-        this.getTreeData(1)
-        this.getTreeData(2)
+        //this.getTreeData(1)
+        //this.getTreeData(2)
     }
 })
