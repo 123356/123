@@ -175,7 +175,7 @@
                     <div class="module">
                         <p class="title"><img src="~/Content/images/energyDifficiency/pie.png" />其它参考数据</p>
                         <span class="dec">建筑面积</span>
-                        <p class="numtext"><font v-html="Area">--</font>㎡</p>
+                        <p class="numtext">{{Area==null?'--':Area|toMoney}}㎡</p>
 
                         <span class="dec">单位面积能耗</span>
                         <p class="numtext"><font v-html="Bili">--</font></p>
@@ -185,7 +185,7 @@
 
                         <template v-for="item in rightList">
                             <span class="typeName"><font v-html="item.name">--</font>/万元</span>
-                            <p class="numtext">{{item.value==null?'--':item.value|toFIxed2}}</p>
+                            <p class="numtext">{{item.value==null?'--':item.value|toMoney}}</p>
                         </template>
 
 
@@ -277,7 +277,7 @@
         </Modal>
     </div>
     
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.016"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js"></script>
 </body>
 </html>
 

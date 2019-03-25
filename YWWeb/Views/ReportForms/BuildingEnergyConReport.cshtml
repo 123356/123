@@ -79,7 +79,7 @@
 
         <div class="reportView">
             <table class="buildTable">
-                <caption class="caption" style="">{{curTimeStr}}{{UnitName}}建筑能耗报表</caption>
+                <caption class="caption" style="">{{curTimeStr}}{{UnitName}}建筑分项能耗报表</caption>
                 <tr>
                     <th>ID</th>
                     <th class="nameCol">名称</th>
@@ -90,19 +90,19 @@
                 <tr v-for="(data,index) in list_item">
                     <td align="center">{{index+1}}</td>
                     <td align="left">{{data.name}}</td>
-                    <td>{{data.Label}}</td>
+                    <td  align="center">{{data.Label==''?'--':data.Label}}</td>
                     <td v-for="item in data.Value" align="center">{{item | isnull}}</td>
                     <td align="center">{{data.count}}</td>
                 </tr>
                 <tr v-show="itemHJ.length>0">
                     <td colspan="3" align="center">分时合计</td>
                     <td v-for="item in itemHJ" align="center">{{item.val}}</td>
-                    <td>{{itemTotal}}</td>
+                    <td align="center">{{itemTotal}}</td>
                 </tr>
             </table>
 
             <table class="buildTable" style="margin-top:50px">
-                <caption class="caption" style="">{{curTimeStr}}{{UnitName}}建筑能耗报表</caption>
+                <caption class="caption" style="">{{curTimeStr}}{{UnitName}}建筑能耗区域报表</caption>
                 <tr>
                     <th>ID</th>
                     <th class="nameCol">名称</th>
@@ -113,14 +113,14 @@
                 <tr v-for="(data,index) in list_area">
                     <td align="center">{{index+1}}</td>
                     <td align="left">{{data.name}}</td>
-                    <td>{{data.Label}}</td>
+                    <td  align="center">{{data.Label==''?'--':data.Label}}</td>
                     <td v-for="item in data.Value" align="center">{{item | isnull}}</td>
                     <td align="center">{{data.count}}</td>
                 </tr>
                 <tr v-show="areaHJ.length>0">
                     <td colspan="3" align="center">分时合计</td>
                     <td v-for="item in areaHJ" align="center">{{item.val}}</td>
-                    <td>{{areaTotal}}</td>
+                    <td align="center">{{areaTotal}}</td>
                 </tr>
             </table>
         </div>

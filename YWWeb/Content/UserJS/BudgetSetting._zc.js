@@ -84,6 +84,12 @@
     filters: {
         toFIxed2: function (e) {
             return e.toFixed(2)
+        },
+        toMoney: function (num) {
+            num = num.toFixed(2);
+            num = parseFloat(num)
+            num = num.toLocaleString();
+            return num;//返回的是字符串23,245.12保留2位小数
         }
     },
     methods: {
