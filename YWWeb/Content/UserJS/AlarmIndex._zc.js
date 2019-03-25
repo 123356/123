@@ -11,7 +11,7 @@ Startdate.setDate(Startdate.getDate() - 10);
 var DS = Startdate.getFullYear() + "-" + (Startdate.getMonth() + 1) + "-" + Startdate.getDate();
 $('#StartDate').datebox({
     value: DS,
-    onSelect: function() { //输入判断
+    onSelect: function () { //输入判断
         startdate = $('#StartDate').datebox('getValue');
         enddate = $('#EndDate').datebox('getValue');
         if (startdate > enddate) {
@@ -31,7 +31,7 @@ function ValueReset(value, row, index) {
 }
 $('#EndDate').datebox({
     value: '24:00',
-    onSelect: function() { //输入判断
+    onSelect: function () { //输入判断
         startdate = $('#StartDate').datebox('getValue');
         enddate = $('#EndDate').datebox('getValue');
         if (startdate > enddate) {
@@ -41,13 +41,13 @@ $('#EndDate').datebox({
 });
 $("#currPosition", window.parent.document).html("当前位置：报警 > 数据报警");
 $('#StartDate').datebox('calendar').calendar({
-    validator: function(date) {
+    validator: function (date) {
         var now = new Date();
         return date <= now;
     }
 });
 $('#EndDate').datebox('calendar').calendar({
-    validator: function(date) {
+    validator: function (date) {
         var now = new Date();
         return date <= now;
     }
@@ -72,7 +72,7 @@ function alarmExport() {
         if (row) {
             var ajaxbg = top.$("#loading_background,#loading");
             ajaxbg.show();
-            $.post("/AlarmManage/ExportAlarmDoc?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function(data) {
+            $.post("/AlarmManage/ExportAlarmDoc?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function (data) {
                 if (data != "生成报警报告异常！") {
                     ajaxbg.hide();
                     window.open('http://' + window.location.host + data);
@@ -98,9 +98,9 @@ function addBug() {
     } else {
         var row = $('#list_data').datagrid('getSelected');
         if (row) {
-            $.messager.confirm('提示', '你确定要添加隐患？', function(r) {
+            $.messager.confirm('提示', '你确定要添加隐患？', function (r) {
                 if (r) {
-                    $.post("/AlarmManage/AddBugInfo?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function(data) {
+                    $.post("/AlarmManage/AddBugInfo?Rnum=" + Math.random(), { "AlarmID": row.AlarmID }, function (data) {
                         if (data == "OKadd") {
                             $.messager.alert("提示", "添加隐患成功！", "info");
                         } else {
@@ -120,13 +120,13 @@ $("#SPID").combobox({
     valueField: 'PID',
     editable: false,
     textField: 'Name',
-    onLoadSuccess: function() { //数据加载完毕事件
+    onLoadSuccess: function () { //数据加载完毕事件
 
         var data = $('#SPID').combobox('getData');
 
         $("#SPID").combobox('setValue', pid);
     },
-    onChange: function() {
+    onChange: function () {
         var selid = $("#SPID").combobox("getValue");
         loadDataTypeList(selid);
 
@@ -138,8 +138,11 @@ $("#SPID").combobox({
 //报警确认状态
 $("#alarmState").combobox({
     onChange: function (e) {
-        console.log(e)
-    }
+        dosearch()
+    },
+    onLoadSuccess: function () { //数据加载完毕事件
+        $("#SPID").combobox('setValue', "全部");
+    },
 })
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
@@ -147,13 +150,13 @@ function loadDataTypeList(pid) {
         valueField: 'DTID',
         textField: 'Name',
         editable: false,
-        onLoadSuccess: function() { //数据加载完毕事件
+        onLoadSuccess: function () { //数据加载完毕事件
             var data = $('#cbType').combobox('getData');
             if (data.length > 0) {
                 $("#cbType").combobox('select', data[0].DTID);
             }
         },
-        onSelect: function() {
+        onSelect: function () {
             dosearch();
         },
     });
@@ -180,7 +183,7 @@ function recover() {
             top: ($(window).height() - 600) * 0.5,
             left: ($(window).width() - 800) * 0.5,
             href: url,
-            onClose: function() { dosearch(); }
+            onClose: function () { dosearch(); }
         });
         $('#editwin').window('open');
     }
@@ -199,7 +202,7 @@ function export1() {
     var typename = $("#cbType").combobox('getText');
     var ajaxbg = top.$("#loading_background,#loading");
     ajaxbg.show();
-    $.post("/AlarmManage/ExportAlarmData", { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename }, function(data) {
+    $.post("/AlarmManage/ExportAlarmData", { "pid": pid, "startdate": startdate, "enddate": enddate, "typename": typename }, function (data) {
         ajaxbg.hide();
 
         var protocolStr = document.location.protocol;
@@ -214,6 +217,7 @@ function dosearch() {
     var startdate = $('#StartDate').datebox('getValue');
     var enddate = $('#EndDate').datebox('getValue') + ' 23:59:59';
     var dtid = $("#cbType").combobox('getValue');
+    var AlarmConfirm = $("#alarmState").combobox('getValue');
     //$('#list_data').datagrid({pageNumber:1});
     //$('#list_data').datagrid('reload', { "pid": pid,"dtid":dtid, "startdate": startdate, "enddate": enddate });
     //$('#list_data').datagrid('uncheckAll');
@@ -221,9 +225,9 @@ function dosearch() {
         url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
         //pageList: [10, 20, 30, 50],
         //pageSize: 30,
-        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate },
-      
-        rowStyler: function(index, row) {
+        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate, "AlarmConfirm": AlarmConfirm },
+
+        rowStyler: function (index, row) {
             if (row.AlarmState == "1") {
                 return 'background-color:Yellow;color:#333;font-weight:bold;';
             } else if (row.AlarmState == "2") {
@@ -232,7 +236,7 @@ function dosearch() {
                 return 'background-color:#b00000;color:#fff;font-weight:bold;';
             }
         },
-        onDblClickRow: function(rowIndex, rowData) {
+        onDblClickRow: function (rowIndex, rowData) {
             if (rowData) {
                 var str = JSON.stringify(rowData);
                 var url = "/AlarmManage/Treatment?alarmObj=" + escape(str);
@@ -241,7 +245,7 @@ function dosearch() {
                     top: ($(window).height() - 600) * 0.5,
                     left: ($(window).width() - 800) * 0.5,
                     href: url,
-                    onClose: function() { dosearch(); }
+                    onClose: function () { dosearch(); }
                 });
                 $('#editwin').window('open');
             }
@@ -349,7 +353,7 @@ function querensAlarm() {
 
     //去掉前后空格               
     AlarmTreatment = AlarmTreatment.replace(/(^\s*)|(\s*$)/g, "");
-    $.post("/AlarmManage/DelAlarmByIds", { "AlarmID": ids.join(','), "AlarmTreatment": AlarmTreatment }, function(data) {
+    $.post("/AlarmManage/DelAlarmByIds", { "AlarmID": ids.join(','), "AlarmTreatment": AlarmTreatment }, function (data) {
         $.messager.alert("提示", data, "info");
         $('#querens').window('close');
         dosearch();
