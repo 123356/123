@@ -190,7 +190,7 @@
                         $('#energyMoneyChart').removeAttr('_echarts_instance_');
                         that.left_viewIsShow = false
                     }
-                    that.Peozhanbi = data.list_bottom.Peozhanbi.toFixed(2)
+                    that.Peozhanbi = data.list_bottom.Peozhanbi.toFixed(5)
                     that.LPeozhanbi = data.list_bottom.LPeozhanbi
                     that.zongBudget = data.list_bottom.zongBudget
                 })
@@ -218,9 +218,9 @@
                         for (var i = 0; i < res.data.list.length; i++) {
                             res.data.list[i].pieChart = "pie" + i
                             res.data.list[i].barChart = "bar" + i
-                            res.data.list[i].rate = res.data.list[i].rate.toFixed(2)
-                            res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(2)
-                            res.data.list[i].budget = res.data.list[i].budget.toFixed(2)
+                            res.data.list[i].rate = res.data.list[i].rate.toFixed(5)
+                            res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(5)
+                            res.data.list[i].budget = res.data.list[i].budget.toFixed(5)
                         }
                         this.info = res.data
                         var temp = res.data.list
@@ -279,7 +279,7 @@
         },
         creatPowerChart: function (data) {
             powerChart = echarts.init(document.getElementById('powerChart'));
-            var rate = data.list_zong.zongRate.toFixed(2)
+            var rate = data.list_zong.zongRate.toFixed(5)
             var budget = data.list_zong.zongBudget.toFixed(2)
             var serData = null
             var color = null
@@ -355,7 +355,7 @@
             var legend = new Array()
             var sumTotal = 0
             for (var i = 0; i < data.left_view.length; i++) {
-                data.left_view[i].value = data.left_view[i].value.toFixed(2)
+                data.left_view[i].value = data.left_view[i].value.toFixed(5)
                 sumTotal += parseFloat(data.left_view[i].value)
                 legend.push(data.left_view[i].name)
             }
@@ -487,7 +487,7 @@
             var yData = new Array()
             for (var i = 0; i < data.keyValuePairs_Time.length; i++) {
                 xData.push(data.keyValuePairs_Time[i].name.split(" ")[0].split("/")[2])
-                yData.push(data.keyValuePairs_Time[i].value.toFixed(2))
+                yData.push(data.keyValuePairs_Time[i].value.toFixed(5))
             }
             chart = echarts.init(document.getElementById(chart));
             var option = {

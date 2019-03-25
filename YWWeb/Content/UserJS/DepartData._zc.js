@@ -407,14 +407,14 @@
             var sumTotal = 0
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
-                data[i].value = data[i].value.toFixed(2)
+                data[i].value = data[i].value.toFixed(5)
                 sumTotal += parseFloat(data[i].value)
             }
 
             var option = {
                 title: {
                     text: this.deartmentName + '(' + str + ')',
-                    subtext: '预算：' + par.DepBudget + '万，总能耗：' + sumTotal.toFixed(2) + '万',
+                    subtext: '预算：' + par.DepBudget + '万，总能耗：' + sumTotal.toFixed(5) + '万',
                     x: 'center',
                     textStyle: {
                         fontSize: 13,

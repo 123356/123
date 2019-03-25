@@ -50,7 +50,7 @@
         departName: null,
         treeData: [],
         userButtons: [],
-        EneryUserTypeID: '',//部门id
+        EneryUserTypeID: []
     },
     methods: {
         //设置树下拉框
@@ -76,22 +76,20 @@
 
                     } else {
                         that.isUnitSelect = node.id
-
                     }
 
                 },
                 onChange: function (newvla, oldval) {
-
                     that.EneryUserTypeID = newvla
 
                 },
 
                 onLoadSuccess: function (node, data) {
                     if (that.EneryUserTypeID) {
-                        $("#StationID").combotree("setValue", that.EneryUserTypeID.split(','));
+                        $("#StationID").combotree("setValue", that.EneryUserTypeID);
                     } else {
                         $("#StationID").combotree("setValue", that.isUnitSelect);
-                        that.EneryUserTypeID = that.isUnitSelect
+                        that.EneryUserTypeID.push(that.isUnitSelect)
                     }
                     that.getEneryView()
 
@@ -390,7 +388,7 @@
                 }
             })
                 .then(function (res) {
-                    that.EneryUserTypeID = res.data.EneryUserTypeID
+                    that.EneryUserTypeID = res.data.EneryUserTypeID.split(',')
                     that.getTreeData()
             })
             .catch(function (e) {
