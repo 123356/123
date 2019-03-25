@@ -109,7 +109,7 @@ namespace YWWeb.Controllers
 
         //报警数据查询
         [Login]
-        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "")
+        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "",string AlarmConfirm="全部")
         {
             try
             {
@@ -148,6 +148,10 @@ namespace YWWeb.Controllers
                 //typename = typename.Replace("==全部==", "");
                 //if (!typename.Equals(""))
                 //    strquery = strquery + " and AlarmCate='" + typename + "'";
+                if (!AlarmConfirm.Equals("全部"))
+                {
+                    strquery = strquery + " and AlarmConfirm='" + AlarmConfirm + "'";
+                }
                 if (pid > 0)
                     strquery = strquery + " and pid=" + pid;
                 else
