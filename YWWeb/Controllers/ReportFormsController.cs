@@ -1762,6 +1762,7 @@ namespace YWWeb.Controllers
                     sbHtml.AppendFormat("<td style='text-align:center;'>{0}</td>", Item);
                 }
                 sbHtml.AppendFormat("<td>{0}</td>", list_item[i].Value.Where(p => p != "" && p != null).Sum(p => Convert.ToDecimal(p)));
+                sbHtml.Append("</tr>");
             }
 
             sbHtml.Append("<tr>");
@@ -1827,9 +1828,10 @@ namespace YWWeb.Controllers
                 foreach (var item in list_area[i].Value)
                 {
                     var Item = ((item == null || item == "") ? "--" : item);
-                    sbHtml.AppendFormat("<td style='text-align:center;>{0}</td>", Item);
+                    sbHtml.AppendFormat("<td style='text-align:center;'>{0}</td>", Item);
                 }
                 sbHtml.AppendFormat("<td>{0}</td>", list_area[i].Value.Where(p=>p!=""&&p!=null).Sum(p => Convert.ToDecimal(p)));
+                sbHtml.Append("</tr>");
             }
 
             sbHtml.Append("<tr>");
