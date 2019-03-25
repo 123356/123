@@ -5,6 +5,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>建筑能耗报表</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
     <script src="~/Content/TreeTable/jquery.treeTable.js" type="text/javascript"></script>
@@ -63,7 +64,6 @@
             <div class="searchrow">
                 标签:
                 <i-select style="width:180px" v-model="label" :multiple="true">
-                    l
                     <i-option v-for="item in labelData" :value="item.Label">{{item.Label}}</i-option>
                 </i-select>
             </div>
@@ -124,4 +124,4 @@
     </div>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/BuildingEnergyConReport ._zc.js?v=175"></script>
+<script type="text/javascript" src="~/Content/UserJS/BuildingEnergyConReport ._zc.js?v=182"></script>

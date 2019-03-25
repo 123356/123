@@ -405,7 +405,7 @@
         //导出
         ExcelPort: function () {
             var time =
-                window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + this.formaterDate() + "&isHide=false" + "&type=" + this.dateType + "&itemtype=" + this.userType, '_blank');
+                window.open('/ReportForms/GetExtItemFrom?uid=' + this.UID + "&time=" + this.formaterDate() + "&type=" + this.dateType + "&itemids=" + [...this.isUnitElecSubSelect].join(',') + "&areaids=" + [...this.isUnitAreaSelect].join(',') + '&lables=' + [...this.label].join(','), '_blank');
         }
     },
     beforeMount: function () {
