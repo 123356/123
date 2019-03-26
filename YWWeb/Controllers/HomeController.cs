@@ -5199,7 +5199,7 @@ namespace YWWeb.Controllers
                         string CName = "";
                         if (bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault() != null)
                         {
-                            CName = bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault().CName;
+                            CName = bll.t_DM_CircuitInfo.Where(p => p.CID == cid && p.PID == pid).FirstOrDefault().CName;
                         }
                         mm.name = CName;
                         if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
