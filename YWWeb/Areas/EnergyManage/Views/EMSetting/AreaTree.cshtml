@@ -136,11 +136,9 @@
                 //}
                 //console.log(parseInt(size) + 1)
                 //return d.UsePower//parseInt(size)+1
-
                 var size = parseInt(d.UsePower);
                 if (size > all / 10) {
                     size = size;
-
                 } else {
                     size = all / 10;
                 }
@@ -176,7 +174,11 @@
                 var root = JSON.parse(res).children[0];
                 deepTraversal(JSON.parse(res).children[0]);
 
-                all = eval(arr.join("+"));
+
+
+
+
+                all = JSON.parse(res).children[0].UsePower;
 
 
 
