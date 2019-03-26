@@ -31,9 +31,9 @@ namespace DAO
             foreach (KeyValuePair<int, string> item in cpids)
             {
                 if (i == 0)
-                    sql += $" and (c.CID in({ item.Value}) and c.PID in ({ item.Key})";
+                    sql += $" and ((c.CID in({ item.Value}) and c.PID in ({ item.Key}))";
                 else
-                    sql += $" or c.CID in({ item.Value}) and c.PID in ({ item.Key})";
+                    sql += $" or (c.CID in({ item.Value}) and c.PID in ({ item.Key}))";
                 if (cpids.Count() == (i + 1))
                 {
                     sql += ")";

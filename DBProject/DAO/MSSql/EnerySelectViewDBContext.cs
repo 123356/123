@@ -26,7 +26,7 @@ namespace DAO
         public IList<t_V_EnerySelectView> GetDatas(string time, Dictionary<int, string> cpids, int did, int cotypeid)
         {
             string sql = $@"select a.RecordTime,d.DeviceName,c.Name,a.QID,a.UserPowerRate from t_EE_PowerQualityMonthly a 
-join t_DM_CircuitInfo b on a.CID = b.CID
+join t_DM_CircuitInfo b on (a.CID = b.CID and a.PID=b.PID)
 join t_DM_CollectDevType c on b.coolect_dev_type = c.ID
 join t_DM_DeviceInfo d on b.DID = d.DID
 where a.UserPowerRate is not null and a.UsePower!=0";
