@@ -364,19 +364,30 @@
         },
         //添加部门
         addEnUserBudget: function (ids) {
+            //var zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            //var getNodes = zTree.getNodes()
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var nodes = treeObj.transformToArray(treeObj.getNodes());
+            var arr = []
+            for (var i in nodes) {
+                if (nodes[i].checked) {
+                    arr.push(nodes[i].id)
+                }
+            }
+            
+
             var that = this
             this.$http({
                 url: '/energyManage/EMHome/AddEnUserBudget',
                 method: 'POST',
                 params: {
                     cotypeid: this.cotypeid,
-                    eneryids: ids
+                    eneryids: [...arr].join(',')
                 }
             })
             .then(function (res) {
                 that.treeSelectList = []
                 that.getYearBugGetDataByType(that.cotypeid)
-
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -786,7 +797,6 @@
             $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(0)
             $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(0)
-            console.log($(".last-main-item").width() )
             $(".lastOverflow").width($(".last-main-item").width() + 50)
             that.setWidth()
             that.setHeight()
