@@ -327,6 +327,7 @@
             if (!node) {
                 return;
             }
+            
             var that = this
             if (node.children && node.children.length > 0) {
                 for (var i = 0; i < node.children.length; i++) {
@@ -397,9 +398,12 @@
             if (this.treeSelectList.length == 0) {
                 this.getTreeData()
             }
+            this.getYearBugGetDataByType(this.cotypeid)
         },
         showTreeModal: function () {
             this.treeModalVisable = true
+            this.treeSelectList = []
+            this.getYearBugGetDataByType(this.cotypeid)
             this.getTreeData()
         },
         edit: function () {

@@ -272,12 +272,12 @@
                 </table>
             </i-form>
         </Modal>
-        <Modal v-model="treeModalVisable" class="iviewModal addEnergyModal treeModal" :closable="false" :mask-closable="false" v-on:on-ok="selectTreeOk" v-on:on-cancel="selectTreeCancel" title="科室选择" style="max-height:450px">
+        <Modal v-model="treeModalVisable" class="iviewModal addEnergyModal treeModal" :closable="true" :mask-closable="false" v-on:on-ok="selectTreeOk" v-on:on-cancel="selectTreeCancel" title="科室选择" style="max-height:450px">
             <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
         </Modal>
     </div>
     
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.01"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js"></script>
 </body>
 </html>
 
