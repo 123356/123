@@ -42,6 +42,7 @@
                        
                     } else {
                         that.isUnitSelect = node.id
+                        that.departName = node.name
                         that.getTableData()
                     }
                 },

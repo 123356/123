@@ -47,13 +47,27 @@
                         $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
                     }
                 }
-                if (that.unitID != null) {
+                else if (that.unitID != null) {
+                    var count = 0
+                    for (var i in res.data) {
+                        if (that.unitID == res.data[i].UnitID) {
+                            count++
+                        }
+                    }
+                    if (count == 0) {
+                        if (res.data.length > 0) {
+                            that.unitID = res.data[0].UnitID
+                            $.cookie("enUID", res.data[0].UnitID, { expires: 7 })
+                            $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
+                        }
+                    } else {
+                        that.unitID = parseInt($.cookie("enUID"))
+                    }
                     if (that.thirdMenu.length > 0) {
                         that.frameSrc = that.thirdMenu[0].Location
                     } 
                 }
-                //console.log("that.frameSrc：" + that.frameSrc)
-                that.selectedCom = parseInt($.cookie("enUID"))
+                that.selectedCom = that.unitID
 
             }).catch(function (e) {
                 throw new ReferenceError(e.message)

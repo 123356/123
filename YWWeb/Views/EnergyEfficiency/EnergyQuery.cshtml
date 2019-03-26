@@ -61,7 +61,7 @@
                                     <td>
                                         <form-item label="设备">
                                             <i-select v-model="searchForm.did" :filterable="true" :clearable="false" class="minWidth" style="width:160px">
-                                                <i-option value=" ">全部</i-option>
+                                                <i-option value="">全部</i-option>
                                                 <i-option :value="item.DID" :key="item.DID" v-for="item in deviceList">{{item.DeviceName}}</i-option>
                                             </i-select>
                                         </form-item>

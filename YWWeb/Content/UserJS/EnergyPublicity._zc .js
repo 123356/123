@@ -16,7 +16,7 @@
                 key: 'Name',
             },
             {
-                title: '能耗费用(万元)',
+                title: '能耗费用(元)',
                 align: 'center',
                 key: 'DValue',
                 sortable: true,
@@ -188,7 +188,7 @@
             barChart = echarts.init(document.getElementById("barChart"));
             var option = {
                 title: {
-                    text: '12月电费能让消耗图(万元)',
+                    text: '12月电费能让消耗图(元)',
                     show: false,
                     left: 'center',
                     textStyle: {
@@ -281,7 +281,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: '万元',
+                        name: '元',
                         axisLine: {
                             lineStyle: {
                                 color: '#57b9a3',//x轴线颜色
@@ -309,7 +309,7 @@
                 ],
                 series: [
                     {
-                        name: '能耗费用(万)',
+                        name: '能耗费用(元)',
                         type: 'bar',
                         barWidth: '50%',
                         data: yData

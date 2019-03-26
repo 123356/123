@@ -13,7 +13,7 @@
                 key: 'RecordTime',
             },
             {
-                title: '科室',
+                title: '区域',
                 align: 'center',
                 key: 'Name',
             },
@@ -23,7 +23,7 @@
                 key: 'DeviceName',
             },
             {
-                title: '能耗',
+                title: '能耗(元)',
                 align: 'center',
                 key: 'DValue',
                 sortable: true

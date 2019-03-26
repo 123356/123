@@ -21,6 +21,12 @@
         DepBudget: 0,//饼图预算
     },
     methods: {
+        toMoney: function (num) {
+            //num = num.toFixed(2);
+            num = parseFloat(num)
+            num = num.toLocaleString();
+            return num;//返回的是字符串23,245.12保留2位小数
+        },
         //获取能源类型
         getCollectDevTypeList: function () {
             var that = this
@@ -103,7 +109,7 @@
 
 
                         var temp = {
-                            title: data.TitleList[i].Name + '(万元)',
+                            title: data.TitleList[i].Name + '(元)',
                             align: 'center',
                             key: data.TitleList[i].Type
                         }
@@ -416,14 +422,14 @@
             var sumTotal = 0
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
-                data[i].value = data[i].value.toFixed(5)
+                data[i].value = this.toMoney(data[i].value)
                 sumTotal += parseFloat(data[i].value)
             }
 
             var option = {
                 title: {
                     text: this.deartmentName + '(' + str + ')',
-                    subtext: '预算：' + par.DepBudget + '万，总能耗：' + sumTotal.toFixed(5) + '万',
+                    subtext: '预算：' + this.toMoney(par.DepBudget) + '元，总能耗：' + this.toMoney(sumTotal) + '元',
                     x: 'center',
                     textStyle: {
                         fontSize: 13,
@@ -442,7 +448,7 @@
 
                 series: [
                     {
-                        name: '能耗(万元)',
+                        name: '能耗(元)',
                         type: 'pie',
                         radius: '68%',
                         center: ['50%', '60%'],

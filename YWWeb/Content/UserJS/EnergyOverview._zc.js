@@ -42,8 +42,25 @@
         initSelectShow: true,
         unitDepartName: null,
     },
-
+    filters: {
+        toMoney: function (num) {
+            if (num == null || num == undefined) {
+                return '--'
+            }
+            num = parseFloat(num)
+            num = num.toLocaleString();
+            return num;//返回的是字符串23,245.12保留2位小数
+        }
+    },
     methods: {
+        toMoney: function (num) {
+            if (num == null || num == undefined) {
+                return '--'
+            }
+            num = parseFloat(num)
+            num = num.toLocaleString();
+            return num;//返回的是字符串23,245.12保留2位小数
+        },
         renderContent(h, { root, node, data }) {
             var disabled = false
             var that = this
@@ -218,9 +235,9 @@
                         for (var i = 0; i < res.data.list.length; i++) {
                             res.data.list[i].pieChart = "pie" + i
                             res.data.list[i].barChart = "bar" + i
-                            res.data.list[i].rate = res.data.list[i].rate.toFixed(5)
-                            res.data.list[i].energyConsumption = res.data.list[i].energyConsumption.toFixed(5)
-                            res.data.list[i].budget = res.data.list[i].budget.toFixed(5)
+                            res.data.list[i].rate = that.toMoney(res.data.list[i].rate)
+                            res.data.list[i].energyConsumption = that.toMoney(res.data.list[i].energyConsumption)
+                            res.data.list[i].budget =  that.toMoney(res.data.list[i].budget)
                         }
                         this.info = res.data
                         var temp = res.data.list
@@ -320,7 +337,7 @@
                             position: 'center',
                             formatter: [
                                 '{a|总预算}',
-                                '{b|' + budget + '}'
+                                '{b|' + this.toMoney(budget) + '}'
                             ].join('\n'),
                             rich: {
                                 a: {
@@ -403,7 +420,7 @@
                             position: 'center',
                             formatter: [
                                 '{a|总费用}',
-                                '{b|' + sumTotal.toFixed(2) + '}'
+                                '{b|' + this.toMoney(sumTotal) + '}'
                             ].join('\n'),
                             rich: {
                                 a: {
