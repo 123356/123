@@ -13,5 +13,8 @@ namespace IDAO.Models
         public string Name { get; set; }
         public int QID { get; set; }
         public decimal UserPowerRate { get; set; }
+
+        public string CName { get; set; }
+        public string PName { get; set; }
     }
 }
