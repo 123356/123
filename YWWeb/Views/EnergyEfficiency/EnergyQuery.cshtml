@@ -58,14 +58,16 @@
                                             <date-picker type="date" v-model="searchForm.time" style="width:160px" class="minWidth"></date-picker>
                                         </form-item>
                                     </td>
-                                    <td>
-                                        <form-item label="设备">
-                                            <i-select v-model="searchForm.did" :filterable="true" :clearable="false" class="minWidth" style="width:160px">
-                                                <i-option value="">全部</i-option>
-                                                <i-option :value="item.DID" :key="item.DID" v-for="item in deviceList">{{item.DeviceName}}</i-option>
-                                            </i-select>
-                                        </form-item>
-                                    </td>
+                                    <!--
+                                       <td>
+                                           <form-item label="设备">
+                                               <i-select v-model="searchForm.did" :filterable="true" :clearable="false" class="minWidth" style="width:160px">
+                                                   <i-option value="">全部</i-option>
+                                                   <i-option :value="item.DID" :key="item.DID" v-for="item in deviceList">{{item.DeviceName}}</i-option>
+                                               </i-select>
+                                           </form-item>
+                                       </td>-->
+
                                     <td>
                                         <form-item label="科室">
                                             <div id="leftmenuSpace" class="inlineBlock"></div>
@@ -73,7 +75,7 @@
                                     </td>
                                     <td>
                                         <form-item label="类型">
-                                            <i-select v-model="searchForm.cotypeid" :filterable="true" :clearable="false"  style="width:100px !important">
+                                            <i-select v-model="searchForm.cotypeid" :filterable="true" :clearable="false" style="width:100px !important">
                                                 <i-option value=" ">全部</i-option>
                                                 <i-option :value="item.ID" :key="item.ID" v-for="item in typeList">{{item.Name}}</i-option>
                                             </i-select>
@@ -83,27 +85,27 @@
                                         <i-button class="btn" v-on:click="getEneryList" style="margin-top:0px">查询</i-button>
                                     </td>
                                 </tr>
-                            </table>
-                        </i-form>
+                                </table>
+                            </i-form>
+                        </div>
                     </div>
-                </div>
-               
-            </div>
 
-            <div class="bottomView main-item underFormView" style="margin-top:0px">
-               
-                <div class="con">
-                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" :loading="loading" border></i-table>
                 </div>
-                <div style="margin:10px 0px;text-align:right" class="noprint">
-                    <Page :total="total" :current="page" :page-size="rows" size="small" show-total show-elevator show-sizer 
-                          v-on:on-change="pageChange"
-                          v-on:on-page-size-change="sizeChange"/>
+
+                <div class="bottomView main-item underFormView" style="margin-top:0px">
+
+                    <div class="con">
+                        <i-table :columns="tableCol" :data="tableData" :height="tableHeight" :loading="loading" border></i-table>
+                    </div>
+                    <div style="margin:10px 0px;text-align:right" class="noprint">
+                        <Page :total="total" :current="page" :page-size="rows" size="small" show-total show-elevator show-sizer
+                              v-on:on-change="pageChange"
+                              v-on:on-page-size-change="sizeChange"/>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyQuery._jm.js"></script>
-</body>
-</html>
+        <script type="text/javascript" src="~/Content/UserJS/EnergyQuery._jm.js"></script>
+    </body>
+    </html>
 
