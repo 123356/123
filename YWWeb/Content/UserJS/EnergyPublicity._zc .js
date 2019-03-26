@@ -388,7 +388,10 @@
                 }
             })
                 .then(function (res) {
-                    that.EneryUserTypeID = res.data.EneryUserTypeID.split(',')
+                    if (res.data) {
+                        that.EneryUserTypeID = res.data.EneryUserTypeID.split(',')
+                    }
+                    
                     that.getTreeData()
             })
             .catch(function (e) {

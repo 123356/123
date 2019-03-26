@@ -71,7 +71,7 @@
                     } else {
                         this.analysisColumns.push(
                             {
-                                title: data.TitleList[i].Name + '(万元)',
+                                title: data.TitleList[i].Name + '(元)',
                                 align: 'center',
                                 key: data.TitleList[i].Type
                             }
@@ -257,7 +257,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: yName,
+                        name: '元',
                         min: 0,
 
 

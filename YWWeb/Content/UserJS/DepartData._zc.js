@@ -3,7 +3,6 @@
     data: {
         uid: null,
         uName: null,
-        loading: true,
         deartmentName: '',
         departmentID: null,
         analysisTableHeight: 0,
@@ -56,7 +55,7 @@
                     uid: that.uid,
                     time: that.curDate,
                     DepartmentID: that.departmentID
-                }
+                },
             })
                 .then(function (res) {
                     if (res.data.list.length > 0) {
@@ -70,8 +69,13 @@
 
                 })
                 .catch(function (e) {
+                    this.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
+                .finally(function () {
+                    that.loading = false
+                })
+               
         },
         //表格数据
         getTableData: function () {
@@ -148,11 +152,13 @@
 
                 })
                 .catch(function (e) {
-
+                    this.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
+                   
                     that.loading = false
+                    console.log("loading：" + that.loading)
                 })
         },
         //柱状图数据
@@ -183,8 +189,11 @@
                     }
                 })
                 .catch(function (e) {
+                    this.$Message.error('请求失败');
+                    that.loading = false
                     throw new ReferenceError(e.message)
                 })
+
         },
         dateChange: function (e) {
             this.curDate = e
@@ -311,7 +320,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: yName,
+                        name: '元',
                         min: 0,
                         axisLabel: {
                             formatter: '{value}'
@@ -427,7 +436,7 @@
                 },
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{a} <br/>{b} : {c} <br/>({d}%)"
                 },
                 color: ['#60b7a4', '#e0c389', '#86d2df'],
 
@@ -489,4 +498,3 @@
 
     }
 })
-

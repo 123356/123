@@ -190,7 +190,7 @@
                         $('#energyMoneyChart').removeAttr('_echarts_instance_');
                         that.left_viewIsShow = false
                     }
-                    that.Peozhanbi = data.list_bottom.Peozhanbi.toFixed(5)
+                    that.Peozhanbi = data.list_bottom.Peozhanbi
                     that.LPeozhanbi = data.list_bottom.LPeozhanbi
                     that.zongBudget = data.list_bottom.zongBudget
                 })
@@ -487,12 +487,12 @@
             var yData = new Array()
             for (var i = 0; i < data.keyValuePairs_Time.length; i++) {
                 xData.push(data.keyValuePairs_Time[i].name.split(" ")[0].split("/")[2])
-                yData.push(data.keyValuePairs_Time[i].value.toFixed(5))
+                yData.push(data.keyValuePairs_Time[i].value)
             }
             chart = echarts.init(document.getElementById(chart));
             var option = {
                 title: {
-                    text: this.month + '月' + data.name + '消耗图(万元)',
+                    text: this.month + '月' + data.name + '消耗图(元)',
                     left: 'center',
                     textStyle: {
                         color: '#757575',
@@ -555,7 +555,7 @@
                 }],
                 yAxis: [{
                     type: 'value',
-                    name: '万元',
+                    name: '元',
                     axisLine: {
                         lineStyle: {
                             color: '#57b9a3', //x轴线颜色
