@@ -1,7 +1,7 @@
 ﻿new Vue({
     el: '#DistributionReport',
     data: {
-        loading:true,
+        loading: true,
         UID: null,
         UnitName: null,
         comList: [],
@@ -19,7 +19,7 @@
         xTotal: [],
         sumTotal: 0,
         curTimeStr: null,
-        times:[]
+        times: []
     },
     methods: {
         //单位下拉框
@@ -31,7 +31,6 @@
                 method: 'get',
             }).then(function (res) {
                 that.comList = res.data
-                console.log(that.UID)
                 if (that.UID == null) {
                     if (res.data.length > 0) {
                         that.UID = res.data[0].UnitID
@@ -78,9 +77,9 @@
         formaterDate: function () {
             var time = new Date(this.dateTime)
             if (this.dateType == 1) {
-                time = time.toLocaleDateString().replace(/\//g, "-") 
-            }else  if (this.dateType == 2) {
-                time = time.getFullYear() + "-" + ( time.getMonth() + 1)
+                time = time.toLocaleDateString().replace(/\//g, "-")
+            } else if (this.dateType == 2) {
+                time = time.getFullYear() + "-" + (time.getMonth() + 1)
             } else if (this.dateType == 3) {
                 time = time.getFullYear()
             }
@@ -97,14 +96,12 @@
                             arr.push(i + ":00")
                         }
                     }
-                    this.times= arr
+                    this.times = arr
                     break
                 case 2:
                     var temp = new Date(this.dateTime)
                     temp = new Date(temp.getFullYear(), (temp.getMonth() + 1), 0)
-
                     col = temp.getDate()
-                    console.log("col："+col)
                     for (var i = 1; i <= col; i++) {
                         arr.push(i)
                     }
@@ -248,11 +245,11 @@
                     throw new ReferenceError(e.message)
                 })
         },
-       
+
         dateTypeChange: function (e) {
             switch (e) {
                 case 1:
-                    this.dateTypeText ="date"
+                    this.dateTypeText = "date"
                     break
                 case 2:
                     this.dateTypeText = "month"
@@ -264,17 +261,21 @@
         },
         comChange: function (e) {
             this.UID = e.value,
-            this.UnitName = e.label
+                this.UnitName = e.label
             $.cookie("enUID", this.UID, { expires: 7 })
             $.cookie("enUName", this.UnitName, { expires: 7 })
         },
         //打印
         openOrPrint: function () {
+            $(".reportView").show()
+            $(".newReport").hide()
             window.print()
+            $(".reportView").hide()
+            $(".newReport").show()
+
         },
         //导出
         ExcelPort: function () {
-            console.log(this.formaterDate())
             var time =
                 window.open('/ReportForms/ExportData?pid=' + this.PID + "&Time=" + this.formaterDate() + "&isHide=false" + "&type=" + this.dateType + "&itemtype=" + this.userType, '_blank');
         },
@@ -307,16 +308,16 @@
             this.UID = parseInt($.cookie("enUID"))
             this.UnitName = $.cookie("enUName")
         }
-        
+
         this.getUnitComobxList()
         this.getTimes()
         this.getUserBtn()
         this.getStation()
         this.curTimeStr = this.formaterDate()
-        
-        
+
+
     },
     mounted: function () {
-       
+
     }
 })

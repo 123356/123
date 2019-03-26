@@ -185,3 +185,100 @@
         font-size:18px;
         padding:10px 0px
     }
+
+
+
+.newReport {
+    width: 100%;
+    height: 100%;
+    color: #333;
+    clear: both;
+    margin-top:30px;
+
+}
+    .newReport div {
+        overflow: hidden;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+.newReport .title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0px;
+    border: 1px solid #777;
+    border-bottom: 0px
+}
+    .newReport .stationName {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0px;
+        border: 1px solid #777;
+        border-bottom: 0px
+    }
+    .newReport .row {
+        display: flex;
+        flex-direction: row;
+        border: 1px solid #777;
+        border-bottom: 0px;
+        
+    }
+        .newReport .row div {
+            font-size: 12px !important;
+        }
+        .newReport .row .flex-1_5 {
+            flex: 1.5;
+            justify-content: center;
+            align-items: center
+        }
+        .newReport .row .flex-2 {
+            flex: 2;
+            justify-content: center;
+            align-items: center
+        }
+        .newReport .row .flex-3-5 {
+            flex: 3.5;
+        }
+            .newReport .row .flex-1{
+                flex:1;
+                
+            }
+            .newReport .borderRight {
+                /*border-right: 1px solid #777;*/
+                position:relative
+                
+            }
+                .newReport .borderRight::after {
+                    content: "";
+                    width: 1px;
+                    height: 100%;
+                    position: absolute;
+                    background-color: #777;
+                    top: 0;
+                    right: 0;
+                }
+                .newReport .timesView {
+                    display: flex;
+                    flex-direction: row;
+                }
+    .newReport .center {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align:center;
+    }
+    .newReport .borderBottom {
+        border-bottom: 1px solid #777
+    }
+    .newReport .row .borderBottom:last-child{
+        border-bottom:0px
+    }
+    .newReport .total{
+        display:flex;
+        flex-direction:row;
+        
+    }
+    .newReport .totalRow {
+        border-bottom: 1px solid #777
+    }
