@@ -106,13 +106,7 @@ namespace EnergyManage.Controllers
             {
                 //根据权限读取PID;
                 string pids = GetPIDs();
-
-                t_CM_Unit unit = DAL.UnitDAL.getInstance().GetUnitModelByID(uid);
-                if (unit != null)
-                {
-                    mianji = Convert.ToDecimal(unit.ArchitectureArea);
-                }
-                IList<t_EE_CollTypeBudget> list_budgets = DAL.CollTypeBudgetDAL.getInstance().GetBudgetByID(uid, year, month);
+                //IList<t_EE_CollTypeBudget> list_budgets = DAL.CollTypeBudgetDAL.getInstance().GetBudgetByID(uid, year, month);
 
                 IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
                 foreach (var item_peizhi in list_peizhi)
@@ -178,19 +172,12 @@ namespace EnergyManage.Controllers
                                 group_i.value = Math.Round(item_group.Sum(p => p.Rate), 5);
                                 view.keyValuePairs_Time.Add(group_i);
                             }
-
-                            //mianji += item_userP.unit_area;
                             peos += item_userP.unit_people;
 
                         }
                         view.rate = Math.Round(rate / 10000, 5);
                         view.energyConsumption = energyConsumption;
                         list.Add(view);
-
-                        overView oview = new overView();
-                        oview.name = item_peizhi.Name;
-                        oview.value = Math.Round(rate / 10000, 5);
-                        left_view.Add(oview);
                     }
                 }
 
@@ -207,11 +194,9 @@ namespace EnergyManage.Controllers
                     item.keyValuePairs = ttt;
                 }
 
-
-                decimal zongBudget = list_budgets.Sum(p => p.GeneralBudget);
+                
                 decimal zduibi = 0;
-                if (lasrRate != 0)
-                    zduibi = Math.Round(zongRate / lasrRate, 2) * 100;
+                decimal zongBudget = 0;
                 var list_zong = new
                 {
                     zongRate,
@@ -220,26 +205,12 @@ namespace EnergyManage.Controllers
                 };
                 decimal Peozhanbi = 0;
                 decimal LPeozhanbi = 0;
-                if (mianji * peos != 0)
-                {
-                    Peozhanbi = Math.Round(zongRate / (mianji * peos), 2);
-                    LPeozhanbi = Math.Round(lasrRate / (mianji * peos), 2);
-                }
                 var list_bottom = new
                 {
                     Peozhanbi,
                     LPeozhanbi,
                     zongBudget
                 };
-                //List<overView> xxxx = new List<overView>();
-                //foreach (var xxx in left_view.GroupBy(p => p.name))
-                //{
-                //    overView m = new overView();
-                //    m.name = xxx.Key;
-                //    m.value = xxx.Sum(p => p.value);
-                //    xxxx.Add(m);
-                //}
-                //left_view = xxxx;
                 return Json(new { list_zong, left_view, list, list_bottom }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -372,7 +343,7 @@ namespace EnergyManage.Controllers
                     var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
                     foreach (var dd in data.Where(p => p.coolect_dev_type != null).GroupBy(p => p.coolect_dev_type))
                     {
-                        t.value.Add(dd.Key + "", Math.Round(dd.Sum(p => p.Rate) / 10000, 5) + "");
+                        t.value.Add(dd.Key + "", Math.Round(dd.Sum(p => p.Rate), 5) + "");
                         title ttt = new title();
                         ttt.Type = dd.Key.Value + "";
                         ttt.Name = TypeList.Where(p => p.ID == dd.Key).FirstOrDefault().Name;
@@ -1244,7 +1215,7 @@ namespace EnergyManage.Controllers
                                 var v = DAL.EneryOverViewDAL.getInstance().GetLookDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM-dd"));
                                 LookView m = new LookView();
                                 m.Name = item.Name;
-                                m.DValue = Math.Round(v.Sum(p => p.Rate) / 10000, 5);
+                                m.DValue = Math.Round(v.Sum(p => p.Rate), 5);
                                 m.unit_area = item.unit_area;
                                 m.unit_people = item.unit_people;
                                 if (item.unit_people != 0)
@@ -1343,7 +1314,7 @@ namespace EnergyManage.Controllers
                                     m.RecordTime = it.Key.ToString();
                                     m.DeviceName = i.Key;
                                     m.TypeName = ii.Key;
-                                    m.DValue = Math.Round(ii.Sum(p => p.UserPowerRate) / 10000, 5);
+                                    m.DValue = Math.Round(ii.Sum(p => p.UserPowerRate), 5);
                                     m.Name = item.Name;
                                     datas.Add(m);
                                 }
