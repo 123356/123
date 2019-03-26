@@ -498,11 +498,11 @@ var vm = new Vue({
                 var item = {
                     name: data.result.CName[i],
                     type: 'line',
-                    stack: '总量',
+                    stack: data.result.CName[i],
                     areaStyle: {},
                     symbol: 'none',  //这句就是去掉点的  
                     smooth: true,  //这句就是让曲线变平滑的
-                    data: yData,//[0, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90, 0],
+                    data: yData,
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
@@ -619,6 +619,11 @@ var vm = new Vue({
                             lineStyle: {
                                 color: '#e9e9e9',
 
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                width: 0.5,
                             }
                         }
                     }

@@ -56,6 +56,7 @@
             color: #333;
             padding: 5px 2px
         }
+
         .btn {
             float: none !important;
             padding: 5px 10px !important;
@@ -65,8 +66,6 @@
         .noprint {
             visibility: hidden;
         }
-
-        
     </style>
 </head>
 <body>
@@ -78,14 +77,12 @@
                     <img src="~/Content/images/energyDifficiency/fx.png" class="icon" />
                     <span>能源报告</span>
                     <div id="leftmenuSpace" style="display:inline-block"></div>
-
                     <i-select style="width:100px" v-model="dateType" placeholder="日期类型" v-on:on-change="dateTypeChange">
                         <i-option :value="1">日报表</i-option>
                         <i-option :value="2">月报表</i-option>
                         <i-option :value="3">年报表</i-option>
                     </i-select>
                     <date-picker :type="curDateType" v-model="time" style="width: 160px;font-size:12px" placeholder="请选择时间" v-on:on-change="dateChange"></date-picker>
-
                     <i-button icon="ios-print-outline" class="btn" v-on:click="openOrPrint">打印</i-button>
                 </div>
                 <div class="con noprint " id="printCon">
@@ -104,14 +101,14 @@
             <p slot="header" class="noprint">
                 <Icon type="ios-print-outline"></Icon>
                 <span>打印预览</span>
-                <i-button type="primary" class="btn" v-on:click="ok" >打印</i-button>
+                <i-button type="primary" class="btn" v-on:click="ok">打印</i-button>
             </p>
             <div class="con " id="printModal">
                 <div class="tableTitle">
                     {{title}}
                 </div>
                 @*<i-table :columns="tableCol" :data="tableData" border class="ivuTable" style="width:100%"></i-table>*@
-                <table  class="printTable">
+                <table class="printTable">
                     <tr>
                         <th v-for="item in tableCol">{{item.title}}</th>
                     </tr>
@@ -126,7 +123,6 @@
                     <i-button type="primary" class="btn" v-on:click="ok">打印</i-button>
                 </div>*@
         </Modal>
-
     </div>
     <script type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.181"></script>
 </body>

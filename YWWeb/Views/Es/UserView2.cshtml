@@ -17,7 +17,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    
+
 </head>
 <body>
     <div id="userView">
@@ -32,14 +32,11 @@
                         <div class="module">
                             <div class="title"><i class="iconfont icon-guidangxiangmu"></i>运行状况</div>
                             <div class="main">
-                              
-
-
                                 <div class="swiper-container swiper1">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide slide1">
                                             <div>
-                                                <p class="normal" 
+                                                <p class="normal"
                                                    :style='{color:StationStateInfo.Name=="严重"&&StationStateInfo.Name!=""?"#f3773d":"#42a68e"}'
                                                    v-html="StationStateInfo.Name==''?'--':StationStateInfo.Name" id="sattionName">--</p>
                                                 <span class="littltInfo">正常 <font v-html="StationStateInfo.NormalDays==null?'--':StationStateInfo.NormalDays" id="NormalDays">--</font>天</span>
@@ -50,7 +47,6 @@
                                                 <p class="normal"><font v-html="StationStateInfo.CheckDays==null?'--':StationStateInfo.CheckDays">--</font>天</p>
                                                 <span class="littltInfo">距离下次检修</span>
                                             </div>
-
                                         </div>
                                         <div class="swiper-slide  ">
                                             <div>
@@ -205,8 +201,6 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.20"></script>
-    
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.29"></script>
 </body>
 </html>
