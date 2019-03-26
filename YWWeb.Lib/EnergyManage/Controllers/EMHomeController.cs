@@ -78,8 +78,8 @@ namespace EnergyManage.Controllers
             decimal LPeozhanbi = 0;
             if (mianji != 0)
             {
-                Peozhanbi = Math.Round(zongRate / mianji, 5);
-                LPeozhanbi = Math.Round(lasrRate / mianji, 5);
+                Peozhanbi = Math.Round(zongRate * 10000 / mianji, 5);
+                LPeozhanbi = Math.Round(lasrRate * 10000 / mianji, 5);
             }
             var list_bottom = new
             {
@@ -175,7 +175,7 @@ namespace EnergyManage.Controllers
                             {
                                 overView group_i = new overView();
                                 group_i.name = item_group.Key.ToString();
-                                group_i.value = Math.Round(item_group.Sum(p => p.Rate)/10000, 5);
+                                group_i.value = Math.Round(item_group.Sum(p => p.Rate), 5);
                                 view.keyValuePairs_Time.Add(group_i);
                             }
 
@@ -327,13 +327,16 @@ namespace EnergyManage.Controllers
                 }
             }
             Dictionary<int, string> cpids = GetCId(cids);
-            var data = DAL.EneryReportFromDAL.getInstance().GetMonthFormDatas(cpids, t1, t2);
-            foreach (var item in data.GroupBy(p => p.TypeName))
+            if (cpids.Count != 0)
             {
-                overView oview = new overView();
-                oview.name = item.Key;
-                oview.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
-                list.Add(oview);
+                var data = DAL.EneryReportFromDAL.getInstance().GetMonthFormDatas(cpids, t1, t2);
+                foreach (var item in data.GroupBy(p => p.TypeName))
+                {
+                    overView oview = new overView();
+                    oview.name = item.Key;
+                    oview.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
+                    list.Add(oview);
+                }
             }
             decimal DepBudget = 0;
           
@@ -535,7 +538,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = Math.Round(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate) / 10000, 5);
+                    m.value = Math.Round(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate), 5);
                     list_r.list_this.Add(m);
 
 
@@ -546,7 +549,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = Math.Round(list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate) / 10000, 5);
+                    m.value = Math.Round(list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate), 5);
                     list_r.list_last.Add(m);
                 }
             }
@@ -609,7 +612,7 @@ namespace EnergyManage.Controllers
                             //string t2 = item.Key.ToString("yyyy-MM-dd 23:59:59");
                             //IList<t_V_EneryView> list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cpids, it.Key.Value, t1, t2);
 
-                            v = Math.Round(it.Sum(p => p.Rate) / 10000, 5);
+                            v = Math.Round(it.Sum(p => p.Rate), 5);
                             t.value.Add(it.Key + "", v + "");
                             title ttt = new title();
                             ttt.Type = it.Key.Value + "";
@@ -620,11 +623,11 @@ namespace EnergyManage.Controllers
 
                                 title ttt1 = new title();
                                 ttt1.Type = it.Key.Value + "d";
-                                ttt1.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(万元/平米)";
+                                ttt1.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(元/平米)";
                                 TitleList.Add(ttt1);
                                 title ttt2 = new title();
                                 ttt2.Type = it.Key.Value + "L";
-                                ttt2.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(万元/人)";
+                                ttt2.Name = TypeList.Where(p => p.ID == it.Key).FirstOrDefault().Name + "(元/人)";
                                 TitleList.Add(ttt2);
                             }
                             if (mianji != 0) {

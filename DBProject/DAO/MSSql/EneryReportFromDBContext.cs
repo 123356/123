@@ -27,7 +27,7 @@ namespace DAO
         public IList<t_V_EneryReportFrom> GetMonthFormDatas(Dictionary<int, string> cpids, string startTime, string endTime)
         {
             string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,e.Name as TypeName  from 
-t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on a.CID=b.CID
+t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID and a.PID=b.PID)
 join t_DM_CollectDevType e on e.ID=b.coolect_dev_type
 where RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate is not null and UsePower is not null";
 
@@ -51,7 +51,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}'  and a.UserPowerRate
         public IList<t_V_EneryReportFrom> GetYearFormDatas(Dictionary<int, string> cpids, string startTime, string endTime)
         {
             string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,e.Name as TypeName   
-from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b  on a.CID=b.CID 
+from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) 
 join t_DM_CollectDevType e on e.ID=b.coolect_dev_type
 where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null";
 
@@ -75,7 +75,7 @@ where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate 
         public IList<t_V_EneryReportFrom> GetDayFormDatas(Dictionary<int,string> cpids, string startTime, string endTime)
         {
             string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName,a.CID,e.Name as TypeName  
-from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on a.CID=b.CID 
+from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) 
 join t_DM_CollectDevType e on e.ID=b.coolect_dev_type
 where RecordTime>='{startTime}' and RecordTime<='{endTime}' and a.UserPowerRate is not null and UsePower is not null ";
 
