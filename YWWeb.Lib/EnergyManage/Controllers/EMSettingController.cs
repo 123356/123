@@ -27,6 +27,11 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
+        public ActionResult AreaTreeEdit1()
+        {
+            return View();
+        }
+
         #region 
         /// <summary>
         /// 返回该单位的组织区域树数据
@@ -412,15 +417,29 @@ namespace EnergyManage.Controllers
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
                 for (var a = 0; a < power.Count(); a++) {
                 for (var b = 0; b < list.Count(); b++) {
-                    if (list[b].addCid.Contains($"{power[a].PID}-{power[a].CID}")) {
-                        list[b].UsePower += power[a].UsePower;
-                        list[b].NeedPower += power[a].NeedPower;
+                    var q = list[b].addCid.Split(',');
+                    var w = list[b].delCid.Split(',');
+
+                    for (var i = 0; i < q.Count(); i++) {
+                        if (q[i]== $"{power[a].PID}-{power[a].CID}")
+                        {
+                            list[b].UsePower += power[a].UsePower;
+                            list[b].NeedPower += power[a].NeedPower;
+                        }
                     }
-                    if (list[b].delCid.Contains($"{power[a].PID}-{power[a].CID}"))
-                    {
-                        list[b].UsePower -= power[a].UsePower;
-                        list[b].NeedPower -= power[a].NeedPower;
-                    }
+
+                    //for (var j = 0; j < w.Count(); j++)
+                    //{
+                    //    if (w[j] == $"{power[a].PID}-{power[a].CID}")
+                    //    {
+                    //        list[b].UsePower -= power[a].UsePower;
+                    //        list[b].NeedPower -= power[a].NeedPower;
+                    //    }
+                    //}
+
+
+
+                   
                 }
             }
             Tree tree = new Tree();
@@ -475,8 +494,8 @@ namespace EnergyManage.Controllers
             {
                 IDAO.Models.t_V_EnerPower obj = new IDAO.Models.t_V_EnerPower();
                 obj.RecordTime = list[a].RecordTime;
-                obj.UsePower = 0;
-                obj.NeedPower = 0;
+                //obj.UsePower = 0;
+                //obj.NeedPower = 0;
                 var RecordTime = list[a].RecordTime;
                 for (var b = 0; b < power.Count(); b++)
                 {
