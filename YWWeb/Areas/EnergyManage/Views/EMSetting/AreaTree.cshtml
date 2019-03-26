@@ -86,7 +86,7 @@
     </u>
 
     <div id="editwin" title="详情" class="easyui-window" closed="true" style="width: 900px;
-        height: 300px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
+        height: 350px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
         <div class="barChart" id="barChart"></div>
         <div class="pieChart" id="pieChart"></div>
     </div>
@@ -504,7 +504,7 @@
                 series: [
                     {
                         type: 'pie',
-                        radius: ['40%', '60%'],
+                        radius: ['50%', '75%'],
                         center: ['50%', '50%'],
                         avoidLabelOverlap: false,
                         hoverAnimation: true,
@@ -513,8 +513,7 @@
                                 show: true,
                                 position: 'center',
                                 formatter: [
-
-                                    '{b|' + allPower.toFixed(2) + 'kW·h}',
+                                    '{b|\n' + allPower.toFixed(2) + '\nkW·h}',
                                 ].join('\n'),
                                 rich: {
                                     b: {

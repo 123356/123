@@ -1306,17 +1306,23 @@ namespace EnergyManage.Controllers
 
                         foreach (var it in list_data.GroupBy(p => p.RecordTime))
                         {
-                            foreach (var i in it.GroupBy(p => p.DeviceName))
+                            foreach (var ix in it.GroupBy(p => p.PName))
                             {
-                                foreach (var ii in i.GroupBy(p => p.Name))
+                                foreach (var ixx in ix.GroupBy(p => p.CName))
                                 {
-                                    enview m = new enview();
-                                    m.RecordTime = it.Key.ToString();
-                                    m.DeviceName = i.Key;
-                                    m.TypeName = ii.Key;
-                                    m.DValue = Math.Round(ii.Sum(p => p.UserPowerRate), 5);
-                                    m.Name = item.Name;
-                                    datas.Add(m);
+                                    foreach (var i in ixx.GroupBy(p => p.DeviceName))
+                                    {
+                                        foreach (var ii in i.GroupBy(p => p.Name))
+                                        {
+                                            enview m = new enview();
+                                            m.RecordTime = it.Key.ToString();
+                                            m.DeviceName = ix.Key+ "_" + ixx.Key + "_" + i.Key;
+                                            m.TypeName = ii.Key;
+                                            m.DValue = Math.Round(ii.Sum(p => p.UserPowerRate), 5);
+                                            m.Name = item.Name;
+                                            datas.Add(m);
+                                        }
+                                    }
                                 }
                             }
                         }
