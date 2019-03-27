@@ -11,6 +11,14 @@
                 title: '时间',
                 align: 'center',
                 key: 'RecordTime',
+                render: (h, params) => {
+                    var time = params.row.RecordTime.split(' ')[0]
+                    return h('div', [
+                        h('span', {
+                            
+                        }, time),
+                    ])
+                }
             },
             {
                 title: '区域',
@@ -40,7 +48,8 @@
             time: null,//日期
             did: null,//设备
             ksid: [],//科室
-            cotypeid: null,//能源类型
+            cotypeid: null,//能源类型,
+            PID:0
         },
         typeList: [],
         departMentList: [],
@@ -50,8 +59,9 @@
         treeData: [],
         page: 1,
         rows: 20,
-        total:0
-
+        total: 0,
+        stationRomm: [],
+        PID:"0"
     },
     methods: {
         //类型下拉框
@@ -156,6 +166,20 @@
                 throw new ReferenceError(e.message)
             })
         },
+        //站室下拉框
+        getStation: function () {
+            var that = this
+            this.$http({
+                url: '/BaseInfo/BindPDRInfo?showall=1',
+                method:'post'
+            })
+                .then(function (res) {
+                    that.stationRomm = res.data
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
+        },
         //查询
         getEneryList: function () {
             this.loading = true
@@ -211,6 +235,7 @@
         window.addEventListener("resize", () => {
             that.tableHeight = $(".bottomView .con").height()
         });
+        this.getStation()
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getDeviceCombox()
