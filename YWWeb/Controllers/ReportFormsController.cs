@@ -1717,13 +1717,14 @@ namespace YWWeb.Controllers
                         }
                     }
                 }
-               return  ExportEneryToExcel(list_item, times, type, listDataItem, list_area, listDataArea, UnitName);
+                list_item = list_item.OrderBy(p => p.name).ToList();
+                list_area = list_area.OrderBy(p => p.name).ToList();
+                return  ExportEneryToExcel(list_item, times, type, listDataItem, list_area, listDataArea, UnitName);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            //return Json(new { list_item, list_area }, JsonRequestBehavior.AllowGet);
         }
 
 

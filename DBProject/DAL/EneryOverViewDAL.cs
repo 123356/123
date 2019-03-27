@@ -161,5 +161,19 @@ namespace DAL
             }
             return data;
         }
+
+        public IList<t_V_EneryView> GetFirstPageDatas(Dictionary<int,string> cpids, string time)
+        {
+            IList<t_V_EneryView> data = new List<t_V_EneryView>();
+            try
+            {
+                data = _dbFactory.eneryOverView.GetFirstPageDatas(cpids, time);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
     }
 }

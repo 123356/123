@@ -218,6 +218,30 @@ where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not nu
 where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(4),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null order by RecordTime";
             return SQLQuery<t_V_EneryView>(sql);
         }
+
+        public IList<t_V_EneryView> GetFirstPageDatas(Dictionary<int,string> cpids, string time)
+        {
+            string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((','+ (CONVERT(varchar(255),c.id)+',') in (b.ener_use_type)))
+
+where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                else
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+            sql += " order by RecordTime";
+            return SQLQuery<t_V_EneryView>(sql);
+        }
+
         public DbSet<t_V_EneryView> Datas { get; set; }
     }
 }
