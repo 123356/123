@@ -422,7 +422,7 @@
             var option = {
                 title: {
                     text: this.deartmentName + '(' + str + ')',
-                    subtext: '预算：' + this.toMoney(par.DepBudget) + '元，总能耗：' + this.toMoney(sumTotal) + '元',
+                    subtext: '预算(万)：' + this.toMoney(par.DepBudget) + '，总能耗(元)：' + this.toMoney(sumTotal),
                     x: 'center',
                     textStyle: {
                         fontSize: 13,

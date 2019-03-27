@@ -77,11 +77,11 @@
                         <p v-html="item.name">--</p>
                     </div>
                     <div class="module-item info">
-                        <p>科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;室<span><font>{{item.DepName}}</font></span></p>
-                        <p>用电预算<span><font v-html="item.budget">--</font>万元</span></p>
-                        <p>当前费用<span><font v-html="item.rate">--</font>万元</span></p>
+                        <p>科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;室:<span><font>{{item.DepName}}</font></span></p>
+                        <p>用电预算:<span><font v-html="item.budget">--</font>万元</span></p>
+                        <p>当前费用:<span><font v-html="item.rate">--</font>万元</span></p>
                         <p>
-                            当前能耗
+                            当前能耗:
                             <span>
                                 <font v-html="item.energyConsumption">--</font>
                                 <c v-if="item.name=='电'">kW·h</c>
@@ -147,7 +147,7 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.145"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.147"></script>
 </body>
 </html>
 

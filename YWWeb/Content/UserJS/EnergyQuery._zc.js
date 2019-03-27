@@ -11,14 +11,14 @@
                 title: '时间',
                 align: 'center',
                 key: 'RecordTime',
-                render: (h, params) => {
-                    var time = params.row.RecordTime.split(' ')[0]
-                    return h('div', [
-                        h('span', {
+                //render: (h, params) => {
+                //    var time = params.row.RecordTime.split(' ')[0]
+                //    return h('div', [
+                //        h('span', {
                             
-                        }, time),
-                    ])
-                }
+                //        }, time),
+                //    ])
+                //}
             },
             {
                 title: '区域',
@@ -48,7 +48,7 @@
             time: null,//日期
             did: null,//设备
             ksid: [],//科室
-            cotypeid: null,//能源类型,
+            cotypeid: '0',//能源类型,
             PID:0
         },
         typeList: [],
@@ -235,7 +235,7 @@
         window.addEventListener("resize", () => {
             that.tableHeight = $(".bottomView .con").height()
         });
-        this.getStation()
+        //this.getStation()
         this.getCollectDevTypeList()
         this.getDepartMentList()
         this.getDeviceCombox()
