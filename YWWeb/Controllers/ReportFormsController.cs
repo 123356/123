@@ -1114,7 +1114,9 @@ namespace YWWeb.Controllers
             {
                 throw ex;
             }
-            return Json(new { list_item, list_area }, JsonRequestBehavior.AllowGet);
+            list_item = list_item.OrderBy(p => p.name).ToList();
+            list_area = list_area.OrderBy(p => p.name).ToList();
+            return Json(new { list_item, list_area}, JsonRequestBehavior.AllowGet);
         }
 
         public class Ev : t_EE_PowerQualityDaily
