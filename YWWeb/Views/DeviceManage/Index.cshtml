@@ -12,8 +12,18 @@
             $(".tab_box").height($(document.body).outerHeight() - $(".tab_menu").outerHeight(true));
         })
     </script>
+    <style type="text/css">
+        .tab_menu {
+            overflow: hidden;
+            height: 32px;
+            margin: 5px 0px;
+            background: #fff;
+            padding: 4px;
+        }
+    </style>
 </head>
-<body><div class="leftmenu" id="leftmenu">
+<body style="height:99%">
+    <div class="leftmenu" id="leftmenu">
         <div id="leftmenuSpace">
         </div>
     </div>
@@ -27,7 +37,7 @@
         <div class="tab_box">
             <!--Éè±¸×´Ì¬-->
             <div class="tabbg tabbg3">
-                <iframe frameborder="0" scrolling="yes" src="" width="100%" height="100%" name="leftmenu"
+                <iframe frameborder="0" scrolling="yes" src=""  name="leftmenu" style="width:100%;height:100%"
                     id="sysContent"></iframe>
             </div>
             <!--<a class="backone" onclick="goback();" href="#">·µ»Ø</a>-->

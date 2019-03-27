@@ -72,7 +72,7 @@
                 })
         },
         dateChange: function () {
-            this.curTimeStr = this.formaterDate()
+            
         },
         formaterDate: function () {
             var time = new Date(this.dateTime)

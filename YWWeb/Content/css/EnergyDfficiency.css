@@ -1560,3 +1560,8 @@ table {
 
   
 }*/
+.deartDataMon #treeDemo_1_a {
+    cursor: inherit;
+    text-decoration: none
+}
+
