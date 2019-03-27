@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.03" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.21" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.22" />
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
 
     <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
@@ -22,8 +22,9 @@
 </head>
 <body>
     <div id="EnergyOverview" style="padding:0">
-        <Spin size="large" fix v-if="loading"></Spin>
-        <div class="left flex-item">
+        @*<Spin size="large" fix v-if="loading"></Spin>*@
+        <div class="left flex-item" style="position:relative">
+            <Spin size="large" fix v-if="leftLoading" ></Spin>
             <div class="chartView">
                 <div class="item">
                     <div class="chartTitle">
@@ -52,14 +53,15 @@
                     <div class="main">
                         <p style="text-align:center">{{Peozhanbi | toMoney}}<span class="dw">(元/㎡)</span></p>
                         @*<div class="footer">
-                            <div class="footer-item">预算(万)：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
-                            <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
-                        </div>*@
+                        <div class="footer-item">预算(万)：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
+                        <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                    </div>*@
                     </div>
                 </div>
             </div>
         </div>
         <div class="right flex-item EnergyModule">
+            <Spin size="large" fix v-if="rightLoading"></Spin>
             <!--能耗模块-->
             <div class="right-module" v-for="item in info.list">
                 <div class="header">
@@ -145,7 +147,7 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.134"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.145"></script>
 </body>
 </html>
 

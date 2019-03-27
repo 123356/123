@@ -32,7 +32,9 @@ table {
 .flex-item {
     margin-right: 12px;
 }
-
+#EnergyOverview .left, #EnergyOverview .right{
+    position:relative
+}
 .left {
     flex: 1;
     height: 100%;
@@ -41,7 +43,6 @@ table {
     border-radius: 4px;
     padding: 15px;
     overflow: hidden;
-    
 }
     .left .chartView {
         width:100%;

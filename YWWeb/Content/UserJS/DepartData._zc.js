@@ -75,7 +75,6 @@
 
                 })
                 .catch(function (e) {
-                    this.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
@@ -156,7 +155,6 @@
                     that.analysisData = tempTable
                 })
                 .catch(function (e) {
-                    this.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
@@ -191,7 +189,6 @@
                     }
                 })
                 .catch(function (e) {
-                    this.$Message.error('请求失败');
                     that.loading = false
                     throw new ReferenceError(e.message)
                 })
@@ -290,7 +287,7 @@
                 color: ['#53bda9'],
                 grid: {
                     bottom: '6%',
-                    left: 30,
+                    left: 40,
                     right: 20,
                     top: '17%'
                 },
@@ -421,7 +418,7 @@
                 str += data[i].name
                 sumTotal += parseFloat(data[i].value)
             }
-
+            var that = this
             var option = {
                 title: {
                     text: this.deartmentName + '(' + str + ')',
@@ -438,7 +435,9 @@
                 },
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} <br/>({d}%)"
+                    formatter: function (params, ticket, callback) {
+                        return params.name + "：" + that.toMoney(params.value)
+                    },
                 },
                 color: ['#60b7a4', '#e0c389', '#86d2df'],
 

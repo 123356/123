@@ -1,7 +1,8 @@
 ﻿new Vue({
     el: "#EnergyOverview",
     data: {
-        loading: true,
+        leftLoading:true,
+        rightLoading: true,
         info: {},
         uid: null,
         Uname: '',
@@ -216,6 +217,9 @@
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
+                .finally(function () {
+                    that.leftLoading = false
+                })
         },
         //数据加载
         getEneryOverView: function () {
@@ -264,7 +268,7 @@
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
-                    that.loading = false
+                    that.rightLoading = false
                 })
         },
         closeModule: function (id) {
@@ -320,10 +324,13 @@
                 ]
                 color = ['#f9b88c', '#58b9a3']
             }
+            var that = this
             var option = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{b}: <br/>{c}万<br/> ({d}%)"
+                    formatter: function (params, ticket, callback) {
+                        return params.name + "：" + that.toMoney(params.value)
+                    },
                 },
                 color: color,
                 series: [{
@@ -508,6 +515,7 @@
                 xData.push(data.keyValuePairs_Time[i].name.split(" ")[0].split("/")[2])
                 yData.push(data.keyValuePairs_Time[i].value)
             }
+            var that = this
             chart = echarts.init(document.getElementById(chart));
             var option = {
                 title: {
@@ -523,7 +531,13 @@
                 color: ['#57b9a3'],
                 tooltip: {
                     trigger: 'axis',
-                    formatter: "{a}: <br/>" + this.month + "-{b}:{c}",
+                    formatter: function (params, ticket, callback) {
+                        var res = params[0].seriesName+"<br/>";
+                        for (var i in params) {
+                            res += that.month + "-" + params[i].axisValue + "：" + that.toMoney(params[i].value)
+                        }
+                        return res
+                    },
                     axisPointer: { // 坐标轴指示器，坐标轴触发有效
                         type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                     },

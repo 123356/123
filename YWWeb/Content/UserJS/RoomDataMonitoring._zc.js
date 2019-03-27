@@ -225,7 +225,7 @@
                 color: ['#53bda9'],
                 grid: {
                     bottom: '7%',
-                    left: 30,
+                    left: 40,
                     right: 20,
                     top: '25%'
                 },
