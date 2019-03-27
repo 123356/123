@@ -145,7 +145,6 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_UnitScore" Width="1.5" PointX="39.375" PointY="9.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_ItemOperationLog" Width="1.5" PointX="39.375" PointY="12.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_PM_OneGraph" Width="1.5" PointX="39.375" PointY="19.75" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="21.375" PointY="35.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEDaily" Width="1.5" PointX="39.375" PointY="23.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEMonthly" Width="1.5" PointX="39.375" PointY="27.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUERealTime" Width="1.5" PointX="29.375" PointY="39.75" />
@@ -154,6 +153,7 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherYearly" Width="1.5" PointX="39.375" PointY="35.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherDaily" Width="1.5" PointX="39.375" PointY="39.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_ShopTruck" Width="1.5" PointX="39.375" PointY="15.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="21.375" PointY="35.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

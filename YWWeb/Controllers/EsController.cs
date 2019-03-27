@@ -2461,7 +2461,8 @@ namespace YWWeb.Controllers
                     {
                         item.jiashu += item2 + "、";
                     }
-                    item.jiashu = item.jiashu.Substring(0, item.jiashu.Length - 1);
+                    if (!string.IsNullOrEmpty(item.jiashu))
+                        item.jiashu = item.jiashu.Substring(0, item.jiashu.Length - 1);
                 }
                 List<int> intList1 = new List<int>();
                 if (item.subtractCid != null)
@@ -2474,7 +2475,8 @@ namespace YWWeb.Controllers
                     {
                         item.jianshu += item2 + "、";
                     }
-                    item.jianshu = item.jianshu.Substring(0, item.jianshu.Length - 1);
+                    if (!string.IsNullOrEmpty(item.jianshu))
+                        item.jianshu = item.jianshu.Substring(0, item.jianshu.Length - 1);
                 }
 
                 if (item.isUpload == 1)

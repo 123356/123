@@ -1020,7 +1020,7 @@
           <Property Name="RatedCapacity" Type="decimal" Precision="18" Scale="0" />
           <Property Name="State" Type="int" />
           <Property Name="UpDateTime" Type="datetime" />
-          <Property Name="ener_use_type" Type="int" />
+          <Property Name="ener_use_type" Type="nvarchar(max)" />
           <Property Name="coolect_dev_type" Type="int" />
           <Property Name="Label" Type="nvarchar" MaxLength="255" />
         </EntityType>
@@ -3802,7 +3802,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_CM_UnitScore" EntityType="YWModel.t_CM_UnitScore" />
           <EntitySet Name="t_CM_ItemOperationLog" EntityType="YWModel.t_CM_ItemOperationLog" />
           <EntitySet Name="t_PM_OneGraph" EntityType="YWModel.t_PM_OneGraph" />
-          <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
           <EntitySet Name="t_EE_PUEDaily" EntityType="YWModel.t_EE_PUEDaily" />
           <EntitySet Name="t_EE_PUEMonthly" EntityType="YWModel.t_EE_PUEMonthly" />
           <EntitySet Name="t_EE_PUERealTime" EntityType="YWModel.t_EE_PUERealTime" />
@@ -3811,6 +3810,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_EE_WeatherYearly" EntityType="YWModel.t_EE_WeatherYearly" />
           <EntitySet Name="t_EE_WeatherDaily" EntityType="YWModel.t_EE_WeatherDaily" />
           <EntitySet Name="t_CM_ShopTruck" EntityType="YWModel.t_CM_ShopTruck" />
+          <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
         </EntityContainer>
         <EntityType Name="t_AlarmTable_en">
           <Key>
@@ -6347,42 +6347,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="UnitID" Type="Int32" />
         </EntityType>
-        <EntityType Name="t_DM_CircuitInfo">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CID" Type="Int32" Nullable="false" />
-          <Property Name="CName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PID" Type="Int32" Nullable="false" />
-          <Property Name="DID" Type="Int32" />
-          <Property Name="TID" Type="Int32" />
-          <Property Name="TagIDs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="AreaType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ItemType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="GradeType" Type="Int32" />
-          <Property Name="ParentID" Type="Int32" />
-          <Property Name="MetersID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LineNumber" Type="Int32" />
-          <Property Name="MultipleRate" Type="Int32" />
-          <Property Name="ElecIndustryID" Type="Int32" />
-          <Property Name="device_type" Type="Int32" />
-          <Property Name="collect_port" Type="Int32" />
-          <Property Name="collect_jzqno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="collect_gy" Type="Int32" />
-          <Property Name="collect_baud" Type="Int32" />
-          <Property Name="collect_cjq" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="collect_period" Type="Int32" />
-          <Property Name="collect_cld" Type="Int32" />
-          <Property Name="collect_lastTime" Type="DateTime" Precision="3" />
-          <Property Name="RatedCapacity" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UpDateTime" Type="DateTime" Precision="3" />
-          <Property Name="ener_use_type" Type="Int32" />
-          <Property Name="State" Type="Int32" />
-          <Property Name="coolect_dev_type" Type="Int32" />
-          <Property Name="Label" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="t_EE_PUEDaily">
           <Key>
             <PropertyRef Name="ID" />
@@ -6495,6 +6459,42 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="UID" Type="Int32" />
           <Property Name="Coordination" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="DriverTel" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="t_DM_CircuitInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CID" Type="Int32" Nullable="false" />
+          <Property Name="CName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="DID" Type="Int32" />
+          <Property Name="TID" Type="Int32" />
+          <Property Name="TagIDs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AreaType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GradeType" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="MetersID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LineNumber" Type="Int32" />
+          <Property Name="MultipleRate" Type="Int32" />
+          <Property Name="ElecIndustryID" Type="Int32" />
+          <Property Name="device_type" Type="Int32" />
+          <Property Name="collect_port" Type="Int32" />
+          <Property Name="collect_jzqno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="collect_gy" Type="Int32" />
+          <Property Name="collect_baud" Type="Int32" />
+          <Property Name="collect_cjq" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="collect_period" Type="Int32" />
+          <Property Name="collect_cld" Type="Int32" />
+          <Property Name="collect_lastTime" Type="DateTime" Precision="3" />
+          <Property Name="RatedCapacity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="UpDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ener_use_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="coolect_dev_type" Type="Int32" />
+          <Property Name="Label" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -9117,43 +9117,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="t_DM_CircuitInfo">
-            <EntityTypeMapping TypeName="YWModel.t_DM_CircuitInfo">
-              <MappingFragment StoreEntitySet="t_DM_CircuitInfo">
-                <ScalarProperty Name="Label" ColumnName="Label" />
-                <ScalarProperty Name="coolect_dev_type" ColumnName="coolect_dev_type" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ener_use_type" ColumnName="ener_use_type" />
-                <ScalarProperty Name="UpDateTime" ColumnName="UpDateTime" />
-                <ScalarProperty Name="RatedCapacity" ColumnName="RatedCapacity" />
-                <ScalarProperty Name="collect_lastTime" ColumnName="collect_lastTime" />
-                <ScalarProperty Name="collect_cld" ColumnName="collect_cld" />
-                <ScalarProperty Name="collect_period" ColumnName="collect_period" />
-                <ScalarProperty Name="collect_cjq" ColumnName="collect_cjq" />
-                <ScalarProperty Name="collect_baud" ColumnName="collect_baud" />
-                <ScalarProperty Name="collect_gy" ColumnName="collect_gy" />
-                <ScalarProperty Name="collect_jzqno" ColumnName="collect_jzqno" />
-                <ScalarProperty Name="collect_port" ColumnName="collect_port" />
-                <ScalarProperty Name="device_type" ColumnName="device_type" />
-                <ScalarProperty Name="ElecIndustryID" ColumnName="ElecIndustryID" />
-                <ScalarProperty Name="MultipleRate" ColumnName="MultipleRate" />
-                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
-                <ScalarProperty Name="MetersID" ColumnName="MetersID" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="GradeType" ColumnName="GradeType" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="AreaType" ColumnName="AreaType" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="TagIDs" ColumnName="TagIDs" />
-                <ScalarProperty Name="TID" ColumnName="TID" />
-                <ScalarProperty Name="DID" ColumnName="DID" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="CName" ColumnName="CName" />
-                <ScalarProperty Name="CID" ColumnName="CID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="t_EE_PUEDaily">
             <EntityTypeMapping TypeName="YWModel.t_EE_PUEDaily">
               <MappingFragment StoreEntitySet="t_EE_PUEDaily">
@@ -9271,6 +9234,43 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="Driver" ColumnName="Driver" />
                 <ScalarProperty Name="NumberPlate" ColumnName="NumberPlate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_DM_CircuitInfo">
+            <EntityTypeMapping TypeName="YWModel.t_DM_CircuitInfo">
+              <MappingFragment StoreEntitySet="t_DM_CircuitInfo">
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="coolect_dev_type" ColumnName="coolect_dev_type" />
+                <ScalarProperty Name="ener_use_type" ColumnName="ener_use_type" />
+                <ScalarProperty Name="UpDateTime" ColumnName="UpDateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="RatedCapacity" ColumnName="RatedCapacity" />
+                <ScalarProperty Name="collect_lastTime" ColumnName="collect_lastTime" />
+                <ScalarProperty Name="collect_cld" ColumnName="collect_cld" />
+                <ScalarProperty Name="collect_period" ColumnName="collect_period" />
+                <ScalarProperty Name="collect_cjq" ColumnName="collect_cjq" />
+                <ScalarProperty Name="collect_baud" ColumnName="collect_baud" />
+                <ScalarProperty Name="collect_gy" ColumnName="collect_gy" />
+                <ScalarProperty Name="collect_jzqno" ColumnName="collect_jzqno" />
+                <ScalarProperty Name="collect_port" ColumnName="collect_port" />
+                <ScalarProperty Name="device_type" ColumnName="device_type" />
+                <ScalarProperty Name="ElecIndustryID" ColumnName="ElecIndustryID" />
+                <ScalarProperty Name="MultipleRate" ColumnName="MultipleRate" />
+                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+                <ScalarProperty Name="MetersID" ColumnName="MetersID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="GradeType" ColumnName="GradeType" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="AreaType" ColumnName="AreaType" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="TagIDs" ColumnName="TagIDs" />
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="CName" ColumnName="CName" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

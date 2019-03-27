@@ -2308,22 +2308,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_DM_CircuitInfo> t_DM_CircuitInfo
-        {
-            get
-            {
-                if ((_t_DM_CircuitInfo == null))
-                {
-                    _t_DM_CircuitInfo = base.CreateObjectSet<t_DM_CircuitInfo>("t_DM_CircuitInfo");
-                }
-                return _t_DM_CircuitInfo;
-            }
-        }
-        private ObjectSet<t_DM_CircuitInfo> _t_DM_CircuitInfo;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_EE_PUEDaily> t_EE_PUEDaily
         {
             get
@@ -2448,6 +2432,22 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_CM_ShopTruck> _t_CM_ShopTruck;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_DM_CircuitInfo> t_DM_CircuitInfo
+        {
+            get
+            {
+                if ((_t_DM_CircuitInfo == null))
+                {
+                    _t_DM_CircuitInfo = base.CreateObjectSet<t_DM_CircuitInfo>("t_DM_CircuitInfo");
+                }
+                return _t_DM_CircuitInfo;
+            }
+        }
+        private ObjectSet<t_DM_CircuitInfo> _t_DM_CircuitInfo;
 
         #endregion
 
@@ -3574,14 +3574,6 @@ namespace YWWeb
         }
     
         /// <summary>
-        /// 用于向 t_DM_CircuitInfo EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_DM_CircuitInfo(t_DM_CircuitInfo t_DM_CircuitInfo)
-        {
-            base.AddObject("t_DM_CircuitInfo", t_DM_CircuitInfo);
-        }
-    
-        /// <summary>
         /// 用于向 t_EE_PUEDaily EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddTot_EE_PUEDaily(t_EE_PUEDaily t_EE_PUEDaily)
@@ -3643,6 +3635,14 @@ namespace YWWeb
         public void AddTot_CM_ShopTruck(t_CM_ShopTruck t_CM_ShopTruck)
         {
             base.AddObject("t_CM_ShopTruck", t_CM_ShopTruck);
+        }
+    
+        /// <summary>
+        /// 用于向 t_DM_CircuitInfo EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_DM_CircuitInfo(t_DM_CircuitInfo t_DM_CircuitInfo)
+        {
+            base.AddObject("t_DM_CircuitInfo", t_DM_CircuitInfo);
         }
 
         #endregion
@@ -22513,6 +22513,30 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Int32> State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value, "State");
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _State;
+        partial void OnStateChanging(Nullable<global::System.Int32> value);
+        partial void OnStateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> UpDateTime
         {
             get
@@ -22537,7 +22561,7 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> ener_use_type
+        public global::System.String ener_use_type
         {
             get
             {
@@ -22547,38 +22571,14 @@ namespace YWWeb
             {
                 Onener_use_typeChanging(value);
                 ReportPropertyChanging("ener_use_type");
-                _ener_use_type = StructuralObject.SetValidValue(value, "ener_use_type");
+                _ener_use_type = StructuralObject.SetValidValue(value, true, "ener_use_type");
                 ReportPropertyChanged("ener_use_type");
                 Onener_use_typeChanged();
             }
         }
-        private Nullable<global::System.Int32> _ener_use_type;
-        partial void Onener_use_typeChanging(Nullable<global::System.Int32> value);
+        private global::System.String _ener_use_type;
+        partial void Onener_use_typeChanging(global::System.String value);
         partial void Onener_use_typeChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> State
-        {
-            get
-            {
-                return _State;
-            }
-            set
-            {
-                OnStateChanging(value);
-                ReportPropertyChanging("State");
-                _State = StructuralObject.SetValidValue(value, "State");
-                ReportPropertyChanged("State");
-                OnStateChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _State;
-        partial void OnStateChanging(Nullable<global::System.Int32> value);
-        partial void OnStateChanged();
     
         /// <summary>
         /// 没有元数据文档可用。

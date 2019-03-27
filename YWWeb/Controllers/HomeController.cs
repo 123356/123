@@ -119,7 +119,7 @@ namespace YWWeb.Controllers
         {
             return View();
         }
-        
+
         public ActionResult PowerInfoMap()
         {
             return View();
@@ -1077,7 +1077,7 @@ namespace YWWeb.Controllers
             {
                 throw ex;
             }
-          
+
         }
         public JsonResult GetThirdMenuInfo2(int mid)
         {
@@ -1366,7 +1366,7 @@ namespace YWWeb.Controllers
                 foreach (var item in list)
                 {
                     List<int?> pids = bll.t_CM_PDRInfo.Where(p => p.UnitID == item.UnitID).Select(p => p.PID).Distinct().ToList().ConvertAll<int?>(i => i);
-                    var count = bll.t_AlarmTable_en.Where(p => pids.Contains(p.PID)&&p.AlarmState!=0).OrderByDescending(p => p.AlarmState).FirstOrDefault();
+                    var count = bll.t_AlarmTable_en.Where(p => pids.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmState).FirstOrDefault();
                     if (count != null)
                     {
                         item.isAlarm = count.AlarmState.Value;
@@ -1471,7 +1471,8 @@ namespace YWWeb.Controllers
                     }
 
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -1487,31 +1488,17 @@ namespace YWWeb.Controllers
             {
                 using (var bll = new pdermsWebEntities())
                 {
-                    if (h.CurrentUser.RoleID == 1)
+                    try
                     {
-                        List<t_CM_Unit> ulist = new List<t_CM_Unit>();
-                        string unlist = "";
-                        string strsql1 = "select * from  t_CM_Unit";
-                        ulist = bll.ExecuteStoreQuery<t_CM_Unit>(strsql1).ToList();
-                        foreach (var item in ulist)
+                        if (h.CurrentUser.RoleID == 1)
                         {
-                            unlist += item.UnitID + ",";
-                        }
-                        if (!string.IsNullOrEmpty(unlist))
-                            unlist = unlist.Substring(0, unlist.Length - 1);
-
-                        ustr = unlist;
-                    }
-                    else
-                    {
-                        if (Convert.ToBoolean(h.CurrentUser.IsAdmin))
-                        {
+                            List<t_CM_Unit> ulist = new List<t_CM_Unit>();
                             string unlist = "";
-                            var Ulist = bll.t_CM_UserInfo.Where(p => p.UID == h.CurrentUser.UID && p.RoleID != 1).ToList();
-                            foreach (var item in Ulist)
+                            string strsql1 = "select * from  t_CM_Unit";
+                            ulist = bll.ExecuteStoreQuery<t_CM_Unit>(strsql1).ToList();
+                            foreach (var item in ulist)
                             {
-                                if (!string.IsNullOrEmpty(item.UNITList))
-                                    unlist += item.UNITList + ",";
+                                unlist += item.UnitID + ",";
                             }
                             if (!string.IsNullOrEmpty(unlist))
                                 unlist = unlist.Substring(0, unlist.Length - 1);
@@ -1520,13 +1507,33 @@ namespace YWWeb.Controllers
                         }
                         else
                         {
-                            ustr = h.CurrentUser.UNITList;
+                            if (Convert.ToBoolean(h.CurrentUser.IsAdmin))
+                            {
+                                string unlist = "";
+                                var Ulist = bll.t_CM_UserInfo.Where(p => p.UID == h.CurrentUser.UID && p.RoleID != 1).ToList();
+                                foreach (var item in Ulist)
+                                {
+                                    if (!string.IsNullOrEmpty(item.UNITList))
+                                        unlist += item.UNITList + ",";
+                                }
+                                if (!string.IsNullOrEmpty(unlist))
+                                    unlist = unlist.Substring(0, unlist.Length - 1);
+
+                                ustr = unlist;
+                            }
+                            else
+                            {
+                                ustr = h.CurrentUser.UNITList;
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
             return ustr;
-
         }
         public static string GetUserID()
         {
@@ -2033,7 +2040,7 @@ namespace YWWeb.Controllers
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 
-              
+
                 DateTime d = DateTime.Now.Date;
                 DateTime dgh = DateTime.Now.AddMonths(-1);
                 DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
@@ -5307,7 +5314,7 @@ namespace YWWeb.Controllers
         #region 元器件
         public JsonResult GetElementList(string name, int pid = 0, int did = 0, int page = 1, int rows = 10)
         {
-             IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name, pid, did, page, rows);
+            IList<IDAO.Models.t_DM_ElementDevice> list = DAL.ElementDeviceDAL.getInstance().GetElementList(name, pid, did, page, rows);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public JsonResult AddOrUpdateElement(IDAO.Models.t_DM_ElementDevice model)
