@@ -189,19 +189,21 @@
             }
         },
         conversionDate: function(str) {
-            var timetamp = new Date(parseInt(str));
-            timetamp.toLocaleDateString().replace(/\//g, "-") + " " + timetamp.toTimeString().substr(0, 8);
+            console.log(str)
 
-            da = new Date(timetamp);
-            var year = da.getFullYear() + '年';
-            var month = da.getMonth() + 1 + '月';
-            var date = da.getDate() + '日';
-
-
-            var str = year + month + date;
+            var time = new Date(parseInt(str));
+            console.log(time)
+            var y = time.getFullYear();
+            var m = time.getMonth() + 1;
+            var d = time.getDate();
+            var h = time.getHours();
+            var mm = time.getMinutes();
+            var s = time.getSeconds();
+            var str = y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
             console.log(str)
             return str
         },
+        add0: function(m) { return m < 10 ? '0' + m : m },
         mqtt: function() {
             var that = this;
             var wsbroker, wsport
