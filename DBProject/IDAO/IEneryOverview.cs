@@ -25,6 +25,7 @@ namespace IDAO
 
         IList<t_V_EneryView> GetYearDatasByTime(Dictionary<int, string> cpids, int type, string startTime, string endTime);
         IList<t_V_EneryView> GetYearBudgetDatas(string cids, string pids, string month);
-        
+
+        IList<t_V_EneryView> GetFirstPageDatas(Dictionary<int,string> cpids, string time);
     }
 }
