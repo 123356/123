@@ -54,7 +54,7 @@
     },
     watch: {
         newPV: {
-            handler: function (val, oldVal) {
+            handler: function(val, oldVal) {
                 var that = this;
                 if (oldVal.length == 0 || !oldVal[0]) {
                     return
@@ -62,7 +62,7 @@
                 for (let i = 0; i < val.length; i++) {
                     if (oldVal[i] != val[i]) {
                         this.data[i].cellClassName.PV = 'activat';
-                        setTimeout(function () {
+                        setTimeout(function() {
                             that.data[i].cellClassName.PV = '';
                         }, 700)
 
@@ -72,7 +72,7 @@
             deep: true,
         },
         newRecTime: {
-            handler: function (val, oldVal) {
+            handler: function(val, oldVal) {
                 var that = this;
                 if (oldVal.length == 0 || !oldVal[0]) {
                     return
@@ -80,7 +80,7 @@
                 for (let i = 0; i < val.length; i++) {
                     if (oldVal[i] != val[i]) {
                         this.data[i].cellClassName.RecTime = "activat";
-                        setTimeout(function () {
+                        setTimeout(function() {
                             that.data[i].cellClassName.RecTime = "";
                         }, 700)
 
@@ -91,7 +91,7 @@
         }
     },
     computed: {
-        newPV: function () {
+        newPV: function() {
             for (var a = 0, arr = []; a < this.data.length; a++) {
                 if (this.data[a]) {
                     arr.push(this.data[a].PV);
@@ -99,7 +99,7 @@
             }
             return arr;
         },
-        newRecTime: function () {
+        newRecTime: function() {
             for (var a = 0, arr = []; a < this.data.length; a++) {
                 if (this.data[a]) {
                     arr.push(this.data[a].RecTime);
@@ -109,18 +109,18 @@
         },
     },
     methods: {
-        changePage: function (e) {
+        changePage: function(e) {
             this.pageNum = e;
             this.tab();
         },
-        tab: function (a) {
+        tab: function(a) {
             var that = this;
             if (a == 1) {
                 that.BindDevice();
                 that.Bind();
             } else if (a == 2) {
                 that.Bind();
-            } 
+            }
 
 
             that.loading = true;
@@ -135,7 +135,7 @@
                     cid: parseInt(that.CID),
                     tdid: parseInt(that.DTID)
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 for (var i = 0, arr = []; i < res.data.aaData.length; i++) {
                     arr.push(res.data.aaData[i].TagID);
                     res.data.aaData[i].PV = '';
@@ -146,12 +146,12 @@
                 that.loading = false;
                 that.pageNumMax = res.data.iTotalRecords;
                 that.PV(arr.join(','));
-            }).catch(function (e) {
+            }).catch(function(e) {
                 throw new ReferenceError(e.message);
                 that.loading = false;
             })
         },
-        PV: function (str) {
+        PV: function(str) {
             var that = this;
             this.$http({
                 url: '/DataInfo/GetTagIdPV',
@@ -160,15 +160,15 @@
                     pid: that.PID,
                     tages: str || '0'
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 if (res.data.length > 0) {
                     that.merge(that.data, res.data);
                 }
-            }).catch(function (e) {
+            }).catch(function(e) {
                 throw new ReferenceError(e.message);
             })
         },
-        merge: function (data, pv) {
+        merge: function(data, pv) {
             for (var i = 0; i < data.length; i++) {
                 for (var j = 0; j < pv.length; j++) {
                     if (data[i].TagID == pv[j].TagID) {
@@ -178,7 +178,7 @@
                 }
             }
         },
-        merge1: function (data, pv) {
+        merge1: function(data, pv) {
             for (var i = 0; i < data.length; i++) {
                 for (var j in pv) {
                     if (data[i].TagID == j) {
@@ -188,13 +188,23 @@
                 }
             }
         },
-        conversionDate: function (str) {
+        conversionDate: function(str) {
             var timetamp = new Date(parseInt(str));
-            return timetamp.toLocaleDateString().replace(/\//g, "-") + " " + timetamp.toTimeString().substr(0, 8)
+            timetamp.toLocaleDateString().replace(/\//g, "-") + " " + timetamp.toTimeString().substr(0, 8);
+
+            da = new Date(timetamp);
+            var year = da.getFullYear() + '年';
+            var month = da.getMonth() + 1 + '月';
+            var date = da.getDate() + '日';
+
+
+            var str = year + month + date;
+            console.log(str)
+            return str
         },
-        mqtt: function () {
+        mqtt: function() {
             var that = this;
-            var wsbroker,wsport 
+            var wsbroker, wsport
 
             if (location.protocol == "https:") {
                 wsbroker = "yw.ife360.com";
@@ -210,15 +220,15 @@
                 userName: "webguest",
                 password: "!@#23&Qbn",
                 keepAliveInterval: 10,
-                onSuccess: function (e) {
+                onSuccess: function(e) {
                     console.log(("连接成功"));
                     client.subscribe('/ny/' + that.PID, {
                         qos: 2
                     });
                 },
-                onFailure: function (message) {
+                onFailure: function(message) {
                     console.log("连接失败 ");
-                    setTimeout(function () {
+                    setTimeout(function() {
                         that.mqtt();
                     }, 10000);
                 }
@@ -230,15 +240,15 @@
             }
             //创建连接
             client.connect(options);
-            client.onConnectionLost = function (responseObject) {
+            client.onConnectionLost = function(responseObject) {
                 if (responseObject.errorCode !== 0) {
                     console.error("异常掉线，掉线信息为:" + responseObject.errorMessage);
                 }
-                setTimeout(function () {
+                setTimeout(function() {
                     that.mqtt();
                 }, 10000);
             };
-            client.onMessageArrived = function (res) {
+            client.onMessageArrived = function(res) {
                 var payload = JSON.parse(res.payloadString);
                 var data = payload.content;
                 if (!payload.type) {
@@ -249,16 +259,15 @@
                 }
             }
         },
-        guid: function () {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        guid: function() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,
                     v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         },
 
-        BindValueType:function()
-        {
+        BindValueType: function() {
             var that = this;
             this.$http({
                 url: '/BaseInfo/BindValueType',
@@ -266,33 +275,33 @@
                 body: {
                     pid: this.PID,
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 that.DeviceTypeNameList = res.data;
                 that.DTID = res.data[0].DTID;
                 that.progress++;
-            }).catch(function (e) {
+            }).catch(function(e) {
                 throw new ReferenceError(e.message);
             })
 
         },
-        BindDevice: function (a,b ) {
+        BindDevice: function(a, b) {
             var that = this;
             this.$http({
                 url: '/DataInfo/BindDevice',
                 method: 'Post',
                 body: {
                     pid: a,
-                    DTID: b||1
+                    DTID: b || 1
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 that.DeviceNameList = res.data;
                 that.progress++;
                 that.DID = res.data[0].DID;
-            }).catch(function (e) {
+            }).catch(function(e) {
                 throw new ReferenceError(e.message);
-            })     
+            })
         },
-        Bind: function () {
+        Bind: function() {
             var that = this;
             that.$http({
                 url: '/DataInfo/BindC',
@@ -302,11 +311,11 @@
                     DID: that.DID || 1,
                     DTID: that.DTID || 1
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 that.CNameList = res.data;
                 that.CID = res.data[0].CID;
                 that.progress++;
-            }).catch(function (e) {
+            }).catch(function(e) {
                 throw new ReferenceError(e.message);
             })
 
@@ -318,7 +327,7 @@
         that.progress = 0;
         that.BindValueType(that.PID);
         that.BindDevice(that.PID, 1);
-        that.Bind(that.PID,0,1);
+        that.Bind(that.PID, 0, 1);
 
     },
     mounted: function() {
@@ -329,7 +338,7 @@
         var timer = setInterval(function() {
 
             if (that.progress == 3) {
-               that.tab();
+                that.tab();
                 clearInterval(timer);
             }
         }, 500)
