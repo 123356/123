@@ -41,7 +41,7 @@ function showAlarmInfo() {
 //查看设备详情
 function deviceinfo(did) {
     var fullurl = "/DeviceManage/Index?did=" + did + "&pid=" + pid + "&sid=0";
-    myWindow = window.open(fullurl, '', 'width=1200,height=1000,toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    myWindow = window.open(fullurl, '', 'width=1200,height=1000,toolbar =no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no');
     myWindow.focus();
 }
 
