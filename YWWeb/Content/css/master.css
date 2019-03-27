@@ -18,13 +18,14 @@
 }
 
     .tab_menu li {
-        width: 100px;
+        width: auto;
         float: left;
         height: 30px;
         line-height: 30px; /*background:url(../images/menubg.png) 0px -86px repeat-x;border:1px solid #999;*/
         text-align: center;
         cursor: pointer;
         border-left: none;
+        padding:0px 10px
     }
 
         .tab_menu li.current {

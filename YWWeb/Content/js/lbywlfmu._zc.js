@@ -21,10 +21,12 @@ function BuildLeftMenu() {
         editable: true,
         panelMinHeight: 400,
         onBeforeSelect: function (node) {
+           
             if (!$(this).tree('isLeaf', node.target)) {
                 $('#StationID').combotree('tree').tree("expand", node.target); //展开
-                return false;
+                 return false;
             }
+             
         },
         onClick: function (node) {
             if (!$(this).tree('isLeaf', node.target)) {
@@ -76,6 +78,9 @@ function BuildLeftMenu() {
             }
         },
         onLoadSuccess: function (node, data) {
+
+            $("#StationID").combotree('tree').tree('expandAll');//展开所有节点 
+
             pid = $.cookie('cookiepid');
            // DST(pid);
             if (pid != undefined &&null!=pid) {

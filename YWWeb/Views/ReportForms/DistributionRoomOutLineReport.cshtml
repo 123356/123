@@ -52,55 +52,49 @@
             </div>
             <div class="searchrow">
                 用电类型:
-
                 <i-select style="width:180px" v-model="userType">
                     <i-option v-for="item in userTypeList" :value="item.name">{{item.name}}</i-option>
                 </i-select>
             </div>
-
             <div id="" class="searchbutton">
                 <i-button class="btn" v-on:click="openOrPrint" icon="ios-print-outline">打印</i-button>
                 <i-button class="btn" v-on:click="ExcelPort" icon="md-exit">导出</i-button>
                 <i-button v-for="item in userBtn" class="btn" v-on:click="userMenuClick(item.Location)"><img v-bind:src="item.src" />{{item.ModuleName}}</i-button>
             </div>
         </div>
-
         <div>
-            
-    <div class="reportView" style="min-height:300px;display:none" >
-        <div class="title">{{curTimeStr}} 配电室能源统计表 (kW·h)</div>
-        <div class="stationName">&nbsp;{{cruPname}}</div>
-        <div class="row">
-            <div class="flex-item flex-1_5 center">柜号</div>
-            <div class="flex-item flex-2 center">回路名称</div>
-            <div class="flex-item flex-24 noBorder" :style="{flex:times.length+2}">
-                <div class="flex-item flex-1 center" v-for="item in times">{{item}}</div>
-                <div class="flex-item flex-2 center " style="overflow:hidden">
-                    回路合计
+
+            <div class="reportView" style="min-height:300px;display:none">
+                <div class="title">{{curTimeStr}} 配电室能源统计表 (kW·h)</div>
+                <div class="stationName">&nbsp;{{cruPname}}</div>
+                <div class="row">
+                    <div class="flex-item flex-1_5 center">柜号</div>
+                    <div class="flex-item flex-2 center">回路名称</div>
+                    <div class="flex-item flex-24 noBorder" :style="{flex:times.length+2}">
+                        <div class="flex-item flex-1 center" v-for="item in times">{{item}}</div>
+                        <div class="flex-item flex-2 center " style="overflow:hidden">
+                            回路合计
+                        </div>
+                    </div>
+                </div>
+                <div class="row heihgt100" v-for='item in info'>
+                    <div class="flex-item flex-1_5 center pHeight"> {{item.DeviceName}}</div>
+                    <div class="flex-item flex-26 heihgt100 noBorder outView cHeight" :style="{flex:times.length+4}">
+                        <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data">
+                            <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:1.5px">{{data.Cname==""?'--':data.Cname}}</div>
+                            <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
+                            <div class="flex-item flex-2 center" style="overflow-x:hidden">{{data.count}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="flex-item flex-2" style="justify-content:center;flex:3.5">分时合计</div>
+                    <div class="flex-item flex-24 noBorder" :style="{flex:times.length+2}">
+                        <div class="flex-item flex-1 center" v-for="item in xTotal" style="padding-right:1px">{{item.val}}</div>
+                        <div class="flex-item flex-2 center" style="overflow:hidden">{{sumTotal}}</div>
+                    </div>
                 </div>
             </div>
-
-        </div>
-        <div class="row heihgt100" v-for='item in info'>
-            <div class="flex-item flex-1_5 center pHeight"> {{item.DeviceName}}</div>
-            <div class="flex-item flex-26 heihgt100 noBorder outView cHeight" :style="{flex:times.length+4}">
-                <div class="flex-item flex-1 noBorder heihgt100" v-for="data in item.list_data">
-                    <div class="flex-item flex-2 center" style="overflow-x:hidden;padding-right:1.5px">{{data.Cname==""?'--':data.Cname}}</div>
-                    <div class="flex-item flex-1 center" v-for="val in data.Value">{{val}}</div>
-                    <div class="flex-item flex-2 center" style="overflow-x:hidden">{{data.count}}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="flex-item flex-2" style="justify-content:center;flex:3.5">分时合计</div>
-            <div class="flex-item flex-24 noBorder" :style="{flex:times.length+2}">
-                <div class="flex-item flex-1 center" v-for="item in xTotal" style="padding-right:1px">{{item.val}}</div>
-                <div class="flex-item flex-2 center" style="overflow:hidden">{{sumTotal}}</div>
-            </div>
-        </div>
-
-    </div>
             <!--new-->
             <div class="newReport noprint">
                 <div class="title">{{curTimeStr}} 配电室能源统计表 (kW·h)</div>
@@ -113,7 +107,6 @@
                         <div class="flex-2 center heihgt100 ">回路合计</div>
                     </div>
                 </div>
-
                 <div class="row" v-for='item in info'>
                     <div class="flex-1_5 borderRight center pHeight">{{item.DeviceName}}</div>
                     <div :style="{flex:times.length+4}" class="cHeight heihgt100">
@@ -124,7 +117,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row totalRow">
                     <div class="flex-3-5 borderRight center">分时合计</div>
                     <div :style="{flex:times.length+2}" class="total">
@@ -132,18 +124,10 @@
                         <div class="flex-2 center" style="overflow:hidden">{{sumTotal}}</div>
                     </div>
                 </div>
-
-
-
             </div>
             <!--new-->
-
         </div>
     </div>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/DistributionRoomOutLineReport ._jm.js?v=1.40"></script>
-<script type="text/javascript">
-
-
-</script>
+<script type="text/javascript" src="~/Content/UserJS/DistributionRoomOutLineReport ._jm.js?v=1.41"></script>

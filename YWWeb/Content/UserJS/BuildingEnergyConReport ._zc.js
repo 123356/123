@@ -193,7 +193,7 @@
             this.getTreeData(2)
         },
         dateChange: function () {
-            this.curTimeStr = this.formaterDate()
+           // this.curTimeStr = this.formaterDate()
         },
         //日期类型
         dateTypeChange: function (e) {
@@ -208,7 +208,7 @@
                     this.dateTypeText = "year"
                     break
             }
-            this.curTimeStr = this.formaterDate()
+            //this.curTimeStr = this.formaterDate()
             
         },
         getTimes: function () {
@@ -281,6 +281,7 @@
             switch (method) {
                 case 'dosearch()':
                     this.loading = true
+                    this.curTimeStr = this.formaterDate()
                     this.getTimes()
                     
                     this.getReport()

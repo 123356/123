@@ -627,6 +627,7 @@ select::-ms-expand {
     display: none;
     background: #ccc;
     overflow: auto;
+    height:auto !important
 }
 
     .two li {

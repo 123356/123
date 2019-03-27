@@ -117,7 +117,7 @@
                     break
             }
            
-            this.title = this.formaterDate() + this.UName + this.departName + type + "报表"
+            this.title = this.formaterDate() + "  "+this.departName + type + "报表"
             var arr = [
                
             ]
@@ -239,7 +239,7 @@
         this.time = new Date()
         var that = this
         setInterval(function () {
-            that.tableHeight = $(".bottomView .con").height()-45
+            that.tableHeight = $(".bottomView .con").height()-90
         }, 100)
         this.getTreeData()
 

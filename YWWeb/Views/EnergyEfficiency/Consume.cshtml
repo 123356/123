@@ -16,7 +16,7 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
-    
+
 </head>
 <body>
     <div id="app" class="noPaddingBottom" style="padding:0">
@@ -26,11 +26,8 @@
                 <img src="~/Content/images/energyDifficiency/yc.png" class="icon" />
                 <span>用能异常</span>
                 <div class="switchVIew">
-                    <label>对比</label><i-switch v-on:on-change="switchChange" size="small"/>
+                    <label>对比</label><i-switch v-on:on-change="switchChange" size="small" />
                 </div>
-                
-                    
-                
                 @*<button class="btn">对比</button>*@
             </div>
             <dv class="list consumeList" style="overflow:hidden">
@@ -86,7 +83,6 @@
         </div>
         <!--right e-->
     </div>
-    
     <script type="text/javascript" src="~/Content/UserJS/Consume._jm.js?v=1.48"></script>
 </body>
 </html>

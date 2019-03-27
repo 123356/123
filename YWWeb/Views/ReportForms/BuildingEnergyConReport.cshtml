@@ -74,9 +74,11 @@
             </div>
         </div>
         <div class="reportView">
+            <div class="title" style="border:0px">
+                {{UnitName}}
+            </div>
             <table class="buildTable">
-                <caption class="caption" style="">{{curTimeStr}} 建筑分项能耗报表<br />{{UnitName}}</caption>
-               
+                <caption class="caption" style="">{{curTimeStr}} 建筑分项能耗报表</caption>
                 <tr>
                     <th style="min-width:25px">ID</th>
                     <th class="nameCol">名称</th>
@@ -97,9 +99,8 @@
                     <td align="center">{{itemTotal}}</td>
                 </tr>
             </table>
-
             <table class="buildTable" style="margin-top:50px">
-                <caption class="caption" style="">{{curTimeStr}} 建筑能耗区域报表<br />{{UnitName}}</caption>
+                <caption class="caption" style="">{{curTimeStr}} 建筑能耗区域报表</caption>
                 <tr>
                     <th style="min-width:25px">ID</th>
                     <th class="nameCol">名称</th>
@@ -124,4 +125,4 @@
     </div>
 </body>
 </html>
-<script type="text/javascript" src="~/Content/UserJS/BuildingEnergyConReport ._jm.js?v=182"></script>
+<script type="text/javascript" src="~/Content/UserJS/BuildingEnergyConReport ._jm.js?v=183"></script>
