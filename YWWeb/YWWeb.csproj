@@ -1873,6 +1873,7 @@
     <Content Include="Content\UserJS\StationTemp._zc.js" />
     <Content Include="Content\UserJS\DepartDataMonitoring._zc.js" />
     <Content Include="Content\UserJS\SubItem._jm.js" />
+    <Content Include="Content\UserJS\EnergyPriceIndex._zc.js" />
     <Content Include="Content\UserJS\SubItem._zc.js" />
     <Content Include="Content\UserJS\SupplierEdits._jm.js" />
     <Content Include="Content\UserJS\SupplierEdits._zc.js" />
@@ -2524,6 +2525,7 @@
     <Content Include="Views\SysInfo\CommunicaEdit.cshtml" />
     <Content Include="Views\SysInfo\ErrorPUE.cshtml" />
     <Content Include="Views\SysInfo\AlarmConfig.cshtml" />
+    <Content Include="Views\EnergyEfficiency\EnergyPriceIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
