@@ -154,17 +154,13 @@
                         tempTable.push(data.table[i].value)
                     }
                     that.analysisData = tempTable
-
-
                 })
                 .catch(function (e) {
                     this.$Message.error('请求失败');
                     throw new ReferenceError(e.message)
                 })
                 .finally(function () {
-                   
                     that.loading = false
-                    console.log("loading：" + that.loading)
                 })
         },
         //柱状图数据
@@ -417,12 +413,12 @@
         },
         createPieChart: function (par) {
             var data = par.list
+           
             piechart = echarts.init(document.getElementById('piechart'));
             var str = ''
             var sumTotal = 0
             for (var i = 0; i < data.length; i++) {
                 str += data[i].name
-                data[i].value = this.toMoney(data[i].value)
                 sumTotal += parseFloat(data[i].value)
             }
 
