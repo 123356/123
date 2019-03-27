@@ -259,9 +259,11 @@ namespace EnergyManage.Controllers
             try
             {
                 string pids = GetPIDs();
-                IList<t_EE_EnerUserProject> list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID);
-                string childs = "";
-                string cidss = "";
+
+                IList<t_EE_EnerUserProject> list_userP;
+                list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID);
+                if (list_userP.Count == 0)
+                    list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
                 IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
                 var TypeList = DAL.CollecDevTypeDAL.getInstance().GetCollectDevTypeList();
                 foreach (var item in list_userP)
