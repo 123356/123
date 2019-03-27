@@ -692,7 +692,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
                                 int index = 0;
@@ -705,6 +705,8 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -758,7 +760,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
                                 int index = 0;
@@ -771,6 +773,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -832,7 +835,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
                                 int index = 0;
@@ -845,6 +848,8 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -898,7 +903,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
                                 int index = 0;
@@ -911,6 +916,8 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -973,7 +980,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
                                 int index = 0;
@@ -986,6 +993,8 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1039,7 +1048,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
                                 int index = 0;
@@ -1052,6 +1061,8 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1197,7 +1208,7 @@ namespace YWWeb.Controllers
                 {
                     s += item + " > ";
                 }
-                s = s.TrimEnd('>');
+                s = s.Trim().TrimEnd('>');
             }
             return s;
         }
@@ -1284,7 +1295,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
                                 int index = 0;
@@ -1297,6 +1308,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1353,7 +1365,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityDaily a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(10),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM-dd") + "'";
                                 int index = 0;
@@ -1366,6 +1378,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1430,7 +1443,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
                                 int index = 0;
@@ -1443,6 +1456,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1497,7 +1511,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityMonthly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(7),RecordTime, 120)='" + Convert.ToDateTime(time).ToString("yyyy-MM") + "'";
                                 int index = 0;
@@ -1510,6 +1524,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1573,7 +1588,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
                                 int index = 0;
@@ -1586,6 +1601,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
@@ -1640,7 +1656,7 @@ namespace YWWeb.Controllers
                             if (item.addCid != null && !string.IsNullOrEmpty(item.addCid))
                             {
                                 Dictionary<int, string> cpids = GetCId(item.addCid);
-                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on a.CID=b.CID where 1=1 and UsePower!=0 and UsePower is not null";
+                                string sqlD = "select a.*,b.Label from t_EE_PowerQualityYearly a join t_DM_CircuitInfo b on (a.CID=b.CID and a.PID=b.PID) where 1=1 and UsePower!=0 and UsePower is not null";
                                 if (!string.IsNullOrEmpty(time))
                                     sqlD += " and CONVERT(varchar(4),RecordTime, 120)='" + time + "'";
                                 int index = 0;
@@ -1653,6 +1669,7 @@ namespace YWWeb.Controllers
 
                                     if (index + 1 == cpids.Count)
                                         sqlD += ")";
+                                    index++;
                                 }
                                 if (!string.IsNullOrEmpty(lables))
                                 {
