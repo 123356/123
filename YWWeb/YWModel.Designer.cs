@@ -836,22 +836,6 @@ namespace YWWeb
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<t_CM_SparePartInfo> t_CM_SparePartInfo
-        {
-            get
-            {
-                if ((_t_CM_SparePartInfo == null))
-                {
-                    _t_CM_SparePartInfo = base.CreateObjectSet<t_CM_SparePartInfo>("t_CM_SparePartInfo");
-                }
-                return _t_CM_SparePartInfo;
-            }
-        }
-        private ObjectSet<t_CM_SparePartInfo> _t_CM_SparePartInfo;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<t_PM_EmergencyPlan> t_PM_EmergencyPlan
         {
             get
@@ -2448,6 +2432,22 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_DM_CircuitInfo> _t_DM_CircuitInfo;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_CM_SparePartInfo> t_CM_SparePartInfo
+        {
+            get
+            {
+                if ((_t_CM_SparePartInfo == null))
+                {
+                    _t_CM_SparePartInfo = base.CreateObjectSet<t_CM_SparePartInfo>("t_CM_SparePartInfo");
+                }
+                return _t_CM_SparePartInfo;
+            }
+        }
+        private ObjectSet<t_CM_SparePartInfo> _t_CM_SparePartInfo;
 
         #endregion
 
@@ -2835,14 +2835,6 @@ namespace YWWeb
         public void AddTot_CM_SupplierInfo(t_CM_SupplierInfo t_CM_SupplierInfo)
         {
             base.AddObject("t_CM_SupplierInfo", t_CM_SupplierInfo);
-        }
-    
-        /// <summary>
-        /// 用于向 t_CM_SparePartInfo EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddTot_CM_SparePartInfo(t_CM_SparePartInfo t_CM_SparePartInfo)
-        {
-            base.AddObject("t_CM_SparePartInfo", t_CM_SparePartInfo);
         }
     
         /// <summary>
@@ -3643,6 +3635,14 @@ namespace YWWeb
         public void AddTot_DM_CircuitInfo(t_DM_CircuitInfo t_DM_CircuitInfo)
         {
             base.AddObject("t_DM_CircuitInfo", t_DM_CircuitInfo);
+        }
+    
+        /// <summary>
+        /// 用于向 t_CM_SparePartInfo EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_CM_SparePartInfo(t_CM_SparePartInfo t_CM_SparePartInfo)
+        {
+            base.AddObject("t_CM_SparePartInfo", t_CM_SparePartInfo);
         }
 
         #endregion
@@ -17032,6 +17032,30 @@ namespace YWWeb
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Int32> StockCount
+        {
+            get
+            {
+                return _StockCount;
+            }
+            set
+            {
+                OnStockCountChanging(value);
+                ReportPropertyChanging("StockCount");
+                _StockCount = StructuralObject.SetValidValue(value, "StockCount");
+                ReportPropertyChanged("StockCount");
+                OnStockCountChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _StockCount;
+        partial void OnStockCountChanging(Nullable<global::System.Int32> value);
+        partial void OnStockCountChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String EadoCode
         {
             get
@@ -17098,30 +17122,6 @@ namespace YWWeb
         private global::System.String _Remarks;
         partial void OnRemarksChanging(global::System.String value);
         partial void OnRemarksChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> StockCount
-        {
-            get
-            {
-                return _StockCount;
-            }
-            set
-            {
-                OnStockCountChanging(value);
-                ReportPropertyChanging("StockCount");
-                _StockCount = StructuralObject.SetValidValue(value, "StockCount");
-                ReportPropertyChanged("StockCount");
-                OnStockCountChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _StockCount;
-        partial void OnStockCountChanging(Nullable<global::System.Int32> value);
-        partial void OnStockCountChanged();
     
         /// <summary>
         /// 没有元数据文档可用。

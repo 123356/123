@@ -126,37 +126,40 @@ namespace YWWeb.Controllers
 
             try
             {
-                List<t_CM_SparePartInfo> list = bll.t_CM_SparePartInfo.Where(d => (d.SparePartCode == sparepart.SparePartCode || d.SparePartName == sparepart.SparePartName) && d.SparePartID != sparepart.SparePartID).ToList();
-                if (list.Count > 0)
+
+
+                //编辑
+                if (sparepart.SparePartID > 0)
                 {
-                    result = "此备件名称或编码已存在，请重新录入！";
+                    t_CM_SparePartInfo info = bll.t_CM_SparePartInfo.Where(d => d.SparePartID == sparepart.SparePartID).First();
+                    info.SparePartID = sparepart.SparePartID;
+                    info.SparePartCode = sparepart.SparePartCode;
+                    info.SparePartName = sparepart.SparePartName;
+                    info.StockCount = sparepart.StockCount;
+                    info.SupplierID = sparepart.SupplierID;
+                    info.EadoCode = sparepart.EadoCode;
+                    info.UseState = sparepart.UseState;
+                    info.pid = sparepart.pid;
+                    if (sparepart.Remarks != null)
+                    {
+                        info.Remarks = sparepart.Remarks.Replace("\n", "<br>");
+                    }
+                    else
+                    {
+                        info.Remarks = sparepart.Remarks;
+                    }
+
+                    bll.ObjectStateManager.ChangeObjectState(info, EntityState.Modified);
+                    bll.SaveChanges();
+                    result = "ok1";
+                    Common.InsertLog("备件管理", CurrentUser.UserName, "编辑备件信息[" + info.SparePartName + "(" + info.SparePartCode + ")_" + info.SparePartID + "]");
                 }
                 else
                 {
-                    //编辑
-                    if (sparepart.SparePartID > 0)
+                    List<t_CM_SparePartInfo> list = bll.t_CM_SparePartInfo.Where(d => (d.SparePartCode == sparepart.SparePartCode || d.SparePartName == sparepart.SparePartName) && d.SparePartID != sparepart.SparePartID).ToList();
+                    if (list.Count > 0)
                     {
-                        t_CM_SparePartInfo info = bll.t_CM_SparePartInfo.Where(d => d.SparePartID == sparepart.SparePartID).First();
-                        info.SparePartID = sparepart.SparePartID;
-                        info.SparePartCode = sparepart.SparePartCode;
-                        info.SparePartName = sparepart.SparePartName;
-                        info.StockCount = sparepart.StockCount;
-                        info.SupplierID = sparepart.SupplierID;
-                        info.EadoCode = sparepart.EadoCode;
-                        info.UseState = sparepart.UseState;
-                        if (sparepart.Remarks != null)
-                        {
-                            info.Remarks = sparepart.Remarks.Replace("\n", "<br>");
-                        }
-                        else
-                        {
-                            info.Remarks = sparepart.Remarks;
-                        }
-
-                        bll.ObjectStateManager.ChangeObjectState(info, EntityState.Modified);
-                        bll.SaveChanges();
-                        result = "ok1";
-                        Common.InsertLog("备件管理", CurrentUser.UserName, "编辑备件信息[" + info.SparePartName + "(" + info.SparePartCode + ")_" + info.SparePartID + "]");
+                        result = "此备件名称或编码已存在，请重新录入！";
                     }
                     else
                     {
@@ -177,6 +180,7 @@ namespace YWWeb.Controllers
                         Common.InsertLog("备件管理", CurrentUser.UserName, "新增备件信息[" + sparepart.SparePartName + "(" + sparepart.SparePartCode + ")]");
                     }
                 }
+                
 
                 return Content(result);
             }

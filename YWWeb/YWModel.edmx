@@ -697,13 +697,9 @@
           <Property Name="SoeDesc" Type="varchar" MaxLength="200" />
           <Property Name="HappenDate" Type="datetime" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“yw_db.dbo.t_CM_SparePartInfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_CM_SparePartInfo">
           <Key>
             <PropertyRef Name="SparePartID" />
-            
-            
           </Key>
           <Property Name="SparePartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SparePartCode" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -2829,6 +2825,7 @@
           <EntitySet Name="t_CM_Score" EntityType="Self.t_CM_Score" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_ShopTruck" EntityType="Self.t_CM_ShopTruck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SOEInfo" EntityType="Self.t_CM_SOEInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_CM_SparePartInfo" EntityType="Self.t_CM_SparePartInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SubSysPDRInfo" EntityType="Self.t_CM_SubSysPDRInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_SupplierInfo" EntityType="Self.t_CM_SupplierInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_CM_Unit" EntityType="Self.t_CM_Unit" Schema="dbo" store:Type="Tables" />
@@ -2898,19 +2895,6 @@
           <EntitySet Name="t_Sys_City" EntityType="Self.t_Sys_City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_Sys_EquipmentCode" EntityType="Self.t_Sys_EquipmentCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_Sys_Promary" EntityType="Self.t_Sys_Promary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="t_CM_SparePartInfo" EntityType="Self.t_CM_SparePartInfo" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[t_CM_SparePartInfo].[SparePartID] AS [SparePartID], 
-[t_CM_SparePartInfo].[SparePartCode] AS [SparePartCode], 
-[t_CM_SparePartInfo].[SparePartName] AS [SparePartName], 
-[t_CM_SparePartInfo].[SupplierID] AS [SupplierID], 
-[t_CM_SparePartInfo].[StockCount] AS [StockCount], 
-[t_CM_SparePartInfo].[EadoCode] AS [EadoCode], 
-[t_CM_SparePartInfo].[UseState] AS [UseState], 
-[t_CM_SparePartInfo].[Remarks] AS [Remarks], 
-[t_CM_SparePartInfo].[pid] AS [pid]
-FROM [dbo].[t_CM_SparePartInfo] AS [t_CM_SparePartInfo]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="t_DE_Report" EntityType="Self.t_DE_Report" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [t_DE_Report].[Xuhao] AS [Xuhao], 
@@ -3710,7 +3694,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_Sys_Promary" EntityType="YWModel.t_Sys_Promary" />
           <EntitySet Name="t_DM_ElectricMeterInfo" EntityType="YWModel.t_DM_ElectricMeterInfo" />
           <EntitySet Name="t_CM_SupplierInfo" EntityType="YWModel.t_CM_SupplierInfo" />
-          <EntitySet Name="t_CM_SparePartInfo" EntityType="YWModel.t_CM_SparePartInfo" />
           <EntitySet Name="t_PM_EmergencyPlan" EntityType="YWModel.t_PM_EmergencyPlan" />
           <EntitySet Name="t_CM_SOEInfo" EntityType="YWModel.t_CM_SOEInfo" />
           <EntitySet Name="t_CM_PDRInfo" EntityType="YWModel.t_CM_PDRInfo" />
@@ -3811,6 +3794,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_EE_WeatherDaily" EntityType="YWModel.t_EE_WeatherDaily" />
           <EntitySet Name="t_CM_ShopTruck" EntityType="YWModel.t_CM_ShopTruck" />
           <EntitySet Name="t_DM_CircuitInfo" EntityType="YWModel.t_DM_CircuitInfo" />
+          <EntitySet Name="t_CM_SparePartInfo" EntityType="YWModel.t_CM_SparePartInfo" />
         </EntityContainer>
         <EntityType Name="t_AlarmTable_en">
           <Key>
@@ -4597,20 +4581,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Type="Int32" Name="UseState" />
           <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="t_CM_SparePartInfo">
-          <Key>
-            <PropertyRef Name="SparePartID" />
-          </Key>
-          <Property Type="Int32" Name="SparePartID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="SparePartCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SparePartName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="SupplierID" />
-          <Property Type="String" Name="EadoCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="UseState" />
-          <Property Type="String" Name="Remarks" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="StockCount" />
-          <Property Name="pid" Type="Int32" />
         </EntityType>
         <EntityType Name="t_PM_EmergencyPlan">
           <Key>
@@ -6496,6 +6466,20 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="coolect_dev_type" Type="Int32" />
           <Property Name="Label" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="t_CM_SparePartInfo">
+          <Key>
+            <PropertyRef Name="SparePartID" />
+          </Key>
+          <Property Name="SparePartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SparePartCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SparePartName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="StockCount" Type="Int32" />
+          <Property Name="EadoCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UseState" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pid" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7258,21 +7242,6 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="t_CM_SparePartInfo">
-            <EntityTypeMapping TypeName="YWModel.t_CM_SparePartInfo">
-              <MappingFragment StoreEntitySet="t_CM_SparePartInfo">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="StockCount" ColumnName="StockCount" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="UseState" ColumnName="UseState" />
-                <ScalarProperty Name="EadoCode" ColumnName="EadoCode" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="SparePartName" ColumnName="SparePartName" />
-                <ScalarProperty Name="SparePartCode" ColumnName="SparePartCode" />
-                <ScalarProperty Name="SparePartID" ColumnName="SparePartID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9272,6 +9241,21 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="CName" ColumnName="CName" />
                 <ScalarProperty Name="CID" ColumnName="CID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_CM_SparePartInfo">
+            <EntityTypeMapping TypeName="YWModel.t_CM_SparePartInfo">
+              <MappingFragment StoreEntitySet="t_CM_SparePartInfo">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="UseState" ColumnName="UseState" />
+                <ScalarProperty Name="EadoCode" ColumnName="EadoCode" />
+                <ScalarProperty Name="StockCount" ColumnName="StockCount" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="SparePartName" ColumnName="SparePartName" />
+                <ScalarProperty Name="SparePartCode" ColumnName="SparePartCode" />
+                <ScalarProperty Name="SparePartID" ColumnName="SparePartID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

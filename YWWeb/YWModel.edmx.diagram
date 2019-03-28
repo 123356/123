@@ -53,7 +53,6 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_Sys_Promary" Width="1.5" PointX="20.75" PointY="9.75" Height="1.5506396484374818" />
         <edmx:EntityTypeShape EntityType="YWModel.t_DM_ElectricMeterInfo" Width="1.5" PointX="6.75" PointY="22.75" Height="2.3520719401041674" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_SupplierInfo" Width="1.5" PointX="8.75" PointY="22.75" Height="2.7341113281249818" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SparePartInfo" Width="1.5" PointX="22.75" PointY="21.75" Height="2.3520719401041674" />
         <edmx:EntityTypeShape EntityType="YWModel.t_PM_EmergencyPlan" Width="1.5" PointX="0.75" PointY="23.75" Height="1.7790128580729174" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_SOEInfo" Width="1.5" PointX="14.75" PointY="23.75" Height="2.4746101888020746" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_PDRInfo" Width="1.5" PointX="24.75" PointY="7.75" Height="5.2465218098958246" />
@@ -71,7 +70,7 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_PointIO" Width="1.5" PointX="24.75" PointY="26.75" Height="1.7354337565104174" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_PointsInfo" Width="1.5" PointX="26.75" PointY="26.75" Height="8.7576098632812318" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_UserInfo" Width="1.5" PointX="28.75" PointY="0.75" />
-        <edmx:EntityTypeShape EntityType="YWModel.V_PointsAllInfo" Width="1.5" PointX="0.75" PointY="28.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.V_PointsAllInfo" Width="1.5" PointX="2" PointY="28.875" />
         <edmx:EntityTypeShape EntityType="YWModel.V_Alarm_PDRInfo" Width="1.5" PointX="29.375" PointY="5.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_DataTransfer" Width="1.5" PointX="11.375" PointY="29.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_Sys_EquipmentCode" Width="1.5" PointX="9.375" PointY="14.75" />
@@ -154,6 +153,7 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_WeatherDaily" Width="1.5" PointX="39.375" PointY="39.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_ShopTruck" Width="1.5" PointX="39.375" PointY="15.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="21.375" PointY="35.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_CM_SparePartInfo" Width="1.5" PointX="21.375" PointY="21.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
