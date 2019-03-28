@@ -248,7 +248,6 @@
             };
             client.onMessageArrived = function(res) {
                 var payload = JSON.parse(res.payloadString);
-                console.log(payload)
                 var data = payload.content;
                 if (!payload.type) {
                     return;
