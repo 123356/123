@@ -1716,6 +1716,7 @@
     <Content Include="Content\UserJS\DepartDataMonitoring._jm.js" />
     <Content Include="Content\UserJS\ElectricityConsumptionRepor._zc.js" />
     <Content Include="Content\UserJS\ElectricityMonthConsumptionRepor._zc.js" />
+    <Content Include="Content\UserJS\ElectricityReport._jm.js" />
     <Content Include="Content\UserJS\EnergyOverview._jm.js" />
     <Content Include="Content\UserJS\EnergyPrice._jm.js" />
     <Content Include="Content\UserJS\EnergyPrice._zc.js" />
