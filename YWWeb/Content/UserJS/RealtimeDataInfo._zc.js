@@ -189,10 +189,7 @@
             }
         },
         conversionDate: function(str) {
-            console.log(str)
-
             var time = new Date(parseInt(str));
-            console.log(time)
             var y = time.getFullYear();
             var m = time.getMonth() + 1;
             var d = time.getDate();
@@ -200,7 +197,6 @@
             var mm = time.getMinutes();
             var s = time.getSeconds();
             var str = y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
-            console.log(str)
             return str
         },
         add0: function(m) { return m < 10 ? '0' + m : m },
@@ -252,6 +248,7 @@
             };
             client.onMessageArrived = function(res) {
                 var payload = JSON.parse(res.payloadString);
+                console.log(payload)
                 var data = payload.content;
                 if (!payload.type) {
                     return;
