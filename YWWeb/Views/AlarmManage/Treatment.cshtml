@@ -46,7 +46,7 @@
 	line-height: 24px;
 	letter-spacing: 0px;
 	color: #40af94;">
-                        报警时间
+                        报警分析
                     </button>
                     <button onclick="showhandle()" style="margin-left:100px;font-family: MicrosoftYaHei;
 	font-size: 16px;
@@ -119,6 +119,7 @@
         $.post("/AlarmManage/getMan", { "AlarmID": alarmObj.AlarmID }, function (data) {
             $('#tel').html("<div style=\"margin-left:50px;margin-top:10px;\">"+data+"</div>");
         });
+        console.log(alarmObj)
         if (alarmObj != null) {
             //console.log(alarmObjStr)
             //var str = unescape(alarmObjStr)
@@ -180,6 +181,7 @@
                 url: '/DataReport/GetHisDataByTime',
                 type: 'POST',
                 data: {
+                    //cid: alarmObj.CID,
                     pid: alarmObj.PID,
                     tagid: alarmObj.TagID,
                     time:  alarmObj.AlarmDateTime
@@ -278,6 +280,7 @@
                     top:45
                 },
                 series: [{
+                    name:'电流',
                     data: yData,
                     type: 'line',
                     smooth: true,
