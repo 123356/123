@@ -50,7 +50,8 @@ function save() {
         SupplierID: $("#SupplierID").combobox('getValue'),
 
         EadoCode: $("#EadoCode").val(),
-        Remarks: $("#Remarks").val()
+        Remarks: $("#Remarks").val(),
+        pid: $.cookie('cookiepid')
     };
     $.post("/SparePartManage/SaveSparePartInfo", postData, function (data) {
         if (data == "ok1") {

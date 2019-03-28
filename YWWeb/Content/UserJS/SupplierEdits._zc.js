@@ -64,7 +64,8 @@ function save() {
         MobilePhone: $("#MobilePhone").val(),
         Telephone: $("#Telephone").val(),
         SupplierAddress: $("#SupplierAddress").val(),
-        Remarks: $("#Remarks").val()
+        Remarks: $("#Remarks").val(),
+        PID: $.cookie('cookiepid') 
     };
     $.post("/SupplierManage/SaveSupplierInfo", postData, function (data) {
         if (data == "ok1") {

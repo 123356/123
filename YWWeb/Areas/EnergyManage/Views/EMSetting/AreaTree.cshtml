@@ -375,7 +375,7 @@
             console.log(xData)
             var option = {
                 title: {
-                    text: `${new Date().getMonth()}月—累计用电量`,
+                    text: `${new Date().getMonth()+1}月—累计用电量`,
                     subtext: Math.floor(count * 100) / 100+"  kW·h",
                     left: 'center',
                     textStyle: {
@@ -487,7 +487,8 @@
             var pieChart = echarts.init(document.getElementById('pieChart'));
             var option = {
                 title: {
-                    text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
+                    //text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
+                    text: `当日实时分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
                     subtext: subtext,
                     left: 'center',
                     textStyle: {

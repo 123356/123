@@ -5,7 +5,7 @@ $('#list_data').datagrid({
 })
 $('#list_data').datagrid({
     url: '/Home/GetElementList',
-    queryParams: { "name": $("#sparepartname").val() },
+    queryParams: { "name": $("#sparepartname").val(), "pid": $.cookie('cookiepid') },
     rownumbers: true,
     pageSize: 15,
     pageList: [10, 15, 20, 30, 50],
@@ -19,7 +19,7 @@ $('#list_data').datagrid({
 //查询
 function dosearch() {
     var sparepartname = $("#sparepartname").val();
-    $('#list_data').datagrid('load', { "name": sparepartname });
+    $('#list_data').datagrid('load', { "name": sparepartname, "pid": $.cookie('cookiepid') });
     $('#list_data').datagrid('uncheckAll');
 }
 

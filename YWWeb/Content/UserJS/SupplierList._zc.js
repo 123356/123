@@ -10,7 +10,7 @@ function dosearch() {
     var suppliername = $("#suppliername").val();
     var cname = $("#cname").val();
     var mpnumber = $("#mpnumber").val();
-    $('#list_data').datagrid('load', { "SupplierName": suppliername, "Contacter": cname, "MobilePhone": mpnumber });
+    $('#list_data').datagrid('load', { "SupplierName": suppliername, "Contacter": cname, "MobilePhone": mpnumber, "pid": $.cookie('cookiepid')});
     $('#list_data').datagrid('uncheckAll');
 }
 

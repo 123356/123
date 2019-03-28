@@ -24,9 +24,7 @@
             })
             .then(function (res) {
                 that.thirdMenu = res.data
-                /*if (res.data.length > 0) {
-                    that.frameSrc = res.data[0].Location
-                }*/
+               
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -39,6 +37,9 @@
                 url: '/energyManage/EMHome/GetUnitComobxList',
                 method: 'get',
             }).then(function (res) {
+                if (that.thirdMenu.length > 0) {
+                    that.frameSrc = that.thirdMenu[0].Location
+                }
                 that.comList = res.data
                 if (that.unitID == null) {
                     if (res.data.length > 0) {
@@ -63,9 +64,7 @@
                     } else {
                         that.unitID = parseInt($.cookie("enUID"))
                     }
-                    if (that.thirdMenu.length > 0) {
-                        that.frameSrc = that.thirdMenu[0].Location
-                    } 
+                   
                 }
                 that.selectedCom = that.unitID
 
