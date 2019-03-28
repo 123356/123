@@ -7,8 +7,8 @@
     <meta name="renderer" content="webkit">
     <title>报警处理</title>
     <link href="~/Content/css/common.css" rel="stylesheet" type="text/css" />
-    <style>
 
+    <style>
     </style>
 </head>
 <body>
@@ -17,14 +17,8 @@
             <div>
                 <div class="ww" style="width: 100%;
 	        height: 97px;
-	        background-image: linear-gradient(0deg, 
-		        #54b3fa 0%, 
-		        #1565c0 100%), 
-	        linear-gradient(
-		        #1565c0, 
-		        #1565c0);
-	        background-blend-mode: normal, 
-		        normal;">
+	        background: linear-gradient(to bottom, #40af94 , #41a49f);
+	       ">
                     <div style="width: 208px;
 	        height: 26px;
 	        font-family: MicrosoftYaHei;
@@ -33,16 +27,16 @@
 	        font-stretch: normal;
 	        line-height: 24px;
 	        letter-spacing: 0px;
-	        color: #ffffff;padding-top:36px;padding-left:56px">设备报警详细页面</div>         
+	        color: #ffffff;padding-top:36px;padding-left:56px">设备报警详细页面</div>
                 </div>
-                <div style="display:inline-block;margin-top: 18px;" >
+                <div style="display:inline-block;margin-top: 18px;">
                     <button onclick="showalarm()" style="margin-left:50px;font-family: MicrosoftYaHei;
 	font-size: 16px;
 	font-weight: normal;
 	font-stretch: normal;
 	line-height: 24px;
 	letter-spacing: 0px;
-	color: #1565c0;">
+	color: #40af94;">
                         报警内容
                     </button>
                     <button onclick="showreason()" style="margin-left:100px;font-family: MicrosoftYaHei;
@@ -51,8 +45,8 @@
 	font-stretch: normal;
 	line-height: 24px;
 	letter-spacing: 0px;
-	color: #1565c0;">
-                        可能原因
+	color: #40af94;">
+                        报警时间
                     </button>
                     <button onclick="showhandle()" style="margin-left:100px;font-family: MicrosoftYaHei;
 	font-size: 16px;
@@ -60,7 +54,7 @@
 	font-stretch: normal;
 	line-height: 24px;
 	letter-spacing: 0px;
-	color: #1565c0;">
+	color: #40af94;">
                         处理流程
                     </button>
                 </div>
@@ -86,38 +80,40 @@
                         <tr> <th>监测位置</th> <th id="AlarmAddress" colspan="2"></th><th>监测站点</th> <th id="Company" colspan="2"></th>  </tr>
                     </table>
                 </div>
-                <div id="tel">        
+                <div id="tel">
                 </div>
-               <div style="padding-right:50px;margin-left:50px;margin-top: 10px;">
-                   <div>
-                       选择批注：
-                   </div>
-                   <div class="radio m">
-                       <label>
-                           <input type="radio" name="group1" id="optionsRadios1" value="设备调试">设备调试
-                       </label>
-                   </div>
-                   <div class="radio">
-                       <label>
-                           <input type="radio" name="group1" id="optionsRadios2" value="真实故障">真实故障
-                       </label>
-                   </div>
-                   <div class="radio">
-                       <label>
-                           <input type="radio" name="group1" id="optionsRadios3" value="误报">误报
-                       </label>
-                   </div>
-                   <div class="radio">
-                       <label>
-                           <input type="radio" name="group1" id="optionsRadios4" value="其他">其他
-                       </label>
-                       <input id="ii" />
-                   </div>
-               </div>
-                <button onclick="subbmit()" style="width: 116px;height: 31px;background-color: #1565c0;color:white;position: relative;left: 440px;top:40px;">提交</button>
+                <div style="padding-right:50px;margin-left:50px;margin-top: 10px;">
+                    <div>
+                        选择批注：
+                    </div>
+                    <div class="radio m">
+                        <label>
+                            <input type="radio" name="group1" id="optionsRadios1" value="设备调试">设备调试
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="group1" id="optionsRadios2" value="真实故障">真实故障
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="group1" id="optionsRadios3" value="误报">误报
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="group1" id="optionsRadios4" value="其他">其他
+                        </label>
+                        <input id="ii" />
+                    </div>
+                </div>
+                <button onclick="subbmit()" style="width: 116px;height: 31px;background-color: #40af94;color:white;position: relative;left: 440px;top:40px;">提交</button>
             </div>
         </div>
     </div>
+    @*<script type="text/javascript" src="~/Content/js/jquery-1.7.2.min.js"></script>*@
+    <script type="text/javascript" src="~/Content/js/echarts.min.js"></script>
     <script>
         var alarmObj = @Html.Raw(Request.QueryString["alarmObj"]);
         $.post("/AlarmManage/getMan", { "AlarmID": alarmObj.AlarmID }, function (data) {
@@ -138,7 +134,7 @@
             document.getElementById("AlarmAddress").innerHTML = alarmObj.AlarmAddress;
             document.getElementById("AlarmArea").innerHTML = alarmObj.AlarmArea;
             document.getElementById("Company").innerHTML = alarmObj.Company;
-           
+
         }
         //开关量显示设置
         function ValueReset(value, row) {
@@ -155,15 +151,153 @@
             $('#info').html(content);
             showAlarmInfo()
         }
-        function showreason(){
-            var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.浸水.\n2.误报.</textarea>"
-            $('#info').html(content);
+        function showreason() {
+            getChartData()
+            var html = "<div id='lineChart' class='chart' style='width:100%;height:100%;'></div>"
+            //var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.浸水.\n2.误报.</textarea>"
+            $('#info').html(html);
+            createLine()
         }
         function showhandle(){
             var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.联系负责人核实报警情况，要求15分钟内反馈结果.\n2.依据结果处理报警.\n3.如为：真实故障，自动下发工单，并短信通知相关人员，电话通知值班班长，安排抢修事宜.\n4.跟踪工单进展.</textarea>"
             $('#info').html(content);
         }
+       
+        function formaterDate(time) {
+            var t = time.slice(6, 19)
+            var NewDtime = new Date(parseInt(t));
+            var year = NewDtime.getFullYear();
+            var month = NewDtime.getMonth() + 1;
+            var date = NewDtime.getDate();
+            var hour = NewDtime.getHours();
+            var minute = NewDtime.getMinutes();
+            var second = NewDtime.getSeconds();
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+        }
+        //获取趋势图数据
+        function getChartData() {
+            $.ajax({
+                url: '/DataReport/GetHisDataByTime',
+                type: 'POST',
+                data: {
+                    pid: alarmObj.PID,
+                    tagid: alarmObj.TagID,
+                    time:  alarmObj.AlarmDateTime
 
+                },
+                success: function (data) {
+                    createLine(data)
+                },
+                error: function () {
+
+                }
+
+            })
+        }
+        //创建电流趋势图
+        function createLine(data) {
+            var chart = echarts.init(document.getElementById('lineChart'));
+            var xData = []
+            var yData = []
+            for (var i in data) {
+                xData.push(formaterDate(data[i].RecTime))
+                yData.push(data[i].PV)
+            }
+            var option = {
+                title: {
+                    left: 'center',
+                    text: '电流趋势',
+                    textStyle: {
+                        fontSize: 14,
+                        color:'#777'
+                    },
+                    top:10
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                color: ['#53bda9'],
+                xAxis: {
+                    type: 'category',
+                    data: xData,
+                    
+                    axisLine: {
+                        lineStyle: {
+                            color: '#cdcdcd',//x轴线颜色
+                            width: '0.7'
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLabel: { //调整y轴的lable
+                        textStyle: {
+                            fontSize: 10,// 让字体变大
+                            color: '#9f9d9d'
+                        }
+                    },
+                },
+                yAxis: {
+                    name:'A',
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#cdcdcd',//x轴线颜色
+                            width: '0.7'
+                        },
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#ededed'
+                        }
+                    },
+                    axisLabel: { //调整y轴的lable
+                        textStyle: {
+                            fontSize: 10,// 让字体变大
+                            color: '#9f9d9d'
+                        }
+                    }
+                },
+                grid: {
+                    bottom: 20,
+                    left: 40,
+                    right: 20,
+                    top:45
+                },
+                series: [{
+                    data: yData,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',//节点样式
+                    lineStyle: {
+                        color: '#53bda9',
+                        width: 1,
+                    },
+                }],
+                dataZoom: [{
+                    type: 'inside',
+                    realtime: true,
+                }],
+            };
+            chart.clear()
+            chart.setOption(option)
+            window.addEventListener("resize", () => {
+                chart.resize()
+            });
+        }
         function subbmit() {
             //console.log("subbmit")
             //console.log(alarmObj)
@@ -177,15 +311,15 @@
                 } else {
                     AlarmTreatment = document.getElementById("ii").value
                 }
-                            
+
                 //console.log(AlarmTreatment);
                 if(AlarmTreatment==undefined||AlarmTreatment==""){
                     alert("批注不能为空")
                     return;
                 }
 
-                //去掉前后空格               
-                AlarmTreatment =  AlarmTreatment.replace(/(^\s*)|(\s*$)/g, ""); 
+                //去掉前后空格
+                AlarmTreatment =  AlarmTreatment.replace(/(^\s*)|(\s*$)/g, "");
                 //console.log("AlarmTreatment ="+AlarmTreatment);
 
                 $.post("/AlarmManage/DelAlarmById", { "AlarmID": alarmObj.AlarmID, "AlarmTreatment": AlarmTreatment }, function (data) {
