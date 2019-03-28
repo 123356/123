@@ -403,6 +403,7 @@ namespace YWWeb.Controllers
                         info.MobilePhone = supplier.MobilePhone;
                         info.Telephone = supplier.Telephone;
                         info.SupplierAddress = supplier.SupplierAddress;
+                        info.PID = supplier.PID;
                         info.UseState = supplier.UseState;
                         if (supplier.Remarks != null)
                         {
