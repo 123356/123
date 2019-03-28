@@ -431,5 +431,18 @@ namespace YWWeb.Controllers
         //{
         //    get { return loginbll.CurrentUser; }
         //}
+        public JsonResult GetHisDataByTime(int pid,int tagid,string time)
+        {
+            try
+            {
+                string startTime = Convert.ToDateTime(time).AddMinutes(-3).ToString("yyyy-MM-dd HH:mm:ss");
+                string endTime = Convert.ToDateTime(time).AddMinutes(3).ToString("yyyy-MM-dd HH:mm:ss");
+                var data = HisDataDAL.getInstance().GetHisData(pid, tagid + "", startTime, endTime);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
