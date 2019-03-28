@@ -48,7 +48,7 @@
                         $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
                     }
                 }
-                else if (that.unitID != null) {
+                else {
                     var count = 0
                     for (var i in res.data) {
                         if (that.unitID == res.data[i].UnitID) {
@@ -63,6 +63,11 @@
                         }
                     } else {
                         that.unitID = parseInt($.cookie("enUID"))
+                        for (var i in res.data) {
+                            if (that.unitID == res.data[i].UnitID) {
+                                $.cookie("enUName", res.data[i].UnitName, { expires: 7 })
+                            }
+                        }
                     }
                    
                 }
