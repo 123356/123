@@ -310,7 +310,6 @@ var vm = new Vue({
                     throw new ReferenceError(e.message)
                 })
         },
-
         barMenuClick: function (e) {
             this.activeIndex = e
             this.getLineData()
@@ -676,6 +675,5 @@ var vm = new Vue({
         this.initSwiper()
     },
     created: function () {
-
     }
 })
