@@ -618,6 +618,7 @@ namespace YWWeb.Controllers
                 List<string> litTime = new List<string>();
                 //list1.IndexOf()
 
+                list = list.OrderBy(p => p.RecordTime).ToList();
                 foreach (PowerData_SSQX mod in list)
                 {
                     if (mod.Aphase < 0)
