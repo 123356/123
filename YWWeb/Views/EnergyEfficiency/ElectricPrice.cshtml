@@ -134,7 +134,7 @@
             var fdrid = 0;
             var pvfid = 0;
             var BigIndTypeID = 0;
-        
+
         $.ajax({
             url:'/BaseInfo/GetElecIndustry',
             type:'post',
@@ -158,7 +158,7 @@
                 });
             }
         })
-        
+
         $.ajax({
             url:'/BaseInfo/GetElecVoltage',
             type:'post',
@@ -180,12 +180,12 @@
                     }, onChange: function (n, o) {
                     }
                 });
-                
+
             }
         })
-       
-        
-        
+
+
+
          $.ajax({
             url:'/BaseInfo/GetElecFDR',
             type:'post',
@@ -232,7 +232,7 @@
                 });
             }
         })
-       
+
         $.ajax({
             url:'/BaseInfo/GetElecBigIndustryType',
             type:'post',
@@ -250,13 +250,13 @@
                         if (data.length > 0) {
                             $("#BigIndTypeID").combobox('select', data[0].BigIndTypeID);
                         }
-                        
+
                     }, onChange: function (n, o) {
                     }
                 });
             }
         })
-        
+
         var editIndex = undefined;
         function endEditing() {
             if (editIndex == undefined) { return true }
@@ -277,8 +277,8 @@
                 $('#list_data').datagrid('selectRow', editIndex);
             }
         }
-       
-       
+
+
         setTimeout(function(){
           dosearch();
         },100)
@@ -291,7 +291,7 @@
                  BigIndTypeID = $("#BigIndTypeID").combobox('getValue');
             }
              catch(err){
-                 
+
             }
             $('#list_data').datagrid({
                 url: '/Home/GetElecPriceList',
@@ -318,9 +318,10 @@
             }
         }
         function Delete() {
-            var row = $('#list_data').datagrid('getChecked');
+            var row = $('#list_data').datagrid('getSelected');
+
             if (row) {
-               
+
                 if (row.id > 0) {
                     $.messager.confirm('提示', '你确定要删除选中的单价？', function (r) {
                         if (r) {
@@ -357,6 +358,7 @@
             if (endEditing()) {
                 $('#list_data').datagrid('acceptChanges');
                 var row = $('#list_data').datagrid('getSelected');
+                console.log(row)
                 if (row) {
                     var postData = {
                         id: row.id,
@@ -372,8 +374,16 @@
                         reservoir: row.reservoir,
                         Demand: row.Demand,
                         capacity: row.capacity,
-                        
+
                     };
+                    if(row.id){
+                        postData.indID = row.indID
+                        postData.FDRID = row.FDRID
+                        postData.PVFID = row.PVFID
+                        postData.VID = row.VID
+                        postData.BigIndTypeID = row.BigIndTypeID
+
+                    }
                     $.post("/Home/UpdateOrAddElec", postData, function (data) {
                         if (data.indexOf("ok") >= 0) {
                             var arr = data.split(",");
@@ -506,7 +516,7 @@
             }
         }
 
-         
+
     </script>
     <script src="~/Content/js/ResizeList._zc.js"></script>
 </body>
