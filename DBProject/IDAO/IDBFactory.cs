@@ -46,5 +46,7 @@ namespace IDAO
         IAlarmConfig pueError { get; }
         IEPowerForeQuality powerForeQuality { get; }
 
+        IElecPrice elecPrice { get; }
+
     }
 }

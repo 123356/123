@@ -1905,7 +1905,7 @@ namespace YWWeb.Controllers
                 var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
                 if (list.Count() > 0)
                 {
-                    model.Name = "危急";
+                    model.Name = "严重";
                     DateTime start = Convert.ToDateTime(Convert.ToDateTime(list.FirstOrDefault().AlarmDateTime).ToShortDateString());
                     DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
                     TimeSpan sp = end.Subtract(start);
@@ -5372,6 +5372,66 @@ namespace YWWeb.Controllers
         {
             IDAO.Models.t_DM_ElementDevice info = DAL.ElementDeviceDAL.getInstance().GetModelByID(id);
             return Json(info, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region 电价配置
+        public JsonResult GetElecPriceList(int page=10,int rows=1)
+        {
+            try
+            {
+                var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public JsonResult UpdateOrAddElec(IDAO.Models.t_ES_ElecPrice model)
+        {
+            int n = 0;
+            string messg = "Error";
+            try
+            {
+                if (model.id > 0)
+                {
+                    //var data = DAL.ElecPriceDAL.getInstance().GetElecPriceByID(model.id);
+                    n = DAL.ElecPriceDAL.getInstance().Update(model);
+                }
+                else
+                {
+                    n = DAL.ElecPriceDAL.getInstance().Add(model);
+                }
+                if (n > 0)
+                {
+                    messg = "ok";
+                }
+                return Json(messg, JsonRequestBehavior.AllowGet);
+
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public JsonResult DeleteElecByID(string id)
+        {
+            int n = 0;
+            string messg = "Error";
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    n = DAL.ElecPriceDAL.getInstance().Delete(id);
+                    if (n > 0)
+                    {
+                        messg = "ok";
+                    }
+                }
+                return Json(messg, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }

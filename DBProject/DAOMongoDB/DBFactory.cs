@@ -76,5 +76,6 @@ namespace DAOMongoDB
 
         public IEPowerForeQuality powerForeQuality => throw new NotImplementedException();
 
+        public IElecPrice elecPrice => throw new NotImplementedException();
     }
 }

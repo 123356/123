@@ -356,6 +356,31 @@ namespace YWWeb.Controllers
             return Content(strJson);
         }
 
+        public ActionResult GetElecFDR()
+        {
+            List<t_ES_ElecFlatDryRich> list = bll.t_ES_ElecFlatDryRich.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetElecPVF()
+        {
+            List<t_ES_ElecPeakValleyFlat> list = bll.t_ES_ElecPeakValleyFlat.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetElecVoltage()
+        {
+            List<t_ES_ElecVoltage> list = bll.t_ES_ElecVoltage.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetElecIndustry()
+        {
+            List<t_ES_ElecIndustry> list = bll.t_ES_ElecIndustry.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetElecBigIndustryType()
+        {
+            List<t_ES_ElecBigIndustryType> list = bll.t_ES_ElecBigIndustryType.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         //获取区域名称
         public ActionResult GetAreaName(int AreaID)
         {
