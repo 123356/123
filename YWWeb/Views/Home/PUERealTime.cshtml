@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.02">
     <!--<link data-dump-line-numbers="all" data-global-vars='{ myvar: "#ddffee", mystr: "\"quoted\"" }' rel="stylesheet/less" type="text/css"  href="~/Content/less/pue.less?v=1.01">-->
-    <link rel="stylesheet" href="~/Content/css/computerRoomManage.css?v=1.01" />
+    <link rel="stylesheet" href="~/Content/css/computerRoomManage.css?v=1.04" />
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script src="~/jquery-easyui-1.4.5/jquery.easyui.min.js" type="text/javascript"></script>
     <script src="~/jquery-easyui-1.4.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
@@ -31,32 +31,22 @@
 <body>
     <div id="app" class="realTimeApp flex-direction-column">
         <Spin size="large" fix v-if="loading"></Spin>
+        <div class="selectView">
+           <label>数据中心实时PUE</label> <div id="leftmenuSpace"></div>
+        </div>
         <div class="flex flex-1 flex-margin-bottom flex-module">
             <div class="module-title lineTitle">
-                <div id="leftmenuSpace" ></div>
-
-
-                @*<i-select class="pidSelect" v-model="curPid" v-on:on-open-change="openSelect" v-on:on-change="checkStation" :filterable="true">
-                        <i-option :value="curPid" v-show="initSelectShow">{{curPname}}</i-option>
-                        <Tree :data="treeData"
-                              empty-text="暂无数据"
-                              :multiple="false"
-                              class="tree"
-                              ref="tree"
-                              v-on:n-select-change="treeChange"
-                              :render="renderContent"
-                              style="margin:5px"></Tree>
-                    </i-select>*@
+                
                 <p class="titleName">
                     <img src="~/Content/images/energyDifficiency/qx.png" />
-                    <span>数据中心实时PUE统计</span>
+                    <span>实时PUE趋势</span>
 
                 </p>
                 <span class="subTitle">数值越接近1，效率越高</span>
 
 
             </div>
-            <div class="con" style="flex:6;width:100%;height:100%;display:flex;position:relative">
+            <div class="con" style="flex:14;width:100%;height:100%;display:flex;position:relative">
                 <div class="noData" v-show="!lineShow">暂无数据</div>
                 <div id="lineChart" class="chart"></div>
                 <!-- <div id="lineChart" class="chart" :style="{display:lineShow?'block':'none',width:'100%',height:'100%'}"></div>-->
@@ -67,7 +57,7 @@
                 <div class="module-title">
                     <p class="titleName">
                         <img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />
-                        <span>数据中心实时PUE值</span>
+                        <span>实时PUE值</span>
                     </p>
                     <span class="subTitle">数值越接近1，效率越高</span>
                 </div>
@@ -81,7 +71,7 @@
                 <div class="module-title">
                     <p class="titleName">
                         <img src="~/Content/images/energyDifficiency/yubeifeiyong.png" />
-                        <span>能耗效率统计图</span>
+                        <span>能耗统计</span>
                     </p>
                     <span class="subTitle">根据能耗对比，改进设备效率</span>
                 </div>
@@ -106,7 +96,7 @@
 
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/PUERealTime._zc .js?v=1.17"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUERealTime._zc .js?v=1.19"></script>
    
 </body>
 </html>

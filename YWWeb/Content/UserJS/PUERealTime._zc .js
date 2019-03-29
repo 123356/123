@@ -228,11 +228,24 @@
             var x = new Array()
             var y = new Array()
             for (var i = 0; i < data.length; i++) {
-                x.push(data[i].name)
+                x.push(data[i].name.split(" ")[1])
                 y.push(data[i].value)
+            }
+            var time ="";
+            if(data.length>0){
+                time = data[0].name.split(" ")[0]
             }
             lineChart = echarts.init(document.getElementById('lineChart'));
             var  option = {
+                title: {
+                        text:time +'  实时PUE',
+                        x: 'center',
+                        top:0,
+                        textStyle:{
+                            fontSize:15,
+                            color:'#333'
+                        }
+                },
                 backgroundColor: '#fff',
                 tooltip: {
                     trigger: 'axis',
@@ -241,7 +254,7 @@
                     }
                 },
                 grid: {
-                    top:40,
+                    top:60,
                     left: 35,
                     right: 40,
                     bottom: 25,
@@ -302,7 +315,7 @@
                         realtime: true,
                     }],
                     visualMap: {
-                        top: 10,
+                        top: 25,
                         left: 'center',
                         orient: 'horizontal',
                         precision: 1,
@@ -334,7 +347,8 @@
                             data: [
                                 { type: 'max', name: '最大值' },
                                 { type: 'min', name: '最小值' }
-                            ]
+                            ],
+                            symbolOffset:[0,'10']
                         },
                         markLine: {
                             silent: true,

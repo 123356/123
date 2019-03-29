@@ -180,8 +180,32 @@ table {
 .flex-module .lineTitle {
     flex: 1.5
 }
-
+.selectView {
+    flex: 0.15;
+    background: #fff;
+    margin-bottom: 15px;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-start;
+    padding:0px 10px;
+    overflow:hidden
+}
+    .selectView label {
+        font-size: 15px;
+        color: #333;
+        font-weight: bold;
+        margin-right:10px
+    }
+#leftmenuSpace {
+    display: inline-block
+}
 @media screen and (min-width:1250px) and (max-width:1500px) {
+    .selectView {
+        flex: 0.17;
+        background: #fff;
+        margin-bottom: 15px
+    }
     .flex-module .lineTitle {
         flex: 2
     }

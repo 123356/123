@@ -119,7 +119,6 @@
         $.post("/AlarmManage/getMan", { "AlarmID": alarmObj.AlarmID }, function (data) {
             $('#tel').html("<div style=\"margin-left:50px;margin-top:10px;\">"+data+"</div>");
         });
-        console.log(alarmObj)
         if (alarmObj != null) {
             //console.log(alarmObjStr)
             //var str = unescape(alarmObjStr)
@@ -157,7 +156,7 @@
             var html = "<div id='lineChart' class='chart' style='width:100%;height:100%;'></div>"
             //var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.浸水.\n2.误报.</textarea>"
             $('#info').html(html);
-            createLine()
+            
         }
         function showhandle(){
             var content="<textarea style=\"width:500px;height:100%;margin-left:50px;font-size: 14px;\">1.联系负责人核实报警情况，要求15分钟内反馈结果.\n2.依据结果处理报警.\n3.如为：真实故障，自动下发工单，并短信通知相关人员，电话通知值班班长，安排抢修事宜.\n4.跟踪工单进展.</textarea>"
@@ -181,14 +180,13 @@
                 url: '/DataReport/GetHisDataByTime',
                 type: 'POST',
                 data: {
-                    //cid: alarmObj.CID,
+                    cid: alarmObj.CID,
                     pid: alarmObj.PID,
-                    tagid: alarmObj.TagID,
                     time:  alarmObj.AlarmDateTime
 
                 },
                 success: function (data) {
-                    createLine(data)
+                  createLine(data)
                 },
                 error: function () {
 
@@ -199,11 +197,33 @@
         //创建电流趋势图
         function createLine(data) {
             var chart = echarts.init(document.getElementById('lineChart'));
+            
+            
             var xData = []
-            var yData = []
+            var serData = []
             for (var i in data) {
-                xData.push(formaterDate(data[i].RecTime))
-                yData.push(data[i].PV)
+                
+                var yData = []
+                for(var j in data[i].list){
+                    yData.push(data[i].list[j].AlarmLimits)
+                    if(i==0){
+                         xData.push(formaterDate(data[i].list[j].RecTime))
+                    }
+                }
+               serData.push(
+                    {
+                    name:data[i].Name,
+                    data: yData,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',//节点样式
+                    lineStyle: {
+                        //color: '#53bda9',
+                        width: 1,
+                    }
+                    }
+                )
+                
             }
             var option = {
                 title: {
@@ -279,17 +299,7 @@
                     right: 20,
                     top:45
                 },
-                series: [{
-                    name:'电流',
-                    data: yData,
-                    type: 'line',
-                    smooth: true,
-                    symbol: 'none',//节点样式
-                    lineStyle: {
-                        color: '#53bda9',
-                        width: 1,
-                    },
-                }],
+                series: serData,
                 dataZoom: [{
                     type: 'inside',
                     realtime: true,

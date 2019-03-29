@@ -345,7 +345,7 @@
                             show: true,
                             position: 'center',
                             formatter: [
-                                '{a|总预算}',
+                                '{a|总预算(万元)}',
                                 '{b|' + this.toMoney(budget) + '}'
                             ].join('\n'),
                             rich: {
@@ -428,7 +428,7 @@
                             show: true,
                             position: 'center',
                             formatter: [
-                                '{a|总费用}',
+                                '{a|总费用(万元)}',
                                 '{b|' + this.toMoney(sumTotal) + '}'
                             ].join('\n'),
                             rich: {
@@ -467,7 +467,7 @@
             var option = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: "{b}: <br/>{c} <br/>({d}%)",
+                    formatter: "{b}(万元): <br/>{c} ({d}%)",
                     position: ['left', 'top']
                 },
                 color: ['#f9b88c', '#58b9a3', '#d0737b'],
