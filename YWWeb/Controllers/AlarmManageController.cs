@@ -128,12 +128,12 @@ namespace YWWeb.Controllers
                 }
                 else if (dtid == 3)
                 {
-                    ALarmType = "and ALarmType='报警'";
+                    ALarmType = "and ALarmType='严重'";
 
                 }
                 else if (dtid == 4)
                 {
-                    ALarmType = "and ALarmType='严重'";
+                    ALarmType = "and ALarmType='危急'";
 
                 }
                 string strquery = " 1=1" + ALarmType;

@@ -1905,7 +1905,7 @@ namespace YWWeb.Controllers
                 var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
                 if (list.Count() > 0)
                 {
-                    model.Name = "严重";
+                    model.Name = "危急";
                     DateTime start = Convert.ToDateTime(Convert.ToDateTime(list.FirstOrDefault().AlarmDateTime).ToShortDateString());
                     DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
                     TimeSpan sp = end.Subtract(start);

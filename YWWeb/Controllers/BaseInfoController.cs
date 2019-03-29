@@ -109,7 +109,7 @@ namespace YWWeb.Controllers
         }
         //测点类型列表
         public ActionResult BindValueType1(int did = -1, int showall = 0, int pid = 8) {
-            string strJson = "[{\"DTID\":\"0\",\"Name\":\"==全部==\"},{\"DTID\":\"2\",\"Name\":\"恢复\"},{\"DTID\":\"1\",\"Name\":\"一般\"},{\"DTID\":\"4\",\"Name\":\"严重\"},{\"DTID\":\"3\",\"Name\":\"报警\"}]";
+            string strJson = "[{\"DTID\":\"0\",\"Name\":\"==全部==\"},{\"DTID\":\"2\",\"Name\":\"恢复\"},{\"DTID\":\"1\",\"Name\":\"一般\"},{\"DTID\":\"3\",\"Name\":\"严重\"},{\"DTID\":\"4\",\"Name\":\"危急\"}]";
             return Content(strJson);
 
         }
