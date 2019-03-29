@@ -2527,6 +2527,7 @@
     <Content Include="Views\SysInfo\ErrorPUE.cshtml" />
     <Content Include="Views\SysInfo\AlarmConfig.cshtml" />
     <Content Include="Views\EnergyEfficiency\EnergyPriceIndex.cshtml" />
+    <Content Include="Views\EnergyEfficiency\ElectricPrice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

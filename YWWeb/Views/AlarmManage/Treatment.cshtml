@@ -189,20 +189,15 @@
                   createLine(data)
                 },
                 error: function () {
-
                 }
-
             })
         }
         //创建电流趋势图
         function createLine(data) {
             var chart = echarts.init(document.getElementById('lineChart'));
-            
-            
             var xData = []
             var serData = []
             for (var i in data) {
-                
                 var yData = []
                 for(var j in data[i].list){
                     yData.push(data[i].list[j].AlarmLimits)
