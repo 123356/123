@@ -42,5 +42,6 @@ namespace IDAO.Models
         public DateTime RecordTime{get;set;}
         public int PID { get; set; }
         public int CID { get; set; }
+        public string ener_use_type { get; set; }
     }
 }

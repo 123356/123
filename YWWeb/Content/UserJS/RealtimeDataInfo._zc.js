@@ -135,7 +135,8 @@
                     cid: parseInt(that.CID),
                     tdid: parseInt(that.DTID)
                 }
-            }).then(function(res) {
+            }).then(function (res) {
+                console.log(res.data)
                 for (var i = 0, arr = []; i < res.data.aaData.length; i++) {
                     arr.push(res.data.aaData[i].TagID);
                     res.data.aaData[i].PV = '';
@@ -143,6 +144,8 @@
                     res.data.aaData[i].cellClassName = { PV: '', RecTime: '' }
                 }
                 that.data = res.data.aaData;
+
+
                 that.loading = false;
                 that.pageNumMax = res.data.iTotalRecords;
                 that.PV(arr.join(','));

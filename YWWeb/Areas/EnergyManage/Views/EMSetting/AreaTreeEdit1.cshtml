@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分项区域树编辑</title>
+
+
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/topo/iview/styles/iview.css">
+    <link href="~/Content/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
+    <script src="~/Content/iview/dist/iview.min.js"></script>
+
+
+    <script src="~/Content/ztree/js/jquery-1.4.4.min.js"></script>
+    <script src="~/Content/ztree/js/jquery.ztree.all.min.js"></script>
+
+
+    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
+
+
+
+    <style>
+
+        #app {
+            background: #efefef;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+        }
+        .layout {
+            border: 1px solid #d7dde4;
+            background: #f5f7f9;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+
+        .layout-nav {
+            width: 420px;
+            margin: 0 auto;
+            margin-right: 20px;
+        }
+
+        .layout-footer-center {
+            text-align: center;
+        }
+        .ivu-layout-content {
+        
+        display:flex;
+        }
+
+        ul.ivu-menu.ivu-menu-light.ivu-menu-vertical {
+            height: 100%;
+            background: #fff;
+            overflow: hidden;
+            overflow-y: auto;
+
+        }
+
+
+        .ivu-tabs.ivu-tabs-card.ivu-tabs-no-animation{
+            width:100%;
+        }
+
+        .ivu-tabs.ivu-tabs-card {
+            width:100%;
+        }
+
+        .ivu-layout-content {
+            display: flex;
+            flex-direction: column;
+            border-bottom:0px !important;
+        }
+        .contentdiv {
+            display: flex;
+            justify-content: space-between;
+            height: 100%;
+        }
+            .contentdiv>div {
+                height:100%;
+            }
+  
+        .ivu-layout-sider {
+            overflow:hidden;
+            border:1px solid #ddd;
+        }
+        .ivu-layout-sider-children{
+            width:296px;
+        }
+        /*4AB89B*/
+        .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab{
+
+        }
+   
+    </style>
+</head>
+<body>
+    <div id="app" class="layout">
+        <Layout>
+            <Layout :style="{padding: '0 50px'}">
+                <i-breadcrumb :style="{margin: '16px 0'}">
+                    <breadcrumb-item>Home</breadcrumb-item>
+                    <breadcrumb-item>Components</breadcrumb-item>
+                    <breadcrumb-item>Layout</breadcrumb-item>
+                </i-breadcrumb>
+                <i-content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
+                    <Layout>
+                        <Sider hide-trigger :width="280">
+                            <i-menu theme="light" width="280" :open-names="['1']" ref="side_menu" :active-name="UnitData.UnitID" v-on:on-select="UnitChange">
+                                <submenu name="1">
+                                    <template slot="title">
+                                        <Icon type="ios-navigate"></Icon>
+                                        单位
+                                    </template>
+                                    <menu-item v-for="(itme,index) in UnitList" :name="itme.UnitID" :key="index" :data-pids="itme.PDRList">{{itme.UnitName}}</menu-item>
+                                </submenu>
+                            </i-menu>
+                        </Sider>
+                        <i-content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                            <div class="contentdiv">
+                                <div style="width:65%">
+                                    <Tabs type="card" :animated="true" v-model="TreeType" :value="TreeType" v-on:on-click="TabsChange">
+                                        <tab-pane label="用电分项树" :name="1" icon="ios-leaf">
+                                            <div>123</div>
+                                        </tab-pane>
+                                        <tab-pane label="组织区域树" :name="2" icon="md-pie">
+                                            <div>321</div>
+                                        </tab-pane>
+                                    </Tabs>
+                                </div>
+                                <div style="width:45%">
+                                    <Collapse :value="2">
+                                        <Panel name="1">
+                                            {{UnitData.UnitName}}
+                                            <row slot="content">
+                                                @*<i-col span="4">总树结构</i-col>*@
+                                                <i-col span="6">
+                                                    总表:
+                                                    <Tag color="purple">100</Tag>
+                                                </i-col>
+                                                <i-col span="6">
+                                                    已绑定:
+                                                    <Tag color="purple">30</Tag>
+                                                </i-col>
+                                                <i-col span="6">
+                                                    未绑定:
+                                                    <Tag color="purple" v-on:click="unbindAlert(true)">标签一</Tag>
+                                                </i-col>
+                                                <i-col span="6">
+                                                    重复绑定:
+                                                    <Tag color="purple" v-on:click="bindsAlert(true)">标签一</Tag>
+                                                </i-col>
+                                            </row>
+                                        </Panel>
+                                        <Panel name="2">
+                                            编辑
+                                            <i-Form label-position="left" :label-width="75" :style="{'padding':'10px 20px 10px 10px','overflow':'hidden'}" slot="content">
+                                                <div style="height:520px;overflow-x:hidden;width:110%;padding-right:10%;border-bottom:1px solid #ddd">
+                                                    <row>
+                                                        <i-col span="11">
+                                                            <form-item label="名称：">
+                                                                <i-input></i-input>
+                                                            </form-item>
+                                                        </i-col>
+                                                        <i-col span="12" offset="1">
+                                                            <form-item label="负责人：">
+                                                                <i-input></i-input>
+                                                            </form-item>
+                                                        </i-col>
+                                                    </row>
+
+                                                    <row>
+                                                        <i-col span="11">
+                                                            <form-item label="人数：">
+                                                                <i-input></i-input>
+                                                            </form-item>
+                                                        </i-col>
+                                                        <i-col span="12" offset="1">
+                                                            <form-item label="面积：">
+                                                                <i-input></i-input>
+                                                            </form-item>
+                                                        </i-col>
+                                                    </row>
+                                                    <form-item label="累加电表：">
+                                                        <Badge :count="3">
+                                                            <i-button :size="'small'" type="primary" shape="circle" class="demo-badge">总数</i-button>
+                                                        </Badge>
+                                                        <i-button :size="'small'" type="primary" shape="circle" v-on:click="showCidTree(1)">添加</i-button>
+                                                        <i-button :size="'small'" type="primary" shape="circle">继承</i-button>
+                                                        <i-button :size="'small'" type="primary" shape="circle">全删</i-button>
+                                                        <div style="width:100%;min-height:150px;display:inline-block;border: 1px solid #dcdee2;"></div>
+                                                    </form-item>
+
+                                                    <form-item label="累减电表：">
+                                                        <Badge :count="3">
+                                                            <i-button :size="'small'" type="primary" shape="circle" class="demo-badge">总数</i-button>
+                                                        </Badge>
+                                                        <i-button :size="'small'" type="primary" shape="circle" v-on:click="showCidTree(-1)">添加</i-button>
+                                                        <i-button :size="'small'" type="primary" shape="circle">继承</i-button>
+                                                        <i-button :size="'small'" type="primary" shape="circle">全删</i-button>
+                                                        <div style="width:100%;min-height:150px;display:inline-block;border: 1px solid #dcdee2;"></div>
+                                                    </form-item>
+                                                </div>
+                                                <i-Button type="primary" long :style="{'margin-top':'20px','border-top':'1px solid #ddd'}">提 交</i-Button>
+                                            </i-Form>
+                                        </Panel>
+                                    </Collapse>
+                                </div>
+                            </div>
+                        </i-content>
+                    </Layout>
+                </i-content>
+            </Layout>
+            <i-footer class="layout-footer-center">
+            </i-footer>
+        </Layout>
+        @*树  *@
+        <Modal v-model="modal.modal1" title="'qwe'" :loading="false">
+            @*@on -ok="asyncOK"*@
+            <i-Form label-position="left" :label-width="75">
+                <form-item label="筛选：">
+                    <i-input></i-input>
+                </form-item>
+            </i-Form>
+
+            <ul id="cidTree" class="ztree"></ul>
+        </Modal>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                //样式
+                style: {
+                    height: null,
+                },
+                //单位
+                UnitList: [],
+                UnitData: {
+                    UnitName: "",
+                    UnitID: 0,
+                    PDRList: "",
+                    ArchitectureArea: ""
+                },
+                TreeType: 1,
+                modal: {
+                    modal1: false,
+                    modal2: false,
+                    modal3: false,
+                    modal4: false,
+                },
+                loading: {
+                    loading1: false,
+                    loading2: false,
+                    loading3: false,
+                    loading4: false,
+
+                },
+                treecid: null,
+            },
+
+            computed: {
+                addCid: function () {
+                    return "";
+                },
+
+                delCid: function () {
+                    return "";
+                },
+
+                //总表数
+                bindMax: function () {
+
+                    return;
+                },
+                //已绑定
+                binded: function () {
+                    return;
+
+                },
+                //未绑定
+                unbind: function () {
+                    return;
+
+                },
+                //重复绑定
+                binds: function () {
+                    return;
+                },
+                //cid树
+                //cidtree: function () {
+
+                //    console.log(this.UnitData.PDRList);
+
+
+                //}
+
+                 
+
+            },
+            methods: {
+                //获取单位列表
+                GetUnitList: function () {
+                    var that = this;
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetUnitList",
+                        method: "post",
+                        body: {}
+                    }).then(function (res) {
+                        this.UnitList = res.data;
+                        this.UnitChange(res.data[0].UnitID);
+                    }).catch(function (e) {
+                        console.error("加载单位列表异常");
+                    })
+                },
+                UnitChange: function (e) {
+                    for (var a = 0; a < this.UnitList.length; a++) {
+                        if (this.UnitList[a].UnitID == e) {
+                            this.UnitData = this.UnitList[a];
+                            $.cookie('UnitData', JSON.stringify(this.UnitList[a]), {
+                                expires: 7,
+                                path: '/'
+                            })
+                        }
+                    }
+                },
+                TabsChange: function () {
+                    console.log(this.TreeType)
+                },
+
+                showCidTree: function (n) {
+                    console.log(n)
+                    this.modal.modal1 = true;
+                    if (n > 0) {
+                        //加
+                    } else {
+                        //减
+                    }
+
+                  
+                },
+                GetCidTree: function() {
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetCidTree",
+                        method: "post",
+                        body: {
+                            pids: this.UnitData.PDRList,
+                        }
+                    }).then(function (res) {
+                        that.oldCidTree = res.data;
+                        return res.data;
+                    })
+                },
+            },
+            updated: function () {
+                this.$nextTick(() => {
+                    this.$refs.side_menu.updateOpened();
+                    this.$refs.side_menu.updateActiveName()
+                })
+            },
+            beforeMount: function () {
+                this.GetUnitList();
+            },
+
+          
+           
+
+        })
+    </script>
+</body>
+</html>

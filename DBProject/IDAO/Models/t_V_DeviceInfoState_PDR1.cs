@@ -24,4 +24,12 @@ namespace IDAO.Models
         public int CID { get; set; }
         public string CName { get; set; }
     }
+
+    //: t_V_DeviceInfoState_PDR1
+
+    public partial class t_V_CIDTree {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int pid { get; set; }
+    }
 }

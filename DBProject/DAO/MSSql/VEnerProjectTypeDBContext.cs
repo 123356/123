@@ -57,8 +57,12 @@ namespace DAO
             startTime = startTime.AddDays(1);
             string end = startTime.ToString("yyyy-MM-dd 00:00:00.000");
 
-            string sql = $"SELECT PID,CID,RecordTime , isnull(NeedPower,'0') as NeedPower, isnull(UsePower,'0') as UsePower  FROM t_EE_PowerQualityDaily WHERE pid in ({pid}) and cid in ({cid}) and RecordTime> '{star}' and RecordTime< '{end}'  order by RecordTime DESC";
-            return SQLQuery<t_V_EnerPower>(sql);
+            string sql = $" SELECT a.PID,a.CID,b.UsePower,isnull(b.NeedPower,'0') as NeedPower,a.ener_use_type,b.RecordTime FROM   t_DM_CircuitInfo a" +
+                $" right JOIN t_EE_PowerQualityDaily b " +
+                $" ON a.CID = b.CID AND a.PID = b.PID" +
+                $" WHERE a.pid  in({pid})  and a.cid in ({cid})" +
+                $" and b.RecordTime> '{star}' and b.RecordTime< '{end}'  and b.UsePower!= 0   and a.ener_use_type!=''";
+                return SQLQuery<t_V_EnerPower>(sql);
         }
 
         public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)

@@ -1,7 +1,9 @@
 ﻿using EnergyManage.PubClass;
+using Loger;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -79,8 +81,8 @@ namespace EnergyManage.Controllers
         /// </summary>
         /// <param name="pids"></param>
         /// <returns></returns>
-        public JsonResult GetCidTree(string pids) {
-            IList<IDAO.Models.t_V_DeviceInfoState_PDR1> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(pids);
+        public JsonResult GetCidTree(string pdrlist) {
+            IList<IDAO.Models.t_V_CIDTree> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(pdrlist);
             return Json(list);
         }
         /// <summary>
@@ -374,8 +376,16 @@ namespace EnergyManage.Controllers
         /// <returns></returns>
         public ActionResult GetTreePower(int unitID, int item_type, string unitName)
         {
+            Stopwatch watch = new Stopwatch();
+            LogHelper.Debug("GetTreePower begin ...");
+
+            watch.Start();
             IList<IDAO.Models.t_V_EnerProjectType> list;
             list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+           
+
+            LogHelper.Debug("111:" + watch.ElapsedMilliseconds);            
+
             if (list.Count() == 0 && item_type == 1)
             {
                 DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
@@ -389,6 +399,8 @@ namespace EnergyManage.Controllers
                 if (!string.IsNullOrEmpty(list[a].delCid))
                     all += list[a].delCid+",";
             }
+
+            LogHelper.Debug("22222:" + watch.ElapsedMilliseconds);
             if (all.Length > 1) {
                 all = all.Substring(0, all.Length - 1);
             }
@@ -407,48 +419,55 @@ namespace EnergyManage.Controllers
                 pid += arr1[0] + ',';
                 cid += arr1[1] + ',';
             }
+            LogHelper.Debug("333333:" + watch.ElapsedMilliseconds);
+
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
 
 
-         
+
 
 
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
-                for (var a = 0; a < power.Count(); a++) {
-                for (var b = 0; b < list.Count(); b++) {
-                    var q = list[b].addCid.Split(',');
-                    var w = list[b].delCid.Split(',');
 
-                    for (var i = 0; i < q.Count(); i++) {
-                        if (q[i]== $"{power[a].PID}-{power[a].CID}")
-                        {
-                            list[b].UsePower += power[a].UsePower;
-                            list[b].NeedPower += power[a].NeedPower;
-                        }
+            LogHelper.Debug("44444:" + watch.ElapsedMilliseconds);
+
+
+            for (int a = 0; a < list.Count(); a++)
+            {
+
+
+                decimal use = 0;
+                decimal need = 0;
+                for (int b = 0; b < power.Count(); b++)
+                {
+                    if (power[b].ener_use_type.Contains($",{list[a].child_id},"))
+                    {
+                        use += power[b].UsePower;
+                        need += power[b].NeedPower;
                     }
-
-                    //for (var j = 0; j < w.Count(); j++)
-                    //{
-                    //    if (w[j] == $"{power[a].PID}-{power[a].CID}")
-                    //    {
-                    //        list[b].UsePower -= power[a].UsePower;
-                    //        list[b].NeedPower -= power[a].NeedPower;
-                    //    }
-                    //}
-
-
-
-                   
                 }
+
+
+                list[a].UsePower = use;
+                list[a].NeedPower = need;
+
             }
+
+
+
+            LogHelper.Debug("5555555:" + watch.ElapsedMilliseconds);
+
             Tree tree = new Tree();
             tree.id = 0;
             tree.name = unitName;
             tree.pId = -1;
             tree.children = new List<Tree>();
+
             getTree(list, tree.children, 0);
             string json = JsonConvert.SerializeObject(tree);
+            watch.Stop();
+            LogHelper.Debug("GetTreePower end ..."+watch.ElapsedMilliseconds);
             return Content(json);
         }
 

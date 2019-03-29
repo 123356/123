@@ -36,18 +36,25 @@ namespace DAL
         }
 
 
-        public IList<t_V_DeviceInfoState_PDR1> GetCidTree(string unitID)
+        public IList<t_V_CIDTree> GetCidTree(string pdrlist)
         {
             IList<t_V_DeviceInfoState_PDR1> data = new List<t_V_DeviceInfoState_PDR1>();
+
+            IList<t_V_CIDTree> tree = new List<t_V_CIDTree>();
+
             try
             {
-                data = _dbFactory.deviceInfoState_PDR1.GetCidTree(unitID);
+                data = _dbFactory.deviceInfoState_PDR1.GetCidTree(pdrlist);
+                for(var a= 0; a < data.Count(); a++)
+                {
+
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return data;
+            return tree;
            
         }
     }
