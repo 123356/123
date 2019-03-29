@@ -5375,11 +5375,11 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 电价配置
-        public JsonResult GetElecPriceList(int page=10,int rows=1)
+        public JsonResult GetElecPriceList(int page=10,int rows=1,int indid=0, int vid=0, int fdrid=0, int pvfid=0, int bigindtypeid=0)
         {
             try
             {
-                var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows);
+                var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid);
                 return Json(data, JsonRequestBehavior.AllowGet);
             }catch(Exception ex)
             {

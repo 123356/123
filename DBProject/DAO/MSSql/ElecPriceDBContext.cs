@@ -67,14 +67,24 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where id={
             return SQLQuery<t_ES_ElecPrice_W>(sql).FirstOrDefault();
         }
 
-        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows)
+        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid)
         {
-            string sql = $@"select top 10 a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
+            string sql = $@"select top {page} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
 left join t_ES_ElecIndustry b on a.IndID=b.IndID 
 left join t_ES_ElecVoltage c on a.VID=c.VID
 left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
 left join t_ES_ElecPeakValleyFlat e on a.PVFID=e.PVFID
 left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where a.RowNumber>{(page - 1) * rows}";
+            if (indid != 0)
+                sql += " and a.IndID=" + indid;
+            if (vid != 0)
+                sql += " and a.VID=" + vid;
+            if (fdrid != 0)
+                sql += " and a.FDRID=" + fdrid;
+            if (indid != 0)
+                sql += " and a.PVFID=" + pvfid;
+            if (indid != 0)
+                sql += " and a.BigIndTypeID=" + bigindtypeid;
             return SQLQuery<t_ES_ElecPrice_W>(sql);
         }
 
