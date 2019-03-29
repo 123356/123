@@ -5379,7 +5379,8 @@ namespace YWWeb.Controllers
         {
             try
             {
-                var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid);
+                int total = 0;
+                var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid, out total);
                 return Json(data, JsonRequestBehavior.AllowGet);
             }catch(Exception ex)
             {

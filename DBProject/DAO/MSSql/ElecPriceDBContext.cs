@@ -67,7 +67,7 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where id={
             return SQLQuery<t_ES_ElecPrice_W>(sql).FirstOrDefault();
         }
 
-        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid)
+        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid,out int total)
         {
             string sql = $@"select top {rows} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
 left join t_ES_ElecIndustry b on a.IndID=b.IndID 
@@ -75,16 +75,38 @@ left join t_ES_ElecVoltage c on a.VID=c.VID
 left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
 left join t_ES_ElecPeakValleyFlat e on a.PVFID=e.PVFID
 left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where a.RowNumber>{(page - 1) * rows}";
+            string sqlcount = $@"select a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
+left join t_ES_ElecIndustry b on a.IndID=b.IndID 
+left join t_ES_ElecVoltage c on a.VID=c.VID
+left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
+left join t_ES_ElecPeakValleyFlat e on a.PVFID=e.PVFID
+left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where 1=1";
             if (indid != 0)
+            {
                 sql += " and a.IndID=" + indid;
+                sqlcount += " and a.IndID=" + indid;
+            }
             if (vid != 0)
+            {
                 sql += " and a.VID=" + vid;
+                sqlcount += " and a.VID=" + vid;
+            }
             if (fdrid != 0)
+            {
                 sql += " and a.FDRID=" + fdrid;
+                sqlcount += " and a.FDRID=" + fdrid;
+            }
             if (pvfid != 0)
+            {
                 sql += " and a.PVFID=" + pvfid;
+                sqlcount += " and a.PVFID=" + pvfid;
+            }
             if (bigindtypeid != 0)
+            {
                 sql += " and a.BigIndTypeID=" + bigindtypeid;
+                sqlcount += " and a.BigIndTypeID=" + bigindtypeid;
+            }
+            total = SQLQuery<t_ES_ElecPrice_W>(sqlcount).Count;
             return SQLQuery<t_ES_ElecPrice_W>(sql);
         }
 
