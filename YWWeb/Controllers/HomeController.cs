@@ -5375,7 +5375,7 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 电价配置
-        public JsonResult GetElecPriceList(int page=10,int rows=1,int indid=0, int vid=0, int fdrid=0, int pvfid=0, int bigindtypeid=0)
+        public JsonResult GetElecPriceList(int page=1,int rows=10,int indid=0, int vid=0, int fdrid=0, int pvfid=0, int bigindtypeid=0)
         {
             try
             {

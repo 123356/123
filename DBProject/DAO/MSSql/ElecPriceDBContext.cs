@@ -69,7 +69,7 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where id={
 
         public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid)
         {
-            string sql = $@"select top {page} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
+            string sql = $@"select top {rows} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
 left join t_ES_ElecIndustry b on a.IndID=b.IndID 
 left join t_ES_ElecVoltage c on a.VID=c.VID
 left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
