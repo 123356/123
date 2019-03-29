@@ -44,7 +44,7 @@ namespace DAO
            ,{8}
            ,{9}
            ,{10}
-           ,{11})", model.indID, model.BigIndTypeID==null?0:model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr, model.FarmNet==null?0:model.FarmNet, model.renewable==null?0:model.renewable, model.reservoir==null?0:model.reservoir, model.Demand==null?0:model.Demand, model.capacity == null ? 0 : model.capacity);
+           ,{11})", model.indID, model.BigIndTypeID==null?0:model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr==null?0:model.WaterConstr, model.FarmNet==null?0:model.FarmNet, model.renewable==null?0:model.renewable, model.reservoir==null?0:model.reservoir, model.Demand==null?0:model.Demand, model.capacity == null ? 0 : model.capacity);
             return ExecuteSqlCommand(sql);
         }
 
@@ -81,9 +81,9 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where a.Ro
                 sql += " and a.VID=" + vid;
             if (fdrid != 0)
                 sql += " and a.FDRID=" + fdrid;
-            if (indid != 0)
+            if (pvfid != 0)
                 sql += " and a.PVFID=" + pvfid;
-            if (indid != 0)
+            if (bigindtypeid != 0)
                 sql += " and a.BigIndTypeID=" + bigindtypeid;
             return SQLQuery<t_ES_ElecPrice_W>(sql);
         }
