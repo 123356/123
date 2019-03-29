@@ -55,7 +55,7 @@ namespace YWWeb.Controllers
         public ActionResult HisData(int rows, int page, int pid = 0, int CID = 0, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "", string sort = "记录时间", string order = "asc")
         {
             string strJson = "{\"total\":0,\"rows\":[]}";
-            if ((CID == 1 || CID == 3|| CID == 12) &&  pid ==177 ) {
+            if ((CID == 1 || CID == 3 || CID == 12) && pid == 177) {
                 return Content("{\"total\":3025,\"rows\":[{\"PID\":\"0\",\"PV\":\"0\",\"AlarmStatus\":\"暂无数据\",\"AlarmLimits\":\"0\"}]}");
             }
             int rowcount;
@@ -71,8 +71,8 @@ namespace YWWeb.Controllers
             list = null;
             return Content(strJson);
         }
-     
-        public static string List2Json<T>(IList<T> list, int total,List<t_CM_PointsInfo> listPar)
+
+        public static string List2Json<T>(IList<T> list, int total, List<t_CM_PointsInfo> listPar)
         {
             pdermsWebEntities b = new pdermsWebEntities();
             StringBuilder json = new StringBuilder();
@@ -87,13 +87,13 @@ namespace YWWeb.Controllers
                 Type type = obj.GetType();
                 PropertyInfo[] pis = type.GetProperties();
                 json.Append("{");
-               
+
                 for (int j = 0; j < pis.Length; j++)
                 {
                     json.Append("\"" + pis[j].Name.ToString() + "\":\"" + pis[j].GetValue(list[i], null) + "\"");
-                    if("TagID"==pis[j].Name.ToString())
+                    if ("TagID" == pis[j].Name.ToString())
                     {
-                        int tagid=Convert.ToInt32(pis[j].GetValue(list[i], null));
+                        int tagid = Convert.ToInt32(pis[j].GetValue(list[i], null));
                         var pointInf = listPar.Where(o => o.TagID == tagid);
                         if (pointInf.Count() > 0)
                         {
@@ -106,7 +106,7 @@ namespace YWWeb.Controllers
                             if (b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID).FirstOrDefault() != null)
                             {
                                 json.Append(",");
-                                json.Append("\"" + "CName" + "\":\"" + b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID&&p.PID==poinf.PID).FirstOrDefault().CName + "\"");
+                                json.Append("\"" + "CName" + "\":\"" + b.t_DM_CircuitInfo.Where(p => p.CID == poinf.CID && p.PID == poinf.PID).FirstOrDefault().CName + "\"");
                             }
                             else
                             {
@@ -119,7 +119,7 @@ namespace YWWeb.Controllers
                     {
                         json.Append(",");
                     }
-                    
+
                 }
                 json.Append("}");
                 if (i < list.Count - 1)
@@ -160,7 +160,7 @@ namespace YWWeb.Controllers
             {
                 if (pid == 0)
                 {
-                    pid =Convert.ToInt32( HomeController.GetPID(CurrentUser.UNITList).Split(',')[0]);
+                    pid = Convert.ToInt32(HomeController.GetPID(CurrentUser.UNITList).Split(',')[0]);
                 }
                 string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
                 string strsql = "SELECT 设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
@@ -388,7 +388,7 @@ namespace YWWeb.Controllers
                     SaveImage(PID, 5, Img5);
                 if (Img6 != "")
                     SaveImage(PID, 6, Img6);
-                PubClass.Exportdoc.ExportWordFromRun(CurrentUser,Img2, Img3, Img4, Img5, Img6, PID, ReportStartDate, ReportEndDate);
+                PubClass.Exportdoc.ExportWordFromRun(CurrentUser, Img2, Img3, Img4, Img5, Img6, PID, ReportStartDate, ReportEndDate);
                 string fileName = "/DownLoad/run/run" + PID + ".doc";
 
                 return Content(fileName);
@@ -421,7 +421,7 @@ namespace YWWeb.Controllers
         //维护检修报告
         public ActionResult ExportRepairDoc(int pid, string ReportStartDate, string ReportEndDate)
         {
-            PubClass.Exportdoc.ExportWordFromBO(CurrentUser,pid, ReportStartDate, ReportEndDate);
+            PubClass.Exportdoc.ExportWordFromBO(CurrentUser, pid, ReportStartDate, ReportEndDate);
             string fileName = "/DownLoad/repair/repair" + pid + ".doc";
 
             return Content(fileName);
@@ -431,18 +431,40 @@ namespace YWWeb.Controllers
         //{
         //    get { return loginbll.CurrentUser; }
         //}
-        public JsonResult GetHisDataByTime(int pid,int tagid,string time)
+        public JsonResult GetHisDataByTime(int pid, int cid, string time)
         {
+            List<AlarmAnyis> datas = new List<AlarmAnyis>();
             try
             {
                 string startTime = Convert.ToDateTime(time).AddMinutes(-3).ToString("yyyy-MM-dd HH:mm:ss");
-                string endTime = Convert.ToDateTime(time).AddMinutes(3).ToString("yyyy-MM-dd HH:mm:ss");
-                var data = HisDataDAL.getInstance().GetHisData(pid, tagid + "", startTime, endTime);
-                return Json(data, JsonRequestBehavior.AllowGet);
-            }catch(Exception ex)
+                string endTime = Convert.ToDateTime(time).AddHours(1).ToString("yyyy-MM-dd HH:mm:ss");
+                var tagids = string.Join(",", bll.t_CM_PointsInfo.Where(p => p.DataTypeID == 2 && p.PID == pid && p.CID == cid).Select(p => p.TagID).ToArray());
+                if (!string.IsNullOrEmpty(tagids))
+                {
+                    var data = HisDataDAL.getInstance().GetHisData(pid, tagids, startTime, endTime);
+                    foreach (var item in data.GroupBy(p => p.TagID))
+                    {
+                        AlarmAnyis model = new AlarmAnyis();
+                        model.Name = bll.t_CM_PointsInfo.Where(p => p.TagID == item.Key).FirstOrDefault().中文描述;
+                        model.list = item.OrderBy(p => p.RecTime).ToList();
+                        datas.Add(model);
+                    }
+                    return Json(datas.OrderBy(p => p.Name), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(datas, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public class AlarmAnyis{
+            public string Name { get; set; }
+            public IList<t_SM_HisData> list { get; set; }
         }
     }
 }
