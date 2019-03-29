@@ -172,9 +172,10 @@
                         that.UID = res.data[0].UnitID
                         $.cookie("enUID", that.UID, { expires: 7 })
                         $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
-
+                        that.UnitName = res.data[0].UnitName
 
                     }
+                    
                 }
             }).catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -186,7 +187,7 @@
         //单位下拉框change
         comChange: function (e) {
             this.UID = e.value
-            this.UnitName = e.label
+            
             $.cookie("enUID", e.value, { expires: 7 })
             $.cookie("enUName", e.label, { expires: 7 })
             this.getTreeData(1)
@@ -281,6 +282,7 @@
             switch (method) {
                 case 'dosearch()':
                     this.loading = true
+                    this.UnitName = $.cookie("enUName")
                     this.curTimeStr = this.formaterDate()
                     this.getTimes()
                     

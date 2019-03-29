@@ -63,14 +63,14 @@
                     <div class="statisticsView boxStyle">
                         <div class="item">
                             <div class="module">
-                                <div class="title"><i class="iconfont icon-lightningbshandian"></i>当日累计电量<span class="floatRight">(kW·h)</span></div>
+                                <div class="title"><i class="iconfont icon-lightningbshandian"></i>当日累计电量{{thisDayPower}}<span class="floatRight">(kW·h)</span></div>
                                 <div class="main center">
                                     <div class="view">
-                                        <p class="normal" v-html="StationStateInfo.thisDayPower==null?'--':StationStateInfo.thisDayPower"></p>
+                                        <p class="normal" v-html="thisDayPower==null?'--':thisDayPower"></p>
                                         <span class="littltInfo">
                                             上年同期对比
-                                            <font style="color:#d58a60" v-html="StationStateInfo.thisDayOccupation==null?'--':StationStateInfo.thisDayOccupation+'%'">--</font>
-                                            <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="StationStateInfo.thisDayOccupation!=0" />
+                                            <font style="color:#d58a60" v-html="thisDayOccupation==null?'--':thisDayOccupation+'%'">--</font>
+                                            <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="thisDayOccupation!=0" />
                                         </span>
                                     </div>
                                 </div>
@@ -78,14 +78,14 @@
                         </div>
                         <div class="item">
                             <div class="module">
-                                <div class="title"><i class="iconfont icon-lightningbshandian"></i>当月用电<span class="floatRight">(kW·h)</span></div>
+                                <div class="title"><i class="iconfont icon-lightningbshandian"></i>当月用电{{thisMonthPower}}<span class="floatRight">(kW·h)</span></div>
                                 <div class="main center">
                                     <div class="view">
-                                        <p class="normal" v-html="StationStateInfo.thisMonthPower==null?'--':StationStateInfo.thisMonthPower"></p>
+                                        <p class="normal" v-html="thisMonthPower==null?'--':thisMonthPower"></p>
                                         <span class="littltInfo">
                                             上年同月对比
-                                            <font style="color:#d58a60" v-html="StationStateInfo.thisMonthOccupation==null?'--':StationStateInfo.thisMonthOccupation+'%'">--</font>
-                                            <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="StationStateInfo.thisMonthOccupation!=0" />
+                                            <font style="color:#d58a60" v-html="thisMonthOccupation==null?'--':thisMonthOccupation+'%'">--</font>
+                                            <img src="~/Content/images/icon4/up.png" class="iconImg" v-show="thisMonthOccupation!=0" />
                                         </span>
                                     </div>
                                 </div>
@@ -201,6 +201,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.33"></script>
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.53"></script>
 </body>
 </html>

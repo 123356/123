@@ -1057,7 +1057,7 @@ table {
         
         .allMain .main-item  .con{
             position:relative;
-            flex:14;
+            flex:18;
             overflow:hidden
         }
         .allMain .main-item .module-title{

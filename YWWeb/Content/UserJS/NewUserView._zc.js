@@ -18,7 +18,12 @@ var vm = new Vue({
         activeIndex: null,
         otherInfo: {},
         Sumload: null,
-        RatedCapacity: null
+        RatedCapacity: null,
+        timer:null,
+        thisDayPower:null,
+        thisMonthPower:null,
+        thisMonthOccupation:null,
+        thisDayOccupation:null
     },
     methods: {
         //用户下拉框
@@ -38,14 +43,7 @@ var vm = new Vue({
                         }
                     }
                     that.unitList = res.data
-                    that.getStationState()
-                    that.getThisDayPower()
-                    that.getLastMonthPower()
-                    that.getThisYearPower()
-                    that.getUseEl()
-                    that.getMessage()
-                    that.getProInfo()
-                    that.getPDF()
+                    that.init()
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -56,6 +54,10 @@ var vm = new Vue({
             this.loading = true
             this.PID = null
             this.activeIndex = null
+            this.init()
+            
+        },
+        init:function(){
             this.getStationState()
             this.getThisDayPower()
             this.getLastMonthPower()
@@ -64,6 +66,7 @@ var vm = new Vue({
             this.getMessage()
             this.getProInfo()
             this.getPDF()
+           
         },
         //获取运行情况
         getStationState: function () {
@@ -76,7 +79,11 @@ var vm = new Vue({
                 }
             })
                 .then(function (res) {
-                    that.StationStateInfo = res.data
+                    //that.StationStateInfo = res.data
+                    that.StationStateInfo.Name = res.data.Name
+                    that.StationStateInfo.NormalDays = res.data.NormalDays
+                    that.StationStateInfo.CheckDays = res.data.CheckDays
+                    that.StationStateInfo.Score = res.data.Score
 
                 })
                 .catch(function (e) {
@@ -98,9 +105,12 @@ var vm = new Vue({
             })
                 .then(function (res) {
                     if (res.data) {
-                        that.StationStateInfo.thisDayPower = res.data.thisDayPower;
-                        that.StationStateInfo.thisDayOccupation = res.data.thisDayOccupation;
+                        
+                        that.thisDayPower = res.data.thisDayPower;
+                        that.thisDayOccupation = res.data.thisDayOccupation;
                     }
+                },function(){
+
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -121,9 +131,12 @@ var vm = new Vue({
             })
                 .then(function (res) {
                     if (res.data) {
-                        that.StationStateInfo.thisMonthPower = res.data.thisMonthPower
-                        that.StationStateInfo.thisMonthOccupation = res.data.thisMonthOccupation
+                        
+                        that.thisMonthPower = res.data.thisMonthPower
+                        that.thisMonthOccupation = res.data.thisMonthOccupation
                     }
+                },function(){
+
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -251,18 +264,26 @@ var vm = new Vue({
                     }
                     that.getLineData()
                     var timeset;
-                    clearInterval(timeset);
-                    timeset = setInterval(function () {
+                    
+                    clearInterval(that.timer);
+                    setTimeout(that.setTimer,60000)
+                    /*timer = setInterval(function () {
                         that.getLineData()
                         that.getThisDayPower()
                         that.getUseEl()
                         //that.getLXData()
-                    }, 60000)
+                    }, 60000)*/
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
         },
+        setTimer:function(){
+            this.getLineData()
+            this.getThisDayPower()
+            this.getUseEl()
+            setTimeout(this.setTimer,60000)
+         },
         //用电概况
         getUseEl: function () {
             var that = this
