@@ -24,10 +24,9 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-        public IList<t_CM_Unit> GetUnitList(string pids)
+        public IList<t_CM_Unit> GetUnitList(string UNITList)
         {
-            string sql = "select UnitID,UnitName,PDRList,ArchitectureArea from t_CM_Unit where t_CM_Unit.UnitID in(" + pids + ")";
-
+            string sql = "select UnitID,UnitName,PDRList,ArchitectureArea from t_CM_Unit where t_CM_Unit.UnitID in(" + UNITList + ") and PDRList != ''";
             return SQLQuery<t_CM_Unit>(sql);
         }
 

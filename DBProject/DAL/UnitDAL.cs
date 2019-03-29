@@ -36,12 +36,12 @@ namespace DAL
         
       
 
-        public IList<t_CM_Unit> GetUnitList(string pids)
+        public IList<t_CM_Unit> GetUnitList(string UNITList)
         {
             IList<t_CM_Unit> data = new List<t_CM_Unit>();
             try
             {
-                data = _dbFactory.unit.GetUnitList(pids);
+                data = _dbFactory.unit.GetUnitList(UNITList);
             }
             catch (Exception ex)
             {

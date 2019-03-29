@@ -35,20 +35,76 @@ namespace EnergyManage.Controllers
         }
 
         #region 
-        /// <summary>
+        /// 返回该用户权限可见的单位列表
+        public JsonResult GetUnitList()
+        {
+            IList<IDAO.Models.t_CM_Unit> list = DAL.UnitDAL.getInstance().GetUnitList(CurrentUser.UNITList);
+            return Json(list);
+        }
+
+        /// 返回cid树
+        public JsonResult GetCidTree(int UnitID,string UnitName,string PDRList)
+        {
+            IList<IDAO.Models.t_V_CIDTree> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(UnitID, UnitName, PDRList);
+            return Json(list);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// 返回该单位的组织区域树数据
-        /// </summary>
-        /// <param name="unitID"></param>
-        /// <param name="item_type"></param>
-        /// <param name="unitName"></param>
-        /// <returns></returns>
-        public ActionResult GetTreeData(int unitID,int item_type,string unitName)
+        public ActionResult GetTreeData(int unitID, int item_type, string unitName)
         {
             IList<IDAO.Models.t_V_EnerProjectType> list;
             list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            if (list.Count() == 0 && item_type==1)
+            if (list.Count() == 0 && item_type == 1)
             {
-               DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
                 list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
             }
             Tree tree = new Tree();
@@ -58,33 +114,9 @@ namespace EnergyManage.Controllers
             tree.children = new List<Tree>();
             getTree(list, tree.children, 0);
             string json = JsonConvert.SerializeObject(tree);
-            return  Content(json);
+            return Content(json);
         }
 
-
-
-   
-  
-
-
-        /// <summary>
-        /// 返回该用户权限可见的单位列表
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetUnitList()
-        {
-            IList<IDAO.Models.t_CM_Unit> list = DAL.UnitDAL.getInstance().GetUnitList(CurrentUser.UNITList);
-            return Json(list);
-        }
-        /// <summary>
-        /// 返回cid树
-        /// </summary>
-        /// <param name="pids"></param>
-        /// <returns></returns>
-        public JsonResult GetCidTree(string pdrlist) {
-            IList<IDAO.Models.t_V_CIDTree> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(pdrlist);
-            return Json(list);
-        }
         /// <summary>
         /// 拼接tree数据
         /// </summary>

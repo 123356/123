@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface IUnit : IDAOBase, IDisposable
     {
-        IList<t_CM_Unit> GetUnitList(string unitList);
+        IList<t_CM_Unit> GetUnitList(string UNITList);
 
         IList<t_CM_Unit> GetUnitListByPID(int pid);
 

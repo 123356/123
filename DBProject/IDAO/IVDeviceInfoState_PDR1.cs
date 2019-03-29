@@ -9,6 +9,7 @@ namespace IDAO
 {
     public interface IVDeviceInfoState_PDR1 : IDAOBase, IDisposable
     {
-        IList<t_V_DeviceInfoState_PDR1> GetCidTree(string pdrlist);
+
+        IList<t_V_DeviceInfoState_PDR1> GetCidTree(int UnitID,string UnitName, string PDRList);
     }
 }

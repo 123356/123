@@ -23,9 +23,21 @@ namespace DAO
               .HasKey(t => new { t.CID });
             base.OnModelCreating(modelBuilder);
         }
-        public IList<t_V_DeviceInfoState_PDR1> GetCidTree(string pdrlist)
+
+
+
+
+
+
+
+        public IList<t_V_DeviceInfoState_PDR1> GetCidTree(int UnitID, string UnitName, string PDRList)
         {
-            string sql = "SELECT a.PID,a.Name,b.DID,b.DeviceName,CID,CName from t_CM_PDRInfo a right JOIN t_DM_DeviceInfo b on a.PID=b.PID right join t_DM_CircuitInfo c on a.PID = c.PID and b.DID = c.DID where a.pid in("+ pdrlist + ") order by PID,DID,CID" ;
+            string sql = $"SELECT c.PID,c.DID,c.CID,a.Name PName,b.DeviceName DName,c.CName CNAme FROM t_CM_PDRInfo a  " +
+                        $"RIGHT JOIN t_DM_DeviceInfo b " +
+                        $"ON a.PID=b.PID " +
+                        $"RIGHT JOIN t_DM_CircuitInfo c " +
+                        $"ON c.PID = a.PID AND  c.DID = b.DID " +
+                        $"WHERE a.pid in({PDRList}) ";
             return SQLQuery<t_V_DeviceInfoState_PDR1>(sql);
         }
 

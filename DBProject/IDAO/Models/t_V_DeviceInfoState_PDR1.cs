@@ -15,11 +15,11 @@ namespace IDAO.Models
 
         //pid
         public int PID { get; set; }
-        public string Name { get; set; }
+        public string PName { get; set; }
 
         //did
         public int DID { get; set; }
-        public string DeviceName { get; set; }
+        public string DName { get; set; }
         //cid
         public int CID { get; set; }
         public string CName { get; set; }
@@ -28,8 +28,8 @@ namespace IDAO.Models
     //: t_V_DeviceInfoState_PDR1
 
     public partial class t_V_CIDTree {
-        public int id { get; set; }
+        public string pId { get; set; }
+        public string id { get; set; }
         public string name { get; set; }
-        public int pid { get; set; }
     }
 }

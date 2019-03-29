@@ -35,18 +35,57 @@ namespace DAL
             return _DataDal;
         }
 
-
-        public IList<t_V_CIDTree> GetCidTree(string pdrlist)
+        
+        public IList<t_V_CIDTree> GetCidTree(int UnitID,string UnitName, string PDRList)
         {
-            IList<t_V_DeviceInfoState_PDR1> data = new List<t_V_DeviceInfoState_PDR1>();
+            IList<t_V_DeviceInfoState_PDR1> list = new List<t_V_DeviceInfoState_PDR1>();
 
             IList<t_V_CIDTree> tree = new List<t_V_CIDTree>();
 
             try
             {
-                data = _dbFactory.deviceInfoState_PDR1.GetCidTree(pdrlist);
-                for(var a= 0; a < data.Count(); a++)
+                list = _dbFactory.deviceInfoState_PDR1.GetCidTree(UnitID, UnitName, PDRList);
+                int pid = -1, cid = -1, did = -1;
+                string uid = "0";
+
+                if (PDRList.Contains(',')) {
+                    uid = UnitID + "_u";
+                    t_V_CIDTree u = new t_V_CIDTree();
+                    u.pId = "0";
+                    u.id = uid;
+                    u.name = UnitName;
+                    tree.Add(u);
+                }
+
+                for (var a= 0; a < list.Count(); a++)
                 {
+                    if (pid != list[a].PID) {
+                        pid = list[a].PID;
+                        t_V_CIDTree t = new t_V_CIDTree();
+                        t.pId = uid;
+                        t.id = list[a].PID+"_p";
+                        t.name = list[a].PName;
+                        tree.Add(t);
+                    }
+                    if (list[a].DID != did)
+                    {
+                        did = list[a].DID;
+                        t_V_CIDTree t = new t_V_CIDTree();
+                        t.pId = list[a].PID + "_p";
+                        t.id = list[a].DID + "_d";
+                        t.name = list[a].DName;
+                        tree.Add(t);
+                    }else  if (list[a].CID != cid)
+                    {
+                        cid = list[a].CID;
+                        t_V_CIDTree t = new t_V_CIDTree();
+                        t.pId = list[a].DID + "_d";
+                        t.id = list[a].CID + "_c";
+                        t.name = list[a].CName;
+                        tree.Add(t);
+                    }
+
+
 
                 }
             }
