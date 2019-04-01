@@ -247,7 +247,7 @@ function loadDeviceInfo() {
 
 function loadBugData() {
     select = 1;
-    var h = $(".el_tab").height() - 71
+    var h = $(".el_tab").height() -75
     $(".demo2").height(h)
     var type = $("input[name='BugState']:checked").val();
     var HS = "";
@@ -283,7 +283,7 @@ function loadBugData() {
 //元器件
 function loadSparePartData() {
     select = 0
-    var h = $(".el_tab").height() - 32
+    var h = $(".el_tab").height() - 34
     $(".demo2").height(h)
     $('#list_data').datagrid({
         url: '/Home/GetElementList',
