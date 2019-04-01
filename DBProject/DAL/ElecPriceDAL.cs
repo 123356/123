@@ -28,12 +28,12 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid, int vid, int fdrid, int pvfid, int bigindtypeid, out int total)
+        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid, int vid, int fdrid, int pvfid, int bigindtypeid, out int total,int uid)
         {
             IList<t_ES_ElecPrice_W> data = new List<t_ES_ElecPrice_W>();
             try
             {
-                data = _dbFactory.elecPrice.GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid,out total);
+                data = _dbFactory.elecPrice.GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid, out total, uid);
             }
             catch (Exception ex)
             {

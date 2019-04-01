@@ -31,7 +31,8 @@ namespace DAO
            ,[renewable]
            ,[reservoir]
            ,[Demand]
-           ,[capacity])
+           ,[capacity]
+           ,[UID])
      VALUES
            ({0}
            ,{1}
@@ -44,7 +45,7 @@ namespace DAO
            ,{8}
            ,{9}
            ,{10}
-           ,{11})", model.indID, model.BigIndTypeID==null?0:model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr==null?0:model.WaterConstr, model.FarmNet==null?0:model.FarmNet, model.renewable==null?0:model.renewable, model.reservoir==null?0:model.reservoir, model.Demand==null?0:model.Demand, model.capacity == null ? 0 : model.capacity);
+           ,{11})", model.indID, model.BigIndTypeID == null ? 0 : model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr == null ? 0 : model.WaterConstr, model.FarmNet == null ? 0 : model.FarmNet, model.renewable == null ? 0 : model.renewable, model.reservoir == null ? 0 : model.reservoir, model.Demand == null ? 0 : model.Demand, model.capacity == null ? 0 : model.capacity, model.UID == null ? 0 : model.UID);
             return ExecuteSqlCommand(sql);
         }
 
@@ -67,20 +68,23 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where id={
             return SQLQuery<t_ES_ElecPrice_W>(sql).FirstOrDefault();
         }
 
-        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid,out int total)
+        public IList<t_ES_ElecPrice_W> GetElecPriceList(int page,int rows,int indid,int vid,int fdrid,int pvfid,int bigindtypeid,out int total,int uid)
         {
-            string sql = $@"select top {rows} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
+            string sql = $@"select top {rows} a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName,g.UnitName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
 left join t_ES_ElecIndustry b on a.IndID=b.IndID 
 left join t_ES_ElecVoltage c on a.VID=c.VID
 left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
 left join t_ES_ElecPeakValleyFlat e on a.PVFID=e.PVFID
-left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where a.RowNumber>{(page - 1) * rows}";
-            string sqlcount = $@"select a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
+left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID
+left join t_CM_Unit g on a.UID=g.UnitID
+where a.RowNumber>{(page - 1) * rows}";
+            string sqlcount = $@"select a.*, b.IndName,c.VName,d.FDRName,e.PVFName,f.BigIndTypeName,g.UnitName  from ( select ROW_NUMBER () OVER (ORDER BY id desc) RowNumber,* from [t_ES_ElecPrice]) a 
 left join t_ES_ElecIndustry b on a.IndID=b.IndID 
 left join t_ES_ElecVoltage c on a.VID=c.VID
 left join t_ES_ElecFlatDryRich d on a.FDRID=d.FDRID
 left join t_ES_ElecPeakValleyFlat e on a.PVFID=e.PVFID
-left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where 1=1";
+left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID 
+left join t_CM_Unit g on a.UID=g.UnitID where 1=1";
             if (indid != 0)
             {
                 sql += " and a.IndID=" + indid;
@@ -106,6 +110,11 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where 1=1"
                 sql += " and a.BigIndTypeID=" + bigindtypeid;
                 sqlcount += " and a.BigIndTypeID=" + bigindtypeid;
             }
+            if (bigindtypeid != 0)
+            {
+                sql += " and a.UID=" + uid;
+                sqlcount += " and a.UID=" + uid;
+            }
             total = SQLQuery<t_ES_ElecPrice_W>(sqlcount).Count;
             return SQLQuery<t_ES_ElecPrice_W>(sql);
         }
@@ -125,6 +134,7 @@ left join t_ES_ElecBigIndustryType f on a.BigIndTypeID=f.BigIndTypeID where 1=1"
       ,[reservoir] = {(model.reservoir == null ? 0 : model.reservoir)}
       ,[Demand] = {(model.Demand == null ? 0 : model.Demand)}
       ,[capacity] = {(model.capacity == null ? 0 : model.capacity)}
+      ,[UID]={(model.UID == null ? 0 : model.UID)}
  WHERE id={model.id}";
             return ExecuteSqlCommand(sql);
         }

@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface IElecPrice:IDAOBase,IDisposable
     {
-        IList<t_ES_ElecPrice_W> GetElecPriceList(int page, int rows, int indid, int vid, int fdrid, int pvfid, int bigindtypeid,out int total);
+        IList<t_ES_ElecPrice_W> GetElecPriceList(int page, int rows, int indid, int vid, int fdrid, int pvfid, int bigindtypeid,out int total,int uid);
         int Add(t_ES_ElecPrice model);
         int Update(t_ES_ElecPrice model);
         int Delete(string id);

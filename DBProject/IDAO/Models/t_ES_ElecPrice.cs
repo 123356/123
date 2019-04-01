@@ -21,6 +21,7 @@ namespace IDAO.Models
         public Nullable<decimal> reservoir { get; set; }
         public Nullable<decimal> Demand { get; set; }
         public Nullable<decimal> capacity { get; set; }
+        public Nullable<int> UID { get; set; }
     }
     public partial class t_ES_ElecPrice_W:t_ES_ElecPrice
     {
@@ -29,5 +30,6 @@ namespace IDAO.Models
         public string FDRName { get; set; }
         public string PVFName { get; set; }
         public string BigIndTypeName { get; set; }
+        public string UnitName { get; set; }
     }
 }
