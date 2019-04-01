@@ -45,7 +45,8 @@ namespace DAO
            ,{8}
            ,{9}
            ,{10}
-           ,{11})", model.indID, model.BigIndTypeID == null ? 0 : model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr == null ? 0 : model.WaterConstr, model.FarmNet == null ? 0 : model.FarmNet, model.renewable == null ? 0 : model.renewable, model.reservoir == null ? 0 : model.reservoir, model.Demand == null ? 0 : model.Demand, model.capacity == null ? 0 : model.capacity, model.UID == null ? 0 : model.UID);
+           ,{11}
+           ,{12})", model.indID, model.BigIndTypeID == null ? 0 : model.BigIndTypeID, model.VID, model.FDRID, model.PVFID, model.ElecPrice, model.WaterConstr == null ? 0 : model.WaterConstr, model.FarmNet == null ? 0 : model.FarmNet, model.renewable == null ? 0 : model.renewable, model.reservoir == null ? 0 : model.reservoir, model.Demand == null ? 0 : model.Demand, model.capacity == null ? 0 : model.capacity, model.UID == null ? 0 : model.UID);
             return ExecuteSqlCommand(sql);
         }
 
@@ -110,7 +111,7 @@ left join t_CM_Unit g on a.UID=g.UnitID where 1=1";
                 sql += " and a.BigIndTypeID=" + bigindtypeid;
                 sqlcount += " and a.BigIndTypeID=" + bigindtypeid;
             }
-            if (bigindtypeid != 0)
+            if (uid != 0)
             {
                 sql += " and a.UID=" + uid;
                 sqlcount += " and a.UID=" + uid;
