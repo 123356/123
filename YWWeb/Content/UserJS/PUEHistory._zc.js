@@ -4,7 +4,8 @@
         loading:true,
         treeData: [],
         typeList: [
-            { id: 1, name: '近一日' }, { id: 2, name: '近一月' }, { id: 3, name: '近一年' }, { id: 4, name: '自定义' },
+           { id: 1, name: '近一日' }, { id: 2, name: '近一月' }, { id: 3, name: '近一年' }, { id: 4, name: '自定义' },
+            //{ id: 1, name: '15分钟PUE' }, { id: 2, name: '小时PUE' }, { id: 3, name: '天PUE' }, { id: 4, name: '月PUE' },
         ],
         curType:1,
         lineChart: null,
@@ -17,62 +18,26 @@
         PID:null
     },
     methods: {
-        renderContent(h, { root, node, data }) {
-            var disabled = false
-            if (data.id == 0) {
-                disabled = true
-            }
-            var that = this
-            return h('Option', {
-                style: {
-                    display: 'inline-block',
-                    margin: '5px'
-                },
-                attrs: {
-                    selected: data.id == that.curPid,
-                    disabled: disabled
-                },
-                props: {
-                    value: data.id
-                }
-            }, data.text)
-        },
-        //获取站
-        //getStation: function () {
+        //renderContent(h, { root, node, data }) {
+        //    var disabled = false
+        //    if (data.id == 0) {
+        //        disabled = true
+        //    }
         //    var that = this
-        //    this.$http({
-        //        url: '/Home/ComboTreeMenu?type=1',
-        //        method:'post'
-        //    })
-        //        .then(function (res) {
-        //            var data = res.data
-        //            var arr = new Array()
-        //            if ($.cookie('cookiepid') > 0) {
-        //                that.curPid = $.cookie('cookiepid')
-
-        //            }
-        //            for (var i = 1; i < data.length; i++) {
-        //                arr.push(data[i])
-        //            }
-        //            var temp = new Array()
-        //            temp.push(
-        //                {
-        //                    id: -1,
-        //                    text: '全部',
-        //                    expand:true,
-        //                    children: arr
-        //                }
-        //            )
-
-        //            that.foreachTree(temp[0])
-        //            that.treeData = temp
-        //            that.getPUEDataByTime()
-        //    })
-        //    .catch(function (e) {
-        //        throw new ReferenceError(e.message)
-        //    })
+        //    return h('Option', {
+        //        style: {
+        //            display: 'inline-block',
+        //            margin: '5px'
+        //        },
+        //        attrs: {
+        //            selected: data.id == that.curPid,
+        //            disabled: disabled
+        //        },
+        //        props: {
+        //            value: data.id
+        //        }
+        //    }, data.text)
         //},
-       
         //下拉框
         getSelectTree: function () {
             var that = this
@@ -224,7 +189,8 @@
                     x.push(data[i].name)
                     y.push(data[i].value)
                 }
-
+                var time = new Date()
+                time = time.toLocaleDateString()+" 0:00:00"
             lineChart = echarts.init(document.getElementById('lineChart'));
             var option = {
                 backgroundColor: '#fff',
@@ -240,6 +206,7 @@
                     data: x
                 },
                 yAxis: {
+                    name:'PUE趋势图',
                     splitLine: {
                         show: false
                     }
@@ -285,9 +252,24 @@
                         saveAsImage: {}
                     }
                 },
+                //dataZoom: [{
+                //    type: 'inside',
+                //    realtime: true,
+                //}],
                 dataZoom: [{
                     type: 'inside',
-                    realtime: true,
+                    startValue:time
+                    
+                }, {
+                    handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                    handleSize: '80%',
+                    handleStyle: {
+                        color: '#fff',
+                        shadowBlur: 3,
+                        shadowColor: 'rgba(0, 0, 0, 0.6)',
+                        shadowOffsetX: 2,
+                        shadowOffsetY: 2
+                    }
                 }],
                 visualMap: {
                     top: 10,

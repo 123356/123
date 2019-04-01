@@ -31,7 +31,7 @@
         <div class="flex flex-1  flex-module">
             <div class="flex flex-1">
                 <ul class="headerUl">
-                    <li class="outLi">数据中心选择：</li>
+                    <li class="outLi">数据中心：</li>
                     <li class="outLi">
                         <div id="leftmenuSpace"></div>
                         @*<i-select v-on:on-change="checkStation" v-model="curPid" v-on:on-open-change="openSelect" :filterable="true">
@@ -45,7 +45,7 @@
                                   style="margin:5px"></Tree>
                         </i-select>*@
                     </li>
-                    <li class="outLi">PUE趋势图：</li>
+                    <li class="outLi">类型：</li>
                     <li class="outLi">
                         <i-select class="typeSelect" v-model="curType" v-on:on-change="dateTypeChange">
                             <i-option :name="item.id" :value="item.id" v-for="item in typeList">{{item.name}}</i-option>
@@ -73,7 +73,7 @@
     </div>
 
     
-    <script type="text/javascript" src="~/Content/UserJS/PUEHistory._zc.js?v=1.01"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUEHistory._zc.js?v=1.03"></script>
 
 </body>
 </html>
