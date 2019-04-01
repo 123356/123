@@ -30,6 +30,10 @@
                 <th data-options="field:'id',width:20,editor:'numberbox'" editor="{type:'validatebox',options:{readonly:true}}">
                     ID
                 </th>
+                <th data-options="field:'UnitName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'UnitID',textField:'UnitName', url: '/energyManage/EMHome/GetUnitComobxList',required:true }}">
+                    单位
+                </th>
+
                 <th data-options="field:'IndName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'IndID',textField:'IndName', url: '/BaseInfo/GetElecIndustry',required:true }}">
                     行业类型
                 </th>
@@ -72,6 +76,7 @@
     <form method="post" action="" id="searchform">
         <div id="tb" class="searchbar">
             <div class="searchrow">
+                单位：<select id="UID" style="width: 150px; height: 26px;"></select>
                 行业类型：<select id="IndID" style="width: 150px; height: 26px;"></select>
                 电压等级：
                 <input id="VID" style="width: 150px; height: 26px;" />
@@ -134,7 +139,31 @@
             var fdrid = 0;
             var pvfid = 0;
             var BigIndTypeID = 0;
+            var UID = 0
 
+            $.ajax({
+                url: '/energyManage/EMHome/GetUnitComobxList',
+                type: 'post',
+                success: function (data) {
+                    data.unshift({
+                        UnitID: 0,
+                        UnitName: '==全部=='
+                    })
+                    $("#UID").combobox({
+                        data: data,
+                        valueField: 'UnitID',
+                        textField: 'UnitName',
+                        editable: false,
+                        onLoadSuccess: function (data) { //数据加载完毕事件
+                            if (data.length > 0) {
+                                $("#UID").combobox('select', data[0].UnitID);
+                            }
+                            // dosearch();
+                        }, onChange: function (n, o) {
+                        }
+                    });
+                }
+            })
         $.ajax({
             url:'/BaseInfo/GetElecIndustry',
             type:'post',
@@ -289,14 +318,26 @@
                  fdrid = $("#FDRID").combobox('getValue');
                  pvfid = $("#PVFID").combobox('getValue');
                  BigIndTypeID = $("#BigIndTypeID").combobox('getValue');
+                 UID = $("#UID").combobox('getValue');
             }
              catch(err){
 
-            }
+             }
+            //$.ajax({
+            //    url: '/Home/GetElecPriceList',
+            //    method:'post',
+            //    data: { "indid": indid == 0 ? null : indid, "vid": vid == 0 ? null : vid, "fdrid": fdrid == 0 ? null : fdrid, 'pvfid': pvfid == 0 ? null : pvfid, 'BigIndTypeID': BigIndTypeID == 0 ? null : BigIndTypeID },
+            //    success: function (data) {
+            //        $('#list_data').datagrid({
+            //            data:data.data
+            //        })
+            //    }
+            //})
             $('#list_data').datagrid({
                 url: '/Home/GetElecPriceList',
-                queryParams: { "indid": indid==0?null:indid, "vid": vid==0?null:vid, "fdrid": fdrid==0?null:fdrid,'pvfid':pvfid==0?null:pvfid,'BigIndTypeID':BigIndTypeID==0?null:BigIndTypeID }
+                queryParams: { "uid": UID == 0 ? null : UID, "indid": indid == 0 ? null : indid, "vid": vid == 0 ? null : vid, "fdrid": fdrid == 0 ? null : fdrid, 'pvfid': pvfid == 0 ? null : pvfid, 'BigIndTypeID': BigIndTypeID == 0 ? null : BigIndTypeID }
             });
+           
         }
         function add() {
             if (endEditing()) {
@@ -358,7 +399,6 @@
             if (endEditing()) {
                 $('#list_data').datagrid('acceptChanges');
                 var row = $('#list_data').datagrid('getSelected');
-                console.log(row)
                 if (row) {
                     var postData = {
                         id: row.id,
@@ -374,7 +414,7 @@
                         reservoir: row.reservoir,
                         Demand: row.Demand,
                         capacity: row.capacity,
-
+                        UID: row.UnitName
                     };
                     if(row.id){
                         postData.indID = row.indID
@@ -382,6 +422,7 @@
                         postData.PVFID = row.PVFID
                         postData.VID = row.VID
                         postData.BigIndTypeID = row.BigIndTypeID
+                        UID: row.UID
 
                     }
                     $.post("/Home/UpdateOrAddElec", postData, function (data) {

@@ -180,8 +180,9 @@
             }).catch(function (e) {
                     throw new ReferenceError(e.message)
                 }).finally(function () {
-                    this.getTreeData(1)
-                    this.getTreeData(2)
+                    that.getTreeData(1)
+                    that.getTreeData(2)
+                    that.getReport()
                 })
         },
         //单位下拉框change
@@ -412,6 +413,7 @@
         }
     },
     beforeMount: function () {
+        console.log($.cookie("enUID"))
         if ($.cookie("enUID")) {
             this.UID = parseInt($.cookie("enUID"))
             this.UnitName = $.cookie("enUName")
@@ -422,7 +424,7 @@
         this.getTimes()
         this.getLabelData()
         this.curTimeStr = this.formaterDate()
-        this.getReport()
+        
     },
     mounted: function () {
         //获取用电分项、组织区域树

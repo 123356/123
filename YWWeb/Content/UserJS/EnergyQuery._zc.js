@@ -11,14 +11,14 @@
                 title: '时间',
                 align: 'center',
                 key: 'RecordTime',
-                //render: (h, params) => {
-                //    var time = params.row.RecordTime.split(' ')[0]
-                //    return h('div', [
-                //        h('span', {
+                render: (h, params) => {
+                    var time = params.row.RecordTime.split(' ')[0]
+                    return h('div', [
+                        h('span', {
                             
-                //        }, time),
-                //    ])
-                //}
+                        }, time),
+                    ])
+                }
             },
             {
                 title: '区域',
@@ -29,17 +29,27 @@
                 title: '设备',
                 align: 'center',
                 key: 'DeviceName',
+                render: (h, params) => {
+                    var time = params.row.RecordTime.split(' ')[0]
+                    return h('div', {
+                        style: {
+                            textAlign: 'left'
+                        },
+                    }, params.row.DeviceName)
+                }
             },
             {
                 title: '能耗(元)',
                 align: 'center',
                 key: 'DValue',
-                sortable: true
+                sortable: true,
+                width:120
             },
             {
                 title: '类型',
                 align: 'center',
                 key: 'TypeName',
+                width: 100
             },
 
         ],
