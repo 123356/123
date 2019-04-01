@@ -5238,7 +5238,7 @@ namespace YWWeb.Controllers
                     case 2:
                         tablename = "Monthly";
                         dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = TimeUtils.getThisMonthFirstDay(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss");
+                        datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
                         break;
                     case 3:
                         tablename = "Yearly";
