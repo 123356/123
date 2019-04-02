@@ -7,7 +7,7 @@
            { id: 1, name: '近一日' }, { id: 2, name: '近一月' }, { id: 3, name: '近一年' }, { id: 4, name: '自定义' },
             //{ id: 1, name: '15分钟PUE' }, { id: 2, name: '小时PUE' }, { id: 3, name: '天PUE' }, { id: 4, name: '月PUE' },
         ],
-        curType:1,
+        curType: '4',
         lineChart: null,
         curPid: null,
         curPname:'',
@@ -128,8 +128,8 @@
             var y = time.getFullYear()
             var m = time.getMonth() + 1
             var d = time.getDate()
-            if (this.curType != 4) {
-                return null
+            if (this.curType ==3) {
+                return y + "-" + m
             }
             return y + "-" + m + "-" + d
         },
@@ -165,6 +165,28 @@
             this.curPid = e
             $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
             this.getPUEDataByTime()
+        },
+        radioChange:function(e){
+            console.log(e)
+        },
+        dateChange:function(e){
+            console.log(e)
+            if (this.curType == 4) {
+                if (this.datedifference() > 30) {
+                    this.$Message.warning('15分钟PUE,时间范围请在30天内！');
+                    return
+                }
+            }
+            
+            
+        },
+        //计算相差时间
+        datedifference:function(){
+            var start = new Date(this.selectDate[0])
+            var end = new Date(this.selectDate[1])
+            var diff = Math.abs(end.getTime() - start.getTime())
+            var day = parseInt(diff / (1000 * 60 * 60 * 24))
+            return day+1
         },
         openSelect: function (e) {
             if (e) {
@@ -349,7 +371,13 @@
         },
     },
     beforeMount: function () {
+        var end = new Date()
+        end = end.setDate(end.getDate()-1)
+        var start = new Date()
+        start = start.setMonth(start.getMonth() - 1)
         
+        this.selectDate = [new Date(start), new Date(end)]
+        console.log(this.selectDate)
 
         //this.getStation()
     },

@@ -284,6 +284,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 padding: 20,
                 borderColor: "#ccc"
             },
+            color: ['#54ab88', '#ca9a5c', '#cd574b', '#b8a875'],
             grid: {
                 x: 54,
                 y: 50,
