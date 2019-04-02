@@ -171,12 +171,7 @@
         },
         dateChange:function(e){
             console.log(e)
-            if (this.curType == 4) {
-                if (this.datedifference() > 30) {
-                    this.$Message.warning('15分钟PUE,时间范围请在30天内！');
-                    return
-                }
-            }
+            
             
             
         },
@@ -200,6 +195,12 @@
            
         },
         search: function () {
+            if (this.curType == 4) {
+                if (this.datedifference() > 30) {
+                    this.$Message.warning('15分钟PUE,时间范围请在30天内！');
+                    return
+                }
+            }
             this.getPUEDataByTime()
         },
         createLine: function (data) {
