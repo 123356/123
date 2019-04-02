@@ -96,6 +96,12 @@ namespace EnergyManage.Controllers
             List<rightView> list = new List<rightView>();
             int year = Convert.ToDateTime(time).Year;
             int month = Convert.ToDateTime(time).Month;
+            int days = DateTime.DaysInMonth(year, month);
+            List<DateTime> times = new List<DateTime>();
+            for (int i = 0; i < days; i++)
+            {
+                times.Add(new DateTime(year, month, 1).AddDays(i));
+            }
             try
             {
                 IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
@@ -131,11 +137,11 @@ namespace EnergyManage.Controllers
                                     view.keyValuePairs.Add(group_i);
                                     rate += item.Sum(p => p.Rate);
                                 }
-                                foreach (var item_group in data.GroupBy(p=>p.RecordTime))
+                                for (int i = 0; i < times.Count(); i++)
                                 {
                                     overView group_i = new overView();
-                                    group_i.name = item_group.Key.ToString();
-                                    group_i.value = Math.Round(item_group.Sum(p => p.Rate), 2);
+                                    group_i.name = times[i].ToString();
+                                    group_i.value = Math.Round(data.Where(p => p.RecordTime == times[i]).Sum(p => p.Rate), 2);
                                     view.keyValuePairs_Time.Add(group_i);
                                 }
                             }
@@ -793,8 +799,8 @@ namespace EnergyManage.Controllers
             var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
             decimal rate = 0;
 
-            string t1 = new DateTime(year, 1, 1).ToString("yyyy-MM-dd");
-            string t2 = new DateTime(year, 12, 31).ToString("yyyy-MM-dd");
+            string t1 = new DateTime(year-1, 1, 1).ToString("yyyy-MM-dd");
+            string t2 = new DateTime(year-1, 12, 31).ToString("yyyy-MM-dd");
             string cids = "";
             foreach (var item in list_dep)
             {
@@ -808,7 +814,7 @@ namespace EnergyManage.Controllers
 
                 if (cpids.Count != 0)
                 {
-                    var data = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cpids, 0, t1, t2);
+                    var data = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cpids, 0, t1, t2);
                     rate = data.Sum(p => p.Rate);
                 }
             }
