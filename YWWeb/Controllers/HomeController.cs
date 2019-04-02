@@ -5176,18 +5176,31 @@ namespace YWWeb.Controllers
             decimal RealValue = 0;
             DateTime time = DateTime.Now;
             List<pueView> list_le = new List<pueView>();
+            List<DateTime> times = new List<DateTime>();
+            for (int i = 0; i < 60 / 15 * 24; i++)
+            {
+                times.Add(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMinutes(i*15));
+            }
             if (!string.IsNullOrEmpty(uids))
             {
                 var uidList = uids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p));
                 var TopList = bll.t_EE_PUERealTime.Where(p => p.PID == pid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
-                var groupTopList = TopList.GroupBy(p => p.RecordTime);
-                foreach (var item in groupTopList)
+                for(int i = 0; i < times.Count(); i++)
                 {
                     pueView m = new pueView();
-                    m.name = item.Key.ToString();
-                    m.value = item.Sum(p => p.PUE);
+                    m.name = times[i].ToString();
+                    m.value = TopList.Where(p => p.RecordTime == times[i]).Sum(p => p.PUE);
                     list_top.Add(m);
                 }
+
+                var groupTopList = TopList.GroupBy(p => p.RecordTime);
+                //foreach (var item in groupTopList)
+                //{
+                //    pueView m = new pueView();
+                //    m.name = item.Key.ToString();
+                //    m.value = item.Sum(p => p.PUE);
+                //    list_top.Add(m);
+                //}
                 var model = groupTopList.OrderByDescending(p => p.Key).FirstOrDefault();
                 if (model != null)
                 {
