@@ -5232,21 +5232,21 @@ namespace YWWeb.Controllers
                 {
                     case 1:
                         tablename = "Daily";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //datestart = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
                         break;
                     case 2:
                         tablename = "Monthly";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
                         break;
                     case 3:
                         tablename = "Yearly";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd HH:mm:ss");
+                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //datestart = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd HH:mm:ss");
                         break;
                     case 4:
-                        tablename = "Daily";
+                        tablename = "RealTime";
                         break;
                 }
                 string tabname = "t_EE_PUE" + tablename;
