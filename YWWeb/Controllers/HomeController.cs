@@ -5192,15 +5192,7 @@ namespace YWWeb.Controllers
                     m.value = TopList.Where(p => p.RecordTime == times[i]).Sum(p => p.PUE);
                     list_top.Add(m);
                 }
-
                 var groupTopList = TopList.GroupBy(p => p.RecordTime);
-                //foreach (var item in groupTopList)
-                //{
-                //    pueView m = new pueView();
-                //    m.name = item.Key.ToString();
-                //    m.value = item.Sum(p => p.PUE);
-                //    list_top.Add(m);
-                //}
                 var model = groupTopList.OrderByDescending(p => p.Key).FirstOrDefault();
                 if (model != null)
                 {
