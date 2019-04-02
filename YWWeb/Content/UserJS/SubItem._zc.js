@@ -37,9 +37,7 @@
                 url: '/energyManage/EMHome/GetUnitComobxList',
                 method: 'get',
             }).then(function (res) {
-                if (that.thirdMenu.length > 0) {
-                    that.frameSrc = that.thirdMenu[0].Location
-                }
+                
                 that.comList = res.data
                 if (that.unitID == null) {
                     if (res.data.length > 0) {
@@ -75,6 +73,11 @@
 
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
+            })
+            .finally(function () {
+                if (that.thirdMenu.length > 0) {
+                    that.frameSrc = that.thirdMenu[0].Location
+                }
             })
         },
         selectChange: function (res) {

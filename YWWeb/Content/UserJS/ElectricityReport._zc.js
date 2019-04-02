@@ -1,6 +1,7 @@
 ﻿new Vue({
     el: "#app",
     data: {
+        loading:true,
         UID: null,
         UName: null,
         time: null,
@@ -176,7 +177,7 @@
 
                 })
                 .finally(function () {
-
+                    that.loading = false
                 })
         },
         formaterDate: function () {

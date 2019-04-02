@@ -92,7 +92,7 @@
                     <div class="tableTitle">
                         {{title}}
                     </div>
-                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border class="ivuTable"></i-table>
+                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border class="ivuTable" :loading="loading"></i-table>
                 </div>
                 @*<div style="margin-top:10px;text-align:right" class="noprint">
                         <Page :total="40" size="small" show-total show-elevator show-sizer />

@@ -64,7 +64,7 @@ getSelectTree: function () {
     $('#StationID').combotree({
         url: '/Home/ComboTreeMenu',
         multiple: false,
-        editable: true,
+        editable: false,
         panelMinHeight: 400,
         onBeforeSelect: function (node) {
             if (!$(this).tree('isLeaf', node.target)) {
