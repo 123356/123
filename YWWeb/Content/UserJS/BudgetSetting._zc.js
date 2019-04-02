@@ -79,7 +79,8 @@
         isAdd: false,//是否显示编辑部门按钮
         Area: 0,
         Bili: 0,
-        rightList: []
+        rightList: [],
+        treeShow:false
     },
     filters: {
         toFIxed2: function (e) {
@@ -120,7 +121,7 @@
                 throw new ReferenceError(e.message)
             })
             .finally(function () {
-                that.loading = false
+               
             })
         },
         //清空数据
@@ -275,6 +276,10 @@
             .catch(function (e) {
                 throw new ReferenceError(e.message)
             })
+            .finally(function () {
+                that.treeShow =true
+            })
+           
         },
         initTree: function (data) {
             var setting = {
@@ -681,6 +686,7 @@
             $("#uploadFile").click()
         },
         dateChange: function (e) {
+            this.loading=true
             $(".con table tbody tr td").removeClass("trActive")
             $(".con table tbody tr td .ivu-input-number-input").removeClass("activeColor")
             this.editDisable = true
@@ -714,6 +720,9 @@
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
+            .finally(function () {
+                that.loading = false
+            })
         },
         //最右侧数据
         getRightData: function () {

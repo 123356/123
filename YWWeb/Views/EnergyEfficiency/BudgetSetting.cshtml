@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
     <link rel="stylesheet" href="~/Content/css/modalForm.css?v=1.04" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.49" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.52" />
     <link rel="stylesheet" href="~/Content/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script type="text/javascript" src="~/Content/js/jquery.ztree.core.js"></script>
@@ -43,7 +43,7 @@
             <p class="proName" v-html="uName">--</p>
             <div class="formView">
                 <p class="title">
-                    <date-picker type="year" v-on:on-change="dateChange" format="yyyy预算分配" v-model="slectYear" :clearable="false" class="selectYear"></date-picker>
+                    <date-picker type="year" v-on:on-change="dateChange" format="yyyy预算分配" v-model="slectYear"  class="selectYear" :clearable="false" :editable="false"></date-picker>
                 </p>
                 <div class="btnView">
                     <i-button class="btn" icon="ios-create-outline" v-on:click="edit" v-html="editName">编辑</i-button>
@@ -121,7 +121,7 @@
             </div>
             <div class="main-item">
                 <div class="item-title" style="position:relative">
-                    <p>各科室用<font v-html="curEnType">--</font><br />预算<font v-html="sumDepartBudgetData">--</font>万</p>
+                    <p>各区域用<font v-html="curEnType">--</font><br />预算<font v-html="sumDepartBudgetData">--</font>万</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                     <div style="position:absolute;right:0;cursor:pointer" v-on:click="showTreeModal"><Icon type="md-add" size="18" color="#333" v-if="isAdd" /></div>
                 </div>
@@ -129,7 +129,7 @@
                     <div class="overflowCon departBudgetCon">
                         <table>
                             <tr>
-                                <th>科室</th>
+                                <th>区域</th>
                                 <th>预算(万)</th>
                             </tr>
                             <tbody>
@@ -146,14 +146,14 @@
             </div>
             <div class="main-item">
                 <div class="item-title">
-                    <p>各科室能耗<br />均摊详情</p>
+                    <p>各区域能耗<br />均摊详情</p>
                     <span><Icon type="ios-arrow-forward" class="icon nexticon" /></span>
                 </div>
                 <div class="con" :style="{'height':height+'px'}">
                     <div class="overflowCon departMoneyCon">
                         <table>
                             <tr>
-                                <th>科室</th>
+                                <th>区域</th>
                                 <th>预算(万)</th>
                             </tr>
                             <tbody>
@@ -266,11 +266,12 @@
                 </table>
             </i-form>
         </Modal>
-        <Modal v-model="treeModalVisable" class="iviewModal addEnergyModal treeModal" :closable="true" :mask-closable="false" v-on:on-ok="selectTreeOk" v-on:on-cancel="selectTreeCancel" title="科室选择" style="max-height:450px">
-            <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
+        <Modal v-model="treeModalVisable" class="iviewModal addEnergyModal treeModal" :closable="true" :mask-closable="false" v-on:on-ok="selectTreeOk" v-on:on-cancel="selectTreeCancel" title="区域选择" style="max-height:450px">
+            <p class="treeLoading" v-show="!treeShow">Loading...</p>
+            <ul id="treeDemo" class="ztree" style="width:100%;height:100%" v-show="treeShow"></ul>
         </Modal>
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/BudgetSetting._jm.js?v=1.01"></script>
 </body>
 </html>
 

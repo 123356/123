@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="datePicekerView" style="display:inline-block;position:inherit">
-                            <date-picker v-model="curDate" type="month" size="small" v-on:on-change="dateChange"></date-picker>
+                            <date-picker v-model="curDate" type="month" size="small" v-on:on-change="dateChange" :clearable="false" :editable="false"></date-picker>
                         </div>
                     </div>
                     <div class="con pieView">

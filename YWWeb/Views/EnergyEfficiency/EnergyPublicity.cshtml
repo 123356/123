@@ -30,7 +30,7 @@
                 <div class="module-title">
                     <img src="~/Content/images/energyDifficiency/barAndLine.png" class="icon" />
                     <span>能效公示</span>
-                    <date-picker type="date" :clearable="false" v-model="time" v-on:on-change="dateChange" class="datePicker"></date-picker>
+                    <date-picker type="date" :clearable="false" :editable="false" v-model="time" v-on:on-change="dateChange" class="datePicker"></date-picker>
                     <div id="leftmenuSpace" class="inlineBlock"></div>
                     <div class="inlineBlock">
                         <i-button class="userBtn" v-on:click="showInfo">显示</i-button>
@@ -56,7 +56,7 @@
         </div>
         <!--right e-->
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyPublicity._jm.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyPublicity._jm.js?v=1.0"></script>
 </body>
 </html>
 

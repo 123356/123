@@ -111,7 +111,7 @@
                 }
             },
             {
-                title: '科室',
+                title: '区域',
                 align: 'center',
                 key: 'EName'
             },

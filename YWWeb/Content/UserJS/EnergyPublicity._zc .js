@@ -11,7 +11,7 @@
         tableCol: [
 
             {
-                title: '科室',
+                title: '区域',
                 align: 'center',
                 key: 'Name',
             },
@@ -62,7 +62,7 @@
             $('#StationID').combotree({
                 data: arr,
                 multiple: true,
-                editable: true,
+                editable: false,
                 panelMinHeight: 300,
                 onBeforeSelect: function (node) {
                     if (!$(this).tree('isLeaf', node.target)) {
@@ -217,7 +217,7 @@
                             optionToContent: function (opt) {
                                 var axisData = opt.xAxis[0].data;
                                 var series = opt.series;
-                                var tdHeads = '<td  style="padding:0 10px">科室</td>';
+                                var tdHeads = '<td  style="padding:0 10px">区域</td>';
                                 series.forEach(function (item) {
                                     tdHeads += '<td style="padding: 0 10px">' + item.name + '</td>';
                                 });

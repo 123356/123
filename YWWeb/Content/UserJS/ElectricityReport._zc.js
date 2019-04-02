@@ -30,6 +30,7 @@
             $('#StationID').combotree({
                 data: arr,
                 panelMinHeight: 300,
+                editable:false,
                 onBeforeSelect: function (node) {
                     if (!$(this).tree('isLeaf', node.target)) {
                         $('#StationID').combotree('tree').tree("expand", node.target); //展开

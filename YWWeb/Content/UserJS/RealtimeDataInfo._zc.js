@@ -116,7 +116,7 @@
         tab: function(a) {
             var that = this;
             if (a == 1) {
-                that.BindDevice();
+                that.BindDevice(this.PID,this.DTID);
                 that.Bind();
             } else if (a == 2) {
                 that.Bind();

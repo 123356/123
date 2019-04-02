@@ -95,7 +95,7 @@
             $('#StationID').combotree({
                 data: arr,
                 multiple: true,
-                editable: true,
+                editable: false,
                 panelMinHeight: 300,
                 onBeforeSelect: function (node) {
                     if (!$(this).tree('isLeaf', node.target)) {
@@ -245,6 +245,10 @@
         window.addEventListener("resize", () => {
             that.tableHeight = $(".bottomView .con").height()
         });
+        
+        var time = new Date()
+        time = new Date(time.getFullYear(), time.getMonth(), time.getDate() - 1)
+        this.searchForm.time = time.toLocaleDateString()
         //this.getStation()
         this.getCollectDevTypeList()
         this.getDepartMentList()

@@ -28,7 +28,7 @@
             <div class="chartView">
                 <div class="item">
                     <div class="chartTitle">
-                        <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" class="datePicker" v-on:on-change="datePicekChange"></date-picker>
+                        <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" :editable="false" class="datePicker" v-on:on-change="datePicekChange"></date-picker>
                     </div>
                     <div class="main">
                         <div class="chart" id="powerChart"></div>
@@ -77,7 +77,7 @@
                         <p v-html="item.name">--</p>
                     </div>
                     <div class="module-item info">
-                        <p>科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;室:<span><font>{{item.DepName}}</font></span></p>
+                        <p>区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;域:<span><font>{{item.DepName}}</font></span></p>
                         <p>用电预算:<span><font v-html="item.budget">--</font> 万元</span></p>
                         <p>当前费用:<span><font v-html="item.rate">--</font> 万元</span></p>
                         <p>
@@ -117,7 +117,7 @@
                             </form-item>
                         </td>
                         <td>
-                            <form-item label="科室" class="moneyView">
+                            <form-item label="区域" class="moneyView">
                                 @*<i-select v-model="addForm.EnerUserTypeID">
                                         <i-option :value="item.id" :key="item.id" v-for="item in departMentList">{{item.Name}}</i-option>
                                     </i-select>*@
@@ -147,7 +147,7 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._jm.js?v=1.149"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._jm.js?v=1.154"></script>
 </body>
 </html>
 

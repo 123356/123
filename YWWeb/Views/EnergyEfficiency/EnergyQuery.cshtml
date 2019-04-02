@@ -57,7 +57,7 @@
                                 <tr>
                                     <td>
                                         <form-item label="时间">
-                                            <date-picker type="date" v-model="searchForm.time" style="width:160px" class="minWidth"></date-picker>
+                                            <date-picker type="date" v-model="searchForm.time" style="width:160px" class="minWidth" :clearable="false" :editable="false" ></date-picker>
                                         </form-item>
                                     </td>
                                     @*<td>
@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/EnergyQuery._jm.js?v=1.09"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyQuery._jm.js?v=1.13"></script>
 </body>
 </html>
 
