@@ -98,12 +98,13 @@ namespace EnergyManage.Controllers
             int month = Convert.ToDateTime(time).Month;
             int days = DateTime.DaysInMonth(year, month);
             List<DateTime> times = new List<DateTime>();
-            for (int i = 0; i < days; i++)
-            {
-                times.Add(new DateTime(year, month, 1).AddDays(i));
-            }
+           
             try
             {
+                for (int i = 0; i < days; i++)
+                {
+                    times.Add(new DateTime(year, month, 1).AddDays(i));
+                }
                 IList<t_EE_enTypeConfig> list_peizhi = DAL.EnTypeConfigDAL.getInstance().GetenConig(uid);
                 foreach (var item_peizhi in list_peizhi)
                 {
