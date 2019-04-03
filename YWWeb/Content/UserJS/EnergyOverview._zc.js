@@ -322,10 +322,11 @@ creatPowerChart: function (data) {
     }
     else {
         serData = [
-            { value: budget - rate, name: '预算剩余' },
             { value: rate, name: '已用费用' },
+            { value: budget - rate, name: '预算剩余' },
+            
         ]
-        color = ['#e0e0e0', '#ca9a5c']
+        color = ['#ca9a5c', '#e0e0e0']
     }
     var that = this
     var option = {
