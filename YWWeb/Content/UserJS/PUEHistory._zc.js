@@ -374,10 +374,10 @@
     },
     beforeMount: function () {
         var end = new Date()
-        end = end.setDate(end.getDate()-1)
+        end = end.setDate(end.getDate() - 1)
+        end = new Date(end)
         var start = new Date()
-        start = start.setMonth(start.getMonth() - 1)
-        
+        start = start.setDate(start.getDate()-30)
         this.selectDate = [new Date(start), new Date(end)]
         console.log(this.selectDate)
 
