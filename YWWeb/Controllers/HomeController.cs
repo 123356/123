@@ -5233,12 +5233,12 @@ namespace YWWeb.Controllers
             try
             {
                 string tablename = "";
+                dateend = Convert.ToDateTime(dateend).ToString("yyyy-MM-dd 23:59:59");
+                datestart = Convert.ToDateTime(datestart).ToString("yyyy-MM-dd 00:00:00");
                 switch (totaltype)
                 {
                     case 1:
                         tablename = "Daily";
-                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        //datestart = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
                         break;
                     case 2:
                         tablename = "Monthly";
