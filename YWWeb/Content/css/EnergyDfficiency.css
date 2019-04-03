@@ -53,12 +53,12 @@ table {
 
     }
         .left .chartView .item {
-            flex: 2.8;
+            flex: 1;
             overflow: hidden;
             
         }
         .left .chartView .lastItem {
-            flex: 1.8;
+            flex: 0.5;
         }
         .left .chartView .item .main {
             height: 65%;
@@ -1336,11 +1336,11 @@ table {
     }
 
     .left .chartView .item {
-        flex: 2.5;
+        flex: 1;
     }
 
     .left .chartView .lastItem {
-        flex: 1.5
+        flex: 0.5
     }
 
     .left .chartView .item .main p {

@@ -40,6 +40,7 @@
         Peozhanbi: null,
         LPeozhanbi: null,
         zongBudget: null,
+        zongRate:null,
         initSelectShow: true,
         unitDepartName: null,
     },
@@ -212,7 +213,8 @@ getZongData: function () {
             }
             that.Peozhanbi = data.list_bottom.Peozhanbi
             that.LPeozhanbi = data.list_bottom.LPeozhanbi
-            that.zongBudget = data.list_bottom.zongBudget
+            that.zongBudget = data.list_zong.zongBudget
+            that.zongRate = data.list_zong.zongRate
         })
         .catch(function (e) {
             throw new ReferenceError(e.message)
@@ -333,12 +335,25 @@ creatPowerChart: function (data) {
                 return params.name + "：" + that.toMoney(params.value)
             },
         },
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            bottom: 0,
+            
+            data: ['预算剩余','已用费用'],
+            itemWidth: 13,
+            textStyle: {
+                fontSize: 10
+            },
+            borderRadius: 0
+        },
         color: color,
         series: [{
             name: '电量',
             type: 'pie',
-            center: ['48%', '52%'],
-            radius: ['85%', '62%'],
+            center: ['48%', '45%'],
+            // radius: ['85%', '62%'],
+            radius: ['78%', '55%'],
             avoidLabelOverlap: false,
             hoverAnimation: false,
             label: {
@@ -358,7 +373,7 @@ creatPowerChart: function (data) {
                         b: {
                             color: '#525252',
                             lineHeight: 30,
-                            fontSize: 16,
+                            fontSize: 14,
                         }
                     },
                 },
