@@ -201,7 +201,7 @@
                 var yData = []
                 legend.push(data[i].Name)
                 for(var j in data[i].list){
-                    yData.push(data[i].list[j].AlarmLimits)
+                    yData.push(data[i].list[j].PV)
                     if(i==0){
                          xData.push(formaterDate(data[i].list[j].RecTime))
                     }
