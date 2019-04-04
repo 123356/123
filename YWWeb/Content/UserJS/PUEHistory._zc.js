@@ -168,10 +168,11 @@
         },
         radioChange:function(e){
             console.log(e)
+            this.search()
         },
         dateChange:function(e){
             console.log(e)
-            
+            this.search()
             
             
         },

@@ -68,6 +68,7 @@ function PowerQualityData_PM(DataJson) {
                 }
             }
         },
+        color: ['#54ab88', '#ca9a5c', '#cd574b', '#b8a875'],
         legend: {
             data: [t1, t2]
         },
@@ -78,7 +79,7 @@ function PowerQualityData_PM(DataJson) {
             containLabel: true
         },
         xAxis: {
-            name: 'KW‧H',
+            name: 'kW·h',
             type: 'value',
             boundaryGap: [0, 0.01]
         },
@@ -169,8 +170,9 @@ function PowerQualityData_FX(DataJson) {
                 }
             }
         },
+        color: ['#ca9a5c', '#54ab88', '#cd574b', '#b8a875'],
         series: [{
-            name: "昨天用电分项统计 KW‧H",
+            name: "昨天用电分项统计 kW·h",
             type: "pie",
             radius: ['50%', '70%'],
             data: DataJson.series1,//[{value: 10,name: "照明"}, {value: 10,name: "空调"}, {value: 30,name: "电梯"}, {value: 50,name: "其他"}],
@@ -180,7 +182,7 @@ function PowerQualityData_FX(DataJson) {
         }],
         title: {
             text: titlePie,
-            subtext: DataJson.total + "KW‧H",
+            subtext: DataJson.total + "kW·h",
             x: 'center',
             y: 'center'
         },
@@ -359,7 +361,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 //}
             }],
             yAxis: [{
-                name: "KW‧H",
+                name: "kW·h",
                 type: "value",
                 //axisLabel: {
                 //    show: true,
