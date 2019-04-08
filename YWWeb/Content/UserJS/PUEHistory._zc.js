@@ -359,7 +359,7 @@
                             { type: 'min', name: '最小值' }
                         ]
                     },
-                    smooth: true,
+                    smooth: false,
                     symbol: 'none',
                     markLine: {
                         silent: true,

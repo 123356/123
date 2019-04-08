@@ -304,8 +304,8 @@ addEnergy: function () {
 },
 creatPowerChart: function (data) {
     powerChart = echarts.init(document.getElementById('powerChart'));
-    var rate = data.list_zong.zongRate.toFixed(5)
-    var budget = data.list_zong.zongBudget.toFixed(2)
+    var rate = data.list_zong.zongRate
+    var budget = data.list_zong.zongBudget
     var serData = null
     var color = null
     if (rate == 0) {
@@ -333,7 +333,7 @@ creatPowerChart: function (data) {
         tooltip: {
             trigger: 'item',
             formatter: function (params, ticket, callback) {
-                return params.name + "：" + that.toMoney(params.value)
+                return params.name + "：<br/>" + that.toMoney(params.value)
             },
         },
         legend: {
@@ -398,7 +398,7 @@ creatEnergyMoneyChart: function (data) {
     var legend = new Array()
     var sumTotal = 0
     for (var i = 0; i < data.left_view.length; i++) {
-        data.left_view[i].value = data.left_view[i].value.toFixed(5)
+        data.left_view[i].value = data.left_view[i].value
         sumTotal += parseFloat(data.left_view[i].value)
         legend.push(data.left_view[i].name)
     }
@@ -478,7 +478,11 @@ creatEnergyMoneyChart: function (data) {
 },
 createModulePieChart: function (chart, data) {
     for (var i = 0; i < data.keyValuePairs.length; i++) {
-        data.keyValuePairs[i].value = data.keyValuePairs[i].value.toFixed(2)
+        var val =  data.keyValuePairs[i].value
+        if(val!='-'){
+            data.keyValuePairs[i].value = data.keyValuePairs[i].value
+        }
+       
     }
     chart = echarts.init(document.getElementById(chart));
     var option = {
@@ -531,6 +535,8 @@ createModuleBarChart: function (data, data) {
     for (var i = 0; i < data.keyValuePairs_Time.length; i++) {
         xData.push(data.keyValuePairs_Time[i].name.split(" ")[0].split("/")[2])
         yData.push(data.keyValuePairs_Time[i].value)
+        
+       
     }
     var that = this
     chart = echarts.init(document.getElementById(chart));
@@ -551,7 +557,14 @@ createModuleBarChart: function (data, data) {
             formatter: function (params, ticket, callback) {
                 var res = params[0].seriesName+"<br/>";
                 for (var i in params) {
-                    res += that.month + "-" + params[i].axisValue + "：" + that.toMoney(params[i].value)
+                   
+                    var m = params[i].value
+                    if(m=='-'){
+                        res += that.month + "-" + params[i].axisValue 
+                    }else{
+                        res += that.month + "-" + params[i].axisValue + "：" + that.toMoney(params[i].value)
+                    }
+                    
                 }
                 return res
             },

@@ -342,7 +342,7 @@ createLine: function (data) {
             type: 'line',
             data: y,
             areaStyle: {},
-            smooth: true,
+            smooth: false,
             symbol: 'none',
             markPoint: {
                 data: [

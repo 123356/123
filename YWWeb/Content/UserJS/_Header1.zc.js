@@ -63,7 +63,7 @@ function ConTep() {
 function showAlarmWindow() {
     playList.length = 1;
     var sArarmTem = "", sArarmMp3Name = "";
-
+   
     if (alarmInf.length > 0) {
         sArarmTem = sArarmTem + alarmInf;
         sArarmMp3Name += "1";
@@ -129,7 +129,6 @@ function showAlarmWindow() {
         // console.log("curDate:" + curDate.getFullYear() + "-" + (curDate.getMonth() + 1) + "-" + curDate.getDate() + " " + curDate.getHours() + ":" + curDate.getMinutes() + ":" + curDate.getSeconds())
         var time = curDate.getTime() - hintDate.getTime()
         time = Math.floor(time / (60 * 1000))
-        console.log("相差时间：" + time)
         if (time > 120) {
             if (playList.length > 1) {
                 play(audio, playList)
@@ -195,23 +194,35 @@ function show(array) {
         showAlarmWindow()
     }
 }
-
 function alarmState() {
     $.post("/Home/getPtAlarmInfo", "", function (data) {
+        
         if (1 == data.indexOf("<")) {
-            {
+            //console.log(alarmInf)
+            var count = alarmInf
+            var str =  "id=\"alarmNum\">"
+            count = parseInt(count.substring(count.indexOf(str) + str.length, count.indexOf("</span>条【监测报警】")))
+           
                 if (alarmInf == data)
                     return;
-
+                
                 alarmInf = data;
                 var sf = "id=\"alarmNum\">";
                 var is = data.indexOf(sf);
                 var ie = data.indexOf("</span>条【监测报警】");
                 var val = data.substring(is + sf.length, ie);
+            //console.log("count=" + count + ",val=" + val)
+                //console.log("val==count:" + parseInt(val) == count)
+                //console.log("val=" + parseInt(val)+",count="+count)
+                if (parseInt(val) < count || parseInt(val) == count) {
+                    alarmInf = ''
+                    $("#alarm_popups").hide();
+                    return
+                }
                 var text = "<span class=\"am-badge am-badge-warning am-round item-feed-badge\" id=\"alarmNum\">" + val + "</span>";
                 $("#alarmNum").remove();//移除历史
                 $("#alarmIcon").append(text);
-            }
+           
         }
         else if (data == "error") {
             alarmInf = "";
