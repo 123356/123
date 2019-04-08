@@ -29,10 +29,6 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
-        public ActionResult AreaTreeEdit1()
-        {
-            return View();
-        }
 
         #region 
         /// 返回该用户权限可见的单位列表
@@ -45,7 +41,28 @@ namespace EnergyManage.Controllers
         /// 返回cid树
         public JsonResult GetCidTree(int UnitID,string UnitName,string PDRList)
         {
-            IList<IDAO.Models.t_V_CIDTree> list = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(UnitID, UnitName, PDRList);
+            IList<IDAO.Models.t_V_CidTree> tree = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(UnitID, UnitName, PDRList);
+            return Json(tree);
+        }
+
+        //返回CID数据
+        public JsonResult GetCidData(int UnitID, string UnitName, string PDRList)
+        {
+            IList<IDAO.Models.t_V_DeviceInfoState_PDR1> tree = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidData(UnitID, UnitName, PDRList);
+            return Json(tree);
+        }
+
+        //返回能源树
+        public JsonResult GetEnergyTree(int UnitID, int ItemType, string UnitName)
+        {
+            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
+            return Json(list);
+        }
+
+        //编辑能源树信息
+        public JsonResult SetEnergyTree(int UnitID, int ItemType, string UnitName)
+        {
+            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
             return Json(list);
         }
 
@@ -92,30 +109,6 @@ namespace EnergyManage.Controllers
 
 
 
-
-
-
-
-
-        /// 返回该单位的组织区域树数据
-        public ActionResult GetTreeData(int unitID, int item_type, string unitName)
-        {
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            }
-            Tree tree = new Tree();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<Tree>();
-            getTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            return Content(json);
-        }
 
         /// <summary>
         /// 拼接tree数据
@@ -130,7 +123,7 @@ namespace EnergyManage.Controllers
                     {
                         Tree tree = new Tree();
                         tree.id = data[a].child_id;
-                        tree.name = data[a].Name;
+                        tree.name = data[a].name;
                         tree.pId = data[a].parent_id;
                         tree.addCid = data[a].addCid;
                         tree.delCid = data[a].delCid;
@@ -309,7 +302,7 @@ namespace EnergyManage.Controllers
                     }
                     else
                     {
-                        exEnergy.enerUserTypeID = enerProjectType[0].id; //区域ID
+                        exEnergy.enerUserTypeID = enerProjectType[0].ID; //区域ID
                         exEnergy.People = enerProjectType[0].unit_people;  //人流量
                         exEnergy.Area = enerProjectType[0].unit_area;  //建筑面积
                     }
@@ -406,102 +399,102 @@ namespace EnergyManage.Controllers
         /// <param name="item_type"></param>
         /// <param name="unitName"></param>
         /// <returns></returns>
-        public ActionResult GetTreePower(int unitID, int item_type, string unitName)
-        {
-            Stopwatch watch = new Stopwatch();
-            LogHelper.Debug("GetTreePower begin ...");
+        //public ActionResult GetTreePower(int unitID, int item_type, string unitName)
+        //{
+        //    Stopwatch watch = new Stopwatch();
+        //    LogHelper.Debug("GetTreePower begin ...");
 
-            watch.Start();
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+        //    watch.Start();
+        //    IList<IDAO.Models.t_V_EnerProjectType> list;
+        //    list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
            
 
-            LogHelper.Debug("111:" + watch.ElapsedMilliseconds);            
+        //    LogHelper.Debug("111:" + watch.ElapsedMilliseconds);            
 
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            }
-            string all = "" ;
-            for(var a = 0; a < list.Count(); a++)
-            {
-                if (!string.IsNullOrEmpty(list[a].addCid))
-                    all += list[a].addCid + ",";
-                if (!string.IsNullOrEmpty(list[a].delCid))
-                    all += list[a].delCid+",";
-            }
+        //    if (list.Count() == 0 && item_type == 1)
+        //    {
+        //        DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+        //        list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+        //    }
+        //    string all = "" ;
+        //    for(var a = 0; a < list.Count(); a++)
+        //    {
+        //        if (!string.IsNullOrEmpty(list[a].addCid))
+        //            all += list[a].addCid + ",";
+        //        if (!string.IsNullOrEmpty(list[a].delCid))
+        //            all += list[a].delCid+",";
+        //    }
 
-            LogHelper.Debug("22222:" + watch.ElapsedMilliseconds);
-            if (all.Length > 1) {
-                all = all.Substring(0, all.Length - 1);
-            }
-            else
-            {
-                return Json("没有查到数据");
-            }
+        //    LogHelper.Debug("22222:" + watch.ElapsedMilliseconds);
+        //    if (all.Length > 1) {
+        //        all = all.Substring(0, all.Length - 1);
+        //    }
+        //    else
+        //    {
+        //        return Json("没有查到数据");
+        //    }
 
-            string[] arr;
-            string pid="", cid="";
-            arr = all.Split(',');
+        //    string[] arr;
+        //    string pid="", cid="";
+        //    arr = all.Split(',');
 
-            for (var a = 0; a < arr.Count(); a++)
-            {
-                var arr1 = arr[a].Split('-');
-                pid += arr1[0] + ',';
-                cid += arr1[1] + ',';
-            }
-            LogHelper.Debug("333333:" + watch.ElapsedMilliseconds);
+        //    for (var a = 0; a < arr.Count(); a++)
+        //    {
+        //        var arr1 = arr[a].Split('-');
+        //        pid += arr1[0] + ',';
+        //        cid += arr1[1] + ',';
+        //    }
+        //    LogHelper.Debug("333333:" + watch.ElapsedMilliseconds);
 
-            pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
-            cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
-
-
+        //    pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
+        //    cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
 
 
 
-            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
-
-            LogHelper.Debug("44444:" + watch.ElapsedMilliseconds);
 
 
-            for (int a = 0; a < list.Count(); a++)
-            {
+        //    IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
+
+        //    LogHelper.Debug("44444:" + watch.ElapsedMilliseconds);
 
 
-                decimal use = 0;
-                decimal need = 0;
-                for (int b = 0; b < power.Count(); b++)
-                {
-                    if (power[b].ener_use_type.Contains($",{list[a].child_id},"))
-                    {
-                        use += power[b].UsePower;
-                        need += power[b].NeedPower;
-                    }
-                }
+        //    for (int a = 0; a < list.Count(); a++)
+        //    {
 
 
-                list[a].UsePower = use;
-                list[a].NeedPower = need;
+        //        decimal use = 0;
+        //        decimal need = 0;
+        //        for (int b = 0; b < power.Count(); b++)
+        //        {
+        //            if (power[b].ener_use_type.Contains($",{list[a].child_id},"))
+        //            {
+        //                use += power[b].UsePower;
+        //                need += power[b].NeedPower;
+        //            }
+        //        }
 
-            }
+
+        //        list[a].UsePower = use;
+        //        list[a].NeedPower = need;
+
+        //    }
 
 
 
-            LogHelper.Debug("5555555:" + watch.ElapsedMilliseconds);
+        //    LogHelper.Debug("5555555:" + watch.ElapsedMilliseconds);
 
-            Tree tree = new Tree();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<Tree>();
+        //    Tree tree = new Tree();
+        //    tree.id = 0;
+        //    tree.name = unitName;
+        //    tree.pId = -1;
+        //    tree.children = new List<Tree>();
 
-            getTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            watch.Stop();
-            LogHelper.Debug("GetTreePower end ..."+watch.ElapsedMilliseconds);
-            return Content(json);
-        }
+        //    getTree(list, tree.children, 0);
+        //    string json = JsonConvert.SerializeObject(tree);
+        //    watch.Stop();
+        //    LogHelper.Debug("GetTreePower end ..."+watch.ElapsedMilliseconds);
+        //    return Content(json);
+        //}
 
         /// <summary>
         /// 查询当月用电量

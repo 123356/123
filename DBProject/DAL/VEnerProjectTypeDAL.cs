@@ -30,21 +30,43 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_V_EnerProjectType> GetTreeData(int unitID, int item_type)
+        public List<t_V_EnerProjectTypeTree> GetEnergyTree(int UnitID, int ItemType,string UnitName)
         {
-            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
+            IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
+
+
+            List<t_V_EnerProjectTypeTree> tree = new List<t_V_EnerProjectTypeTree>();
+
             try
             {
-                data = _dbFactory.venerProjectType.GetTreeData(unitID, item_type);
+                list = _dbFactory.venerProjectType.GetEnergyData(UnitID, ItemType, UnitName);
+                GetEnergyDataToTree(list,tree,0);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return data;
+            return tree;
+        }
+        public void GetEnergyDataToTree(IList<t_V_EnerProjectType> list,List<t_V_EnerProjectTypeTree> Children,int child_id)
+        {
+           // IList<t_V_EnerProjectType>  list1 = list.Where(o => o.parent_id == 0).ToList();
+            for (var a = 0; a < list.Count(); a++)
+            {
+                if (list[a].parent_id == child_id)
+                {
+                    t_V_EnerProjectTypeTree node = new t_V_EnerProjectTypeTree(list[a]);
+                    node.Children = new List<t_V_EnerProjectTypeTree>();
+                    Children.Add(node);
+                    GetEnergyDataToTree(list, node.Children, list[a].child_id);
+                }
+            }
+
         }
 
-        
+
+
+
 
         /// <summary>
         /// 查列历史分项列表

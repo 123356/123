@@ -35,58 +35,97 @@ namespace DAL
             return _DataDal;
         }
 
-        
-        public IList<t_V_CIDTree> GetCidTree(int UnitID,string UnitName, string PDRList)
-        {
-            IList<t_V_DeviceInfoState_PDR1> list = new List<t_V_DeviceInfoState_PDR1>();
 
-            IList<t_V_CIDTree> tree = new List<t_V_CIDTree>();
+        public IList<t_V_DeviceInfoState_PDR1> GetCidData(int UnitID, string UnitName, string PDRList) {
 
+            IList<t_V_DeviceInfoState_PDR1> list ;
             try
             {
                 list = _dbFactory.deviceInfoState_PDR1.GetCidTree(UnitID, UnitName, PDRList);
-                int pid = -1, cid = -1, did = -1;
-                string uid = "0";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
+        
 
-                if (PDRList.Contains(',')) {
-                    uid = UnitID + "_u";
-                    t_V_CIDTree u = new t_V_CIDTree();
-                    u.pId = "0";
-                    u.id = uid;
-                    u.name = UnitName;
-                    tree.Add(u);
-                }
+        public IList<t_V_CidTree> GetCidTree(int UnitID,string UnitName, string PDRList)
+        {
+            IList<t_V_DeviceInfoState_PDR1> list = new List<t_V_DeviceInfoState_PDR1>();
 
-                for (var a= 0; a < list.Count(); a++)
+            IList<t_V_CidTree> tree = new List<t_V_CidTree>();
+
+            try
+            {
+                int id = 0;
+                list = _dbFactory.deviceInfoState_PDR1.GetCidTree(UnitID, UnitName, PDRList);
+                IList<t_V_CidTree> obj ;
+                if (PDRList.Contains(','))
                 {
-                    if (pid != list[a].PID) {
-                        pid = list[a].PID;
-                        t_V_CIDTree t = new t_V_CIDTree();
-                        t.pId = uid;
-                        t.id = list[a].PID+"_p";
-                        t.name = list[a].PName;
-                        tree.Add(t);
-                    }
-                    if (list[a].DID != did)
+                    t_V_CidTree o = new t_V_CidTree();
+                    o.name = UnitName;
+                    o.Children = new List<t_V_CidTree>();
+                    o.id = ""+id++;
+                    tree.Add(o);
+                    obj = o.Children;
+                }
+                else
+                {
+                     obj = tree;
+                }
+                string pids = "", cids = "", dids = "";
+
+                for (int a = 0; a < list.Count(); a++)
+                {
+
+                    if (!pids.Contains($",{ list[a].PID},"))
                     {
-                        did = list[a].DID;
-                        t_V_CIDTree t = new t_V_CIDTree();
-                        t.pId = list[a].PID + "_p";
-                        t.id = list[a].DID + "_d";
-                        t.name = list[a].DName;
-                        tree.Add(t);
-                    }else  if (list[a].CID != cid)
-                    {
-                        cid = list[a].CID;
-                        t_V_CIDTree t = new t_V_CIDTree();
-                        t.pId = list[a].DID + "_d";
-                        t.id = list[a].CID + "_c";
-                        t.name = list[a].CName;
-                        tree.Add(t);
+                        pids += $",{ list[a].PID},";
+                        t_V_CidTree p = new t_V_CidTree();
+                        p.PID = list[a].PID;
+                        p.name = list[a].PName;
+                        p.Children = new List<t_V_CidTree>();
+                        p.id = "" + id++;
+                        obj.Add(p);
+
+
+                        for (int b = 0; b < list.Count(); b++)
+                        {
+                            if (list[a].PID == list[b].PID &&  !dids.Contains($",{list[a].PID}-{list[b].DID},"))
+                            {
+                                dids += $",{list[a].PID}-{list[b].DID},";
+                                t_V_CidTree d = new t_V_CidTree();
+                                d.PID = list[b].PID;
+                                d.DID = list[b].DID;
+                                d.name = list[b].DName;
+                                d.Children = new List<t_V_CidTree>();
+                                d.id = ""+id++;
+
+                                p.Children.Add(d);
+
+
+
+
+                                for (int c = 0; c < list.Count(); c++)
+                                {
+                                    if (list[c].PID == list[a].PID && list[c].DID == list[b].DID && !cids.Contains($",{list[b].PID}-{list[b].DID}-{list[c].CID}," ))
+                                    {
+                                        cids += $",{list[b].PID}-{list[b].DID}-{list[c].CID},";
+                                        t_V_CidTree cc = new t_V_CidTree();
+                                        cc.PID = list[c].PID;
+                                        cc.DID = list[c].DID;
+                                        cc.CID = list[c].CID;
+                                        cc.name = list[c].CName;
+                                        cc.id = $"{list[c].PID}-{list[c].CID}";
+                                        d.Children.Add(cc);
+
+                                    }
+                                }
+                            }
+                        }
                     }
-
-
-
                 }
             }
             catch (Exception ex)
@@ -96,5 +135,7 @@ namespace DAL
             return tree;
            
         }
+
+
     }
 }

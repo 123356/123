@@ -9,7 +9,7 @@ namespace IDAO
 {
     public interface IVEnerProjectType : IDAOBase, IDisposable
     {
-        IList<t_V_EnerProjectType> GetTreeData(int unitID, int item_type);
+        IList<t_V_EnerProjectType> GetEnergyData(int UnitID, int ItemType,string UnitName);
         IList<t_V_EnerProjectType> UpdateRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid,int updateTypeID,int unit_area,int unit_people);
         IList<t_V_EnerProjectType> AddProjectTemplate(int unitID, int item_type);
         IList<t_V_EnerProjectType> GetHistoryList(int unitID, int item_type);
