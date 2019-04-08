@@ -5189,7 +5189,11 @@ namespace YWWeb.Controllers
                 {
                     pueView m = new pueView();
                     m.name = times[i].ToString();
-                    m.value = TopList.Where(p => p.RecordTime == times[i]).Sum(p => p.PUE);
+                    var ccc = TopList.Where(p => p.RecordTime == times[i]).ToList();
+                    if (ccc.Count != 0)
+                        m.value = TopList.Where(p => p.RecordTime == times[i]).Sum(p => p.PUE).ToString();
+                    else
+                        m.value = "-";
                     list_top.Add(m);
                 }
                 var groupTopList = TopList.GroupBy(p => p.RecordTime);
@@ -5215,9 +5219,9 @@ namespace YWWeb.Controllers
                         }
                         mm.name = CName;
                         if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
-                            mm.value = 0;
+                            mm.value = "";
                         else
-                            mm.value = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power);
+                            mm.value = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power).ToString();
 
                         list_le.Add(mm);
                     }
@@ -5270,7 +5274,7 @@ namespace YWWeb.Controllers
                 {
                     pueView m = new pueView();
                     m.name = item.Key.ToString();
-                    m.value = Math.Round(item.Sum(p => p.PUE), 2);
+                    m.value = Math.Round(item.Sum(p => p.PUE), 2).ToString();
                     data.Add(m);
                 }
             }
@@ -5312,7 +5316,7 @@ namespace YWWeb.Controllers
         public class pueView
         {
             public string name { get; set; }
-            public decimal? value { get; set; }
+            public string value { get; set; }
         }
         #endregion
 

@@ -64,7 +64,7 @@ namespace EnergyManage.Controllers
             {
                 overView m = new overView();
                 m.name = TypeList.Where(p => p.ID == item.Key).FirstOrDefault().Name;
-                m.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
+                m.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5).ToString();
                 left_view.Add(m);
             }
 
@@ -134,7 +134,7 @@ namespace EnergyManage.Controllers
                                 {
                                     overView group_i = new overView();
                                     group_i.name = item.Key;
-                                    group_i.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5);
+                                    group_i.value = Math.Round(item.Sum(p => p.Rate) / 10000, 5).ToString();
                                     view.keyValuePairs.Add(group_i);
                                     rate += item.Sum(p => p.Rate);
                                 }
@@ -142,7 +142,15 @@ namespace EnergyManage.Controllers
                                 {
                                     overView group_i = new overView();
                                     group_i.name = times[i].ToString();
-                                    group_i.value = Math.Round(data.Where(p => p.RecordTime == times[i]).Sum(p => p.Rate), 2);
+                                    var vvv = data.Where(p => p.RecordTime == times[i]);
+                                    if (vvv.Count() != 0)
+                                    {
+                                        group_i.value = Math.Round(vvv.Sum(p => p.Rate), 2).ToString();
+                                    }
+                                    else
+                                    {
+                                        group_i.value = "-";
+                                    }
                                     view.keyValuePairs_Time.Add(group_i);
                                 }
                             }
@@ -164,7 +172,7 @@ namespace EnergyManage.Controllers
         public class overView
         {
             public string name { get; set; }
-            public decimal value { get; set; }
+            public string value { get; set; }
         }
 
         public class rightView
@@ -246,7 +254,7 @@ namespace EnergyManage.Controllers
                 {
                     overView oview = new overView();
                     oview.name = item.Key;
-                    oview.value = Math.Round(item.Sum(p => p.Rate), 2);
+                    oview.value = Math.Round(item.Sum(p => p.Rate), 2).ToString();
                     list.Add(oview);
                 }
             }
@@ -452,7 +460,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = Math.Round(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate), 2);
+                    m.value = Math.Round(list_this.Where(p => p.RecordTime == d).Sum(p => p.Rate), 2).ToString();
                     list_r.list_this.Add(m);
 
 
@@ -463,7 +471,7 @@ namespace EnergyManage.Controllers
                     overView m = new overView();
                     m.name = item;
                     DateTime d = Convert.ToDateTime(item);
-                    m.value = Math.Round(list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate), 2);
+                    m.value = Math.Round(list_last.Where(p => p.RecordTime == d).Sum(p => p.Rate), 2).ToString();
                     list_r.list_last.Add(m);
                 }
             }
@@ -647,7 +655,7 @@ namespace EnergyManage.Controllers
 
                         overView mx = new overView();
                         DateTime d = Convert.ToDateTime(itemf);
-                        mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value);
+                        mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
                         m.list.Add(mx);
                     }
                     list_line.Add(m);
@@ -782,7 +790,7 @@ namespace EnergyManage.Controllers
                         group_i.name = TypeList.Where(p => p.ID == item.Key).FirstOrDefault().Name;
                     else
                         group_i.name = "";
-                    group_i.value = item.Sum(p => p.Rate);
+                    group_i.value = item.Sum(p => p.Rate).ToString();
                     list.Add(group_i);
                 }
             }
