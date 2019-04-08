@@ -67,6 +67,36 @@ namespace DAL
 
 
 
+        public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type)
+        {
+
+            IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
+            try
+            {
+                list = _dbFactory.venerProjectType.GetTreeData(unitId, item_type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
+
+        public IList<t_V_EnerProjectType> SetEnergyTree(int UnitID, int ItemType, string UnitName)
+        {
+            IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
+            try
+            {
+                list = _dbFactory.venerProjectType.GetEnergyData(UnitID, ItemType, UnitName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
+
+
 
         /// <summary>
         /// 查列历史分项列表
