@@ -787,11 +787,17 @@
 
 
 
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.uid = unitData.enUID
+                this.uName = unitData.enName
+            }
         }
     },
     beforeMount: function () {
-        this.uid = $.cookie("enUID")
-        this.uName = $.cookie("enUName")
+        this.getUnitData()
         this.slectYear = new Date().getFullYear().toString()
         if (parseInt(this.slectYear) <= new Date().getFullYear()) {
             this.isEdit = false

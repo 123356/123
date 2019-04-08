@@ -654,16 +654,18 @@ datePicekChange: function (e) {
     this.curDate = time
     this.getEneryOverView()
     this.getZongData()
+},
+getUnitData: function () {
+    var unitData = JSON.parse(localStorage.getItem("UnitData"))
+    if (unitData) {
+        this.uid = unitData.enUID
+        this.Uname =unitData.enName
+    }
 }
 },
 beforeMount: function () {
     var that = this
-    var id = $.cookie("enUID")
-    if (id != null) {
-        this.uid = id
-        this.Uname = $.cookie("enUName")
-        window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: this.uid, UnitName: this.Uname }))
-    }
+    this.getUnitData()
     var date = new Date()
     this.month = (date.getMonth() + 1)
     var month = (date.getMonth() + 1)

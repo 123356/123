@@ -34,8 +34,7 @@
                 if (that.UID == null) {
                     if (res.data.length > 0) {
                         that.UID = res.data[0].UnitID
-                        $.cookie("enUID", that.UID, { expires: 7 })
-                        $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
+                        localStorage.setItem('UnitData', JSON.stringify({ enUID: that.UID, enName: res.data[0].UnitName }))
                     }
                 }
             }).catch(function (e) {
@@ -261,9 +260,8 @@
         },
         comChange: function (e) {
             this.UID = e.value,
-                this.UnitName = e.label
-            $.cookie("enUID", this.UID, { expires: 7 })
-            $.cookie("enUName", this.UnitName, { expires: 7 })
+            this.UnitName = e.label
+            localStorage.setItem('UnitData', JSON.stringify({ enUID: e.value, enName: e.label }))
         },
         //打印
         openOrPrint: function () {
@@ -302,13 +300,16 @@
                     break;
             }
         },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UID = unitData.enUID
+                this.UnitName = unitData.enName
+            }
+        }
     },
     beforeMount: function () {
-        if ($.cookie("enUID")) {
-            this.UID = parseInt($.cookie("enUID"))
-            this.UnitName = $.cookie("enUName")
-        }
-
+        this.getUnitData()
         this.getUnitComobxList()
         this.getTimes()
         this.getUserBtn()

@@ -233,11 +233,17 @@
         dropdownClick: function (e) {
             this.curReportType = e
         },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UID = unitData.enUID
+                this.UName = unitData.enName
+            }
+        }
     },
     beforeMount: function () {
-        
-        this.UID = $.cookie("enUID")
-        this.UName = $.cookie("enUName")
+        this.getUnitData()
+       
         this.time = new Date()
         var that = this
         setInterval(function () {

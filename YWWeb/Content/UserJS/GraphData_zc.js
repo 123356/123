@@ -1,4 +1,9 @@
 ﻿$("#currPosition", window.top.document).html("当前位置：状态 > 历史 > 曲线报表 ");
+function ajaxLoading() {
+    $("<div class=\"datagrid-mask\"></div>").css({ display: "block", width: "100%", height: $(window).height() }).appendTo("body");
+    $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({ display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2 });
+}
+
 var firstOpen = 0,
     canAdd = 0;
 var pid = 0,
@@ -288,6 +293,7 @@ var Json = "",
     Colors = [];
 
 function GetGraphData() {
+    ajaxLoading()
     //请求前先清空
     Json = [], xAxisFormat = [], yAxisFormat = [], LegendData = [], SeriesData = [], Histagid = "";
     graphtype = $("input[name='GraphType']:checked").val();
@@ -314,7 +320,8 @@ function GetGraphData() {
         //     window.LegendData = [],
         //     window.SeriesData = [],
         //     window.Colors = [];
-
+        $(".datagrid-mask").remove();
+        $(".datagrid-mask-msg").remove();
         var dataJson = eval("(" + data + ")");
         Json = dataJson;
         if (dataJson.xLength < 1) {
@@ -325,6 +332,7 @@ function GetGraphData() {
             $('#canvas').html("<div id='HisGraphCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;'>");
             SetGraphOption();
         }
+       
     });
 
 }

@@ -42,8 +42,7 @@
                 if (that.unitID == null) {
                     if (res.data.length > 0) {
                         that.unitID = res.data[0].UnitID
-                        $.cookie("enUID", that.unitID, { expires: 7 })
-                        $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
+                        localStorage.setItem('UnitData', JSON.stringify({ enUID: that.unitID, enName: res.data[0].UnitName }))
                     }
                 }
                 else {
@@ -56,14 +55,12 @@
                     if (count == 0) {
                         if (res.data.length > 0) {
                             that.unitID = res.data[0].UnitID
-                            $.cookie("enUID", res.data[0].UnitID, { expires: 7 })
-                            $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
+                            localStorage.setItem('UnitData', JSON.stringify({ enUID: that.unitID, enName: res.data[0].UnitName }))
                         }
                     } else {
-                        that.unitID = parseInt($.cookie("enUID"))
                         for (var i in res.data) {
                             if (that.unitID == res.data[i].UnitID) {
-                                $.cookie("enUName", res.data[i].UnitName, { expires: 7 })
+                                localStorage.setItem('UnitData', JSON.stringify({ enUID: that.unitID, enName: res.data[i].UnitName }))
                             }
                         }
                     }
@@ -77,14 +74,15 @@
             .finally(function () {
                 if (that.thirdMenu.length > 0) {
                     that.frameSrc = that.thirdMenu[0].Location
+                    console.log("frameSrc：" + that.frameSrc)
                 }
             })
         },
         selectChange: function (res) {
             this.unitID = res.value
-            $.cookie("enUID", this.unitID, { expires: 7 })
-            $.cookie("enUName", res.label, { expires: 7 })
-            window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: $.cookie("enUID"), UnitName: $.cookie("enUName"), PDRList: null }))
+            //$.cookie("enUID", this.unitID, { expires: 7 })
+            //$.cookie("enUName", res.label, { expires: 7 })
+            localStorage.setItem('UnitData', JSON.stringify({ enUID: res.value, enName: res.label }))
             document.getElementById('energyFrame').contentWindow.location.reload(true);
         },
         userBtnClick: function (e, url) {
@@ -94,14 +92,21 @@
             this.activeIndex = e
             this.frameSrc = url
         },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.unitID = unitData.enUID
+            }
+        }
     },
     beforeMount: function () {
         var mid = window.location.search.split("=")[1]
-        var id = $.cookie("enUID")
-        window.localStorage.setItem('UnitData', JSON.stringify({ UnitID: $.cookie("enUID"), UnitName: $.cookie("enUName") }))
-        if (id != null) {
-            this.unitID = id
-        }
+        this.getUnitData()
+        //var id = $.cookie("enUID")
+        
+        //if (id != null) {
+        //    this.unitID = id
+        //}
         this.getThirdMenuInfo(mid)
         this.getUnitComobxList()
     },

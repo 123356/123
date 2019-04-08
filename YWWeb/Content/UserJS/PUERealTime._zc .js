@@ -396,7 +396,7 @@ createGauge: function (data) {
     var option ={
         backgroundColor: '#fff',
         tooltip: {
-            formatter: "{b} : {c}%",
+            formatter: "{b} : {c}",
             textStyle: {
                 fontSize: 12
             }
@@ -474,13 +474,14 @@ createBar: function (data) {
 
         grid: {
             left: '1%',
-            right: '5%',
-            bottom: '3%',
-            top:'5%',
+            right: '10%',
+            bottom: '0%',
+            top:'16%',
             containLabel: true
         },
         color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
         xAxis: {
+            name:'kW·h',
             type: 'value',
             boundaryGap: [0, 0.01],
             axisLabel: {
@@ -490,11 +491,13 @@ createBar: function (data) {
             },
         },
         yAxis: {
+            name:'回路',
             type: 'category',
             axisLabel: {
                 //  rotate: 30,
                 color: '#666',
-                fontSize:12
+                fontSize: 12,
+                rotate: 30
             },
             data: x
         },
@@ -530,7 +533,7 @@ createPie: function (data) {
     var option = {
         tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : <br/>{c} ({d}%)",
+            formatter: "{b} : <br/>{c} ({d}%)",
             textStyle: {
                 fontSize:12
             }
@@ -538,7 +541,7 @@ createPie: function (data) {
         color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
         series: [
             {
-                name: '能耗效率',
+               
                 type: 'pie',
                 radius: '68%',
                 center: ['50%', '50%'],

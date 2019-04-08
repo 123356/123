@@ -84,6 +84,7 @@ function PowerQualityData_PM(DataJson) {
             boundaryGap: [0, 0.01]
         },
         yAxis: {
+            name:'回路',
             type: 'category',
             data: DataJson.yAxis.split(',')
         },
@@ -226,7 +227,23 @@ function getPowerQualityData_SSQX() {
     });
 }
 function HourYdlGraph_SSQX(DataJson) {
-
+    var obj = {}
+    if (totaltype == 2) {
+        obj = {
+            show: true,
+            interval:0
+        }
+    } else if (totaltype == 1) {
+        obj = {
+            show: true,
+            interval: 11
+        }
+    } else if (totaltype == 0) {
+        obj = {
+            show: true,
+            interval: 5
+        }
+    }
     var Series = [];
 
     if (DataJson.xAxis != '') {
@@ -354,11 +371,11 @@ function HourYdlGraph_SSQX(DataJson) {
                 type: "category",
                 boundaryGap: false,
                 data: DataJson.xAxis.split(','),
-                //axisLabel: {
-                //    show: true,
-                //    formatter: "{value}"
-                //    //interval: 0 0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
-                //}
+                axisLabel: {
+                    
+                    rotate: 50
+                },
+                //splitArea:obj
             }],
             yAxis: [{
                 name: "kW·h",
@@ -367,7 +384,7 @@ function HourYdlGraph_SSQX(DataJson) {
                 //    show: true,
                 //    formatter: "{value}"
                 //}
-            },],
+            }, ],
             dataZoom: [{
                 type: 'inside',
                 filterMode: 'filter'
@@ -376,6 +393,7 @@ function HourYdlGraph_SSQX(DataJson) {
         };
         myChart1.clear();
         myChart1.setOption(option);
+       
     }
     else {
         //alert(1);
@@ -449,7 +467,9 @@ function loadStationName() {
             }
             loadCircuitType(pid);
             lock();
+            $.cookie('cookiepid', pid, { expires: 7, path: '/' });
         }
+        
     });
 }
 

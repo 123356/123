@@ -27,12 +27,71 @@ $(function() {
     //       storageSave(saveSelectColor);
     //     }
 
+    var open = false
   
 	$(function() {
     var $fullText = $('.admin-fullText');
-    $('#admin-fullscreen').on('click', function() {
-      $.AMUI.fullscreen.toggle();
+    $('#admin-fullscreen').on('click', function () {
+        if (!open) {
+            fullScreen()
+        } else {
+            exitScreen()
+        }
+        
+     // $.AMUI.fullscreen.toggle();
     });
+	    //全屏
+    function fullScreen() {
+        open = true
+        var el = document.documentElement;
+        var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;      
+        if(typeof rfs != "undefined" && rfs) {
+            rfs.call(el);
+        };
+        return;
+    }
+    
+
+	    //退出全屏
+    function exitScreen() {
+        open = false
+        if (document.exitFullscreen) {  
+            document.exitFullscreen();  
+        }  
+        else if (document.mozCancelFullScreen) {  
+            document.mozCancelFullScreen();  
+        }  
+        else if (document.webkitCancelFullScreen) {  
+            document.webkitCancelFullScreen();  
+        }  
+        else if (document.msExitFullscreen) {  
+            document.msExitFullscreen();  
+        } 
+        if(typeof cfs != "undefined" && cfs) {
+            cfs.call(el);
+        }
+    }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $(document).on($.AMUI.fullscreen.raw.fullscreenchange, function() {
       $fullText.text($.AMUI.fullscreen.isFullscreen ? '退出全屏' : '开启全屏');

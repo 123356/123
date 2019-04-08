@@ -234,11 +234,17 @@
         },
         setHeight: function () {
             this.tableHeight = $(".bottomView").height() - 36
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UID = unitData.enUID
+                this.UName = unitData.enName
+            }
         }
     },
     beforeMount: function () {
-        this.UID = $.cookie("enUID")
-        this.Uname = $.cookie("enUName")
+        this.getUnitData()
         var that = this
         that.tableHeight = $(".bottomView .con").height()-40
        

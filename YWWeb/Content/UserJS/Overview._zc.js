@@ -328,7 +328,7 @@ function initEcharts() {
                 },
                 axisLabel: {
                     interval: 0,
-                    rotate: -30
+                    rotate: 40
                 },
             },
             grid: {
@@ -336,7 +336,7 @@ function initEcharts() {
                 bottom: '35%'
             },
             yAxis: {
-                name: 'KW-h',
+                name: 'kW·h',
                 type: 'value',
             },
 
