@@ -713,7 +713,7 @@ namespace YWWeb.Controllers
             return View();
         }
         [Login]
-        public ActionResult LogInfo(string username, string contents, string datestart, string dateend, int rows, int page)
+        public ActionResult SysLogInfoList(string username, string contents, string datestart, string dateend, int rows, int page)
         {
             string query = "UserName like '%" + username + "%' and Contents like '%" + contents + "%'";
             if (datestart != null && !datestart.Equals(""))

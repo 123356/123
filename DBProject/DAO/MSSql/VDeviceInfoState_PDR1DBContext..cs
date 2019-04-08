@@ -37,7 +37,8 @@ namespace DAO
                         $"ON a.PID=b.PID " +
                         $"RIGHT JOIN t_DM_CircuitInfo c " +
                         $"ON c.PID = a.PID AND  c.DID = b.DID " +
-                        $"WHERE a.pid in({PDRList}) ";
+                        $"WHERE a.pid in({PDRList}) " +
+                        $"ORDER BY  c.PID,c.DID,c.CID";
             return SQLQuery<t_V_DeviceInfoState_PDR1>(sql);
         }
 

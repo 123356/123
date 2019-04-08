@@ -12,24 +12,19 @@ namespace IDAO.Models
     [Serializable]
     public partial class t_V_DeviceInfoState_PDR1
     {
-
-        //pid
         public int PID { get; set; }
         public string PName { get; set; }
-
-        //did
         public int DID { get; set; }
         public string DName { get; set; }
-        //cid
         public int CID { get; set; }
         public string CName { get; set; }
     }
-
-    //: t_V_DeviceInfoState_PDR1
-
-    public partial class t_V_CIDTree {
-        public string pId { get; set; }
+    public partial class t_V_CidTree {
         public string id { get; set; }
         public string name { get; set; }
+        public int PID { get; set; }
+        public int CID { get; set; }
+        public int DID { get; set; }
+        public IList<t_V_CidTree> Children { get; set; }
     }
 }

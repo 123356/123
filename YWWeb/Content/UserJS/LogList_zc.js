@@ -30,9 +30,8 @@ $('#dateend').datebox('calendar').calendar({
         return date <= now;
     }
 });
-
 $('#list_data').datagrid({
-    url: '/SysInfo/LogInfo?rom=' + Math.random()
+    url: '/SysInfo/SysLogInfoList?rom='+Math.random()
 });
 function LogDateFormart(d) {
     alert(d);

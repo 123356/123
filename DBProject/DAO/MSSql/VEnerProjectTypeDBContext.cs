@@ -24,12 +24,39 @@ namespace DAO
               .HasKey(t => new { t.child_id});
             base.OnModelCreating(modelBuilder);
         }
-        public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type)
+        public IList<t_V_EnerProjectType> GetEnergyData(int UnitID, int ItemType,string UnitName)
         {
+            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
+            string sql = $"SELECT b.*,0.0 NeedPower,0.0 UsePower,a.*,a.Name name" +
+                $" FROM t_EE_EnerUserType a " +
+                $" right join t_EE_EnerUserProject b" +
+                $" on a.id =b.child_id " +
+                $" WHERE b.unit_id = {UnitID} AND a.item_type = {ItemType} ORDER BY b.ProjectID";
+            return SQLQuery<t_V_EnerProjectType>(sql);
+        }
+        public IList<t_V_EnerProjectType> SetEnergyTree(t_V_EnerProjectType data)
+        {
+            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
+            string sql = $"SELECT b.*,0.0 NeedPower,0.0 UsePower,a.*,a.Name name" +
+                $" FROM t_EE_EnerUserType a " +
+                $" right join t_EE_EnerUserProject b" +
+                $" on a.id =b.child_id ";
+            return SQLQuery<t_V_EnerProjectType>(sql);
+        }
+
+
+        public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type) {
+
+
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             string sql = "SELECT *,0.0 NeedPower,0.0 UsePower FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
             return SQLQuery<t_V_EnerProjectType>(sql);
+
         }
+
+
+
+
         public IList<t_V_EnerProjectType> UpdateRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid,int updateTypeID,int unit_area,int unit_people)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });

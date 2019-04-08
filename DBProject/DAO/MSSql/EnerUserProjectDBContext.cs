@@ -70,12 +70,18 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 
-        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid)
+        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid, int isP)
         {
             string sql = $"select * from t_EE_EnerUserProject where unit_id={uid}";
-            if (parid != 0)
+            if (isP == 1)
+            {
                 sql += $" and parent_id={parid}";
-
+            }
+            else
+            {
+                if (parid != 0)
+                    sql += $" and parent_id={parid}";
+            }
             sql += " order by child_id";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }

@@ -15,6 +15,6 @@ namespace IDAO
         IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId , int id, int unit_id);
         IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id);
 
-        IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid);
+        IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid, int isP);
     }
 }

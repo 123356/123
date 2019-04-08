@@ -436,8 +436,8 @@ namespace YWWeb.Controllers
             List<AlarmAnyis> datas = new List<AlarmAnyis>();
             try
             {
-                string startTime = Convert.ToDateTime(time).AddMinutes(-3).ToString("yyyy-MM-dd HH:mm:ss");
-                string endTime = Convert.ToDateTime(time).AddHours(1).ToString("yyyy-MM-dd HH:mm:ss");
+                string startTime = Convert.ToDateTime(time).AddMinutes(-30).ToString("yyyy-MM-dd HH:mm:ss");
+                string endTime = Convert.ToDateTime(time).AddMinutes(30).ToString("yyyy-MM-dd HH:mm:ss");
                 var tagids = string.Join(",", bll.t_CM_PointsInfo.Where(p => p.DataTypeID == 2 && p.PID == pid && p.CID == cid).Select(p => p.TagID).ToArray());
                 if (!string.IsNullOrEmpty(tagids))
                 {
