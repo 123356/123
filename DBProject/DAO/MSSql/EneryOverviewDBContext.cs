@@ -222,7 +222,7 @@ where a.CID in({cids}) and a.PID in ({pids}) and CONVERT(varchar(4),RecordTime, 
         public IList<t_V_EneryView> GetFirstPageDatas(Dictionary<int,string> cpids, string time)
         {
             string sql = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
-on ((','+ (CONVERT(varchar(255),c.id)+',') in (b.ener_use_type)))
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
 where CONVERT(varchar(7),RecordTime, 120)='{time}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
             int i = 0;
