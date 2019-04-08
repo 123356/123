@@ -170,8 +170,7 @@
                 if (that.UID == null) {
                     if (res.data.length > 0) {
                         that.UID = res.data[0].UnitID
-                        $.cookie("enUID", that.UID, { expires: 7 })
-                        $.cookie("enUName", res.data[0].UnitName, { expires: 7 })
+                        localStorage.setItem('UnitData', JSON.stringify({ enUID: that.UID, enName: res.data[0].UnitName }))
                         that.UnitName = res.data[0].UnitName
 
                     }
@@ -188,9 +187,7 @@
         //单位下拉框change
         comChange: function (e) {
             this.UID = e.value
-            
-            $.cookie("enUID", e.value, { expires: 7 })
-            $.cookie("enUName", e.label, { expires: 7 })
+            localStorage.setItem('UnitData', JSON.stringify({ enUID: e.value, enName: e.label }))
             this.getTreeData(1)
             this.getTreeData(2)
         },
@@ -410,15 +407,17 @@
         ExcelPort: function () {
             var time =
                 window.open('/ReportForms/GetExtItemFrom?uid=' + this.UID + "&time=" + this.formaterDate() + "&type=" + this.dateType + "&itemids=" + [...this.isUnitElecSubSelect].join(',') + "&areaids=" + [...this.isUnitAreaSelect].join(',') + '&lables=' + [...this.label].join(','), '_blank');
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UID = unitData.enUID
+                this.UnitName = unitData.enName
+            }
         }
     },
     beforeMount: function () {
-        console.log($.cookie("enUID"))
-        if ($.cookie("enUID")) {
-            this.UID = parseInt($.cookie("enUID"))
-            this.UnitName = $.cookie("enUName")
-        }
-
+        this.getUnitData()
         this.getUnitComobxList()
         this.getUserBtn()
         this.getTimes()

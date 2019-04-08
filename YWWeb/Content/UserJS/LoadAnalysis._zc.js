@@ -62,6 +62,23 @@ function getPowerQualityData_SSQXS() {
 
 function HourYdlGraph_SSQX(DataJson) {
     var Series = [];
+    var obj = {}
+    if (totaltype == 2) {
+        obj = {
+            show: true,
+            interval: 0
+        }
+    } else if (totaltype == 1) {
+        obj = {
+            show: true,
+            interval: 11
+        }
+    } else if (totaltype == 0) {
+        obj = {
+            show: true,
+            interval: 5
+        }
+    }
     if (DataJson.xAxis != '') {
         $('#Error').css('display', 'none');
         $('#cavans').css('display', '');
@@ -173,6 +190,11 @@ function HourYdlGraph_SSQX(DataJson) {
                 type: "category",
                 boundaryGap: false,
                 data: DataJson.xAxis.split(','),
+                axisLabel: {
+                    //interval: 0,
+                    rotate: 50
+                },
+               // splitArea:obj
 
             }],
             yAxis: [{

@@ -361,9 +361,17 @@
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.uid = unitData.enUID
+               // this.Uname = unitData.enName
+            }
         }
     },
     beforeMount: function () {
+        this.getUnitData()
         this.uid = $.cookie("enUID")
         this.departmentID = this.getParURl("departmentID")
         this.curTime = this.getParURl("time")

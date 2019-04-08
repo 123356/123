@@ -726,10 +726,18 @@
         setHeight: function () {
             this.listHeight = $(".left .list").height() - 21
             this.analysisTableHeight = $(".right .bottom").height() - 40
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.uid = unitData.enUID
+                // this.Uname = unitData.enName
+            }
         }
     },
     beforeMount: function () {
-        this.uid = $.cookie("enUID")
+        this.getUnitData()
+        //this.uid = $.cookie("enUID")
         var that = this
         function setWidth2() {
             var isScroll = $(".ivu-table-overflowY").length

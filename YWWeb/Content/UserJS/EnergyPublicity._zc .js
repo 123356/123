@@ -274,7 +274,8 @@
                             textStyle: {
                                 fontSize: 10,// 让字体变大
                                 color: '#9f9d9d'
-                            }
+                            },
+                            rotate: 50
                         },
                     }
                 ],
@@ -398,11 +399,17 @@
                
                 throw new ReferenceError(e.message)
             })
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UID = unitData.enUID
+                this.UName = unitData.enName
+            }
         }
     },
     beforeMount: function () {
-        this.UID = $.cookie("enUID")
-        this.UName = $.cookie("enUName")
+        this.getUnitData()
       //  this.getEneryView()
         var that = this
         this.setHeight()

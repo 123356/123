@@ -95,13 +95,17 @@ var vm = new Vue({
             })
             .catch(function (e) {
                 console.log(e)
+                that.$Message.warning(e.message)
+            })
+            .finally(function () {
+              
             })
         },
 
 
     },
     beforeMount: function () {
-        this.unitId = $.cookie("unitId")
+        this.unitId = $.cookie("enUID")
         this.getScore()
     }
 })

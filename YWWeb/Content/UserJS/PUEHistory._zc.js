@@ -168,6 +168,9 @@
         },
         radioChange:function(e){
             console.log(e)
+            if (e == 4) {
+                this.initDate()
+            }
             this.search()
         },
         dateChange:function(e){
@@ -197,15 +200,39 @@
         },
         search: function () {
             if (this.curType == 4) {
+
                 if (this.datedifference() > 30) {
                     this.$Message.warning('15分钟PUE,时间范围请在30天内！');
                     return
                 }
+            } else if (this.curType == 1) {
+                var end = new Date()
+                end = end.setDate(end.getDate() - 1)
+                end = new Date(end)
+                var start = new Date()
+                start = start.setDate(start.getDate() - 7)
+                this.selectDate = [new Date(start), new Date(end)]
             }
             this.getPUEDataByTime()
         },
         createLine: function (data) {
-            console.log("创建图表")
+            var obj = {}
+            if (this.curType == 1) {
+                obj = {
+                    show: true,
+                    interval: 11
+                }
+            } else if (this.curType == 2) {
+                obj = {
+                    show: true,
+                    interval: 0
+                }
+            } else if (this.curType == 4) {
+                obj = {
+                    show: true,
+                    interval: 23
+                }
+            }
             this.chartShow = true
             var x = new Array()
             var y = new Array()
@@ -228,13 +255,16 @@
                 },
                 xAxis: {
                     boundaryGap: false,
-                    data: x
+                    data: x,
+                    //splitArea: obj
+
                 },
                 yAxis: {
                     name:'PUE趋势图',
                     splitLine: {
                         show: false
-                    }
+                    },
+                    
                 },
                 toolbox: {
                     right: 35,
@@ -372,14 +402,17 @@
             });
 
         },
+        initDate: function () {
+            var end = new Date()
+            end = end.setDate(end.getDate() - 1)
+            end = new Date(end)
+            var start = new Date()
+            start = start.setDate(start.getDate() - 30)
+            this.selectDate = [new Date(start), new Date(end)]
+        }
     },
     beforeMount: function () {
-        var end = new Date()
-        end = end.setDate(end.getDate() - 1)
-        end = new Date(end)
-        var start = new Date()
-        start = start.setDate(start.getDate()-30)
-        this.selectDate = [new Date(start), new Date(end)]
+        this.initDate()
         console.log(this.selectDate)
 
         //this.getStation()

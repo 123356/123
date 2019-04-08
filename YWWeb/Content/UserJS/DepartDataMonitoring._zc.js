@@ -89,10 +89,16 @@
 
             document.getElementById('departFrame').contentWindow.location.reload(true);
         },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.uid = unitData.enUID
+                this.uName = unitData.enName
+            }
+        }
     },
     beforeMount: function () {
-        this.uid = $.cookie("enUID")
-        this.uName = $.cookie("enUName")
+        this.getUnitData()
         this.getTreeData()
     },
     mounted: function () {

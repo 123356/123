@@ -466,6 +466,13 @@
         },
         setHeight: function () {
             this.analysisTableHeight = $(".top .right-top-left .con").height()
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.uid = unitData.enUID
+                this.Uname = unitData.enName
+            }
         }
     },
     beforeMount: function () {
@@ -476,8 +483,7 @@
         sessionStorage.getItem("isParent", true)
         this.deartmentName = sessionStorage.getItem("parentDepartName")
         this.departmentID = window.location.search.split("=")[1]
-        this.uid = $.cookie("enUID")
-        this.uName = $.cookie("enUName")
+        this.getUnitData()
         var that = this
         setInterval(function () {
             //setWidth2()
