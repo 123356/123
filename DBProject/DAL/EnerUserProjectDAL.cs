@@ -90,12 +90,12 @@ namespace DAL
             return data;
         }
 
-        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid)
+        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid, int isP)
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.GetDepIDByParID(uid, parid);
+                data = _dbFactory.enerUserProject.GetDepIDByParID(uid, parid, isP);
             }
             catch (Exception ex)
             {

@@ -26,7 +26,7 @@ namespace EnergyManage.Controllers
             int year = Convert.ToDateTime(time).Year;
             int month = Convert.ToDateTime(time).Month;
             string lastTime = Convert.ToDateTime(time).AddYears(-1).ToString();
-            var DepList = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
+            var DepList = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0, 1);
             string cids = "";
             foreach (var dep in DepList)
             {
@@ -268,7 +268,7 @@ namespace EnergyManage.Controllers
                 string pids = GetPIDs();
 
                 IList<t_EE_EnerUserProject> list_userP;
-                list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID);
+                list_userP = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, DepartmentID,0);
                 if (list_userP.Count == 0)
                     list_userP = DAL.EnerUserProjectDAL.getInstance().GetCidByUidAndIDepID(uid, DepartmentID);
                 IList<t_EE_EnerUserType> list_keshi = DAL.EnerUserTypeDAL.getInstance().GetComobxList(2);
@@ -306,7 +306,7 @@ namespace EnergyManage.Controllers
 
         private decimal FindNode(int uid, int depid, DateTime time, decimal DepBudget)
         {
-            var m = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, depid);
+            var m = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, depid,0);
             if (m.Count != 0)
             {
                 foreach (var item in m)
@@ -595,7 +595,7 @@ namespace EnergyManage.Controllers
                 return Json("No Data", JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult GetExData(string cids, int type, int TypeTime, string time, int uid)
+        public JsonResult GetExData(string cids,int type, int TypeTime, string time, int uid)
         {
             try
             {
@@ -797,7 +797,7 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetLastYearArea(int uid, int year)
         {
-            var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0);
+            var list_dep = DAL.EnerUserProjectDAL.getInstance().GetDepIDByParID(uid, 0,0);
             decimal rate = 0;
 
             string t1 = new DateTime(year-1, 1, 1).ToString("yyyy-MM-dd");
