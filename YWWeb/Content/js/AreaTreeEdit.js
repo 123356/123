@@ -151,19 +151,49 @@ let vm = new Vue({
                 method: "post",
                 body: this.node
             }).then(function(res) {
-                this.GetEnergyTree();
-                console.log(res.data)
+                var id = res.data[0].child_id;
+                this.$message({
+                    message: '已保存节点信息',
+                    type: 'success'
+                });
+                this.$http({
+                    url: "/energyManage/EMSetting/GetEnergyTree",
+                    method: "POST",
+                    body: {
+                        UnitID: parseInt(this.UnitData.UnitID),
+                        ItemType: parseInt(this.treeType),
+                        UnitName: this.UnitData.UnitName,
+                    }
+                }).then(function(res) {
+                    this.tree.energy = res.data;
+                    setTimeout(function() {
+                        vm.$refs.energy.setCurrentKey(id);
+                    })
+                })
             })
         },
         //添加节点
         append(data) {
-            console.log(data)
-
-            const newChild = { ID: -1, name: '新建节点', Children: [], parent_id: data.child_id, unit_id: this.UnitData.UnitID, item_type: this.treeType };
+            // if(JSON.stringify(vm.tree.energy).indexOf)
+            if (JSON.stringify(vm.tree.energy).indexOf(`"ID":-1,"`) >= 0) {
+                this.$message({
+                    message: '请先编辑并保存已有的新建节点',
+                    type: 'warning'
+                });
+                return;
+            }
+            const newChild = { ID: -1, name: '新建节点', Children: [], parent_id: data.child_id, unit_id: this.UnitData.UnitID, item_type: this.treeType, addCid: "", delCid: "" };
             if (!data.Children) {
                 this.$set(data, 'Children', []);
             }
             data.Children.push(newChild);
+            this.node = newChild;
+            this.addCidOld = "";
+            this.delCidOld = "";
+
+            setTimeout(() => {
+                vm.$refs.energy.setCurrentKey(-1);
+            });
         },
         //删除节点
         remove(node, data) {
@@ -233,7 +263,6 @@ let vm = new Vue({
             if (!value) return true;
             return data.name.indexOf(value) !== -1;
         },
-
         //cid模态框关闭时
         closedDialog: function() {
             this.$refs.cidtree.setCheckedKeys([]);
@@ -253,7 +282,6 @@ let vm = new Vue({
                 this.$refs.cidtree.setCheckedKeys(arr.split(','));
             }
         },
-
         //站室表格
         showTab: function() {
             this.Dialogtab = true;
@@ -344,8 +372,8 @@ let vm = new Vue({
             for (let a = 0; a < list.length; a++) {
                 cid += list[a][str1] + ",";
             }
-            cid = cid.substr(0, cid.length - 1).split(',');
-            cid = this.unique5(cid).join(',');
+            cid = cid.substr(0, cid.length - 1).substr(1, cid.length);
+            cid = this.unique5(cid.split(',')).join(',');
             this[str] = cid;
         },
         //数组去重
@@ -379,6 +407,7 @@ let vm = new Vue({
         //点击能源树节点
         TreeNodeClick: function(node) {
             this.node = node;
+            console.log(this.node);
             this.addCidOld = node.addCid || "";
             this.delCidOld = node.delCid || "";
         },
@@ -405,7 +434,7 @@ let vm = new Vue({
                 this.addCidOld = this.node.addCid || "";
                 this.delCidOld = this.node.delCid || "";
                 setTimeout(function() {
-                    vm.$refs.energy.setCurrentKey(vm.node.ID);
+                    vm.$refs.energy.setCurrentKey(vm.updataNodeID || vm.node.ID);
                 })
             })
         },
