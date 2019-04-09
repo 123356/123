@@ -97,6 +97,7 @@
         var all = 0;
 
         function deepTraversal(node) {
+            console.log(node)
             let nodes = [];
             if (node != null) {
                 nodes.push[node];
@@ -128,14 +129,6 @@
 
         var partition = d3.layout.partition()
             .value(function (d) {
-                //var size;
-                //for (var a in arr) {
-                //    if (arr[a] == d.UsePower) {
-                //        size = a;
-                //    }    
-                //}
-                //console.log(parseInt(size) + 1)
-                //return d.UsePower//parseInt(size)+1
                 var size = parseInt(d.UsePower);
                 if (size > all / 10) {
                     size = size;
@@ -152,42 +145,27 @@
         var clickInterval = 0;
         $.ajax({
             type: "post",
-            url: "/energyManage/EMSetting/GetTreePower",
+            url: "/energyManage/EMSetting/GetEnergyTreePower",
             data: {
-                unitID: data.enUID,
-                item_type: 1,
-                unitName: data.enName
+                UnitID: data.enUID,
+                ItemType: 1,
+                UnitName: data.enName
             },
             success: function (res) {
                 if (!res) {
                     return;
                 }
+                res = JSON.stringify(res[0]);
+
+                res = res.replace(/{/g, `{"size":1,`).replace(/Children/g, `children`);
+
+                var root = JSON.parse(res);
 
 
-                res = res.replace(/{/g, `{"size":1,`);
+                deepTraversal(JSON.parse(res));
 
 
-
-
-                var root = JSON.parse(res).children[0];
-                deepTraversal(JSON.parse(res).children[0]);
-
-
-
-
-
-                all = JSON.parse(res).children[0].UsePower;
-
-
-
-
-               
-
-
-
-
-
-
+                all = JSON.parse(res).UsePower;
 
 
                 var g = vis.selectAll("g")
@@ -211,13 +189,6 @@
                         d3.event.stopPropagation();
                     })
              
-
-
-                
-
-
-
-
 
                 var kx = w / root.dx,
                     ky = h / 1;
@@ -269,10 +240,8 @@
 
 
                 function click(d) {
-                    console.log(d)
                     if (window.id == d.id) {
                         click(root);
-
                         return 
                     } else {
                         window.id = d.id;
@@ -355,8 +324,7 @@
             return "";
         }
 
-    </script>
-    <script type="text/javascript">
+   
         function createBarChart(data, name) {
             var xData = [];
             var yData = [];
@@ -370,7 +338,6 @@
               
             }
             var barChart = echarts.init(document.getElementById('barChart'));
-            console.log(xData)
             var option = {
                 title: {
                     text: `${new Date().getMonth()+1}月—累计用电量`,
@@ -411,7 +378,6 @@
                         show: false,
                         alignWithLabel: true
                     },
-
                     axisLabel: { //调整y轴的lable
                         textStyle: {
                             fontSize: 9, // 让字体变大
@@ -432,7 +398,6 @@
                         show: false,
                         alignWithLabel: true
                     },
-
                     axisLabel: { //调整y轴的lable
                         textStyle: {
                             fontSize: 9, // 让字体变大
@@ -541,9 +506,9 @@
                     right: 0,
                     bottom: 0,
                     data: legend,
+                   
                 },
             };
-
             pieChart.clear()
             pieChart.setOption(option)
             window.addEventListener("resize", () => {

@@ -207,8 +207,19 @@ let vm = new Vue({
                     cancelButtonText: '取消',
                     type: 'error'
                 }).then(() => {
+                    if(node.ID == -1){
+                            const parent = node.parent;
+                            const Children = parent.data.Children || parent.data;
+                            const index = Children.findIndex(d => d.ID === data.ID);
+                            Children.splice(index, 1);
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                    return ;
+                    }
                     this.$http({
-                        url: "/energyManage/EMSetting/DeleteSupervisor",
+                        url: "/energyManage/EMSetting/DeleteEnergyNode",
                         method: "post",
                         body: { parent_id: data.parent_id, child_id: data.child_id, unit_id: this.UnitData.UnitID, }
                     }).then(function(res) {

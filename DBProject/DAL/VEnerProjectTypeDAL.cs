@@ -33,10 +33,7 @@ namespace DAL
         public List<t_V_EnerProjectTypeTree> GetEnergyTree(int UnitID, int ItemType,string UnitName)
         {
             IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
-
-
             List<t_V_EnerProjectTypeTree> tree = new List<t_V_EnerProjectTypeTree>();
-
             try
             {
                 list = _dbFactory.venerProjectType.GetEnergyData(UnitID, ItemType, UnitName);
@@ -47,59 +44,6 @@ namespace DAL
                 throw ex;
             }
             return tree;
-        }
-        public void GetEnergyDataToTree(IList<t_V_EnerProjectType> list,List<t_V_EnerProjectTypeTree> Children,int child_id)
-        {
-           // IList<t_V_EnerProjectType>  list1 = list.Where(o => o.parent_id == 0).ToList();
-            for (var a = 0; a < list.Count(); a++)
-            {
-                if (list[a].parent_id == child_id)
-                {
-                    t_V_EnerProjectTypeTree node = new t_V_EnerProjectTypeTree(list[a]);
-                    node.Children = new List<t_V_EnerProjectTypeTree>();
-                    Children.Add(node);
-                    GetEnergyDataToTree(list, node.Children, list[a].child_id);
-                }
-
-
-
-
-            }
-        
-
-        }
-        public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type)
-        {
-
-            IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
-            try
-            {
-                list = _dbFactory.venerProjectType.GetTreeData(unitId, item_type);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return list;
-        }
-        /// <summary>
-        /// 查列历史分项列表
-        /// </summary>
-        /// <param name="unitID"></param>
-        /// <param name="item_type"></param>
-        /// <returns></returns>
-        public IList<t_V_EnerProjectType> AddProjectTemplate(int unitID, int item_type)
-        {
-            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
-            try
-            {
-                data = _dbFactory.venerProjectType.DefaultNode(unitID, item_type);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return data;
         }
         public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid)
         {
@@ -171,5 +115,108 @@ namespace DAL
             }
             return res;
         }
+        public List<t_V_EnerProjectTypeTree> GetEnergyTreePower(int UnitID, int ItemType, string UnitName)
+        {
+            IList<t_V_EnerProjectType> list;
+
+            List<t_V_EnerProjectTypeTree> tree = new List<t_V_EnerProjectTypeTree>();
+            try
+            {
+                list = _dbFactory.venerProjectType.GetEnergyData(UnitID, ItemType, UnitName);
+
+                string all = "";
+
+                for (int a = 0; a < list.Count(); a++)
+                {
+                    if (!string.IsNullOrEmpty(list[a].addCid))
+                        all += list[a].addCid + ",";
+                    if (!string.IsNullOrEmpty(list[a].delCid))
+                        all += list[a].delCid + ",";
+                }
+
+                if (all.Length > 1)
+                {
+                    all = all.Substring(0, all.Length - 1);
+                }
+                else
+                {
+                    return new List<t_V_EnerProjectTypeTree>();
+                }
+
+                string[] arr;
+                string pid = "", cid = "";
+                arr = all.Split(',');
+
+                for (int a = 0; a < arr.Count(); a++)
+                {
+                    var arr1 = arr[a].Split('-');
+                    pid += arr1[0] + ',';
+                    cid += arr1[1] + ',';
+                }
+
+                pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
+                cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
+
+                IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
+
+                for (int a = 0; a < list.Count(); a++)
+                {
+                    decimal use = 0;
+                    decimal need = 0;
+                    for (int b = 0; b < power.Count(); b++)
+                    {
+                        if (power[b].ener_use_type.Contains($",{list[a].child_id},"))
+                        {
+                            use += power[b].UsePower;
+                            need += power[b].NeedPower;
+                        }
+                    }
+                    list[a].UsePower = use;
+                    list[a].NeedPower = need;
+                }
+
+
+
+
+
+
+
+
+                GetEnergyDataToTree(list, tree, 0);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return tree;
+        }
+        public IList<t_V_EnerProjectType> DefaultNode(int UnitID, int ItemType)
+        {
+            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
+            try
+            {
+                data = _dbFactory.venerProjectType.DefaultNode(UnitID, ItemType);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public void GetEnergyDataToTree(IList<t_V_EnerProjectType> list,List<t_V_EnerProjectTypeTree> Children,int child_id)
+        {
+            for (var a = 0; a < list.Count(); a++)
+            {
+                if (list[a].parent_id == child_id)
+                {
+                    t_V_EnerProjectTypeTree node = new t_V_EnerProjectTypeTree(list[a]);
+                    node.Children = new List<t_V_EnerProjectTypeTree>();
+                    Children.Add(node);
+                    GetEnergyDataToTree(list, node.Children, list[a].child_id);
+                }
+            }
+        }
+
     }
 }

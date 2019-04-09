@@ -72,13 +72,13 @@ namespace DAL
             }
             return list;
         }
-        public IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id)
+        public IList<t_EE_EnerUserProject> DeleteEnergyNode(int parent_id, int child_id, int unit_id)
 
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.DeleteSupervisor(parent_id, child_id, unit_id);
+                data = _dbFactory.enerUserProject.DeleteEnergyNode(parent_id, child_id, unit_id);
             }
             catch (Exception ex)
             {

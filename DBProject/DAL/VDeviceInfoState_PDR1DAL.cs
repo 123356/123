@@ -117,7 +117,7 @@ namespace DAL
                                         cc.PID = list[c].PID;
                                         cc.DID = list[c].DID;
                                         cc.CID = list[c].CID;
-                                        cc.name = list[c].CName;
+                                        cc.name = $"{list[c].CName}({list[c].PID}-{list[c].CID})"  ;
                                         cc.id = $"{list[c].PID}-{list[c].CID}";
                                         d.Children.Add(cc);
 

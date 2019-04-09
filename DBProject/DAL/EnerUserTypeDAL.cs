@@ -32,7 +32,6 @@ namespace DAL
 
             return _DataDal;
         }
-
         public IList<t_EE_EnerUserType> GetEnerTypeToID(string Name, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
@@ -46,7 +45,6 @@ namespace DAL
             }
             return data;
         }
-
         public IList<t_EE_EnerUserType> GetEnerTypeToName(int ID, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
@@ -60,8 +58,6 @@ namespace DAL
             }
             return data;
         }
-   
-
         public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
@@ -75,7 +71,6 @@ namespace DAL
             }
             return data;
         }
-
         public IList<t_EE_EnerUserType> GetComobxList(int itemType)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();

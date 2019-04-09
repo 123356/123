@@ -1,0 +1,49 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>分项用电</title>
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+
+
+    <script>
+
+
+        let = traverseTree = function(list, Children) {
+            if (Children.length != 0) {
+                for (let a = 0; a < Children.length; a++) {
+                    if (Children[a].Children.length != 0) {
+                        this.traverseTree(list, Children[a].Children);
+                    } else {
+                        list.push(Children[a]);
+                    }
+                }
+            }
+        }
+
+
+
+        let data = JSON.parse(window.localStorage.getItem("UnitData"));
+        $.ajax({
+			type : "POST",
+			url: "/EnergyManage/EMSetting/GetEnergyTreePower",
+			data : {
+				UnitID: data.enUID,
+                ItemType: 1,
+                UnitName: data.enName
+			},
+			success : function(res) {
+				console.log(res);
+			}
+        })
+    </script>
+
+
+
+</body>
+</html>

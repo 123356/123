@@ -29,7 +29,10 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
-
+        public ActionResult AreaTree1()
+        {
+            return View();
+        }
         #region 
         /// 返回该用户权限可见的单位列表
         public JsonResult GetUnitList()
@@ -58,12 +61,9 @@ namespace EnergyManage.Controllers
             List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
             if(list.Count() == 0)
             {
-
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(UnitID, ItemType);
+                DAL.VEnerProjectTypeDAL.getInstance().DefaultNode(UnitID, ItemType);
                 list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
-
             }
-
             return Json(list);
         }
 
@@ -135,13 +135,13 @@ namespace EnergyManage.Controllers
             return Json(data);
         }
 
-        public JsonResult DeleteSupervisor(int parent_id,int child_id,int unit_id)
+        public JsonResult DeleteEnergyNode(int parent_id,int child_id,int unit_id)
         {
-            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteSupervisor(parent_id, child_id, unit_id);
+            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteEnergyNode(parent_id, child_id, unit_id);
             try {
                 if (list.Count() > 0) {
                     for (var a = 0; a < list.Count(); a++) {
-                        DeleteSupervisor(list[a].child_id, -1, unit_id);
+                        DeleteEnergyNode(list[a].child_id, -1, unit_id);
                     }
                 }
             }
@@ -306,153 +306,9 @@ namespace EnergyManage.Controllers
 			return(Json( list, JsonRequestBehavior.AllowGet ) );
 		}
 
-
-        //查询当天累计用电
-        public ActionResult GetTreePower(int unitID, int item_type, string unitName)
-        {
-            Stopwatch watch = new Stopwatch();
-            LogHelper.Debug("GetTreePower begin ...");
-
-            watch.Start();
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-
-
-            LogHelper.Debug("111:" + watch.ElapsedMilliseconds);
-
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            }
-            string all = "";
-            for (var a = 0; a < list.Count(); a++)
-            {
-                if (!string.IsNullOrEmpty(list[a].addCid))
-                    all += list[a].addCid + ",";
-                if (!string.IsNullOrEmpty(list[a].delCid))
-                    all += list[a].delCid + ",";
-            }
-
-            LogHelper.Debug("22222:" + watch.ElapsedMilliseconds);
-            if (all.Length > 1)
-            {
-                all = all.Substring(0, all.Length - 1);
-            }
-            else
-            {
-                return Json("没有查到数据");
-            }
-
-            string[] arr;
-            string pid = "", cid = "";
-            arr = all.Split(',');
-
-            for (var a = 0; a < arr.Count(); a++)
-            {
-                var arr1 = arr[a].Split('-');
-                pid += arr1[0] + ',';
-                cid += arr1[1] + ',';
-            }
-            LogHelper.Debug("333333:" + watch.ElapsedMilliseconds);
-
-            pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
-            cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
-
-
-
-
-
-            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
-
-            LogHelper.Debug("44444:" + watch.ElapsedMilliseconds);
-
-
-            for (int a = 0; a < list.Count(); a++)
-            {
-
-
-                decimal use = 0;
-                decimal need = 0;
-                for (int b = 0; b < power.Count(); b++)
-                {
-                    if (power[b].ener_use_type.Contains($",{list[a].child_id},"))
-                    {
-                        use += power[b].UsePower;
-                        need += power[b].NeedPower;
-                    }
-                }
-
-
-                list[a].UsePower = use;
-                list[a].NeedPower = need;
-
-            }
-
-
-
-            LogHelper.Debug("5555555:" + watch.ElapsedMilliseconds);
-
-            Tree tree = new Tree();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<Tree>();
-
-            getTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            watch.Stop();
-            LogHelper.Debug("GetTreePower end ..." + watch.ElapsedMilliseconds);
-            return Content(json);
-        }
-        /// 返回该单位的组织区域树数据
-        public ActionResult GetTreeData(int unitID, int item_type, string unitName)
-        {
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            }
-            Tree tree = new Tree();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<Tree>();
-            getTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            return Content(json);
-        }
-        /// <summary>
-        /// 拼接tree数据
-        /// </summary>
-        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
-        {
-            try
-            {
-                for (var a = 0; a < data.Count(); a++)
-                    if (data[a].parent_id == childID)
-                    {
-                        Tree tree = new Tree();
-                        tree.id = data[a].child_id;
-                        tree.name = data[a].name;
-                        tree.pId = data[a].parent_id;
-                        tree.addCid = data[a].addCid;
-                        tree.delCid = data[a].delCid;
-                        tree.note = data[a].unit_note;
-                        tree.head = data[a].unit_head;
-                        tree.area = data[a].unit_area;
-                        tree.people = data[a].unit_people;
-                        tree.UsePower = data[a].UsePower;
-                        tree.NeedPower = data[a].NeedPower;
-                        tree.children = new List<Tree>();
-                        arr.Add(tree);
-                        getTree(data, tree.children, tree.id);
-                    }
-            }
-            catch {
-            }
+        public ActionResult GetEnergyTreePower(int UnitID, int ItemType, string UnitName) {
+            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName);
+            return Json(list);
         }
 
     // 查询当月用电量

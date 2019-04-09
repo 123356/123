@@ -25,7 +25,6 @@ namespace DAO
             base.OnModelCreating(modelBuilder);
         }
 
-
         public IList<t_EE_EnerUserProject> addTreeNode(t_V_EnerProjectType data)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
@@ -34,16 +33,12 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 
-
-
-
         public IList<t_EE_EnerUserProject> updataTreeNode(t_V_EnerProjectType data)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
             string sql = $"UPDATE t_EE_EnerUserProject SET unit_head = '{data.unit_head}',unit_note='{data.unit_note}',addCid='{data.addCid}',delCid='{data.delCid}',unit_area={data.unit_area},unit_people={data.unit_people} output inserted.*  WHERE parent_id = {data.parent_id} and  child_id = {data.ID} and unit_id = {data.unit_id}";
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
-
 
         public IList<t_EE_EnerUserProject> updataTreeNodeId(t_V_EnerProjectType data)
         {
@@ -53,19 +48,6 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 
-
-
-
-
-        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId, int id, int unit_id)
-        {
-            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = $"UPDATE t_EE_EnerUserProject SET child_id = {id}  WHERE child_id = {oldId} and unit_id = {unit_id} ;UPDATE t_EE_EnerUserProject SET parent_id = {id} output inserted.* WHERE parent_id = {oldId} and unit_id = {unit_id}";
-            return SQLQuery<t_EE_EnerUserProject>(sql);
-        }
-
-
-
         public IList<t_EE_EnerUserProject> UpdatEnerNode(t_V_EnerProjectType data)
         {
             this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
@@ -73,8 +55,7 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 
-
-        public IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id)
+        public IList<t_EE_EnerUserProject> DeleteEnergyNode(int parent_id, int child_id, int unit_id)
         {
 
 

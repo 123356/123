@@ -16,7 +16,6 @@ namespace DAO
             : base(ConnectBuild.GetConnect(typeof(VEnerProjectTypeDBContext).Name))
         {
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<VEnerProjectTypeDBContext>(null);
@@ -34,22 +33,7 @@ namespace DAO
                 $" WHERE b.unit_id = {UnitID} AND a.item_type = {ItemType} ORDER BY b.ProjectID";
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
-        public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type) {
-            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = "SELECT *,0.0 NeedPower,0.0 UsePower FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
-            return SQLQuery<t_V_EnerProjectType>(sql);
-        }
 
-
-
-
-        public IList<t_V_EnerProjectType> UpdateRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid,int updateTypeID,int unit_area,int unit_people)
-        {
-            this.Database.Log = new Action<string>((string text) => { System.Diagnostics.Debug.WriteLine(text); });
-            string sql = $"UPDATE t_EE_EnerUserProject  SET unit_head = '{unit_head}',unit_note = '{unit_note}',addCid='{addCid}',delCid='{delCid}',child_id='{updateTypeID}',unit_area={unit_area},unit_people={unit_people}  output inserted.*,inserted.parent_id id,inserted.unit_note Name,inserted.parent_id item_type,inserted.unit_note Remarks,0.0 NeedPower,0.0 UsePower  WHERE parent_id = {parent_id} and child_id={child_id} and unit_id={unit_id}";
-            return SQLQuery<t_V_EnerProjectType>(sql);
-        }
-      
         public IList<t_V_EnerProjectType> DefaultNode(int unitId, int item_type)
         {
             string sql = "";
@@ -61,12 +45,6 @@ namespace DAO
             {
                 sql = $"INSERT INTO t_EE_EnerUserProject  output inserted.*,inserted.parent_id id,inserted.unit_note Name,inserted.parent_id item_type,inserted.unit_note Remarks,0.0 NeedPower,0.0 UsePower   VALUES  (N'0', N'415', N'{unitId}', NULL, NULL, NULL, NULL, N'0', N'0')";
             }
-            return SQLQuery<t_V_EnerProjectType>(sql);
-        }
-
-        public IList<t_V_EnerProjectType> GetHistoryList(int item_type, int unitId)
-        {
-            string sql = "SELECT * ,0.0 NeedPower,0.0 UsePower  FROM t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id =b.child_id  WHERE b.unit_id = " + unitId + " AND a.item_type = " + item_type;
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
 
