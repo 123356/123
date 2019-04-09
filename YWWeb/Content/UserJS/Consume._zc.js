@@ -419,16 +419,16 @@
         },
         //用电趋势图
         createBarAndLine: function (data) {
-            var legend = []
+            
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
             var legend = []
             var seriesData = new Array()
-            legend.push("温度")
+            
             var yName = "kW·h"
             if (this.curEntype != 1) {
                 yName = "m³"
             }
-            var color = ['#53bda9', '#7fc4e1', '#3ea19c',]
+            var color = ['#53bda9', '#7fc4e1', ]
             if (data.name.length > 0) {
                 legend = data.name
                 for (var i = 0; i < data.list_line.length; i++) {
@@ -437,31 +437,45 @@
                     for (var j = 0; j < tempData.length; j++) {
                         dataArray.push(tempData[j].value)
                     }
+                    var yc = []
+                    for (var j in data.list_line[i].list_budget) {
+                        yc.push(data.list_line[i].list_budget[j].value)
+                    }
                     var temp = {
-                        name: data.list_line[i].name,
+                        name: data.list_line[i].name[i],
                         type: 'bar',
                         barMaxWidth: '15',
                         color: color[i],
                         data: dataArray
                     }
+                    var index =parseInt(i+1)
                     seriesData.push(temp)
+                    seriesData.push({
+                        name: data.list_line[i].name[index],
+                        type: 'bar',
+                        barMaxWidth: '15',
+                        color: '#fb8134',
+                        data: yc
+                    })
                 }
+                console.log(data.listweather)
                 seriesData.push(
                     {
                         name: '温度',
                         type: 'line',
                         yAxisIndex: 1,
-                        smooth: true,
+                        smooth: false,
                         symbol: 'none',//节点样式
                         lineStyle: {
                             color: '#53bda9',
                             width: 1,
 
                         },
-                        data: data.tianqi
+                        data: data.listweather
                     }
                 )
             }
+            legend.push("温度")
             var option = {
                 tooltip: {
                     trigger: 'axis',
@@ -559,7 +573,7 @@
                         type: 'value',
                         name: '温度℃',
                         min: 0,
-                        max: 25,
+                        
                         interval: 5,
                         axisLabel: {
                             formatter: '{value} °C'
@@ -620,7 +634,7 @@
                 seriesData.push({
                     name: data.name[i],
                     type: 'line',
-                    smooth: true,
+                    smooth: false,
                     symbol: 'none',//节点样式
                     lineStyle: {
                         color: '#53bda9',
@@ -633,7 +647,7 @@
                 seriesData.push({
                     name: data.name[index],
                     type: 'line',
-                    smooth: true,
+                    smooth: false,
                     symbol: 'none',//节点样式
                     lineStyle: {
                         color: '#fa8033',
