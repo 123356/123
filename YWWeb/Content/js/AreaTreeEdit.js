@@ -151,11 +151,14 @@ let vm = new Vue({
                 method: "post",
                 body: this.node
             }).then(function(res) {
+                this.GetEnergyTree();
                 console.log(res.data)
             })
         },
         //添加节点
         append(data) {
+            console.log(data)
+
             const newChild = { ID: -1, name: '新建节点', Children: [], parent_id: data.child_id, unit_id: this.UnitData.UnitID, item_type: this.treeType };
             if (!data.Children) {
                 this.$set(data, 'Children', []);
