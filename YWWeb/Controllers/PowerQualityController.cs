@@ -489,22 +489,35 @@ namespace YWWeb.Controllers
             try
             {
                 string tablename = "";
+                List<string> litTime = new List<string>();
                 switch (totaltype)
                 {
                     case 0:
                         tablename = "Daily";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:00");
+                        datestart = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:00");
+                        for (DateTime d=DateTime.Now.AddDays(-1); d < DateTime.Now; d=d.AddHours(1))
+                        {
+                            litTime.Add(d.ToString("MM-dd HH:00"));
+                        }
                         break;
                     case 1:
                         tablename = "Daily";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd HH:mm:ss");
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:00");
+                        datestart = DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd HH:00");
+                        for (DateTime d = DateTime.Now.AddDays(-7); d < DateTime.Now; d = d.AddHours(1))
+                        {
+                            litTime.Add(d.ToString("MM-dd HH:00"));
+                        }
                         break;
                     case 2:
                         tablename = "Monthly";
-                        dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                        dateend = DateTime.Now.ToString("yyyy-MM-dd");
+                        datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+                        for (DateTime d = DateTime.Now.AddMonths(-1); d < DateTime.Now; d = d.AddDays(1))
+                        {
+                            litTime.Add(d.ToString("MM-dd 00:00"));
+                        }
                         break;
                 }
                 string tabname = "t_EE_PowerQuality" + tablename;//t_EE_PowerQuality为通用名称，totaltype为统计类型
@@ -615,20 +628,22 @@ namespace YWWeb.Controllers
                 string xAxis = "", yAxis = "", series1 = "", series2 = "", CName = "", yData = "";
 
                 List<int> litCid = new List<int>();
-                List<string> litTime = new List<string>();
-                //list1.IndexOf()
-
+               
                 list = list.OrderBy(p => p.RecordTime).ToList();
+                foreach(var t in litTime)
+                {
+                    xAxis += t + ",";
+                }
                 foreach (PowerData_SSQX mod in list)
                 {
                     if (mod.Aphase < 0)
                         continue;
 
-                    if (xAxis.Contains(mod.RecordTime.ToString("MM-dd HH:mm")) == false)
-                    {
-                        xAxis += mod.RecordTime.ToString("MM-dd HH:mm") + ",";
-                        litTime.Add(mod.RecordTime.ToString("MM-dd HH:mm"));
-                    }
+                    //if (xAxis.Contains(mod.RecordTime.ToString("MM-dd HH:mm")) == false)
+                    //{
+                    //    xAxis += mod.RecordTime.ToString("MM-dd HH:mm") + ",";
+                    //    litTime.Add(mod.RecordTime.ToString("MM-dd HH:mm"));
+                    //}
                     if (litCid.Contains(mod.CID) == false)
                     {
                         //限制最多10个回路显示
