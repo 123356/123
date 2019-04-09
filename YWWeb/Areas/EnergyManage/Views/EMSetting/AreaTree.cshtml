@@ -145,8 +145,6 @@
                 return size;
             });
         var data = JSON.parse(window.localStorage.getItem("UnitData"));
-
-
         $("#icon").on('click', function (e) {
             getElectrMonth(window.d);
             e.stopPropagation();
@@ -156,9 +154,9 @@
             type: "post",
             url: "/energyManage/EMSetting/GetTreePower",
             data: {
-                unitID: data.UnitID,
+                unitID: data.enUID,
                 item_type: 1,
-                unitName: data.UnitName
+                unitName: data.enName
             },
             success: function (res) {
                 if (!res) {
