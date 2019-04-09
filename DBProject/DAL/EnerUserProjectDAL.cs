@@ -16,7 +16,6 @@ namespace DAL
     {
         IDBFactory _dbFactory = DBFactoryManager.GetDBFactory();
         IDBCacheFactory _dbCacheFactory = DBCacheFactoryManager.GetDBFactory();
-
         static EnerUserProjectDAL _DataDal;
         static readonly object _loker = new object();
         public static EnerUserProjectDAL getInstance(string json = null)
@@ -31,37 +30,48 @@ namespace DAL
             }
             return _DataDal;
         }
-        public IList<t_EE_EnerUserProject> AddRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int unit_area, int unit_people) 
+        public IList<t_EE_EnerUserProject> addTreeNode(t_V_EnerProjectType data)
 
         {
-            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            IList<t_EE_EnerUserProject> list = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.AddRelationship(child_id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, unit_area, unit_people);
+                list = _dbFactory.enerUserProject.addTreeNode(data);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return data;
+            return list;
         }
-        
-        public IList<t_EE_EnerUserProject> UpdateSupervisor(int oldId, int id, int unit_id)
+        public IList<t_EE_EnerUserProject> updataTreeNode(t_V_EnerProjectType data)
 
         {
-            IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
+            IList<t_EE_EnerUserProject> list = new List<t_EE_EnerUserProject>();
             try
             {
-                data = _dbFactory.enerUserProject.UpdateSupervisor(oldId, id, unit_id);
+                list = _dbFactory.enerUserProject.updataTreeNode(data);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return data;
+            return list;
         }
+        public IList<t_EE_EnerUserProject> updataTreeNodeId(t_V_EnerProjectType data)
 
-
+        {
+            IList<t_EE_EnerUserProject> list = new List<t_EE_EnerUserProject>();
+            try
+            {
+                list = _dbFactory.enerUserProject.updataTreeNodeId(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
         public IList<t_EE_EnerUserProject> DeleteSupervisor(int parent_id, int child_id, int unit_id)
 
         {
@@ -89,8 +99,7 @@ namespace DAL
             }
             return data;
         }
-
-        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid, int isP)
+        public IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid,int isP)
         {
             IList<t_EE_EnerUserProject> data = new List<t_EE_EnerUserProject>();
             try
