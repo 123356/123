@@ -46,20 +46,20 @@
                                  :check-on-click-node="true">
                             <span class="custom-tree-node" slot-scope="{ node, data }">
                                 <span>
-                                    <i :class="data.Children == 0? 'el-icon-tickets':'el-icon-date'" style="margin:0 10px;font-size:16px;"></i>
+                                    <i :class="data.parent_id == 0?'el-icon-goods':data.Children == 0? 'el-icon-tickets':'el-icon-message'" style="margin:0 10px;font-size:16px;"></i>
                                     {{data.name}}
                                 </span>
                                 <span>
                                     <el-button type="text"
                                                size="medium "
                                                icon="el-icon-circle-plus-outline"
-                                               v-on:click="() => append(data)">
+                                               v-on:click.stop="() => append(data)">
                                     </el-button>
                                     <el-button type="text"
                                                v-if="data.parent_id != 0"
                                                size="medium "
                                                icon="el-icon-delete"
-                                               v-on:click="() => remove(node, data)">
+                                               v-on:click.stop="() => remove(node, data)">
                                     </el-button>
                                 </span>
                             </span>
