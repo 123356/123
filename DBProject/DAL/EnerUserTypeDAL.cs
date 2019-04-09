@@ -33,12 +33,12 @@ namespace DAL
             return _DataDal;
         }
 
-        public IList<t_EE_EnerUserType> CheckHistory(string Name, int item_type)
+        public IList<t_EE_EnerUserType> GetEnerTypeToID(string Name, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.CheckHistory(Name, item_type);
+                data = _dbFactory.enerUserType.GetEnerTypeToID(Name, item_type);
             }
             catch (Exception ex)
             {
@@ -47,12 +47,27 @@ namespace DAL
             return data;
         }
 
-        public IList<t_EE_EnerUserType> AddHistory(string Name, int item_type)
+        public IList<t_EE_EnerUserType> GetEnerTypeToName(int ID, int item_type)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.AddHistory(Name, item_type);
+                data = _dbFactory.enerUserType.GetEnerTypeToName(ID, item_type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+   
+
+        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type)
+        {
+            IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
+            try
+            {
+                data = _dbFactory.enerUserType.AddEnerNameType(Name, item_type);
             }
             catch (Exception ex)
             {

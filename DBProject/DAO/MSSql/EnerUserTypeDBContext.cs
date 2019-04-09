@@ -23,15 +23,25 @@ namespace DAO
               .HasKey(t => new { t.id });
             base.OnModelCreating(modelBuilder);
         }
-   
-
-        public IList<t_EE_EnerUserType> CheckHistory(string Name,int item_type)
+        public IList<t_EE_EnerUserType> GetEnerName(int ID, string Name, int item_type)
+        {
+            string sql = $"select * from t_EE_EnerUserType where ID={ID} and item_type={item_type}";
+            return SQLQuery<t_EE_EnerUserType>(sql);
+        }
+        public IList<t_EE_EnerUserType> GetEnerTypeToID(string Name,int item_type)
         {
             string sql = "select * from t_EE_EnerUserType where Name='"+ Name + "' and item_type="+ item_type;
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
 
-        public IList<t_EE_EnerUserType> AddHistory(string Name, int item_type)
+
+        public IList<t_EE_EnerUserType> GetEnerTypeToName(int ID, int item_type)
+        {
+            string sql = "select * from t_EE_EnerUserType where id=" + ID + " and item_type=" + item_type;
+            return SQLQuery<t_EE_EnerUserType>(sql);
+        }
+
+        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type)
         {
             string sql = "INSERT INTO t_EE_EnerUserType(Name,item_type) output inserted.* VALUES('"+ Name + "',"+ item_type + ")";
             return SQLQuery<t_EE_EnerUserType>(sql);

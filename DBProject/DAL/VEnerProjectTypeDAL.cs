@@ -60,13 +60,14 @@ namespace DAL
                     Children.Add(node);
                     GetEnergyDataToTree(list, node.Children, list[a].child_id);
                 }
+
+
+
+
             }
+        
 
         }
-
-
-
-
         public IList<t_V_EnerProjectType> GetTreeData(int unitId, int item_type)
         {
 
@@ -81,61 +82,18 @@ namespace DAL
             }
             return list;
         }
-
-        public IList<t_V_EnerProjectType> SetEnergyTree(int UnitID, int ItemType, string UnitName)
-        {
-            IList<t_V_EnerProjectType> list = new List<t_V_EnerProjectType>();
-            try
-            {
-                list = _dbFactory.venerProjectType.GetEnergyData(UnitID, ItemType, UnitName);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return list;
-        }
-
-
-
         /// <summary>
         /// 查列历史分项列表
         /// </summary>
         /// <param name="unitID"></param>
         /// <param name="item_type"></param>
         /// <returns></returns>
-        public IList<t_V_EnerProjectType> GetHistoryList(int unitID, int item_type)
-        {
-            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
-            try
-            {
-                data = _dbFactory.venerProjectType.GetHistoryList(unitID, item_type);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return data;
-        }
-        public IList<t_V_EnerProjectType> UpdateRelationship(int child_id, int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid,int updateTypeID,int unit_area,int unit_people)
-        {
-            IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
-            try
-            {
-                data = _dbFactory.venerProjectType.UpdateRelationship(child_id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, updateTypeID, unit_area, unit_people);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return data;
-        }
         public IList<t_V_EnerProjectType> AddProjectTemplate(int unitID, int item_type)
         {
             IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
             try
             {
-                data = _dbFactory.venerProjectType.AddProjectTemplate(unitID, item_type);
+                data = _dbFactory.venerProjectType.DefaultNode(unitID, item_type);
             }
             catch (Exception ex)
             {
@@ -156,7 +114,6 @@ namespace DAL
             }
             return data;
         }
-        
         public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)
         {
             IList<t_V_EnerPower> data = new List<t_V_EnerPower>();
@@ -170,13 +127,6 @@ namespace DAL
             }
             return data;
         }
-
-
-
-
-
-
-
         public IList<t_V_EnerProjectType> PidCidGetArea(int pid, int cid)
         {
             IList<t_V_EnerProjectType> data = new List<t_V_EnerProjectType>();
@@ -221,7 +171,5 @@ namespace DAL
             }
             return res;
         }
-
-
     }
 }

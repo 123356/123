@@ -56,157 +56,85 @@ namespace EnergyManage.Controllers
         public JsonResult GetEnergyTree(int UnitID, int ItemType, string UnitName)
         {
             List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
+            if(list.Count() == 0)
+            {
+
+                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(UnitID, ItemType);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
+
+            }
+
             return Json(list);
         }
 
         //编辑能源树信息
-        public JsonResult SetEnergyTree(IDAO.Models.t_V_EnerProjectType data)
+        public JsonResult SetEnergyTreeNode(IDAO.Models.t_V_EnerProjectType data)
         {
-           // List<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().SetEnergyTree(data);
-            return Json("");
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// 拼接tree数据
-        /// </summary>
-        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
-        {
-            try
+             if (data.ID == -1)
             {
-                for (var a = 0; a < data.Count(); a++)
+                //查是否有这个名字的类型
+                IList<IDAO.Models.t_EE_EnerUserType> name = DAL.EnerUserTypeDAL.getInstance().GetEnerTypeToID(data.name, data.item_type);
+
+                if (name.Count > 1)
                 {
-                    if (data[a].parent_id == childID)
+                    return Json("error:类型名称和ID一对多");
+                }
+                //新增节点 名字类型已经存在
+                if (name.Count()==1) {
+                    data.ID = name[0].id;
+                }
+                //新增节点 名字类型不存在  
+                else if(name.Count() == 0)
+                {
+                    IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
+                    data.ID = addName[0].id;
+                }
+               
+                IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().addTreeNode(data);
+                return Json(list);
+            }
+            else {
+                IList<IDAO.Models.t_EE_EnerUserType> names = DAL.EnerUserTypeDAL.getInstance().GetEnerTypeToName(data.ID, data.item_type);
+                if (names.Count > 1) {
+                    return Json("error:类型名称和ID一对多");
+                }
+
+                //现有节点不改名字  只改属性
+                if (names[0].Name ==  data.name)
+                {
+                    IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().updataTreeNode(data);
+                    return Json(list);
+                }
+                else
+                {
+                    //查是否有这个名字的类型
+                    IList<IDAO.Models.t_EE_EnerUserType> name = DAL.EnerUserTypeDAL.getInstance().GetEnerTypeToID(data.name, data.item_type);
+                    if (name.Count > 1)
                     {
-                        Tree tree = new Tree();
-                        tree.id = data[a].child_id;
-                        tree.name = data[a].name;
-                        tree.pId = data[a].parent_id;
-                        tree.addCid = data[a].addCid;
-                        tree.delCid = data[a].delCid;
-                        tree.note = data[a].unit_note;
-                        tree.head = data[a].unit_head;
-                        tree.area = data[a].unit_area;
-                        tree.people = data[a].unit_people;
-                        tree.UsePower = data[a].UsePower;
-                        tree.NeedPower = data[a].NeedPower;
-                        tree.children = new List<Tree>();
-                         arr.Add(tree);
-                        getTree(data, tree.children, tree.id);
+                        return Json("error:类型名称和ID一对多");
                     }
+                    //新增节点 名字类型已经存在
+                    if (name.Count() == 1)
+                    {
+                        data.ID = name[0].id;
+                    }
+                    //新增节点 名字类型不存在  
+                    else if (name.Count() == 0)
+                    {
+                        IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
+                        data.ID = addName[0].id;
+                    }
+
+                    //改id
+                    IList<IDAO.Models.t_EE_EnerUserProject> id = DAL.EnerUserProjectDAL.getInstance().updataTreeNodeId(data);
+                    //改属性
+                    IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().updataTreeNode(data);
+
                 }
             }
-            catch {
-            }
+            return Json(data);
         }
 
-
-        /// <summary>
-        /// 添加节点
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult AddTreeNode(int parent_id,int unit_id,string unit_head,string unit_note,string addCid,string delCid,int item_type, string Name,int id,int unit_area,int unit_people)
-        {
-            //先查之前历史有没有  
-            if (id == -1) {
-                IList<IDAO.Models.t_EE_EnerUserType> checklist = DAL.EnerUserTypeDAL.getInstance().CheckHistory(Name, item_type);
-                if (checklist.Count != 0) {
-                    id = checklist[0].id;
-                }
-            }
-            //没有增加历史  获取id
-            if (id == -1)
-            {
-                IList<IDAO.Models.t_EE_EnerUserType> addlist = DAL.EnerUserTypeDAL.getInstance().AddHistory(Name, item_type);
-                id = addlist[0].id;
-            }
-            //增加关联关系  
-            IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().AddRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, unit_area, unit_people);
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// 修改节点
-        /// </summary>
-        /// <returns></returns>
-        [AuthorizeIgnore]
-        public JsonResult UpdateTreeNode(int parent_id, int unit_id, string unit_head, string unit_note, string addCid, string delCid, int item_type, string Name, int id,int unit_area,int unit_people)
-        {
-            var updateTypeID = -1;
-            //先查之前历史有没有  
-            try
-            {
-                IList<IDAO.Models.t_EE_EnerUserType> checklist = DAL.EnerUserTypeDAL.getInstance().CheckHistory(Name, item_type);
-                updateTypeID = checklist[0].id;
-            }
-            catch
-            {
-                updateTypeID = -1;
-            }
-            //没有就增加
-            if (updateTypeID == -1)
-            {
-                IList<IDAO.Models.t_EE_EnerUserType> addlist = DAL.EnerUserTypeDAL.getInstance().AddHistory(Name, item_type);
-                updateTypeID = addlist[0].id;
-            }
-            //修改自己本身的关系
-            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().UpdateRelationship(id, parent_id, unit_id, unit_head, unit_note, addCid, delCid, updateTypeID, unit_area, unit_people);
-            //修改上下级间的关系
-            DAL.EnerUserProjectDAL.getInstance().UpdateSupervisor(id, updateTypeID, unit_id);
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// 返回已有的区域类型 用于输入联想
-        /// </summary>
-        /// <returns></returns>
-        [AuthorizeIgnore]
-        public JsonResult GetHistoryList( int unitID,int item_type)
-        { 
-            IList<IDAO.Models.t_V_EnerProjectType> list = DAL.VEnerProjectTypeDAL.getInstance().GetHistoryList( item_type, unitID); 
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
         public JsonResult DeleteSupervisor(int parent_id,int child_id,int unit_id)
         {
             IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteSupervisor(parent_id, child_id, unit_id);
@@ -221,16 +149,13 @@ namespace EnergyManage.Controllers
             {
                 return Json("数据异常", JsonRequestBehavior.AllowGet);
             }
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
 
         public class PidandCid {
             public int pid { set; get; }
             public string cid { set; get; }
         }
-
 
         public class Tree
         {
@@ -375,35 +300,6 @@ namespace EnergyManage.Controllers
             }
         }
 
-
-
-
-
-
-        /// 返回该单位的组织区域树数据
-        public ActionResult GetTreeData(int unitID, int item_type, string unitName)
-        {
-            IList<IDAO.Models.t_V_EnerProjectType> list;
-            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            if (list.Count() == 0 && item_type == 1)
-            {
-                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
-                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
-            }
-            Tree tree = new Tree();
-            tree.id = 0;
-            tree.name = unitName;
-            tree.pId = -1;
-            tree.children = new List<Tree>();
-            getTree(list, tree.children, 0);
-            string json = JsonConvert.SerializeObject(tree);
-            return Content(json);
-        }
-
-
-
-
-
         public JsonResult GetTageID( int pid, int cid )
 		{
 			IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
@@ -411,13 +307,7 @@ namespace EnergyManage.Controllers
 		}
 
 
-        /// <summary>
-        /// 查询当天累计用电
-        /// </summary>
-        /// <param name="unitID"></param>
-        /// <param name="item_type"></param>
-        /// <param name="unitName"></param>
-        /// <returns></returns>
+        //查询当天累计用电
         public ActionResult GetTreePower(int unitID, int item_type, string unitName)
         {
             Stopwatch watch = new Stopwatch();
@@ -515,14 +405,58 @@ namespace EnergyManage.Controllers
             LogHelper.Debug("GetTreePower end ..." + watch.ElapsedMilliseconds);
             return Content(json);
         }
-
+        /// 返回该单位的组织区域树数据
+        public ActionResult GetTreeData(int unitID, int item_type, string unitName)
+        {
+            IList<IDAO.Models.t_V_EnerProjectType> list;
+            list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            if (list.Count() == 0 && item_type == 1)
+            {
+                DAL.VEnerProjectTypeDAL.getInstance().AddProjectTemplate(unitID, item_type);
+                list = DAL.VEnerProjectTypeDAL.getInstance().GetTreeData(unitID, item_type);
+            }
+            Tree tree = new Tree();
+            tree.id = 0;
+            tree.name = unitName;
+            tree.pId = -1;
+            tree.children = new List<Tree>();
+            getTree(list, tree.children, 0);
+            string json = JsonConvert.SerializeObject(tree);
+            return Content(json);
+        }
         /// <summary>
-        /// 查询当月用电量
+        /// 拼接tree数据
         /// </summary>
-        /// <param name="addCid"></param>
-        /// <param name="delCid"></param>
-        /// <returns></returns>
-        public ActionResult GetTreePowerMonth(string addCid, string delCid) {
+        public void getTree(IList<IDAO.Models.t_V_EnerProjectType> data, List<Tree> arr, int childID)
+        {
+            try
+            {
+                for (var a = 0; a < data.Count(); a++)
+                    if (data[a].parent_id == childID)
+                    {
+                        Tree tree = new Tree();
+                        tree.id = data[a].child_id;
+                        tree.name = data[a].name;
+                        tree.pId = data[a].parent_id;
+                        tree.addCid = data[a].addCid;
+                        tree.delCid = data[a].delCid;
+                        tree.note = data[a].unit_note;
+                        tree.head = data[a].unit_head;
+                        tree.area = data[a].unit_area;
+                        tree.people = data[a].unit_people;
+                        tree.UsePower = data[a].UsePower;
+                        tree.NeedPower = data[a].NeedPower;
+                        tree.children = new List<Tree>();
+                        arr.Add(tree);
+                        getTree(data, tree.children, tree.id);
+                    }
+            }
+            catch {
+            }
+        }
+
+    // 查询当月用电量
+    public ActionResult GetTreePowerMonth(string addCid, string delCid) {
             if (addCid == "" && delCid == "")
             {
                 return Json(new List<int>());
@@ -582,13 +516,5 @@ namespace EnergyManage.Controllers
             return Json(json);
         }
         #endregion
-
-
-
-
-
-    
-
-
     }
 } 
