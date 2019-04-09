@@ -700,7 +700,7 @@ namespace EnergyManage.Controllers
                         }
                     }
                 }
-                return Json(new { name, x, list_line, listweather = listweather.Select(p => p.ThisTemperatureValue).ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { name, x, list_line, listweather = listweather.Select(p => p.ThisTemperatureValue.TrimEnd('℃')).ToList() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
