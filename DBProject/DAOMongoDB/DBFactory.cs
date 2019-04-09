@@ -77,5 +77,9 @@ namespace DAOMongoDB
         public IEPowerForeQuality powerForeQuality => throw new NotImplementedException();
 
         public IElecPrice elecPrice => throw new NotImplementedException();
+
+        public IPowerFore powerFore => throw new NotImplementedException();
+
+        public IWeather weather => throw new NotImplementedException();
     }
 }
