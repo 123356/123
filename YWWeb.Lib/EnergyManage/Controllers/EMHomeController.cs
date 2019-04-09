@@ -684,7 +684,16 @@ namespace EnergyManage.Controllers
 
                                 overView mx = new overView();
                                 DateTime d = Convert.ToDateTime(itemf);
-                                mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
+                                var dd = item.Where(p => p.RecordTime == d).ToList();
+                                if (dd.Count() > 0)
+                                {
+                                    mx.value = dd.Sum(p => p.Value).ToString();
+                                }
+                                else
+                                {
+                                    mx.value = "";
+                                }
+                                //mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
                                 m.list.Add(mx);
                             }
                             name.Add(item.Key+"预测");
@@ -693,7 +702,15 @@ namespace EnergyManage.Controllers
                             {
                                 overView mx = new overView();
                                 DateTime d = Convert.ToDateTime(itemf);
-                                mx.value = list_PowerFore.Where(p => p.RecordTime == d).Sum(p => p.ForeUsePower).ToString();
+                                var dd = list_PowerFore.Where(p => p.RecordTime == d).ToList();
+                                if (dd.Count() > 0)
+                                {
+                                    mx.value = dd.Sum(p => p.ForeUsePower).ToString();
+                                }
+                                else
+                                {
+                                    mx.value = "";
+                                }
                                 m.list_budget.Add(mx);
                             }
                             list_line.Add(m);
@@ -759,7 +776,15 @@ namespace EnergyManage.Controllers
 
                             overView mx = new overView();
                             DateTime d = Convert.ToDateTime(itemf);
-                            mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
+                            var dd = item.Where(p => p.RecordTime == d).ToList();
+                            if (dd.Count() > 0)
+                            {
+                                mx.value = dd.Sum(p => p.Value).ToString();
+                            }
+                            else
+                            {
+                                mx.value = "";
+                            }
                             m.list.Add(mx);
                         }
                         view md = new view();
@@ -770,7 +795,15 @@ namespace EnergyManage.Controllers
 
                             overView mx = new overView();
                             DateTime d = Convert.ToDateTime(itemf);
-                            mx.value = list_budget.Where(p => p.RecordTime == d).Sum(p => p.ForeUsePower).ToString();
+                            var dd = list_budget.Where(p => p.RecordTime == d).ToList();
+                            if (dd.Count() > 0)
+                            {
+                                mx.value = dd.Sum(p => p.ForeUsePower).ToString();
+                            }
+                            else
+                            {
+                                mx.value = "";
+                            }
                             m.list_budget.Add(mx);
                         }
                         list_line.Add(m);
