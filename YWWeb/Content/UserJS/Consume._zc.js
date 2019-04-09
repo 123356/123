@@ -194,11 +194,14 @@
                             data[i].index = i
                         }
                         var id = data[0].ID
-                        that.curCID = data[0].CID
+                        that.curCID = data[0].PID + "-" + data[0].CID
                         that.curSelectID = data[0].ID
                         that.getTableList(data[0].ID)
-                        that.getBarData(data[0].CID)
-                        that.getLineData(data[0].CID)
+                        that.getBarData(data[0].PID+"-"+data[0].CID)
+                        that.getLineData(data[0].PID + "-" + data[0].CID)
+                    } else {
+                        that.barShow = false
+                        that.lineShow = false
                     }
                     that.listData = data
                 })
@@ -255,7 +258,7 @@
                 url: '/energyManage/EMHome/GetExData',
                 method: 'post',
                 body: {
-                    cids: cids,
+                    cpids: cids,
                     type: that.curEntype,
                     TypeTime: that.dateType,
                     uid: that.uid,
@@ -288,12 +291,12 @@
                 url: '/energyManage/EMHome/GetBudgetData',
                 method: 'post',
                 body: {
-                    cids: cids,
+                    cpids: cids,
                 }
             })
                 .then(function (res) {
                     if (res.data) {
-                        if (res.data.shijivalue.length > 0) {
+                        if (res.data.x.length > 0) {
                             that.lineShow = true
                             that.createEnergyConLine(res.data)
                         } else {
@@ -346,11 +349,12 @@
                 //    title: '信息提示',
                 //    content: '最多只能选择两项进行对比'
                 //});
-                if (selection[0].index > selection[1].index) {
-                    this.curTime = selection[1].RecordTime
-                } else {
-                    this.curTime = selection[0].RecordTime
-                }
+                //if (selection[0].index > selection[1].index) {
+                //    this.curTime = selection[1].RecordTime
+                //} else {
+                //    this.curTime = selection[0].RecordTime
+                //}
+                this.curTime = selection[0].RecordTime
                 this.setSelectState(true)
             } else {
                 this.setSelectState(false)
@@ -366,10 +370,10 @@
             for (var i = 0; i < selection.length; i++) {
                 if ((i + 1) == selection.length) {
                     this.curSelectID += selection[i].ID + ""
-                    this.curCID += selection[i].CID + ""
+                    this.curCID += (selection[i].PID+"-"+selection[i].CID)
                 } else {
                     this.curSelectID += selection[i].ID + ","
-                    this.curCID += selection[i].CID + ","
+                    this.curCID += (selection[i].PID + "-" + selection[i].CID) + ","
                 }
             }
             this.getTableList(this.curSelectID)
@@ -602,14 +606,51 @@
             if (this.curEntype != 1) {
                 yName = "m³"
             }
+            var seriesData = []
+            for (var i in data.list_line) {
+                var sj = []
+                var yc = []
+                for(var j in data.list_line[i].list){
+                    sj.push(data.list_line[i].list[j].value)
+                }
+                for (var j in data.list_line[i].list_budget) {
+                    yc.push(data.list_line[i].list_budget[j].value)
+                }
+                
+                seriesData.push({
+                    name: data.name[i],
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',//节点样式
+                    lineStyle: {
+                        color: '#53bda9',
+                        width: 1,
 
+                    },
+                    data: sj
+                })
+                var index = parseInt(i+1)
+                seriesData.push({
+                    name: data.name[index],
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',//节点样式
+                    lineStyle: {
+                        color: '#fa8033',
+                        width: 1,
+
+                    },
+                    data: yc
+                })
+                
+            }
             var option = option = {
 
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['实时', '预测'],
+                    data: data.name,
                     x: 'center',
                     textStyle: {
                         fontSize: 10,
@@ -682,35 +723,7 @@
                         }
                     },
                 },
-                series: [
-
-                    {
-                        name: '实时',
-                        type: 'line',
-                        smooth: true,
-                        symbol: 'none',//节点样式
-                        lineStyle: {
-                            color: '#53bda9',
-                            width: 1,
-
-                        },
-                        data: data.shijivalue
-                    },
-                    {
-                        name: '预测',
-                        type: 'line',
-                        symbol: 'none',//节点样式
-                        smooth: true,
-
-                        lineStyle: {
-                            color: '#fa8033',
-                            width: 1,
-
-                        },
-
-                        data: data.budgetList
-                    }
-                ],
+                series: seriesData,
                 dataZoom: [
                     {
                         type: 'inside'
