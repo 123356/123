@@ -48,5 +48,7 @@ namespace IDAO
 
         IElecPrice elecPrice { get; }
 
+        IPowerFore powerFore { get; }
+        IWeather weather { get; }
     }
 }

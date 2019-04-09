@@ -79,6 +79,7 @@
     <Compile Include="ILookEneryView.cs" />
     <Compile Include="IPDRInfo.cs" />
     <Compile Include="IPointsInfo.cs" />
+    <Compile Include="IPowerFore.cs" />
     <Compile Include="IPriceEnery.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="IEnerUserType.cs" />
     <Compile Include="IVDeviceInfoState_PDR1.cs" />
     <Compile Include="IVEnerProjectType.cs" />
+    <Compile Include="IWeather.cs" />
     <Compile Include="IYearBudget.cs" />
     <Compile Include="Models.Context.cs">
       <AutoGen>True</AutoGen>
@@ -141,7 +143,9 @@
     <Compile Include="Models\t_CM_DeviceTypeComBox.cs" />
     <Compile Include="Models\t_CM_RoleRight.cs" />
     <Compile Include="Models\t_V_LookEneryView.cs" />
+    <Compile Include="Models\t_V_PowerForeView.cs" />
     <Compile Include="Models\t_V_RealTimeData.cs" />
+    <Compile Include="Models\t_V_WeatherView.cs" />
     <Compile Include="t_SM_HisData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

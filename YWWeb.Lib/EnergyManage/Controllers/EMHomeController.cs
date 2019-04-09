@@ -603,65 +603,104 @@ namespace EnergyManage.Controllers
                 return Json("No Data", JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult GetExData(string cids,int type, int TypeTime, string time, int uid)
+        public JsonResult GetExData(string cpids,int type, int TypeTime, string time, int uid)
         {
             try
             {
+                string CityName = "北京";
+                //var unit = DAL.UnitDAL.getInstance().GetUnitList(uid + "").FirstOrDefault();
+                //if (unit != null && !string.IsNullOrEmpty(unit.PDRList))
+                //    CityName = unit.PDRList;
                 string pids = "0";
-                var unit = DAL.UnitDAL.getInstance().GetUnitList(uid + "").FirstOrDefault();
-                if (unit != null && !string.IsNullOrEmpty(unit.PDRList))
-                    pids = unit.PDRList;
-
+                string cids = "0";
                 IList<t_V_EneryView> list_this = null;
-                if (TypeTime == 1)
-                {
-                    DateTime time_test = Convert.ToDateTime(time);
-                    string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
-                    string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
-                }
-                else if (TypeTime == 2)
-                {
-                    DateTime time_test = Convert.ToDateTime(time);
-                    string t1 = time_test.AddDays(1 - time_test.Day).ToString();
-                    string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
-                }
-                else if (TypeTime == 3)
-                {
-
-                    string t1 = new DateTime(Convert.ToInt32(time), 1, 1).ToString();
-                    string t2 = new DateTime(Convert.ToInt32(time), 12, 31).ToString();
-                    list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
-                }
-
+                IList<t_V_PowerForeView> list_PowerFore = null;
+                IList<t_V_WeatherView> listweather = null;
                 List<view> list_line = new List<view>();
                 List<string> x = new List<string>();
 
                 List<string> name = new List<string>();
 
-                foreach (var item in list_this.GroupBy(p => p.RecordTime))
-                {
-                    x.Add(item.Key.ToString());
-                }
-
-                foreach (var item in list_this.GroupBy(p => p.CName))
-                {
-                    view m = new view();
-                    name.Add(item.Key);
-                    m.name = item.Key;
-                    foreach (var itemf in x)
-                    {
-
-                        overView mx = new overView();
-                        DateTime d = Convert.ToDateTime(itemf);
-                        mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
-                        m.list.Add(mx);
-                    }
-                    list_line.Add(m);
-                }
                 List<string> tianqi = new List<string>();
-                return Json(new { name, x, list_line, tianqi }, JsonRequestBehavior.AllowGet);
+                if (!string.IsNullOrEmpty(cpids))
+                {
+                    var cp = cpids.Split(',');
+                    foreach (var cc in cp)
+                    {
+                        var xx = cc.Split('-');
+                        pids = xx[0];
+                        cids = xx[1];
+                        if (TypeTime == 1)
+                        {
+                            int year = Convert.ToDateTime(time).Year;
+                            int month = Convert.ToDateTime(time).Month;
+                            int day = Convert.ToDateTime(time).Day;
+                            for (int i = 0; i < 24; i++)
+                            {
+                                x.Add(new DateTime(year, month, day).AddHours(i).ToString());
+                            }
+                            DateTime time_test = Convert.ToDateTime(time);
+                            string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
+                            string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
+                            list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
+                            list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
+                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                        }
+                        else if (TypeTime == 2)
+                        {
+                            int year = Convert.ToDateTime(time).Year;
+                            int month = Convert.ToDateTime(time).Month;
+                            int days = DateTime.DaysInMonth(year, month);
+                            for (int i = 0; i < days; i++)
+                            {
+                                x.Add(new DateTime(year, month, 1).AddDays(i).ToString());
+                            }
+                            DateTime time_test = Convert.ToDateTime(time);
+                            string t1 = time_test.AddDays(1 - time_test.Day).ToString();
+                            string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
+                            list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
+                            list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
+                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                        }
+                        else if (TypeTime == 3)
+                        {
+                            for (int i = 0; i < 12; i++)
+                            {
+                                x.Add(new DateTime(int.Parse(time), 1, 1).AddMonths(i).ToString());
+                            }
+                            string t1 = new DateTime(Convert.ToInt32(time), 1, 1).ToString();
+                            string t2 = new DateTime(Convert.ToInt32(time), 12, 31).ToString();
+                            list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
+                            list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
+                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                        }
+                        foreach (var item in list_this.GroupBy(p => p.CName))
+                        {
+                            view m = new view();
+                            name.Add(item.Key);
+                            m.name.Add(item.Key);
+                            foreach (var itemf in x)
+                            {
+
+                                overView mx = new overView();
+                                DateTime d = Convert.ToDateTime(itemf);
+                                mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
+                                m.list.Add(mx);
+                            }
+                            name.Add(item.Key+"预测");
+                            m.name.Add(item.Key + "预测");
+                            foreach (var itemf in x)
+                            {
+                                overView mx = new overView();
+                                DateTime d = Convert.ToDateTime(itemf);
+                                mx.value = list_PowerFore.Where(p => p.RecordTime == d).Sum(p => p.ForeUsePower).ToString();
+                                m.list_budget.Add(mx);
+                            }
+                            list_line.Add(m);
+                        }
+                    }
+                }
+                return Json(new { name, x, list_line, listweather = listweather.Select(p => p.ThisTemperatureValue).ToList() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -674,33 +713,73 @@ namespace EnergyManage.Controllers
             public view()
             {
                 list = new List<overView>();
+                list_budget = new List<overView>();
+                name = new List<string>();
             }
-            public string name { get; set; }
+            public List<string> name { get; set; }
             public List<overView> list { get; set; }
+            public List<overView> list_budget { get; set; }
         }
-        public JsonResult GetBudgetData(string cids)
+        public JsonResult GetBudgetData(string cpids)
         {
-            string pids = GetPIDs();
             IList<t_V_EneryView> list_this = null;
+            IList<t_V_PowerForeView> list_budget = null;
             DateTime time_test = Convert.ToDateTime(DateTime.Now);
             List<string> x = new List<string>();
+            List<view> list_line = new List<view>();
+            List<string> name = new List<string>();
             List<string> budgetList = new List<string>();
             List<string> shijivalue = new List<string>();
             string t1 = time_test.ToString("yyyy-MM-dd 00:00:00");
             string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
-            list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, 0, t1, t2);
-            for (var i = 0; i < 24; i++)
+            string pids = "0";
+            string cids = "0";
+            if (!string.IsNullOrEmpty(cpids))
             {
-                x.Add(Convert.ToDateTime(t1).AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
-            }
-            List<overView> list_shiji = new List<overView>();
-            foreach (var item in x)
-            {
-                DateTime d = Convert.ToDateTime(item);
-                shijivalue.Add(list_this.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString());
+                var cp = cpids.Split(',');
+                foreach (var cc in cp)
+                {
+                    var xx = cc.Split('-');
+                    pids = xx[0];
+                    cids = xx[1];
+                    list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, 0, t1, t2);
+                    list_budget = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, 1);
+                    for (var i = 0; i < 24; i++)
+                    {
+                        x.Add(Convert.ToDateTime(t1).AddHours(i).ToString("yyyy-MM-dd HH:mm:ss"));
+                    }
+                    List<overView> list_shiji = new List<overView>();
+                    foreach (var item in list_this.GroupBy(p => p.CName))
+                    {
+                        view m = new view();
+                        name.Add(item.Key);
+                        m.name.Add(item.Key);
+                        foreach (var itemf in x)
+                        {
+
+                            overView mx = new overView();
+                            DateTime d = Convert.ToDateTime(itemf);
+                            mx.value = item.Where(p => p.RecordTime == d).Sum(p => p.Value).ToString();
+                            m.list.Add(mx);
+                        }
+                        view md = new view();
+                        name.Add(item.Key + "预测");
+                        m.name.Add(item.Key + "预测");
+                        foreach (var itemf in x)
+                        {
+
+                            overView mx = new overView();
+                            DateTime d = Convert.ToDateTime(itemf);
+                            mx.value = list_budget.Where(p => p.RecordTime == d).Sum(p => p.ForeUsePower).ToString();
+                            m.list_budget.Add(mx);
+                        }
+                        list_line.Add(m);
+                    }
+                }
             }
 
-            return Json(new { x, shijivalue, budgetList }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { x, name, list_line }, JsonRequestBehavior.AllowGet);
 
         }
 

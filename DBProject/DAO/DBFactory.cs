@@ -78,5 +78,8 @@ namespace DAO
         public IEPowerForeQuality powerForeQuality => new PowerForeQualityDBContext();
 
         public IElecPrice elecPrice => new ElecPriceDBContext();
+
+        public IPowerFore powerFore => new PowerForeDBContext();
+        public IWeather weather => new WeatherDBContext();
     }
 }
