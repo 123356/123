@@ -188,11 +188,11 @@ function HourYdlGraph_SSQX(DataJson) {
             yAxis: [{
                 //min: 173,
                 //max: 287,
-                name: "V",
+                name: DataJson.Unit,
                 type: "value",
                 axisLabel: {
                     show: true,
-                    formatter: "{value}V"
+                   // formatter: "{value}V"
                 }
             }, ],
             dataZoom: [{
