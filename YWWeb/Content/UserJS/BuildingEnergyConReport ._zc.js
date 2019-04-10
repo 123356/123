@@ -104,12 +104,16 @@
                 return;
             }
             node.text = node.name
-            if (node.children && node.children.length > 0) {
+            node.children = node.Children
+            node.id = node.ID
+            if (node.Children && node.Children.length > 0) {
                 for (var i = 0; i < node.children.length; i++) {
-                    if (!node.children[i].children) {
-                        node.children[i].text = node.children[i].name
+                    if (!node.Children[i].Children) {
+                        node.Children[i].text = node.Children[i].name
+                        node.Children[i].children = node.Children[i].Children
+                        node.Children[i].id = node.Children[i].ID
                     }
-                    this.foreachTree(node.children[i], type);
+                    this.foreachTree(node.Children[i], type);
                 }
             } else {
                 var val = 0
@@ -135,16 +139,16 @@
             this.treeType = type
             var that = this
             this.$http({
-                url: '/energyManage/EMSetting/GetTreeData',
+                url: '/energyManage/EMSetting/GetEnergyTree',
                 method: 'POST',
                 params: {
-                    unitID: that.UID,
-                    item_type: type,
-                    unitName: that.UnitName
+                    UnitID: that.UID,
+                    ItemType: type,
+                    UnitName: that.UnitName
                 }
             })
                 .then(function (res) {
-                    var data = res.data
+                    var data = res.data[0]
                     that.foreachTree(data, type)
                     if (type == 1) {
                         that.elecSubItemTree = data

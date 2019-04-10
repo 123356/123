@@ -126,16 +126,20 @@
                 return;
             }
             node.text = node.name
-            if (node.children && node.children.length > 0) {
-                for (var i = 0; i < node.children.length; i++) {
-                    if (!node.children[i].children) {
-                        node.children[i].text = node.children[i].name
+            node.children = node.Children
+            node.id = node.ID
+            if (node.Children && node.Children.length > 0) {
+                for (var i = 0; i < node.Children.length; i++) {
+                    if (!node.Children[i].Children) {
+                        node.Children[i].text = node.Children[i].name
+                        node.Children[i].children = node.Children[i].Children
+                        node.Children[i].id = node.Children[i].ID
                     }
-                    this.foreachTree(node.children[i]);
+                    this.foreachTree(node.Children[i]);
                 }
             } else {
-                if (node.id != 0 && this.isUnitSelect == 0) {
-                    this.isUnitSelect = node.id
+                if (node.ID != 0 && this.isUnitSelect == 0) {
+                    this.isUnitSelect = node.ID
                     this.departName = node.name
                 }
             }
@@ -144,16 +148,16 @@
         getDepartMentList: function () {
             var that = this
             this.$http({
-                url: "/energyManage/EMSetting/GetTreeData",
+                url: "/energyManage/EMSetting/GetEnergyTree",
                 method: "post",
                 body: {
-                    unitID: that.UID,
-                    item_type: 2,
-                    unitName: that.Uname
+                    UnitID: that.UID,
+                    ItemType: 2,
+                    UnitName: that.Uname
                 }
             }).then(function (res) {
                 that.departMentList = res.data
-                var data = res.data
+                var data = res.data[0]
                 that.foreachTree(data)
                 that.treeData = data
                 that.getSelectTree()
@@ -239,7 +243,7 @@
             var unitData = JSON.parse(localStorage.getItem("UnitData"))
             if (unitData) {
                 this.UID = unitData.enUID
-                this.UName = unitData.enName
+                this.Uname = unitData.enName
             }
         }
     },

@@ -101,7 +101,7 @@
                 render: (h, params) => {
                     var time = params.row.RecordTime
                     var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
-                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
                     return h('span',
                         {
                             attrs: {
@@ -146,7 +146,7 @@
             {
                 title: '用途',
                 align: 'center',
-                key: 'CName'
+                key: 'Purpose'
             },
             /* {
                  title: '结论',
@@ -398,7 +398,7 @@
             this.curTime = row.RecordTime
             if (!this.switchState) {
                 this.curSelectID = row.ID
-                this.curCID = row.CID
+                this.curCID = row.PID + "-" + row.CID
                 this.curEntype = row.CODID
                 this.getTableList(this.curSelectID)
                 this.getBarData(this.curCID)

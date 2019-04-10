@@ -78,7 +78,7 @@
                 {{UnitName}}
             </div>
             <table class="buildTable">
-                <caption class="caption" style="">{{curTimeStr}} 建筑分项能耗报表</caption>
+                <caption class="caption" style="">{{curTimeStr}} 建筑分项能耗报表(kW·h)</caption>
                 <tr>
                     <th style="min-width:25px">ID</th>
                     <th class="nameCol">名称</th>
@@ -96,11 +96,11 @@
                 <tr v-show="itemHJ.length>0">
                     <td colspan="3" align="center">分时合计</td>
                     <td v-for="item in itemHJ" align="center">{{item.val}}</td>
-                    <td align="center">{{itemTotal}}</td>
+                    <td align="center">@*{{itemTotal}}*@</td>
                 </tr>
             </table>
             <table class="buildTable" style="margin-top:50px">
-                <caption class="caption" style="">{{curTimeStr}} 建筑能耗区域报表</caption>
+                <caption class="caption" style="">{{curTimeStr}} 建筑区域能耗报表(kW·h)</caption>
                 <tr>
                     <th style="min-width:25px">ID</th>
                     <th class="nameCol">名称</th>
@@ -118,7 +118,7 @@
                 <tr v-show="areaHJ.length>0">
                     <td colspan="3" align="center">分时合计</td>
                     <td v-for="item in areaHJ" align="center">{{item.val}}</td>
-                    <td align="center">{{areaTotal}}</td>
+                    <td align="center">@*{{areaTotal}}*@</td>
                 </tr>
             </table>
         </div>

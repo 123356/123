@@ -65,27 +65,7 @@
             num = num.toLocaleString();
             return num;//返回的是字符串23,245.12保留2位小数
         },
-        renderContent(h, { root, node, data }) {
-            var disabled = false
-            var that = this
-            return h('Option', {
-                style: {
-                    display: 'inline-block',
-                    margin: '5px'
-                },
-                attrs: {
-                    selected: data.id == that.addForm.EnerUserTypeID,
-                    //disabled: disabled
-                },
-                props: {
-                    value: data.id
-                },
-                on: {
-                    click: () => {
-                    }
-                }
-            }, data.name)
-        },
+        
 openSelect: function (e) {
     if (e) {
         this.initSelectShow = false
@@ -108,30 +88,70 @@ getCollectDevTypeList: function () {
         throw new ReferenceError(e.message)
     })
 },
+renderContent(h, { root, node, data }) {
+            
+    var disabled = false
+    var that = this
+    return h('Option', {
+        style: {
+            display: 'inline-block',
+            margin: '5px'
+        },
+        attrs: {
+            selected: data.ID == that.addForm.EnerUserTypeID,
+            //disabled: disabled
+        },
+        props: {
+            value: data.ID
+        },
+        on: {
+            click: () => {
+            }
+        }
+    }, data.name)
+},
 //科室下拉框
 getDepartMentList: function () {
     var that = this
 
     this.$http({
-        url: "/energyManage/EMSetting/GetTreeData",
+        url: "/energyManage/EMSetting/GetEnergyTree",
         method: "post",
         body: {
-            unitID: that.uid,
-            item_type: 2,
-            unitName: that.Uname
+            UnitID: that.uid,
+            ItemType: 2,
+            UnitName: that.Uname
         }
     }).then(function (res) {
-        if (res.data.children.length > 0) {
-            that.addForm.EnerUserTypeID = res.data.children[0].id
-            that.unitDepartName = res.data.children[0].name
-        }
+       var data = res.data[0]
+        that.foreachTree(data)
+       
+            
+        that.addForm.EnerUserTypeID = data.ID
+        that.unitDepartName = data.name
 
-        that.departMentList = res.data.children
+        var arr = []
+        arr.push(data)
+        that.departMentList = arr
     }).catch(function (e) {
         throw new ReferenceError(e.message)
     })
 },
-
+foreachTree: function (node) {
+    if (!node) {
+        return;
+    }
+   
+    node.children = node.Children
+    if (node.Children && node.Children.length > 0) {
+        for (var i = 0; i < node.Children.length; i++) {
+            if (!node.Children[i].Children) {
+                node.Children[i].children = node.Children[i].Children
+            }
+            this.foreachTree(node.Children[i]);
+        }
+    }
+},
 //删除能源
 deleteConfig: function (id) {
     var that = this

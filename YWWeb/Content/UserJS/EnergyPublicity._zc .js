@@ -77,11 +77,11 @@
                     } else {
                         that.isUnitSelect = node.id
                     }
-
+                    
                 },
                 onChange: function (newvla, oldval) {
                     that.EneryUserTypeID = newvla
-
+                    
                 },
 
                 onLoadSuccess: function (node, data) {
@@ -103,16 +103,20 @@
                 return;
             }
             node.text = node.name
-            if (node.children && node.children.length > 0) {
-                for (var i = 0; i < node.children.length; i++) {
-                    if (!node.children[i].children) {
-                        node.children[i].text = node.children[i].name
+            node.children = node.Children
+            node.id = node.ID
+            if (node.Children && node.Children.length > 0) {
+                for (var i = 0; i < node.Children.length; i++) {
+                    if (!node.Children[i].Children) {
+                        node.Children[i].text = node.Children[i].name
+                        node.Children[i].children = node.Children[i].Children
+                        node.Children[i].id = node.Children[i].ID
                     }
-                    this.foreachTree(node.children[i]);
+                    this.foreachTree(node.Children[i]);
                 }
             } else {
-                if (node.id != 0 && this.isUnitSelect == 0) {
-                    this.isUnitSelect = node.id
+                if (node.ID != 0 && this.isUnitSelect == 0) {
+                    this.isUnitSelect = node.ID
                     this.departName = node.name
                 }
             }
@@ -121,16 +125,16 @@
         getTreeData: function () {
             var that = this
             this.$http({
-                url: '/energyManage/EMSetting/GetTreeData',
+                url: '/energyManage/EMSetting/GetEnergyTree',
                 method: 'POST',
                 params: {
-                    unitID: that.UID,
-                    item_type: 2,
-                    unitName: that.UName
+                    UnitID: that.UID,
+                    ItemType: 2,
+                    UnitName: that.UName
                 }
-            })
+                })
                 .then(function (res) {
-                    var data = res.data
+                    var data = res.data[0]
                     that.foreachTree(data)
                     that.treeData = data
                     that.getSelectTree()

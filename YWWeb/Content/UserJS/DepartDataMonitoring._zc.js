@@ -13,49 +13,58 @@
             var that = this
 
             this.$http({
-                url: '/energyManage/EMSetting/GetTreeData',
+                url: '/energyManage/EMSetting/GetEnergyTree',
                 method: 'POST',
                 body: {
-                    unitID: that.uid,
-                    item_type: 2,
-                    unitName: that.uName
+                    UnitID: that.uid,
+                    ItemType: 2,
+                    UnitName: that.uName
                 }
             })
                 .then(function (res) {
-                    res.data.open = true
-                    that.init(res.data)
+                    var data = res.data[0]
+                    data.open = true
+                    that.foreachTree(data)
+                    var arr = []
+                    that.init(data)
                     var did = null
 
-                    if (res.data) {
-                        if (res.data.children.length > 0) {
-                            did = res.data.children[0].id
-                            sessionStorage.setItem('parentDepartName', res.data.children[0].name)
+                    if (data) {
+                        if (data.Children.length > 0) {
+                            did = data.Children[0].ID
+                            sessionStorage.setItem('parentDepartName', data.Children[0].name)
                         }
                     }
                     that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
-                    /* if (res.data.children.length > 0) {
-                         that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + res.data.children[0].id
-                         res.data.children[0].selected=true
-                     } else {
-                         that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=null'
-                     }
-                     this.treeData = [
-                         {
-                             title: this.uName,
-                             id: this.uid,
-                             //selected: true,
-                             expand: true,//是否打开子节点
-                             children: that.traverseTree(res.data).children
-                         }
- 
-                     ]*/
+                    
 
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
         },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            node.text = node.name
+            node.children = node.Children
+            node.id = node.ID
+            if (node.Children && node.Children.length > 0) {
+                for (var i = 0; i < node.Children.length; i++) {
+                    if (!node.Children[i].Children) {
+                        node.Children[i].text = node.Children[i].name
+                        node.Children[i].children = node.Children[i].Children
+                        node.Children[i].id = node.Children[i].ID
+                    }
+                    this.foreachTree(node.Children[i]);
+                }
+            } 
+        },
+
         init: function (data) {
+            
             var setting = {
                 check: {
                     enable: false

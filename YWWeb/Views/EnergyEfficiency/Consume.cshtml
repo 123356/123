@@ -47,11 +47,11 @@
                         <span>历史用能趋势</span>
                     </div>
                     <div class="barAndLine">
-                        <div class="datePicekerView">
+                        <div class="datePicekerView" >
                             <radio-group v-model="dateType" type="button" size="small" v-on:on-change="dateTypeChange">
                                 <Radio label="1" value="1">日</Radio>
-                                <Radio label="2" value="2">月</Radio>
-                                <Radio label="3" value="3">年</Radio>
+                                @*<Radio label="2" value="2">月</Radio>
+                                <Radio label="3" value="3">年</Radio>*@
                             </radio-group>
                         </div>
                         <div class="chart noData" v-if="!barShow">暂无数据</div>
@@ -83,7 +83,7 @@
         </div>
         <!--right e-->
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/Consume._jm.js?v=1.48"></script>
+    <script type="text/javascript" src="~/Content/UserJS/Consume._jm.js?v=1.53"></script>
 </body>
 </html>
 
