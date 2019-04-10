@@ -61,7 +61,7 @@ function showinfomessage(marker, point, data) {
     }
     var opts = {
         width: 320,
-        height: 140,
+        height: 150,
         title: ''
     }
 
@@ -129,7 +129,7 @@ function showinfomessage(marker, point, data) {
     var infoBox = new BMapLib.InfoBox(map, html, {
             boxStyle:{
                 width: '400px',
-                height: '300px',
+                height: '320px',
                 background:'rgba(0,0,0,0.6)'
             }
         }

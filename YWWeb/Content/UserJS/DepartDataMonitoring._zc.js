@@ -43,20 +43,22 @@
             node.text = node.name
             node.children = node.Children
             node.id = node.ID
+            node.open = true
             if (node.Children && node.Children.length > 0) {
                 for (var i = 0; i < node.Children.length; i++) {
                     if (!node.Children[i].Children) {
                         node.Children[i].text = node.Children[i].name
+                        node.Children[i].open = true
                         node.Children[i].children = node.Children[i].Children
                         node.Children[i].id = node.Children[i].ID
                     }
                     this.foreachTree(node.Children[i]);
                 }
-            } 
+            }
         },
 
         init: function (data) {
-            
+
             var setting = {
                 check: {
                     enable: false
@@ -82,7 +84,7 @@
                     sessionStorage.setItem("isParent", treeNode.isParent)
                     sessionStorage.setItem('parentDepartName', treeNode.name)
                 }
-                
+
             }
         },
         selectChange: function (res) {
