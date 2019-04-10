@@ -644,7 +644,23 @@ namespace EnergyManage.Controllers
                             string t2 = time_test.ToString("yyyy-MM-dd 23:59:59");
                             list_this = DAL.EneryOverViewDAL.getInstance().GetDayDatasByTime(cids, pids, type, t1, t2);
                             list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
-                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            var  listwea = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            foreach(var item in x)
+                            {
+                                DateTime d = Convert.ToDateTime(item);
+                                var xd = listwea.Where(p => p.RecordTime == d).FirstOrDefault();
+                                if (xd != null)
+                                {
+                                    tianqi.Add(xd.ThisTemperatureValue.TrimEnd('℃'));
+                                }
+                                else
+                                {
+                                    //t_V_WeatherView model = new t_V_WeatherView();
+                                    //model.RecordTime = d;
+                                    //model.ThisHumidityValue = "";
+                                    tianqi.Add("");
+                                }
+                            }
                         }
                         else if (TypeTime == 2)
                         {
@@ -660,7 +676,24 @@ namespace EnergyManage.Controllers
                             string t2 = time_test.AddDays(1 - time_test.Day).AddMonths(1).AddDays(-1).ToString();
                             list_this = DAL.EneryOverViewDAL.getInstance().GetMonthDatasByTime(cids, pids, type, t1, t2);
                             list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
-                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            var listwea = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            foreach (var item in x)
+                            {
+                                DateTime d = Convert.ToDateTime(item);
+                                var xd = listwea.Where(p => p.RecordTime == d).FirstOrDefault();
+                                if (xd != null)
+                                {
+                                    xd.ThisHumidityValue = xd.ThisHumidityValue.TrimEnd('℃');
+                                    listweather.Add(xd);
+                                }
+                                else
+                                {
+                                    t_V_WeatherView model = new t_V_WeatherView();
+                                    model.RecordTime = d;
+                                    model.ThisHumidityValue = "";
+                                    listweather.Add(model);
+                                }
+                            }
                         }
                         else if (TypeTime == 3)
                         {
@@ -672,7 +705,24 @@ namespace EnergyManage.Controllers
                             string t2 = new DateTime(Convert.ToInt32(time), 12, 31).ToString();
                             list_this = DAL.EneryOverViewDAL.getInstance().GetYearDatasByTime(cids, pids, type, t1, t2);
                             list_PowerFore = DAL.PowerForeDAL.getInstance().GetForeList(pids, cids, t1, t2, TypeTime);
-                            listweather = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            var listwea = DAL.WeatherDAL.getInstance().GetWeatherList(CityName, t1, t2, TypeTime);
+                            foreach (var item in x)
+                            {
+                                DateTime d = Convert.ToDateTime(item);
+                                var xd = listwea.Where(p => p.RecordTime == d).FirstOrDefault();
+                                if (xd != null)
+                                {
+                                    xd.ThisHumidityValue = xd.ThisHumidityValue.TrimEnd('℃');
+                                    listweather.Add(xd);
+                                }
+                                else
+                                {
+                                    t_V_WeatherView model = new t_V_WeatherView();
+                                    model.RecordTime = d;
+                                    model.ThisHumidityValue = "";
+                                    listweather.Add(model);
+                                }
+                            }
                         }
                         foreach (var item in list_this.GroupBy(p => p.CName))
                         {
@@ -717,7 +767,7 @@ namespace EnergyManage.Controllers
                         }
                     }
                 }
-                return Json(new { name, x, list_line, listweather = listweather.Select(p => p.ThisTemperatureValue.TrimEnd('℃')).ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { name, x, list_line, listweather = tianqi }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
