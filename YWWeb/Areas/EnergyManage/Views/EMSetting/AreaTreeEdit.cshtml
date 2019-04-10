@@ -74,7 +74,7 @@
                         <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-badge :value="CidList.length" class="item" type="primary">
-                                    <el-button size="small" v-on:click="showTab">总用表</el-button>
+                                    <el-button size="small" v-on:click="showTab">总表</el-button>
                                 </el-badge>
                             </el-col>
                             <el-col :span="6">
@@ -144,7 +144,7 @@
                                         <el-button type="warning" icon="el-icon-refresh" circle size="mini" title="还原" v-on:click="RevertToCid(1)"></el-button>
                                         <el-button type="danger" icon="el-icon-delete" circle size="mini" title="全部删除" v-on:click="addCidOld=[]"></el-button>
                                         <el-card shadow="hover" :style="{'max-height':'200px','overflow':'auto','min-height':'60px'}">
-                                            <el-tag size="small" :style="{'margin':'5px '}" v-for="itme in AddCidTags" :title="`pid: ${itme.PID}\ndid: ${itme.DID}`" closable :key="itme.PID+'-'+itme.CID" :disable-transitions="true" v-on:close="TagHandleClose(itme.PID,itme.CID,1)">{{itme.CName}}</el-tag>
+                                            <el-tag size="small" :style="{'margin':'5px '}" v-for="itme in AddCidTags" :title="`pid: ${itme.PID}\ndid: ${itme.DID}\ncid: ${itme.CID}`" closable :key="itme.PID+'-'+itme.CID" :disable-transitions="true" v-on:close="TagHandleClose(itme.PID,itme.CID,1)">{{itme.CName}}</el-tag>
                                         </el-card>
                                     </el-form-item>
                                 </el-col>
@@ -177,14 +177,38 @@
 
 
         @*表格模态框*@
-        <el-dialog title="详情" :visible.sync="Dialogtab" :before-close="closeTab">
-            <el-table :data="griData" stripe height="450" border>
-                <el-table-column property="nodeID" label="ID"></el-table-column>
-                <el-table-column property="nodeName" label="节点名称"></el-table-column>
-                <el-table-column property="binded" label="已经绑定" width="350"></el-table-column>
-                <el-table-column property="bindedNum" label="已经绑定个数"></el-table-column>
-                <el-table-column property="bindss" label="重复绑定"></el-table-column>
-            </el-table>
+        <el-dialog title="详情" :visible.sync="Dialogtab" :before-close="closeTab" top="0">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>节点</th>
+                    <th>表</th>
+                    <th>已绑定</th>
+                    <th>重复绑定</th>
+                </tr>
+                <tr v-for="itme in griData">
+                    <td :title="itme.nodeName">{{itme.nodeName}}</td>
+                    <td style="padding: 0;border:0">
+                        <table class="table table-bordered table-striped" style="border:0;margin:0;font-size:12px;">
+                            <tr>
+                                <td style="border:0;width:12.5%">PID</td>
+                                <td  style="border-top:0;width:12.5%">DID</td>
+                                <td  style="border-top:0;width:12.5%">CID</td>
+                                <td style="border-top:0;width:25%">柜子</td>
+                                <td  style="border:0;width:37.5%">表</td>
+                            </tr>
+                            <tr v-for="i in itme.binded">
+                                <td style="border-left:0">{{i.pid}}</td>
+                                <td>{{i.did}}</td>
+                                <td>{{i.cid}}</td>
+                                <td>{{i.DName}}</td>
+                                <td>{{i.CName}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td :title="itme.bindedNum||'无'">{{itme.bindedNum}}</td>
+                    <td :title="itme.bindss||'无'">{{itme.bindss}}</td>
+                </tr>
+            </table>
         </el-dialog>
 
 
