@@ -57,7 +57,6 @@
                     if (!$(this).tree('isLeaf', node.target)) {
                         $('#StationID').combo('showPanel');
                     } else {
-                        console.log(node)
                         that.PID = node.id
                         $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
                         that.getPUEDataByTime()
@@ -167,14 +166,12 @@
             this.getPUEDataByTime()
         },
         radioChange:function(e){
-            console.log(e)
             if (e == 4) {
                 this.initDate()
             }
             this.search()
         },
         dateChange:function(e){
-            console.log(e)
             this.search()
             
             
@@ -215,22 +212,45 @@
             }
             this.getPUEDataByTime()
         },
+        setSatrtTime: function (type) {
+            var time = new Date()
+            var curTime = ''
+            switch (parseInt(type)) {
+                case 1:
+                    time.setDate(time.getDate() - 2)
+                    time = new Date(time)
+                    curTime = time.toLocaleDateString() + " 0:00:00"
+                    break
+                case 2:
+                    time.setDate(time.getDate() - 6)
+                    time = new Date(time)
+                    curTime = time.toLocaleDateString() + " 0:00:00"
+                    break
+                case 4:
+                    curTime = time.toLocaleDateString()+" 0:00:00"
+                    break
+
+            }
+            return curTime
+        },
         createLine: function (data) {
             var obj = {}
-            if (this.curType == 1) {
+            var starVal = this.setSatrtTime(this.curType)
+            
+            if (parseInt(this.curType) == 1) {
                 obj = {
                     show: true,
                     interval: 11
                 }
-            } else if (this.curType == 2) {
+            } else if (parseInt(this.curType) == 2) {
                 obj = {
                     show: true,
                     interval: 0
                 }
-            } else if (this.curType == 4) {
+            } else if (parseInt(this.curType) == 4) {
                 obj = {
                     show: true,
-                    interval: 23
+                    interval: 3
                 }
             }
             this.chartShow = true
@@ -242,7 +262,11 @@
                     y.push(data[i].value)
                 }
                 var time = new Date()
-                time = time.toLocaleDateString()+" 0:00:00"
+                time = time.toLocaleDateString() + " 0:00:00"
+                if (this.curType == 3) {
+                    starVal = x[0]
+                }
+                var endVal = x[x.length - 1]
             lineChart = echarts.init(document.getElementById('lineChart'));
             var option = {
                 backgroundColor: '#fff',
@@ -256,7 +280,7 @@
                 xAxis: {
                     boundaryGap: false,
                     data: x,
-                    //splitArea: obj
+                    splitArea: obj
 
                 },
                 yAxis: {
@@ -313,7 +337,8 @@
                 //}],
                 dataZoom: [{
                     type: 'inside',
-                   
+                    startValue: starVal,
+                    endValue:endVal
                     
                 }, {
                     handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
@@ -353,6 +378,7 @@
                     type: 'line',
                     data: y,
                     areaStyle: {},
+                   
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
@@ -404,16 +430,15 @@
         },
         initDate: function () {
             var end = new Date()
-            end = end.setDate(end.getDate() - 1)
+            end = end.setDate(end.getDate())
             end = new Date(end)
             var start = new Date()
-            start = start.setDate(start.getDate() - 30)
+            start = start.setDate(start.getDate() - 29)
             this.selectDate = [new Date(start), new Date(end)]
         }
     },
     beforeMount: function () {
         this.initDate()
-        console.log(this.selectDate)
 
         //this.getStation()
     },
