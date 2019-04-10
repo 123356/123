@@ -27,6 +27,26 @@ namespace YWWeb
     public class MvcApplication : System.Web.HttpApplication
     {
         pdermsWebEntities bll = new pdermsWebEntities();
+        public static List<string> CityList = new List<string>()
+        {
+            "101010100",
+            "101010200",
+            "101010300",
+            "101010400",
+            "101010500",
+            "101010600",
+            "101010700",
+            "101010800",
+            "101010900",
+            "101011000",
+            "101011100",
+            "101011200",
+            "101011300",
+            "101011400",
+            "101011500",
+            "101010200",
+            "101030100"
+        };
         protected void Application_Start()
         {
             var pathLoc = "~/bin";
@@ -189,145 +209,189 @@ namespace YWWeb
             timer.Interval = 3600000;
             Console.Read();
         }
+
+        //public List<>
+        //public class City
+        //{
+        //    public string weaid { get; set; }
+        //    public string citynm { get; set; }
+        //    public string cityid { get; set; }
+        //    public string area_1 { get; set; }
+        //    public string area_2 { get; set; }
+        //    public string area_3 { get; set; }
+        //    public string coumk { get; set; }
+        //    public string upddate { get; set; }
+        //    public string mk { get; set; }
+        //    public string remark { get; set; }
+        //}
+        //private class CityView
+        //{
+        //    public CityView()
+        //    {
+        //        result = new List<City>();
+        //    }
+        //    public string success { get; set; }
+        //    public List<City> result { get; set; }
+        //}
+        //private CityView GetCityList()
+        //{
+        //    string url = "http://api.k780.com/";
+        //    PostData model = new PostData();
+        //    model.appkey = "39089";
+        //    model.sign = "6e957038e2c4e3836e9a2c5621e9361d";
+        //    model.format = "json";
+        //    model.app = "weather.city";
+        //    model.cou = 1;
+        //    string str = SendHttpRequest(url, "post", model);
+        //    int i = 0;
+        //    CityView listCity = JsonConvert.DeserializeObject<CityView>(str);
+        //    return listCity;
+        //}
+        
         public void InsertWeatherInfo(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
             {
-                string url = "http://api.k780.com/?app=weather.today";
-                PostData data = new PostData();
-                data.appkey = "39089";
-                data.sign = "6e957038e2c4e3836e9a2c5621e9361d";
-                data.format = "json";
-                data.weaid = getIp();
-                string s = SendHttpRequest(url, "post", data);
-                var model = JsonConvert.DeserializeObject<WeatherView>(s);
-                if (model.success == "1")
+
+                //CityView listCity = GetCityList();
+                foreach (var it in CityList)
                 {
-                    DateTime d = Convert.ToDateTime(DateTime.Now.ToString("yy-MM-dd HH:00:00"));
-                    var mm = bll.t_EE_WeatherDaily.Where(p => p.RecordTime == d && p.CityCode == model.result.cityid).FirstOrDefault();
-                    if (mm != null)
+                    string url = "http://api.k780.com/?app=weather.today";
+                    PostData data = new PostData();
+                    data.appkey = "39089";
+                    data.sign = "6e957038e2c4e3836e9a2c5621e9361d";
+                    data.format = "json";
+                    data.weaid = it;
+                    string s = SendHttpRequest(url, "post", data);
+                    var model = JsonConvert.DeserializeObject<WeatherView>(s);
+                    if (model.success == "1")
                     {
-                        mm.MaxTemperatureValue = model.result.temp_high;
-                        mm.MinTemperatureValue = model.result.temp_low;
-                        mm.MaxHumidityValue = model.result.humi_high;
-                        mm.MinHumidityValue = model.result.humi_low;
-                        mm.ThisTemperatureValue = model.result.temperature_curr;
-                        mm.ThisHumidityValue = model.result.humidity;
-                        bll.ObjectStateManager.ChangeObjectState(mm, System.Data.EntityState.Modified);
-                    }
-                    else
-                    {
-                        t_EE_WeatherDaily m = new t_EE_WeatherDaily();
-                        m.CityCode = model.result.cityid;
-                        m.CityName = model.result.citynm;
-                        m.RecordTime = Convert.ToDateTime(d);
-                        m.MaxTemperatureValue = model.result.temp_high;
-                        m.MinTemperatureValue = model.result.temp_low;
-                        m.MaxHumidityValue = model.result.humi_high;
-                        m.MinHumidityValue = model.result.humi_low;
-                        m.ThisTemperatureValue = model.result.temperature_curr;
-                        m.ThisHumidityValue = model.result.humidity;
-                        bll.t_EE_WeatherDaily.AddObject(m);
-                    }
-                    bll.SaveChanges();
-
-                    if (DateTime.Now.Hour > 21)
-                    {
-                        var lastDay = bll.t_EE_WeatherDaily.Where(p => p.CityCode == model.result.cityid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                        if (lastDay != null)
+                        DateTime d = Convert.ToDateTime(DateTime.Now.ToString("yy-MM-dd HH:00:00"));
+                        var mm = bll.t_EE_WeatherDaily.Where(p => p.RecordTime == d && p.CityCode == model.result.cityid).FirstOrDefault();
+                        if (mm != null)
                         {
-                            DateTime dM = Convert.ToDateTime(lastDay.RecordTime.Value.ToString("yy-MM-dd"));
-                            var Mon = bll.t_EE_WeatherMonthly.Where(p => p.RecordTime == dM && p.CityCode == model.result.cityid).FirstOrDefault();
-                            int[] arr = { 2, 8, 14, 20 };
-                            List<int> times = arr.ToList();
-                            var wd = bll.t_EE_WeatherDaily.Where(p => p.CityCode == model.result.cityid && arr.Contains(p.RecordTime.Value.Hour) && p.RecordTime.Value.Day == dM.Day).ToList();
-                            decimal sumWd = 0;
-                            decimal sumSd = 0;
-                            foreach (var item in wd)
-                            {
-                                sumWd += Convert.ToDecimal(item.ThisTemperatureValue.Replace("℃", "").Trim());
-                                sumSd += Convert.ToDecimal(item.ThisHumidityValue.Replace("%", "").Trim());
-                            }
-                            if (Mon != null)
-                            {
-                                Mon.MaxTemperatureValue = lastDay.MaxTemperatureValue;
-                                Mon.MinTemperatureValue = lastDay.MinTemperatureValue;
-                                Mon.MaxHumidityValue = lastDay.MaxHumidityValue;
-                                Mon.MinHumidityValue = lastDay.MinHumidityValue;
-                                Mon.ThisTemperatureValue = Math.Round(sumWd / 4, 2) + "";
-                                Mon.ThisHumidityValue = Math.Round(sumSd / 4, 2) + "";
-                                bll.ObjectStateManager.ChangeObjectState(Mon, System.Data.EntityState.Modified);
-                            }
-                            else
-                            {
-                               
-                                t_EE_WeatherMonthly month = new t_EE_WeatherMonthly();
-                                month.CityName = lastDay.CityName;
-                                month.CityCode = lastDay.CityCode;
-                                month.RecordTime = dM;
-                                month.MaxTemperatureValue = lastDay.MaxTemperatureValue;
-                                month.MinTemperatureValue = lastDay.MinTemperatureValue;
-                                month.MaxHumidityValue = lastDay.MaxHumidityValue;
-                                month.MinHumidityValue = lastDay.MinHumidityValue;
-                                month.ThisTemperatureValue = Math.Round(sumWd / 4, 2) + "";
-                                month.ThisHumidityValue = Math.Round(sumSd / 4, 2) + "";
-                                bll.t_EE_WeatherMonthly.AddObject(month);
-                            }
+                            mm.MaxTemperatureValue = model.result.temp_high;
+                            mm.MinTemperatureValue = model.result.temp_low;
+                            mm.MaxHumidityValue = model.result.humi_high;
+                            mm.MinHumidityValue = model.result.humi_low;
+                            mm.ThisTemperatureValue = model.result.temperature_curr;
+                            mm.ThisHumidityValue = model.result.humidity;
+                            bll.ObjectStateManager.ChangeObjectState(mm, System.Data.EntityState.Modified);
                         }
-                    }
-                    bll.SaveChanges();
-                    if (DateTime.Now.Hour > 21)
-                    {
-                        var lastMonth = bll.t_EE_WeatherMonthly.Where(p => p.CityCode == model.result.cityid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                        if (lastMonth != null)
+                        else
                         {
-                            DateTime dY = Convert.ToDateTime(lastMonth.RecordTime.Value.ToString("yy-MM-01"));
-                            var Yea = bll.t_EE_WeatherYearly.Where(p => p.RecordTime == dY && p.CityCode == model.result.cityid).FirstOrDefault();
+                            t_EE_WeatherDaily m = new t_EE_WeatherDaily();
+                            m.CityCode = model.result.cityid;
+                            m.CityName = model.result.citynm;
+                            m.RecordTime = Convert.ToDateTime(d);
+                            m.MaxTemperatureValue = model.result.temp_high;
+                            m.MinTemperatureValue = model.result.temp_low;
+                            m.MaxHumidityValue = model.result.humi_high;
+                            m.MinHumidityValue = model.result.humi_low;
+                            m.ThisTemperatureValue = model.result.temperature_curr;
+                            m.ThisHumidityValue = model.result.humidity;
+                            bll.t_EE_WeatherDaily.AddObject(m);
+                        }
+                        bll.SaveChanges();
 
+                        if (DateTime.Now.Hour > 21)
+                        {
+                            var lastDay = bll.t_EE_WeatherDaily.Where(p => p.CityCode == model.result.cityid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                            if (lastDay != null)
+                            {
+                                DateTime dM = Convert.ToDateTime(lastDay.RecordTime.Value.ToString("yy-MM-dd"));
+                                var Mon = bll.t_EE_WeatherMonthly.Where(p => p.RecordTime == dM && p.CityCode == model.result.cityid).FirstOrDefault();
+                                int[] arr = { 2, 8, 14, 20 };
+                                List<int> times = arr.ToList();
+                                var wd = bll.t_EE_WeatherDaily.Where(p => p.CityCode == model.result.cityid && arr.Contains(p.RecordTime.Value.Hour) && p.RecordTime.Value.Day == dM.Day).ToList();
+                                decimal sumWd = 0;
+                                decimal sumSd = 0;
+                                foreach (var item in wd)
+                                {
+                                    sumWd += Convert.ToDecimal(item.ThisTemperatureValue.Replace("℃", "").Trim());
+                                    sumSd += Convert.ToDecimal(item.ThisHumidityValue.Replace("%", "").Trim());
+                                }
+                                if (Mon != null)
+                                {
+                                    Mon.MaxTemperatureValue = lastDay.MaxTemperatureValue;
+                                    Mon.MinTemperatureValue = lastDay.MinTemperatureValue;
+                                    Mon.MaxHumidityValue = lastDay.MaxHumidityValue;
+                                    Mon.MinHumidityValue = lastDay.MinHumidityValue;
+                                    Mon.ThisTemperatureValue = Math.Round(sumWd / 4, 2) + "";
+                                    Mon.ThisHumidityValue = Math.Round(sumSd / 4, 2) + "";
+                                    bll.ObjectStateManager.ChangeObjectState(Mon, System.Data.EntityState.Modified);
+                                }
+                                else
+                                {
 
-                            var lastMonths = bll.t_EE_WeatherMonthly.Where(p => p.CityCode == model.result.cityid && p.RecordTime.Value.Month == dY.Month).OrderByDescending(p => p.RecordTime).ToList();
-                            decimal sumWd = 0;
-                            decimal sumSd = 0;
-                            int count = lastMonths.Count;
-                            foreach (var item in lastMonths)
-                            {
-                                sumWd += Convert.ToDecimal(item.ThisTemperatureValue.Replace("℃", "").Trim());
-                                sumSd += Convert.ToDecimal(item.ThisHumidityValue.Replace("%", "").Trim());
-                            }
-                            decimal Yyw = 0;
-                            decimal Yys = 0;
-                            if (count != 0)
-                            {
-                                Yyw = Math.Round(sumWd / count, 2);
-                                Yys = Math.Round(sumSd / count, 2);
-                            }
-                            if (Yea != null)
-                            {
-
-                                Yea.MaxTemperatureValue = lastMonth.MaxTemperatureValue;
-                                Yea.MinTemperatureValue = lastMonth.MinTemperatureValue;
-                                Yea.MaxHumidityValue = lastMonth.MaxHumidityValue;
-                                Yea.MinHumidityValue = lastMonth.MinHumidityValue;
-                                Yea.ThisTemperatureValue = Yyw + "";
-                                Yea.ThisHumidityValue = Yys + "";
-                                bll.ObjectStateManager.ChangeObjectState(Yea, System.Data.EntityState.Modified);
-                            }
-                            else
-                            {
-                                t_EE_WeatherYearly year = new t_EE_WeatherYearly();
-                                year.CityName = lastMonth.CityName;
-                                year.CityCode = lastMonth.CityCode;
-                                year.RecordTime = dY;
-                                year.MaxTemperatureValue = lastMonth.MaxTemperatureValue;
-                                year.MinTemperatureValue = lastMonth.MinTemperatureValue;
-                                year.MaxHumidityValue = lastMonth.MaxHumidityValue;
-                                year.MinHumidityValue = lastMonth.MinHumidityValue;
-                                year.ThisTemperatureValue = Yyw + "";
-                                year.ThisHumidityValue = Yys + "";
-                                bll.t_EE_WeatherYearly.AddObject(year);
+                                    t_EE_WeatherMonthly month = new t_EE_WeatherMonthly();
+                                    month.CityName = lastDay.CityName;
+                                    month.CityCode = lastDay.CityCode;
+                                    month.RecordTime = dM;
+                                    month.MaxTemperatureValue = lastDay.MaxTemperatureValue;
+                                    month.MinTemperatureValue = lastDay.MinTemperatureValue;
+                                    month.MaxHumidityValue = lastDay.MaxHumidityValue;
+                                    month.MinHumidityValue = lastDay.MinHumidityValue;
+                                    month.ThisTemperatureValue = Math.Round(sumWd / 4, 2) + "";
+                                    month.ThisHumidityValue = Math.Round(sumSd / 4, 2) + "";
+                                    bll.t_EE_WeatherMonthly.AddObject(month);
+                                }
                             }
                         }
                         bll.SaveChanges();
+                        if (DateTime.Now.Hour > 21)
+                        {
+                            var lastMonth = bll.t_EE_WeatherMonthly.Where(p => p.CityCode == model.result.cityid).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                            if (lastMonth != null)
+                            {
+                                DateTime dY = Convert.ToDateTime(lastMonth.RecordTime.Value.ToString("yy-MM-01"));
+                                var Yea = bll.t_EE_WeatherYearly.Where(p => p.RecordTime == dY && p.CityCode == model.result.cityid).FirstOrDefault();
+
+
+                                var lastMonths = bll.t_EE_WeatherMonthly.Where(p => p.CityCode == model.result.cityid && p.RecordTime.Value.Month == dY.Month).OrderByDescending(p => p.RecordTime).ToList();
+                                decimal sumWd = 0;
+                                decimal sumSd = 0;
+                                int count = lastMonths.Count;
+                                foreach (var item in lastMonths)
+                                {
+                                    sumWd += Convert.ToDecimal(item.ThisTemperatureValue.Replace("℃", "").Trim());
+                                    sumSd += Convert.ToDecimal(item.ThisHumidityValue.Replace("%", "").Trim());
+                                }
+                                decimal Yyw = 0;
+                                decimal Yys = 0;
+                                if (count != 0)
+                                {
+                                    Yyw = Math.Round(sumWd / count, 2);
+                                    Yys = Math.Round(sumSd / count, 2);
+                                }
+                                if (Yea != null)
+                                {
+
+                                    Yea.MaxTemperatureValue = lastMonth.MaxTemperatureValue;
+                                    Yea.MinTemperatureValue = lastMonth.MinTemperatureValue;
+                                    Yea.MaxHumidityValue = lastMonth.MaxHumidityValue;
+                                    Yea.MinHumidityValue = lastMonth.MinHumidityValue;
+                                    Yea.ThisTemperatureValue = Yyw + "";
+                                    Yea.ThisHumidityValue = Yys + "";
+                                    bll.ObjectStateManager.ChangeObjectState(Yea, System.Data.EntityState.Modified);
+                                }
+                                else
+                                {
+                                    t_EE_WeatherYearly year = new t_EE_WeatherYearly();
+                                    year.CityName = lastMonth.CityName;
+                                    year.CityCode = lastMonth.CityCode;
+                                    year.RecordTime = dY;
+                                    year.MaxTemperatureValue = lastMonth.MaxTemperatureValue;
+                                    year.MinTemperatureValue = lastMonth.MinTemperatureValue;
+                                    year.MaxHumidityValue = lastMonth.MaxHumidityValue;
+                                    year.MinHumidityValue = lastMonth.MinHumidityValue;
+                                    year.ThisTemperatureValue = Yyw + "";
+                                    year.ThisHumidityValue = Yys + "";
+                                    bll.t_EE_WeatherYearly.AddObject(year);
+                                }
+                            }
+                            bll.SaveChanges();
+                        }
                     }
                 }
             }
@@ -358,6 +422,45 @@ namespace YWWeb
             {
                 return "获取IP出错:" + ex.Message;
             }
+        }
+
+        private string GetIP()
+        {
+            string tempip = "";
+            try
+            {
+                string path = GetHttpName();
+                WebRequest wr = WebRequest.Create(path);
+                Stream s = wr.GetResponse().GetResponseStream();
+                StreamReader sr = new StreamReader(s, Encoding.Default);
+                string all = sr.ReadToEnd(); //读取网站的数据
+
+                int start = all.IndexOf("您的IP地址是：[") + 9;
+                int end = all.IndexOf("]", start);
+                tempip = all.Substring(start, end - start);
+                sr.Close();
+                s.Close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return tempip;
+        }
+        private string GetHttpName()
+        {
+            var path = "";
+            string secure =HttpContext.Current.Request.ServerVariables["HTTPS"];
+            string httpProtocol = (secure == "on" ? "https://" : "http://");
+            // 服务器名称
+            string serverName = HttpContext.Current.Request.ServerVariables["Server_Name"];
+            string port = HttpContext.Current.Request.ServerVariables["SERVER_PORT"];
+            string url = HttpContext.Current.Request.Url.Host;
+            //string serverName = HttpContext.Request.ServerVariables["Server_Name"];
+            // 应用服务名称
+            string applicationName = HttpContext.Current.Request.ApplicationPath;
+            path = httpProtocol + serverName + (port.Length > 0 ? ":" + port : string.Empty) + applicationName;
+            return path;
         }
         protected void Session_End()
         {
