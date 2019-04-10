@@ -30,10 +30,7 @@
         //获取能源类型
         getCollectDevTypeList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetCollectDevTypeList',
-                method: 'get',
-            }).then(function (res) {
+            getCollectDevTypeListAPI().then(function (res) {
                 that.typeList = res.data
                 if (res.data.length > 0) {
                     that.curType = res.data[0].ID
@@ -42,6 +39,7 @@
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
+            
         },
         typeTabClick: function (name) {
             this.curType = name

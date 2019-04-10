@@ -85,11 +85,22 @@
                 },
 
                 onLoadSuccess: function (node, data) {
-                    if (that.EneryUserTypeID) {
+                    console.log(that.EneryUserTypeID)
+                    if (that.EneryUserTypeID.length>0) {
                         $("#StationID").combotree("setValue", that.EneryUserTypeID);
                     } else {
-                        $("#StationID").combotree("setValue", that.isUnitSelect);
-                        that.EneryUserTypeID.push(that.isUnitSelect)
+                        var arr = []
+                        for (var j in data) {
+                            arr.push(data[j].id)
+                        }
+                        $("#StationID").combotree("setValues", arr);
+                        var tree =$('#StationID').combotree('tree')
+                        var nodes = tree.tree('getChecked');
+                        var nodeArr = []
+                        for (var j in nodes) {
+                            nodeArr.push(nodes[j].id)
+                        }
+                        that.EneryUserTypeID = nodeArr
                     }
                     that.getEneryView()
 
@@ -121,27 +132,25 @@
                 }
             }
         },
-        // tree data
+        // 区域树
         getTreeData: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMSetting/GetEnergyTree',
-                method: 'POST',
-                params: {
-                    UnitID: that.UID,
-                    ItemType: 2,
-                    UnitName: that.UName
-                }
-                })
-                .then(function (res) {
-                    var data = res.data[0]
-                    that.foreachTree(data)
-                    that.treeData = data
-                    that.getSelectTree()
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            var par = {
+                UnitID: that.UID,
+                ItemType: 2,
+                UnitName: that.UName
+            }
+            getEnergyTreeAPI(par).then(function (res) {
+                var data = res.data[0]
+                that.foreachTree(data)
+                that.treeData = data
+                that.getSelectTree()
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            
+                
         },
         //显示数据
         showInfo: function () {
@@ -149,7 +158,6 @@
         },
         //获取数据
         getEneryView: function () {
-           
             var that = this
             this.$http({
                 url: '/energyManage/EMHome/GetEneryView',
@@ -341,19 +349,13 @@
         getUserBtn: function () {
             var that = this
             var url = window.location.pathname;
-            this.$http({
-                url: '/SysInfo/UserButtonList2',
-                method: 'post',
-                params: {
-                    CurrUrl: url
-                }
+            getUserBtnAPI(url).then(function (res) {
+                that.userButtons = res.data
             })
-                .then(function (res) {
-                    that.userButtons = res.data
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
+            
         },
         userBtnClick: function (method) {
             switch (method) {
@@ -394,13 +396,13 @@
             })
                 .then(function (res) {
                     if (res.data) {
-                        that.EneryUserTypeID = res.data.EneryUserTypeID.split(',')
+                        if (res.data.EneryUserTypeID) {
+                            that.EneryUserTypeID = res.data.EneryUserTypeID.split(',')
+                        }
                     }
-                    
                     that.getTreeData()
             })
             .catch(function (e) {
-               
                 throw new ReferenceError(e.message)
             })
         },

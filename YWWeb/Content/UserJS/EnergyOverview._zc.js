@@ -79,14 +79,12 @@ toAreaTree: function () {
 //类型下拉框
 getCollectDevTypeList: function () {
     var that = this
-    this.$http({
-        url: '/energyManage/EMHome/GetCollectDevTypeList',
-        method: 'get',
-    }).then(function (res) {
+    getCollectDevTypeListAPI().then(function (res) {
         that.typeList = res.data
     }).catch(function (e) {
         throw new ReferenceError(e.message)
     })
+    
 },
 renderContent(h, { root, node, data }) {
             
@@ -110,26 +108,19 @@ renderContent(h, { root, node, data }) {
         }
     }, data.name)
 },
-//科室下拉框
+//区域下拉框
 getDepartMentList: function () {
     var that = this
-
-    this.$http({
-        url: "/energyManage/EMSetting/GetEnergyTree",
-        method: "post",
-        body: {
-            UnitID: that.uid,
-            ItemType: 2,
-            UnitName: that.Uname
-        }
-    }).then(function (res) {
-       var data = res.data[0]
+    var params = {
+        UnitID: that.uid,
+        ItemType: 2,
+        UnitName: that.Uname
+    }
+    getEnergyTreeAPI(params).then(function (res) {
+        var data = res.data[0]
         that.foreachTree(data)
-       
-            
         that.addForm.EnerUserTypeID = data.ID
         that.unitDepartName = data.name
-
         var arr = []
         arr.push(data)
         that.departMentList = arr
@@ -141,7 +132,6 @@ foreachTree: function (node) {
     if (!node) {
         return;
     }
-   
     node.children = node.Children
     if (node.Children && node.Children.length > 0) {
         for (var i = 0; i < node.Children.length; i++) {

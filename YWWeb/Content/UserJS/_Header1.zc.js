@@ -198,11 +198,13 @@ function alarmState() {
     $.post("/Home/getPtAlarmInfo", "", function (data) {
         
         if (1 == data.indexOf("<")) {
-            //console.log(alarmInf)
-            var count = alarmInf
-            var str =  "id=\"alarmNum\">"
-            count = parseInt(count.substring(count.indexOf(str) + str.length, count.indexOf("</span>条【监测报警】")))
-           
+            if (alarmInf != '') {
+                var count = alarmInf
+                var str = "id=\"alarmNum\">"
+                count = parseInt(count.substring(count.indexOf(str) + str.length, count.indexOf("</span>条【监测报警】")))
+                sessionStorage.setItem("alramCount", count)
+            }
+            
                 if (alarmInf == data)
                     return;
                 
@@ -211,14 +213,19 @@ function alarmState() {
                 var is = data.indexOf(sf);
                 var ie = data.indexOf("</span>条【监测报警】");
                 var val = data.substring(is + sf.length, ie);
-            //console.log("count=" + count + ",val=" + val)
-                //console.log("val==count:" + parseInt(val) == count)
-                //console.log("val=" + parseInt(val)+",count="+count)
-                if (parseInt(val) < count || parseInt(val) == count) {
-                    alarmInf = ''
-                    $("#alarm_popups").hide();
-                    return
+               
+                var alramCount = sessionStorage.getItem("alramCount")
+               // console.log("alramCount=" + alramCount)
+                if (alramCount) {
+                    alramCount = parseInt(alramCount)
+                    if (val < alramCount ) {
+                        alarmInf=''
+                        $("#alarm_popups").hide();
+                        
+                        return
+                    } 
                 }
+                
                 var text = "<span class=\"am-badge am-badge-warning am-round item-feed-badge\" id=\"alarmNum\">" + val + "</span>";
                 $("#alarmNum").remove();//移除历史
                 $("#alarmIcon").append(text);

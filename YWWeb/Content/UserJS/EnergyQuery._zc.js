@@ -77,15 +77,13 @@
         //类型下拉框
         getCollectDevTypeList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetCollectDevTypeList',
-                method: 'get',
-            }).then(function (res) {
+            getCollectDevTypeListAPI().then(function (res) {
                 // console.log(res.data)
                 that.typeList = res.data
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
+            
         },
         getSelectTree: function () {
             var arr = []
@@ -147,15 +145,12 @@
         //科室下拉框
         getDepartMentList: function () {
             var that = this
-            this.$http({
-                url: "/energyManage/EMSetting/GetEnergyTree",
-                method: "post",
-                body: {
-                    UnitID: that.UID,
-                    ItemType: 2,
-                    UnitName: that.Uname
-                }
-            }).then(function (res) {
+            var par = {
+                UnitID: that.UID,
+                ItemType: 2,
+                UnitName: that.Uname
+            }
+            getEnergyTreeAPI(par).then(function (res) {
                 that.departMentList = res.data
                 var data = res.data[0]
                 that.foreachTree(data)
@@ -164,6 +159,7 @@
             }).catch(function (e) {
                 throw new ReferenceError(e.message)
             })
+            
         },
         //设备下拉框
         getDeviceCombox: function () {
@@ -262,7 +258,7 @@
         //this.getStation()
         this.getCollectDevTypeList()
         this.getDepartMentList()
-        this.getDeviceCombox()
+        //this.getDeviceCombox()
         this.getEneryList()
     },
     mounted: function () {

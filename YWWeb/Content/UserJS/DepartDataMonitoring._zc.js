@@ -8,37 +8,29 @@
         departFrameSrc: '',
     },
     methods: {
-        //tree data
+        //区域树
         getTreeData: function () {
             var that = this
-
-            this.$http({
-                url: '/energyManage/EMSetting/GetEnergyTree',
-                method: 'POST',
-                body: {
-                    UnitID: that.uid,
-                    ItemType: 2,
-                    UnitName: that.uName
-                }
-            })
-                .then(function (res) {
-                    var data = res.data[0]
-                    data.open = true
-                    that.foreachTree(data)
-                    var arr = []
-                    that.init(data)
-                    var did = null
-
-                    if (data) {
-                        if (data.Children.length > 0) {
-                            did = data.Children[0].ID
-                            sessionStorage.setItem('parentDepartName', data.Children[0].name)
-                        }
+            var params = {
+                UnitID: that.uid,
+                ItemType: 2,
+                UnitName: that.uName
+            }
+            getEnergyTreeAPI(params).then(function (res) {
+                var data = res.data[0]
+                data.open = true
+                that.foreachTree(data)
+                var arr = []
+                that.init(data)
+                var did = null
+                if (data) {
+                    if (data.Children.length > 0) {
+                        did = data.Children[0].ID
+                        sessionStorage.setItem('parentDepartName', data.Children[0].name)
                     }
-                    that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
-                    
-
-                })
+                }
+                that.departFrameSrc = '/EnergyEfficiency/DepartData?DepartmentID=' + did
+            })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })

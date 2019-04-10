@@ -24,9 +24,9 @@
     <div id="EnergyOverview" style="padding:0">
         @*<Spin size="large" fix v-if="loading"></Spin>*@
         <div class="left flex-item" style="position:relative">
-            <Spin size="large" fix v-if="leftLoading" ></Spin>
+            <Spin size="large" fix v-if="leftLoading"></Spin>
             <div class="chartView">
-                <div class="item" >
+                <div class="item">
                     <div class="chartTitle">
                         <date-picker type="month" placeholder="" format="yyyy-MM能源总费用(万元)" v-model="curDate" :clearable="false" :editable="false" class="datePicker" v-on:on-change="datePicekChange"></date-picker>
                     </div>
@@ -53,9 +53,9 @@
                     <div class="main">
                         <p style="text-align:center">{{Peozhanbi | toMoney}}<span class="dw">(元/㎡)</span></p>
                         @*<div class="footer">
-                        <div class="footer-item">预算(万)：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
-                        <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
-                    </div>*@
+                                <div class="footer-item">预算(万)：<font v-html="zongBudget==undefined||zongBudget==null?'--':zongBudget">--</font></div>
+                                <div class="footer-item">同比： <font v-html="LPeozhanbi==undefined||LPeozhanbi==null?'--':LPeozhanbi">--</font>%<Icon type="md-arrow-round-up" color="#d0747c" /> </div>
+                            </div>*@
                     </div>
                 </div>
             </div>
@@ -146,8 +146,8 @@
             </i-form>
         </Modal>
     </div>
-
-    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.172"></script>
+    <script type="text/javascript" src="~/Content/UserJS/api.js"></script>
+    <script type="text/javascript" src="~/Content/UserJS/EnergyOverview._zc.js?v=1.174"></script>
 </body>
 </html>
 

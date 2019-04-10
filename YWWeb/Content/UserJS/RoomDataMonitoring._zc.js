@@ -95,10 +95,7 @@
         //获取能源类型
         getCollectDevTypeList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetCollectDevTypeList',
-                method: 'get',
-            }).then(function (res) {
+            getCollectDevTypeListAPI().then(function (res) {
                 that.typeList = res.data
                 if (res.data.length > 0) {
                     that.curType = res.data[0].ID
@@ -138,8 +135,6 @@
                     console.log(e)
                 })
         },
-
-        
         createbarChart: function (data) {
             barChart = echarts.init(document.getElementById('barChart'));
             var legendData = new Array()
@@ -348,7 +343,6 @@
             });
 
         },
-
         userBtnClick: function (e) {
             this.activeIndex = e
             this.frameSrc = this.userMneus[e].url
@@ -372,7 +366,6 @@
     },
     beforeMount: function () {
         this.getUnitData()
-        this.uid = $.cookie("enUID")
         this.departmentID = this.getParURl("departmentID")
         this.curTime = this.getParURl("time")
         this.departName = sessionStorage.getItem("curDepartName")

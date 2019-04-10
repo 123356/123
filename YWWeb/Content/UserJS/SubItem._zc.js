@@ -15,29 +15,17 @@
         //获取三级菜单
         getThirdMenuInfo: function (mid) {
             var that = this
-            this.$http({
-                url: '/Home/GetThirdMenuInfo2',
-                method: 'post',
-                body: {
-                    mid: mid
-                }
-            })
-            .then(function (res) {
+            var params = {
+                mid: mid
+            }
+            getThirdMenuInfoAPI(params).then(function (res) {
                 that.thirdMenu = res.data
-               
-            })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+            }).catch(function (e) { throw new ReferenceError(e.message) })
         },
         //单位下拉框
         getUnitComobxList: function () {
             var that = this
-            this.$http({
-                url: '/energyManage/EMHome/GetUnitComobxList',
-                method: 'get',
-            }).then(function (res) {
-                
+            getUnitComobxListAPI().then(function (res) {
                 that.comList = res.data
                 if (that.unitID == null) {
                     if (res.data.length > 0) {
@@ -64,11 +52,10 @@
                             }
                         }
                     }
-                   
                 }
                 that.selectedCom = that.unitID
-
-            }).catch(function (e) {
+            })
+            .catch(function (e) {
                 throw new ReferenceError(e.message)
             })
             .finally(function () {
@@ -102,11 +89,6 @@
     beforeMount: function () {
         var mid = window.location.search.split("=")[1]
         this.getUnitData()
-        //var id = $.cookie("enUID")
-        
-        //if (id != null) {
-        //    this.unitID = id
-        //}
         this.getThirdMenuInfo(mid)
         this.getUnitComobxList()
     },
