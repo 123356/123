@@ -207,16 +207,16 @@ let vm = new Vue({
                     cancelButtonText: '取消',
                     type: 'error'
                 }).then(() => {
-                    if(node.ID == -1){
-                            const parent = node.parent;
-                            const Children = parent.data.Children || parent.data;
-                            const index = Children.findIndex(d => d.ID === data.ID);
-                            Children.splice(index, 1);
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功!'
-                            });
-                    return ;
+                    if (node.ID == -1) {
+                        const parent = node.parent;
+                        const Children = parent.data.Children || parent.data;
+                        const index = Children.findIndex(d => d.ID === data.ID);
+                        Children.splice(index, 1);
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        return;
                     }
                     this.$http({
                         url: "/energyManage/EMSetting/DeleteEnergyNode",
@@ -302,7 +302,28 @@ let vm = new Vue({
                 var obj = {};
                 obj.nodeID = this.leavesNode[a].ID;
                 obj.nodeName = this.leavesNode[a].name;
-                obj.binded = this.leavesNode[a].addCid.replace(/,/g, " ");
+
+                var arr1 = [];
+                for (let i = 0; i < this.CidList.length; i++) {
+                    var arr = this.leavesNode[a].addCid.split(',');
+                    for (let j = 0; j < arr.length; j++) {
+                        if (`${this.CidList[i].PID}-${this.CidList[i].CID}` == arr[j]) {
+                            arr1.push({
+                                pid: this.CidList[a].PID,
+                                did: this.CidList[a].DID,
+                                cid: this.CidList[a].CID,
+                                DName: this.CidList[a].DName,
+                                CName: this.CidList[a].CName,
+                            })
+                        }
+                    }
+                }
+
+                obj.binded = arr1;
+
+
+
+
                 obj.bindedNum = this.leavesNode[a].addCid.split(',').length;
                 let str = "," + this.leavesNode[a].addCid + ",";
                 let array = [];
@@ -321,12 +342,20 @@ let vm = new Vue({
 
             let obj1 = {};
             obj1.nodeID = 0;
-            obj1.nodeName = "未绑定";
+            obj1.nodeName = "无";
             let str1 = [];
             for (let a = 0; a < this.UnBind.length; a++) {
-                str1.push(`${this.UnBind[a].PID}-${this.UnBind[a].CID}`)
+                str1.push({
+                    pid: this.UnBind[a].PID,
+                    did: this.UnBind[a].DID,
+                    cid: this.UnBind[a].CID,
+                    DName: this.UnBind[a].DName,
+                    CName: this.UnBind[a].CName,
+                })
             }
-            obj1.binded = str1.join(" ");
+
+
+            obj1.binded = str1;
             obj1.bindedNum = this.UnBind.length;
             this.griData.unshift(obj1)
         },

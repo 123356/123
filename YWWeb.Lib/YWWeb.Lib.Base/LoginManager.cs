@@ -45,7 +45,6 @@ namespace YWWeb.Lib.Base
                     LogHelper.Warn(ex);
                 }
             }
-
             return userInf;
         }
         public static t_CM_UserInfo Login(string mobile, ControllerContext actionContext, out int ErrCode)
