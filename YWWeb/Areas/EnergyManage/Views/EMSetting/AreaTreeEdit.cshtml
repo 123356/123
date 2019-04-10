@@ -177,7 +177,7 @@
 
 
         @*表格模态框*@
-        <el-dialog title="详情" :visible.sync="Dialogtab" :before-close="closeTab">
+        <el-dialog title="详情" :visible.sync="Dialogtab" :before-close="closeTab" top="0">
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>节点</th>
@@ -186,9 +186,9 @@
                     <th>重复绑定</th>
                 </tr>
                 <tr v-for="itme in griData">
-                    <td>{{itme.nodeName}}</td>
+                    <td :title="itme.nodeName">{{itme.nodeName}}</td>
                     <td style="padding: 0;border:0">
-                        <table class="table table-bordered table-striped" style="border:0;margin:0;">
+                        <table class="table table-bordered table-striped" style="border:0;margin:0;font-size:12px;">
                             <tr>
                                 <td style="border:0;width:12.5%">PID</td>
                                 <td  style="border-top:0;width:12.5%">DID</td>
@@ -205,8 +205,8 @@
                             </tr>
                         </table>
                     </td>
-                    <td>{{itme.bindedNum}}</td>
-                    <td>{{itme.bindss}}</td>
+                    <td :title="itme.bindedNum||'无'">{{itme.bindedNum}}</td>
+                    <td :title="itme.bindss||'无'">{{itme.bindss}}</td>
                 </tr>
             </table>
         </el-dialog>
