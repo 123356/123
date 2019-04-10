@@ -96,23 +96,6 @@
         var arr = [];
         var all = 0;
 
-        function deepTraversal(node) {
-            console.log(node)
-            let nodes = [];
-            if (node != null) {
-                nodes.push[node];
-                let childrens = node.children;
-                if (node.children.length== 0) {
-                    arr.push(node.UsePower)
-                }
-                for (let i = 0; i < childrens.length; i++)
-                    deepTraversal(childrens[i]);
-
-
-            }
-            return nodes;
-        }
-
 
         var w = document.documentElement.scrollWidth - 120,
             h = document.documentElement.scrollHeight * .8,
@@ -155,18 +138,9 @@
                 if (!res) {
                     return;
                 }
-                res = JSON.stringify(res[0]);
+                var root = res[0];
 
-                res = res.replace(/{/g, `{"size":1,`).replace(/Children/g, `children`);
-
-                var root = JSON.parse(res);
-
-
-                deepTraversal(JSON.parse(res));
-
-
-                all = JSON.parse(res).UsePower;
-
+                all = res[0].UsePower;
 
                 var g = vis.selectAll("g")
                     .data(partition.nodes(root))
@@ -198,7 +172,7 @@
                         return d.dx * ky;
                     })
                     .attr("class", function (d) {
-                        return d.children.length ? "parent" : "child";
+                        return d.Children.length ? "parent" : "child";
                     })
 
 
@@ -304,7 +278,7 @@
                 success: function (res) {
                     $("#editwin").window("open");
                     createBarChart(res, d.name);
-                    createPieChart(d.children);
+                    createPieChart(d.Children);
                 },
                 error: function (e) {
                     console.log(e)
