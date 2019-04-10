@@ -490,6 +490,7 @@ namespace YWWeb.Controllers
             {
                 string tablename = "";
                 List<string> litTime = new List<string>();
+                string Unit = "";
                 switch (totaltype)
                 {
                     case 0:
@@ -538,6 +539,7 @@ namespace YWWeb.Controllers
                     case 2: //电压
                         //DataType = " RecordTime,IsNull(" + mL + "AVoltage" + mR + ",0.404) Aphase,IsNull(" + mL + "BVoltage" + mR + ",0.404) Bphase,IsNull(" + mL + "CVoltage" + mR + ",0.404) Cphase";
                         DataType = "AVoltage";
+                        Unit = "kV";
                         break;
                     case 3: //功率因数
                         //DataType = " RecordTime,IsNull(" + mL + "AFactor" + mR + ",0.404) Aphase,IsNull(" + mL + "BFactor" + mR + ",0.404) Bphase,IsNull(" + mL + "CFactor" + mR + ",0.404) Cphase";
@@ -624,6 +626,28 @@ namespace YWWeb.Controllers
                     strsqly += "  ORDER BY a.CID,RecordTime";
                 }
 
+                if (datatypeid == 2)
+                {
+                    string sqlU = "select c.单位 as unit from " + tabname + " a,t_DM_CircuitInfo b,t_CM_PointsInfo c where 1 = 1 and a.CID=c.CID and a.PID=c.PID and a.CID = b.cid and a." + DataType + " is not null";
+                    sqlU += " and a.RecordTime >='" + datestart + "' and a.RecordTime <='" + dateend + "'";
+                    sqlU += " and c.DataTypeID IN (3,56)";
+                    if (!pid.Equals(""))
+                    {
+                        sqlU += " and a.pid=" + pid + " and a.pid=b.pid"; ;
+                    }
+                    if (!did.Equals("") && !did.Equals(0))
+                    {
+                        sqlU += " and a.did=" + did;
+                    }
+                    if (!cid.Equals("") && !cid.Equals(0))
+                    {
+                        sqlU += " and a.cid=" + cid;
+                    }
+                    var mV = bll.ExecuteStoreQuery<antisUnit>(sqlU).FirstOrDefault();
+                    if (mV != null)
+                        Unit = mV.unit;
+                }
+
                 List<PowerData_SSQX> list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
                 string xAxis = "", yAxis = "", series1 = "", series2 = "", CName = "", yData = "";
 
@@ -697,7 +721,7 @@ namespace YWWeb.Controllers
                     }
                 }
 
-                result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"],\"Unit\":\"" + Unit + "\"}";
 
             }
             catch (Exception ex)
@@ -708,6 +732,10 @@ namespace YWWeb.Controllers
             return result;
         }
 
+        public class antisUnit
+        {
+            public string unit { get; set; }
+        }
         /// <summary>
         ///  //用电量实时曲线  当天
         /// </summary>
