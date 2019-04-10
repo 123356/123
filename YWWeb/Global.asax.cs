@@ -293,7 +293,7 @@ namespace YWWeb
                             bll.t_EE_WeatherDaily.AddObject(m);
                         }
                         bll.SaveChanges();
-
+                        Common.InsertLog("存储天气", DateTime.Now.ToString(), "获取" + model.result.citynm + "天气数据成功");
                         if (DateTime.Now.Hour > 21)
                         {
                             var lastDay = bll.t_EE_WeatherDaily.Where(p => p.CityCode == model.result.cityid).OrderByDescending(p => p.RecordTime).FirstOrDefault();

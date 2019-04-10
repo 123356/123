@@ -1321,22 +1321,25 @@ namespace EnergyManage.Controllers
                 {
                     foreach (var ittt in deps)
                     {
-                        IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ittt, uid);
-                        foreach (var item in list)
+                        if (!string.IsNullOrEmpty(ittt))
                         {
-                            if (!string.IsNullOrEmpty(item.cids.Trim()))
+                            IList<t_V_LookEneryView> list = DAL.LookEneryViewDAL.getInstance().GetCIDByID(ittt, uid);
+                            foreach (var item in list)
                             {
-                                Dictionary<int, string> cpids = GetCId(item.cids);
-                                var v = DAL.EneryOverViewDAL.getInstance().GetLookDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM-dd"));
-                                LookView m = new LookView();
-                                m.Name = item.Name;
-                                m.DValue = Math.Round(v.Sum(p => p.Rate), 2);
-                                m.unit_area = item.unit_area;
-                                m.unit_people = item.unit_people;
-                                if (item.unit_people != 0)
-                                    m.avgV = m.DValue / item.unit_people;
+                                if (!string.IsNullOrEmpty(item.cids.Trim()))
+                                {
+                                    Dictionary<int, string> cpids = GetCId(item.cids);
+                                    var v = DAL.EneryOverViewDAL.getInstance().GetLookDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM-dd"));
+                                    LookView m = new LookView();
+                                    m.Name = item.Name;
+                                    m.DValue = Math.Round(v.Sum(p => p.Rate), 2);
+                                    m.unit_area = item.unit_area;
+                                    m.unit_people = item.unit_people;
+                                    if (item.unit_people != 0)
+                                        m.avgV = m.DValue / item.unit_people;
 
-                                lookList.Add(m);
+                                    lookList.Add(m);
+                                }
                             }
                         }
                     }
