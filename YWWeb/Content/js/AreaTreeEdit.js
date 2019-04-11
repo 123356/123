@@ -270,9 +270,14 @@ let vm = new Vue({
             this.DialogCid = false;
         },
         //筛选CID树
-        filterCidNode(value, data) {
-            if (!value) return true;
-            return data.name.indexOf(value) !== -1;
+        filterCidNode(value, data, node) {
+            if (!value) {
+                data.disabled = true;
+                return true;
+            }
+             var bool = data.name.indexOf(value) == -1;
+             data.disabled = bool;
+            return !bool;
         },
         //cid模态框关闭时
         closedDialog: function() {
@@ -303,6 +308,7 @@ let vm = new Vue({
                 obj.nodeID = this.leavesNode[a].ID;
                 obj.nodeName = this.leavesNode[a].name;
 
+
                 var arr1 = [];
                 for (let i = 0; i < this.CidList.length; i++) {
                     var arr = this.leavesNode[a].addCid.split(',');
@@ -320,9 +326,6 @@ let vm = new Vue({
                 }
 
                 obj.binded = arr1;
-
-
-
 
                 obj.bindedNum = this.leavesNode[a].addCid.split(',').length;
                 let str = "," + this.leavesNode[a].addCid + ",";
@@ -447,7 +450,6 @@ let vm = new Vue({
         //点击能源树节点
         TreeNodeClick: function(node) {
             this.node = node;
-            console.log(this.node);
             this.addCidOld = node.addCid || "";
             this.delCidOld = node.delCid || "";
         },
@@ -504,8 +506,10 @@ let vm = new Vue({
                 method: "POST",
                 body: this.UnitData
             }).then(function(res) {
-                this.tree.cid = res.data;
-                localStorage.setItem("tree" + this.UnitData.UnitID, JSON.stringify(res.data))
+                var json  = JSON.stringify(res.data);
+                json = json.replace(/}/g, `,"disabled":false}`);
+                localStorage.setItem("tree" + this.UnitData.UnitID, json);
+                this.tree.cid = JSON.parse(json);
             })
         },
         //加载单位列表
