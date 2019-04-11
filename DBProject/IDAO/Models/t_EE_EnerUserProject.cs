@@ -21,5 +21,15 @@ namespace IDAO.Models
         public string delCid { get; set; }
         public int unit_area { get; set; }
         public int unit_people { get; set; }
-}
+    }
+
+    public partial class t_EE_CircuitInfoEnerType
+    {
+        public int PID { get; set; }
+        public int CID { get; set; }
+        public string ener_use_type { get; set; }
+
+    }
+
+
 }

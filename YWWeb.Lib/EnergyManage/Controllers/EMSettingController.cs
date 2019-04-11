@@ -33,7 +33,7 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
-        #region 
+        #region 树
         /// 返回该用户权限可见的单位列表
         public JsonResult GetUnitList()
         {
@@ -67,6 +67,10 @@ namespace EnergyManage.Controllers
             return Json(list);
         }
 
+
+
+
+
         //编辑能源树信息
         public JsonResult SetEnergyTreeNode(IDAO.Models.t_V_EnerProjectType data)
         {
@@ -89,8 +93,8 @@ namespace EnergyManage.Controllers
                     IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
                     data.ID = addName[0].id;
                 }
-               
                 IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().addTreeNode(data);
+                IList<IDAO.Models.t_EE_CircuitInfoEnerType> list1 = DAL.EnerUserProjectDAL.getInstance().setCidEneeruseType(data);
                 return Json(list);
             }
             else {
@@ -103,6 +107,8 @@ namespace EnergyManage.Controllers
                 if (names[0].Name ==  data.name)
                 {
                     IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().updataTreeNode(data);
+                    IList<IDAO.Models.t_EE_CircuitInfoEnerType> list1 = DAL.EnerUserProjectDAL.getInstance().setCidEneeruseType(data);
+
                     return Json(list);
                 }
                 else
@@ -124,12 +130,11 @@ namespace EnergyManage.Controllers
                         IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
                         data.ID = addName[0].id;
                     }
-
                     //改id
                     IList<IDAO.Models.t_EE_EnerUserProject> id = DAL.EnerUserProjectDAL.getInstance().updataTreeNodeId(data);
                     //改属性
                     IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().updataTreeNode(data);
-
+                    IList<IDAO.Models.t_EE_CircuitInfoEnerType> list1 = DAL.EnerUserProjectDAL.getInstance().setCidEneeruseType(data);
                 }
             }
             return Json(data);
@@ -174,7 +179,7 @@ namespace EnergyManage.Controllers
         }
         #endregion
 
-        #region
+        #region 用能异常
 
         public void qwe() {
                 IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality();

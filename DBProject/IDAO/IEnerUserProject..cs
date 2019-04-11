@@ -16,5 +16,7 @@ namespace IDAO
         IList<t_EE_EnerUserProject> DeleteEnergyNode(int parent_id, int child_id, int unit_id);
         IList<t_EE_EnerUserProject> GetDepIDByParID(int uid, int parid, int isP);
         IList<t_EE_EnerUserProject> UpdatEnerNode(t_V_EnerProjectType data);
+        IList<t_EE_CircuitInfoEnerType> getCidEneeruseType(t_V_EnerProjectType data);
+        IList<t_EE_CircuitInfoEnerType> setCidEneeruseType(IList<t_EE_CircuitInfoEnerType> data);
     }
 }
