@@ -30,17 +30,17 @@ namespace DAO
         {
 
             DateTime startTime = DateTime.Now;
-            startTime = startTime.AddMinutes(-5);
-            string star = startTime.ToString("yyyy-MM-dd hh:mm:ss.000");
-            startTime = startTime.AddMinutes(10);
-            string end = startTime.ToString("yyyy-MM-dd hh:mm:ss.000");
+            string star = startTime.ToString("yyyy-MM-dd HH:00:00");
+            startTime = startTime.AddHours(-1);
+            string end = startTime.ToString("yyyy-MM-dd HH:00:00");
 
-            string sql = $"SELECT TOP 1  b.*,a.UsePower " +
+
+
+            string sql = $"SELECT  b.*,a.UsePower " +
                         $" FROM t_EE_PowerQualityDaily a " +
                         $" INNER JOIN t_EE_PowerForeDaily b " +
-                        $" ON a.PID = b.PID  and a.CID = b.CID " +
-                        $" where a.RecordTime >= '{star}' AND a.RecordTime <= '{end}'" +
-                        $" order by RecordTime desc";
+                        $" ON a.PID = b.PID  and a.CID = b.CID AND a.RecordTime = b.RecordTime" +
+                        $" where a.RecordTime <= '{star}' and a.RecordTime > '{end}' ";
             return SQLQuery<t_EE_PowerForeQuality>(sql);
         }
 

@@ -190,7 +190,7 @@ namespace EnergyManage.Controllers
                     if (powerForeQuality[a].ForeUsePower == 0)
                     {
                         Console.WriteLine("无效预测");
-                        return;
+                        continue;
                     }
                     exEnergy.Proportion = powerForeQuality[a].UsePower / powerForeQuality[a].ForeUsePower *100;
 
@@ -199,17 +199,17 @@ namespace EnergyManage.Controllers
                     if (exEnergy.ProportionValue == -1)
                     {
                         Console.WriteLine("阈值设置异常: 一个PID存在多个阈值设置");
-                        return;
+                    continue;
                     }
                     else if (exEnergy.ProportionValue == -2)
                     {
                         Console.WriteLine("正常：异常占比在阈值区间内");
-                        return;
+                    continue;
                     }
                     else if (exEnergy.ProportionValue == -3)
                     {
                         Console.WriteLine("阈值设置异常: 低报 >高报");
-                        return;
+                    continue;
                     }
 
                     exEnergy.PID = powerForeQuality[a].PID;
@@ -223,7 +223,7 @@ namespace EnergyManage.Controllers
                     if (enerProjectType.Count() == 0)
                     {
                         Console.WriteLine("没有查到相应科室");
-                        //return;
+                    continue;
                     }
                     else
                     {
