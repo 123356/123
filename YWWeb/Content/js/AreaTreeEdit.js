@@ -272,7 +272,7 @@ let vm = new Vue({
         //筛选CID树
         filterCidNode(value, data, node) {
             if (!value) {
-                data.disabled = true;
+                data.disabled = false;
                 return true;
             }
              var bool = data.name.indexOf(value) == -1;
