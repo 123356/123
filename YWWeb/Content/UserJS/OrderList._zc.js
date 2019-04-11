@@ -1,5 +1,5 @@
-﻿
-var pid = 0;
+﻿var pid = 0;
+
 
 var Request = GetRequest();
 if (Request['type'] != "new") {
@@ -14,6 +14,11 @@ if (Request['type'] != "new") {
 } else {
     pid = 0;
 }
+var par = window.location.search
+if (par) {
+    pid = par.substring(1, par.length).split("=")[1]
+}
+
 $("#currPosition", window.top.document).html("当前位置：运维 > 工单管理 ");
 var mouseX;
 var mouseY;

@@ -34,12 +34,11 @@ var vm = new Vue({
                 method: 'post'
             })
                 .then(function (res) {
-                    if ($.cookie("enUID") != null) {
-                        that.UnitID = parseInt($.cookie("enUID"))
-                    } else {
+                   
+                    if(that.UnitID==null) {
                         if (res.data.length > 0) {
                             that.UnitID = res.data[0].UnitID
-                            $.cookie('enUID', res.data[0].UnitID, { expires: 7, path: '/' });
+                            localStorage.setItem('UnitData', JSON.stringify({ enUID: res.data[0].UnitID, enName: res.data[0].UnitName }))
                         }
                     }
                     that.unitList = res.data
@@ -50,7 +49,7 @@ var vm = new Vue({
                 })
         },
         selectChange: function (e) {
-            $.cookie('enUID', e, { expires: 7, path: '/' });
+            localStorage.setItem('UnitData', JSON.stringify({ enUID: e.value, enName: e.label }))
             this.loading = true
             this.PID = null
             this.activeIndex = null
@@ -365,12 +364,13 @@ var vm = new Vue({
             window.open("/Es/Score", "_blank",
                 "left=100px,top=50px,resizable=no, toolbar=no, location=no,fullscreen=no,channelmode=no, directories=no, status=no, menubar=no, scrollbars=yes, copyhistory=no, width=1000, height=500")
         },
-        msgDetail: function (type) {
+        msgDetail: function (type,PID) {
+            console.log(PID)
             if (type == 0) {
-                location.href = '/AlarmManage/Index?pid=0'
+                location.href = '/AlarmManage/Index?pid='+PID
 
             } else {
-                location.href = '/Orderinfo/OrderList'
+                location.href = '/Orderinfo/OrderList?PID='+PID
             }
         },
         //当年累计电量pie
@@ -682,9 +682,17 @@ var vm = new Vue({
                     $(".ivu-menu-light").width(w + 16)
                 }
             });
+        },
+        getUnitData: function () {
+            var unitData = JSON.parse(localStorage.getItem("UnitData"))
+            if (unitData) {
+                this.UnitID = unitData.enUID
+            }
         }
     },
+    
     beforeMount: function () {
+        this.getUnitData()
         this.getUnitListData()
     },
     mounted: function () {

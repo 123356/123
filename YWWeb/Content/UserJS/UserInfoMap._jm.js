@@ -82,6 +82,10 @@ function showinfomessage(marker, point, data) {
             break
 
     }
+    var par = {
+        uid: data.UnitID,
+        name: data.UnitName
+    }
     if (data.Type == 1) {
 
         html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.UnitName + '</span><a href="JavaScript:toDetail(' + data.UnitID + ')">详情&gt;</a>' + isAlarm + '</td></tr>'
@@ -116,7 +120,7 @@ function showinfomessage(marker, point, data) {
         //}
         //html+="</table></tr>"
     } else if (data.Type == 2) {
-        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i>' + data.UnitName + '<a href="JavaScript:toDetail('+data.UnitID +')">详情&gt;</a>' + isAlarm + '</td></tr>'
+        html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i>' + data.UnitName + '<a href="JavaScript:toDetail(' + data.UnitID + ')">详情&gt;</a>' + isAlarm + '</td></tr>'
         html += '<tr style=""><td style="padding-top:5px"><i class="iconfont icon-location"></i>' + data.LinkAddress + '</td></tr>'
         html += '<tr style=""><td style="padding-top:12px"><hr></td></tr>'
         html += '<tr ><td style="padding-top:5px;">所属公司名称：' + data.companyName + '</td></tr>'
@@ -154,9 +158,10 @@ function showinfomessage(marker, point, data) {
     );
     */
 }
-function toDetail(data) {
-    $.cookie('unitId', data, { expires: 7, path: '/' });
-    location.href = "/Es/UserView2?unitId="+data
+function toDetail(uid) {
+    
+    localStorage.setItem('UnitData', JSON.stringify({ enUID: uid, enName: null }))
+    location.href = "/Es/UserView2?unitId=" +uid
 
 }
 

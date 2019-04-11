@@ -22,7 +22,7 @@
 <body>
     <div id="userView">
         <Spin size="large" fix v-if="loading"></Spin>
-        <i-select class="userSelect" v-model="UnitID" v-on:on-change="selectChange" filterable>
+        <i-select class="userSelect" :label-in-value="true" v-model="UnitID" v-on:on-change="selectChange" filterable>
             <i-option v-for="item in unitList" :value="item.UnitID" v-html="item.UnitName"></i-option>
         </i-select>
         <div class="container">
@@ -110,7 +110,7 @@
                             <div class="item">
                                 <div class="view">
                                     <p class="normal" v-html="Sumload==null?'--':Sumload">--</p>
-                                    <span class="littltInfo">当前负荷(kW·h)</span>
+                                    <span class="littltInfo">当前负荷(kVA)</span>
                                 </div>
                             </div>
                             <div class="item">
@@ -173,8 +173,8 @@
                         <div class="module">
                             <div class="title"><i class="iconfont icon-icon"></i>消息通知</div>
                             <div class="main mainCol">
-                                <div v-for="item in orderList" v-html="item.OrderName" v-on:click="msgDetail(1)"></div>
-                                <div v-for="item in alarmList" style="color:#d58a60" v-html="item.OrderName" v-on:click="msgDetail(0)"></div>
+                                <div v-for="item in orderList" v-html="item.OrderName" v-on:click="msgDetail(1,item.PID)"></div>
+                                <div v-for="item in alarmList" style="color:#d58a60"  v-on:click="msgDetail(0,item.PID)">{{item.Company}} {{item.AlarmArea}}</div>
                             </div>
                         </div>
                     </div>
@@ -201,6 +201,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.53"></script>
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.54"></script>
 </body>
 </html>
