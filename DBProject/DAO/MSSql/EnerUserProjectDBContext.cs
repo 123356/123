@@ -100,6 +100,28 @@ namespace DAO
             return SQLQuery<t_EE_EnerUserProject>(sql);
         }
 
+        public IList<t_EE_CircuitInfoEnerType> setCidEneeruseType(IList<t_EE_CircuitInfoEnerType> data)
+        {
+            string sql = "";
+            for (int a = 0; a < data.Count(); a++) {
+                sql += $"UPDATE t_DM_CircuitInfo SET ener_use_type = '{data[a].ener_use_type}' output inserted.*  WHERE PID = {data[a].PID} AND CID = {data[a].CID};";
+            }
+            return SQLQuery<t_EE_CircuitInfoEnerType>(sql);
+        }
+        public IList<t_EE_CircuitInfoEnerType> getCidEneeruseType(t_V_EnerProjectType data)
+        {
+            var arr = data.addCid.Split(',');
+            string sql = $"select PID,CID,ener_use_type  FROM t_DM_CircuitInfo " +
+                $" WHERE CHARINDEX (',{data.ID},', ener_use_type)>0 ";
+
+            for (int a = 0; a < arr.Count(); a++)
+            {
+                var cid = arr[a].Split('-');
+                sql += $" or (PID = {cid[0]} and CID = {cid[1]})";
+            }
+            return SQLQuery<t_EE_CircuitInfoEnerType>(sql);
+        }
+
         public DbSet<t_EE_EnerUserProject> Datas { get; set; }
     }
 }

@@ -81,7 +81,7 @@
                                 <el-badge :value="CidBinded.length"
                                           class="item"
                                           :type="CidBindMany.length?'danger':'primary'">
-                                    <el-button size="small" v-on:click="showTab">已绑定</el-button>
+                                    <el-button size="small" v-on:click="showTab">绑定</el-button>
                                 </el-badge>
                             </el-col>
                             <el-col :span="6">
@@ -95,7 +95,7 @@
                                 <el-badge :value="CidBindMany.length"
                                           class="item"
                                           :type="CidBindMany.length?'danger':'primary'">
-                                    <el-button size="small" v-on:click="showTab">重复绑定 </el-button>
+                                    <el-button size="small" v-on:click="showTab">重复 </el-button>
                                 </el-badge>
                             </el-col>
                         </el-row>
@@ -181,8 +181,8 @@
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>节点</th>
-                    <th>表</th>
-                    <th>已绑定</th>
+                    <th>表详情</th>
+                    <th>表个数</th>
                     <th>重复绑定</th>
                 </tr>
                 <tr v-for="itme in griData">
@@ -240,6 +240,7 @@
                      node-key="id"
                      ref="cidtree"
                      :style="{'height':'40vh','overflow':'auto','background':'#F0F6E4','margin-top':'10px'}">
+
             </el-tree>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" v-on:click="ModalBoxClickOk">确 定</el-button>

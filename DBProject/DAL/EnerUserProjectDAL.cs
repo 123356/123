@@ -112,5 +112,46 @@ namespace DAL
             }
             return data;
         }
+
+        public IList<t_EE_CircuitInfoEnerType> setCidEneeruseType(t_V_EnerProjectType data)
+
+        {
+            IList<t_EE_CircuitInfoEnerType> list = new List<t_EE_CircuitInfoEnerType>();
+            if (data.addCid == null || data.item_type == 2) {
+                return list;
+            }
+            try
+            {
+                list = _dbFactory.enerUserProject.getCidEneeruseType(data);
+
+                var add = data.addCid.Split(',');
+                string addcid = $",{data.addCid},";
+                for(int a = 0; a < list.Count(); a++)
+                {
+                    if (addcid.Contains($",{list[a].PID}-{list[a].CID},")) {
+                        if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
+                        {
+                            list[a].ener_use_type += $",{data.ID},";
+                        }
+                    }
+                    else
+                    {
+                        if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
+                        {
+                            var str = $",{data.ID},";
+                            list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
+                        }
+                    }
+                }
+                list = _dbFactory.enerUserProject.setCidEneeruseType(list);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
+
+
     }
 }
