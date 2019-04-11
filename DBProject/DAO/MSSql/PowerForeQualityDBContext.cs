@@ -40,7 +40,8 @@ namespace DAO
                         $" FROM t_EE_PowerQualityDaily a " +
                         $" INNER JOIN t_EE_PowerForeDaily b " +
                         $" ON a.PID = b.PID  and a.CID = b.CID AND a.RecordTime = b.RecordTime" +
-                        $" where a.RecordTime <= '{star}' and a.RecordTime > '{end}' ";
+                        $" where a.RecordTime <= '{star}' and a.RecordTime >= '{end}' " +
+                        $" ORDER BY a.RecordTime DESC";
             return SQLQuery<t_EE_PowerForeQuality>(sql);
         }
 
