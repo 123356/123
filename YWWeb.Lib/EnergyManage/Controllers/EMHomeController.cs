@@ -125,7 +125,6 @@ namespace EnergyManage.Controllers
                         if (!string.IsNullOrEmpty(item_userP.addCid.Trim()))
                         {
                             Dictionary<int, string> cpids = GetCId(item_userP.addCid);
-                            IList<t_DM_CircuitInfo> list_cir = DAL.CircuitInfoDAL.getInstance().GetCID(cpids, item_peizhi.CollTypeID);
                             if (cpids.Count != 0)
                             {
                                 var data=  DAL.EneryOverViewDAL.getInstance().GetFirstPageDatas(cpids, Convert.ToDateTime(time).ToString("yyyy-MM"));
