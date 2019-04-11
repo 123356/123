@@ -47,6 +47,14 @@ function getUnitComobxListAPI() {
         method: 'GET',
     })
 }
+//用户下拉框
+function getUnitListDataAPI() {
+    return vm.$http({
+        url: '/Home/UnitListData',
+        method: 'GET',
+    })
+}
+
 //设备下拉框
 function getDeviceComboxAPI(data) {
     return vm.$http({

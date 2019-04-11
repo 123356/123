@@ -19,34 +19,29 @@ var vm = new Vue({
         otherInfo: {},
         Sumload: null,
         RatedCapacity: null,
-        timer:null,
-        thisDayPower:null,
-        thisMonthPower:null,
-        thisMonthOccupation:null,
-        thisDayOccupation:null
+        timer: null,
+        thisDayPower: null,
+        thisMonthPower: null,
+        thisMonthOccupation: null,
+        thisDayOccupation: null
     },
     methods: {
         //用户下拉框
         getUnitListData: function () {
             var that = this
-            this.$http({
-                url: '/Home/UnitListData',
-                method: 'post'
-            })
-                .then(function (res) {
-                   
-                    if(that.UnitID==null) {
-                        if (res.data.length > 0) {
-                            that.UnitID = res.data[0].UnitID
-                            localStorage.setItem('UnitData', JSON.stringify({ enUID: res.data[0].UnitID, enName: res.data[0].UnitName }))
-                        }
+            getUnitListDataAPI().then(function (res) {
+                if (that.UnitID == null) {
+                    if (res.data.length > 0) {
+                        that.UnitID = res.data[0].UnitID
+                        localStorage.setItem('UnitData', JSON.stringify({ enUID: res.data[0].UnitID, enName: res.data[0].UnitName }))
                     }
-                    that.unitList = res.data
-                    that.init()
-                })
-                .catch(function (e) {
-                    throw new ReferenceError(e.message)
-                })
+                }
+                that.unitList = res.data
+                that.init()
+            })
+            .catch(function (e) {
+                throw new ReferenceError(e.message)
+            })
         },
         selectChange: function (e) {
             localStorage.setItem('UnitData', JSON.stringify({ enUID: e.value, enName: e.label }))
@@ -54,9 +49,8 @@ var vm = new Vue({
             this.PID = null
             this.activeIndex = null
             this.init()
-            
         },
-        init:function(){
+        init: function () {
             this.getStationState()
             this.getThisDayPower()
             this.getLastMonthPower()
@@ -65,7 +59,6 @@ var vm = new Vue({
             this.getMessage()
             this.getProInfo()
             this.getPDF()
-           
         },
         //获取运行情况
         getStationState: function () {
@@ -104,11 +97,11 @@ var vm = new Vue({
             })
                 .then(function (res) {
                     if (res.data) {
-                        
+
                         that.thisDayPower = res.data.thisDayPower;
                         that.thisDayOccupation = res.data.thisDayOccupation;
                     }
-                },function(){
+                }, function () {
 
                 })
                 .catch(function (e) {
@@ -130,11 +123,11 @@ var vm = new Vue({
             })
                 .then(function (res) {
                     if (res.data) {
-                        
+
                         that.thisMonthPower = res.data.thisMonthPower
                         that.thisMonthOccupation = res.data.thisMonthOccupation
                     }
-                },function(){
+                }, function () {
 
                 })
                 .catch(function (e) {
@@ -263,9 +256,9 @@ var vm = new Vue({
                     }
                     that.getLineData()
                     var timeset;
-                    
+
                     clearInterval(that.timer);
-                    setTimeout(that.setTimer,60000)
+                    setTimeout(that.setTimer, 60000)
                     /*timer = setInterval(function () {
                         that.getLineData()
                         that.getThisDayPower()
@@ -277,12 +270,12 @@ var vm = new Vue({
                     throw new ReferenceError(e.message)
                 })
         },
-        setTimer:function(){
+        setTimer: function () {
             this.getLineData()
             this.getThisDayPower()
             this.getUseEl()
-            setTimeout(this.setTimer,60000)
-         },
+            setTimeout(this.setTimer, 60000)
+        },
         //用电概况
         getUseEl: function () {
             var that = this
@@ -364,13 +357,13 @@ var vm = new Vue({
             window.open("/Es/Score", "_blank",
                 "left=100px,top=50px,resizable=no, toolbar=no, location=no,fullscreen=no,channelmode=no, directories=no, status=no, menubar=no, scrollbars=yes, copyhistory=no, width=1000, height=500")
         },
-        msgDetail: function (type,PID) {
+        msgDetail: function (type, PID) {
             console.log(PID)
             if (type == 0) {
-                location.href = '/AlarmManage/Index?pid='+PID
+                location.href = '/AlarmManage/Index?pid=' + PID
 
             } else {
-                location.href = '/Orderinfo/OrderList?PID='+PID
+                location.href = '/Orderinfo/OrderList?PID=' + PID
             }
         },
         //当年累计电量pie
@@ -690,7 +683,7 @@ var vm = new Vue({
             }
         }
     },
-    
+
     beforeMount: function () {
         this.getUnitData()
         this.getUnitListData()
