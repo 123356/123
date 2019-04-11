@@ -117,7 +117,7 @@ namespace DAL
 
         {
             IList<t_EE_CircuitInfoEnerType> list = new List<t_EE_CircuitInfoEnerType>();
-            if (data.addCid == null || data.item_type == 1) {
+            if (data.addCid == null || data.item_type == 2) {
                 return list;
             }
             try
