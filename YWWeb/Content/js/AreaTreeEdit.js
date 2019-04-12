@@ -44,14 +44,20 @@ let vm = new Vue({
         Dialogtab: false,
         //监听字段
         filterText: "",
-        dialogTabQ:0
+        dialogTabQ: 0
     },
     computed: {
+        //全部节点
+        allNode: function() {
+            let list = [];
+            this.traverseTree(list, this.tree.energy, 'all');
+            return list
 
+        },
         //叶节点
         leavesNode: function() {
             let list = [];
-            this.traverseTree(list, this.tree.energy);
+            this.traverseTree(list, this.tree.energy, 'y');
             return list
         },
         //绑定的所有电表
@@ -95,7 +101,7 @@ let vm = new Vue({
             }
             return list
         },
-        //重复复绑定
+        //重复绑定
         CidBindMany: function() {
             var ary = this.CidBinded.sort(); //数组排序
             var cffwxmsAry = new Array();
@@ -304,62 +310,43 @@ let vm = new Vue({
             this.dialogTabQ = n;
             this.Dialogtab = true;
             this.griData = [];
-            console.log(n)
-
-            if (n == 2) {
-                //未绑定
-                let obj1 = {};
-                obj1.nodeID = 0;
-                obj1.nodeName = "无";
-                let str1 = [];
-                for (let a = 0; a < this.UnBind.length; a++) {
-                    str1.push({
-                        pid: this.UnBind[a].PID,
-                        did: this.UnBind[a].DID,
-                        cid: this.UnBind[a].CID,
-                        DName: this.UnBind[a].DName,
-                        CName: this.UnBind[a].CName,
-                    })
-                }
-                obj1.binded = str1;
-                obj1.bindedNum = this.UnBind.length;
-                this.griData.unshift(obj1)
-            } else {
-                for (let a = 0; a < this.leavesNode.length; a++) {
-                    var obj = {};
-                    obj.nodeID = this.leavesNode[a].ID;
-                    obj.nodeName = this.leavesNode[a].name;
-                    var arr1 = [];
-                    for (let i = 0; i < this.CidList.length; i++) {
-                        var arr = this.leavesNode[a].addCid.split(',');
-                        for (let j = 0; j < arr.length; j++) {
-                            if (`${this.CidList[i].PID}-${this.CidList[i].CID}` == arr[j]) {
-                                arr1.push({
-                                    pid: this.CidList[a].PID,
-                                    did: this.CidList[a].DID,
-                                    cid: this.CidList[a].CID,
-                                    DName: this.CidList[a].DName,
-                                    CName: this.CidList[a].CName,
-                                })
+            if (n == 3) {
+                let str = `,${this.CidBindMany.join(',,')},`;
+                for (let i = 0; i < this.CidList.length; i++) {
+                    if (str.indexOf(`,${this.CidList[i].PID}-${this.CidList[i].CID},`) >= 0) {
+                        let arr = [];
+                        for (let j = 0; j < this.leavesNode.length; j++) {
+                            if (`,${this.leavesNode[j].addCid},`.indexOf(`,${this.CidList[i].PID}-${this.CidList[i].CID},`) >= 0) {
+                                arr.push(this.leavesNode[j].name);
                             }
                         }
-                    }
-                    obj.binded = arr1;
-                    obj.bindedNum = this.leavesNode[a].addCid.split(',').length;
-                    let str = "," + this.leavesNode[a].addCid + ",";
-                    let array = [];
-                    for (let b = 0; b < this.CidBindMany.length; b++) {
-                        if (str.indexOf(',' + this.CidBindMany[b] + ',') >= 0) {
-                            array.push(this.CidBindMany[b])
-                        }
-                    }
-                    obj.bindss = array.join(" ");
-                    if (obj.bindss != "") {
-                        this.griData.unshift(obj)
-                    } else {
-                        this.griData.push(obj)
+                        this.griData.push({
+                            pid: this.CidList[i].PID,
+                            did: this.CidList[i].DID + "(" + this.CidList[i].DName + ")",
+                            cid: this.CidList[i].CID,
+                            CName: this.CidList[i].CName,
+                            nodeName: arr
+                        })
                     }
                 }
+            } else {
+
+                for (let i = 0; i < this.CidList.length; i++) {
+                    let arr = [];
+                    for (let a = 0; a < this.allNode.length; a++) {
+                        if (`,${this.allNode[a].addCid},`.indexOf(`,${this.CidList[i].PID}-${this.CidList[i].CID},`) >= 0) {
+                            arr.push(this.allNode[a].name);
+                        }
+                    }
+                    this.griData.push({
+                        pid: this.CidList[i].PID,
+                        did: this.CidList[i].DID + "(" + this.CidList[i].DName + ")",
+                        cid: this.CidList[i].CID,
+                        CName: this.CidList[i].CName,
+                        nodeName: arr
+                    })
+                }
+
             }
         },
         //关闭表格
@@ -410,7 +397,7 @@ let vm = new Vue({
             }
             var cid = this[str] + ",";
             let list = [];
-            this.traverseTree(list, [this.node]);
+            this.traverseTree(list, [this.node], 'y');
 
             for (let a = 0; a < list.length; a++) {
                 cid += list[a][str1] + ",";
@@ -431,11 +418,14 @@ let vm = new Vue({
             return temp;
         },
         //递归树
-        traverseTree: function(list, Children) {
+        traverseTree: function(list, Children, y) {
             if (Children.length != 0) {
                 for (let a = 0; a < Children.length; a++) {
                     if (Children[a].Children.length != 0) {
-                        this.traverseTree(list, Children[a].Children);
+                        if (y == 'all') {
+                            list.push(Children[a]);
+                        }
+                        this.traverseTree(list, Children[a].Children, y);
                     } else {
                         list.push(Children[a]);
                     }

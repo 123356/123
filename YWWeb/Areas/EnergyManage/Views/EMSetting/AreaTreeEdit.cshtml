@@ -178,36 +178,67 @@
 
         @*表格模态框*@
         <el-dialog title="详情" :visible.sync="Dialogtab" :before-close="closeTab" top="0">
+
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th>节点</th>
-                    <th>表详情</th>
-                    <th v-if="dialogTabQ!=3">表个数</th>
-                    <th  v-if="dialogTabQ==3">重复绑定</th>
+                    <th colspan="4">详情</th>
+                    <th rowspan="2">节点名称</th>
                 </tr>
-                <tr v-for="(itme,index) in griData" >
-                    <td :title="itme.nodeName">{{itme.nodeName}}</td>
-                    <td style="padding: 0;border:0">
-                        <table class="table table-bordered table-striped" style="border:0;margin:0;font-size:12px;">
-                            <tr>
-                                <td style="border:0;width:12.5%">PID</td>
-                                <td  style="border-top:0;width:12.5%">DID</td>
-                                <td  style="border-top:0;width:12.5%">CID</td>
-                                <td style="border-top:0;width:25%">柜子</td>
-                                <td  style="border:0;width:37.5%">表</td>
-                            </tr>
-                            <tr v-for="i in itme.binded">
-                                <td style="border-left:0">{{i.pid}}</td>
-                                <td>{{i.did}}</td>
-                                <td>{{i.cid}}</td>
-                                <td>{{i.DName}}</td>
-                                <td>{{i.CName}}</td>
-                            </tr>
-                        </table>
+                <tr>
+                    <th>PID</th>
+                    <th>DID</th>
+                    <th>CID</th>
+                    <th>CName</th>
+                </tr>
+                <tr v-for="itme in griData"
+                    v-if="dialogTabQ==0 ||
+                        dialogTabQ==3 ||
+                        dialogTabQ==1&&itme.nodeName.length!=0||
+                        dialogTabQ==2&&itme.nodeName.length==0">
+                    <td width="12.5%">{{itme.pid}}</td>
+                    <td width="12.5%">{{itme.did}}</td>
+                    <td width="12.5%">{{itme.cid}}</td>
+                    <td width="12.5%">{{itme.CName}}</td>
+                    <td v-if="dialogTabQ!=3">{{itme.nodeName.join('；')}}</td>
+                    <td v-if="dialogTabQ==3" >
+                        <p v-for="i in itme.nodeName" style="padding:0;margin:0;color:#f00;">
+                            <i class="el-icon-error" style="margin-right:6px;"></i>
+                            {{i}}
+                        </p>
                     </td>
-                    <td :title="itme.bindedNum||'无'"  v-if="dialogTabQ!=3">{{itme.bindedNum}}</td>
-                    <td :title="itme.bindss||'无'"  v-if="dialogTabQ==3">{{itme.bindss}}</td>
+
                 </tr>
+
+
+                @*<tr>
+            <th>节点</th>
+            <th>表详情</th>
+            <th v-if="dialogTabQ!=3">表个数</th>
+            <th  v-if="dialogTabQ==3">重复绑定</th>
+        </tr>
+        <tr v-for="(itme,index) in griData" >
+            <td :title="itme.nodeName">{{itme.nodeName}}</td>
+            <td style="padding: 0;border:0">
+                <table class="table table-bordered table-striped" style="border:0;margin:0;font-size:12px;">
+                    <tr>
+                        <td style="border:0;width:12.5%">PID</td>
+                        <td  style="border-top:0;width:12.5%">DID</td>
+                        <td  style="border-top:0;width:12.5%">CID</td>
+                        <td style="border-top:0;width:25%">柜子</td>
+                        <td  style="border:0;width:37.5%">表</td>
+                    </tr>
+                    <tr v-for="i in itme.binded">
+                        <td style="border-left:0">{{i.pid}}</td>
+                        <td>{{i.did}}</td>
+                        <td>{{i.cid}}</td>
+                        <td>{{i.DName}}</td>
+                        <td>{{i.CName}}</td>
+                    </tr>
+                </table>
+            </td>
+            <td :title="itme.bindedNum||'无'"  v-if="dialogTabQ!=3">{{itme.bindedNum}}</td>
+            <td :title="itme.bindss||'无'"  v-if="dialogTabQ==3">{{itme.bindss}}</td>
+        </tr>*@
             </table>
         </el-dialog>
 
