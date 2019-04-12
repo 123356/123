@@ -45,6 +45,20 @@ namespace DAO
         }
 
 
+        public IList<t_EE_PowerForeQuality> ForeThanQuality123(DateTime date)
+        {
+
+            string d = date.ToString("yyyy-MM-dd HH:00:00");
+            string sql = $"SELECT  b.*,a.UsePower " +
+                        $" FROM t_EE_PowerQualityDaily a " +
+                        $" INNER JOIN t_EE_PowerForeDaily b " +
+                        $" ON a.PID = b.PID  and a.CID = b.CID AND a.RecordTime = b.RecordTime" +
+                        $" where a.RecordTime = '{d}' ";
+            return SQLQuery<t_EE_PowerForeQuality>(sql);
+        }
+
+
+
         public DbSet<t_EE_PowerForeQuality> Datas { get; set; }
     }
 }

@@ -63,6 +63,10 @@ namespace YWWeb
             Thread conth = new Thread(getContempInfo);
             conth.Start();
             Thread weather = new Thread(getWeatherInfo);
+
+            Thread energyDeviate = new Thread(getEnergyDeviate);
+            energyDeviate.Start();
+
             weather.Start();
         }
         private void getPtAlarmInfo()
@@ -572,7 +576,6 @@ namespace YWWeb
         }
 
         #region 用能异常
-
         private void getEnergyDeviate()
         {
             var timer = new System.Timers.Timer();
@@ -582,8 +585,7 @@ namespace YWWeb
             timer.Interval = 300000;
             Console.Read();
         }
-
-
+       
         //用能异常
         private void InEnergyDeviate(object sender, System.Timers.ElapsedEventArgs e) {
             IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality();

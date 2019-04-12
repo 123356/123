@@ -46,6 +46,21 @@ namespace DAL
             return data;
         }
 
-    
+
+        public IList<t_EE_PowerForeQuality> ForeThanQuality123(DateTime date)
+        {
+            IList<t_EE_PowerForeQuality> data = new List<t_EE_PowerForeQuality>();
+            try
+            {
+                data = _dbFactory.powerForeQuality.ForeThanQuality123(date);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+        
+
     }
 }

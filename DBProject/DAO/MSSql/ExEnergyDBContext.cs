@@ -53,7 +53,8 @@ join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevTyp
 
         public IList<t_EE_ExEnergy1> InExDeviate(t_EE_ExEnergy1 ex)
         {
-            string sql = $"DELETE FROM t_EE_ExEnergy WHERE PID = {ex.PID} AND CID = {ex.CID}; INSERT INTO t_EE_ExEnergy(DID,PID,enerUserTypeID, CID, BudgetEnergy, ActualEnergy, Proportion, ProportionValue, People, Area, CODID, Purpose, Temperature, RecordTime,Conclusion) output inserted.*" +
+            string sql = $"DELETE FROM t_EE_ExEnergy WHERE PID = {ex.PID} AND CID = {ex.CID} AND RecordTime = '{ex.RecordTime}'; " +
+                        $" INSERT INTO t_EE_ExEnergy(DID,PID,enerUserTypeID, CID, BudgetEnergy, ActualEnergy, Proportion, ProportionValue, People, Area, CODID, Purpose, Temperature, RecordTime,Conclusion) output inserted.*" +
                         $" VALUES({ex.DID},{ex.PID},{ex.enerUserTypeID},{ex.CID},{ex.BudgetEnergy},{ex.ActualEnergy},{ex.Proportion},{ex.ProportionValue},{ex.People},{ex.Area},{ex.CODID},'{ex.Purpose}','{ex.Temperature}','{ex.RecordTime}','');";
             return SQLQuery<t_EE_ExEnergy1>(sql);
         }

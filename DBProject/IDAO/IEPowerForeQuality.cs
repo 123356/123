@@ -10,5 +10,7 @@ namespace IDAO
     public interface IEPowerForeQuality : IDAOBase, IDisposable
     {
         IList<t_EE_PowerForeQuality> ForeThanQuality();
+        IList<t_EE_PowerForeQuality> ForeThanQuality123(DateTime date);
+
     }
 }
