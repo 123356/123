@@ -44,6 +44,7 @@ let vm = new Vue({
         Dialogtab: false,
         //监听字段
         filterText: "",
+        dialogTabQ:0
     },
     computed: {
 
@@ -275,8 +276,8 @@ let vm = new Vue({
                 data.disabled = false;
                 return true;
             }
-             var bool = data.name.indexOf(value) == -1;
-             data.disabled = bool;
+            var bool = data.name.indexOf(value) == -1;
+            data.disabled = bool;
             return !bool;
         },
         //cid模态框关闭时
@@ -299,68 +300,67 @@ let vm = new Vue({
             }
         },
         //站室表格
-        showTab: function() {
+        showTab: function(n) {
+            this.dialogTabQ = n;
             this.Dialogtab = true;
             this.griData = [];
+            console.log(n)
 
-            for (let a = 0; a < this.leavesNode.length; a++) {
-                var obj = {};
-                obj.nodeID = this.leavesNode[a].ID;
-                obj.nodeName = this.leavesNode[a].name;
-
-
-                var arr1 = [];
-                for (let i = 0; i < this.CidList.length; i++) {
-                    var arr = this.leavesNode[a].addCid.split(',');
-                    for (let j = 0; j < arr.length; j++) {
-                        if (`${this.CidList[i].PID}-${this.CidList[i].CID}` == arr[j]) {
-                            arr1.push({
-                                pid: this.CidList[a].PID,
-                                did: this.CidList[a].DID,
-                                cid: this.CidList[a].CID,
-                                DName: this.CidList[a].DName,
-                                CName: this.CidList[a].CName,
-                            })
+            if (n == 2) {
+                //未绑定
+                let obj1 = {};
+                obj1.nodeID = 0;
+                obj1.nodeName = "无";
+                let str1 = [];
+                for (let a = 0; a < this.UnBind.length; a++) {
+                    str1.push({
+                        pid: this.UnBind[a].PID,
+                        did: this.UnBind[a].DID,
+                        cid: this.UnBind[a].CID,
+                        DName: this.UnBind[a].DName,
+                        CName: this.UnBind[a].CName,
+                    })
+                }
+                obj1.binded = str1;
+                obj1.bindedNum = this.UnBind.length;
+                this.griData.unshift(obj1)
+            } else {
+                for (let a = 0; a < this.leavesNode.length; a++) {
+                    var obj = {};
+                    obj.nodeID = this.leavesNode[a].ID;
+                    obj.nodeName = this.leavesNode[a].name;
+                    var arr1 = [];
+                    for (let i = 0; i < this.CidList.length; i++) {
+                        var arr = this.leavesNode[a].addCid.split(',');
+                        for (let j = 0; j < arr.length; j++) {
+                            if (`${this.CidList[i].PID}-${this.CidList[i].CID}` == arr[j]) {
+                                arr1.push({
+                                    pid: this.CidList[a].PID,
+                                    did: this.CidList[a].DID,
+                                    cid: this.CidList[a].CID,
+                                    DName: this.CidList[a].DName,
+                                    CName: this.CidList[a].CName,
+                                })
+                            }
                         }
                     }
-                }
-
-                obj.binded = arr1;
-
-                obj.bindedNum = this.leavesNode[a].addCid.split(',').length;
-                let str = "," + this.leavesNode[a].addCid + ",";
-                let array = [];
-                for (let b = 0; b < this.CidBindMany.length; b++) {
-                    if (str.indexOf(',' + this.CidBindMany[b] + ',') >= 0) {
-                        array.push(this.CidBindMany[b])
+                    obj.binded = arr1;
+                    obj.bindedNum = this.leavesNode[a].addCid.split(',').length;
+                    let str = "," + this.leavesNode[a].addCid + ",";
+                    let array = [];
+                    for (let b = 0; b < this.CidBindMany.length; b++) {
+                        if (str.indexOf(',' + this.CidBindMany[b] + ',') >= 0) {
+                            array.push(this.CidBindMany[b])
+                        }
+                    }
+                    obj.bindss = array.join(" ");
+                    if (obj.bindss != "") {
+                        this.griData.unshift(obj)
+                    } else {
+                        this.griData.push(obj)
                     }
                 }
-                obj.bindss = array.join(" ");
-                if (obj.bindss != "") {
-                    this.griData.unshift(obj)
-                } else {
-                    this.griData.push(obj)
-                }
             }
-
-            let obj1 = {};
-            obj1.nodeID = 0;
-            obj1.nodeName = "无";
-            let str1 = [];
-            for (let a = 0; a < this.UnBind.length; a++) {
-                str1.push({
-                    pid: this.UnBind[a].PID,
-                    did: this.UnBind[a].DID,
-                    cid: this.UnBind[a].CID,
-                    DName: this.UnBind[a].DName,
-                    CName: this.UnBind[a].CName,
-                })
-            }
-
-
-            obj1.binded = str1;
-            obj1.bindedNum = this.UnBind.length;
-            this.griData.unshift(obj1)
         },
         //关闭表格
         closeTab: function() {
@@ -506,7 +506,7 @@ let vm = new Vue({
                 method: "POST",
                 body: this.UnitData
             }).then(function(res) {
-                var json  = JSON.stringify(res.data);
+                var json = JSON.stringify(res.data);
                 json = json.replace(/}/g, `,"disabled":false}`);
                 localStorage.setItem("tree" + this.UnitData.UnitID, json);
                 this.tree.cid = JSON.parse(json);

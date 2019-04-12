@@ -74,28 +74,28 @@
                         <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-badge :value="CidList.length" class="item" type="primary">
-                                    <el-button size="small" v-on:click="showTab">总表</el-button>
+                                    <el-button size="small" v-on:click="showTab(0)">总表</el-button>
                                 </el-badge>
                             </el-col>
                             <el-col :span="6">
                                 <el-badge :value="CidBinded.length"
                                           class="item"
                                           :type="CidBindMany.length?'danger':'primary'">
-                                    <el-button size="small" v-on:click="showTab">绑定</el-button>
+                                    <el-button size="small" v-on:click="showTab(1)">绑定</el-button>
                                 </el-badge>
                             </el-col>
                             <el-col :span="6">
                                 <el-badge :value="UnBind.length"
                                           class="item"
                                           :type="UnBind.length?'warning':'primary'">
-                                    <el-button size="small" v-on:click="showTab">未绑定</el-button>
+                                    <el-button size="small" v-on:click="showTab(2)">未绑定</el-button>
                                 </el-badge>
                             </el-col>
                             <el-col :span="6">
                                 <el-badge :value="CidBindMany.length"
                                           class="item"
                                           :type="CidBindMany.length?'danger':'primary'">
-                                    <el-button size="small" v-on:click="showTab">重复 </el-button>
+                                    <el-button size="small" v-on:click="showTab(3)">重复 </el-button>
                                 </el-badge>
                             </el-col>
                         </el-row>
@@ -182,10 +182,10 @@
                 <tr>
                     <th>节点</th>
                     <th>表详情</th>
-                    <th>表个数</th>
-                    <th>重复绑定</th>
+                    <th v-if="dialogTabQ!=3">表个数</th>
+                    <th  v-if="dialogTabQ==3">重复绑定</th>
                 </tr>
-                <tr v-for="itme in griData">
+                <tr v-for="(itme,index) in griData" >
                     <td :title="itme.nodeName">{{itme.nodeName}}</td>
                     <td style="padding: 0;border:0">
                         <table class="table table-bordered table-striped" style="border:0;margin:0;font-size:12px;">
@@ -205,8 +205,8 @@
                             </tr>
                         </table>
                     </td>
-                    <td :title="itme.bindedNum||'无'">{{itme.bindedNum}}</td>
-                    <td :title="itme.bindss||'无'">{{itme.bindss}}</td>
+                    <td :title="itme.bindedNum||'无'"  v-if="dialogTabQ!=3">{{itme.bindedNum}}</td>
+                    <td :title="itme.bindss||'无'"  v-if="dialogTabQ==3">{{itme.bindss}}</td>
                 </tr>
             </table>
         </el-dialog>
