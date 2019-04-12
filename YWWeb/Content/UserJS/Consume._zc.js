@@ -72,7 +72,7 @@
                             attrs: {
                                 style: 'color:#6d6d6f',
                             },
-                        }, (params.row.Proportion - 100).toFixed(2))
+                        }, (params.row.Proportion - 100).toFixed(2)+'%')
                 }
             },
             {
@@ -140,7 +140,7 @@
                 render: (h, params) => {
                     return h('span',
                         {
-                        }, (params.row.Proportion - 100).toFixed(2))
+                        }, (params.row.Proportion - 100).toFixed(2)+'%')
                 }
             },
             {
