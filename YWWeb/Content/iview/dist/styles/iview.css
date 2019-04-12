@@ -12606,8 +12606,9 @@ tr.ivu-table-row-hover td {
 	height:39px;
 	line-height:39px
 }
-.ivu-table-row-highlight td,.ivu-table-stripe .ivu-table-body tr.ivu-table-row-highlight:nth-child(2n) td,.ivu-table-stripe .ivu-table-fixed-body tr.ivu-table-row-highlight:nth-child(2n) td,tr.ivu-table-row-highlight.ivu-table-row-hover td {
-	background-color:#ebf7ff
+.ivu-table-row-highlight td, .ivu-table-stripe .ivu-table-body tr.ivu-table-row-highlight:nth-child(2n) td, .ivu-table-stripe .ivu-table-fixed-body tr.ivu-table-row-highlight:nth-child(2n) td, tr.ivu-table-row-highlight.ivu-table-row-hover td {
+    /*background-color: #ebf7ff;*/
+    background-color:rgba(91,176,157,0.3)
 }
 .ivu-table-fixed,.ivu-table-fixed-right {
 	position:absolute;

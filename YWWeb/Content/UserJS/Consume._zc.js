@@ -63,9 +63,17 @@
                 }
             },
             {
-                title: '百分比',
+                title: '偏差率',
                 align: 'center',
-                key: 'Proportion'
+                key: 'Proportion',
+                render: (h, params) => {
+                    return h('span',
+                        {
+                            attrs: {
+                                style: 'color:#6d6d6f',
+                            },
+                        }, (params.row.Proportion - 100).toFixed(2))
+                }
             },
             {
                 title: '类型',
@@ -81,7 +89,7 @@
                 render: (h, params) => {
                     var time = params.row.RecordTime
                     var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
-                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
                     return h('span',
                         {
                             attrs: {
@@ -114,6 +122,26 @@
                 title: '区域',
                 align: 'center',
                 key: 'EName'
+            },
+            {
+                title: '预测电量(kW·h)',
+                align: 'center',
+                key: 'BudgetEnergy'
+            },
+            {
+                title: '实际电量(kW·h)',
+                align: 'center',
+                key: 'ActualEnergy'
+            },
+            {
+                title: '偏差率',
+                align: 'center',
+                key: 'Proportion',
+                render: (h, params) => {
+                    return h('span',
+                        {
+                        }, (params.row.Proportion - 100).toFixed(2))
+                }
             },
             {
                 title: '电量(kW·h)',
@@ -395,6 +423,8 @@
         },
         rowCLick: function (row, index) {
             //this.listData[index]._checked = !this.listData[index]._checked
+            $(".ivu-table-tbody .ivu-table-row").removeClass("ivu-table-row-highlight")
+            $(".ivu-table-tbody .ivu-table-row:eq("+index+")").addClass("ivu-table-row-highlight")
             this.curTime = row.RecordTime
             if (!this.switchState) {
                 this.curSelectID = row.ID
@@ -458,7 +488,6 @@
                         data: yc
                     })
                 }
-                console.log(data.listweather)
                 seriesData.push(
                     {
                         name: '温度',
