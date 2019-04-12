@@ -183,6 +183,7 @@ namespace EnergyManage.Controllers
 
         public void qwe() {
                 IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality();
+                //IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality123(date);
                 if (powerForeQuality.Count() == 0)
                 {
                     Console.WriteLine("预测和实际没有对应数据");
