@@ -61,15 +61,15 @@
                     var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
                     return h('div', [
                         h('p', [
-                             h('span',  '名称：' + params.row.EName),
+                             h('span', '名称：' + params.row.EName),
                               h('span', { attrs: { class: 'labelName' } }, '类型：' + params.row.COName),
                         ]),
                         h('p', [
-                             h('span', '偏差率：' + (params.row.Proportion - 100).toFixed(2) + '%')
+                             h('span', '偏差率：' + (params.row.Proportion - 100).toFixed(2) )
                         ]),
                         h('p', [
-                            
-                             h('span', '时间：' +d )
+
+                             h('span', '时间：' + d)
                         ])
 
                     ]);
@@ -117,7 +117,7 @@
                 render: (h, params) => {
                     return h('span',
                         {
-                        }, (params.row.Proportion - 100).toFixed(2) + '%')
+                        }, (params.row.Proportion - 100).toFixed(2) )
                 }
             },
             {
@@ -757,7 +757,6 @@
             });
         },
         setHeight: function () {
-            this.listHeight = $(".left .list").height() - 21
             this.analysisTableHeight = $(".right .bottom").height() - 40
         },
         getUnitData: function () {
@@ -772,18 +771,10 @@
         this.getUnitData()
         //this.uid = $.cookie("enUID")
         var that = this
-        function setWidth2() {
-            var isScroll = $(".ivu-table-overflowY").length
-            if (isScroll > 0) {
-                var width = $(".left .list").width()
-                that.listWidth = width + 17
-            }
-        }
-        setWidth2()
-        setInterval(function () {
-            setWidth2()
+        that.setHeight()
+        window.addEventListener("resize", () => {
             that.setHeight()
-        }, 100)
+        });
         this.getLeftList()
 
 

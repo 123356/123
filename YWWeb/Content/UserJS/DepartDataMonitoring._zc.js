@@ -107,15 +107,5 @@
     mounted: function () {
     }
 })
-function setScroll() {
-    var treeWidth = $(".left").width()
-    $(".left .treeList").width(treeWidth + 32)
-    document.getElementsByClassName(".treeList").scrollTop = 100
-}
-$(function () {
-    setScroll()
-    window.onresize = function () {
-        setScroll()
-    };
 
-})
+

@@ -8,6 +8,13 @@ html {
     font-size: 62.5% !important;
     background: #f3f4f6;
 }
+.el-scrollbar {
+    width: 100%;
+    height: 100%
+}
+.el-scrollbar__wrap {
+    overflow-x: hidden !important
+}
 table {
     -webkit-user-select: text;
     user-select: text;
@@ -186,15 +193,15 @@ table {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-       
-    .module-title .btn {
+
+    .module-title .btn,.searchView .btn {
         color: #fff;
         background: #54beaa;
-        font-size:1.2rem;
-        padding:2px 10px;
-        float:right;
-        margin-top:2px;
-        border:0px
+        font-size: 1.2rem;
+        padding: 2px 10px;
+        float: right;
+        margin-top: 2px;
+        border: 0px
     }
 
 .right {
@@ -1256,8 +1263,138 @@ table {
 .ivu-modal-header{
     border-bottom:none
 }
+.formLable {
+    font-size: 12px;
+    font-weight: normal;
+    padding:5px 
+}
+.searchView .rows{
+    display:inline-block;
+    margin-bottom:5px;
+    width:auto
+}
+.reportApp .main-item {
+    justify-content:flex-start;
+    overflow-y:auto
+}
+.reportApp .allMain .searchView{
+    flex:none
+}
+.reportApp .reportCon {
+    margin:10px 0px;
+    padding:10px 50px;
+   
+}
+    .reportApp .reportCon .lineChartView{
+        width:100%;
+        height:400px;
+        margin-bottom:15px
+    }
+.lineChartView .btnView{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center
+}
+.reportCon .row {
+   
+    display: flex;
+    width: 100%;
+    height: 360px;
+    margin-top: 5px
+}
+    .reportCon .row .module{
+        flex:1;
+        margin:5px 5px 5px 10px;
+        border:1px solid #eee;
+        box-shadow:0 3px 3px #eee;
+        border-radius:5px;
+        padding:10px;
+        overflow:hidden
+
+    }
+        .reportCon .row .module .radio{
+            margin-left:10px
+        }
+        .reportCon .row .module .module-title{
+            height:50px;
+        }
+        .reportCon .row .module .con {
+            height: 280px;
+            width:100%;
+            display:flex;
+            flex-direction:row
+            
+        }
+            .reportCon .row .module .con .item{
+                flex:1
+            }
+            .reportCon .row .module .con .rightItem{
+                display:flex;
+                flex-direction:row;
+                justify-content:center;
+                align-items:center;
+            }
+                .reportCon .row .module .con .rightItem div {
+                    margin: 5px;
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden ;
+                    
+                }
+                    .reportCon .row .module .con .rightItem div > b {
+                        font-size: 30px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 100%;
+                        display: inline-block;
+                        text-align: center;
+                        color: #323433
+                    }
+                    .reportCon .row .module .con .rightItem div > p{
+                        color:#777
+                    }
+
+#buildReport .module-title{
+    margin:15px 0px
+}
+
+
+
+
+
+
 @media screen and (max-width: 1300px) {
-    .BudgetSetting .header .ivu-input{
+    .reportApp .reportCon .lineChartView {
+                            height: 350px;
+                            margin-bottom: 10px
+                        }
+
+                        .reportCon .row {
+                            height: 300px;
+                        }
+                            .reportCon .row .module .radio {
+                                margin-left: 5px
+                            }
+
+                            .reportCon .row .module .module-title {
+                                height: 40px;
+                            }
+
+                            .reportCon .row .module .con {
+                                height: 210px;
+                            }
+                                .reportCon .row .module .con .rightItem div > b {
+                                    font-size:20px !important
+                                }
+                                .reportCon .row .module .con .rightItem div > b {
+                                    font-size: 12px !important
+                                }
+                                    .BudgetSetting .header .ivu-input{
                     font-size:1.6rem
                 }
                 .allMain .searchView {
@@ -1288,7 +1425,7 @@ table {
             margin-right: 2px
         }
 
-        .module-title .btn {
+        .module-title .btn,.searchView .btn {
             color: #fff;
             background: #54beaa;
             font-size: 1rem;
@@ -1296,7 +1433,7 @@ table {
             float: right;
             margin-top: 4px
         }
-
+    
     .left .consumeList table {
         font-size: 1rem
     }

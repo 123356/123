@@ -9,7 +9,7 @@
     <title>科室数据监测</title>
     <!--<link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="~/Content/iview/dist/styles/iview.css?v=1.01">
-    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.10" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/EnergyDfficiency.css?v=1.11" />
     <link rel="stylesheet" href="~/Content/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
     <script type="text/javascript" src="~/Content/js/jquery-1.12.2.min.js"></script>
     <script type="text/javascript" src="~/Content/js/jquery.ztree.core.js"></script>
@@ -18,6 +18,8 @@
     <script type="text/javascript" src="~/Content/js/vue.min.js"></script>
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
+    <link rel="stylesheet" href="~/Content/element-ui/lib/theme-chalk/index.css">
+    <script src="~/Content/element-ui/lib/index.js"></script>
    
 </head>
 <body>
@@ -28,7 +30,10 @@
                 <span><font v-html="uName">--</font>能源结构</span>
             </div>
             <div class="treeList">
-                <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
+                <el-scrollbar>
+                    <ul id="treeDemo" class="ztree" style="width:100%;height:100%"></ul>
+                </el-scrollbar>
+                    
             </div>
         </div>
         <div class="right allMain departmentWatch">
@@ -36,7 +41,7 @@
         </div>
     </div>
     <script type="text/javascript" src="~/Content/UserJS/api.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/DepartDataMonitoring._zc.js?v=1.46"></script>
+    <script type="text/javascript" src="~/Content/UserJS/DepartDataMonitoring._jm.js?v=1.47"></script>
 </body>
 </html>
 

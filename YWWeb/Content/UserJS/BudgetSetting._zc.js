@@ -750,43 +750,7 @@
             var itemHeight = $(".main .main-item").height() - 45
             var titleH = $(".main .main-item .item-title").height()
             var footerH = $(".main .main-item .footer").height()
-
             this.height = itemHeight - titleH - footerH
-
-
-        },
-        setWidth: function () {
-
-            var itemW = $(".BudgetSetting .main .main-item .con").width()
-            //各月能源
-
-            $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(1)
-            $(" .BudgetSetting .main .main-item .allMonthCon").width(itemW + 32)
-            $(".BudgetSetting .main .main-item .allMonthCon").scroll(function () {
-                $(" .BudgetSetting .main .main-item .allMonthCon").css("padding-right", "15px")
-
-            })
-            //各部门用电预算
-
-            $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(1)
-            $(" .BudgetSetting .main .main-item .departBudgetCon").width(itemW + 32)
-            $(".BudgetSetting .main .main-item .departBudgetCon").scroll(function () {
-                $(" .BudgetSetting .main .main-item .departBudgetCon").css("padding-right", "15px")
-
-            })
-            //各部门电费均摊
-
-            $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(1)
-            $(" .BudgetSetting .main .main-item .departMoneyCon").width(itemW + 32)
-            $(".BudgetSetting .main .main-item .departMoneyCon").scroll(function () {
-                $(" .BudgetSetting .main .main-item .departMoneyCon").css("padding-right", "5px")
-
-
-            })
-
-
-
-
         },
         getUnitData: function () {
             var unitData = JSON.parse(localStorage.getItem("UnitData"))
@@ -808,16 +772,9 @@
         //this.getTreeData()
     },
     mounted: function () {
-        this.setWidth()
         this.setHeight()
         var that = this
-        $(".lastOverflow").width($(".last-main-item").width() + 50)
         window.onresize = function () {
-            $(".BudgetSetting .main .main-item .allMonthCon").scrollTop(0)
-            $(".BudgetSetting .main .main-item .departBudgetCon").scrollTop(0)
-            $(".BudgetSetting .main .main-item .departMoneyCon").scrollTop(0)
-            $(".lastOverflow").width($(".last-main-item").width() + 50)
-            that.setWidth()
             that.setHeight()
         };
         

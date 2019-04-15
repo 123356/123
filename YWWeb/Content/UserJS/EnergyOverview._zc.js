@@ -46,13 +46,19 @@
     },
     filters: {
         toMoney: function (num) {
-            
             if (num == null || num == undefined) {
                 return '--'
             }
-            num = num.toFixed(2)
             num = parseFloat(num)
-            num = num.toLocaleString();
+            num = num.toFixed(2)
+            return num;//返回的是字符串23,245.12保留2位小数
+        },
+        toFixed: function (num) {
+            if (num == null || num == undefined) {
+                return '--'
+            }
+            num = parseFloat(num)
+            num = num.toFixed(2)
             return num;//返回的是字符串23,245.12保留2位小数
         }
     },
@@ -408,7 +414,7 @@ creatEnergyMoneyChart: function (data) {
     var legend = new Array()
     var sumTotal = 0
     for (var i = 0; i < data.left_view.length; i++) {
-        data.left_view[i].value = data.left_view[i].value
+        data.left_view[i].value = parseFloat(data.left_view[i].value).toFixed(2)
         sumTotal += parseFloat(data.left_view[i].value)
         legend.push(data.left_view[i].name)
     }
@@ -490,7 +496,7 @@ createModulePieChart: function (chart, data) {
     for (var i = 0; i < data.keyValuePairs.length; i++) {
         var val =  data.keyValuePairs[i].value
         if(val!='-'){
-            data.keyValuePairs[i].value = data.keyValuePairs[i].value
+            data.keyValuePairs[i].value = parseFloat(data.keyValuePairs[i].value).toFixed(2)
         }
        
     }
@@ -513,7 +519,7 @@ createModulePieChart: function (chart, data) {
                     show: true,
                     position: 'center',
                     formatter: function (arg) {
-                        var html = data.rate;
+                        var html = parseFloat(data.rate).toFixed(2) ;
                         return html
                     },
                     textStyle: {
