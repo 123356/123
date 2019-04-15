@@ -17,6 +17,7 @@
                 title: '排名',
                 align: 'center',
                 key: 'index',
+                width: 50,
                 render: (h, params) => {
                     var index = params.index + 1
                     if (index <= 3) {
@@ -32,70 +33,46 @@
                             }
                         })
                     } else {
-                        return h('div', {
+                        return h('Badge', {
                             attrs: {
-                                class: 'orderNum',
-                                style: 'width: 18px;height:18px;border-radius:50%;color:#fff;background:#9d9d9d;text-align:center;line-height:18px;margin:0 auto;font-size:1rem',
-
+                                type: 'normal',
+                                count: index,
+                                overflowCount: 1000
                             },
                             on: {
                                 click: () => {
                                 }
                             }
-                        }, index)
+                        })
+
                     }
 
                 }
 
             },
             {
-                title: '名称',
+                title: '详细',
                 align: 'left',
                 tooltip: true,
                 key: 'EName',
                 render: (h, params) => {
-                    return h('span',
-                        {
-                            attrs: {
-                                style: 'color:#6d6d6f',
-                            },
-                        }, params.row.EName)
-                }
-            },
-            {
-                title: '偏差率',
-                align: 'center',
-                key: 'Proportion',
-                render: (h, params) => {
-                    return h('span',
-                        {
-                            attrs: {
-                                style: 'color:#6d6d6f',
-                            },
-                        }, (params.row.Proportion - 100).toFixed(2)+'%')
-                }
-            },
-            {
-                title: '类型',
-                width: 35,
-                align: 'center',
-                key: 'COName'
-            },
-            {
-                title: '时间',
-                tooltip: true,
-                align: 'center',
-                key: 'RecordTime',
-                render: (h, params) => {
                     var time = params.row.RecordTime
                     var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
-                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
-                    return h('span',
-                        {
-                            attrs: {
-                                style: 'color:#6d6d6f',
-                            },
-                        }, d)
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+                    return h('div', [
+                        h('p', [
+                             h('span',  '名称：' + params.row.EName),
+                              h('span', { attrs: { class: 'labelName' } }, '类型：' + params.row.COName),
+                        ]),
+                        h('p', [
+                             h('span', '偏差率：' + (params.row.Proportion - 100).toFixed(2) + '%')
+                        ]),
+                        h('p', [
+                            
+                             h('span', '时间：' +d )
+                        ])
+
+                    ]);
                 }
             }
         ],
@@ -109,7 +86,7 @@
                 render: (h, params) => {
                     var time = params.row.RecordTime
                     var date = new Date(parseInt(time.replace(/\/Date\((-?\d+)\)\//, '$1')));
-                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
+                    var d = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
                     return h('span',
                         {
                             attrs: {
@@ -140,7 +117,7 @@
                 render: (h, params) => {
                     return h('span',
                         {
-                        }, (params.row.Proportion - 100).toFixed(2)+'%')
+                        }, (params.row.Proportion - 100).toFixed(2) + '%')
                 }
             },
             {
@@ -194,7 +171,7 @@
         lineShow: true,
         rowClickSelection: [],
         switchState: false,
-        curTime:null,
+        curTime: null,
     },
     methods: {
         //异常列表
@@ -204,9 +181,9 @@
             this.$http({
                 url: '/energyManage/EMHome/GetExTable',
                 method: 'post',
-                 body: {
-                     uid:that.uid
-                 }
+                body: {
+                    uid: that.uid
+                }
             })
                 .then(function (res) {
                     var data = res.data
@@ -225,7 +202,7 @@
                         that.curCID = data[0].PID + "-" + data[0].CID
                         that.curSelectID = data[0].ID
                         that.getTableList(data[0].ID)
-                        that.getBarData(data[0].PID+"-"+data[0].CID)
+                        that.getBarData(data[0].PID + "-" + data[0].CID)
                         that.getLineData(data[0].PID + "-" + data[0].CID)
                     } else {
                         that.barShow = false
@@ -253,7 +230,7 @@
             } else {
                 this.listColumns.splice(0, 1)
                 $(".ivu-table-tbody .ivu-table-row:eq(0)").addClass("ivu-table-row-highlight")
-               
+
             }
         },
         //异常分析表格
@@ -363,15 +340,15 @@
                         closable: true
                     });
                     this.listData[selection[1].index]._checked = false
-                    selection.splice(1,1)
+                    selection.splice(1, 1)
                 }
             }
             if (selection.length <= 2) {
                 this.tableSelection = selection
-                
-                
+
+
             }
-           
+
             if (this.tableSelection.length == 2) {
                 //this.$Modal.warning({
                 //    title: '信息提示',
@@ -398,7 +375,7 @@
             for (var i = 0; i < selection.length; i++) {
                 if ((i + 1) == selection.length) {
                     this.curSelectID += selection[i].ID + ""
-                    this.curCID += (selection[i].PID+"-"+selection[i].CID)
+                    this.curCID += (selection[i].PID + "-" + selection[i].CID)
                 } else {
                     this.curSelectID += selection[i].ID + ","
                     this.curCID += (selection[i].PID + "-" + selection[i].CID) + ","
@@ -418,13 +395,13 @@
             }
         },
         onSelectCancel: function (selection, row) {
-            
+
             this.listData[row.index]._checked = false
         },
         rowCLick: function (row, index) {
             //this.listData[index]._checked = !this.listData[index]._checked
             $(".ivu-table-tbody .ivu-table-row").removeClass("ivu-table-row-highlight")
-            $(".ivu-table-tbody .ivu-table-row:eq("+index+")").addClass("ivu-table-row-highlight")
+            $(".ivu-table-tbody .ivu-table-row:eq(" + index + ")").addClass("ivu-table-row-highlight")
             this.curTime = row.RecordTime
             if (!this.switchState) {
                 this.curSelectID = row.ID
@@ -434,7 +411,7 @@
                 this.getBarData(this.curCID)
                 this.getLineData(this.curCID)
             }
-            
+
         },
         setSelectState: function (isDisable) {
             for (var i = 0; i < this.listData.length; i++) {
@@ -449,11 +426,11 @@
         },
         //用电趋势图
         createBarAndLine: function (data) {
-            
+
             barAndLineChart = echarts.init(document.getElementById('barAndLine'));
             var legend = []
             var seriesData = new Array()
-            
+
             var yName = "kW·h"
             if (this.curEntype != 1) {
                 yName = "m³"
@@ -478,7 +455,7 @@
                         color: color[i],
                         data: dataArray
                     }
-                    var index =parseInt(i+1)
+                    var index = parseInt(i + 1)
                     seriesData.push(temp)
                     seriesData.push({
                         name: data.list_line[i].name[index],
@@ -602,7 +579,7 @@
                         type: 'value',
                         name: '温度℃',
                         min: 0,
-                        
+
                         interval: 5,
                         axisLabel: {
                             formatter: '{value} °C'
@@ -653,13 +630,13 @@
             for (var i in data.list_line) {
                 var sj = []
                 var yc = []
-                for(var j in data.list_line[i].list){
+                for (var j in data.list_line[i].list) {
                     sj.push(data.list_line[i].list[j].value)
                 }
                 for (var j in data.list_line[i].list_budget) {
                     yc.push(data.list_line[i].list_budget[j].value)
                 }
-                
+
                 seriesData.push({
                     name: data.name[i],
                     type: 'line',
@@ -672,7 +649,7 @@
                     },
                     data: sj
                 })
-                var index = parseInt(i+1)
+                var index = parseInt(i + 1)
                 seriesData.push({
                     name: data.name[index],
                     type: 'line',
@@ -685,7 +662,7 @@
                     },
                     data: yc
                 })
-                
+
             }
             var option = option = {
 

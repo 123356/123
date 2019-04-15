@@ -17,10 +17,13 @@
     <script type="text/javascript" src="~/Content/js/vue-resource.min.js"></script>
     <script type="text/javascript" src="~/Content/iview/dist/iview.js"></script>
     <style type="text/css">
-        /*tr.ivu-table-row-hover td {
-            background: rgba(91,176,157,0.2)
-        }*/
-       
+        .ivu-badge-count {
+            font-size: 10px !important
+        }
+        .labelName{
+            float:right;
+            margin-right:5px
+        }
     </style>
 </head>
 <body>
@@ -35,8 +38,10 @@
                 </div>
                 @*<button class="btn">对比</button>*@
             </div>
+            
             <dv class="list consumeList" style="overflow:hidden">
                 <i-table ref="tableSelect" :columns="listColumns" :data="listData" :height="listHeight" :width="listWidth" :highlight-row="true" class="comTable"
+                         :show-header="false"
                          v-on:on-selection-change="tableSelectChange"
                          v-on:on-select="onSelect"
                          v-on:on-select-cancel="onSelectCancel"
@@ -88,7 +93,7 @@
         </div>
         <!--right e-->
     </div>
-    <script type="text/javascript" src="~/Content/UserJS/Consume._jm.js?v=1.58"></script>
+    <script type="text/javascript" src="~/Content/UserJS/Consume._jm.js?v=1.61"></script>
 </body>
 </html>
 
