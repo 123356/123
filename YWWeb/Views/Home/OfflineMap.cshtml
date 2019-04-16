@@ -185,11 +185,11 @@
                     })
                         .then(function (res) {
                             var data = res.data
-                            if (data.length == 1) {
+                            //if (data.length == 1) {
                                 that.info = data[0]
                                 $(".offLineMapView").css("background", "url('/Content/images/offLineMap/" + data[0].UnitID + "_offLineMap.png')")
                                 that.setPosition()
-                            }
+                            //}
                             //for (var i in data) {
                             //    if (data[i].UnitName == "北人展馆中心") {
                             //        that.info = data[i]

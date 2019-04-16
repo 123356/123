@@ -77,6 +77,12 @@
 
     <script type="text/javascript">
        
+        if (!navigator.onLine) {
+            //if (data.length == 1) {
+            location.href = '/Home/OfflineMap'
+            //}
+
+        }
 
 
         var x, y;
@@ -148,9 +154,18 @@
                             "elementType": "all",
                             "stylers": {
                                 "lightness": 30,
-                                "saturation": -100
+                                "saturation": -100,
                             }
                         },
+                        //{
+                        //    "featureType": "background",
+                        //    "elementType": "all",
+                        //    "stylers": {
+                        //        "color": "#ffffffff",
+                        //        "weight": "0.1",
+                        //        "visibility": "on"
+                        //    }
+                        //},
                         {   //道路不显示文字
                             "featureType": "highway",
                             "elementType": "labels",
@@ -214,12 +229,7 @@
 
         $.post("/Home/UnitListData", function (data) {
             //markerArr = eval("(" + data + ")");
-            if (!navigator.onLine) {
-                if (data.length == 1) {
-                    location.href = '/Home/OfflineMap'
-                }
-                
-            }
+            
             markerArr = data;
             
             //二级页面默认id

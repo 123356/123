@@ -1,4 +1,10 @@
-	//用百度地图API获得当前所在城市
+function isOnline() {
+    if (!navigator.onLine) {
+        return;
+    }
+}
+isOnline()
+//用百度地图API获得当前所在城市
 	var map = new BMap.Map('map');
 	var myCity = new BMap.LocalCity();
 	var cityName;
