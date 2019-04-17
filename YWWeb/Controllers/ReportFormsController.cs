@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -1116,7 +1117,7 @@ namespace YWWeb.Controllers
             }
             list_item = list_item.OrderBy(p => p.name).ToList();
             list_area = list_area.OrderBy(p => p.name).ToList();
-            return Json(new { list_item, list_area}, JsonRequestBehavior.AllowGet);
+            return Json(new { list_item, list_area }, JsonRequestBehavior.AllowGet);
         }
 
         public class Ev : t_EE_PowerQualityDaily
@@ -1155,15 +1156,18 @@ namespace YWWeb.Controllers
                         var s = stringCid.Split(',');
                         foreach (var i in s)
                         {
-                            var x = i.Split('-');
-                            List<string> cidList = new List<string>();
-                            if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                            if (!string.IsNullOrEmpty(i))
                             {
-                                data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
-                            }
-                            else
-                            {
-                                data.Add(Convert.ToInt32(x[0]), x[1]);
+                                var x = i.Split('-');
+                                List<string> cidList = new List<string>();
+                                if (data.Keys.Contains(Convert.ToInt32(x[0])))
+                                {
+                                    data[Convert.ToInt32(x[0])] = data[Convert.ToInt32(x[0])] + "," + x[1];
+                                }
+                                else
+                                {
+                                    data.Add(Convert.ToInt32(x[0]), x[1]);
+                                }
                             }
                         }
                     }
@@ -1227,11 +1231,11 @@ namespace YWWeb.Controllers
             try
             {
                 var bll = new pdermsWebEntities();
-                var unit=  bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                var unit = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
                 if (unit != null)
                 {
                     string sql = "select * from t_DM_CircuitInfo WHERE Label is not NULL and Label!=''";
-                    if(!string.IsNullOrEmpty(unit.PDRList))
+                    if (!string.IsNullOrEmpty(unit.PDRList))
                     {
                         sql += " AND PID IN(" + unit.PDRList + ")";
                     }
@@ -1248,16 +1252,17 @@ namespace YWWeb.Controllers
 
                     var m = from n in LableList
                             select new
-                    {
-                        Label = n
-                    };
+                            {
+                                Label = n
+                            };
                     return Json(m, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     return Json("No Data", JsonRequestBehavior.AllowGet);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -1278,7 +1283,7 @@ namespace YWWeb.Controllers
                 {
                     var unit = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
                     if (unit != null)
-                         UnitName = unit.UnitName;
+                        UnitName = unit.UnitName;
                     if (type == 1)
                     {
                         string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
@@ -1353,7 +1358,7 @@ namespace YWWeb.Controllers
                                 }
                                 list_item.Add(model);
 
-                                
+
                             }
                         }
 
@@ -1399,7 +1404,7 @@ namespace YWWeb.Controllers
                                             sqlD += ")";
                                     }
                                 }
-                                var  listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
+                                var listData = bll.ExecuteStoreQuery<Ev>(sqlD).ToList();
                                 listDataArea.AddRange(listData);
                                 var labless = listData.Select(p => p.Label).Distinct().ToList();
                                 string ll = "";
@@ -1719,7 +1724,7 @@ namespace YWWeb.Controllers
                 }
                 list_item = list_item.OrderBy(p => p.name).ToList();
                 list_area = list_area.OrderBy(p => p.name).ToList();
-                return  ExportEneryToExcel(list_item, times, type, listDataItem, list_area, listDataArea, UnitName);
+                return ExportEneryToExcel(list_item, times, type, listDataItem, list_area, listDataArea, UnitName);
             }
             catch (Exception ex)
             {
@@ -1729,7 +1734,7 @@ namespace YWWeb.Controllers
 
 
 
-        public ActionResult ExportEneryToExcel(List<RetnView> list_item, List<DateTime> times, int type,List<Ev> list_sm,List<RetnView> list_area,List<Ev> list_ar,string UnitName)
+        public ActionResult ExportEneryToExcel(List<RetnView> list_item, List<DateTime> times, int type, List<Ev> list_sm, List<RetnView> list_area, List<Ev> list_ar, string UnitName)
         {
             //var lstTitle = list.Select(p => new { p.CID, p.CName }).Distinct().ToList();
             //var listTime = list.Select(p => p.RecordTime).Distinct().ToList();
@@ -1741,17 +1746,17 @@ namespace YWWeb.Controllers
             {
                 timeText = times[1].ToString("yyyy-MM-dd");
             }
-            else if(type==2)
+            else if (type == 2)
             {
-                timeText= times[1].ToString("yyyy-MM");
+                timeText = times[1].ToString("yyyy-MM");
             }
-            else if (type==3)
+            else if (type == 3)
             {
                 timeText = Convert.ToDateTime(times[1]).Year + "";
             }
 
             sbHtml.AppendFormat("<tr><td style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;' colspan='" + (4 + times.Count) + "'>{0}<br>{1}</td></tr>", timeText + "建筑能耗分项报表", UnitName);
-            
+
             sbHtml.Append("<tr>");
             sbHtml.Append("<td>ID</td>");
             sbHtml.Append("<td>名称</td>");
@@ -1860,7 +1865,7 @@ namespace YWWeb.Controllers
                     var Item = ((item == null || item == "") ? "--" : item);
                     sbHtml.AppendFormat("<td style='text-align:center;'>{0}</td>", Item);
                 }
-                sbHtml.AppendFormat("<td>{0}</td>", list_area[i].Value.Where(p=>p!=""&&p!=null).Sum(p => Convert.ToDecimal(p)));
+                sbHtml.AppendFormat("<td>{0}</td>", list_area[i].Value.Where(p => p != "" && p != null).Sum(p => Convert.ToDecimal(p)));
                 sbHtml.Append("</tr>");
             }
 
@@ -1915,6 +1920,1503 @@ namespace YWWeb.Controllers
             return File(fileContents, "application/ms-excel", fileName + ".xls");
         }
         #endregion
+        #region 用电报告
+        public string GetElectricityConsumptionReport_SSQX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        {
+            try
+            {
+                string result = "";
+                IList<IDAO.Models.t_V_EneryView> list = null;
+                string xAxis = "", CName = "", yData = string.Empty;
+                using (pdermsWebEntities bll = new pdermsWebEntities())
+                {
+                    List<DateTime> times = new List<DateTime>();
+                    string cids = "0-0";
+                    if (type == 1)
+                    {
+                        if (TimeType == 1)
+                        {
+                            int year = Convert.ToDateTime(TimeDate).Year;
+                            int month = Convert.ToDateTime(TimeDate).Month;
+                            int day = Convert.ToDateTime(TimeDate).Day;
+                            for (int index = 0; index < 24; index++)
+                            {
+                                times.Add(new DateTime(year, month, day).AddHours(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',')+ "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            int year = Convert.ToDateTime(TimeDate).Year;
+                            int month = Convert.ToDateTime(TimeDate).Month;
+                            int days = DateTime.DaysInMonth(year, month);
+                            for (int index = 0; index < days; index++)
+                            {
+                                times.Add(new DateTime(year, month, 1).AddDays(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',') + "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                        else if (TimeType == 3)
+                        {
+
+                            for (int index = 0; index < 12; index++)
+                            {
+                                times.Add(new DateTime(int.Parse(TimeDate), 1, 1).AddMonths(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',') + "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                    }
+                    else
+                    {
+                        if (TimeType == 1)
+                        {
+                            int year = Convert.ToDateTime(TimeDate).Year;
+                            int month = Convert.ToDateTime(TimeDate).Month;
+                            int day = Convert.ToDateTime(TimeDate).Day;
+                            for (int index = 0; index < 24; index++)
+                            {
+                                times.Add(new DateTime(year, month, day).AddHours(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',') + "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            int year = Convert.ToDateTime(TimeDate).Year;
+                            int month = Convert.ToDateTime(TimeDate).Month;
+                            int days = DateTime.DaysInMonth(year, month);
+                            for (int index = 0; index < days; index++)
+                            {
+                                times.Add(new DateTime(year, month, 1).AddDays(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',') + "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                        else if (TimeType == 3)
+                        {
+
+                            for (int index = 0; index < 12; index++)
+                            {
+                                times.Add(new DateTime(int.Parse(TimeDate), 1, 1).AddMonths(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var item in times)
+                            {
+                                xAxis += item.ToString("MM-dd HH:mm") + ",";
+                            }
+                            int ii = 0;
+                            foreach (var temp in ListTemp)
+                            {
+                                CName += "\"" + temp.Key + "\",";
+                                foreach (var item in times)
+                                {
+                                    //xAxis += item.ToString("MM-dd HH:mm") + ",";
+                                    var data = temp.Where(p => p.RecordTime == item).ToList();
+                                    if (data.Count() > 0)
+                                    {
+                                        yData += data.Sum(p => p.Value) + ",";
+                                    }
+                                    else
+                                    {
+                                        yData += 0 + ",";
+                                    }
+                                }
+                                if (ii < (ListTemp.Count() - 1))
+                                {
+                                    yData = yData.TrimEnd(',') + "\",\"";
+                                }
+                                else
+                                {
+                                    yData = yData.TrimEnd(',');
+                                }
+                                ii++;
+                            }
+                            result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string GetElectricityConsumptionReport_FX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        {
+            try
+            {
+                string result = "";
+                IList<IDAO.Models.t_V_EneryView> list = null;
+                string yAxis = "", series1 = "";
+                decimal dbTotal = 0;
+                using (pdermsWebEntities bll = new pdermsWebEntities())
+                {
+                    List<DateTime> times = new List<DateTime>();
+                    string cids = "0-0";
+                    if (type == 1)
+                    {
+                        if (TimeType == 1)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p=>p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            int year = Convert.ToDateTime(TimeDate).Year;
+                            int month = Convert.ToDateTime(TimeDate).Month;
+                            int days = DateTime.DaysInMonth(year, month);
+                            for (int index = 0; index < days; index++)
+                            {
+                                times.Add(new DateTime(year, month, 1).AddDays(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p => p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                        else if (TimeType == 3)
+                        {
+
+                            for (int index = 0; index < 12; index++)
+                            {
+                                times.Add(new DateTime(int.Parse(TimeDate), 1, 1).AddMonths(index));
+                            }
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p => p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                    }
+                    else
+                    {
+                        if (TimeType == 1)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p => p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p => p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                        else if (TimeType == 3)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                else
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int inn = 0; inn < lalist.Count; inn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[inn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[inn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                        sqlarea += ")";
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.GroupBy(p => p.CName).ToList();
+                            foreach (var temp in ListTemp)
+                            {
+                                yAxis += "'" + temp.Key + "',";
+                                series1 += "{\"value\": " + temp.Sum(p => p.Value) + ",\"name\": \"" + temp.Key + "\"},";
+                                dbTotal += temp.Sum(p => p.Value);
+                            }
+                            result = "{\"yAxis\":\"[" + yAxis.TrimEnd(',') + "]\",\"series1\":[" + series1.TrimEnd(',') + "],\"total\":[" + dbTotal.ToString() + "]}";
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public string GetElectricityConsumptionReport_PM(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        {
+            try
+            {
+                string result = "";
+                IList<IDAO.Models.t_V_EneryView> list = null;
+                string yAxis = "", series1 = "", series2 = "";
+                using (pdermsWebEntities bll = new pdermsWebEntities())
+                {
+                    List<DateTime> times = new List<DateTime>();
+                    string cids = "0-0";
+                    if (type == 1)
+                    {
+                        if (TimeType == 1)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+                         
+                            foreach (var temp in List_c)
+                            {
+                                
+                                 series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+                                
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+
+                            foreach (var temp in List_c)
+                            {
+
+                                series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                        else if (TimeType == 3)
+                        {
+
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=2 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(areaids))
+                                sql += " AND b.child_id IN(" + areaids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+
+                            foreach (var temp in List_c)
+                            {
+
+                                series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                    }
+                    else
+                    {
+                        if (TimeType == 1)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+
+                            foreach (var temp in List_c)
+                            {
+
+                                series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                        else if (TimeType == 2)
+                        {
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+
+                            foreach (var temp in List_c)
+                            {
+
+                                series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                        else if (TimeType == 3)
+                        {
+
+                            string sql = "select a.Name,b.child_id,b.addCid from t_EE_EnerUserType a join t_EE_EnerUserProject b on a.id=b.child_id where a.item_type=1 and unit_id=" + uid;
+                            if (!string.IsNullOrEmpty(itemids))
+                                sql += " AND b.child_id IN(" + itemids + ")";
+                            var ItemData = bll.ExecuteStoreQuery<EnView>(sql);
+                            foreach (var item in ItemData)
+                            {
+                                cids += item.addCid + ",";
+                            }
+                            Dictionary<int, string> cpids = GetCId(cids);
+                            string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
+on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
+
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+                            int i = 0;
+                            foreach (KeyValuePair<int, string> item in cpids)
+                            {
+                                if (i == 0)
+                                {
+                                    sqlarea += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                else
+                                {
+                                    sqlarea += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                    sqlarea_lm += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}) and b.PID={item.Key})";
+                                }
+                                if (cpids.Count() == (i + 1))
+                                {
+                                    sqlarea += ")";
+                                    sqlarea_lm += ")";
+                                }
+                                i++;
+                            }
+                            if (!string.IsNullOrEmpty(lables))
+                            {
+                                var lalist = lables.Split(',').ToList();
+                                for (int innn = 0; innn < lalist.Count; innn++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        sqlarea += " and ((b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    else
+                                    {
+                                        sqlarea += " or (b.Label='" + lalist[innn] + "')";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                    if (i == lalist.Count - 1)
+                                    {
+                                        sqlarea += ")";
+                                        sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
+                                    }
+                                }
+                            }
+                            sqlarea += " order by RecordTime";
+                            sqlarea_lm += " order by RecordTime";
+
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
+                            var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
+                            int inn = 0;
+                            List<string> List_c = new List<string>();
+                            foreach (var temp in ListTemp)
+                            {
+                                if (inn < 6)
+                                {
+                                    yAxis += temp.Key + ",";
+                                    series1 += temp.Sum(p => p.Value) + ",";
+                                    List_c.Add(temp.Key);
+                                    inn++;
+                                }
+                            }
+                            list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
+
+                            foreach (var temp in List_c)
+                            {
+
+                                series2 += list.Where(p => p.CName == temp).Sum(p => p.Value) + ",";
+
+                            }
+                            result = "{\"yAxis\":\"" + yAxis.TrimEnd(',') + "\",\"series1\":\"" + series1.TrimEnd(',') + "\",\"series2\":\"" + series2.TrimEnd(',') + "\"}";
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
 
     }
 }
