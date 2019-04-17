@@ -30,10 +30,24 @@ join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevTyp
             return SQLQuery<t_EE_ExEnergy>(sql);
         }
 
-        public IList<t_EE_ExEnergy> GetExTable(string pids, string id)
+        public IList<t_EE_ExEnergy> GetExTable(Dictionary<int,string> cpids)
         {
             string sql = $@"select a.*,b.Name EName,c.DeviceName,d.CName,e.Name as COName,f.Name as PName from t_EE_ExEnergy a join t_EE_EnerUserType b on a.enerUserTypeID=b.id join t_DM_DeviceInfo c on a.DID=c.DID
-join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevType e on a.CODID = e.ID join t_CM_PDRInfo f on a.PID=F.PID where a.PID IN({pids}) and a.ID IN({id}) order by Proportion desc";
+join t_DM_CircuitInfo d on a.CID = d.CID and a.PID=d.PID join t_DM_CollectDevType e on a.CODID = e.ID join t_CM_PDRInfo f on a.PID=F.PID where 1=1";
+            int i = 0;
+            foreach (KeyValuePair<int, string> item in cpids)
+            {
+                if (i == 0)
+                    sql += $" and ((a.CID in({ item.Value}) and a.PID in ({ item.Key}))";
+                else
+                    sql += $" or (a.CID in({ item.Value}) and a.PID in ({ item.Key}))";
+                if (cpids.Count() == (i + 1))
+                {
+                    sql += ")";
+                }
+                i++;
+            }
+            sql += " order by Proportion desc";
             return SQLQuery<t_EE_ExEnergy>(sql);
         }
 

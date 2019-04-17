@@ -867,8 +867,8 @@ namespace EnergyManage.Controllers
 
         public JsonResult GetbugTable(string id)
         {
-            string pids = GetPIDs();
-            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(pids, id);
+            Dictionary<int, string> cpids = GetCId(id);
+            IList<t_EE_ExEnergy> list = DAL.ExEnergyDAL.getInstance().GetExTable(cpids);
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
