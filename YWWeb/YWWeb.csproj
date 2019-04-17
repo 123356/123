@@ -3529,6 +3529,7 @@
     <Content Include="Content\images\offLineMap\29_offLineMap.png" />
     <Content Include="Content\images\offLineMap\34_offLineMap.png" />
     <Content Include="Content\images\offLineMap\36_offLineMap.png" />
+    <Content Include="Content\images\offLineMap\38_offLineMap.png" />
     <Content Include="Content\images\pageleft.png" />
     <Content Include="Content\images\pageright.png" />
     <Content Include="Content\images\page_location.png" />
@@ -4059,6 +4060,7 @@
     <Content Include="Content\UserJS\ElectricityReport._zc.js" />
     <Content Include="Content\UserJS\EnergyAudit._zc.js" />
     <Content Include="Content\UserJS\EnergyOverview.js" />
+    <Content Include="Content\UserJS\EnergyPriceIndex._jm.js" />
     <Content Include="Content\UserJS\EnergyPublicity._jm.js" />
     <Content Include="Content\UserJS\EnergyPublicity._zc .js" />
     <Content Include="Content\UserJS\EnergyQuery._jm.js" />

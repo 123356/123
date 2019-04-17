@@ -25,7 +25,7 @@
         //单位下拉框
         getUnitComobxList: function () {
             var that = this
-            getUnitComobxListAPI().then(function (res) {
+            getUnitListDataAPI().then(function (res) {
                 that.comList = res.data
                 if (that.unitID == null) {
                     if (res.data.length > 0) {

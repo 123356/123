@@ -77,7 +77,13 @@
     </div>
 
     <script type="text/javascript">
-       
+        function isOnline() {
+            if (!navigator.onLine) {
+                location.href = "/Home/OfflineMap"
+                return
+            }
+        }
+        isOnline()
         var x, y;
         try {
             var geo = new jQuery.AMUI.Geolocation({
