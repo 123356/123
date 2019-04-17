@@ -189,7 +189,7 @@
                                 </div>
                                 <div class="item rightItem">
                                     <div>
-                                        <b><font v-html="zongRate==null?'--':zongRate"></font></b>
+                                        <b><font  :title="zongRate">{{zongRate|toMoney}}</font></b>
                                         <p>已用费用(万)</p>
                                     </div>
                                     <div>
