@@ -21,3 +21,33 @@
     border-bottom: 1px;
     background: #f8f8f9
 }
+
+
+#printModal .reportCon .row {
+    height: 300px;
+    margin-top:0
+}
+    #printModal .reportCon .row .module .con {
+        height: 220px;
+    }
+        #printModal .reportCon .row .module .con .rightItem div > b {
+            font-size: 24px !important
+        }
+
+        #printModal .reportCon .row .module .con .rightItem div > b {
+            font-size: 12px !important
+        }
+ #printModal  .module .con img {
+    width: 100%;
+    height:auto
+}
+#printModal .module .con .firstPieImg {
+    height: 180px
+}
+#printModal .module .con .lineChartView img{
+    width:100%
+}
+#printModal .reportView {
+    border: 0px !important;
+    margin-bottom: 20px
+}

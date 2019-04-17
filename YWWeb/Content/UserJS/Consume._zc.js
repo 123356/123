@@ -187,9 +187,21 @@
             })
                 .then(function (res) {
                     var data = res.data
+                    var tempArr = that.listData
+                    var start = tempArr.length-1
                     if (data.length > 0) {
-                        that.curTime = data[0].RecordTime
-                        for (var i = 0; i < data.length; i++) {
+                        if (tempArr.length == 0) {
+                            that.curTime = data[0].RecordTime
+                            var id = data[0].ID
+                            that.curCID = data[0].PID + "-" + data[0].CID
+                            that.curSelectID = data[0].ID
+                            that.getTableList(data[0].ID)
+                            that.getBarData(data[0].PID + "-" + data[0].CID)
+                            that.getLineData(data[0].PID + "-" + data[0].CID)
+                            start=0
+                        }
+                        
+                        for (var i = start; i < data.length; i++) {
                             if (i == 0) {
                                 data[i]._checked = true
                             } else {
@@ -197,18 +209,17 @@
                             }
                             data[i]._disabled = false
                             data[i].index = i
+                            tempArr.push(data[i])
                         }
-                        var id = data[0].ID
-                        that.curCID = data[0].PID + "-" + data[0].CID
-                        that.curSelectID = data[0].ID
-                        that.getTableList(data[0].ID)
-                        that.getBarData(data[0].PID + "-" + data[0].CID)
-                        that.getLineData(data[0].PID + "-" + data[0].CID)
+                        
+                        
                     } else {
-                        that.barShow = false
-                        that.lineShow = false
+                        if (tempArr.length == 0) {
+                            that.barShow = false
+                            that.lineShow = false
+                        }
                     }
-                    that.listData = data
+                    that.listData = tempArr
                 })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
@@ -217,6 +228,10 @@
                     that.loading = false
                     $(".ivu-table-tbody .ivu-table-row:eq(0)").addClass("ivu-table-row-highlight")
                 })
+        },
+        //加载更多
+        loadMore:function(){
+
         },
         switchChange: function (e) {
             this.switchState = e
@@ -381,7 +396,7 @@
                     this.curCID += (selection[i].PID + "-" + selection[i].CID) + ","
                 }
             }
-            this.getTableList(this.curSelectID)
+            this.getTableList(this.curCID)
             this.getBarData(this.curCID)
             this.getLineData(this.curCID)
         },
