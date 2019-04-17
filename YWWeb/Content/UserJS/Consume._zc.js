@@ -195,7 +195,7 @@
                             var id = data[0].ID
                             that.curCID = data[0].PID + "-" + data[0].CID
                             that.curSelectID = data[0].ID
-                            that.getTableList(data[0].ID)
+                            that.getTableList(data[0].PID + "-" + data[0].CID)
                             that.getBarData(data[0].PID + "-" + data[0].CID)
                             that.getLineData(data[0].PID + "-" + data[0].CID)
                             start=0
@@ -422,7 +422,7 @@
                 this.curSelectID = row.ID
                 this.curCID = row.PID + "-" + row.CID
                 this.curEntype = row.CODID
-                this.getTableList(this.curSelectID)
+                this.getTableList(this.curCID)
                 this.getBarData(this.curCID)
                 this.getLineData(this.curCID)
             }
