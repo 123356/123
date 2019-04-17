@@ -1921,7 +1921,7 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 用电报告
-        public string GetElectricityConsumptionReport_SSQX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        public string GetElectricityConsumptionReport_SSQX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
         {
             try
             {
@@ -1955,7 +1955,7 @@ namespace YWWeb.Controllers
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2044,7 +2044,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2131,7 +2131,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2223,7 +2223,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2312,7 +2312,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2399,7 +2399,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2477,7 +2477,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
             }
         }
 
-        public string GetElectricityConsumptionReport_FX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        public string GetElectricityConsumptionReport_FX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
         {
             try
             {
@@ -2505,7 +2505,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2569,7 +2569,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2631,7 +2631,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2691,7 +2691,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2748,7 +2748,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2805,7 +2805,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2859,7 +2859,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
         }
 
 
-        public string GetElectricityConsumptionReport_PM(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables)
+        public string GetElectricityConsumptionReport_PM(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
         {
             try
             {
@@ -2886,11 +2886,11 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2974,11 +2974,11 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3063,11 +3063,11 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1";
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3154,11 +3154,11 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3242,11 +3242,11 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3331,11 +3331,11 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2";
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
