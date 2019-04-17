@@ -27,6 +27,8 @@ namespace IDAO.Models
         public int unit_people { get; set; }
         public decimal NeedPower { get; set; }
         public decimal UsePower { get; set; }
+        public string icon { get; set; }
+
     }
     public partial class t_V_EnerProjectTypeTree: t_V_EnerProjectType
     {

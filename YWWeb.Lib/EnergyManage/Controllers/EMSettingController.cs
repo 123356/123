@@ -44,20 +44,34 @@ namespace EnergyManage.Controllers
         /// 返回cid树
         public JsonResult GetCidTree(int UnitID,string UnitName,string PDRList)
         {
+
+            if (UnitID == 0 || UnitName == "" || PDRList == "")
+            {
+                return Json("参数异常:参数为空");
+            }
+
             IList<IDAO.Models.t_V_CidTree> tree = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidTree(UnitID, UnitName, PDRList);
             return Json(tree);
         }
 
         //返回CID数据
-        public JsonResult GetCidData(int UnitID, string UnitName, string PDRList)
+        public JsonResult GetCidData(int UnitID=0, string UnitNam="", string PDRList = "")
         {
+            if (UnitID == 0 || UnitNam == "" || PDRList == "")
+            {
+                return Json("参数异常:参数为空");
+            }
+
             IList<IDAO.Models.t_V_DeviceInfoState_PDR1> tree = DAL.VDeviceInfoState_PDR1DAL.getInstance().GetCidData(UnitID, UnitName, PDRList);
             return Json(tree);
         }
 
         //返回能源树
-        public JsonResult GetEnergyTree(int UnitID, int ItemType, string UnitName)
+        public JsonResult GetEnergyTree(int UnitID=0, int ItemType=0, string UnitName="")
         {
+            if (UnitID == 0 || ItemType == 0 || UnitName == "") {
+                return Json("参数异常:参数为空");
+            }
             List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTree(UnitID, ItemType, UnitName);
             if(list.Count() == 0)
             {
@@ -141,8 +155,14 @@ namespace EnergyManage.Controllers
             return Json(data);
         }
 
-        public JsonResult DeleteEnergyNode(int parent_id,int child_id,int unit_id)
+        public JsonResult DeleteEnergyNode(int parent_id=0,int child_id=0,int unit_id=0)
         {
+            if (parent_id == 0 || child_id == 0 || unit_id == 0)
+            {
+                return Json("参数异常:参数为空");
+            }
+
+
             IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteEnergyNode(parent_id, child_id, unit_id);
             try {
                 if (list.Count() > 0) {
@@ -307,19 +327,36 @@ namespace EnergyManage.Controllers
             }
         }
 
-        public JsonResult GetTageID( int pid, int cid )
+        public JsonResult GetTageID( int pid=0, int cid=0 )
 		{
-			IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
+            if (pid == 0 || cid == 0 )
+            {
+                return Json("参数异常:参数为空");
+            }
+            IList<IDAO.Models.t_CM_PointsInfoBase1> list = DAL.PointsInfoDAL.getInstance().GetTageID( pid, cid );
 			return(Json( list, JsonRequestBehavior.AllowGet ) );
 		}
 
-        public ActionResult GetEnergyTreePower(int UnitID, int ItemType, string UnitName) {
+        public ActionResult GetEnergyTreePower(int UnitID=0, int ItemType=0, string UnitName ="") {
+
+            if (UnitID == 0 || ItemType == 0 || UnitName=="")
+            {
+                return Json("参数异常:参数为空");
+            }
+
+
             List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName);
             return Json(list);
         }
 
     // 查询当月用电量
     public ActionResult GetTreePowerMonth(string addCid, string delCid) {
+
+            if (addCid == "" || delCid == "")
+            {
+                return Json("参数异常:参数为空");
+            }
+
             if (addCid == "" && delCid == "")
             {
                 return Json(new List<int>());
