@@ -28,8 +28,6 @@ namespace IDAO.Models
         public int PID { get; set; }
         public int CID { get; set; }
         public string ener_use_type { get; set; }
-
+        public string ener_use_type_area { get; set; }
     }
-
-
 }

@@ -1,86 +1,194 @@
-﻿@{ Layout = null; }
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>分项用电</title>
-    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
     <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        .body {
+            display: flex;
+        }
+
+        .body,
         .main {
-            width:600px;
-            height:600px;
+            flex-grow: 7.5;
         }
-        div{
-            border:1px solid #ddd;
+
+        .foot,
+        .aside {
+            flex-grow: 2.5;
         }
-        .sum{
-            display:flex;
+
+        .aside,
+        .foot {
+            border: 1px solid #000;
         }
-        .sum>div{
-            
-        }
+
+            .foot div {
+                box-sizing: border-box
+            }
     </style>
+
 </head>
+
 <body>
+    <div class="container">
+        <div class="body">
+            <div class="main" id="main">
 
 
-    <div class="main sum">
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
 
-
+            </div>
+            <div class="aside"></div>
+        </div>
+        <div class="foot"></div>
     </div>
 
 
 
 
+    <script type="text/x-template" id="tree-menu">
+        <div class="Children">
+            <div class="list" v-if="leaves.length">
+                <el-card :style="{'width':width/floor+'%'}" class="itme">
+                    <div slot="header" class="clearfix">
+                        <span>{{parent.name}}分项用电</span>
+                    </div>
+                    <div v-for="itme in leaves" class="node2">
+                        <p class="firstNodeImg" style="width:20%;height:30px;"> </p>
+                        <p>{{itme.name}}</p>
+                        <p><span class="name"> {{itme.UsePower}}</span> KW.H</p>
+                    </div>
+                </el-card>
+                <div class="Children" :style="{'width':width/floor*(floor-leaves[0].floor)+'%'}"> </div>
+            </div>
+            <div class="list" v-for="itme in node" :style="{'height':'60%'}">
+                <el-card :style="{'width':width/floor+'%'}" class="itme">
+                    <div slot="header" class="clearfix">
+                        <span>{{itme.name}}实时总用电量</span>
+                    </div>
+                    <div class="node">
+                        <div class="content">
+                            <p class="firstNodeImg"> </p>
+                            <p>{{itme.name}}</p>
+                        </div>
+                        <div class="content">
+                            <p class="nameUnit">实时用电<br /><span class="name"> {{itme.UsePower}}</span> KW.H</p>
+                            <el-button type="success" plain>查看详情</el-button>
+                        </div>
+                    </div>
+                </el-card>
+                <div class="Children" :style="{'width':width/floor*(floor-itme.floor)+'%'}">
+                    <tree-menu :list="itme.Children" :floor="floor" :width="width" :parent="itme"></tree-menu>
+                </div>
+            </div>
 
-
-
-
-
-
-
-
-
-   
-    <script>
-
-
-
-
-        let traverseTree = function (Children, el) {
-
-            let sum = document.createElement('div');
-            sum.className = "sum";
-            sum.innerHTML = '1';
-            el.appendChild(sum);
-
-            if (Children.length != 0) {
-                for (let a = 0; a < Children.length; a++) {
-                    if (Children[a].Children.length != 0) {
-
-
-
-                        sum.innerHTML = 2;
-
-                        traverseTree(Children[a].Children, el);
-                    } else {
-                        sum.innerHTML = 3;
-
-                        //创建子节点
-                        console.log(Children[a])
-                    }
-                }
-            } 
-        }
+        </div>
     </script>
 
 
+    <script>
+        Vue.component('treeMenu', {
+            template: '#tree-menu',
+            props: ["list", "floor", "width", "parent"],
+            data: function () {
+                return {
+                    isshow: true,
+                    leaves: [],
+                    node: []
+                }
+            },
+            created: function () {
+                for (let a = 0; a < this.list.length; a++) {
+                    if (this.list[a].Children.length == 0) {
+                        this.leaves.push(this.list[a]);
+                    } else if (this.list[a]) {
+                        this.node.push(this.list[a])
+                    }
+                }
+                console.log(this.node)
 
+
+            }
+
+        })
+        let vm = new Vue({
+            el: "#main",
+            data: {
+                UnitData: JSON.parse(window.localStorage.getItem("UnitData")),
+                list: [],
+                floor: 1,
+                width: document.getElementById('main').offsetWidth
+            },
+            methods: {
+                GetTreePower: function () {
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetEnergyTreePower",
+                        method: "POST",
+                        body: {
+                            UnitID: this.UnitData.enUID,
+                            ItemType: 1,
+                            UnitName: this.UnitData.enName
+                        }
+                    }).then(function (res) {
+                        this.list = res.data;
+                        this.floor = this.getMaxFloor(this.list);
+                    })
+                },
+                getMaxFloor: function (treeData) {
+                    let floor = 0
+                    let v = this
+                    let max = 0
+
+                    function each(data, floor) {
+                        data.forEach(e => {
+                            e.floor = floor
+                            if (floor > max) {
+                                max = floor
+                            }
+                            e.Children.floor = floor;
+
+                            if (e.Children.length > 0) {
+                                each(e.Children, floor + 1)
+                            }
+                        })
+                    }
+                    each(treeData, 1)
+                    return max
+                }
+            },
+            created: function () {
+                this.GetTreePower();
+            },
+        });
+    </script>
 </body>
+
 </html>
