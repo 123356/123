@@ -40,11 +40,11 @@ namespace DAL
                 throw ex;
             }
         }
-        public IList<t_EE_ExEnergy> GetExTable(string pids,string id)
+        public IList<t_EE_ExEnergy> GetExTable(Dictionary<int,string> cpids)
         {
             try
             {
-                return _dbFactory.exEnergy.GetExTable(pids,id);
+                return _dbFactory.exEnergy.GetExTable(cpids);
             }
             catch (Exception ex)
             {
