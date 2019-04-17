@@ -1921,7 +1921,7 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 用电报告
-        public string GetElectricityConsumptionReport_SSQX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
+        public string GetElectricityConsumptionReport_SSQX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string labels, int coType=1)
         {
             try
             {
@@ -1969,9 +1969,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2058,9 +2058,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2145,9 +2145,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2237,9 +2237,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2326,9 +2326,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2413,9 +2413,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2477,7 +2477,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
             }
         }
 
-        public string GetElectricityConsumptionReport_FX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
+        public string GetElectricityConsumptionReport_FX(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string labels, int coType=1)
         {
             try
             {
@@ -2519,9 +2519,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2583,9 +2583,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2645,9 +2645,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2705,9 +2705,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2762,9 +2762,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2819,9 +2819,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
                                     if (i == 0)
@@ -2859,7 +2859,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
         }
 
 
-        public string GetElectricityConsumptionReport_PM(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string lables,int coType=1)
+        public string GetElectricityConsumptionReport_PM(string itemids, string areaids, string TimeDate, int TimeType, int type, int uid, string labels, int coType=1)
         {
             try
             {
@@ -2911,9 +2911,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
@@ -2999,9 +2999,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
@@ -3088,9 +3088,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
@@ -3179,9 +3179,9 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
@@ -3267,9 +3267,9 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
@@ -3356,9 +3356,9 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                 }
                                 i++;
                             }
-                            if (!string.IsNullOrEmpty(lables))
+                            if (!string.IsNullOrEmpty(labels))
                             {
-                                var lalist = lables.Split(',').ToList();
+                                var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
                                     if (i == 0)
