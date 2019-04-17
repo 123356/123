@@ -135,6 +135,7 @@ namespace EnergyManage.Controllers
                     //改属性
                     IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().updataTreeNode(data);
                     IList<IDAO.Models.t_EE_CircuitInfoEnerType> list1 = DAL.EnerUserProjectDAL.getInstance().setCidEneeruseType(data);
+
                 }
             }
             return Json(data);

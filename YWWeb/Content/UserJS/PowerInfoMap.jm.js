@@ -1,15 +1,15 @@
 ﻿var x, y;
-var  polyline = new BMap.Polygon([
-    new BMap.Point(116.633085, 40.137482),//右上
-    new BMap.Point(116.67103, 39.735616),//右下
-    new BMap.Point(116.107612, 39.706313),//左下
-    new BMap.Point(116.12371, 40.155131)//左上
+var polyline = new BMap.Polygon([
+    new BMap.Point(116.633085, 40.137482), //右上
+    new BMap.Point(116.67103, 39.735616), //右下
+    new BMap.Point(116.107612, 39.706313), //左下
+    new BMap.Point(116.12371, 40.155131) //左上
 
-], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 });   //创建多边形
+], { strokeColor: "red", strokeWeight: 2, strokeOpacity: 0.5 }); //创建多边形
 
 function getBoundary() {
     var bdary = new BMap.Boundary();
-    bdary.get("北京", function (rs) { //获取行政区域
+    bdary.get("北京", function(rs) { //获取行政区域
 
         var EN_JW = "180, 90;"; //东北角
         var NW_JW = "-180,  90;"; //西北角
@@ -32,7 +32,7 @@ function getBoundary() {
             strokeOpacity: 0.5
         }); //建立多边形覆盖物
         powerMap.addOverlay(ply1);
-        
+
 
         var ply = new BMap.Polygon(rs.boundaries[index], {
             strokeWeight: 2,
@@ -41,7 +41,7 @@ function getBoundary() {
         }); //建立多边形覆盖物
         powerMap.addOverlay(ply);
         console.log(powerMap.getOverlays()[0].getPosition())
-        $.post("/PDRInfo/getStationInfo", function (data) {
+        $.post("/PDRInfo/getStationInfo", function(data) {
             var arrdata = data.split('$');
             var arr = eval("(" + arrdata[0] + ")");
             for (var i = 0; i < arr.length; i++) {
@@ -70,7 +70,7 @@ function getBoundary() {
 
 function createLine() {
     getBoundary()
-    //powerMap.addOverlay(polyline);
+        //powerMap.addOverlay(polyline);
 }
 try {
     var geo = new jQuery.AMUI.Geolocation({
@@ -78,22 +78,21 @@ try {
         timeout: 5000,
         maximumAge: 60000
     });
-    geo.get().then(function (position) {
+    geo.get().then(function(position) {
         // 成功回调，position 为返回的位置对象
         x = position.coords.longitude;
         y = position.coords.latitude;
-    }, function (err) {
+    }, function(err) {
         // 不支持或者发生错误时回调，err 为错误提示信息
 
     });
-}
-catch (err) { }
+} catch (err) {}
 
 
 
-$.ajaxSettings.async = false;  //同步才能获取数据
+$.ajaxSettings.async = false; //同步才能获取数据
 var markerArr = new Array();
-$.post("/PDRInfo/getStationInfo", function (data) {
+$.post("/PDRInfo/getStationInfo", function(data) {
     var arrdata = data.split('$');
     var arr = eval("(" + arrdata[0] + ")");
     for (var i = 0; i < arr.length; i++) {
@@ -143,12 +142,12 @@ pageWidth = window.screen.width;
 //初始化地图
 function initMap() {
     createMap(); //创建地图
-    createLine()//绘画矩形
+    createLine() //绘画矩形
     setMapEvent(); //设置地图事件
     addMapControl(); //向地图添加控件
     addMarker();
     mqtt()
-    
+
     //addMarker(); //向地图中添加marker
 }
 //创建地图
@@ -163,32 +162,32 @@ function createMap() {
     powerMap.setMapStyle({
         styleJson: [
 
-                {   //整体风格
-                    "featureType": "all",
-                    "elementType": "all",
-                    "stylers": {
-                        "lightness": 30,
-                        "saturation": -100
-                    }
-                },
-                {   //道路不显示文字
-                    "featureType": "highway",
-                    "elementType": "labels",
-                    "stylers": {
-                        "lightness": 10,
-                        "saturation": -100,
-                        "visibility": "off"
-                    }
-                },
-                {
-                    "featureType": "poilabel",
-                    "elementType": "labels",
-                    "stylers": {
-                        "lightness": 10,
-                        "saturation": -100,
-                        "visibility": "off"
-                    }
-                },
+            { //整体风格
+                "featureType": "all",
+                "elementType": "all",
+                "stylers": {
+                    "lightness": 30,
+                    "saturation": -100
+                }
+            },
+            { //道路不显示文字
+                "featureType": "highway",
+                "elementType": "labels",
+                "stylers": {
+                    "lightness": 10,
+                    "saturation": -100,
+                    "visibility": "off"
+                }
+            },
+            {
+                "featureType": "poilabel",
+                "elementType": "labels",
+                "stylers": {
+                    "lightness": 10,
+                    "saturation": -100,
+                    "visibility": "off"
+                }
+            },
 
             {
                 "featureType": "scenicspotslabel",
@@ -231,6 +230,7 @@ function addMapControl() {
 var iwa = new Array();
 var g_showPDROk = 1;
 var changeMarkerArr = new Array()
+
 function addMarker() {
     for (var i = 0; i < markerArr.length; i++) {
         var a = markerArr[i];
@@ -245,7 +245,7 @@ function addMarker() {
             typeid = 19; //限制点击
         }
         var d = createIcon({ w: 22, h: 32, l: 0, t: 0, x: 6, lb: 5 }, a.title);
-        
+
         var marker = new BMap.Marker(point, { icon: d });
         marker.pid = markerArr[i].pid
         changeMarkerArr.push(marker)
@@ -254,22 +254,22 @@ function addMarker() {
 
         marker.setLabel(f);
         marker.setZIndex(10);
-        
-       
+
+
         powerMap.addOverlay(marker);
-        
+
         f.setStyle({ border: "none", color: "#666", cursor: "pointer", background: "transparent", fontWeight: "bold", textShadow: "-1px 0px 1px #fff" });
 
         showinfomessage(marker, point, a);
-        
+
     }
-    
-   /* setTimeout(function () {
-        setInterval(function () {
-            changeMarkerLocation()
-        }, 5000)
-    }, 1000)
-    */
+
+    /* setTimeout(function () {
+         setInterval(function () {
+             changeMarkerLocation()
+         }, 5000)
+     }, 1000)
+     */
 
 }
 
@@ -301,7 +301,7 @@ function showinfomessage(marker, point, data) {
 
     }
     var time = data.CoordinationTime
-    if (time == null || time=="") {
+    if (time == null || time == "") {
         time = "--"
     }
     /*if (data.Type == 1) {*/
@@ -324,41 +324,41 @@ function showinfomessage(marker, point, data) {
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白唐光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
     }
-   
+
     html += '</table>';
-    var infoWindow = new BMap.InfoWindow(html, opts);  // 创建信息窗口对象
+    var infoWindow = new BMap.InfoWindow(html, opts); // 创建信息窗口对象
     var infoBox = new BMapLib.InfoBox(powerMap, html, {
         boxStyle: {
             width: '400px',
             height: '200px',
             background: 'rgba(0,0,0,0.6)'
         }
-    }
-    )
+    })
 
 
     //添加鼠标滑过时打开自定义信息窗口事件
-   /* marker.addEventListener("click", function () {
-        marker_id = point;
-        powerMap.openInfoWindow(infoWindow, point);
-        
-        //infoBox.open(marker)
-    });*/
-    marker.addEventListener("mouseover", function () {
-        
+    /* marker.addEventListener("click", function () {
+         marker_id = point;
+         powerMap.openInfoWindow(infoWindow, point);
+         
+         //infoBox.open(marker)
+     });*/
+    marker.addEventListener("mouseover", function() {
+
         powerMap.closeInfoWindow();
         marker_id = point;
-        
+
         var lng = marker.point.lng
         var lat = marker.point.lat
-        
+
         var point2 = new BMap.Point(lng, lat);
         powerMap.openInfoWindow(infoWindow, point2);
     });
 
 }
+
 function toDetail(data) {
-    var url = "/Home/PowerMapDetail?pid="+data;
+    var url = "/Home/PowerMapDetail?pid=" + data;
     myWindow = window.open(url, '', 'width=1300,height=800,location=no');
     myWindow.focus();
 
@@ -374,25 +374,22 @@ function createIcon(a, title) {
     var aUrl;
     if (title == '1号_移动电源箱') {
         aUrl = "../../Content/images/location_icon/2.png";
-            return new BMap.Icon(aUrl, new BMap.Size(22, 32),
-            {
-                anchor: new BMap.Size(22 / 2, 32)
-            }
-        );
+        return new BMap.Icon(aUrl, new BMap.Size(22, 32), {
+            anchor: new BMap.Size(22 / 2, 32)
+        });
     } else {
 
         aUrl = "https://lbsyun.baidu.com/jsdemo/img/car.png";
-        return new BMap.Icon(aUrl, new BMap.Size(52, 26),
-            {
-                anchor: new BMap.Size(27, 13)
-            }
-        );
+        return new BMap.Icon(aUrl, new BMap.Size(52, 26), {
+            anchor: new BMap.Size(27, 13)
+        });
     }
 }
 
 initMap();
 
-function setLocation(x, y, z) { var a = new BMap.Point(x, y); powerMap.centerAndZoom(a, z); }
+function setLocation(x, y, z) { var a = new BMap.Point(x, y);
+    powerMap.centerAndZoom(a, z); }
 //
 function SetMapPointState(a, b, c) {
     var g = powerMap.getOverlays();
@@ -401,8 +398,7 @@ function SetMapPointState(a, b, c) {
             var d = g[i];
             if (b == 0) {
                 d.setIcon(new BMap.Icon("../../Content/images/location_icon/" + c + ".png", new BMap.Size(22, 32)));
-            }
-            else {
+            } else {
                 d.setIcon(new BMap.Icon("../../Content/images/location_icon/" + c + "_" + b + ".png", new BMap.Size(22, 32)));
                 d.setTop(true);
             }
@@ -424,8 +420,7 @@ function SetAlarmStateNew(jsonlist) {
                         c = 1;
                     if (b == 0) {
                         d.setIcon(new BMap.Icon("../../Content/images/location_icon/" + c + ".png", new BMap.Size(22, 32)));
-                    }
-                    else {
+                    } else {
                         d.setIcon(new BMap.Icon("../../Content/images/location_icon/" + c + "_" + b + ".png", new BMap.Size(22, 32)));
                         d.setTop(true);
                     }
@@ -446,9 +441,25 @@ function SetAlarmStateNew(jsonlist) {
     }
 }
 
-function setMapType(a) { if ("BMAP_NORMAL_MAP" == a) { powerMap.setMapType(BMAP_NORMAL_MAP); } if ("BMAP_SATELLITE_MAP" == a) { powerMap.setMapType(BMAP_SATELLITE_MAP); } if ("BMAP_HYBRID_MAP" == a) { powerMap.setMapType(BMAP_HYBRID_MAP); } } function setPanoramaControl(i) { powerMap.addTileLayer(new BMap.PanoramaCoverageLayer()); var a = new BMap.PanoramaControl(); a.setOffset(new BMap.Size(20, 20)); powerMap.addControl(a); } var myLocalSearch = new BMap.LocalSearch(powerMap, { renderOptions: { powerMap: powerMap } }); function localSearch(sVal) { myLocalSearch.search(sVal); } function clearLocalSearch() { myLocalSearch.clearResults(); } var mBMTC = new BMapLib.TrafficControl({ showPanel: false }); function setTrafficControl(i) { if ("0" == i) { mBMTC.remove(); } if ("1" == i) { powerMap.addControl(mBMTC); mBMTC.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT); mBMTC.showTraffic(); } }
+function setMapType(a) { if ("BMAP_NORMAL_MAP" == a) { powerMap.setMapType(BMAP_NORMAL_MAP); } if ("BMAP_SATELLITE_MAP" == a) { powerMap.setMapType(BMAP_SATELLITE_MAP); } if ("BMAP_HYBRID_MAP" == a) { powerMap.setMapType(BMAP_HYBRID_MAP); } }
+
+function setPanoramaControl(i) { powerMap.addTileLayer(new BMap.PanoramaCoverageLayer()); var a = new BMap.PanoramaControl();
+    a.setOffset(new BMap.Size(20, 20));
+    powerMap.addControl(a); }
+var myLocalSearch = new BMap.LocalSearch(powerMap, { renderOptions: { powerMap: powerMap } });
+
+function localSearch(sVal) { myLocalSearch.search(sVal); }
+
+function clearLocalSearch() { myLocalSearch.clearResults(); }
+var mBMTC = new BMapLib.TrafficControl({ showPanel: false });
+
+function setTrafficControl(i) { if ("0" == i) { mBMTC.remove(); } if ("1" == i) { powerMap.addControl(mBMTC);
+        mBMTC.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT);
+        mBMTC.showTraffic(); } }
+
 function setMapIndexViewport() {
-    var a = []; var g = powerMap.getOverlays();
+    var a = [];
+    var g = powerMap.getOverlays();
     for (var i = 0; i < g.length; i++) {
         if ("[object Label]" != g[i].toString()) {
             var d = g[i];
@@ -465,8 +476,8 @@ function showControl_ClickPDR(a) {
     g_showPDROk = 1;
 
     var str1 = [
-                { "name": "1-" },
-                { "name": "2-" }
+        { "name": "1-" },
+        { "name": "2-" }
     ];
 
     for (var i = 0; i < str1.length; i++) {
@@ -479,8 +490,11 @@ function showControl_ClickPDR(a) {
 
 
 var myDis = new BMapLib.DistanceTool(powerMap);
+
 function setMyDistanceTool(i) { if (1 == i) { myDis.open(); } if (0 == i) { myDis.close(); } }
-function killErrors() { return true; } window.onerror = killErrors;
+
+function killErrors() { return true; }
+window.onerror = killErrors;
 
 //创建多边形区域
 
@@ -498,21 +512,21 @@ function getRound(temp) {
 }
 
 function isInsidePolygon() {
-    var pt = new BMap.Point(116.545725,39.779821)
+    var pt = new BMap.Point(116.545725, 39.779821)
     var re = BMapLib.GeoUtils.isPointInPolygon(pt, polyline);
 }
 //改变marker值
 function changeMarkerLocation(data) {
-   
+
     for (var i = 0; i < changeMarkerArr.length; i++) {
-       // var lng = getRound(changeMarkerArr[i].point.lng);
+        // var lng = getRound(changeMarkerArr[i].point.lng);
         //var lat = getRound(changeMarkerArr[i].point.lat);
         //var point = new BMap.Point(lng, lat)
-       
+
         if (changeMarkerArr[i].pid == data.pid) {
             changeMarkerArr[i].setPosition(data.point);
             markerArr[i].CoordinationTime = data.time
-            
+
             if (data.pid == "169") {
                 var re = BMapLib.GeoUtils.isPointInPolygon(data.point, polyline);
                 if (!re) {
@@ -528,8 +542,8 @@ function changeMarkerLocation(data) {
 
 //连接mqtt
 function mqtt() {
-    
-    var wsbroker = "yw.ife360.com";//  59.110.153.200
+
+    var wsbroker = location.host; //  59.110.153.200
     location.hostname; //mqtt websocket enabled broker ip
     var wsport = 15673; // 端口号
     //连接选项
@@ -538,12 +552,12 @@ function mqtt() {
         userName: "test",
         password: "123",
         keepAliveInterval: 10,
-        onSuccess: function () {
+        onSuccess: function() {
             console.log(("连接成功"))
-            client.subscribe('gps/ny/167', { qos: 2 });//订阅主题
+            client.subscribe('gps/ny/167', { qos: 2 }); //订阅主题
         },
 
-        onFailure: function (message) {
+        onFailure: function(message) {
             console.log("连接失败 " + message.errorMessage)
         }
     };
@@ -553,22 +567,23 @@ function mqtt() {
     client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid());
     //创建连接
     client.connect(options);
-    client.onConnectionLost = function (responseObject) {
-       
-        if (responseObject.errorCode !== 0) { console.log("异常掉线，掉线信息为:" + responseObject.errorMessage); client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid()); }
+    client.onConnectionLost = function(responseObject) {
+
+        if (responseObject.errorCode !== 0) { console.log("异常掉线，掉线信息为:" + responseObject.errorMessage);
+            client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + guid()); }
     };
-    client.onMessageArrived = function (message) {
+    client.onMessageArrived = function(message) {
         console.log(message)
         var msg = message.payloadString
         msg = JSON.parse(msg)
         var lng = msg.location.split("|")[0]
         var lat = msg.location.split("|")[1]
         var point = new BMap.Point(lng, lat)
-        
+
         var data = {
             pid: msg.pid,
             point: point,
-            time:msg.time
+            time: msg.time
         }
         changeMarkerLocation(data);
         $("#dwtime1").html("定位时间：" + (new Date().Format("yyyy-MM-dd hh:mm:ss")) + "");
@@ -579,8 +594,9 @@ function mqtt() {
 }
 
 function guid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }

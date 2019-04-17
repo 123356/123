@@ -384,12 +384,12 @@ Topo.prototype = {
         }
         that.stage.paint();
     },
-    mqtt: function () {
+    mqtt: function() {
         var that = this;
-        var wsbroker ;
-        var wsport ;
+        var wsbroker;
+        var wsport;
         if (location.protocol == "https:") {
-            wsbroker = "yw.ife360.com";
+            wsbroker = location.host;
             wsport = 15673;
         } else {
             wsbroker = that.__IP;

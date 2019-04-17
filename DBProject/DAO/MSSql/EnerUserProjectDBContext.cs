@@ -104,15 +104,23 @@ namespace DAO
         {
             string sql = "";
             for (int a = 0; a < data.Count(); a++) {
-                sql += $"UPDATE t_DM_CircuitInfo SET ener_use_type = '{data[a].ener_use_type}' output inserted.*  WHERE PID = {data[a].PID} AND CID = {data[a].CID};";
+                sql += $"UPDATE t_DM_CircuitInfo SET ener_use_type = '{data[a].ener_use_type}',ener_use_type_area = '{data[a].ener_use_type_area}' output inserted.*  WHERE PID = {data[a].PID} AND CID = {data[a].CID};";
             }
             return SQLQuery<t_EE_CircuitInfoEnerType>(sql);
         }
         public IList<t_EE_CircuitInfoEnerType> getCidEneeruseType(t_V_EnerProjectType data)
         {
             var arr = data.addCid.Split(',');
-            string sql = $"select PID,CID,ener_use_type  FROM t_DM_CircuitInfo " +
-                $" WHERE CHARINDEX (',{data.ID},', ener_use_type)>0 ";
+            string sql = "";
+            if (data.item_type == 1) {
+                sql = $"select PID,CID,ener_use_type,ener_use_type_area  FROM t_DM_CircuitInfo " +
+                $" WHERE CHARINDEX (',{data.ID},', ener_use_type)>0";
+            }
+            else if (data.item_type == 2)
+            {
+                sql = $"select PID,CID,ener_use_type,ener_use_type_area FROM t_DM_CircuitInfo " +
+                $" WHERE CHARINDEX (',{data.ID},', ener_use_type_area)>0";
+            }
 
             for (int a = 0; a < arr.Count(); a++)
             {

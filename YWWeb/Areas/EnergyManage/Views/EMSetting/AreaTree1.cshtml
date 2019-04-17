@@ -1,86 +1,181 @@
-﻿@{ Layout = null; }
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>分项用电</title>
-    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
     <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        .body {
+            display: flex;
+        }
+
+        .body,
         .main {
-            width:600px;
-            height:600px;
+            flex-grow: 7.5;
         }
-        div{
-            border:1px solid #ddd;
+
+        .foot,
+        .aside {
+            flex-grow: 2.5;
         }
-        .sum{
+
+        .aside,
+        .foot {
+            border: 1px solid #000;
+        }
+            .foot{
+                box-sizing: border-box
+            }
+        div {
+            border:1px solid #000;
+        }
+
+        .list {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+     
+        .content{
+            flex-grow:1;
             display:flex;
+            flex-direction:column;
         }
-        .sum>div{
-            
-        }
+            .content .title {
+                padding: 18px 20px;
+                border-bottom: 1px solid #ebeef5;
+                box-sizing: border-box;
+            }
+
+            .content .node{
+                flex-grow:1;
+            }
     </style>
+
 </head>
+
 <body>
+    <div class="container">
+        <div class="body">
+            <div class="main" id="main">
 
 
-    <div class="main sum">
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
 
 
+
+
+                <div style="width:100%;height:100%;flex-grow:1">
+                    <div class="list">
+                        <div class="content">
+                            <div class="title">
+                                标题
+                            </div>
+                            <div class="node">
+                                123
+                            </div>
+                        </div>
+                        <div class="Children" :style="{'flex-grow':floor-1}">
+
+
+                          qwe
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <div class="aside"></div>
+        </div>
+        <div class="foot"></div>
     </div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-   
     <script>
+        let vm = new Vue({
+            el: "#main",
+            data: {
+                UnitData: JSON.parse(window.localStorage.getItem("UnitData")),
+                list: [],
+                floor: 1,
+                width: document.getElementById('main').offsetWidth
+            },
+            methods: {
+                GetTreePower: function () {
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetEnergyTreePower",
+                        method: "POST",
+                        body: {
+                            UnitID: this.UnitData.enUID,
+                            ItemType: 1,
+                            UnitName: this.UnitData.enName
+                        }
+                    }).then(function (res) {
+                        this.list = res.data;
+                        this.floor = this.getMaxFloor(this.list);
+                    })
+                },
+                getMaxFloor: function (treeData) {
+                    let floor = 0
+                    let v = this
+                    let max = 0
 
+                    function each(data, floor) {
+                        data.forEach(e => {
+                            e.floor = floor
+                            if (floor > max) {
+                                max = floor
+                            }
+                            e.Children.floor = floor;
 
-
-
-        let traverseTree = function (Children, el) {
-
-            let sum = document.createElement('div');
-            sum.className = "sum";
-            sum.innerHTML = '1';
-            el.appendChild(sum);
-
-            if (Children.length != 0) {
-                for (let a = 0; a < Children.length; a++) {
-                    if (Children[a].Children.length != 0) {
-
-
-
-                        sum.innerHTML = 2;
-
-                        traverseTree(Children[a].Children, el);
-                    } else {
-                        sum.innerHTML = 3;
-
-                        //创建子节点
-                        console.log(Children[a])
+                            if (e.Children.length > 0) {
+                                each(e.Children, floor + 1)
+                            }
+                        })
                     }
+                    each(treeData, 1)
+                    return max
                 }
-            } 
-        }
+            },
+            created: function () {
+                this.GetTreePower();
+            },
+        });
     </script>
-
-
-
 </body>
+
 </html>

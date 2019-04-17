@@ -1,7 +1,7 @@
 ﻿new Vue({
     el: '#buildReport',
     data: {
-        loading: true,
+        loading:true,
         UID: null,
         UnitName: null,
         dateType: 1,//日期类型
@@ -28,7 +28,7 @@
         itemTotal: 0,
         areaHJ: [],
         areaTotal: 0,
-
+        
 
     },
     filters: {
@@ -104,16 +104,12 @@
                 return;
             }
             node.text = node.name
-            node.children = node.Children
-            node.id = node.ID
-            if (node.Children && node.Children.length > 0) {
+            if (node.children && node.children.length > 0) {
                 for (var i = 0; i < node.children.length; i++) {
-                    if (!node.Children[i].Children) {
-                        node.Children[i].text = node.Children[i].name
-                        node.Children[i].children = node.Children[i].Children
-                        node.Children[i].id = node.Children[i].ID
+                    if (!node.children[i].children) {
+                        node.children[i].text = node.children[i].name
                     }
-                    this.foreachTree(node.Children[i], type);
+                    this.foreachTree(node.children[i], type);
                 }
             } else {
                 var val = 0
@@ -135,60 +131,68 @@
             }
         },
         // 组织区域/用电分项树
-        getTreeData: function (type) {
+        GetEnergyTree: function (type) {
             this.treeType = type
             var that = this
-            var par = {
-                UnitID: that.UID,
-                ItemType: type,
-                UnitName: that.UnitName
-            }
-            getEnergyTreeAPI(par).then(function (res) {
-                var data = res.data[0]
-                that.foreachTree(data, type)
-                if (type == 1) {
-                    that.elecSubItemTree = data
-                } else {
-                    that.areaTree = data
+            this.$http({
+                url: '/energyManage/EMSetting/GetEnergyTree',
+                method: 'POST',
+                params: {
+                    unitID: that.UID,
+                    item_type: type,
+                    unitName: that.UnitName
                 }
-
-                that.getSelectTree(type)
             })
+                .then(function (res) {
+                    var data = res.data
+                    that.foreachTree(data, type)
+                    if (type == 1) {
+                        that.elecSubItemTree = data
+                    } else {
+                        that.areaTree = data
+                    }
+
+                    that.getSelectTree(type)
+                })
                 .catch(function (e) {
                     throw new ReferenceError(e.message)
                 })
-            
         },
         //单位下拉框
         getUnitComobxList: function () {
+
             var that = this
-            getUnitComobxListAPI().then(function (res) {
+            this.$http({
+                url: '/energyManage/EMHome/GetUnitComobxList',
+                method: 'get',
+            }).then(function (res) {
                 that.comList = res.data
                 if (that.UID == null) {
                     if (res.data.length > 0) {
                         that.UID = res.data[0].UnitID
                         localStorage.setItem('UnitData', JSON.stringify({ enUID: that.UID, enName: res.data[0].UnitName }))
                         that.UnitName = res.data[0].UnitName
+
                     }
+                    
                 }
             }).catch(function (e) {
-                throw new ReferenceError(e.message)
-            }).finally(function () {
-                that.getTreeData(1)
-                that.getTreeData(2)
-                that.getReport()
-            })
-            
+                    throw new ReferenceError(e.message)
+                }).finally(function () {
+                    that.GetEnergyTree(1)
+                    that.GetEnergyTree(2)
+                    that.getReport()
+                })
         },
         //单位下拉框change
         comChange: function (e) {
             this.UID = e.value
             localStorage.setItem('UnitData', JSON.stringify({ enUID: e.value, enName: e.label }))
-            this.getTreeData(1)
-            this.getTreeData(2)
+            this.GetEnergyTree(1)
+            this.GetEnergyTree(2)
         },
         dateChange: function () {
-            // this.curTimeStr = this.formaterDate()
+           // this.curTimeStr = this.formaterDate()
         },
         //日期类型
         dateTypeChange: function (e) {
@@ -204,7 +208,7 @@
                     break
             }
             //this.curTimeStr = this.formaterDate()
-
+            
         },
         getTimes: function () {
             var arr = []
@@ -240,27 +244,37 @@
         //标签下拉框
         getLabelData: function () {
             var that = this
-            var par = {
-                uid: this.UID
-            }
-            getLabelListAPI(par).then(function (res) {
-                that.labelData = res.data
+            this.$http({
+                url: '/ReportForms/GetLabelList',
+                method: 'post',
+                body: {
+                    uid: this.UID
+                }
             })
-            .catch(function (e) {
+                .then(function (res) {
+                    that.labelData = res.data
+                })
+                .catch(function (e) {
 
-            })
-            
+                })
         },
         //操作按钮
         getUserBtn: function () {
             var that = this
             var url = window.location.pathname;
-            getUserBtnAPI(url).then(function (res) {
-                that.userBtn = res.data
+            this.$http({
+                url: '/SysInfo/UserButtonList2',
+                method: 'post',
+                params: {
+                    CurrUrl: url
+                }
             })
-            .catch(function (e) {
-                throw new ReferenceError(e.message)
-            })
+                .then(function (res) {
+                    that.userBtn = res.data
+                })
+                .catch(function (e) {
+                    throw new ReferenceError(e.message)
+                })
         },
         userMenuClick: function (method) {
             switch (method) {
@@ -269,7 +283,7 @@
                     this.UnitName = $.cookie("enUName")
                     this.curTimeStr = this.formaterDate()
                     this.getTimes()
-
+                    
                     this.getReport()
                     break;
             }
@@ -313,17 +327,17 @@
 
 
                     that.totalCom(data.list_item, 1)
-                    that.totalCom(data.list_area, 2)
+                    that.totalCom(data.list_area,2)
 
                 })
                 .catch(function (e) {
 
                 })
                 .finally(function () {
-                    that.loading = false
+                    that.loading=false
                 })
         },
-        totalCom: function (data, type) {
+        totalCom: function (data,type) {
             var sumTotal = 0
             var xTotal = []
             var arr = []
@@ -362,7 +376,7 @@
                 })
             }
 
-
+            
             if (type == 1) {
                 this.itemHJ = xTotal
                 this.itemTotal = sumTotal.toFixed(2)
@@ -371,7 +385,7 @@
                 this.areaTotal = sumTotal.toFixed(2)
             }
 
-
+           
         },
         //日期格式化
         formaterDate: function () {
@@ -409,11 +423,11 @@
         this.getTimes()
         this.getLabelData()
         this.curTimeStr = this.formaterDate()
-
+        
     },
     mounted: function () {
         //获取用电分项、组织区域树
-        //this.getTreeData(1)
-        //this.getTreeData(2)
+        //this.GetEnergyTree(1)
+        //this.GetEnergyTree(2)
     }
 })

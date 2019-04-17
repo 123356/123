@@ -116,7 +116,7 @@
         tab: function(a) {
             var that = this;
             if (a == 1) {
-                that.BindDevice(this.PID,this.DTID);
+                that.BindDevice(this.PID, this.DTID);
                 that.Bind();
             } else if (a == 2) {
                 that.Bind();
@@ -135,7 +135,7 @@
                     cid: parseInt(that.CID),
                     tdid: parseInt(that.DTID)
                 }
-            }).then(function (res) {
+            }).then(function(res) {
                 console.log(res.data)
                 for (var i = 0, arr = []; i < res.data.aaData.length; i++) {
                     arr.push(res.data.aaData[i].TagID);
@@ -208,7 +208,7 @@
             var wsbroker, wsport
 
             if (location.protocol == "https:") {
-                wsbroker = "yw.ife360.com";
+                wsbroker = location.host;
                 wsport = 15673;
             } else {
                 wsbroker = "59.110.153.200";
