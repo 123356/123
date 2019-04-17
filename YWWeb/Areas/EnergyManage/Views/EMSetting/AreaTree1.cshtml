@@ -50,9 +50,32 @@
         .foot {
             border: 1px solid #000;
         }
-
-            .foot div {
+            .foot{
                 box-sizing: border-box
+            }
+        div {
+            border:1px solid #000;
+        }
+
+        .list {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+     
+        .content{
+            flex-grow:1;
+            display:flex;
+            flex-direction:column;
+        }
+            .content .title {
+                padding: 18px 20px;
+                border-bottom: 1px solid #ebeef5;
+                box-sizing: border-box;
+            }
+
+            .content .node{
+                flex-grow:1;
             }
     </style>
 
@@ -65,6 +88,34 @@
 
 
 
+
+
+
+                <div style="width:100%;height:100%;flex-grow:1">
+                    <div class="list">
+                        <div class="content">
+                            <div class="title">
+                                标题
+                            </div>
+                            <div class="node">
+                                123
+                            </div>
+                        </div>
+                        <div class="Children" :style="{'flex-grow':floor-1}">
+
+
+                          qwe
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
             </div>
             <div class="aside"></div>
         </div>
@@ -74,71 +125,7 @@
 
 
 
-    <script type="text/x-template" id="tree-menu">
-        <div class="Children">
-            <div class="list" v-if="leaves.length">
-                <el-card :style="{'width':width/floor+'%'}" class="itme">
-                    <div slot="header" class="clearfix">
-                        <span>{{parent.name}}分项用电</span>
-                    </div>
-                    <div v-for="itme in leaves" class="node2">
-                        <p class="firstNodeImg" style="width:20%;height:30px;"> </p>
-                        <p>{{itme.name}}</p>
-                        <p><span class="name"> {{itme.UsePower}}</span> KW.H</p>
-                    </div>
-                </el-card>
-                <div class="Children" :style="{'width':width/floor*(floor-leaves[0].floor)+'%'}"> </div>
-            </div>
-            <div class="list" v-for="itme in node" :style="{'height':'60%'}">
-                <el-card :style="{'width':width/floor+'%'}" class="itme">
-                    <div slot="header" class="clearfix">
-                        <span>{{itme.name}}实时总用电量</span>
-                    </div>
-                    <div class="node">
-                        <div class="content">
-                            <p class="firstNodeImg"> </p>
-                            <p>{{itme.name}}</p>
-                        </div>
-                        <div class="content">
-                            <p class="nameUnit">实时用电<br /><span class="name"> {{itme.UsePower}}</span> KW.H</p>
-                            <el-button type="success" plain>查看详情</el-button>
-                        </div>
-                    </div>
-                </el-card>
-                <div class="Children" :style="{'width':width/floor*(floor-itme.floor)+'%'}">
-                    <tree-menu :list="itme.Children" :floor="floor" :width="width" :parent="itme"></tree-menu>
-                </div>
-            </div>
-
-        </div>
-    </script>
-
-
     <script>
-        Vue.component('treeMenu', {
-            template: '#tree-menu',
-            props: ["list", "floor", "width", "parent"],
-            data: function () {
-                return {
-                    isshow: true,
-                    leaves: [],
-                    node: []
-                }
-            },
-            created: function () {
-                for (let a = 0; a < this.list.length; a++) {
-                    if (this.list[a].Children.length == 0) {
-                        this.leaves.push(this.list[a]);
-                    } else if (this.list[a]) {
-                        this.node.push(this.list[a])
-                    }
-                }
-                console.log(this.node)
-
-
-            }
-
-        })
         let vm = new Vue({
             el: "#main",
             data: {

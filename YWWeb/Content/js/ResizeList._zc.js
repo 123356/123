@@ -158,7 +158,7 @@ var vm = new Vue({
             var wsport, wsbroker;
             if (location.protocol == "https:") {
                 wsport = 15673;
-                wsbroker = "yw.ife360.com";
+                wsbroker = location.host;
             } else {
                 wsport = 15675;
                 wsbroker = "59.110.153.200";

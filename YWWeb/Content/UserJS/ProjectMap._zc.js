@@ -27,24 +27,24 @@ $.post("/PDRInfo/getStationInfo", function(data) {
     var arr = eval("(" + arrdata[0] + ")");
     for (var i = 0; i < arr.length; i++) {
         if (arr[i].title == '1号_工程车') {
-            arr[i].type="car"
+            arr[i].type = "car"
             markerArr.push(arr[i])
         }
     }
 
 });
 console.log(markerArr)
-/*$.post("/Home/GetShopTruck", function(data) {
+    /*$.post("/Home/GetShopTruck", function(data) {
+        console.log(data);
+        for (var a = 0; a < data.length; a++) {
+            data[a].type = 'car';
+            markerArr.push(data[a]);
+        }
+    });*/
+$.post("/Home/LoadConstract", function(data) {
     console.log(data);
     for (var a = 0; a < data.length; a++) {
-        data[a].type = 'car';
-        markerArr.push(data[a]);
-    }
-});*/
-$.post("/Home/LoadConstract", function (data) {
-    console.log(data);
-    for (var a = 0; a < data.length; a++) {
-        data[a].type=""
+        data[a].type = ""
         markerArr.push(data[a]);
     }
 });
@@ -166,31 +166,30 @@ var changeMarkerArr = new Array()
 function addMarker() {
     for (var i = 0; i < markerArr.length; i++) {
         var a = markerArr[i];
-        var b,c;
+        var b, c;
         if (a.type == "car") {
             b = a.point.split("|")[0]
             c = a.point.split("|")[1]
-        }
-        else {
+        } else {
             b = a.Coordination.split("|")[0];
             c = a.Coordination.split("|")[1];
         }
 
 
-       
+
         //var typeid = a.position;
         var point = new BMap.Point(b, c);
 
         //alert(a.content);		
-        var title =null
+        var title = null
         if (a.type == "car") {
             showControl_ClickPDR(a.title);
             title = a.title
         } else {
             showControl_ClickPDR(a.ProjectName);
-            title=a.ProjectName
+            title = a.ProjectName
         }
-        
+
         if (g_showPDROk == 0) {
             typeid = 19; //限制点击
         }
@@ -199,9 +198,9 @@ function addMarker() {
         var marker = new BMap.Marker(point, { icon: d });
         marker.pid = markerArr[i].pid
         changeMarkerArr.push(marker)
-        
+
         var f = new BMap.Label(title, { "offset": new BMap.Size(-10, 30) });
-       
+
         f.setTitle(title);
 
         marker.setLabel(f);
@@ -278,14 +277,14 @@ function showinfomessage(marker, point, data) {
 
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">驾驶员：白唐光<span style="margin-left:40px">电话：13681226520</span></td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;" id="dwtime2">定位时间：' + time + '</td></tr>'
-    } else{
+    } else {
         html += '<tr style=""><td style="padding-top:5px;"><i class="iconfont icon-lvyouchengshijianzhucity-dalouxiezilou"></i><span style="font-weight:bold">' + data.ProjectName + '</span><a href="JavaScript:toDetail(' + data.ID + ')">详情</a></td></tr>'
         html += '<tr style="font-size:11px"><td ><i class="iconfont icon-location"></i>' + data.Adress + '</td></tr>'
         html += '<tr style=""><td style="padding-top:5px;padding-bottom:5px"><hr/ style="margin-bottom:0px"></td></tr>'
         html += '<tr style="font-size:11px"><td >项目类型：' + proType + '</td></tr>'
         html += '<tr style="font-size:11px"><td style="padding-top:5px;">项目联系人：' + data.ProjectManager + '<span style="margin-left:40px">电话：' + data.Tel + '</span></td></tr>'
     }
-    
+
     html += '</table>';
     var infoWindow = new BMap.InfoWindow(html, opts); // 创建信息窗口对象
     var infoBox = new BMapLib.InfoBox(powerMap, html, {
@@ -334,21 +333,19 @@ function createIcon(a, type) {
     console.log(type)
     if (type == "car") {
         aUrl = "https://lbsyun.baidu.com/jsdemo/img/car.png";
-        return new BMap.Icon(aUrl, new BMap.Size(52, 26),
-            {
-                anchor: new BMap.Size(27, 13)
-            }
-        );
+        return new BMap.Icon(aUrl, new BMap.Size(52, 26), {
+            anchor: new BMap.Size(27, 13)
+        });
     } else {
         aUrl = "../../Content/images/location_icon/2.png";
         return new BMap.Icon(aUrl, new BMap.Size(22, 32), {
             anchor: new BMap.Size(22 / 2, 32)
         });
-        
+
     }
-        
-        
-    
+
+
+
 }
 
 initMap();
@@ -523,7 +520,7 @@ function changeMarkerLocation(data) {
 //连接mqtt
 function mqtt() {
 
-    var wsbroker = "yw.ife360.com";
+    var wsbroker = location.host;
     location.hostname; //mqtt websocket enabled broker ip
     var wsport = 15673; // 端口号
     //连接选项
