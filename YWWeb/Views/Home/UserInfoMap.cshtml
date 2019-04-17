@@ -12,11 +12,11 @@
     <script type="text/javascript" src="~/Content/baiduMap/script/infobox.js"></script>
     <script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
     <script type="text/javascript" src="~/Content/baiduMap/script/TrafficControl_min.js"></script>
-    
+
     <link href="~/Content/baiduMap/script/TrafficControl_min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="~/Content/baiduMap/script/TrafficControl_min.js"></script>
     <script type="text/javascript" src="~/Content/baiduMap/script/DistanceTool_min.js"></script>
-   
+
     <script src="~/Content/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="~/Content/UserJS/lbyw-base._jm.js" type="text/javascript"></script>
     <script src="~/Content/js/jquery.cookie.js" type="text/javascript"></script>
@@ -25,11 +25,11 @@
     <link rel="stylesheet" type="text/css" href="~/Content/css/base.css" />
     @*<script src="~/Content/UserJS/menucontrol._jm.js" type="text/javascript"></script>*@
     <script src="~/Content/js/easySlider.js" type="text/javascript"></script>
-    
+
 
     <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/css/master.css" />
-
+    
     <style>
         body {
             position: absolute;
@@ -51,18 +51,19 @@
             position: absolute;
             background: #FFFFFF;
         }
-        .iconView{
-            width:20px;
-            height:20px;
-            border-radius:50%;
-            background:red;
-            z-index:2000;
-            position:absolute;
-            top:50%;
-            left:50%;
-            margin-top:-10px;
-            margin-right:-10px;
-            display:none
+
+        .iconView {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: red;
+            z-index: 2000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-right: -10px;
+            display: none
         }
     </style>
 </head>
@@ -77,14 +78,6 @@
 
     <script type="text/javascript">
        
-        if (!navigator.onLine) {
-            //if (data.length == 1) {
-            location.href = '/Home/OfflineMap'
-            //}
-
-        }
-
-
         var x, y;
         try {
             var geo = new jQuery.AMUI.Geolocation({

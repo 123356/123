@@ -109,6 +109,14 @@
     </div>
 
     <script type="text/javascript">
+        
+        function isOnline() {
+            if (!navigator.onLine) {
+                $("#main_frame").attr("src", "/Home/OfflineMap")
+                return
+            }
+        }
+        isOnline()
         $(".closeBtn").on('click',function () {
             $("#alarm_popups").fadeOut("slow");
             console.log(window.audio)
