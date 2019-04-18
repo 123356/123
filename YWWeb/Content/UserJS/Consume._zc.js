@@ -112,6 +112,7 @@
             },
             {
                 title: '偏差率',
+                sortable: true,
                 align: 'center',
                 key: 'Proportion',
                 render: (h, params) => {

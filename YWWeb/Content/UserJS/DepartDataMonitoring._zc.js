@@ -44,6 +44,7 @@
             node.children = node.Children
             node.id = node.ID
             node.open = true
+            node.icon =""
             if (node.Children && node.Children.length > 0) {
                 for (var i = 0; i < node.Children.length; i++) {
                     if (!node.Children[i].Children) {
@@ -51,6 +52,7 @@
                         node.Children[i].open = true
                         node.Children[i].children = node.Children[i].Children
                         node.Children[i].id = node.Children[i].ID
+                        node.Children[i].icon=""
                     }
                     this.foreachTree(node.Children[i]);
                 }

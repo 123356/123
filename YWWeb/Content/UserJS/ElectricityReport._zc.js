@@ -247,7 +247,7 @@
                 series.push({
                     name: legend[i],
                     type: 'line',
-                    stack: legend[i],
+                    stack: '总趋势',
                     areaStyle: {},
                     data: data.yData[i].split(','),
                     smooth: true,
@@ -378,10 +378,19 @@
         //饼图
         createPie1Chart: function (data) {
             pie1Chart = echarts.init(document.getElementById("pie1Chart"))
+            var subtext = ''
+            switch (this.CollTypeID) {
+                case 1:
+                    subtext = 'kW·h'
+                    break
+                default:
+                    subtext = 'm³'
+                    break
+            }
             var option = {
                 title: {
                     text: data.total,
-                    subtext: "kW·h",
+                    subtext: subtext,
                     x: 'center',
                     y: '48%',
                     textStyle: {
@@ -432,6 +441,7 @@
             var budget = data.list_zong.zongBudget
             var serData = null
             var color = null
+           
             if (rate == 0) {
                 serData = [
                     { value: budget, name: '预算剩余' },
@@ -452,6 +462,7 @@
                 ]
                 color = ['#ca9a5c', '#e0e0e0']
             }
+            
             var that = this
             var option = {
                 tooltip: {
@@ -741,7 +752,7 @@
             this.$http({
                 url: url,
                 method: 'post',
-                params: {
+                body: {
                     itemids: this.isUnitElecSubSelect.join(','),
                     areaids: this.isUnitAreaSelect.join(','),
                     TimeDate: this.formaterDate(),
@@ -1018,6 +1029,20 @@
         getUserBtn: function () {
             getUserBtnAPI(window.location.pathname)
             .then(function (res) {
+                var data = res.data
+                for (var i in data) {
+                    switch (data[i].ModuleName) {
+                        case '查 询':
+                            data[i].icon = "ios-search"
+                            break
+                        case '打 印':
+                            data[i].icon = "ios-print-outline"
+                            break
+                        case '导出':
+                            data[i].icon = "ios-download-outline"
+                            break
+                    }
+                }
                 vm.userBtn = res.data
             })
         },

@@ -116,9 +116,7 @@
                         </i-select>
                     </div>
                     <div class="rows">
-                        <i-button icon="ios-print-outline" class="btn" v-on:click="userBtnClick(item.Location)" v-for="item in userBtn">{{item.ModuleName}}</i-button>
-                        @*<i-button icon="ios-print-outline" class="btn" v-on:click="openOrPrint">导出</i-button>
-                        <i-button icon="ios-print-outline" class="btn" v-on:click="openOrPrint">打印</i-button>*@
+                        <i-button :icon="item.icon" class="btn" v-on:click="userBtnClick(item.Location)" v-for="item in userBtn">{{item.ModuleName}}</i-button>
                     </div>
 
                 </div>
@@ -281,16 +279,6 @@
 
 
 
-                    <!--
-
-
-                    <div class="tableTitle" style="background:none;border:none">
-                        {{UName}}
-                    </div>
-                    <div class="tableTitle">
-                        {{title}}
-                    </div>
-                    <i-table :columns="tableCol" :data="tableData" :height="tableHeight" border class="ivuTable" :loading="loading"></i-table>-->
                 </div>
 
             </div>
@@ -307,7 +295,7 @@
         </Modal>
     </div>
     <script type="text/javascript" src="~/Content/UserJS/api.js?v=1.0"></script>
-    <script type="text/javascript" src="~/Content/UserJS/ElectricityReport._jm.js?v=1.63"></script>
+    <script type="text/javascript" src="~/Content/UserJS/ElectricityReport._zc.js?v=1.69"></script>
 </body>
 </html>
 
