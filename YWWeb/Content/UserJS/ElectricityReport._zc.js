@@ -359,7 +359,10 @@
                     {
                         type: 'category',
                         boundaryGap: true,
-                        data: xAxis
+                        data: xAxis,
+                        axisLabel: {
+                            rotate: 30
+                        },
                     }
                 ],
                 yAxis: [
