@@ -399,10 +399,10 @@
                         }
                     }).then(function (res) {
                         this.createBarChart(res.data, d.name);
-                        this.createPieChart(d.Children);
+                        this.createPieChart(d.Children,d.name);
                     })
                 },
-                createPieChart: function (data) {
+                createPieChart: function (data,name) {
                     var subtext = "";
                     var series = [];
                     var titleTop = 0;
@@ -428,7 +428,7 @@
                     var option = {
                         title: {
                             //text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
-                            text: `当日实时分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
+                            text: `${name} - 当日分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
                             subtext: subtext,
                             left: 'center',
                             textStyle: {
@@ -500,7 +500,7 @@
                     var barChart = echarts.init(document.getElementById('barChart'));
                     var option = {
                         title: {
-                            text: `${new Date().getMonth() + 1}月总计：${Math.floor(count * 100) / 100} kW·h`,
+                            text: `${name} - ${new Date().getMonth() + 1}月总计用电：${Math.floor(count * 100) / 100} kW·h`,
                             left: 'center',
                             textStyle: {
                                 color: '#757575',
