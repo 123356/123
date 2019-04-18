@@ -1931,7 +1931,7 @@ namespace YWWeb.Controllers
                 using (pdermsWebEntities bll = new pdermsWebEntities())
                 {
                     List<DateTime> times = new List<DateTime>();
-                    string cids = "0-0";
+                    string cids = "0-0,";
                     if (type == 1)
                     {
                         if (TimeType == 1)
