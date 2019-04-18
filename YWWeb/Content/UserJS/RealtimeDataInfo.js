@@ -255,7 +255,7 @@
                 if (!payload.type) {
                     return;
                 }
-                if (payload.type == 6) {
+                if (payload.type == 6 || payload.type == 5) {
                     that.merge1(that.data, data)
                 }
             }
