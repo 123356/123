@@ -121,6 +121,7 @@
                         }
                         $("#elecID").combotree("setValues", arr);
                         that.isUnitElecSubSelect = arr
+                       
 
                     } else {
                         var tree = $('#DID').combotree('tree');
@@ -136,9 +137,14 @@
                         }
                         $("#DID").combotree("setValues", arr);
                         that.isUnitAreaSelect = arr
+                        //if (that.isUnitAreaSelect.length > 0) {
+                        //    vm.initPowerQualityData()
+                        //}
+                        
+                    }
+                    if (that.isUnitAreaSelect.length > 0 && that.isUnitElecSubSelect.length > 0) {
                         vm.initPowerQualityData()
                     }
-                    
                 },
                 onChange: function (newval, oldval) {
                     
@@ -251,12 +257,12 @@
                     areaStyle: {},
                     data: data.yData[i].split(','),
                     smooth: true,
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    },
+                    //markPoint: {
+                    //    data: [
+                    //        { type: 'max', name: '最大值' },
+                    //        { type: 'min', name: '最小值' }
+                    //    ]
+                    //},
                 })
             }
             var yName = ''
