@@ -45,7 +45,7 @@
         dateRange: [],
         moduleTitle: '昨天用电',
         areaOrItem: '1',
-        enTypeName:null,
+        enTypeName:'电',
     },
     filters: {
         isnull: function (e) {
@@ -137,24 +137,18 @@
                         }
                         $("#DID").combotree("setValues", arr);
                         that.isUnitAreaSelect = arr
-                        //if (that.isUnitAreaSelect.length > 0) {
-                        //    vm.initPowerQualityData()
-                        //}
-                        
                     }
                     if (that.isUnitAreaSelect.length > 0 && that.isUnitElecSubSelect.length > 0) {
                         vm.initPowerQualityData()
+                        //vm.getZongData()
+                        //vm.getReport()
                     }
                 },
                 onChange: function (newval, oldval) {
-                    
-
                     if (type == 1) {
                         that.isUnitElecSubSelect = newval
-
                     } else {
                         that.isUnitAreaSelect = newval
-
                     }
                 }
             })
@@ -803,7 +797,14 @@
                         vm.lineLoading = false
                         break
                 }
+            }).finally(function () {
+                if (vm.pie1Loading == false&&vm.bar1Loading == false&&vm.lineLoading ==false){
+                    vm.getZongData()
+                    vm.getReport()
+                }
+                
             })
+
         },
         setLoading: function () {
 
@@ -1066,8 +1067,7 @@
                     this.pie3Loading = true
                     this.bar1Loading = true
                     this.tableLoading = true
-                    this.getZongData()
-                    this.getReport()
+                    
                     this.initPowerQualityData()
                     break
                 case "printer()":
@@ -1087,6 +1087,7 @@
             this.getPowerQualityData('pie')
             this.getPowerQualityData('bar')
             this.getPowerQualityData('line')
+            
         },
         getUnitData: function () {
             var unitData = JSON.parse(localStorage.getItem("UnitData"))
@@ -1108,8 +1109,8 @@
         this.getLabelData()
         this.getCollectDevTypeList()
         this.getTimes()
-        this.getZongData()
-        this.getReport()
+        
+
     },
     mounted: function () {
     }
