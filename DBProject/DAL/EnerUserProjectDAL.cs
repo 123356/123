@@ -128,42 +128,25 @@ namespace DAL
                 string addcid = $",{data.addCid},";
                 for(int a = 0; a < list.Count(); a++)
                 {
-                    if (addcid.Contains($",{list[a].PID}-{list[a].CID},")) {
-                        if (data.item_type == 1)
-                        {
-                            if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
-                            {
-                                list[a].ener_use_type += $",{data.ID},";
-                            }
-                        }
-                        else if(data.item_type == 2) {
-                            if (list[a].ener_use_type_area == null || !list[a].ener_use_type_area.Contains($",{data.ID},"))
-                            {
-                                list[a].ener_use_type_area += $",{data.ID},";
-                            }
+                    if (addcid.Contains($",{list[a].PID}-{list[a].CID},"))
+                    {
+                        if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
+                                                    {
+                            list[a].ener_use_type += $",{data.ID},";
                         }
                     }
                     else
                     {
-                        if (data.item_type == 1)
+                        if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
                         {
-                            if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
-                            {
-                                var str = $",{data.ID},";
-                                list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
-                            }
+                            var str = $",{data.ID},";
+                            //list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
+
                         }
-                        else if (data.item_type == 2)
-                        {
-                            if (list[a].ener_use_type_area != null && list[a].ener_use_type_area.Contains($",{data.ID},"))
-                            {
-                                var str = $",{data.ID},";
-                                list[a].ener_use_type_area = list[a].ener_use_type_area.Remove(list[a].ener_use_type_area.IndexOf(str), str.Length);
-                            }
-                        }
-                   
                     }
                 }
+
+
                 list = _dbFactory.enerUserProject.setCidEneeruseType(list);
             }
             catch (Exception ex)
