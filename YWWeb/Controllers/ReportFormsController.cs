@@ -2488,7 +2488,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                 using (pdermsWebEntities bll = new pdermsWebEntities())
                 {
                     List<DateTime> times = new List<DateTime>();
-                    string cids = "0-0";
+                    string cids = "0-0,";
                     if (type == 1)
                     {
                         if (TimeType == 1)
@@ -2869,7 +2869,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                 using (pdermsWebEntities bll = new pdermsWebEntities())
                 {
                     List<DateTime> times = new List<DateTime>();
-                    string cids = "0-0";
+                    string cids = "0-0,";
                     if (type == 1)
                     {
                         if (TimeType == 1)
@@ -2938,17 +2938,20 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
                          
@@ -3026,17 +3029,20 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
 
@@ -3115,17 +3121,20 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
 
@@ -3206,17 +3215,20 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
 
@@ -3294,17 +3306,20 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
 
@@ -3383,17 +3398,20 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
 
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea).ToList();
                             var ListTemp = list.OrderByDescending(p => p.Value).GroupBy(p => p.CName).ToList();
-                            int inn = 0;
                             List<string> List_c = new List<string>();
+                            List<PMClass> list_pp = new List<PMClass>();
                             foreach (var temp in ListTemp)
                             {
-                                if (inn < 6)
-                                {
-                                    yAxis += temp.Key + ",";
-                                    series1 += temp.Sum(p => p.Value) + ",";
-                                    List_c.Add(temp.Key);
-                                    inn++;
-                                }
+                                PMClass m = new PMClass();
+                                m.Name = temp.Key;
+                                m.Value = temp.Sum(p => p.Value);
+                                list_pp.Add(m);
+                            }
+                            foreach (var temp in list_pp.OrderByDescending(p => p.Value).Take(6).OrderBy(p => p.Value))
+                            {
+                                yAxis += temp.Name + ",";
+                                series1 += temp.Value + ",";
+                                List_c.Add(temp.Name);
                             }
                             list = bll.ExecuteStoreQuery<IDAO.Models.t_V_EneryView>(sqlarea_lm).ToList();
 
@@ -3415,6 +3433,12 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
             }
         }
 
+
+        public class PMClass
+        {
+            public string Name { get; set; }
+            public decimal Value { get; set; }
+        }
         #endregion
 
 
