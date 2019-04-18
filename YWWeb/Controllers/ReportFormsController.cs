@@ -2008,7 +2008,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
@@ -2097,7 +2097,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
@@ -2184,7 +2184,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
@@ -2276,7 +2276,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
@@ -2365,7 +2365,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
@@ -2452,7 +2452,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     }
                                     else
                                     {
-                                        yData += 0 + ",";
+                                        yData += "-" + ",";
                                     }
                                 }
                                 if (ii < (ListTemp.Count() - 1))
