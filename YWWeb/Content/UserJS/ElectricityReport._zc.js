@@ -388,7 +388,7 @@
         //饼图
         createPie1Chart: function (data) {
             pie1Chart = echarts.init(document.getElementById("pie1Chart"))
-            var subtext = ''
+            var subtext = 'kW·h'
             switch (this.CollTypeID) {
                 case 1:
                     subtext = 'kW·h'
@@ -399,7 +399,7 @@
             }
             var option = {
                 title: {
-                    text: data.total,
+                    text: parseFloat(data.total).toFixed(2),
                     subtext: subtext,
                     x: 'center',
                     y: '48%',
