@@ -55,9 +55,9 @@ namespace EnergyManage.Controllers
         }
 
         //返回CID数据
-        public JsonResult GetCidData(int UnitID=0, string UnitNam="", string PDRList = "")
+        public JsonResult GetCidData(int UnitID=0, string UnitName="", string PDRList = "")
         {
-            if (UnitID == 0 || UnitNam == "" || PDRList == "")
+            if (UnitID == 0 || UnitName == "" || PDRList == "")
             {
                 return Json("参数异常:参数为空");
             }
@@ -352,7 +352,7 @@ namespace EnergyManage.Controllers
     // 查询当月用电量
     public ActionResult GetTreePowerMonth(string addCid, string delCid) {
 
-            if (addCid == "" || delCid == "")
+            if (addCid == "" && delCid == "")
             {
                 return Json("参数异常:参数为空");
             }
@@ -384,17 +384,59 @@ namespace EnergyManage.Controllers
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
-            var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
+
+
+            //判断闰年
+            int year = int.Parse(DateTime.Now.Year.ToString());
+            int i = year % 4;
+            int j = year % 400;
+            int month = int.Parse(DateTime.Now.Month.ToString());
+            int day = 0;
+            int[] ms = {4,6,9,11};
+
+            if ((i == 0 || j == 0) && month==2)
+            {
+                day = 28;
+            }
+            else if(month == 2)
+            {
+                day = 29;
+            }else if (ms.Contains(month))
+            {
+                day = 30;
+            }
+            else
+            {
+                day = 31;
+            }
+            List<DateTime> list = new List<DateTime>();
+            for (int a = 0; a < day; a++) 
+            {
+                var d = new DateTime(year, month, a + 1);
+                list.Add(d);
+            }
+
+   
+            //var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
             List<IDAO.Models.t_V_EnerPower> json  = new List<IDAO.Models.t_V_EnerPower>();
+            list.Sort((left, right) =>
+            {
+                if (left > right)
+                    return 1;
+                else if (left == right)
+                    return 0;
+                else
+                    return -1;
+            });
 
 
             for (var a = 0; a < list.Count(); a++)
             {
                 IDAO.Models.t_V_EnerPower obj = new IDAO.Models.t_V_EnerPower();
-                obj.RecordTime = list[a].RecordTime;
+                obj.RecordTime = list[a];
                 //obj.UsePower = 0;
                 //obj.NeedPower = 0;
-                var RecordTime = list[a].RecordTime;
+                var RecordTime = list[a];
                 for (var b = 0; b < power.Count(); b++)
                 {
                     if (RecordTime == power[b].RecordTime)

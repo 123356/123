@@ -1,498 +1,596 @@
-﻿@{ Layout = null; }
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-   @Html.Partial("~/Views/Home/BaseHTML.cshtml")
-    <script type="text/javascript" src="~/Content/js/jquery-1.14.2.min.js"></script>
-    <script type="text/javascript" src="~/Content/js/jquery.cookie.js"></script>
+    <title>分项用电</title>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+
     <script type="text/javascript" src="~/Content/js/echarts.min.js"></script>
-
-    <link href="~/Content/d3/css/style.css" rel="stylesheet" />
-    <script src="~/Content/d3/js/d3.js"></script>
-    <script src="~/Content/d3/js/d3.layout.js"></script>
-
-    <style scoped>
-        #body {
-            background: #efefef;
-            position: absolute;
+    <style>
+        html,
+        body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+            flex-direction: column;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        .body {
+            display: flex;
             background: #fff;
         }
 
-        rect {
-            fill-opacity: .9;
+        .body,
+        .main {
+            flex-grow: 1;
         }
 
-        text {
-            font-size: 14px;
+        .aside,
+        .foot {
+            margin: 10px;
+            border-radius: 4px;
+            background-color: #F8F8F8;
+            overflow: hidden;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            color: #4C4C4C;
+            padding: 20px;
         }
 
-        .electricity {
-            color: #ff6a00;
+        div {
+            overflow: hidden;
         }
 
-        #editwin {
+        .list {
             display: flex;
-            flex-direction: row
+            width: 100%;
+            height: 100%;
         }
 
-            #editwin .barChart {
-                height: 100%;
-                flex: 2;
-                overflow: hidden
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            border-radius: 4px;
+            background-color: #F8F8F8;
+            overflow: hidden;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            color: #4C4C4C;
+            padding: 20px;
+        }
+
+            .content .title {
+                padding: 18px 20px;
+                border-bottom: 1px solid #ebeef5;
+                box-sizing: border-box;
             }
 
-            #editwin .pieChart {
-                height: 100%;
-                flex: 1;
-                overflow: hidden
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content .node {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 0 15px;
+        }
+
+        .content .node1 {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 15px;
+        }
+
+        .content .node2 {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
+
+
+        .Children {
+            flex-grow: 1;
+        }
+
+        .img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .f2 {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+            .f2 > * {
+                margin: 8px 0;
             }
-        .chart {
-            margin-top: 60px;
-            margin-left: 60px;
+
+
+        .f3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        rect.parent {
-            cursor: pointer;
-            fill: #CFCDCE;
-        }
-        rect {
-            fill: #EFEFEF;
-            stroke: #777777;
+            .f3 > node2 {
+                display: inline-block;
+            }
+
+
+        #pieChart, #barChart {
+            height: 100%;
+            overflow: hidden;
         }
 
-        text {
-            color: #777777;
-        }
-        
 
-        
+        .el-button.el-button--default {
+            background: #50bda0;
+            color: #fff;
+        }
     </style>
-</head>
-<body>
-    <div id="body"></div>
-  
-    <u id="icon" style="position:absolute;display:none;color:#1800CC;font-size:14px;cursor:pointer;">
-        查看详情
-    </u>
 
-    <div id="editwin" title="详情" class="easyui-window" closed="true" style="width: 900px;
-        height: 350px; padding: 5px;" minimizable="false" maximizable="false" collapsible="false">
-        <div class="barChart" id="barChart"></div>
-        <div class="pieChart" id="pieChart"></div>
+</head>
+
+<body>
+    <div id="container">
+        <div class="body">
+            <div class="main" id="main">
+                <div :style="{'height':style.body.height*.75+'px','width':'100%'}">
+                    <div class="list" v-for="itme in list">
+                        <div class="content" :style="{'width':style.main.width/floor+'px','font-size':node.font+'px'}">
+                            <div class="title">
+                                {{itme.name}}
+                            </div>
+                            <div class="node">
+                                <div>
+                                    <span :style="{'font-size':node.font*1.5+'px'}">{{itme.UsePower}}</span> kw.h
+                                    <p><el-button icon="el-icon-search" style="margin-top:20px" v-on:click="clickbutton(list[0])">查看详情</el-button></p>
+                                </div>
+                                <p :style="{'height':node.img+'px'}">
+                                    <img :src="'../../../Content/images/tree/'+itme.icon" class="img" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="Children">
+                            <tree-menu :list="itme.Children" :floor="floor" :width="node.width" :height="node.height" :name="itme.name"></tree-menu>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="aside" :style="{'width':style.body.width*.3+'px'}">
+                <div class="barChart" id="pieChart"></div>
+            </div>
+        </div>
+        <div class="foot" :style="{'height':style.body.height*.25+'px'}">
+            <div class="pieChart" id="barChart"></div>
+        </div>
     </div>
 
+
+    <script type="text/x-template" id="tree-menu">
+        <div style="width:100%;height:100%;flex-grow:1;display: flex;flex-direction: column;">
+            <div class="list" v-for="itme in node" :style="{'height':height/list.length*node.length+'px'}" v-if="node.length!=0">
+                <div class="content" :style="{'width':width+'px','font-size':font+'px'}">
+                    <div class="title">
+                        {{itme.name}}实时总用电
+                    </div>
+                    <div class="node1">
+                        <div class="f2">
+                            <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':height/list.length*.2+'px','width':height/list.length*.2+'px'}" />
+                            <span> {{itme.name}}</span>
+                        </div>
+
+                        <div class="f2">
+                            <span> 实时用电</span>
+                            <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span> kw.h</span></p>
+                            <el-button icon="el-icon-search" v-on:click="clickbutton(itme)">查看详情</el-button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="Children">
+                    <tree-menu :list="itme.Children" :floor="floor" :width="width" :height="height/list.length" :name="itme.name"></tree-menu>
+                </div>
+            </div>
+
+
+            <div class="list" :style="{'height':height/list.length*leaves.length+'px'}" v-if="leaves.length!=0">
+                <div class="content" :style="{'width':width+'px','font-size':font+'px'}">
+                    <div class="title">
+                        {{name}}分项用电
+                    </div>
+                    <div class="node2" v-for="itme in leaves" style="align-items:center">
+                        <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':'25px','width':'25px'}" />
+                        <span> {{itme.name}}</span>
+                        <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span>kw.h</span></p>
+                        <el-button icon="el-icon-search" v-on:click="clickbutton(itme)">查看详情</el-button>
+                    </div>
+                </div>
+                <div class="Children"></div>
+            </div>
+
+
+
+        </div>
+    </script>
     <script>
 
-        var arr = [];
-        var all = 0;
-
-
-        var w = document.documentElement.scrollWidth - 120,
-            h = document.documentElement.scrollHeight * .8,
-            x = d3.scale.linear().range([0, w]),
-            y = d3.scale.linear().range([0, h]);
-
-        var vis = d3.select("#body").append("div")
-            .attr("class", "chart")
-            .style("width", w + "px")
-            .style("height", h + "px")
-            .append("svg:svg")
-            .attr("width", w)
-            .attr("height", h);
-
-        var partition = d3.layout.partition()
-            .value(function (d) {
-                var size = parseInt(d.UsePower);
-                if (size > all / 10) {
-                    size = size;
-                } else {
-                    size = all / 10;
-                }
-                return size;
-            });
-        var data = JSON.parse(window.localStorage.getItem("UnitData"));
-        $("#icon").on('click', function (e) {
-            getElectrMonth(window.d);
-            e.stopPropagation();
-        })
-        var clickInterval = 0;
-        $.ajax({
-            type: "post",
-            url: "/energyManage/EMSetting/GetEnergyTreePower",
-            data: {
-                UnitID: data.enUID,
-                ItemType: 1,
-                UnitName: data.enName
+        Vue.component('treeMenu', {
+            template: '#tree-menu',
+            props: ["list", "floor", "width", "height",'name'],
+            computed: {
+                //全部节点
+                font: function () {
+                    let font = this.height *.02;
+                    font = font >= 12 ? font : 12;
+                    return font
+                },
             },
-            success: function (res) {
-                if (!res) {
-                    return;
+            data: function () {
+                return {
+                    leaves: [],
+                    node: [],
                 }
-                var root = res[0];
-
-                all = res[0].UsePower;
-
-                var g = vis.selectAll("g")
-                    .data(partition.nodes(root))
-                    .enter()
-                    .append("svg:g")
-                    .attr("transform", function (d) {
-                        return "translate(" + x(d.y) + "," + y(d.x) + ")";
-                    })
-          
-                   .on('click', click)
-                    .on("mouseover", function (d) {
-                        $("#icon").hide()
-                        var position = $(this).children('text').position();
-
-
-                        $("#icon").fadeIn()
-                            .css("left", position.left+d.name.length*18)
-                            .css("top", position.top-3);
-                        window.d = d;
-                        d3.event.stopPropagation();
-                    })
-             
-
-                var kx = w / root.dx,
-                    ky = h / 1;
-                g.append("svg:rect")
-                    .attr("width", root.dy * kx)
-                    .attr("height", function (d) {
-                        return d.dx * ky;
-                    })
-                    .attr("class", function (d) {
-                        return d.Children.length ? "parent" : "child";
-                    })
-
-
-                var text = g.append("svg:text")
-                    .attr("dy", ".35em")
-                    .style("opacity", function (d) {
-                        return d.dx * ky > 32 ? 1 : 0;
-                    })
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr("transform", transform)
-                    .text(function (d) {
-                        return d.name;
-                    })
-
-
-
-
-                text.selectAll("tspan")
-                    .data(function (d) {
-                        return ["总用电量：" + d.UsePower.toFixed(2)+  'kW·h']
-                    })
-                    .enter()
-                    .append("svg:tspan")
-                    .attr("x", text.attr("x"))
-                    .attr("dy", "1em")
-                    .attr('fill', '#333')
-                    .text(function (d) {
-                        return d;
-                    });
-
-
-
-                d3.select(window)
-                    .on("click", function () {
-                       // $(".panel-tool-close").click();
-                        click(root);
-                    })
-
-
-                function click(d) {
-                    if (window.id == d.id) {
-                        click(root);
-                        return 
-                    } else {
-                        window.id = d.id;
+            },
+            methods: {
+                clickbutton: function (d) {
+                    vm.getElectrMonth(d);
+                }
+            },
+            created: function () {
+                for (let a = 0; a < this.list.length; a++) {
+                    if (this.list[a].Children.length == 0) {
+                        this.leaves.push(this.list[a]);
+                    } else if (this.list[a]) {
+                        this.node.push(this.list[a])
                     }
-
-                    $('#icon').hide();
-                    var that = this;
-                    setTimeout(function () {
-                        $('#icon').show();
-                        var position = $(that).children('text').position();
-                        if (!position) {
-                            return;
-                        }
-                        $("#icon").fadeIn()
-                            .css("left", position.left + d.name.length * 18)
-                            .css("top", position.top - 8);
-                    },800)
-              
-                    kx = (d.y ? w - 40 : w) / (1 - d.y);
-                    ky = h / d.dx;
-
-                    x.domain([d.y, 1]).range([d.y ? 40 : 0, w]);
-                    y.domain([d.x, d.x + d.dx]);
-
-                    var t = g.transition()
-                        .duration(d3.event.altKey ? 7500 : 750)
-                        .attr("transform", function (d) {
-                            return "translate(" + x(d.y) + "," + y(d.x) + ")";
-                        });
-
-                    t.select("rect")
-                        .attr("width", d.dy * kx)
-                        .attr("height", function (d) {
-                            return d.dx * ky;
-                        });
-
-
-                    t.select("text")
-                        .attr("transform", transform)
-                        .style("opacity", function (d) {
-                            return d.dx * ky > 32 ? 1 : 0;
-                        });
-                    d3.event.stopPropagation();
-                }
-                function transform(d) {
-                    return "translate(8," + (d.dx * ky / 2 - 8) + ")";
                 }
             }
         })
 
-        function getElectrMonth(d) {
-            $(".panel-title").text("用电详情——" + d.name);
-            $.ajax({
-                type: "post",
-                url: "/energyManage/EMSetting/GetTreePowerMonth",
-                data: {
-                    addCid: d.addCid,
-                    delCid: d.delCid
+
+
+        let vm = new Vue({
+            el: "#container",
+            data: {
+                UnitData: JSON.parse(window.localStorage.getItem("UnitData")),
+                list: [],
+                floor: 1,
+                style: {
+                    body: {
+                        width: 0,
+                        height: 0,
+                    },
+                    main: {
+                        width: 0,
+                        height: 0,
+                    },
                 },
-                success: function (res) {
-                    $("#editwin").window("open");
-                    createBarChart(res, d.name);
-                    createPieChart(d.Children);
-                },
-                error: function (e) {
-                    console.log(e)
+                node: {
+                    width:0,
+                    height: 0,
+                    font: '0px',
+                    titile: '0px',
+                    img: '0px',
                 }
-            })
-        }
-
-
-        function formatDate(val) {
-            if (val != null) {
-                var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
-                //月份为0-11，所以+1，月份小于10时补个0
-                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                return date.getFullYear() + "-" + month + "-" + currentDate;
-            }
-            return "";
-        }
-
-   
-        function createBarChart(data, name) {
-            var xData = [];
-            var yData = [];
-            var count = 0;
-            data = data.reverse();
-            for (var i in data) {
-                var str = formatDate(data[i].RecordTime);
-                xData.push(str.substr(str.length - 2, 2))
-                yData.push(data[i].UsePower.toFixed(2))
-                count += data[i].UsePower;
-              
-            }
-            var barChart = echarts.init(document.getElementById('barChart'));
-            var option = {
-                title: {
-                    text: `${new Date().getMonth()+1}月—累计用电量`,
-                    subtext: Math.floor(count * 100) / 100+"  kW·h",
-                    left: 'center',
-                    textStyle: {
-                        color: '#757575',
-                        fontWeight: 'normal',
-                        fontSize: 12,
-                    },
-                    top: 0
-                },
-                color: ['#57b9a3'],
-                tooltip: {
-                    trigger: 'axis',
-                    formatter: "{a}: <br/>{b}：{c}",
-                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                    },
-                    position: ['50%', '50%']
+            },
+            methods: {
+                clickbutton: function (d) {
+                    console.log(123)
+                    console.log(d);
+                    vm.getElectrMonth(d);
                 },
 
-                grid: {
-                    top: '18%',
-                    bottom: 45,
-                    containLabel: true
+                //获取树
+                GetTreePower: function () {
+                    if (!this.UnitData.enUID || !this.UnitData.enName) {
+                        return
+                    }
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetEnergyTreePower",
+                        method: "POST",
+                        body: {
+                            UnitID: this.UnitData.enUID,
+                            ItemType: 1,
+                            UnitName: this.UnitData.enName
+                        }
+                    }).then(function (res) {
+                        this.list = res.data;
+                        this.floor = this.getMaxFloor(this.list);
+                        this.style.body.width = document.body.offsetWidth;
+                        this.style.body.height = document.body.offsetHeight;
+
+                        this.style.main.width = this.style.body.width * .7;
+                        this.style.main.height = this.style.body.height * .75;
+
+
+                        this.node.width = this.style.body.width / this.floor;
+                        this.node.height = this.style.body.height / this.list.length;
+
+
+                        this.node.font = this.style.main.height * .04;
+                        this.node.titile = this.style.main.height * .09;
+                        this.node.img = this.style.main.height * .4;
+
+
+                        this.getElectrMonth(res.data[0]);
+
+                        //width/floor
+                    })
                 },
-                xAxis: [{
-                    type: 'category',
-                    data: xData,
-                    axisLine: {
-                        lineStyle: {
-                            color: '#57b9a3', //x轴线颜色
-                            width: '0.7'
+                //获取层数
+                getMaxFloor: function (treeData) {
+                    let floor = 0
+                    let v = this
+                    let max = 0
+                    function each(data, floor) {
+                        data.forEach(e => {
+                            e.floor = floor
+                            if (floor > max) {
+                                max = floor
+                            }
+                            e.Children.floor = floor;
+
+                            if (e.Children.length > 0) {
+                                each(e.Children, floor + 1)
+                            }
+                        })
+                    }
+                    each(treeData, 1)
+                    return max
+                },
+                //年月日  格式化
+                formatDate: function (val) {
+
+                    if (val != null) {
+                        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                        //月份为0-11，所以+1，月份小于10时补个0
+                        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                        return date.getFullYear() + "-" + month + "-" + currentDate;
+                    }
+                    return "";
+                },
+                //获取图表数据
+                getElectrMonth: function(d){
+                    this.$http({
+                        url: "/energyManage/EMSetting/GetTreePowerMonth",
+                        method: "POST",
+                        body: {
+                            addCid: d.addCid,
+                            delCid: d.delCid
+                        }
+                    }).then(function (res) {
+                        this.createBarChart(res.data, d.name);
+                        this.createPieChart(d.Children);
+                    })
+                },
+                createPieChart: function (data) {
+                    var subtext = "";
+                    var series = [];
+                    var titleTop = 0;
+                    var allPower = 0;
+                    var legend = [];
+
+                    for (var i in data) {
+                        if (!data[i].UsePower) {
+                            continue;
+                        }
+                        legend.push(data[i].name)
+                        allPower += data[i].UsePower;
+                        series.push({
+                            name: data[i].name,
+                            value: data[i].UsePower.toFixed(2)
+                        })
+                    }
+                    if (data.length == 0) {
+                        subtext = "暂无数据"
+                        titleTop = '40%'
+                    }
+                    var pieChart = echarts.init(document.getElementById('pieChart'));
+                    var option = {
+                        title: {
+                            //text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
+                            text: `当日实时分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
+                            subtext: subtext,
+                            left: 'center',
+                            textStyle: {
+                                color: '#757575',
+                                fontWeight: 'normal',
+                                fontSize: 20,
+                            },
+                            top: titleTop
                         },
-                    },
-                    axisTick: {
-                        show: false,
-                        alignWithLabel: true
-                    },
-                    axisLabel: { //调整y轴的lable
-                        textStyle: {
-                            fontSize: 9, // 让字体变大
-                            color: '#9f9d9d'
-                        }
-                    },
-                }],
-                yAxis: [{
-                    type: 'value',
-                    name: 'kW·h',
-                    axisLine: {
-                        lineStyle: {
-                            color: '#57b9a3', //x轴线颜色
-                            width: '0.7'
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{c}" + "  kW·h"
                         },
-                    },
-                    axisTick: {
-                        show: false,
-                        alignWithLabel: true
-                    },
-                    axisLabel: { //调整y轴的lable
-                        textStyle: {
-                            fontSize: 9, // 让字体变大
-                            color: '#9f9d9d'
-                        }
-                    },
-                    splitLine: {
-                        show: true,
-                        lineStyle: {
-                            color: '#ededed'
-                        }
-                    },
-                }],
-                series: [{
-                    name: '总用电量',
-                    type: 'bar',
-                    barWidth: '50%',
-                    data: yData
-                }],
-                dataZoom: [{
-                    type: 'inside'
-                }]
-            };
-            barChart.clear()
-            barChart.setOption(option)
-            window.addEventListener("resize", () => {
-                barChart.resize();
-            });
-        }
-
-        function createPieChart(data) {
-            var subtext = "";
-            var series = [];
-            var titleTop = 0;
-            var allPower = 0;
-            var legend = [];
-
-            for (var i in data) {
-                legend.push(data[i].name)
-                allPower += data[i].UsePower;
-                series.push({
-                    name: data[i].name,
-                    value: data[i].UsePower.toFixed(2)
-                })
-            }
-            if (data.length == 0) {
-                subtext = "暂无数据"
-                titleTop = '40%'
-            }
-            var pieChart = echarts.init(document.getElementById('pieChart'));
-            var option = {
-                title: {
-                    //text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
-                    text: `当日实时分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
-                    subtext: subtext,
-                    left: 'center',
-                    textStyle: {
-                        color: '#757575',
-                        fontWeight: 'normal',
-                        fontSize: 12,
-                    },
-                    top: titleTop
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{c}"+"  kW·h"
-                },
-                series: [
-                    {
-                        type: 'pie',
-                        radius: ['50%', '75%'],
-                        center: ['50%', '50%'],
-                        avoidLabelOverlap: false,
-                        hoverAnimation: true,
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'center',
-                                formatter: [
-                                    '{b|\n' + allPower.toFixed(2) + '\nkW·h}',
-                                ].join('\n'),
-                                rich: {
-                                    b: {
-                                        color: '#525252',
-                                        lineHeight: 30,
-                                        fontSize: 18,
-                                    }
+                        series: [{
+                            type: 'pie',
+                            radius: ['50%', '75%'],
+                            center: ['50%', '50%'],
+                            avoidLabelOverlap: false,
+                            hoverAnimation: true,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'center',
+                                    formatter: [
+                                        '{b|\n' + allPower.toFixed(2) + '\nkW·h}',
+                                    ].join('\n'),
+                                    rich: {
+                                        b: {
+                                            color: '#525252',
+                                            lineHeight: 30,
+                                            fontSize: 20,
+                                        }
+                                    },
                                 },
                             },
-                          
-                                
+                            data: series,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            },
+                        }],
+                        legend: {
+                            type: 'scroll',
+                            orient: 'horizontal',
+                            right: 0,
+                            bottom: 0,
+                            data: legend,
                         },
-                        data: series,
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        },
-                    }
-                ],
-                legend: {
-                    type: 'scroll',
-                    orient: 'horizontal',
-                    right: 0,
-                    bottom: 0,
-                    data: legend,
-                   
+                    };
+                    pieChart.clear();
+                    pieChart.setOption(option);
+                    window.addEventListener("resize", () => {
+                        pieChart.resize();
+                    });
                 },
-            };
-            pieChart.clear()
-            pieChart.setOption(option)
-            window.addEventListener("resize", () => {
-                pieChart.resize();
-            });
-        }
+                createBarChart: function (data,name) {
+                    var xData = [];
+                    var yData = [];
+                    var count = 0;
+                    for (var i in data) {
+                        var str = this.formatDate(data[i].RecordTime);
+                        xData.push(str.substr(str.length - 2, 2));
+                        yData.push(data[i].UsePower.toFixed(2))
+                        count += data[i].UsePower;
+                    }
+                    var barChart = echarts.init(document.getElementById('barChart'));
+                    var option = {
+                        title: {
+                            text: `${new Date().getMonth() + 1}月—累计用电量`,
+                            subtext: Math.floor(count * 100) / 100 + "  kW·h",
+                            left: 'center',
+                            textStyle: {
+                                color: '#757575',
+                                fontWeight: 'normal',
+                                fontSize: 16,
+                            },
+                            top: 0
+                        },
+                        color: ['#57b9a3'],
+                        tooltip: {
+                            trigger: 'axis',
+                            formatter: "{a}: <br/>{b}：{c}",
+                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                            },
+                            position: ['50%', '50%']
+                        },
 
+                        grid: {
+                            top: '18%',
+                            bottom: 45,
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            data: xData,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#57b9a3', //x轴线颜色
+                                    width: '0.7',
 
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                                alignWithLabel: true
+                            },
+                            axisLabel: { //调整y轴的lable
+                                textStyle: {
+                                    fontSize: 16, // 让字体变大
+                                    color: '#9f9d9d'
+                                }
+                            },
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            name: 'kW·h',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#57b9a3', //x轴线颜色
+                                    width: '1'
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                                alignWithLabel: true
+                            },
+                            axisLabel: { //调整y轴的lable
+                                textStyle: {
+                                    fontSize: 14, // 让字体变大
+                                    color: '#9f9d9d'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#ededed'
+                                }
+                            },
+                        }],
+                        series: [{
+                            name: '总用电量',
+                            type: 'bar',
+                            barWidth: '50%',
+                            data: yData
+                        }],
+                        dataZoom: [{
+                            type: 'inside'
+                        }]
+                    };
+                    barChart.clear()
+                    barChart.setOption(option)
+                    window.addEventListener("resize", () => {
+                        barChart.resize();
+                    });
 
+                }
+
+            },
+            created: function () {
+                this.GetTreePower();
+            },
+            mounted() {
+
+            }
+        });
     </script>
-
 </body>
+
 </html>
