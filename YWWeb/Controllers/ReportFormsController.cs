@@ -1955,7 +1955,7 @@ namespace YWWeb.Controllers
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -1974,7 +1974,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -1982,7 +1982,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2044,7 +2044,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2063,7 +2063,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2071,7 +2071,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2131,7 +2131,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2150,7 +2150,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2158,7 +2158,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2223,7 +2223,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2242,7 +2242,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2250,7 +2250,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2312,7 +2312,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2331,7 +2331,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2339,7 +2339,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2399,7 +2399,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2418,7 +2418,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2426,7 +2426,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2505,7 +2505,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2524,7 +2524,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2532,7 +2532,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2569,7 +2569,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2588,7 +2588,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2596,7 +2596,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2631,7 +2631,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2650,7 +2650,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2658,7 +2658,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2691,7 +2691,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2710,7 +2710,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2718,7 +2718,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2748,7 +2748,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is n
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2767,7 +2767,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2775,7 +2775,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2805,7 +2805,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,c.Name as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2824,7 +2824,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                 var lalist = labels.Split(',').ToList();
                                 for (int inn = 0; inn < lalist.Count; inn++)
                                 {
-                                    if (i == 0)
+                                    if (inn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[inn] + "')";
                                     }
@@ -2832,7 +2832,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                                     {
                                         sqlarea += " or (b.Label='" + lalist[inn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (inn == lalist.Count - 1)
                                         sqlarea += ")";
                                 }
                             }
@@ -2886,11 +2886,11 @@ where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is no
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}  and c.id IN(" + itemids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType} and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -2916,7 +2916,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -2926,7 +2926,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -2974,11 +2974,11 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}  and c.id IN(" + itemids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}  and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3004,7 +3004,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3014,7 +3014,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3063,11 +3063,11 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}  and c.id IN(" + itemids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=1 and b.coolect_dev_type={coType}  and c.id IN(" + itemids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3093,7 +3093,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3103,7 +3103,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3154,11 +3154,11 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}  and c.id IN(" + areaids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityDaily a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDays(-1).ToString("yyyy-MM-dd")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3184,7 +3184,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3194,7 +3194,7 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3242,11 +3242,11 @@ where CONVERT(varchar(10),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddDay
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityMonthly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMonths(-1).ToString("yyyy-MM")}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3272,7 +3272,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3282,7 +3282,7 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3331,11 +3331,11 @@ where CONVERT(varchar(7),RecordTime, 120)='{Convert.ToDateTime(TimeDate).AddMont
                             string sqlarea = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{TimeDate}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             string sqlarea_lm = $@"select QID as ID,UsePower as Value,UserPowerRate as Rate,RecordTime,b.CName as CName,a.CID,b.coolect_dev_type,b.ener_use_type  from t_EE_PowerQualityYearly a  join t_DM_CircuitInfo b  on (a.CID=b.CID AND a.PID=b.PID) join t_EE_EnerUserType c
 on ((B.ener_use_type_area) like ('%,'+ (CONVERT(varchar(255),c.id)+',%')))
 
-where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType}";
+where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and a.UserPowerRate is not null and UsePower is not null and c.item_type=2 and b.coolect_dev_type={coType} and c.id IN(" + areaids + ")";
                             int i = 0;
                             foreach (KeyValuePair<int, string> item in cpids)
                             {
@@ -3361,7 +3361,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                 var lalist = labels.Split(',').ToList();
                                 for (int innn = 0; innn < lalist.Count; innn++)
                                 {
-                                    if (i == 0)
+                                    if (innn == 0)
                                     {
                                         sqlarea += " and ((b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
@@ -3371,7 +3371,7 @@ where CONVERT(varchar(4),RecordTime, 120)='{Convert.ToInt32(TimeDate) - 1}' and 
                                         sqlarea += " or (b.Label='" + lalist[innn] + "')";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
                                     }
-                                    if (i == lalist.Count - 1)
+                                    if (innn == lalist.Count - 1)
                                     {
                                         sqlarea += ")";
                                         sqlarea_lm += " and ((b.Label='" + lalist[innn] + "')";
