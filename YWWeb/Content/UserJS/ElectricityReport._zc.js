@@ -252,7 +252,8 @@
             for (var i in data.yData) {
                 series.push({
                     name: legend[i],
-                    type: 'line',
+                    type: 'bar',
+                   
                     stack: '总趋势',
                     areaStyle: {},
                     data: data.yData[i].split(','),
@@ -357,7 +358,7 @@
                 xAxis: [
                     {
                         type: 'category',
-                        boundaryGap: false,
+                        boundaryGap: true,
                         data: xAxis
                     }
                 ],
