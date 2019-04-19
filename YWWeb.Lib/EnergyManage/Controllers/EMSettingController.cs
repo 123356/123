@@ -29,10 +29,6 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
-        public ActionResult AreaTree1()
-        {
-            return View();
-        }
         #region 树
         /// 返回该用户权限可见的单位列表
         public JsonResult GetUnitList()
@@ -178,26 +174,8 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public class PidandCid {
-            public int pid { set; get; }
-            public string cid { set; get; }
-        }
-
-        public class Tree
-        {
-            public int id { set; get; }
-            public string name { set; get; }
-            public int? pId { set; get; }
-            public string head { set; get; }
-            public string note { set; get; }
-            public string addCid { set; get; }
-            public string delCid { set; get; }
-            public int area { set; get; }
-            public int people { set; get; }
-            public decimal UsePower { set; get; }
-            public decimal NeedPower { set; get; }
-            public List<Tree> children { set; get; }
-        }
+      
+     
         #endregion
 
         #region 用能异常
