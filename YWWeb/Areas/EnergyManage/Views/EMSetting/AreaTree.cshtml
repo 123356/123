@@ -368,6 +368,14 @@
                         this.getElectrMonth(res.data[0]);
                         loading.close();
                         //width/floor
+                    })    
+                     .catch(function (e) {
+                        loading.close();
+                            this.$notify({
+                              title: '错误提示',
+                              message: '该站室没有配置分项树信息',
+                              duration: 0
+                            });
                     })
                 },
                 //获取层数
@@ -409,16 +417,18 @@
                         url: "/energyManage/EMSetting/GetTreePowerMonth",
                         method: "POST",
                         body: {
+                            //power:12
                             addCid: d.addCid,
                             delCid: d.delCid,
                             time: this.time
                         }
                     }).then(function (res) {
-                        this.createBarChart(res.data, d.name);
-                        this.createPieChart(d.Children,d.name);
+
+                        this.createBarChart(res.data, d.name,d.UsePower);
+                        this.createPieChart(d.Children,d.name,d.UsePower);
                     })
                 },
-                createPieChart: function (data,name) {
+                createPieChart: function (data,name,count) {
                     var subtext = "";
                     var series = [];
                     var titleTop = 0;
@@ -503,15 +513,24 @@
                         pieChart.resize();
                     });
                 },
-                createBarChart: function (data,name) {
+                createBarChart: function (data,name,count) {
                     var xData = [];
                     var yData = [];
-                    var count = 0;
+            
+     
+                    console.log(count)
+
                     for (var i in data) {
                         var str = this.formatDate(data[i].RecordTime);
+
+               //count
+                        if(str.substr(str.length - 2, 2) == this.time.getDate()){
+                                yData.push(count)
+        
+                        }else{
+                                yData.push(data[i].UsePower.toFixed(2))
+                        }
                         xData.push(str.substr(str.length - 2, 2));
-                        yData.push(data[i].UsePower.toFixed(2))
-                        count += data[i].UsePower;
                     }
                     var barChart = echarts.init(document.getElementById('barChart'));
                     var option = {
