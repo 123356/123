@@ -423,9 +423,9 @@
                             time: this.time
                         }
                     }).then(function (res) {
-
-                        this.createBarChart(res.data, d.name,d.UsePower);
-                        this.createPieChart(d.Children,d.name,d.UsePower);
+                        var UsePower = d.UsePower.toFixed(2);
+                        this.createBarChart(res.data, d.name,UsePower);
+                        this.createPieChart(d.Children,d.name,UsePower);
                     })
                 },
                 createPieChart: function (data,name,count) {
