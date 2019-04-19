@@ -160,23 +160,25 @@
 
 <body>
     <div id="container">
+
         <div class="body">
             <div class="main" id="main">
                 <div :style="{'height':style.body.height*.75+'px','width':'100%'}">
+
                     <div class="list" v-for="itme in list">
                         <div class="content" :style="{'width':style.main.width/floor+'px','font-size':'14px'}">
-                            <div class="title" style="display:flex;justify-content:space-around; align-items: center;">
-                                <span> {{itme.name}}</span>
-
-
-                                <el-date-picker :style="{'width':'50%'}" type="date"
+                            <div>
+                              
+                                <el-date-picker :style="{'width':'143px'}" type="date"
                                                 v-model="time"
-                                                disabled>
+                                                v-on:change="changeSelect"
+                                                :focus="true"
+                                                :clearable="false">
                                 </el-date-picker>
-
 
                             </div>
                             <div class="node">
+                                <h2> {{itme.name}} </h2>
                                 <div>
                                     <span :style="{'font-size':node.font*1.5+'px'}">{{itme.UsePower.toFixed(2)}}</span> kW·h
                                     <p><el-button icon="el-icon-search" style="margin-top:20px" v-on:click="clickbutton(list[0])">查看详情</el-button></p>
@@ -208,7 +210,7 @@
             <div class="list" v-for="itme in node" :style="{'height':height/list.length*node.length+'px'}" v-if="node.length!=0">
                 <div class="content" :style="{'width':width+'px','font-size':'14px'}">
                     <div class="title">
-                        {{itme.name}}实时总用电
+                        {{itme.name}} 当日累计
                     </div>
                     <div class="node1">
                         <div class="f2">
@@ -217,7 +219,7 @@
                         </div>
 
                         <div class="f2">
-                            <span> 实时用电</span>
+                            <span> 当日累计</span>
                             <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span> kW·h</span></p>
                             <el-button icon="el-icon-search" v-on:click="clickbutton(itme)">查看详情</el-button>
                         </div>
@@ -233,14 +235,18 @@
             <div class="list" :style="{'height':height/list.length*leaves.length+'px'}" v-if="leaves.length!=0">
                 <div class="content" :style="{'width':width+'px','font-size':'14px'}">
                     <div class="title">
-                        {{name}}分项用电
+                        {{name}} 当日累计
                     </div>
-                    <div class="node2" v-for="itme in leaves" style="align-items:center">
-                        <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':'25px','width':'25px'}" />
-                        <span> {{itme.name}}</span>
-                        <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span>kW·h</span></p>
-                        <el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="small"> </el-button>
+
+                    <div class="ndoe2" style="height:100%;flex-flow:1;display:flex;flex-direction:column;justify-content:space-around;">
+                        <el-row :gutter="20" v-for="itme in leaves">
+                            <el-col :span="6"> <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':'25px','width':'25px'}" /></el-col>
+                            <el-col :span="6">  <span> {{itme.name}}</span></el-col>
+                            <el-col :span="6"><span :style="{'font-size':font*1.2}">{{itme.UsePower.toFixed(2)}}</span><span>kW·h</span></el-col>
+                            <el-col :span="6"><el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="mini"> </el-button></el-col>
+                        </el-row>
                     </div>
+
                 </div>
                 <div class="Children"></div>
             </div>
@@ -313,13 +319,21 @@
             },
             methods: {
                 clickbutton: function (d) {
-                    console.log(123)
-                    console.log(d);
                     vm.getElectrMonth(d);
                 },
-
+                changeSelect:function(val){
+                   this.GetTreePower();
+                },
                 //获取树
                 GetTreePower: function () {
+
+
+             const loading = this.$loading({
+                  lock: true,
+                  text: 'Loading',
+                  spinner: 'el-icon-loading',
+                  background: 'rgba(0, 0, 0, 0.7)'
+                });
                     if (!this.UnitData.enUID || !this.UnitData.enName) {
                         return
                     }
@@ -327,6 +341,7 @@
                         url: "/energyManage/EMSetting/GetEnergyTreePower",
                         method: "POST",
                         body: {
+                            time:this.time,
                             UnitID: this.UnitData.enUID,
                             ItemType: 1,
                             UnitName: this.UnitData.enName
@@ -351,7 +366,7 @@
 
 
                         this.getElectrMonth(res.data[0]);
-
+                        loading.close();
                         //width/floor
                     })
                 },
@@ -395,7 +410,8 @@
                         method: "POST",
                         body: {
                             addCid: d.addCid,
-                            delCid: d.delCid
+                            delCid: d.delCid,
+                            time: this.time
                         }
                     }).then(function (res) {
                         this.createBarChart(res.data, d.name);
@@ -428,7 +444,7 @@
                     var option = {
                         title: {
                             //text: `${new Date().getMonth()+1}月${new Date().getDate()}日—分项用电`,
-                            text: `${name} - 当日分项用电(${new Date().getMonth() + 1}月${new Date().getDate()}日)`,
+                            text: `${name} - 当日分项用电(${this.time.getMonth() + 1}月${this.time.getDate()}日)`,
                             subtext: subtext,
                             left: 'center',
                             textStyle: {
@@ -500,7 +516,7 @@
                     var barChart = echarts.init(document.getElementById('barChart'));
                     var option = {
                         title: {
-                            text: `${name} - ${new Date().getMonth() + 1}月总计用电：${Math.floor(count * 100) / 100} kW·h`,
+                            text: `${name} - ${this.time.getMonth() + 1}月总计用电：${Math.floor(count * 100) / 100} kW·h`,
                             left: 'center',
                             textStyle: {
                                 color: '#757575',

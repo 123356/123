@@ -315,7 +315,7 @@ namespace EnergyManage.Controllers
 			return(Json( list, JsonRequestBehavior.AllowGet ) );
 		}
 
-        public ActionResult GetEnergyTreePower(int UnitID=0, int ItemType=0, string UnitName ="") {
+        public ActionResult GetEnergyTreePower(DateTime time,int UnitID=0, int ItemType=0, string UnitName ="") {
 
             if (UnitID == 0 || ItemType == 0 || UnitName=="")
             {
@@ -323,12 +323,12 @@ namespace EnergyManage.Controllers
             }
 
 
-            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName);
+            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName, time);
             return Json(list);
         }
 
     // 查询当月用电量
-    public ActionResult GetTreePowerMonth(string addCid, string delCid) {
+    public ActionResult GetTreePowerMonth(string addCid, string delCid,DateTime time) {
 
             if (addCid == "" && delCid == "")
             {
@@ -361,14 +361,14 @@ namespace EnergyManage.Controllers
             }
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
-            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
+            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid,time);
 
 
             //判断闰年
-            int year = int.Parse(DateTime.Now.Year.ToString());
+            int year = int.Parse(time.Year.ToString());
             int i = year % 4;
             int j = year % 400;
-            int month = int.Parse(DateTime.Now.Month.ToString());
+            int month = int.Parse(time.Month.ToString());
             int day = 0;
             int[] ms = {4,6,9,11};
 
