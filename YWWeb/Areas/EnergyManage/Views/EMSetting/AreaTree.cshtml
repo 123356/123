@@ -167,8 +167,8 @@
 
                     <div class="list" v-for="itme in list">
                         <div class="content" :style="{'width':style.main.width/floor+'px','font-size':'14px'}">
-                            <div>
-                              
+                            <div class="title" style="padding:4px;display: flex;align-items: center;">
+                                时间：
                                 <el-date-picker :style="{'width':'143px'}" type="date"
                                                 v-model="time"
                                                 v-on:change="changeSelect"
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="Children">
-                            <tree-menu :list="itme.Children" :floor="floor" :width="node.width" :height="node.height" :name="itme.name"></tree-menu>
+                            <tree-menu :list="itme.Children" :floor="floor" :width="node.width" :height="node.height" :name="itme.name" v-if="isRouterAlive"></tree-menu>
                         </div>
                     </div>
                 </div>
@@ -275,6 +275,8 @@
                 }
             },
             methods: {
+
+      
                 clickbutton: function (d) {
                     vm.getElectrMonth(d);
                 }
@@ -315,14 +317,21 @@
                     font: '0px',
                     titile: '0px',
                     img: '0px',
-                }
+                },
+                isRouterAlive :true
             },
             methods: {
+                reload () {
+                    this.isRouterAlive = false
+                    this.$nextTick(() => (
+                        this.isRouterAlive = true
+                    ))
+                },
                 clickbutton: function (d) {
                     vm.getElectrMonth(d);
                 },
                 changeSelect:function(val){
-                   this.GetTreePower();
+                    this.GetTreePower();
                 },
                 //获取树
                 GetTreePower: function () {
@@ -366,7 +375,11 @@
 
 
                         this.getElectrMonth(res.data[0]);
+                         this.reload();
+
                         loading.close();
+
+
                         //width/floor
                     })    
                      .catch(function (e) {
@@ -517,14 +530,10 @@
                     var xData = [];
                     var yData = [];
             
-     
-                    console.log(count)
-
                     for (var i in data) {
                         var str = this.formatDate(data[i].RecordTime);
 
-               //count
-                        if(str.substr(str.length - 2, 2) == this.time.getDate()){
+                        if(str.substr(str.length - 2, 2) == this.time.getDate() && data[i].UsePower.toFixed(2)!=0 && count!=0){
                                 yData.push(count)
         
                         }else{
