@@ -303,7 +303,7 @@ namespace YWWeb.Controllers
                     }
                     if (!string.IsNullOrEmpty(itemtype) && itemtype != "全部")
                     {
-                        strsql += " and b.ItemType=" + itemtype + "";
+                        strsql += " and b.ItemType='" + itemtype + "'";
                     }
                     if (!string.IsNullOrEmpty(Time))
                     {

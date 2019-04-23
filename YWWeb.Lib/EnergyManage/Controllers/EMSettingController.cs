@@ -29,10 +29,6 @@ namespace EnergyManage.Controllers
         {
             return View();
         }
-        public ActionResult AreaTree1()
-        {
-            return View();
-        }
         #region 树
         /// 返回该用户权限可见的单位列表
         public JsonResult GetUnitList()
@@ -178,26 +174,8 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public class PidandCid {
-            public int pid { set; get; }
-            public string cid { set; get; }
-        }
-
-        public class Tree
-        {
-            public int id { set; get; }
-            public string name { set; get; }
-            public int? pId { set; get; }
-            public string head { set; get; }
-            public string note { set; get; }
-            public string addCid { set; get; }
-            public string delCid { set; get; }
-            public int area { set; get; }
-            public int people { set; get; }
-            public decimal UsePower { set; get; }
-            public decimal NeedPower { set; get; }
-            public List<Tree> children { set; get; }
-        }
+      
+     
         #endregion
 
         #region 用能异常
@@ -337,7 +315,7 @@ namespace EnergyManage.Controllers
 			return(Json( list, JsonRequestBehavior.AllowGet ) );
 		}
 
-        public ActionResult GetEnergyTreePower(int UnitID=0, int ItemType=0, string UnitName ="") {
+        public ActionResult GetEnergyTreePower(DateTime time,int UnitID=0, int ItemType=0, string UnitName ="") {
 
             if (UnitID == 0 || ItemType == 0 || UnitName=="")
             {
@@ -345,12 +323,12 @@ namespace EnergyManage.Controllers
             }
 
 
-            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName);
+            List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName, time);
             return Json(list);
         }
 
     // 查询当月用电量
-    public ActionResult GetTreePowerMonth(string addCid, string delCid) {
+    public ActionResult GetTreePowerMonth(string addCid, string delCid,DateTime time) {
 
             if (addCid == "" && delCid == "")
             {
@@ -383,14 +361,14 @@ namespace EnergyManage.Controllers
             }
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
-            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid);
+            IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid,time);
 
 
             //判断闰年
-            int year = int.Parse(DateTime.Now.Year.ToString());
+            int year = int.Parse(time.Year.ToString());
             int i = year % 4;
             int j = year % 400;
-            int month = int.Parse(DateTime.Now.Month.ToString());
+            int month = int.Parse(time.Month.ToString());
             int day = 0;
             int[] ms = {4,6,9,11};
 

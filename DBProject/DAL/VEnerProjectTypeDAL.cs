@@ -45,12 +45,12 @@ namespace DAL
             }
             return tree;
         }
-        public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid)
+        public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid,DateTime time)
         {
             IList<t_V_EnerPower> data = new List<t_V_EnerPower>();
             try
             {
-                data = _dbFactory.venerProjectType.GetElectricityToDay(pid, cid);
+                data = _dbFactory.venerProjectType.GetElectricityToDay(pid, cid,time);
             }
             catch (Exception ex)
             {
@@ -58,12 +58,12 @@ namespace DAL
             }
             return data;
         }
-        public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)
+        public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid,DateTime time)
         {
             IList<t_V_EnerPower> data = new List<t_V_EnerPower>();
             try
             {
-                data = _dbFactory.venerProjectType.GetElectricityToMonth(pid, cid);
+                data = _dbFactory.venerProjectType.GetElectricityToMonth(pid, cid, time);
             }
             catch (Exception ex)
             {
@@ -115,7 +115,7 @@ namespace DAL
             }
             return res;
         }
-        public List<t_V_EnerProjectTypeTree> GetEnergyTreePower(int UnitID, int ItemType, string UnitName)
+        public List<t_V_EnerProjectTypeTree> GetEnergyTreePower(int UnitID, int ItemType, string UnitName,DateTime time)
         {
             IList<t_V_EnerProjectType> list;
 
@@ -157,7 +157,7 @@ namespace DAL
                 pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
                 cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
 
-                IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid);
+                IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToDay(pid, cid,time);
 
                 for (int a = 0; a < list.Count(); a++)
                 {

@@ -48,12 +48,11 @@ namespace DAO
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
 
-        public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid)
+        public IList<t_V_EnerPower> GetElectricityToDay(string pid, string cid,DateTime time)
         {
-            DateTime startTime = DateTime.Now;
-            string star = startTime.ToString("yyyy-MM-dd 00:00:00.000");
-            startTime = startTime.AddDays(1);
-            string end = startTime.ToString("yyyy-MM-dd 00:00:00.000");
+            string star = time.ToString("yyyy-MM-dd 00:00:00.000");
+            time = time.AddDays(1);
+            string end = time.ToString("yyyy-MM-dd 00:00:00.000");
 
             string sql = $" SELECT a.PID,a.CID,b.UsePower,isnull(b.NeedPower,'0') as NeedPower,a.ener_use_type,b.RecordTime FROM   t_DM_CircuitInfo a" +
                 $" right JOIN t_EE_PowerQualityDaily b " +
@@ -63,9 +62,9 @@ namespace DAO
                 return SQLQuery<t_V_EnerPower>(sql);
         }
 
-        public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid)
+        public IList<t_V_EnerPower> GetElectricityToMonth(string pid, string cid, DateTime time)
         {
-            DateTime startTime = DateTime.Now;
+            DateTime startTime = time;
 
             string star = startTime.AddDays(1 - startTime.Day).ToString("yyyy-MM-dd 00:00:00.000");
             startTime = startTime.AddDays(1);
