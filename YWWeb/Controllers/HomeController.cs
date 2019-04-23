@@ -1880,7 +1880,7 @@ namespace YWWeb.Controllers
                     if (bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault() != null)
                         pdf.PName = bll.t_CM_PDRInfo.Where(p => p.PID == iii).FirstOrDefault().Name;
                     pdf.pointCount = bll.t_CM_PointsInfo.Where(p => p.PID == iii).Count();
-                    if (pdf.zhaungji != 0)
+                    if (pdf.zhaungji != 0 && pdf.zhaungji != null)
                         pdf.fuzailv = Math.Round((sum2 / pdf.zhaungji * 100).Value, 2);
                     model.pdfList.Add(pdf);
                 }
