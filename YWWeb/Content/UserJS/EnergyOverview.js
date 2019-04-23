@@ -139,10 +139,12 @@ foreachTree: function (node) {
         return;
     }
     node.children = node.Children
+    node.expand = true
     if (node.Children && node.Children.length > 0) {
         for (var i = 0; i < node.Children.length; i++) {
             if (!node.Children[i].Children) {
                 node.Children[i].children = node.Children[i].Children
+                node.Children[i].expand = true
             }
             this.foreachTree(node.Children[i]);
         }

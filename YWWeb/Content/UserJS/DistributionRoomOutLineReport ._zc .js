@@ -198,6 +198,7 @@
         stationChange: function (e) {
             this.cruPname = e.label
             this.PID = e.value
+            this.getUserType()
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
         },
         //用电类型

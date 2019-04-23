@@ -260,9 +260,12 @@
                     //},
                 })
             }
-            var yName = ''
+            var yName = 'kW·h'
             switch (this.CollTypeID) {
                 case 1:
+                    yName = 'kW·h'
+                    break
+                case null:
                     yName = 'kW·h'
                     break
                 default:
@@ -385,6 +388,8 @@
             var subtext = 'kW·h'
             switch (this.CollTypeID) {
                 case 1:
+                    subtext = 'kW·h'
+                case null:
                     subtext = 'kW·h'
                     break
                 default:
@@ -635,9 +640,12 @@
                     data: data.series2.split(',')
                 }
             )
-            var yName = ''
+            var yName = 'kW·h'
             switch (this.CollTypeID) {
                 case 1:
+                    yName = 'kW·h'
+                    break
+                case null:
                     yName = 'kW·h'
                     break
                 default:
@@ -1061,6 +1069,7 @@
             switch (location) {
                 case "dosearch()":
                     this.curTimeStr = this.formaterDate()
+                    this.getTimes()
                     this.lineLoading = true
                     this.pie1Loading = true
                     this.pie2Loading = true
