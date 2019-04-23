@@ -50,7 +50,7 @@
             border-radius: 4px;
             background-color: #F8F8F8;
             overflow: hidden;
-            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
             color: #4C4C4C;
             padding: 20px;
         }
@@ -72,7 +72,7 @@
             border-radius: 4px;
             background-color: #F8F8F8;
             overflow: hidden;
-            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
             color: #4C4C4C;
             padding: 20px;
         }
@@ -110,7 +110,6 @@
             padding: 0 15px;
         }
 
-
         .Children {
             flex-grow: 1;
         }
@@ -132,7 +131,6 @@
                 margin: 8px 0;
             }
 
-
         .f3 {
             display: flex;
             justify-content: space-between;
@@ -143,12 +141,11 @@
                 display: inline-block;
             }
 
-
-        #pieChart, #barChart {
+        #pieChart,
+        #barChart {
             height: 100%;
             overflow: hidden;
         }
-
 
         .el-button.el-button--default {
             background: #50bda0;
@@ -169,11 +166,7 @@
                         <div class="content" :style="{'width':style.main.width/floor+'px','font-size':'14px'}">
                             <div class="title" style="padding:4px;display: flex;align-items: center;">
                                 时间：
-                                <el-date-picker :style="{'width':'143px'}" type="date"
-                                                v-model="time"
-                                                v-on:change="changeSelect"
-                                                :focus="true"
-                                                :clearable="false">
+                                <el-date-picker :style="{'width':'143px'}" type="date" v-model="time" v-on:change="changeSelect" :focus="true" :clearable="false">
                                 </el-date-picker>
 
                             </div>
@@ -181,7 +174,9 @@
                                 <h2> {{itme.name}} </h2>
                                 <div>
                                     <span :style="{'font-size':node.font*1.5+'px'}">{{itme.UsePower.toFixed(2)}}</span> kW·h
-                                    <p><el-button icon="el-icon-search" style="margin-top:20px" v-on:click="clickbutton(list[0])">查看详情</el-button></p>
+                                    <p>
+                                        <el-button icon="el-icon-search" style="margin-top:20px" v-on:click="clickbutton(list[0])">查看详情</el-button>
+                                    </p>
                                 </div>
                                 <p :style="{'height':node.img+'px'}">
                                     <img :src="'../../../Content/images/tree/'+itme.icon" class="img" />
@@ -204,7 +199,6 @@
         </div>
     </div>
 
-
     <script type="text/x-template" id="tree-menu">
         <div style="width:100%;height:100%;flex-grow:1;display: flex;flex-direction: column;">
             <div class="list" v-for="itme in node" :style="{'height':height/list.length*node.length+'px'}" v-if="node.length!=0">
@@ -213,15 +207,21 @@
                         {{itme.name}} 当日累计
                     </div>
                     <div class="node1">
-                        <div class="f2">
-                            <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':height/list.length*.2+'px','width':height/list.length*.2+'px'}" />
+                        <div class="f2" v-if="itme.floor<3">
+                            <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':height/list.length*.2+'px','width':height/list.length*.2+'px'}" v-if="itme.floor<=3" />
                             <span> {{itme.name}}</span>
                         </div>
 
-                        <div class="f2">
+                        <div class="f2" v-if="itme.floor<3">
                             <span> 当日累计</span>
                             <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span> kW·h</span></p>
                             <el-button icon="el-icon-search" v-on:click="clickbutton(itme)">查看详情</el-button>
+                        </div>
+
+                        <div class="f2" v-if="itme.floor>=3" style="flex-direction: row;justify-content: space-between;">
+                            <span> {{itme.name}}</span>
+                            <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span> kW·h</span></p>
+                            <el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="mini"></el-button>
                         </div>
 
                     </div>
@@ -231,57 +231,52 @@
                 </div>
             </div>
 
-
             <div class="list" :style="{'height':height/list.length*leaves.length+'px'}" v-if="leaves.length!=0">
                 <div class="content" :style="{'width':width+'px','font-size':'14px'}">
                     <div class="title">
-                        {{name}} 当日累计
+                        {{name}} 分项用电
                     </div>
 
                     <div class="ndoe2" style="height:100%;flex-flow:1;display:flex;flex-direction:column;justify-content:space-around;">
                         <el-row :gutter="20" v-for="itme in leaves">
-                            <el-col :span="6"> <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':'25px','width':'25px'}" /></el-col>
-                            <el-col :span="6">  <span> {{itme.name}}</span></el-col>
-                            <el-col :span="6"><span :style="{'font-size':font*1.2}">{{itme.UsePower.toFixed(2)}}</span><span>kW·h</span></el-col>
-                            <el-col :span="6"><el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="mini"> </el-button></el-col>
+                            <el-col :span="itme.floor<=3?6:10" v-if="itme.floor<=3"> <img :src="'../../../Content/images/tree/'+itme.icon" :style="{'height':'25px','width':'25px'}" /></el-col>
+                            <el-col :span="itme.floor<=3?6:8"> <span> {{itme.name}}</span></el-col>
+                            <el-col :span="itme.floor<=3?6:8"><span :style="{'font-size':font*1.2}">{{itme.UsePower.toFixed(2)}}</span><span>kW·h</span></el-col>
+                            <el-col :span="itme.floor<=3?6:6">
+                                <el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="mini"> </el-button>
+                            </el-col>
                         </el-row>
                     </div>
-
                 </div>
-                <div class="Children"></div>
+                <div class="Children"> </div>
             </div>
-
-
 
         </div>
     </script>
     <script>
-
         Vue.component('treeMenu', {
             template: '#tree-menu',
-            props: ["list", "floor", "width", "height",'name'],
+            props: ["list", "floor", "width", "height", 'name'],
             computed: {
                 //全部节点
-                font: function () {
-                    let font = this.height *.02;
+                font: function() {
+                    let font = this.height * .02;
                     font = font >= 12 ? font : 12;
                     return font
                 },
             },
-            data: function () {
+            data: function() {
                 return {
                     leaves: [],
                     node: [],
                 }
             },
             methods: {
-
-      
-                clickbutton: function (d) {
+                clickbutton: function(d) {
                     vm.getElectrMonth(d);
                 }
             },
-            created: function () {
+            created: function() {
                 for (let a = 0; a < this.list.length; a++) {
                     if (this.list[a].Children.length == 0) {
                         this.leaves.push(this.list[a]);
@@ -292,15 +287,13 @@
             }
         })
 
-
-
         let vm = new Vue({
             el: "#container",
             data: {
                 UnitData: JSON.parse(window.localStorage.getItem("UnitData")),
                 list: [],
                 floor: 1,
-                time:new Date(),
+                time: new Date(),
                 style: {
                     body: {
                         width: 0,
@@ -312,90 +305,87 @@
                     },
                 },
                 node: {
-                    width:0,
+                    width: 0,
                     height: 0,
                     font: '0px',
                     titile: '0px',
                     img: '0px',
                 },
-                isRouterAlive :true
+                isRouterAlive: true
             },
             methods: {
-                reload () {
+                reload() {
                     this.isRouterAlive = false
                     this.$nextTick(() => (
                         this.isRouterAlive = true
                     ))
                 },
-                clickbutton: function (d) {
+                clickbutton: function(d) {
                     vm.getElectrMonth(d);
                 },
-                changeSelect:function(val){
+                changeSelect: function(val) {
                     this.GetTreePower();
                 },
                 //获取树
-                GetTreePower: function () {
+                GetTreePower: function() {
 
-
-             const loading = this.$loading({
-                  lock: true,
-                  text: 'Loading',
-                  spinner: 'el-icon-loading',
-                  background: 'rgba(0, 0, 0, 0.7)'
-                });
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
                     if (!this.UnitData.enUID || !this.UnitData.enName) {
                         return
                     }
                     this.$http({
-                        url: "/energyManage/EMSetting/GetEnergyTreePower",
-                        method: "POST",
-                        body: {
-                            time:this.time,
-                            UnitID: this.UnitData.enUID,
-                            ItemType: 1,
-                            UnitName: this.UnitData.enName
-                        }
-                    }).then(function (res) {
-                        this.list = res.data;
-                        this.floor = this.getMaxFloor(this.list);
-                        this.style.body.width = document.body.offsetWidth;
-                        this.style.body.height = document.body.offsetHeight;
+                            url: "/energyManage/EMSetting/GetEnergyTreePower",
+                            method: "POST",
+                            body: {
+                                time: this.time,
+                                UnitID: this.UnitData.enUID,
+                                ItemType: 1,
+                                UnitName: this.UnitData.enName
+                            }
+                        }).then(function(res) {
+                            this.list = res.data;
+                            this.floor = this.getMaxFloor(this.list);
+                            this.style.body.width = document.body.offsetWidth;
+                            this.style.body.height = document.body.offsetHeight;
 
-                        this.style.main.width = this.style.body.width * .7;
-                        this.style.main.height = this.style.body.height * .75;
-
-
-                        this.node.width = this.style.body.width / this.floor;
-                        this.node.height = this.style.body.height / this.list.length;
+                            this.style.main.width = this.style.body.width * .7;
+                            this.style.main.height = this.style.body.height * .75;
 
 
-                        this.node.font = this.style.main.height * .04;
-                        this.node.titile = this.style.main.height * .09;
-                        this.node.img = this.style.main.height * .4;
+                            this.node.width = this.style.body.width / this.floor;
+                            this.node.height = this.style.body.height / this.list.length;
 
+                            this.node.font = this.style.main.height * .04;
+                            this.node.titile = this.style.main.height * .09;
+                            this.node.img = this.style.main.height * .4;
 
-                        this.getElectrMonth(res.data[0]);
-                         this.reload();
+                            this.getElectrMonth(res.data[0]);
+                            this.reload();
 
-                        loading.close();
+                            loading.close();
 
-
-                        //width/floor
-                    })    
-                     .catch(function (e) {
-                        loading.close();
+                            //width/floor
+                        })
+                        .catch(function(e) {
+                            loading.close();
                             this.$notify({
-                              title: '错误提示',
-                              message: '该站室没有配置分项树信息',
-                              duration: 0
+                                title: '错误提示',
+                                message: '该站室没有配置分项树信息',
+                                duration: 0
                             });
-                    })
+                        })
                 },
                 //获取层数
-                getMaxFloor: function (treeData) {
+                getMaxFloor: function(treeData) {
                     let floor = 0
                     let v = this
                     let max = 0
+
                     function each(data, floor) {
                         data.forEach(e => {
                             e.floor = floor
@@ -413,7 +403,7 @@
                     return max
                 },
                 //年月日  格式化
-                formatDate: function (val) {
+                formatDate: function(val) {
 
                     if (val != null) {
                         var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
@@ -425,7 +415,7 @@
                     return "";
                 },
                 //获取图表数据
-                getElectrMonth: function(d){
+                getElectrMonth: function(d) {
                     this.$http({
                         url: "/energyManage/EMSetting/GetTreePowerMonth",
                         method: "POST",
@@ -435,13 +425,13 @@
                             delCid: d.delCid,
                             time: this.time
                         }
-                    }).then(function (res) {
+                    }).then(function(res) {
                         var UsePower = d.UsePower.toFixed(2);
-                        this.createBarChart(res.data, d.name,UsePower);
-                        this.createPieChart(d.Children,d.name,UsePower);
+                        this.createBarChart(res.data, d.name, UsePower);
+                        this.createPieChart(d.Children, d.name, UsePower);
                     })
                 },
-                createPieChart: function (data,name,count) {
+                createPieChart: function(data, name, count) {
                     var subtext = "";
                     var series = [];
                     var titleTop = 0;
@@ -526,18 +516,17 @@
                         pieChart.resize();
                     });
                 },
-                createBarChart: function (data,name,count) {
+                createBarChart: function(data, name, count) {
                     var xData = [];
                     var yData = [];
-            
+
                     for (var i in data) {
                         var str = this.formatDate(data[i].RecordTime);
 
-                        if(str.substr(str.length - 2, 2) == this.time.getDate() && data[i].UsePower.toFixed(2)!=0 && count!=0){
-                                yData.push(count)
-        
-                        }else{
-                                yData.push(data[i].UsePower.toFixed(2))
+                        if (str.substr(str.length - 2, 2) == this.time.getDate() && data[i].UsePower.toFixed(2) != 0 && count != 0) {
+                            yData.push(count)
+                        } else {
+                            yData.push(data[i].UsePower.toFixed(2))
                         }
                         xData.push(str.substr(str.length - 2, 2));
                     }
@@ -575,7 +564,6 @@
                                 lineStyle: {
                                     color: '#57b9a3', //x轴线颜色
                                     width: '0.7',
-
                                 },
                             },
                             axisTick: {
@@ -630,11 +618,9 @@
                     window.addEventListener("resize", () => {
                         barChart.resize();
                     });
-
                 }
-
             },
-            created: function () {
+            created: function() {
                 this.GetTreePower();
             },
             mounted() {
