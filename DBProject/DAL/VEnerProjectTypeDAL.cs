@@ -175,13 +175,6 @@ namespace DAL
                     list[a].NeedPower = need;
                 }
 
-
-
-
-
-
-
-
                 GetEnergyDataToTree(list, tree, 0);
             }
             catch (Exception ex)
@@ -217,6 +210,5 @@ namespace DAL
                 }
             }
         }
-
     }
 }

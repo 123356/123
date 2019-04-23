@@ -78,7 +78,7 @@
         }
 
             .content .title {
-                padding: 18px 20px;
+                padding: 8px 16px;
                 border-bottom: 1px solid #ebeef5;
                 box-sizing: border-box;
             }
@@ -201,7 +201,7 @@
 
     <script type="text/x-template" id="tree-menu">
         <div style="width:100%;height:100%;flex-grow:1;display: flex;flex-direction: column;">
-            <div class="list" v-for="itme in node" :style="{'height':height/list.length*node.length+'px'}" v-if="node.length!=0">
+            <div class="list" v-for="itme in node" :style="{'height':height/list.length+'px'}" v-if="node.length!=0">
                 <div class="content" :style="{'width':width+'px','font-size':'14px'}">
                     <div class="title">
                         {{itme.name}} 当日累计
@@ -215,7 +215,7 @@
                         <div class="f2" v-if="itme.floor<3">
                             <span> 当日累计</span>
                             <p> <span :style="{'font-size':font*1.2+'px'}">{{itme.UsePower.toFixed(2)}}</span><span> kW·h</span></p>
-                            <el-button icon="el-icon-search" v-on:click="clickbutton(itme)">查看详情</el-button>
+                            <el-button icon="el-icon-search" v-on:click="clickbutton(itme)" size="small">查看详情</el-button>
                         </div>
 
                         <div class="f2" v-if="itme.floor>=3" style="flex-direction: row;justify-content: space-between;">

@@ -77,10 +77,6 @@ namespace EnergyManage.Controllers
             return Json(list);
         }
 
-
-
-
-
         //编辑能源树信息
         public JsonResult SetEnergyTreeNode(IDAO.Models.t_V_EnerProjectType data)
         {
@@ -112,7 +108,6 @@ namespace EnergyManage.Controllers
                 if (names.Count > 1) {
                     return Json("error:类型名称和ID一对多");
                 }
-
                 //现有节点不改名字  只改属性
                 if (names[0].Name ==  data.name)
                 {
@@ -158,7 +153,6 @@ namespace EnergyManage.Controllers
                 return Json("参数异常:参数为空");
             }
 
-
             IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().DeleteEnergyNode(parent_id, child_id, unit_id);
             try {
                 if (list.Count() > 0) {
@@ -173,13 +167,8 @@ namespace EnergyManage.Controllers
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
-      
-     
         #endregion
-
         #region 用能异常
-
         public void qwe() {
                 IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality();
                 //IList<IDAO.Models.t_EE_PowerForeQuality> powerForeQuality = DAL.PowerForeQualityDAL.getInstance().ForeThanQuality123(date);
@@ -321,8 +310,6 @@ namespace EnergyManage.Controllers
             {
                 return Json("参数异常:参数为空");
             }
-
-
             List<IDAO.Models.t_V_EnerProjectTypeTree> list = DAL.VEnerProjectTypeDAL.getInstance().GetEnergyTreePower(UnitID, ItemType, UnitName, time);
             return Json(list);
         }
@@ -363,7 +350,6 @@ namespace EnergyManage.Controllers
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid,time);
 
-
             //判断闰年
             int year = int.Parse(time.Year.ToString());
             int i = year % 4;
@@ -393,7 +379,6 @@ namespace EnergyManage.Controllers
                 var d = new DateTime(year, month, a + 1);
                 list.Add(d);
             }
-
    
             //var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
             List<IDAO.Models.t_V_EnerPower> json  = new List<IDAO.Models.t_V_EnerPower>();
@@ -406,7 +391,6 @@ namespace EnergyManage.Controllers
                 else
                     return -1;
             });
-
 
             for (var a = 0; a < list.Count(); a++)
             {
