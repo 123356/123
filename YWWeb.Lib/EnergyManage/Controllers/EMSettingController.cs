@@ -349,7 +349,10 @@ namespace EnergyManage.Controllers
             pid = string.Join(",", pid.Substring(0, pid.Length - 1).Split(',').Distinct());
             cid = string.Join(",", cid.Substring(0, cid.Length - 1).Split(',').Distinct());
             IList<IDAO.Models.t_V_EnerPower> power = DAL.VEnerProjectTypeDAL.getInstance().GetElectricityToMonth(pid, cid,time);
-
+            if (power.Count() == 0)
+            {
+                return Json("该时间段没有数据");
+            }
             //判断闰年
             int year = int.Parse(time.Year.ToString());
             int i = year % 4;
@@ -374,6 +377,7 @@ namespace EnergyManage.Controllers
                 day = 31;
             }
             List<DateTime> list = new List<DateTime>();
+            
             for (int a = 0; a < day; a++) 
             {
                 var d = new DateTime(year, month, a + 1);
@@ -382,6 +386,7 @@ namespace EnergyManage.Controllers
    
             //var list = power.GroupBy(c => c.RecordTime).Select(c => c.First()).ToList();
             List<IDAO.Models.t_V_EnerPower> json  = new List<IDAO.Models.t_V_EnerPower>();
+
             list.Sort((left, right) =>
             {
                 if (left > right)

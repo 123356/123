@@ -412,7 +412,6 @@ Topo.prototype = {
                 bgImg: this.scene.background,
                 translateX: topo.scene.translateX,
                 translateY: topo.scene.translateY,
-
             }
         }
         var nodes = [];

@@ -292,10 +292,25 @@ Topo.prototype = {
                     },
                     success: function(res) {
                         res = res[0];
-                        $('[data-type=IP]').val(that.uncompileStr(res.IP));
-                        $('[data-type=account]').val(that.uncompileStr(res.Account));
-                        $('[data-type=password]').val(that.uncompileStr(res.Password));
-                        $('[data-type=port]').val(that.uncompileStr(res.Port));
+                        if (res.IP) {
+                            that.__IP = $.base64.decode(res.IP);
+                            $('[data-type=IP]').val(that.__IP);
+                        }
+                        if (res.Account) {
+                            that.__account = $.base64.decode(res.Account);
+                            $('[data-type=account]').val(that.__account);
+                        }
+                        if (res.Password) {
+                            that.__password = $.base64.decode(res.Password);
+                        }
+                        $('[data-type=password]').val(that.__password);
+                        if (res.Port) {
+                            that.__port = $.base64.decode(res.Port);
+                            $('[data-type=port]').val(that.__port);
+                        }
+                        if (res.Name) {
+                            $('[data-type=Name]').val(res.Name);
+                        }
                         $.ajax({
                             type: "get",
                             url: res.url + res.Path + "?date" + new Date().valueOf(),
@@ -360,16 +375,15 @@ Topo.prototype = {
                 $('tbody tr').hide();
                 $('.scene').show();
                 $("[data-type=bgcolor]").attr('value', that.rgb2hex(scene.backgroundColor));
-                $("[data-type=pid]").val(that.__pid);
-                $("[data-type=orderNo]").val(that.__orderNo);
-                $("[data-type=IP]").val(that.__IP);
-                $("[data-type=port]").val(that.__port);
-                $("[data-type=account]").val(that.__account);
-                $("[data-type=password]").val(that.__password);
+                //$("[data-type=pid]").val(that.__pid);
+                //$("[data-type=orderNo]").val(that.__orderNo);
+                //$("[data-type=IP]").val(that.__IP);
+                //$("[data-type=port]").val(that.__port);
+                //$("[data-type=account]").val(that.__account);
+                //$("[data-type=password]").val(that.__password);
             }
         })
         this.scene = scene;
- 
     },
     // 编辑
     editRow: function() {
@@ -409,7 +423,7 @@ Topo.prototype = {
         var nodes = {};
         var line = [];
         topo.scene.findElements(function(e) {
-            if (e.elementType == "link") {
+            if (e.elementType == "link" ) {
                 var l = {};
                 l.elementType = e.elementType;
                 l.fillColor = e.fillColor;
@@ -430,7 +444,6 @@ Topo.prototype = {
                 delete e.outLinks;
                 nodes[e.ID] = e;
             }
- 
         })
         ojbect.data = { node: nodes, line: line };
         var saveData = document.createElement("input");
@@ -438,8 +451,13 @@ Topo.prototype = {
         $(saveData).css('display', "none")
         $("body").append(saveData);
  
-        var val = `?pid=${that.__pid}&orderNo=${that.__orderNo}&type=2&IP=${that.compileStr(that.__IP)}&port=${that.compileStr(that.__port)}&account=${ that.compileStr(that.__account)}&password=${ that.compileStr(that.__password)}`;
- 
+        var IP = $.base64.encode(that.__IP);
+        var port = $.base64.encode(that.__port);
+        var account = $.base64.encode(that.__account);
+        var password = $.base64.encode(that.__password);
+
+       var val = `?pid=${that.__pid}&orderNo=${that.__orderNo}&type=2&IP=${IP || ""}&port=${port || ""}&account=${account || ""}&password=${password || ""}&Name=""`;
+
         $.ajax({
             type: 'POST',
             url: "/PDRInfo/SaveAttribute" + val,
@@ -625,7 +643,7 @@ Topo.prototype = {
             y: 250,
             width: 100,
             height: 80,
-            ID: that.__pid,
+            ID: that.__pid+'_p',
             textOffsetY: -10
         });
         this.setlink(root, zhan);
@@ -645,7 +663,7 @@ Topo.prototype = {
                         text: res[a].Name,
                         width: 100,
                         height: 100,
-                        ID: res[a].ID,
+                        ID: res[a].ID+'_d',
                         _parentID: PID.ID,
                         x: res.length == 1 ? PID.x : postiionX + 100 * a,
                         y: PID.y + 60 + PID.height,
@@ -653,14 +671,13 @@ Topo.prototype = {
                     });
                     var PID_DID = that.setlink(DID, PID);
                     PID_DID._parentID = PID.ID;
- 
+
                     $.ajax({
                         type: "post",
                         url: "/PDRInfo/GetCirByDID",
-                        data: { pid: PID.ID, did: DID.ID },
+                        data: { pid: parseInt( PID.ID), did: parseInt( DID.ID) },
                         async: false,
                         success: function(resCID) {
-                            //CID
                             for (var b = 0; b < resCID.length; b++) {
                                 var CID = that.setNode({
                                     __type: "node",
@@ -669,12 +686,11 @@ Topo.prototype = {
                                     text: resCID[b].Name,
                                     width: 60,
                                     height: 60,
-                                    ID: resCID[b].ID,
+                                    ID: resCID[b].ID+'_c',
                                     _parentID: DID.ID,
                                     x: DID.x + DID.width / 3 * 2,
                                     y: DID.y + DID.height + 30 + (50 + 8) * b,
                                     textOffsetY: -15
- 
                                 });
                                 var DID_CID = that.setFoldLink(CID, DID);
                                 DID_CID._parentID = DID.ID;

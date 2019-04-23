@@ -5,7 +5,7 @@ function Layout() {
     this.main = document.createElement("div");
 };
 Layout.prototype = {
-    init: function () {
+    init: function() {
         this.creatBox();
         $("body").prepend(this.main);
         $(this.main).append(this.boxcenter);
@@ -13,7 +13,7 @@ Layout.prototype = {
         this.adaptive();
 
     },
-    getCookie: function (name) {
+    getCookie: function(name) {
         var strcookie = document.cookie; //获取cookie字符串
         var arrcookie = strcookie.split("; "); //分割
         //遍历匹配
@@ -26,7 +26,7 @@ Layout.prototype = {
         return "";
     },
     //加载class 添加节点  class 给定默认样式
-    creatBox: function () {
+    creatBox: function() {
         this.boxcenter.className = "boxCenter";
         this.main.className = "main";
         this.canvas = document.createElement('canvas');
@@ -34,17 +34,17 @@ Layout.prototype = {
         this.boxcenter.appendChild(this.canvas);
     },
     // 屏幕尺寸监听
-    resize: function () {
+    resize: function() {
         //屏幕尺寸变化次数
         var that = this;
-        $(window).resize(function () {
+        $(window).resize(function() {
             //获取屏幕宽度
             that.globalwdith = parseInt($(window).width());
             that.adaptive();
         });
     },
     //按屏幕调整大小
-    adaptive: function () {
+    adaptive: function() {
         var main = this.globalwdith || parseInt($(window).width());
         var boxcenter = this.boxcenter;
         boxcenter.style.left = "0";
@@ -64,14 +64,14 @@ function Topo() {
     this.DIDS = [];
 };
 Topo.prototype = {
-    init: function () {
+    init: function() {
         this.createTopo();
         this.keyEvent();
         this.loadNode();
         this.loadData();
     },
     // 读取历史
-    history: function (obj) {
+    history: function(obj) {
         $("[data-type=bgcolor]").val(obj.config.bgColor);
         this.scene.translateX = obj.config.translateX;
         this.scene.translateY = obj.config.translateY;
@@ -81,7 +81,7 @@ Topo.prototype = {
         this.copyNode(obj.data);
     },
     //复制节点
-    copyNode: function (data) {
+    copyNode: function(data) {
         if (!data) {
             return
         }
@@ -103,11 +103,11 @@ Topo.prototype = {
         }
     },
     // 键盘事件
-    keyEvent: function () {
+    keyEvent: function() {
         this.copyOffset = 50;
         var that = this;
         this.spacing = 0;
-        $(document).keydown(function (event) {
+        $(document).keydown(function(event) {
             if (!that.isDelNode) {
                 return
             }
@@ -118,7 +118,7 @@ Topo.prototype = {
         });
     },
     // 加载数据
-    loadData: function () {
+    loadData: function() {
         var that = this;
         $.ajax({
             type: "post",
@@ -126,7 +126,7 @@ Topo.prototype = {
             data: {
                 pid: pid,
             },
-            success: function (res) {
+            success: function(res) {
                 try {
                     res = JSON.parse(res);
                 } catch (e) {
@@ -141,13 +141,13 @@ Topo.prototype = {
         })
     },
     //控制状态
-    controlState: function (arr, data) {
+    controlState: function(arr, data) {
         for (var key in data) {
             this.changeState(arr, key, data[key].State);
         }
     },
     //改颜色
-    changeState: function (arr, id, type) {
+    changeState: function(arr, id, type) {
         var that = this;
         for (var a = 0; a < arr.length; a++) {
             if (parseInt(arr[a].ID) == id) {
@@ -169,7 +169,7 @@ Topo.prototype = {
             }
         }
     },
-    loadNode: function () {
+    loadNode: function() {
         var that = this;
         that.scene.clear();
         $.ajax({
@@ -180,13 +180,25 @@ Topo.prototype = {
                 orderNo: orderNo || 1,
                 type: 2
             },
-            success: function (res) {
+            success: function(res) {
                 res = res[0];
+                if (res.IP) {
+                    that.__IP = $.base64.decode(res.IP);
+                }
+                if (res.Account) {
+                    that.__account = $.base64.decode(res.Account);
+                }
+                if (res.Password) {
+                    that.__password = $.base64.decode(res.Password);
+                }
+                if (res.Port) {
+                    that.__port = $.base64.decode(res.Port);
+                }
 
                 $.ajax({
                     type: "get",
                     url: res.url + res.Path + "?date" + new Date().valueOf(),
-                    success: function (data) {
+                    success: function(data) {
                         try {
                             data = JSON.parse(data);
                         } catch (e) {
@@ -199,7 +211,7 @@ Topo.prototype = {
         })
     },
     //拓扑
-    createTopo: function () {
+    createTopo: function() {
         // topo.scene.translateX = "";
         // topo.scene.translateX = "";
         var that = this;
@@ -212,7 +224,7 @@ Topo.prototype = {
         stage.mode = "select";
         this.stage = stage;
 
-        stage.click(function (event) {
+        stage.click(function(event) {
             if (event.button == 0) { // 右键
                 $("#contextmenu").hide();
                 $(".panel-default").hide();
@@ -226,7 +238,7 @@ Topo.prototype = {
 
     },
 
-    uncompileStr: function (code) {
+    uncompileStr: function(code) {
         if (!code) {
             return null;
         }
@@ -238,7 +250,7 @@ Topo.prototype = {
         return c;
     },
     //创建节点
-    setNode: function (obj) {
+    setNode: function(obj) {
         var that = this;
         if (obj.__type == "text") {
             var node = new JTopo.TextNode();
@@ -277,7 +289,7 @@ Topo.prototype = {
         node.alpha = 1;
         node.rotate = obj.rotate || 0;
         node._parentID = obj._parentID;
-        node.click(function () {
+        node.click(function() {
             that.nodeClick(node);
         })
         node._visible = 1;
@@ -286,7 +298,7 @@ Topo.prototype = {
     },
 
     //二次折线
-    setlink: function (nodeA, nodeZ, text) {
+    setlink: function(nodeA, nodeZ, text) {
         var link = new JTopo.FlexionalLink(nodeA, nodeZ, text || null);
         // link.arrowsRadius = 10;
         link.lineWidth = 3; // 线宽
@@ -300,7 +312,7 @@ Topo.prototype = {
         return link;
     },
     //折线
-    setFoldLink: function (nodeA, nodeZ, text) {
+    setFoldLink: function(nodeA, nodeZ, text) {
         var link = new JTopo.FoldLink(nodeA, nodeZ, text || null);
         link.lineWidth = 3; // 线宽
         link.offsetGap = 30;
@@ -313,7 +325,7 @@ Topo.prototype = {
         return link;
     },
     // 节点点击事件
-    nodeClick: function (node) {
+    nodeClick: function(node) {
         if (this.isedit) {
             node.editAble = true;
             this.isedit = false;
@@ -324,7 +336,7 @@ Topo.prototype = {
 
     },
     //收缩子集
-    contractionSubset: function (node) {
+    contractionSubset: function(node) {
         if (!node.ID) {
             return;
         }
