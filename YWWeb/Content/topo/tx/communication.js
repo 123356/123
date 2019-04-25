@@ -308,9 +308,7 @@ Topo.prototype = {
                             that.__port = $.base64.decode(res.Port);
                             $('[data-type=port]').val(that.__port);
                         }
-                        if (res.Name) {
-                            $('[data-type=Name]').val(res.Name);
-                        }
+                      
                         $.ajax({
                             type: "get",
                             url: res.url + res.Path + "?date" + new Date().valueOf(),
@@ -326,7 +324,9 @@ Topo.prototype = {
                     },
                 })
             })
-            //删除地图
+         $(".boxRight").on("click", "[data-type=settopo]", function(event) {
+               that.ceshi();
+            })
         $(".boxRight").on("click", "[data-type=deleteMap]", function(event) {
             topo.scene.background = null;
         })
@@ -803,6 +803,7 @@ Topo.prototype = {
         $("[data-type=parentID]").val(node._parentID || null);
         $("[data-type=x]").val(node.x);
         $("[data-type=y]").val(node.y);
+        $("[data-type=name]").val(node.text);
         $("[data-type=fixe]").prop('checked', !node.dragable);
         $("[data-type=angle]").val(parseInt(node.rotate) * 180 / Math.PI || 0);
         $("[data-type=copyOffset]").val(this.copyOffset);
@@ -810,9 +811,7 @@ Topo.prototype = {
         $("[data-type=ID]").val(node.ID);
  
  
- 
- 
- 
+      
         node._visible = node._visible ? 0 : 1;
         this.contractionSubset(node);
         this.stage.eagleEye.update();
@@ -955,6 +954,9 @@ AttributesTab.prototype = {
                         break;
                     case "path":
                         selectedElements[a].setImage("../../Content/topo/img/communication/" + value);
+                        break;
+                    case "name":
+                       selectedElements[a].text = value;
                         break;
                 }
             }
