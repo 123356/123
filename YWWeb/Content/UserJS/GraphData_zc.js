@@ -145,9 +145,12 @@ function loadpoint() {
         },
         onLoadSuccess: function(data) {
             $.post("/BaseInfo/SelectPoints", { "pid": pid, "did": did, "cid": cid }, function(data) {
+                 if(data==""||data==null){
+                  $('#canvas').html("<div id='HisCharts' style = 'color: White;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
+                  }else{
                 $('#DataTypeParams').combotree('tree').tree("collapseAll");
                 $("#DataTypeParams").combotree("setValues", data);
-                DoSearch();
+                DoSearch();}
             });
         },
         onLoadError: function(data) {
