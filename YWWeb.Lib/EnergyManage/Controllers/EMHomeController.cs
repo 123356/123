@@ -654,9 +654,6 @@ namespace EnergyManage.Controllers
                                 }
                                 else
                                 {
-                                    //t_V_WeatherView model = new t_V_WeatherView();
-                                    //model.RecordTime = d;
-                                    //model.ThisHumidityValue = "";
                                     tianqi.Add("");
                                 }
                             }
@@ -1502,7 +1499,6 @@ namespace EnergyManage.Controllers
                     }
 
                     Dictionary<int, string> cpids = GetCId(cidss.TrimEnd(','));
-                    // if (!string.IsNullOrEmpty(cidss))
                     {
                         var data = DAL.EneryReportFromDAL.getInstance().GetDayFormDatas(cpids, t1, t2);
                         var LastData = DAL.EneryReportFromDAL.getInstance().GetDayFormDatas(cpids, t3, t4);
@@ -1673,10 +1669,6 @@ namespace EnergyManage.Controllers
             {
                 throw ex;
             }
-        }
-        public class jichu
-        {
-
         }
         #endregion
     }
