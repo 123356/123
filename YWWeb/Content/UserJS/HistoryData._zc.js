@@ -189,7 +189,6 @@ function export1() {
             if (data.code == 0) {
                 $.messager.alert("提示", data.v, "info");
             } else {
-                alert(data.v);
                 window.open('http://' + window.location.host + data.v);
             }
         }
