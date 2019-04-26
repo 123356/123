@@ -475,10 +475,11 @@ createBar: function (data) {
         grid: {
             left: '1%',
             right: '10%',
-            bottom: '0%',
+            bottom: '25',
             top:'16%',
             containLabel: true
         },
+
         color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
         xAxis: {
             name:'kW·h',
@@ -493,11 +494,12 @@ createBar: function (data) {
         yAxis: {
             name:'回路',
             type: 'category',
+            //inverse:true,
             axisLabel: {
                 //  rotate: 30,
                 color: '#666',
                 fontSize: 12,
-                rotate: 30
+                
             },
             data: x
         },
@@ -510,7 +512,7 @@ createBar: function (data) {
                 itemStyle: {
                     normal: {
                         color: function (params) {
-                            var colorList = ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'];
+                            var colorList = ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c', '#d15642', '#cc9c50', '#32b194', '#88c5ac', '#dc8a81'];
                             return colorList[params.dataIndex]
                         }
                     }
@@ -538,7 +540,7 @@ createPie: function (data) {
                 fontSize:12
             }
         },
-        color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
+        color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c', '#d15642', '#cc9c50', '#32b194', '#88c5ac', '#dc8a81'],
         series: [
             {
                
