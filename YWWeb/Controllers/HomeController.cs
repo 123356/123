@@ -5229,7 +5229,7 @@ namespace YWWeb.Controllers
                 }
 
             }
-            return Json(new { list_top, RealValue, list_le = list_le.OrderBy(p => p.value) }, JsonRequestBehavior.AllowGet);
+            return Json(new { list_top, RealValue, list_le = list_le.OrderByDescending(p => p.value).Take(10) }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid)
         {
