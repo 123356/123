@@ -91,29 +91,29 @@
         <thead>
             <tr>
                 @*<th field='设备名称' width="70px">
-            设备名称
-        </th>
-        <th field='设备编码' width="100px">
-            设备编码
-        </th>
-        <th field='TagName' width="100px">
-            测点名称
-        </th>
-        <th field='TagID' width="60px">
-            测点编号
-        </th>*@
+                        设备名称
+                    </th>
+                    <th field='设备编码' width="100px">
+                        设备编码
+                    </th>
+                    <th field='TagName' width="100px">
+                        测点名称
+                    </th>
+                    <th field='TagID' width="60px">
+                        测点编号
+                    </th>*@
                 <th field='CName' width="30px">
                     回路名称
                 </th>
                 <th field='Remarks' width="30px">
                     描述
                 </th>
-                <th field='PV'  width="30px">
+                <th field='PV' width="30px">
                     测量值
                 </th>
                 @*<th field='报警限值' width="30px">
-            报警限值
-        </th>*@
+                        报警限值
+                    </th>*@
                 <th field='AlarmStatus' width="40px">
                     报警状态
                 </th>
@@ -148,9 +148,9 @@
                     <select id="cbType" style="width: 120px; height: 26px;">
                     </select>*@
             </i>@*<i>
-                监测类型：
-                <input id="cname" style="width: 120px;" />
-            </i>*@
+                    监测类型：
+                    <input id="cname" style="width: 120px;" />
+                </i>*@
             <i>
                 起始时间：
                 <input id="StartDate" style="width: 120px; height: 26px;" />
@@ -167,7 +167,8 @@
         </div>
 
     </div>
-
+    <div class="datagrid-mask loding2" style="display:none"></div>
+    <div class="datagrid-mask-msg loding2" style="display: none; left: 50%; height: 16px; margin-left: -80.5px; line-height: 16px;">正在导出，请稍待...</div>
     <script src="~/Content/UserJS/HistoryData._jm.js"></script>
     <script type="text/javascript" src="~/Content/UserJS/ResizeList._jm.js"></script>
 </body>

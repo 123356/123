@@ -164,13 +164,14 @@ $('#list_data').datagrid({
 });
 
 function export1() {
+
+  var ajaxbg = top.$(".loding2");
     //dname = $("#selDID").combobox('getText');
      cname = $("#cname").val();
      pid = $("#SPID").combobox('getValue');
      startdate = $('#StartDate').datebox('getValue');
      enddate = $('#EndDate').datebox('getValue');
     //typename = $("#selCID").combobox('getText');
-    var ajaxbg = top.$("#loading_background,#loading");
     var aDate, oDate1, oDate2, iDays
     aDate = startdate.split("-");
     oDate1 = new Date(aDate[0] + '-' + aDate[1] + '-' + aDate[2]);     //转换为12-18-2002格式
@@ -190,6 +191,7 @@ function export1() {
                 $.messager.alert("提示", data.v, "info");
             } else {
                 window.open('http://' + window.location.host + data.v);
+                 ajaxbg.hide();
             }
         }
     );
