@@ -130,6 +130,7 @@ namespace DAL
                 {
                     if (addcid.Contains($",{list[a].PID}-{list[a].CID},"))
                     {
+                        //该电表没有这个区域ID
                         if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
                                                     {
                             list[a].ener_use_type += $",{data.ID},";
@@ -137,11 +138,11 @@ namespace DAL
                     }
                     else
                     {
+                        //该点表有区域ID  但是未绑定电表
                         if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
                         {
                             var str = $",{data.ID},";
                             //list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
-
                         }
                     }
                 }

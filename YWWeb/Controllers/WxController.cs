@@ -1587,11 +1587,11 @@ namespace YWWeb.Controllers
                         //SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 and  UserName LIKE '%admin%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by CreateDate desc
                         if (user.RoleID == 1)
                         {
-                          sql  = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId,PlanDate desc";
+                          sql  = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND t_PM_Order.PID=t_CM_PDRInfo.PID order by PlanDate desc";
                         }
                         else
                         {
-                            sql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId,PlanDate desc";
+                            sql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE (OrderState<4 or OrderState=5) AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by PlanDate desc";
                         }
                         List<t_Order> list = bll.ExecuteStoreQuery<t_Order>(sql).ToList();
                         if (list != null && list.Count > 0)
@@ -1605,11 +1605,11 @@ namespace YWWeb.Controllers
                         if (user.RoleID==1)
                         {
                             
-                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId, CheckDate desc";
+                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND t_PM_Order.PID=t_CM_PDRInfo.PID order by CheckDate desc";
                         }
                         else
                         {
-                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by OrderTypeId, CheckDate desc";
+                            finishSql = "SELECT t_PM_Order.*,t_CM_PDRInfo.CompanyName,t_CM_PDRInfo.Position,t_CM_PDRInfo.Coordination FROM t_PM_Order,t_CM_PDRInfo WHERE OrderState=4 AND UserName LIKE '%" + UserName + "%' AND t_PM_Order.PID=t_CM_PDRInfo.PID order by CheckDate desc";
                         }
                         List<t_Order> listFinish = bll.ExecuteStoreQuery<t_Order>(finishSql).ToList();
                         return Content("{\"resultCode\": 0,\"results\": " + "{\"fished_orders\":" + JsonConvert.SerializeObject(listFinish) + "," + "\"unfished_orders\":" + JsonConvert.SerializeObject(list) + "}}");

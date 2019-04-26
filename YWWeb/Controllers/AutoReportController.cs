@@ -74,39 +74,67 @@ namespace YWWeb.Controllers
             //        sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID=" + pid + " AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
             //    }
             //}
-            List<t_EE_PowerQualityDaily2> listPDRinfo = bll.ExecuteStoreQuery<t_EE_PowerQualityDaily2>(sql).ToList();
-            List<ReportInfo2> list2 = new List<ReportInfo2>();
-             if (listPDRinfo != null && listPDRinfo.Count > 0)
-             {
-                 t_EE_PowerQualityDaily2 infoLast = listPDRinfo[0];
-               List<ReportInfo> list = new List<ReportInfo>();
-               int CID = (int)infoLast.CID;
-               string CName = (string)infoLast.CName;
-               string devicename = getDeviceName(infoLast);
-               for (int i = 0; i < listPDRinfo.Count; i++)
-               {
-                   if (listPDRinfo[i].CID == CID)
-                   {
-                       list.Add(new ReportInfo((DateTime)listPDRinfo[i].RecordTime,(double)listPDRinfo[i].AVoltage,(double)listPDRinfo[i].BVoltage,(double)listPDRinfo[i].CVoltage,(double)listPDRinfo[i].ACurrent,(double)listPDRinfo[i].BCurrent,(double)listPDRinfo[i].CCurrent,(double)listPDRinfo[i].Factor,(double)listPDRinfo[i].UsePower));
-                       if (i == listPDRinfo.Count - 1)
-                       {
-                           list2.Add(new ReportInfo2(devicename, CID, CName, list));
-                       }
-                   }
-                   else
-                   {
-                       list2.Add(new ReportInfo2(devicename,CID, CName,list));
-                       list = new List<ReportInfo>();
-                       list.Add(new ReportInfo((DateTime)listPDRinfo[i].RecordTime, (double)listPDRinfo[i].AVoltage, (double)listPDRinfo[i].BVoltage, (double)listPDRinfo[i].CVoltage, (double)listPDRinfo[i].ACurrent, (double)listPDRinfo[i].BCurrent, (double)listPDRinfo[i].CCurrent, (double)listPDRinfo[i].Factor, (double)listPDRinfo[i].UsePower));
-                       infoLast = listPDRinfo[i];
-                       CID = (int)infoLast.CID;
-                       CName = (string)infoLast.CName;
-                       devicename = getDeviceName(infoLast);
-                   }
-               }     
-             }
-             string result = JsonConvert.SerializeObject(list2);
-             return Content(result);
+            try
+            {
+                List<t_EE_PowerQualityDaily2> listPDRinfo = bll.ExecuteStoreQuery<t_EE_PowerQualityDaily2>(sql).ToList();
+                List<ReportInfo2> list2 = new List<ReportInfo2>();
+                if (listPDRinfo != null && listPDRinfo.Count > 0)
+                {
+                    t_EE_PowerQualityDaily2 infoLast = listPDRinfo[0];
+                    List<ReportInfo> list = new List<ReportInfo>();
+                    int CID = (int)infoLast.CID;
+                    string CName = (string)infoLast.CName;
+                    string devicename = getDeviceName(infoLast);
+                    for (int i = 0; i < listPDRinfo.Count; i++)
+                    {
+                        if (listPDRinfo[i].CID == CID)
+                        {
+                            ReportInfo m = new ReportInfo(
+                                (DateTime)listPDRinfo[i].RecordTime,
+                                 listPDRinfo[i].AVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].AVoltage),
+                                listPDRinfo[i].BVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].BVoltage),
+                                listPDRinfo[i].CVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].CVoltage),
+                                 listPDRinfo[i].ACurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].ACurrent),
+                                listPDRinfo[i].BCurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].BCurrent),
+                                listPDRinfo[i].CCurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].CCurrent),
+                                listPDRinfo[i].Factor == null ? 0 : Convert.ToDouble(listPDRinfo[i].Factor),
+                                listPDRinfo[i].UsePower == null ? 0 : Convert.ToDouble(listPDRinfo[i].UsePower));
+                            list.Add(m);
+                            if (i == listPDRinfo.Count - 1)
+                            {
+                                list2.Add(new ReportInfo2(devicename, CID, CName, list));
+                            }
+                        }
+                        else
+                        {
+                            list2.Add(new ReportInfo2(devicename, CID, CName, list));
+                            list = new List<ReportInfo>();
+                            ReportInfo m = new ReportInfo(
+                                (DateTime)listPDRinfo[i].RecordTime,
+                                 listPDRinfo[i].AVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].AVoltage),
+                                listPDRinfo[i].BVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].BVoltage),
+                                listPDRinfo[i].CVoltage == null ? 0 : Convert.ToDouble(listPDRinfo[i].CVoltage),
+                                 listPDRinfo[i].ACurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].ACurrent),
+                                listPDRinfo[i].BCurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].BCurrent),
+                                listPDRinfo[i].CCurrent == null ? 0 : Convert.ToDouble(listPDRinfo[i].CCurrent),
+                                listPDRinfo[i].Factor == null ? 0 : Convert.ToDouble(listPDRinfo[i].Factor),
+                                listPDRinfo[i].UsePower == null ? 0 : Convert.ToDouble(listPDRinfo[i].UsePower));
+                            list.Add(m);
+                            infoLast = listPDRinfo[i];
+                            CID = (int)infoLast.CID;
+                            CName = (string)infoLast.CName;
+                            devicename = getDeviceName(infoLast);
+                        }
+                    }
+                }
+                string result = JsonConvert.SerializeObject(list2);
+                return Content(result);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         private string getDeviceName(t_EE_PowerQualityDaily2 PowerQuality)

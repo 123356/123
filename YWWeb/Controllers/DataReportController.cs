@@ -55,7 +55,8 @@ namespace YWWeb.Controllers
         public ActionResult HisData(int rows, int page, int pid = 0, int CID = 0, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "", string sort = "记录时间", string order = "asc")
         {
             string strJson = "{\"total\":0,\"rows\":[]}";
-            if ((CID == 1 || CID == 3 || CID == 12) && pid == 177) {
+            if ((CID == 1 || CID == 3 || CID == 12) && pid == 177)
+            {
                 return Content("{\"total\":3025,\"rows\":[{\"PID\":\"0\",\"PV\":\"0\",\"AlarmStatus\":\"暂无数据\",\"AlarmLimits\":\"0\"}]}");
             }
             int rowcount;
@@ -154,43 +155,121 @@ namespace YWWeb.Controllers
             return query;
         }
         //导出历史数据查询
-        public JsonResult ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "温度")
+        public JsonResult ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "", string sort = "记录时间", string order = "asc")
         {
             try
             {
+                int rowcount;
+                List<t_CM_PointsInfo> listPoint = bll.t_CM_PointsInfo.Where(o => o.PID == pid && !o.Position.Equals("备用01") && o.TagName.Contains(cname)).ToList();
+                string tagIDS = string.Join(",", listPoint.Select(c => c.TagID).ToArray());
                 if (pid == 0)
                 {
                     pid = Convert.ToInt32(HomeController.GetPID(CurrentUser.UNITList).Split(',')[0]);
                 }
-                string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
-                string strsql = "SELECT 设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
-                string query = GetHisQuery(dname, cname, startdate, enddate, typename);
-                strsql = strsql + " where " + query + " order by 记录时间 desc ";
+                //string tablename = "配电房_" + pid.ToString("00000") + "_历史数据表";
+                //string strsql = "SELECT 设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
+                //string query = GetHisQuery(dname, cname, startdate, enddate, typename);
+                //strsql = strsql + " where " + query + " order by 记录时间 desc ";
+                List<t_SM_HisData> list = HisDataDAL.getInstance().GetHisData(out rowcount, 30000, 1, pid, tagIDS,
+               dname, cname, startdate, enddate, typename, sort, order).ToList();
 
 
-                var count = bll.ExecuteStoreQuery<ExHisData>(strsql).Count();
-                if (count > 30000)
-                {
-                    return Json(new { code = 0, v = "最多可导出30000条,当前导出条数为" + count + "条,请重新选择" }, JsonRequestBehavior.AllowGet);
-                }
+
+
+                //var count = bll.ExecuteStoreQuery<ExHisData>(strsql).Count();
+                //if (rowcount > 30000)
+                //{
+                //    return Json(new { code = 0, v = "最多可导出30000条,当前导出条数为" + rowcount + "条,请重新选择" }, JsonRequestBehavior.AllowGet);
+                //}
                 //string strPath = Server.MapPath("~/Download/");
                 //string strExport = "历史数据导出_" + DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss") + ".csv";
                 //string strFullExport = strPath + strExport;
                 //List<配电房_00001_历史数据表> list = bll.ExecuteStoreQuery<配电房_00001_历史数据表>(strFullSql).ToList();
                 //ExportCSV(strFullExport, list);
-                else
+                //else
+                //{
+                List<ExHisData> list_his = new List<ExHisData>();
+                var pointList = bll.t_CM_PointsInfo.Where(p => p.PID == pid).ToList();
+                var devList = bll.t_DM_DeviceInfo.Where(p => p.PID == pid).ToList();
+                var MonitorList = bll.t_CM_MonitorPosition.ToList();
+                foreach (var item in list)
                 {
-                    DataSet ds = SQLtoDataSet.GetReportSummary(strsql);
+                    ExHisData model = new ExHisData();
+                    var point = pointList.Where(p => p.TagID == item.TagID).FirstOrDefault();
+                    if (point != null)
+                    {
+                        var dev = devList.Where(p => p.DID == point.DID).FirstOrDefault();
+                        if (dev != null)
+                        {
+                            model.设备名称 = dev.DeviceName;
+                            model.设备编码 = dev.DeviceCode;
+                        }
+                        model.测点名称 = point.TagName;
+                        var MonitorPosition = MonitorList.Where(p => p.MPID == point.MPID).FirstOrDefault();
+                        if (MonitorPosition != null)
+                        {
+                            model.监测位置 = MonitorPosition.Name;
+                        }
+                    }
+                    model.测点编号 = item.TagID;
+                    model.测量值 = item.PV.Value;
+                    model.报警状态 = item.AlarmStatus;
+                    model.记录时间 = item.RecTime;
+                    model.监测时间 = item.RecTime;
+                    list_his.Add(model);
+                }
+
+                DataSet ds = ConvertToDataSet<ExHisData>(list_his);
+                if (ds != null)
+                {
                     ExportExcel.doExport2003(ds, "~/DownLoad/historydata.xls");
                     return Json(new { code = 1, v = "/DownLoad/historydata.xls" }, JsonRequestBehavior.AllowGet);
                 }
+                else
+                {
+                    return Json(new { code = 0, v = "没有可导出的数据" }, JsonRequestBehavior.AllowGet);
+                }
+                //}
             }
             catch (Exception ex)
             {
                 return Json(ex.Message);
             }
         }
-
+        public DataSet ConvertToDataSet<T>(IList<T> list)
+        {
+            if (list == null || list.Count <= 0)
+            {
+                return null;
+            }
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable(typeof(T).Name);
+            DataColumn column;
+            DataRow row;
+            System.Reflection.PropertyInfo[] myPropertyInfo = typeof(T).GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            foreach (T t in list)
+            {
+                if (t == null)
+                {
+                    continue;
+                }
+                row = dt.NewRow();
+                for (int i = 0, j = myPropertyInfo.Length; i < j; i++)
+                {
+                    System.Reflection.PropertyInfo pi = myPropertyInfo[i];
+                    string name = pi.Name;
+                    if (dt.Columns[name] == null)
+                    {
+                        column = new DataColumn(name, pi.PropertyType);
+                        dt.Columns.Add(column);
+                    }
+                    row[name] = pi.GetValue(t, null);
+                }
+                dt.Rows.Add(row);
+            }
+            ds.Tables.Add(dt);
+            return ds;
+        }
         public class ExHisData
         {
             public string 设备名称 { get; set; }
@@ -462,7 +541,8 @@ namespace YWWeb.Controllers
             }
         }
 
-        public class AlarmAnyis{
+        public class AlarmAnyis
+        {
             public string Name { get; set; }
             public IList<t_SM_HisData> list { get; set; }
         }

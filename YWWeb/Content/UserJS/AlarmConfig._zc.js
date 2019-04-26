@@ -106,7 +106,6 @@ function SaveForm() {
                 LimitL2: row.LimitL2,
                 LimitL3: row.LimitL3
             }; 
-            console.log(postData)
             $.post("/SysInfo/SavePueError", postData,
                 function (data) {
                     $('#list_data').datagrid('reload');
@@ -163,7 +162,6 @@ function inport() {
 
 function Delete() {
     var row = $('#list_data').datagrid('getSelected');
-    console.log(row)
     if (!row) {
         $.messager.alert("提示", "请选择要删除的行！", "info");
     } else {

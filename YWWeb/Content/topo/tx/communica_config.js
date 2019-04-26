@@ -61,7 +61,12 @@ var palette_Attributes = [{
         sort: "node",
         title: "path"
     },
- 
+      {
+            name: "名称",
+            type: "type",
+            sort: "node",
+            title: "name"
+        }, 
     {
         name: "文字颜色",
         type: "color",
@@ -133,13 +138,23 @@ var palette_Attributes = [{
         sort: "scene",
         title: "orderNo",
         value: "提交"
-    }, {
+    }, 
+    {
+        name: "生成",
+        type: "button",
+        sort: "scene",
+        title: "settopo",
+        value: "确定"
+    },
+    {
         name: "历史",
         type: "button",
         sort: "scene",
         title: "checkMap",
         value: "查看"
-    }, {
+    }, 
+  
+    {
         name: "背景颜色",
         type: "color",
         sort: "scene",
