@@ -494,7 +494,7 @@ createBar: function (data) {
         yAxis: {
             name:'回路',
             type: 'category',
-            //inverse:true,
+            inverse:true,
             axisLabel: {
                 //  rotate: 30,
                 color: '#666',
