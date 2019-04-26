@@ -155,7 +155,7 @@ namespace YWWeb.Controllers
             return query;
         }
         //导出历史数据查询
-        public JsonResult ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "温度", string sort = "记录时间", string order = "asc")
+        public JsonResult ExportHisData(int pid, string dname = "", string cname = "", string startdate = "", string enddate = "", string typename = "", string sort = "记录时间", string order = "asc")
         {
             try
             {
@@ -170,8 +170,8 @@ namespace YWWeb.Controllers
                 //string strsql = "SELECT 设备名称,设备编码,测点名称,测点编号,监测位置,测量值,报警状态,记录时间 监测时间 FROM " + tablename;
                 //string query = GetHisQuery(dname, cname, startdate, enddate, typename);
                 //strsql = strsql + " where " + query + " order by 记录时间 desc ";
-                List<t_SM_HisData> list = HisDataDAL.getInstance().GetHisData(out rowcount, 10000, 1, pid, tagIDS,
-               dname, cname, startdate, enddate, "", sort, order).ToList();
+                List<t_SM_HisData> list = HisDataDAL.getInstance().GetHisData(out rowcount, 30000, 1, pid, tagIDS,
+               dname, cname, startdate, enddate, typename, sort, order).ToList();
 
 
 

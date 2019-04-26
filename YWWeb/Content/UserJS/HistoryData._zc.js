@@ -164,12 +164,12 @@ $('#list_data').datagrid({
 });
 
 function export1() {
-    dname = $("#selDID").combobox('getText');
+    //dname = $("#selDID").combobox('getText');
      cname = $("#cname").val();
      pid = $("#SPID").combobox('getValue');
      startdate = $('#StartDate').datebox('getValue');
      enddate = $('#EndDate').datebox('getValue');
-    typename = $("#selCID").combobox('getText');
+    //typename = $("#selCID").combobox('getText');
     var ajaxbg = top.$("#loading_background,#loading");
     var aDate, oDate1, oDate2, iDays
     aDate = startdate.split("-");
