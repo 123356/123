@@ -225,6 +225,10 @@ Topo.prototype = {
                     type: 1
                 },
                 success: function(res) {
+                    if(res.length == 0){
+                        alert('该站室没有配置数据');
+                        return;
+                    }
                     res = res[0];
                     if (res.IP) {
                         that.__IP = $.base64.decode(res.IP);

@@ -426,7 +426,10 @@
                             time: this.time
                         }
                     }).then(function(res) {
-                        var UsePower = d.UsePower.toFixed(2);
+                        var UsePower=0;    
+                        if(d.UsePower){
+                                UsePower= d.UsePower.toFixed(2);
+                        }
                         this.createBarChart(res.data, d.name, UsePower);
                         this.createPieChart(d.Children, d.name, UsePower);
                     })
@@ -446,7 +449,7 @@
                         allPower += data[i].UsePower;
                         series.push({
                             name: data[i].name,
-                            value: data[i].UsePower.toFixed(2)
+                            value: data[i].UsePower?data[i].UsePower.toFixed(2):0
                         })
                     }
                     if (data.length == 0) {
@@ -482,7 +485,7 @@
                                     show: true,
                                     position: 'center',
                                     formatter: [
-                                        '{b|\n' + allPower.toFixed(2) + '\nkW·h}',
+                                        '{b|\n' + allPower?allPower.toFixed(2):0 + '\nkW·h}',
                                     ].join('\n'),
                                     rich: {
                                         b: {
@@ -522,11 +525,14 @@
 
                     for (var i in data) {
                         var str = this.formatDate(data[i].RecordTime);
-
-                        if (str.substr(str.length - 2, 2) == this.time.getDate() && data[i].UsePower.toFixed(2) != 0 && count != 0) {
+                        var UsePower=0;
+                        if(data[i].UsePower){
+                             UsePower = data[i].UsePower.toFixed(2)
+                        }
+                        if (str.substr(str.length - 2, 2) == this.time.getDate() && UsePower != 0 && count != 0) {
                             yData.push(count)
                         } else {
-                            yData.push(data[i].UsePower.toFixed(2))
+                            yData.push(UsePower)
                         }
                         xData.push(str.substr(str.length - 2, 2));
                     }
