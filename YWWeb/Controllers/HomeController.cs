@@ -5175,7 +5175,7 @@ namespace YWWeb.Controllers
             string uids = HomeController.GetUID();
             decimal RealValue = 0;
             DateTime time = DateTime.Now;
-            List<pueView> list_le = new List<pueView>();
+            List<PPUUEE> list_le = new List<PPUUEE>();
             List<DateTime> times = new List<DateTime>();
             for (int i = 0; i < 60 / 15 * 24; i++)
             {
@@ -5211,18 +5211,17 @@ namespace YWWeb.Controllers
                     var cidList = cids.Split(',').ToList().ConvertAll<int>(p => Convert.ToInt32(p));
                     foreach (var cid in cidList)
                     {
-                        pueView mm = new pueView();
+                        PPUUEE mm = new PPUUEE();
                         string CName = "";
                         if (bll.t_DM_CircuitInfo.Where(p => p.CID == cid).FirstOrDefault() != null)
                         {
                             CName = bll.t_DM_CircuitInfo.Where(p => p.CID == cid && p.PID == pid).FirstOrDefault().CName;
                         }
-                        mm.name = CName;
-                        if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) == null)
-                            mm.value = "";
-                        else
-                            mm.value = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power).ToString();
-
+                        if (bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power) != null)
+                        {
+                            mm.name = CName;
+                            mm.value = bll.t_EE_PowerQualityRealTime.Where(p => p.PID == pid && p.CID == cid && p.Power != -1 && p.Power != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).Sum(p => p.Power).Value;
+                        }
                         list_le.Add(mm);
                     }
 
@@ -5230,6 +5229,11 @@ namespace YWWeb.Controllers
 
             }
             return Json(new { list_top, RealValue, list_le = list_le.OrderByDescending(p => p.value).Take(10) }, JsonRequestBehavior.AllowGet);
+        }
+        public class PPUUEE
+        {
+            public string name { get; set; }
+            public decimal value { get; set; }
         }
         public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid)
         {
