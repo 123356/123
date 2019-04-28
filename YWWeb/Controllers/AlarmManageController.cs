@@ -170,13 +170,21 @@ namespace YWWeb.Controllers
 
                     strsql += " order by AlarmID desc";
                     List<AralmView> list = bll.ExecuteStoreQuery<AralmView>(strsql).ToList();
-
+                    var dev = bll.t_DM_DeviceInfo.ToList();
+                    var cir = bll.t_DM_CircuitInfo.ToList();
                     foreach (var item in list)
                     {
                         if (!string.IsNullOrEmpty(item.Unit))
                             item.AlarmCate = item.AlarmCate + "(" + item.Unit + ")";
                         if (item.AlarmCate == "开关量")
                             item.AlarmMaxValue = "";
+                        string devName = "";
+                        string cirName = "";
+                        if (dev.Where(p => p.DID == item.DID).FirstOrDefault() != null)
+                            devName = dev.Where(p => p.DID == item.DID).FirstOrDefault().DeviceName;
+                        if (cir.Where(p => p.CID == item.CID).FirstOrDefault() != null)
+                            cirName = cir.Where(p => p.CID == item.CID).FirstOrDefault().CName;
+                        item.RArae = devName + "_" + cirName + "_" + item.AlarmAddress;
                     }
                     strJson = Common.List2Json(list, (int)rowcount[0].totalRows);
                 }
