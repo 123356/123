@@ -1,5 +1,5 @@
-var unitId = $.cookie("enUID")
-
+var unitId = localStorage.getItem("UnitData");
+var obj=JSON.parse(unitId);
 $(function () {
 
     console.log(unitId + "...")
@@ -41,7 +41,7 @@ var vm = new Vue({
                 url: '/Home/GetScoreByUID',
                 method: 'post',
                 params: {
-                    uid: this.unitId
+                    uid: obj.enUID
                 }
             })
             .then(function (res) {
