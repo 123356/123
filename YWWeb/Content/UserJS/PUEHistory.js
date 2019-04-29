@@ -259,9 +259,11 @@
           
             for (var i = 0; i < data.length; i++) {
                 
-                x.push(data[i].name)
+                
                 if (parseInt(this.curType) == 2 || parseInt(this.curType) == 3) {
                     x.push(data[i].name.split(' ')[0])
+                } else {
+                    x.push(data[i].name)
                 }
                     y.push(data[i].value)
                 }
