@@ -19,7 +19,8 @@
         xTotal: [],
         sumTotal: 0,
         curTimeStr: null,
-        times: []
+        times: [],
+        tempPname:''
     },
     methods: {
         //单位下拉框
@@ -196,7 +197,8 @@
             this.xTotal = xTotal
         },
         stationChange: function (e) {
-            this.cruPname = e.label
+            this.tempPname = e.label
+           
             this.PID = e.value
             this.getUserType()
             $.cookie('cookiepid', this.PID, { expires: 7, path: '/' });
@@ -293,6 +295,7 @@
         userMenuClick: function (e) {
             switch (e) {
                 case 'dosearch()':
+                    this.cruPname = this.tempPname
                     this.loading = true
                     this.getReport()
                     this.getTimes()

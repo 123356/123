@@ -61,6 +61,7 @@
             .finally(function () {
                 if (that.thirdMenu.length > 0) {
                     that.frameSrc = that.thirdMenu[0].Location
+                    document.getElementById('energyFrame').contentWindow.location.reload(true);
                     console.log("frameSrc：" + that.frameSrc)
                 }
             })

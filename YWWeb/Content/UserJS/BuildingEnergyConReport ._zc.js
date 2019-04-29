@@ -280,7 +280,7 @@
             switch (method) {
                 case 'dosearch()':
                     this.loading = true
-                    this.UnitName = $.cookie("enUName")
+                    this.UnitName = JSON.parse(localStorage.getItem("UnitData")).enName
                     this.curTimeStr = this.formaterDate()
                     this.getTimes()
                     

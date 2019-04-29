@@ -258,20 +258,23 @@
         getTreeData: function () {
             var that = this
             this.$http({
-                url: '/energyManage/EMSetting/GetTreeData',
+                url: '/energyManage/EMSetting/GetEnergyTree',
                 method: 'POST',
                 params: {
-                    unitID: that.uid,
-                    item_type: 2,
-                    unitName: that.uName
+                    UnitID: that.uid,
+                    ItemType: 2,
+                    UnitName: that.uName
                 }
             })
             .then(function (res) {
-                for (var i = 0; i < res.data.length; i++) {
-                    res.data[i].EneryUserID = res.data[i].id
-                }
-                res.data.open = true
-                that.initTree(res.data)
+                var data = res.data[0]
+                data.open = true
+                that.foreachTree(data)
+                //for (var i = 0; i < res.data.length; i++) {
+                //    res.data[i].EneryUserID = res.data[i].ID
+                //}
+                
+                that.initTree(data)
             })
             .catch(function (e) {
                 throw new ReferenceError(e.message)
@@ -280,6 +283,29 @@
                 that.treeShow =true
             })
            
+        },
+        //遍历树
+        foreachTree: function (node) {
+            if (!node) {
+                return;
+            }
+            node.text = node.name
+            node.children = node.Children
+            node.id = node.ID
+            node.open = true
+            node.icon = ""
+            if (node.Children && node.Children.length > 0) {
+                for (var i = 0; i < node.Children.length; i++) {
+                    if (!node.Children[i].Children) {
+                        node.Children[i].text = node.Children[i].name
+                        node.Children[i].open = true
+                        node.Children[i].children = node.Children[i].Children
+                        node.Children[i].id = node.Children[i].ID
+                        node.Children[i].icon = ""
+                    }
+                    this.foreachTree(node.Children[i]);
+                }
+            }
         },
         initTree: function (data) {
             var setting = {
