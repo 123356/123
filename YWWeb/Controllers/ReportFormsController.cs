@@ -137,7 +137,7 @@ namespace YWWeb.Controllers
                     }
                     strsql += "   ORDER BY a.CID,RecordTime";
                     var list = bll.ExecuteStoreQuery<PowerData_SSQX>(strsql).ToList();
-                    foreach (var item in list.GroupBy(p => p.DeviceName))
+                    foreach (var item in list.OrderBy(p => p.OrderBy).GroupBy(p => p.DeviceName))
                     {
                         DevC model = new DevC();
                         model.DeviceName = item.Key;
@@ -1740,6 +1740,7 @@ namespace YWWeb.Controllers
             //var listTime = list.Select(p => p.RecordTime).Distinct().ToList();
             //var data = list.GroupBy(p => p.RecordTime).ToList();
             var sbHtml = new StringBuilder();
+            sbHtml.Append("<div style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;width:100%;'>" + UnitName + "</div>");
             sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
             string timeText = "";
             if (type == 1)
@@ -1755,7 +1756,7 @@ namespace YWWeb.Controllers
                 timeText = Convert.ToDateTime(times[1]).Year + "";
             }
 
-            sbHtml.AppendFormat("<tr><td style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;' colspan='" + (4 + times.Count) + "'>{0}<br>{1}</td></tr>", timeText + "建筑能耗分项报表", UnitName);
+            sbHtml.AppendFormat("<tr><td style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;' colspan='" + (4 + times.Count) + "'>{0}</td></tr>", timeText + "建筑分项能耗报表(kW·h)");
 
             sbHtml.Append("<tr>");
             sbHtml.Append("<td>ID</td>");
@@ -1824,11 +1825,11 @@ namespace YWWeb.Controllers
                     sv += s.Sum(p => p.UsePower.Value);
                 }
             }
-            sbHtml.AppendFormat("<td>{0}</td>", Math.Round(sv, 2) + "");
+            sbHtml.AppendFormat("<td>{0}</td>", "");
             sbHtml.Append("</tr>");
             sbHtml.Append("</table>");
             sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
-            sbHtml.AppendFormat("<tr><td style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;' colspan='" + (4 + times.Count) + "'>{0}<br>{1}</td></tr>", timeText + "建筑能耗区域报表", UnitName);
+            sbHtml.AppendFormat("<tr><td style='text-align:center;font-weight:bold;font-size:18px;border-bottom:0px;' colspan='" + (4 + times.Count) + "'>{0}</td></tr>", timeText + "建筑区域能耗报表(kW·h)");
             sbHtml.Append("<tr>");
             sbHtml.Append("<td>ID</td>");
             sbHtml.Append("<td>名称</td>");
@@ -1893,7 +1894,7 @@ namespace YWWeb.Controllers
                     svv += s.Sum(p => p.UsePower.Value);
                 }
             }
-            sbHtml.AppendFormat("<td>{0}</td>", Math.Round(svv, 2) + "");
+            sbHtml.AppendFormat("<td>{0}</td>","");
             sbHtml.Append("</tr>");
             sbHtml.Append("</table>");
 
