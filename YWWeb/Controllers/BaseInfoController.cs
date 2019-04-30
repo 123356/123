@@ -626,46 +626,50 @@ namespace YWWeb.Controllers
         public string SelectPoints(int pid, int did, int cid)
         {
             string res = "";
-            string strsql = "select * from V_DeviceInfoState_PDR1 where pid=" + pid + " and did=" + did + " and cid = " + cid + " and DataTypeID!=23 order by DataTypeID";
-            List<V_DeviceInfoState_PDR1> list = bll.ExecuteStoreQuery<V_DeviceInfoState_PDR1>(strsql).ToList();
-            List<V_DeviceInfoState_PDR1> Tinlist = list.Where(g => g.DataTypeID == 24).ToList();
-            List<V_DeviceInfoState_PDR1> Toutlist = list.Where(g => g.DataTypeID == 12).ToList();
+            string strsql = "select * from t_CM_PointsInfo where pid=" + pid + " and did=" + did + " and cid = " + cid + " and DataTypeID!=23 order by DataTypeID";
+            List<t_CM_PointsInfo> list = bll.ExecuteStoreQuery<t_CM_PointsInfo>(strsql).ToList();
+
+            //List<V_DeviceInfoState_PDR1> list = bll.ExecuteStoreQuery<V_DeviceInfoState_PDR1>(strsql).ToList();
+            //List<V_DeviceInfoState_PDR1> Tinlist = list.Where(g => g.DataTypeID == 24).ToList();
+            //List<V_DeviceInfoState_PDR1> Toutlist = list.Where(g => g.DataTypeID == 12).ToList();
+             List<t_CM_PointsInfo> Tinlist = list.Where(g => g.DataTypeID == 24).ToList();
+             List<t_CM_PointsInfo> Toutlist = list.Where(g => g.DataTypeID == 12).ToList();
             //设备温度
-            List<V_DeviceInfoState_PDR1> NTlist = list.Where(g => g.DataTypeID == 1).OrderByDescending(J => J.PV).ToList();
+            List<t_CM_PointsInfo> NTlist = list.Where(g => g.DataTypeID == 1).OrderByDescending(J => J.TagID).ToList();
             if (NTlist.Count > 0)
             {
-                V_DeviceInfoState_PDR1 jo = NTlist[0];
-                List<V_DeviceInfoState_PDR1> NNTlist = NTlist.Where(k => k.Position == jo.Position).ToList();
+                t_CM_PointsInfo jo = NTlist[0];
+                List<t_CM_PointsInfo> NNTlist = NTlist.Where(k => k.Position == jo.Position).ToList();
                 int Nc = NNTlist.Count;
                 if (Nc > 3) Nc = 3;
                 for (int i = 0; i < Nc; i++)
                 {
-                    V_DeviceInfoState_PDR1 dio = NNTlist[i];
+                    t_CM_PointsInfo dio = NNTlist[i];
                     res += dio.DataTypeID + "_" + dio.TagID + ",";
                 }
             }
             //环境温度
             if (Tinlist.Count > 0)
             {
-                foreach (V_DeviceInfoState_PDR1 dio in Tinlist)
+                foreach (t_CM_PointsInfo dio in Tinlist)
                 {
                     res += "24" + "_" + dio.TagID + ",";
                 }
             }
             else if (Toutlist.Count > 0)
             {
-                foreach (V_DeviceInfoState_PDR1 dio in Toutlist)
+                foreach (t_CM_PointsInfo dio in Toutlist)
                 {
                     res += "12" + "_" + dio.TagID + ",";
                 }
             }
             //电流
-            List<V_DeviceInfoState_PDR1> ETlist = list.Where(g => g.Position.Contains("电流")).ToList();
+            List<t_CM_PointsInfo> ETlist = list.Where(g => g.Position.Contains("电流")).ToList();
             if (ETlist.Count > 0)
             {
-                V_DeviceInfoState_PDR1 jo = ETlist[0];
-                List<V_DeviceInfoState_PDR1> EETlist = ETlist.Where(k => k.Position == jo.Position).ToList();
-                foreach (V_DeviceInfoState_PDR1 dio in EETlist)
+                t_CM_PointsInfo jo = ETlist[0];
+                List<t_CM_PointsInfo> EETlist = ETlist.Where(k => k.Position == jo.Position).ToList();
+                foreach (t_CM_PointsInfo dio in EETlist)
                 {
                     res += dio.DataTypeID + "_" + dio.TagID + ",";
                 }
@@ -678,7 +682,7 @@ namespace YWWeb.Controllers
                     count = 2;
                 for (int i = 0; i < count; i++)
                 {
-                    V_DeviceInfoState_PDR1 dio = list[i];
+                    t_CM_PointsInfo dio = list[i];
                     res += dio.DataTypeID + "_" + dio.TagID + ",";
                 }
             }
