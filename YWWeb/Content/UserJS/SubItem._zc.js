@@ -20,6 +20,7 @@
             }
             getThirdMenuInfoAPI(params).then(function (res) {
                 that.thirdMenu = res.data
+                that.getUnitComobxList()
             }).catch(function (e) { throw new ReferenceError(e.message) })
         },
         //单位下拉框
@@ -61,7 +62,6 @@
             .finally(function () {
                 if (that.thirdMenu.length > 0) {
                     that.frameSrc = that.thirdMenu[0].Location
-                    document.getElementById('energyFrame').contentWindow.location.reload(true);
                     console.log("frameSrc：" + that.frameSrc)
                 }
             })
@@ -91,7 +91,7 @@
         var mid = window.location.search.split("=")[1]
         this.getUnitData()
         this.getThirdMenuInfo(mid)
-        this.getUnitComobxList()
+        
     },
     mounted: function () { }
 })
