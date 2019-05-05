@@ -155,6 +155,7 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEConfig" Width="1.5" PointX="39.375" PointY="3.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_SM_RealTimeData_00001" Width="1.5" PointX="17.375" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_SM_HisData_00001" Width="1.5" PointX="41.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_AlarmConfig" Width="1.5" PointX="41.375" PointY="3.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

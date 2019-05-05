@@ -1134,6 +1134,21 @@
           <Property Name="coilCurrentOff" Type="float" />
           <Property Name="recTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="t_EE_AlarmConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="PID" Type="int" />
+          <Property Name="TypeId" Type="int" />
+          <Property Name="LimitH1" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LimitH2" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LimitH3" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LimitL1" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LimitL2" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LimitL3" Type="numeric" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="t_EE_JGPF">
           <Key>
             <PropertyRef Name="ID" />
@@ -2864,6 +2879,7 @@
           <EntitySet Name="t_DM_DevicesFiles" EntityType="Self.t_DM_DevicesFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_DM_ElectricMeterInfo" EntityType="Self.t_DM_ElectricMeterInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_DM_MechanicalProperties" EntityType="Self.t_DM_MechanicalProperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_EE_AlarmConfig" EntityType="Self.t_EE_AlarmConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_EE_JGPF" EntityType="Self.t_EE_JGPF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_EE_PowerQualityDaily" EntityType="Self.t_EE_PowerQualityDaily" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_EE_PowerQualityMonthly" EntityType="Self.t_EE_PowerQualityMonthly" Schema="dbo" store:Type="Tables" />
@@ -3818,6 +3834,7 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <EntitySet Name="t_EE_PUEConfig" EntityType="YWModel.t_EE_PUEConfig" />
           <EntitySet Name="t_SM_RealTimeData_00001" EntityType="YWModel.t_SM_RealTimeData_00001" />
           <EntitySet Name="t_SM_HisData_00001" EntityType="YWModel.t_SM_HisData_00001" />
+          <EntitySet Name="t_EE_AlarmConfig" EntityType="YWModel.t_EE_AlarmConfig" />
         </EntityContainer>
         <EntityType Name="t_AlarmTable_en">
           <Key>
@@ -6520,6 +6537,21 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
           <Property Name="PV" Type="Double" />
           <Property Name="AlarmStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AlarmLimits" Type="Double" />
+        </EntityType>
+        <EntityType Name="t_EE_AlarmConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="LimitH1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LimitH2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LimitH3" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LimitL1" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LimitL2" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LimitL3" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -9315,6 +9347,22 @@ FROM [dbo].[配电房_00011_历史数据表] AS [配电房_00011_历史数据表
                 <ScalarProperty Name="PID" ColumnName="PID" />
                 <ScalarProperty Name="TagID" ColumnName="TagID" />
                 <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_EE_AlarmConfig">
+            <EntityTypeMapping TypeName="YWModel.t_EE_AlarmConfig">
+              <MappingFragment StoreEntitySet="t_EE_AlarmConfig">
+                <ScalarProperty Name="LimitL3" ColumnName="LimitL3" />
+                <ScalarProperty Name="LimitL2" ColumnName="LimitL2" />
+                <ScalarProperty Name="LimitL1" ColumnName="LimitL1" />
+                <ScalarProperty Name="LimitH3" ColumnName="LimitH3" />
+                <ScalarProperty Name="LimitH2" ColumnName="LimitH2" />
+                <ScalarProperty Name="LimitH1" ColumnName="LimitH1" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -5177,6 +5177,7 @@ namespace YWWeb.Controllers
             DateTime time = DateTime.Now;
             List<PPUUEE> list_le = new List<PPUUEE>();
             List<DateTime> times = new List<DateTime>();
+            List<decimal> levList = new List<decimal>();
             for (int i = 0; i < 60 / 15 * 24; i++)
             {
                 times.Add(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMinutes(i*15));
@@ -5229,7 +5230,12 @@ namespace YWWeb.Controllers
                 }
 
             }
-            return Json(new { list_top, RealValue, list_le = list_le.OrderByDescending(p => p.value).Take(10) }, JsonRequestBehavior.AllowGet);
+
+            t_EE_AlarmConfig lis = bll.t_EE_AlarmConfig.Where(p => p.PID == pid).FirstOrDefault();
+            levList.Add(lis.LimitH1.Value);
+            levList.Add(lis.LimitH2.Value);
+            levList.Add(lis.LimitH3.Value);
+            return Json(new { list_top, RealValue, list_le = list_le.OrderByDescending(p => p.value).Take(10), levList }, JsonRequestBehavior.AllowGet);
         }
         public class PPUUEE
         {

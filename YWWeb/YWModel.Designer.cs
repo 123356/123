@@ -2464,6 +2464,22 @@ namespace YWWeb
             }
         }
         private ObjectSet<t_SM_HisData_00001> _t_SM_HisData_00001;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<t_EE_AlarmConfig> t_EE_AlarmConfig
+        {
+            get
+            {
+                if ((_t_EE_AlarmConfig == null))
+                {
+                    _t_EE_AlarmConfig = base.CreateObjectSet<t_EE_AlarmConfig>("t_EE_AlarmConfig");
+                }
+                return _t_EE_AlarmConfig;
+            }
+        }
+        private ObjectSet<t_EE_AlarmConfig> _t_EE_AlarmConfig;
 
         #endregion
 
@@ -3667,6 +3683,14 @@ namespace YWWeb
         public void AddTot_SM_HisData_00001(t_SM_HisData_00001 t_SM_HisData_00001)
         {
             base.AddObject("t_SM_HisData_00001", t_SM_HisData_00001);
+        }
+    
+        /// <summary>
+        /// 用于向 t_EE_AlarmConfig EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddTot_EE_AlarmConfig(t_EE_AlarmConfig t_EE_AlarmConfig)
+        {
+            base.AddObject("t_EE_AlarmConfig", t_EE_AlarmConfig);
         }
 
         #endregion
@@ -25039,6 +25063,278 @@ namespace YWWeb
         private Nullable<global::System.DateTime> _recTime;
         partial void OnrecTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnrecTimeChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="YWModel", Name="t_EE_AlarmConfig")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class t_EE_AlarmConfig : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 t_EE_AlarmConfig 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static t_EE_AlarmConfig Createt_EE_AlarmConfig(global::System.Int32 id)
+        {
+            t_EE_AlarmConfig t_EE_AlarmConfig = new t_EE_AlarmConfig();
+            t_EE_AlarmConfig.ID = id;
+            return t_EE_AlarmConfig;
+        }
+
+        #endregion
+
+        #region 简单属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, "ID");
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value, "UID");
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PID
+        {
+            get
+            {
+                return _PID;
+            }
+            set
+            {
+                OnPIDChanging(value);
+                ReportPropertyChanging("PID");
+                _PID = StructuralObject.SetValidValue(value, "PID");
+                ReportPropertyChanged("PID");
+                OnPIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PID;
+        partial void OnPIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TypeId
+        {
+            get
+            {
+                return _TypeId;
+            }
+            set
+            {
+                OnTypeIdChanging(value);
+                ReportPropertyChanging("TypeId");
+                _TypeId = StructuralObject.SetValidValue(value, "TypeId");
+                ReportPropertyChanged("TypeId");
+                OnTypeIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TypeId;
+        partial void OnTypeIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTypeIdChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitH1
+        {
+            get
+            {
+                return _LimitH1;
+            }
+            set
+            {
+                OnLimitH1Changing(value);
+                ReportPropertyChanging("LimitH1");
+                _LimitH1 = StructuralObject.SetValidValue(value, "LimitH1");
+                ReportPropertyChanged("LimitH1");
+                OnLimitH1Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitH1;
+        partial void OnLimitH1Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitH1Changed();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitH2
+        {
+            get
+            {
+                return _LimitH2;
+            }
+            set
+            {
+                OnLimitH2Changing(value);
+                ReportPropertyChanging("LimitH2");
+                _LimitH2 = StructuralObject.SetValidValue(value, "LimitH2");
+                ReportPropertyChanged("LimitH2");
+                OnLimitH2Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitH2;
+        partial void OnLimitH2Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitH2Changed();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitH3
+        {
+            get
+            {
+                return _LimitH3;
+            }
+            set
+            {
+                OnLimitH3Changing(value);
+                ReportPropertyChanging("LimitH3");
+                _LimitH3 = StructuralObject.SetValidValue(value, "LimitH3");
+                ReportPropertyChanged("LimitH3");
+                OnLimitH3Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitH3;
+        partial void OnLimitH3Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitH3Changed();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitL1
+        {
+            get
+            {
+                return _LimitL1;
+            }
+            set
+            {
+                OnLimitL1Changing(value);
+                ReportPropertyChanging("LimitL1");
+                _LimitL1 = StructuralObject.SetValidValue(value, "LimitL1");
+                ReportPropertyChanged("LimitL1");
+                OnLimitL1Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitL1;
+        partial void OnLimitL1Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitL1Changed();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitL2
+        {
+            get
+            {
+                return _LimitL2;
+            }
+            set
+            {
+                OnLimitL2Changing(value);
+                ReportPropertyChanging("LimitL2");
+                _LimitL2 = StructuralObject.SetValidValue(value, "LimitL2");
+                ReportPropertyChanged("LimitL2");
+                OnLimitL2Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitL2;
+        partial void OnLimitL2Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitL2Changed();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LimitL3
+        {
+            get
+            {
+                return _LimitL3;
+            }
+            set
+            {
+                OnLimitL3Changing(value);
+                ReportPropertyChanging("LimitL3");
+                _LimitL3 = StructuralObject.SetValidValue(value, "LimitL3");
+                ReportPropertyChanged("LimitL3");
+                OnLimitL3Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _LimitL3;
+        partial void OnLimitL3Changing(Nullable<global::System.Decimal> value);
+        partial void OnLimitL3Changed();
 
         #endregion
 
