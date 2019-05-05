@@ -160,7 +160,10 @@ namespace YWWeb.Controllers
         {
             return View();
         }
-        
+        public ActionResult PueConfig()
+        {
+            return View();
+        }
         #region 年度计划用电量录入相关方法
         /// <summary>
         /// 加载年度计划用电

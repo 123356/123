@@ -5169,7 +5169,7 @@ namespace YWWeb.Controllers
         #endregion
         #region PUE相关
 
-        public JsonResult GetRealTimePUEData(int pid)
+        public JsonResult GetRealTimePUEData(int pid,int pueid)
         {
             List<pueView> list_top = new List<pueView>();
             string uids = HomeController.GetUID();
@@ -5184,7 +5184,7 @@ namespace YWWeb.Controllers
             if (!string.IsNullOrEmpty(uids))
             {
                 var uidList = uids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p));
-                var TopList = bll.t_EE_PUERealTime.Where(p => p.PID == pid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
+                var TopList = bll.t_EE_PUERealTime.Where(p => p.PID == pid&&p.PUEID==pueid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
                 for(int i = 0; i < times.Count(); i++)
                 {
                     pueView m = new pueView();
@@ -5235,7 +5235,7 @@ namespace YWWeb.Controllers
             public string name { get; set; }
             public decimal value { get; set; }
         }
-        public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid)
+        public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid,int pueid)
         {
             List<pueView> data = new List<pueView>();
             try
@@ -5268,6 +5268,10 @@ namespace YWWeb.Controllers
                 {
                     strsql += " and PID=" + pid + "";
                 }
+                if (!pueid.Equals(""))
+                {
+                    strsql += " and PUEID=" + pueid + "";
+                }
                 if (!string.IsNullOrEmpty(datestart) && !string.IsNullOrEmpty(dateend))
                 {
                     strsql += " and RecordTime >='" + datestart + "' and RecordTime <='" + dateend + "'";
@@ -5298,6 +5302,7 @@ namespace YWWeb.Controllers
             public decimal AllPower { get; set; }
             public decimal ITPower { get; set; }
             public DateTime RecordTime { get; set; }
+            public int PUEID { get; set; }
         }
         private string GetcidByPID(string typename, int pid)
         {
@@ -5321,6 +5326,18 @@ namespace YWWeb.Controllers
         {
             public string name { get; set; }
             public string value { get; set; }
+        }
+        public JsonResult GetComboxPueName(int pid)
+        {
+            try
+            {
+                var list = bll.t_EE_PUEConfig.Where(p => p.PID == pid).ToList();
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
 
@@ -5446,6 +5463,127 @@ namespace YWWeb.Controllers
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region PUE公式编辑
+
+        [Login]
+        public ActionResult GetGs(int rows, int page, int pdf)
+        {
+
+            string strsql = @"SELECT a.ID,a.PID,a.UserPowerCID,a.ITPowerCID,a.Name,b.Name as PDFName from t_EE_PUEConfig a 
+                              INNER JOIN t_CM_PDRInfo b on a.PID=b.PID
+                             where 1=1";
+            if (pdf != 0)
+            {
+                strsql += " and a.PID=" + pdf.ToString() + " ";
+            }
+
+            var Blist = bll.ExecuteStoreQuery<GsView>(strsql).OrderByDescending(p => p.Name).ToList();
+            List<GsView> list = new List<GsView>();
+            foreach (var item in Blist)
+            {
+
+                List<int> intList = new List<int>();
+                if (item.UserPowerCID != null)
+                {
+                    foreach (var item1 in item.UserPowerCID.Split(','))
+                    {
+                        intList.Add(Convert.ToInt32(item1));
+                    }
+                    foreach (var item2 in bll.t_DM_CircuitInfo.Where(p => intList.Contains(p.CID) && p.PID == item.PID).Select(p => p.CName).ToList())
+                    {
+                        item.jiashu += item2 + "、";
+                    }
+                    if (!string.IsNullOrEmpty(item.jiashu))
+                        item.jiashu = item.jiashu.Substring(0, item.jiashu.Length - 1);
+                }
+                List<int> intList1 = new List<int>();
+                if (item.ITPowerCID != null)
+                {
+                    foreach (var item1 in item.ITPowerCID.Split(','))
+                    {
+                        intList1.Add(Convert.ToInt32(item1));
+                    }
+                    foreach (var item2 in bll.t_DM_CircuitInfo.Where(p => intList1.Contains(p.CID) && p.PID == item.PID).Select(p => p.CName).ToList())
+                    {
+                        item.jianshu += item2 + "、";
+                    }
+                    if (!string.IsNullOrEmpty(item.jianshu))
+                        item.jianshu = item.jianshu.Substring(0, item.jianshu.Length - 1);
+                }
+                list.Add(item);
+            }
+            string strJson = Common.List2Json(list, rows, page);
+            return Content(strJson);
+        }
+        //cid列表
+        [Login]
+        public ActionResult CIDComboData(int pid)
+        {
+            List<t_DM_CircuitInfo> list = bll.t_DM_CircuitInfo.Where(p => p.PID == pid).ToList();
+            string strJson = Common.ComboboxToJson(list);
+            return Content(strJson);
+        }
+        private class GsView
+        {
+            public int ID { get; set; }
+            public int PID { get; set; }
+            public string Name { get; set; }
+            public string UserPowerCID { get; set; }
+            public string ITPowerCID { get; set; }
+            public string jiashu { get; set; }
+            public string jianshu { get; set; }
+            public string PDFName { get; set; }
+        }
+        [Login]
+        public ActionResult SaveGs(t_EE_PUEConfig model)
+        {
+            string result = "OK";
+            {
+                if (model.ID < 1)
+                {
+                    bll.t_EE_PUEConfig.AddObject(model);
+                    bll.SaveChanges();
+                    Common.InsertLog("年度计划用电", CurrentUser.UserName, "年度计划用电[ID:" + model.ID + "]");
+                }
+                else
+                {
+                    t_EE_PUEConfig info = bll.t_EE_PUEConfig.Where(r => r.ID == model.ID).First();
+                    info.PID = model.PID;
+                    info.UserPowerCID = model.UserPowerCID;
+                    info.ITPowerCID = model.ITPowerCID;
+                    info.Name = model.Name;
+                    bll.ObjectStateManager.ChangeObjectState(info, EntityState.Modified);
+                    bll.SaveChanges();
+                    Common.InsertLog("年度计划用电", CurrentUser.UserName, "年度计划用电[ID:" + model.ID + "]");
+                }
+
+                return Content(result);
+            }
+        }
+        //删除
+        [Login]
+        public ActionResult DeleteGs(string id)
+        {
+            string result = "OK";
+            try
+            {
+                List<int> resultlist = new List<string>(id.Split(',')).ConvertAll(i => int.Parse(i));
+                List<t_EE_PUEConfig> list = bll.t_EE_PUEConfig.Where(m => resultlist.Contains(m.ID)).ToList();
+                list.ForEach(i =>
+                {
+                    bll.t_EE_PUEConfig.DeleteObject(i);
+                });
+                bll.SaveChanges();
+                Common.InsertLog("公式编辑", CurrentUser.UserName, "删除公式[公式ID:" + id + "]");
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+            return Content(result);
         }
         #endregion
     }

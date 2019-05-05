@@ -37,8 +37,6 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_PDRType" Width="1.5" PointX="14.75" PointY="15.75" Height="1.7354337565104174" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_UserLogin" Width="1.5" PointX="4.75" PointY="16.75" Height="1.7354337565104174" />
         <edmx:EntityTypeShape EntityType="YWModel.V_DeviceDetail" Width="1.5" PointX="16.75" PointY="6.75" Height="13.007874348958325" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_SM_HisData_00001" Width="1.5" PointX="6.75" PointY="16.75" Height="2.1050219726562318" />
-        <edmx:EntityTypeShape EntityType="YWModel.t_SM_RealTimeData_00001" Width="1.5" PointX="18.75" PointY="0.75" Height="2.1050219726562318" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_Locate" Width="1.5" PointX="0.75" PointY="18.75" Height="2.4746101888020746" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_AlternateSet" Width="1.5" PointX="18.75" PointY="3.75" Height="4.1377571614583246" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_WarmSet" Width="1.5" PointX="8.75" PointY="18.75" Height="2.4746101888020746" />
@@ -154,6 +152,9 @@
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_ShopTruck" Width="1.5" PointX="39.375" PointY="15.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_DM_CircuitInfo" Width="1.5" PointX="21.375" PointY="35.75" />
         <edmx:EntityTypeShape EntityType="YWModel.t_CM_SparePartInfo" Width="1.5" PointX="21.375" PointY="21.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_EE_PUEConfig" Width="1.5" PointX="39.375" PointY="3.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_RealTimeData_00001" Width="1.5" PointX="17.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="YWModel.t_SM_HisData_00001" Width="1.5" PointX="41.375" PointY="0.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
