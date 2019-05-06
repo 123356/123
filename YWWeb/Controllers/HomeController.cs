@@ -5245,6 +5245,7 @@ namespace YWWeb.Controllers
         public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid,int pueid)
         {
             List<pueView> data = new List<pueView>();
+            List<decimal> levList = new List<decimal>();
             try
             {
                 string tablename = "";
@@ -5292,12 +5293,16 @@ namespace YWWeb.Controllers
                     m.value = Math.Round(item.Sum(p => p.PUE), 2).ToString();
                     data.Add(m);
                 }
+                t_EE_AlarmConfig lis = bll.t_EE_AlarmConfig.Where(p => p.PID == pid).FirstOrDefault();
+                levList.Add(lis.LimitH1.Value);
+                levList.Add(lis.LimitH2.Value);
+                levList.Add(lis.LimitH3.Value);
             }
             catch (Exception ex)
             {
                 data = null;
             }
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(new { data, levList }, JsonRequestBehavior.AllowGet);
         }
 
         public class PUEViewLine
