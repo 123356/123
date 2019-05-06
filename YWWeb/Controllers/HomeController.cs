@@ -1614,24 +1614,24 @@ namespace YWWeb.Controllers
                     s = s.Substring(0, s.Length - 1);
                     cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
                 }
-                if (list.Count() > 0)
-                {
-                    model.Name = "严重";
-                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
-                }
-                else
-                {
+                //if (list.Count() > 0)
+                //{
+                //    model.Name = "严重";
+                //    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+                //}
+                //else
+                //{
                     var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
                     int days = 0;
-                    if (list_yunxing.Count() > 0)
-                    {
-                        DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                        DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                        TimeSpan sp = end.Subtract(start);
-                        days = sp.Days;
-                    }
-                    else
-                    {
+                    //if (list_yunxing.Count() > 0)
+                    //{
+                    //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                    //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    //    TimeSpan sp = end.Subtract(start);
+                    //    days = sp.Days;
+                    //}
+                    //else
+                    //{
                         if (pdflist.Count() > 0)
                         {
                             DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
@@ -1639,10 +1639,10 @@ namespace YWWeb.Controllers
                             TimeSpan sp = end.Subtract(start);
                             days = sp.Days;
                         }
-                    }
+                    //}
                     model.Name = "正常运行";
                     model.NormalDays = days.ToString();
-                }
+                //}
                 if (pdflist.Count() > 0)
                 {
                     string checkDays = "--";

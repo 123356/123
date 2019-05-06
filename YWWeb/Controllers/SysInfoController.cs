@@ -663,6 +663,14 @@ namespace YWWeb.Controllers
                 //修改
                 else
                 {
+                    if (alarm.LimitL1 == null)
+                        alarm.LimitL1 = -1;
+
+                    if (alarm.LimitL2 == null)
+                        alarm.LimitL2 = -1;
+
+                    if (alarm.LimitL3 == null)
+                        alarm.LimitL3 = -1;
                     IList<IDAO.Models.t_EE_AlarmConfig> list = DAL.AlarmConfigDAL.getInstance().UpdataeAlarm(alarm);
                     return Json("OKedit");
                 }
