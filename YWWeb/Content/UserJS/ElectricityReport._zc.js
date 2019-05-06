@@ -954,7 +954,7 @@
                 month = "0"+month
             }
             if (day < 10) {
-                day ="0"+ady
+                day ="0"+day
             }
             if (this.dateType == 1) {
                 
