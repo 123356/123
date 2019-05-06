@@ -49,7 +49,7 @@ namespace YWWeb.Controllers
         {
             //string pdrlist = CurrentUser.PDRList;
             string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
-            if (pdrlist == null)
+            if (string.IsNullOrEmpty(pdrlist))
                 return Content("");
             List<int> resultlist = new List<string>(pdrlist.Split(',')).ConvertAll(i => int.Parse(i));
             var query = from module in bll.t_CM_PDRInfo where resultlist.Contains(module.PID) && module.IsLast == 1 select module;

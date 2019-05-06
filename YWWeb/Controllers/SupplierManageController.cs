@@ -328,31 +328,36 @@ namespace YWWeb.Controllers
         public ActionResult SupplierInfoData(int rows, int page, string SupplierName = "", string Contacter = "", string MobilePhone = "", int pid = 0)
         {
             List<t_CM_SupplierInfo> list = null;
-                string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
-                //string pdrlist = CurrentUser.PDRList;
-                List<int> resultlist = new List<string>(pdrlist.Split(',')).ConvertAll(i => int.Parse(i));
+            string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
+            if (string.IsNullOrEmpty(pdrlist))
+            {
+                return Content("{}");
+            }
+            //string pdrlist = CurrentUser.PDRList;
+            List<int> resultlist = new List<string>(pdrlist.Split(',')).ConvertAll(i => int.Parse(i));
 
-                string strsql = "select *  from t_CM_SupplierInfo where 1=1 ";
-                if (!SupplierName.Equals(""))
-                {
-                    strsql += string.Format(" and SupplierName like '%{0}%'", SupplierName);
-                }
+            string strsql = "select *  from t_CM_SupplierInfo where 1=1 ";
+            if (!SupplierName.Equals(""))
+            {
+                strsql += string.Format(" and SupplierName like '%{0}%'", SupplierName);
+            }
 
-                if (!Contacter.Equals(""))
-                {
-                    strsql += string.Format(" and Contacter like '%{0}%'", Contacter);
-                }
+            if (!Contacter.Equals(""))
+            {
+                strsql += string.Format(" and Contacter like '%{0}%'", Contacter);
+            }
 
-                if (!MobilePhone.Equals(""))
-                {
-                    strsql += string.Format(" and MobilePhone like '%{0}%'", MobilePhone);
-                }
-                if (pid != 0 ) {
-                    strsql += string.Format($" and PID = '{pid}'");
-                }
-                strsql += " order by SupplierID ";
+            if (!MobilePhone.Equals(""))
+            {
+                strsql += string.Format(" and MobilePhone like '%{0}%'", MobilePhone);
+            }
+            if (pid != 0)
+            {
+                strsql += string.Format($" and PID = '{pid}'");
+            }
+            strsql += " order by SupplierID ";
 
-                list = bll.ExecuteStoreQuery<t_CM_SupplierInfo>(strsql).ToList();
+            list = bll.ExecuteStoreQuery<t_CM_SupplierInfo>(strsql).ToList();
 
             string strJson = Common.List2Json(list, rows, page);
             return Content(strJson);

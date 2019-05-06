@@ -546,14 +546,14 @@ namespace YWWeb.Controllers
         [Login]
         public ActionResult ComboTreeMenu(int type = 0)
         {
-            string strjson = "";
+            string strjson = "{}";
             if (CurrentUser != null)
             {
 
                 string pdrlist = HomeController.GetPID(CurrentUser.UNITList);
                 // string pdrlist = CurrentUser.PDRList;
                 if (string.IsNullOrEmpty(pdrlist))
-                    return Content("");
+                    return Content("{}");
                 //if (pdrlist == null)
                 string strsql = "select PID,Name,Areaname,Typename,Coordination from t_CM_PDRInfo p join t_CM_Area a on p.AreaID=a.AreaID join t_CM_PDRType t on p.TypeID=t.TypeID where IsLast = 1 and PID in (" + pdrlist + ")  order by AreaName,Typename";
                 List<AccordionInfo> list = bll.ExecuteStoreQuery<AccordionInfo>(strsql).ToList();
@@ -1153,9 +1153,10 @@ namespace YWWeb.Controllers
         public JsonResult GetPDFTypeCharts()
         {
             string PIDS = HomeController.GetPID(CurrentUser.UNITList);
-            List<int?> pids = PIDS.Split(',').ToList().ConvertAll<int?>(i => Convert.ToInt32(i)).Distinct().ToList();
             if (string.IsNullOrEmpty(PIDS))
-                return Json("");
+                return Json("{}");
+            List<int?> pids = PIDS.Split(',').ToList().ConvertAll<int?>(i => Convert.ToInt32(i)).Distinct().ToList();
+            
             string sql = "select COUNT(*) as sums,b.TypeName as Name from t_CM_PDRInfo a inner join t_CM_PDRType b on a.TypeID=b.TypeID WHERE a.PID IN (" + PIDS + ") group by b.TypeName";
             var reslut = bll.ExecuteStoreQuery<pdfcharts>(sql);
             sums s = new sums();
@@ -1614,24 +1615,24 @@ namespace YWWeb.Controllers
                     s = s.Substring(0, s.Length - 1);
                     cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
                 }
-                if (list.Count() > 0)
-                {
-                    model.Name = "严重";
-                    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
-                }
-                else
-                {
+                //if (list.Count() > 0)
+                //{
+                //    model.Name = "严重";
+                //    model.NormalDays = list.FirstOrDefault().AlarmDateTime.ToString();
+                //}
+                //else
+                //{
                     var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
                     int days = 0;
-                    if (list_yunxing.Count() > 0)
-                    {
-                        DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                        DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                        TimeSpan sp = end.Subtract(start);
-                        days = sp.Days;
-                    }
-                    else
-                    {
+                    //if (list_yunxing.Count() > 0)
+                    //{
+                    //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                    //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    //    TimeSpan sp = end.Subtract(start);
+                    //    days = sp.Days;
+                    //}
+                    //else
+                    //{
                         if (pdflist.Count() > 0)
                         {
                             DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
@@ -1639,10 +1640,10 @@ namespace YWWeb.Controllers
                             TimeSpan sp = end.Subtract(start);
                             days = sp.Days;
                         }
-                    }
+                    //}
                     model.Name = "正常运行";
                     model.NormalDays = days.ToString();
-                }
+                //}
                 if (pdflist.Count() > 0)
                 {
                     string checkDays = "--";
@@ -1899,6 +1900,8 @@ namespace YWWeb.Controllers
             try
             {
                 string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0 && p.AlarmState != 1).OrderByDescending(p => p.AlarmDateTime);
@@ -2748,7 +2751,12 @@ namespace YWWeb.Controllers
         {
             bool flagOrder = false;
             bool alarmflag = false;
-            var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
+            t_CM_Unit unit = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+            if (null == unit || string.IsNullOrEmpty(unit.PDRList))
+            {
+                return Json("{}");
+            }
+            var pidlist = unit.PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
             var order = bll.t_PM_Order.Where(p => p.OrderState != 0 && pidlist.Contains(p.PID));
             if (order.Count() > 0)
             {
