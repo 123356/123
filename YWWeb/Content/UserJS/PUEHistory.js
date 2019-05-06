@@ -15,7 +15,9 @@
         initSelectShow: true,
         chartShow: true,
         isInit: true,
-        PID:null
+        PID: null,
+        pueList: [],
+        pueid: null,
     },
     methods: {
         //renderContent(h, { root, node, data }) {
@@ -59,7 +61,7 @@
                     } else {
                         that.PID = node.id
                         $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
-                        that.getPUEDataByTime()
+                        that.getComboxPueName()
                     }
                 },
                 onLoadSuccess: function (node, data) {
@@ -81,9 +83,38 @@
                             }
                         }
                     }
-                    that.getPUEDataByTime()
+                    that.getComboxPueName()
                 }
             })
+        },
+        //pue下拉框
+        getComboxPueName: function () {
+            var that = this
+            this.$http({
+                url: '/Home/GetComboxPueName',
+                method: 'post',
+                body: {
+                    pid: this.PID
+                }
+            })
+            .then(function (res) {
+                that.pueList = res.data
+                if (res.data) {
+                    that.pueid = res.data[0].ID
+                    that.getPUEDataByTime()
+                    //setTimeout(function () {
+                    //    that.interval()
+                    //}, 5000)
+                }
+
+            })
+        },
+        pueChange: function () {
+            this.getPUEDataByTime()
+        },
+        interval: function () {
+            this.getPUEDataByTime()
+            setTimeout(this.interval, 5000)
         },
         //获取数据
         getPUEDataByTime: function () {
@@ -95,12 +126,13 @@
                     totaltype: this.curType,
                     datestart: this.fromatDate(this.selectDate[0]),
                     dateend: this.fromatDate(this.selectDate[1]),
-                    pid: parseInt(this.PID)
+                    pid: parseInt(this.PID),
+                    pueid:this.pueid
                 }
             })
                 .then(function (res) {
                     
-                    if (res.data.length > 0) {
+                    if (res.data.data.length > 0) {
                         that.chartShow = true
                         that.createLine(res.data)
                         that.isInit = false
@@ -160,11 +192,7 @@
             } 
            
         },
-        checkStation: function (e) {
-            this.curPid = e
-            $.cookie('cookiepid', this.curPid, { expires: 7, path: '/' });
-            this.getPUEDataByTime()
-        },
+        
         radioChange:function(e){
             if (e == 4) {
                 this.initDate()
@@ -233,7 +261,9 @@
             }
             return curTime
         },
-        createLine: function (data) {
+        createLine: function (zData) {
+            var data = zData.data
+
             var obj = {}
             var starVal = this.setSatrtTime(this.curType)
             
@@ -272,8 +302,53 @@
                 if (this.curType == 3) {
                     starVal = x[0]
                 }
-                var endVal = x[x.length - 1]
-            lineChart = echarts.init(document.getElementById('lineChart'));
+                var endVal = null
+                
+                var dataZoom = {
+                    type: 'inside',
+                    
+                }
+                if (data.length > 1) {
+                    dataZoom = {
+                        type: 'inside',
+                        startValue: starVal,
+                        endValue: x[x.length - 1]
+                    }
+                }
+
+                var levelData = zData.levList
+
+                var level = []
+                var color = ['#54ab88', '#ca9a5c', '#cd574b']
+                var markLine = []
+                for (var i = 0; i < levelData.length; i++) {
+                    if (i == 0) {
+                        var temp = {
+                            gt: 0,
+                            lte: levelData[i],
+                            color: color[i]
+                        }
+                    } else {
+                        var temp = {
+                            gt: levelData[i - 1],
+                            lte: levelData[i],
+                            color: color[i]
+                        }
+                    }
+
+                    var templine = {
+                        yAxis: levelData[i],
+                        lineStyle: {
+                            color: color[i]
+                        }
+                    }
+                    level.push(temp)
+                    markLine.push(templine)
+                }
+
+
+                lineChart = echarts.init(document.getElementById('lineChart'));
+                
             var option = {
                 backgroundColor: '#fff',
                 tooltip: {
@@ -341,12 +416,7 @@
                 //    type: 'inside',
                 //    realtime: true,
                 //}],
-                dataZoom: [{
-                    type: 'inside',
-                    startValue: starVal,
-                    endValue:endVal
-                    
-                }, {
+                dataZoom: [dataZoom, {
                     handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
                     handleSize: '80%',
                     handleStyle: {
@@ -362,19 +432,7 @@
                     left: 'center',
                     precision: 1,
                     orient: 'horizontal',
-                    pieces: [{
-                        gt: 0,
-                        lte: 1.8,
-                        color: '#54ab88'
-                    }, {
-                        gt: 1.8,
-                        lte: 2.6,
-                        color: '#ca9a5c'
-                    }, {
-                        gt: 2.6,
-                        lte: 5,
-                        color: '#cd574b'
-                    }],
+                    pieces: level,
                     outOfRange: {
                         color: '#cd574b'
                     }
@@ -407,28 +465,14 @@
                                     formatter: '{b}\n{c}'
                                 }
                             },
-                            {
-                            yAxis: 1.8,
-                            lineStyle: {
-                                color: '#54ab88'
-                            }
-                        }, {
-                            yAxis: 2.6,
-                            lineStyle: {
-                                color: '#ca9a5c'
-                            }
-                        }, {
-                            yAxis: 5,
-                            lineStyle: {
-                                color: '#ce584c'
-                            }
-                        }]
+                            markLine
+                        ]
                     }
                 }
             };
 
             lineChart.clear()
-            lineChart.setOption(option,true)
+            lineChart.setOption(option, true)
             window.addEventListener("resize", () => {
                 lineChart.resize();
             });

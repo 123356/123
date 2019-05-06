@@ -39,6 +39,9 @@
                     <li class="outLi">数据中心：</li>
                     <li class="outLi">
                         <div id="leftmenuSpace"></div>
+                        <i-select v-model="pueid" style="width:200px;margin-left:20px" v-on:on-change="pueChange">
+                            <i-option v-for="item in pueList" :value="item.ID" :key="item.ID">{{ item.Name }}</i-option>
+                        </i-select>
                     </li>
                     <li class="outLi">类型：</li>
                     <li class="outLi">
@@ -75,7 +78,7 @@
     </div>
 
     
-    <script type="text/javascript" src="~/Content/UserJS/PUEHistory.js?v=1.33"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUEHistory.js?v=1.46"></script>
 
 </body>
 </html>

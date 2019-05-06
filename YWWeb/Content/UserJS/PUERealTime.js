@@ -1,7 +1,7 @@
 ﻿new Vue({
     el: "#app",
     data: {
-        loading:true,
+        loading:false,
         pieChart: null,
         gaugeChart: null,
         lineChart: null,
@@ -17,7 +17,9 @@
         isInitLine: true,
         isInitGauge: true,
         isInitBar: true,
-        PID:null
+        PID: null,
+        pueList: [],
+        pueid:null,
     }, 
     methods: {
         openSelect: function (e) {
@@ -78,7 +80,8 @@ getSelectTree: function () {
             } else {
                 that.PID = node.id
                 $.cookie('cookiepid', that.PID, { expires: 7, path: '/' });
-                that.getRealTimePUEData()
+                that.getComboxPueName()
+                //that.getRealTimePUEData()
             }
         },
         onLoadSuccess: function (node, data) {
@@ -100,47 +103,38 @@ getSelectTree: function () {
                     }
                 }
             }
-            that.getRealTimePUEData()
+            that.getComboxPueName()
+            //that.getRealTimePUEData()
         }
     })
 },
-//获取站
-//getStation: function () {
-//    var that = this
-//    this.$http({
-//        url: '/Home/ComboTreeMenu?type=1',
-//        method: 'post'
-//    })
-//        .then(function (res) {
-//            var data = res.data
-//            if ($.cookie('cookiepid') > 0) {
-//                that.curPid = $.cookie('cookiepid')
+        //pue下拉框
+getComboxPueName:function(){
+    var that = this
+    this.$http({
+        url: '/Home/GetComboxPueName',
+        method: 'post',
+        body: {
+            pid:this.PID
+        }
+    })
+    .then(function (res) {
+        that.pueList = res.data
+        if (res.data) {
+            that.pueid = res.data[0].ID
+            that.getRealTimePUEData()
+            setTimeout(function () {
+                that.interval()
+            },5000)
+        }
+        
+    })
+},
+interval:function(){
+    this.getRealTimePUEData()
+    setTimeout(this.interval,5000)
+},
 
-//            }
-//            var arr = new Array()
-//            for (var i = 1; i < data.length; i++) {
-//                arr.push(data[i])
-//            }
-//            var temp = new Array()
-//            temp.push(
-//                {
-//                    id: -1,
-//                    text: '全部',
-//                    expand: true,
-//                    children: arr
-//                }
-//            )
-//            that.foreachTree(temp[0])
-//            that.treeData = temp
-//            that.getRealTimePUEData()
-//            setInterval(function () {
-//                that.getRealTimePUEData()
-//            }, 60000)
-//        })
-//        .catch(function (e) {
-//            throw new ReferenceError(e.message)
-//        })
-//},
 //遍历树
 foreachTree: function (node) {
     if (!node) {
@@ -165,6 +159,10 @@ foreachTree: function (node) {
         }
     }
 },
+pueChange:function(){
+    this.getRealTimePUEData()
+},
+
 //获取数据
 getRealTimePUEData: function () {
     var that = this
@@ -172,17 +170,17 @@ getRealTimePUEData: function () {
         url: '/Home/GetRealTimePUEData',
         method: 'POST',
         body: {
-            pid: this.PID
+            pid: this.PID,
+            pueid: this.pueid
         }
                 
     })
      .then(function (res) {
-                 
          if (res.data) {
              if (res.data.list_top && res.data.list_top.length > 0) {
                  that.lineShow = true
                  that.isInitLine = false
-                 that.createLine(res.data.list_top)
+                 that.createLine(res.data.list_top, res.data.levList)
                          
              } else {
                  that.lineShow = false
@@ -193,7 +191,7 @@ getRealTimePUEData: function () {
              if (res.data.RealValue) {
                  that.gaugeSHow = true
                  that.isInitGauge = false
-                 this.createGauge(res.data.RealValue)
+                 this.createGauge(res.data.RealValue, res.data.levList)
                         
              } else {
                  that.gaugeSHow = false
@@ -224,7 +222,8 @@ getRealTimePUEData: function () {
     })
 },
 //实时趋势
-createLine: function (data) {
+createLine: function (data, levelData) {
+   
     var x = new Array()
     var y = new Array()
     for (var i = 0; i < data.length; i++) {
@@ -234,6 +233,33 @@ createLine: function (data) {
     var time ="";
     if(data.length>0){
         time = data[0].name.split(" ")[0]
+    }
+    var level = []
+    var color = ['#54ab88', '#ca9a5c', '#cd574b']
+    var markLine = []
+    for (var i=0; i < levelData.length; i++) {
+        if (i == 0) {
+            var temp = {
+                gt: 0,
+                lte: levelData[i],
+                color: color[i]
+            }
+        } else {
+            var temp = {
+                gt: levelData[i-1],
+                lte: levelData[i],
+                color: color[i]
+            }
+        }
+        
+        var templine = {
+            yAxis: levelData[i],
+            lineStyle: {
+                color: color[i]
+            }
+        }
+        level.push(temp)
+        markLine.push(templine)
     }
     lineChart = echarts.init(document.getElementById('lineChart'));
     var  option = {
@@ -320,19 +346,7 @@ createLine: function (data) {
             left: 'center',
             orient: 'horizontal',
             precision: 1,
-            pieces: [{
-                gt: 0,
-                lte: 1.8,
-                color: '#54ab88'
-            }, {
-                gt: 1.8,
-                lte: 2.6,
-                color: '#ca9a5c'
-            }, {
-                gt: 2.6,
-                lte: 5,
-                color: '#cd574b'
-            }],
+            pieces: level,
             outOfRange: {
                 color: '#cd574b'
             }
@@ -365,22 +379,8 @@ createLine: function (data) {
                             formatter: '{b}\n{c}'
                         }
                     },
-                    {
-                        yAxis: 1.8,
-                        lineStyle: {
-                            color: '#54ab88'
-                        }
-                    }, {
-                        yAxis: 2.6,
-                        lineStyle: {
-                            color: '#ca9a5c'
-                        }
-                    }, {
-                        yAxis: 5,
-                        lineStyle: {
-                            color: '#ce584c'
-                        }
-                    }]
+                    markLine
+                ]
             }
         }
     };
@@ -391,7 +391,34 @@ createLine: function (data) {
     });
 },
 //仪表盘
-createGauge: function (data) {
+createGauge: function (data, levelData) {
+    var level = []
+    var color = ['#54ab88', '#ca9a5c', '#cd574b']
+    var markLine = []
+    for (var i = 0; i < levelData.length; i++) {
+        if (i == 0) {
+            var temp = {
+                gt: 0,
+                lte: levelData[i],
+                color: color[i]
+            }
+        } else {
+            var temp = {
+                gt: levelData[i - 1],
+                lte: levelData[i],
+                color: color[i]
+            }
+        }
+
+        var templine = {
+            yAxis: levelData[i],
+            lineStyle: {
+                color: color[i]
+            }
+        }
+        level.push(temp)
+        markLine.push(templine)
+    }
     gaugeChart = echarts.init(document.getElementById('gaugeChart'));
     var option ={
         backgroundColor: '#fff',
@@ -407,7 +434,7 @@ createGauge: function (data) {
             {
                 radius: '95%',
                 type: 'gauge',
-                min: 1,
+                min: 0,
                 max: 5,
                 splitNumber: 5,
                 detail: {
@@ -426,7 +453,7 @@ createGauge: function (data) {
                 },
                 axisLine: {
                     lineStyle: {
-                        color: [[0.2, '#32b194'], [0.4, '#cc9c50'], [1, '#d15642']],
+                        color: [[levelData[0] * 0.2, '#32b194'], [levelData[1] * 0.2, '#cc9c50'], [levelData[2] * 0.2, '#d15642']],
                         width: 18
                     }
                 },
@@ -568,8 +595,7 @@ createPie: function (data) {
 
 },
 },
-beforeMount: function () {
-       
+    beforeMount: function () {
     // this.getStation()
 },
 mounted: function () {

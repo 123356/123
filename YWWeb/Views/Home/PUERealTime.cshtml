@@ -32,7 +32,10 @@
     <div id="app" class="realTimeApp flex-direction-column">
         <Spin size="large" fix v-if="loading"></Spin>
         <div class="selectView">
-           <label>数据中心实时PUE</label> <div id="leftmenuSpace"></div>
+            <label>数据中心实时PUE</label> <div id="leftmenuSpace"></div>
+            <i-select v-model="pueid" style="width:200px;margin-left:20px" v-on:on-change="pueChange">
+                <i-option v-for="item in pueList" :value="item.ID" :key="item.ID">{{ item.Name }}</i-option>
+            </i-select>
         </div>
         <div class="flex flex-1 flex-margin-bottom flex-module">
             <div class="module-title lineTitle">
@@ -96,7 +99,7 @@
 
     </div>
 
-    <script type="text/javascript" src="~/Content/UserJS/PUERealTime.js?v=1.26"></script>
+    <script type="text/javascript" src="~/Content/UserJS/PUERealTime.js?v=1.35"></script>
    
 </body>
 </html>
