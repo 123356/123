@@ -50,7 +50,9 @@ function HourYdlGraph_SSQX(DataJson) {
     if (DataJson.xAxis != '') {
         $('#Error').css('display', 'none');
         $('#cavans').css('display', '');
+        var yData = []
         for (i = 0; i < DataJson.yData.length; i++) {
+            yData.push(DataJson.yData[i].split(','))
             Series.push({
                 name: DataJson.CName[i],
                 type: "line",
@@ -71,6 +73,24 @@ function HourYdlGraph_SSQX(DataJson) {
                 }
             });
         }
+        var tempMaxArr = []
+        var tempMinArr = []
+        for (var i in yData) {
+            var max = yData[i].reduce(function (a, b) {
+                return b > a ? b : a;
+            });
+            var min = yData[i].reduce(function (a, b) {
+                return b < a ? b : a;
+            });
+            tempMaxArr.push(max)
+            tempMinArr.push(min)
+        }
+        var maxData = tempMaxArr.reduce(function (a, b) {
+            return b > a ? b : a;
+        });
+        var minData = tempMinArr.reduce(function (a, b) {
+            return b < a ? b : a;
+        });
         var option = {
             title: {
                 show: true,
@@ -160,6 +180,8 @@ function HourYdlGraph_SSQX(DataJson) {
                 }
             }],
             yAxis: [{
+                min: minData,
+                max: maxData,
                 type: "value",
                 axisLabel: {
                     show: true,

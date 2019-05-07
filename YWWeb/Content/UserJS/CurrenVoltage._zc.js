@@ -56,7 +56,10 @@ function HourYdlGraph_SSQX(DataJson) {
     if (DataJson.xAxis != '') {
         $('#Error').css('display', 'none');
         $('#cavans').css('display', '');
+        var yData =[]
         for (i = 0; i < DataJson.yData.length; i++) {
+            //console.log(DataJson.yData[i].split(','))
+            yData.push(DataJson.yData[i].split(','))
             //max = Math.max.apply(null, DataJson.yData[i].split(',')) * 1.23;
             //min = Math.max.apply(null, DataJson.yData[i].split(',')) * 0.77;
             Series.push({
@@ -88,6 +91,24 @@ function HourYdlGraph_SSQX(DataJson) {
                 //}
             });
         }
+        var tempMaxArr = []
+        var tempMinArr = []
+        for (var i in yData) {
+            var max = yData[i].reduce(function (a, b) {
+                return b > a ? b : a;
+            });
+            var min = yData[i].reduce(function (a, b) {
+                return b < a ? b : a;
+            });
+            tempMaxArr.push(max)
+            tempMinArr.push(min)
+        }
+        var maxData = tempMaxArr.reduce(function (a, b) {
+            return b > a ? b : a;
+        });
+        var minData = tempMinArr.reduce(function (a, b) {
+            return b < a ? b : a;
+        });
         var option = {
             title: {
                 show: true,
@@ -186,8 +207,8 @@ function HourYdlGraph_SSQX(DataJson) {
                 
             }],
             yAxis: [{
-                //min: 173,
-                //max: 287,
+                min: minData,
+                max: maxData,
                 name: DataJson.Unit,
                 type: "value",
                 axisLabel: {
