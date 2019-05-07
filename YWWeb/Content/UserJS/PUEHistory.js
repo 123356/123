@@ -295,7 +295,13 @@
                 } else {
                     x.push(data[i].name)
                 }
-                    y.push(data[i].value)
+                y.push(parseFloat(data[i].value))
+            }
+                var maxYData = y.reduce(function (a, b) {
+                    return b > a ? b : a;
+                });
+                if (maxYData < 5) {
+                    maxYData = 5
                 }
                 var time = new Date()
                 time = time.toLocaleDateString() + " 0:00:00"
@@ -343,9 +349,8 @@
                         }
                     }
                     level.push(temp)
-                    markLine.push(templine)
+                  
                 }
-
 
                 lineChart = echarts.init(document.getElementById('lineChart'));
                 
@@ -369,6 +374,7 @@
                     splitLine: {
                         show: false
                     },
+                    max: maxYData
                     
                 },
                 toolbox: {
@@ -465,7 +471,24 @@
                                     formatter: '{b}\n{c}'
                                 }
                             },
-                            markLine
+                            {
+                                lineStyle: {
+                                    color: "#54ab88"
+                                },
+                                yAxis: levelData[0]
+                            },
+                            {
+                                lineStyle: {
+                                    color: "#ca9a5c"
+                                },
+                                yAxis: levelData[1]
+                            },
+                            {
+                                lineStyle: {
+                                    color: "#cd574b"
+                                },
+                                yAxis: levelData[2]
+                            },
                         ]
                     }
                 }

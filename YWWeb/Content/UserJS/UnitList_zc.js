@@ -36,20 +36,7 @@ function getStr(value) {
             return "无";
     }
 }
-//行业名称
-$("#IndustryID").combobox({
-    url: "/BaseInfo/BindIndustryName",
-    valueField: 'IndustryID',
-    textField: 'IndustryName',
-    editable: false,
-    onLoadSuccess: function () {
-        var data = $('#IndustryID').combobox('getData');
-        console.log(data[0].IndustryName);
-        if (data.length > 0) {
-            $("#IndustryID").combobox('setValue', data[0].IndustryID);
-        }
-    }
-});
+
 
 //获取行业名称
 function loadIndustryName(IndustryID) {
@@ -106,7 +93,7 @@ function loadSelectPDR(arr) {
     });
 }
 function loadProvince(proid, cityid) {
-
+   
     $('#UnitProvince').combobox({
         url: "/BaseInfo/BindPromary?rom=" + Math.random(),
         valueField: 'proID',
@@ -120,6 +107,14 @@ function loadProvince(proid, cityid) {
             if (proid > 0) {
                 $("#UnitProvince").combobox('select', proid);
                 loadCity(cityid);
+            } else {
+                var data = $("#UnitProvince").combobox('getData');
+                if (data.length > 0) {
+                    $("#UnitProvince").combobox('select', data[0].proID);
+                }
+                //loadCity(cityid)
+               
+                
             }
         }
     });
@@ -137,6 +132,13 @@ function loadCity(cityid) {
         onLoadSuccess: function () { //数据加载完毕事件
             if (cityid > 0) {
                 $("#UnitCity").combobox('select', cityid);
+            } else {
+                
+                var citydata = $("#UnitCity").combobox('getData');
+                if (citydata.length > 0) {
+                    $("#UnitCity").combobox('select', citydata[0].cityID);
+                }
+
             }
         }
     });
@@ -146,6 +148,21 @@ function add() {
     clearForm();
     loadProvince();
     loadSelectPDR("");
+
+    //行业名称
+    $("#IndustryID").combobox({
+        url: "/BaseInfo/BindIndustryName",
+        valueField: 'IndustryID',
+        textField: 'IndustryName',
+        editable: false,
+        onLoadSuccess: function () {
+            var data = $('#IndustryID').combobox('getData');
+            if (data.length > 0) {
+                $("#IndustryID").combobox('setValue', data[0].IndustryID);
+            }
+        }
+    });
+
     $("#editwin").dialog({
         closed: false,
         top: ($(window).height() - 600) * 0.5,

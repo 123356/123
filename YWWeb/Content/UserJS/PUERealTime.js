@@ -230,6 +230,13 @@ createLine: function (data, levelData) {
         x.push(data[i].name.split(" ")[1])
         y.push(data[i].value)
     }
+    
+    var maxYData = y.reduce(function (a, b) {
+        return b > a ? b : a;
+    });
+    if (maxYData < 5) {
+        maxYData = 5
+    }
     var time ="";
     if(data.length>0){
         time = data[0].name.split(" ")[0]
@@ -259,7 +266,6 @@ createLine: function (data, levelData) {
             }
         }
         level.push(temp)
-        markLine.push(templine)
     }
     lineChart = echarts.init(document.getElementById('lineChart'));
     var  option = {
@@ -293,6 +299,7 @@ createLine: function (data, levelData) {
             splitLine: {
                 show: false
             },
+            max: maxYData
            // boundaryGap:[0,0.01]
         },
                     
@@ -379,7 +386,24 @@ createLine: function (data, levelData) {
                             formatter: '{b}\n{c}'
                         }
                     },
-                    markLine
+                    {
+                        lineStyle: {
+                            color: "#54ab88"
+                        },
+                        yAxis: levelData[0]
+                    },
+                            {
+                                lineStyle: {
+                                    color: "#ca9a5c"
+                                },
+                                yAxis: levelData[1]
+                            },
+                            {
+                                lineStyle: {
+                                    color: "#cd574b"
+                                },
+                                yAxis: levelData[2]
+                            },
                 ]
             }
         }

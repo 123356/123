@@ -80,8 +80,30 @@ function BuildLeftMenu() {
         onLoadSuccess: function (node, data) {
 
             $("#StationID").combotree('tree').tree('expandAll');//展开所有节点 
-
             pid = $.cookie('cookiepid');
+
+
+            var tree = $('#StationID').combotree('tree');
+            var root = tree.tree('getRoot');
+            var children = tree.tree('getChildren', root);
+            var temp =0
+            for (var i in children) {
+                if (children[i].id == pid) {
+                    temp++
+                }
+            }
+            if (temp == 0) {
+                if (children.leng > 0) {
+                    pid = children[0].id
+                } else {
+                    pid=null
+                }
+                    
+            }
+
+
+
+
            // DST(pid);
             if (pid != undefined &&null!=pid) {
                 $("#StationID").combotree("setValue", pid);
