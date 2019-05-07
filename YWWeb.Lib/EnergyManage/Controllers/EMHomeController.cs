@@ -226,7 +226,6 @@ namespace EnergyManage.Controllers
         }
 
         #endregion
-
         #region 能源分析
 
         public JsonResult GetEneryAnalysis(int uid, int DepartmentID, DateTime time)
@@ -586,7 +585,6 @@ namespace EnergyManage.Controllers
 
         }
         #endregion
-
         #region 能源异常
 
         public JsonResult GetExTable(int uid)
@@ -870,7 +868,6 @@ namespace EnergyManage.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region 预算管理
         public JsonResult GetYearbugGetData(int uid, int year)
         {
@@ -1239,7 +1236,6 @@ namespace EnergyManage.Controllers
 
         }
         #endregion
-
         #region 能源单价
         public JsonResult AddEneryPrice(t_EE_PriceEnery model)
         {
@@ -1302,7 +1298,6 @@ namespace EnergyManage.Controllers
             return Json(new { total, list }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region 能源公示
         public JsonResult GetEneryView(string depids, int uid = 0, string time = "2018-11-25")
         {
@@ -1402,7 +1397,6 @@ namespace EnergyManage.Controllers
         }
 
         #endregion
-
         #region 能源查询
         public JsonResult GetEneryList(string time, string ksid, int uid = 0, int did = 0, int cotypeid = 0, int page = 1, int rows = 10)
         {

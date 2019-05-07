@@ -184,7 +184,10 @@ namespace YWWeb.Controllers
                             devName = dev.Where(p => p.DID == item.DID).FirstOrDefault().DeviceName;
                         if (cir.Where(p => p.CID == item.CID).FirstOrDefault() != null)
                             cirName = cir.Where(p => p.CID == item.CID).FirstOrDefault().CName;
-                        item.RArae = devName + "_" + cirName + "_" + item.AlarmAddress;
+                        if (devName != "" && cirName != "")
+                            item.RArae = devName + "_" + cirName + "_" + item.AlarmAddress;
+                        else
+                            item.RArae = item.AlarmAddress;
                     }
                     strJson = Common.List2Json(list, (int)rowcount[0].totalRows);
                 }

@@ -5351,7 +5351,7 @@ namespace YWWeb.Controllers
         {
             try
             {
-                var list = bll.t_EE_PUEConfig.Where(p => p.PID == pid).ToList();
+                var list = bll.t_EE_PUEConfig.Where(p => p.PID == pid).OrderBy(p => p.Name).ToList();
                 return Json(list, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
