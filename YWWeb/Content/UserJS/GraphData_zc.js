@@ -332,7 +332,7 @@ function GetGraphData() {
             $('#canvas').html("<div id='HisGraphCharts' style = 'color:#fff;text-align: center;font-size: 20px; padding:200px;'>未查到数据！</div>");
             return false;
         } else {
-            $('#canvas').html("<div id='HisGraphCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #333 !important;'>");
+            $('#canvas').html("<div id='HisGraphCharts' style='height: 500px; z-index: 10; padding: 5px; background-color: #17689D !important;'>");
             SetGraphOption();
         }
        
@@ -453,7 +453,7 @@ function SetGraphOption() {
                     normal: {
                         label: {
                             show: true,
-                            color: '#000000', //气泡中字体颜色
+                            color: '#333', //气泡中字体颜色
                         }
                     }
                 },
@@ -497,6 +497,7 @@ function BuildGraphVeiw() {
     }
     var myHisChart = echarts.init(document.getElementById('HisGraphCharts'), 'macarons');
     var option = {
+        backgroundColor: '#17689D',
         title: {
             text: '历史趋势图',
             textStyle: { color: '#fff' }
@@ -528,6 +529,9 @@ function BuildGraphVeiw() {
             bottom: '3%',
             containLabel: true
         },
+        dataZoom: [{
+            type: 'inside',
+        }],
         xAxis: [{
             type: 'category',
             boundaryGap: false,
