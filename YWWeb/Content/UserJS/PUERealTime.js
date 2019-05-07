@@ -533,7 +533,7 @@ createBar: function (data) {
 
         color: ['#576570', '#94c5af', '#769e86', '#c78338', '#bca39c'],
         xAxis: {
-            name:'kW·h',
+            name:'kW',
             type: 'value',
             boundaryGap: [0, 0.01],
             axisLabel: {
