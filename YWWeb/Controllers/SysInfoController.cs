@@ -1883,7 +1883,11 @@ namespace YWWeb.Controllers
         {
             List<t_CM_Unit> list = new List<t_CM_Unit>();
             if (CurrentUser.RoleID == 1)
+            {
                 list = bll.t_CM_Unit.Where(p => p.Type == type).ToList();
+                var query = from model in bll.t_CM_Unit where model.UnitName.Contains(unitname) && model.LinkMan.Contains(linkman) && model.Type == type select model;
+                list = query.ToList();
+            }
             else
             {
                 string str = "";
