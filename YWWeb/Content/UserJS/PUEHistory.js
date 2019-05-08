@@ -105,8 +105,14 @@
                     //setTimeout(function () {
                     //    that.interval()
                     //}, 5000)
+                } else {
+                    that.loading = false
+                    that.pueid = null
+                    that.$Message.error('请求失败');
                 }
 
+            })
+            .catch(function () {
             })
         },
         pueChange: function () {
@@ -196,6 +202,13 @@
         radioChange:function(e){
             if (e == 4) {
                 this.initDate()
+            } else if(e==1) {
+                var end = new Date()
+                //end = end.setDate(end.getDate())
+               // end = new Date(end)
+                var start = new Date()
+                start = start.setDate(start.getDate() - 6)
+                this.selectDate = [new Date(start), end]
             }
             this.search()
         },
@@ -230,14 +243,7 @@
                     this.$Message.warning('15分钟PUE,时间范围请在30天内！');
                     return
                 }
-            } else if (this.curType == 1) {
-                var end = new Date()
-                end = end.setDate(end.getDate() - 1)
-                end = new Date(end)
-                var start = new Date()
-                start = start.setDate(start.getDate() - 7)
-                this.selectDate = [new Date(start), new Date(end)]
-            }
+            } 
             this.getPUEDataByTime()
         },
         setSatrtTime: function (type) {

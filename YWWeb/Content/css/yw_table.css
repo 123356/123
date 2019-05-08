@@ -57,7 +57,7 @@
  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5'); /*IE6 & IE7*/ 
  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#e5e5e5')"; /* IE8 */ 
  background: linear-gradient(#fff,#fff); /* IE11 */ 
- font-family:"Arial";color:#333 ; min-width:80px;
+ font-family:"Arial";color:#333 ; min-width:70px;
  }
  .gs06
 {FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#17689d,endColorStr=#17689d); /*IE*/ 
@@ -96,14 +96,14 @@
 
 /*#region 定义画布大小*/
 /*#region 表格宽度*/
-table.bgw2{border-collapse:collapse; font-family:"Microsoft YaHei";font-size:18px; color:#333; }
+table.bgw2{border-collapse:collapse; font-family:"Microsoft YaHei";font-size:14px; color:#333;width:300px !important;overflow:hidden }
 table.bgw2 td,.bgw2 tr,.bgw2 th{ border:1px solid #e6e6e6; height:35px;white-space:nowrap;}
 table.bgw2 .bgw2_title { background-color:#333333 !important; color:#fff;}
 /*#endregion 运维网络版表格2*/
 
-.tabletitle {background-color: #50bda0;font-family:Microsoft YaHei; display:block; font-size:18px; color:#fff;text-align:center; height:35px; line-height:35px;}
+.tabletitle {background-color: #50bda0;font-family:Microsoft YaHei; display:block; font-size:14px; color:#fff;text-align:center; height:35px; line-height:35px;}
 
 dd table tr:first-child{display: none;}
 table td{
-	padding: 2px 5px;
+	padding: 2px 2px;
 }

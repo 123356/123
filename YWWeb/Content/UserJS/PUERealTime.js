@@ -126,6 +126,8 @@ getComboxPueName:function(){
             setTimeout(function () {
                 that.interval()
             },5000)
+        } else {
+            that.pueid = null
         }
         
     })
