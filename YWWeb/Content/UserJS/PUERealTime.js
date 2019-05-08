@@ -125,7 +125,7 @@ getComboxPueName:function(){
             that.getRealTimePUEData()
             setTimeout(function () {
                 that.interval()
-            },5000)
+            },30000)
         } else {
             that.pueid = null
         }
@@ -134,7 +134,7 @@ getComboxPueName:function(){
 },
 interval:function(){
     this.getRealTimePUEData()
-    setTimeout(this.interval,5000)
+    setTimeout(this.interval,30000)
 },
 
 //遍历树

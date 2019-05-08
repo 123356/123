@@ -136,7 +136,7 @@
                         <div class="main">
                             <div class="leftMenu">
                                 <i-menu theme="light" width="auto" v-bind:active-name="activeIndex" v-on:on-select="barMenuClick">
-                                    <menu-group title="变压器">
+                                    <menu-group title="设备">
                                         <menu-item v-bind:name="item.C" v-for="(item,index) in BYQList" :class="activeIndex==item.C?'activeMenu':''" v-html="item.DeviceName">
                                         </menu-item>
                                     </menu-group>
