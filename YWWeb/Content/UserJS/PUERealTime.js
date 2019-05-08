@@ -120,7 +120,7 @@ getComboxPueName:function(){
     })
     .then(function (res) {
         that.pueList = res.data
-        if (res.data) {
+        if (res.data.length>0) {
             that.pueid = res.data[0].ID
             that.getRealTimePUEData()
             setTimeout(function () {
