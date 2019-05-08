@@ -2541,12 +2541,13 @@ namespace YWWeb.Controllers
             List<int> resultlist = new List<string>(pdrlist.Split(',')).ConvertAll(i => int.Parse(i));
             //var query = from model in bll.t_CM_PDRInfo where resultlist.Contains((int)model.PID) && model.Name.Contains(prdname) && model.CompanyName.Contains(companyname) select model;
             //List<t_CM_PDRInfo> list = query.ToList();
-            string strsql = "select *,t2.AreaName,t3.TypeName,t4.IndName,t5.VName,t6.BigIndTypeName from  t_CM_PDRInfo t1   "
+            string strsql = "select *,t2.AreaName,t3.TypeName,t4.IndName,t5.VName,t6.BigIndTypeName,t7.VoltageName from  t_CM_PDRInfo t1   "
            + " left join t_CM_Area t2 on t1.AreaID = t2.AreaID "
  + " left join t_CM_PDRType t3 on t3.TypeID=t1.TypeID "
  + " left join t_ES_ElecIndustry t4 on t4.IndID=t1.IndID "
  + " left join t_ES_ElecVoltage t5 on t5.VID=t1.VID "
  + " left join t_ES_ElecBigIndustryType t6 on t6.BigIndTypeID=t1.BigIndTypeID "
+  + " left join t_ES_ElecVoltages t7 on t7.VoltageID=t1.VoltageID "
 + "  where  pid in(" + pdrlist + ") and t1.Name like '%"+prdname+"%' and t1.CompanyName like '%"+companyname+"%'";
             List<t_CM_PDRInfo_List> list = bll.ExecuteStoreQuery<t_CM_PDRInfo_List>(strsql).ToList();
             string strJson = Common.List2Json(list, rows, page);
@@ -2559,6 +2560,7 @@ namespace YWWeb.Controllers
             public string IndName { set; get; }
             public string VName { set; get; }
             public string BigIndTypeName { set; get; }
+            public string VoltageName { get; set; }
         }
         public ActionResult Upload2(HttpPostedFileBase fileData, int fk_id, int i = 1, int pid = 1, string ctype = "file", string modules = "matter", string savePath = "~/Content/images/PDRPhoto/")
         //public ActionResult Upload2(HttpPostedFileBase fileData)
