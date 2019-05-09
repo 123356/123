@@ -83,22 +83,22 @@ namespace EnergyManage.Controllers
              if (data.ID == -1)
             {
                 //查是否有这个名字的类型
-                IList<IDAO.Models.t_EE_EnerUserType> name = DAL.EnerUserTypeDAL.getInstance().GetEnerTypeToID(data.name, data.item_type);
+                //IList<IDAO.Models.t_EE_EnerUserType> name = DAL.EnerUserTypeDAL.getInstance().GetEnerTypeToID(data.name, data.item_type);
 
-                if (name.Count > 1)
-                {
-                    return Json("error:类型名称和ID一对多");
-                }
-                //新增节点 名字类型已经存在
-                if (name.Count()==1) {
-                    data.ID = name[0].id;
-                }
-                //新增节点 名字类型不存在  
-                else if(name.Count() == 0)
-                {
-                    IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
+                //if (name.Count > 1)
+                //{
+                //    return Json("error:类型名称和ID一对多");
+                //}
+                ////新增节点 名字类型已经存在
+                //if (name.Count()==1) {
+                //    data.ID = name[0].id;
+                //}
+                ////新增节点 名字类型不存在  
+                //else if(name.Count() == 0)
+                //{
+                    IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type,data.icon);
                     data.ID = addName[0].id;
-                }
+                //}
                 IList<IDAO.Models.t_EE_EnerUserProject> list = DAL.EnerUserProjectDAL.getInstance().addTreeNode(data);
                 IList<IDAO.Models.t_EE_CircuitInfoEnerType> list1 = DAL.EnerUserProjectDAL.getInstance().setCidEneeruseType(data);
                 return Json(list);
@@ -132,7 +132,7 @@ namespace EnergyManage.Controllers
                     //新增节点 名字类型不存在  
                     else if (name.Count() == 0)
                     {
-                        IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type);
+                        IList<IDAO.Models.t_EE_EnerUserType> addName = DAL.EnerUserTypeDAL.getInstance().AddEnerNameType(data.name, data.item_type, data.icon);
                         data.ID = addName[0].id;
                     }
                     //改id

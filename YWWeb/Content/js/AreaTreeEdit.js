@@ -35,6 +35,7 @@ let vm = new Vue({
             unit_id: null,
             unit_note: null,
             unit_people: null,
+            icon:"use.png",
         },
         //电表属性缓存
         addCidOld: "",
@@ -153,6 +154,7 @@ let vm = new Vue({
         submissions: function() {
             this.node.addCid = this.addCidOld;
             this.node.delCid = this.delCidOld;
+            this.node.icon="use.png";
             this.$http({
                 url: "/energyManage/EMSetting/SetEnergyTreeNode",
                 method: "post",
