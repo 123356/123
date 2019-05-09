@@ -90,7 +90,7 @@ $("#SPID").combobox({
         if (docount == 0)
             loadDeviceList(pid);
         docount == 0;
-        dosearch()
+        
     },
     onSelect: function (data) {
         pid = data.PID;
@@ -201,8 +201,9 @@ function export1() {
 
 $(document).ready(function () {
     $("#SPID").combobox({
-        onChange: function() {
-            window.dosearch();
+        onChange: function () {
+            console.log("load")
+            //window.dosearch();
         }
     })
 });
