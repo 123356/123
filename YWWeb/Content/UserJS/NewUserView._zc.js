@@ -35,6 +35,16 @@ var vm = new Vue({
                         that.UnitID = res.data[0].UnitID
                         localStorage.setItem('UnitData', JSON.stringify({ enUID: res.data[0].UnitID, enName: res.data[0].UnitName }))
                     }
+                } else {
+                    var count=0
+                    for (var i in res.data) {
+                        if(that.UnitID==res.data[0].UnitID)
+                            count++
+                    }
+                    if (count == 0) {
+                        that.UnitID = res.data.length > 0 ? res.data[0].UnitID : null
+                        localStorage.setItem('UnitData', JSON.stringify({ enUID: that.UnitID, enName:  res.data.length > 0 ? res.data[0].UnitName : null  }))
+                    }
                 }
                 that.unitList = res.data
                 that.init()
