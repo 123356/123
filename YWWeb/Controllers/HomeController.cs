@@ -1899,7 +1899,10 @@ namespace YWWeb.Controllers
             PdfState model = new PdfState();
             try
             {
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
                 if (string.IsNullOrEmpty(pids))
                     return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
