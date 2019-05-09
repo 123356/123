@@ -58,12 +58,12 @@ namespace DAL
             }
             return data;
         }
-        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type)
+        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type,string icon)
         {
             IList<t_EE_EnerUserType> data = new List<t_EE_EnerUserType>();
             try
             {
-                data = _dbFactory.enerUserType.AddEnerNameType(Name, item_type);
+                data = _dbFactory.enerUserType.AddEnerNameType(Name, item_type, icon);
             }
             catch (Exception ex)
             {

@@ -38,9 +38,9 @@ namespace DAO
             string sql = "select * from t_EE_EnerUserType where id=" + ID + " and item_type=" + item_type;
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
-        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type)
+        public IList<t_EE_EnerUserType> AddEnerNameType(string Name, int item_type,string icon)
         {
-            string sql = "INSERT INTO t_EE_EnerUserType(Name,item_type) output inserted.* VALUES('"+ Name + "',"+ item_type + ")";
+            string sql = "INSERT INTO t_EE_EnerUserType(Name,item_type,icon) output inserted.* VALUES('" + Name + "'," + item_type + ",'" + icon + "')";
             return SQLQuery<t_EE_EnerUserType>(sql);
         }
         public IList<t_EE_EnerUserType> GetComobxList(int itemType)
