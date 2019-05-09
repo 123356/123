@@ -23,6 +23,7 @@ header {
 }
 .tpl-header-logo img {
   width: 170px;
+  max-height:45px
 }
 .tpl-header-fluid {
   margin-left: 240px;

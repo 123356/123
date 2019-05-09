@@ -61,10 +61,24 @@ function loadCompany(){
 function loadUserInfo() {
     $.post("/UserInfo/LoadUserInfo", { "userid": userid }, function (data) {
         var user = eval("(" + data + ")");
+        $.post("/BaseInfo/BindUnitName", function (res) {
+            var count = 0
+            var data = JSON.parse(res)
+            for (var i in data) {
+                if (user.UID == data[i].UnitID) {
+                    count++
+                }
+            }
+            if (count == 0) {
+                $("#Company").combobox("setValue",data.length>0?data[i].UnitID:null);
+            } else {
+                $("#Company").combobox("setValue", user.UID);
+            }
+        })
         //console.log(user);
         loadSelectUnit(user.UNITList);
         $("#UserName").val(user.UserName);
-        $("#Company").combobox("setValue",user.UID);
+        //$("#Company").combobox("setValue",user.UID);
         $("#Post").val(user.Post);
         $("#Telephone").val(user.Telephone);
         $("#Mobilephone").val(user.Mobilephone);
@@ -146,6 +160,7 @@ $(function () {
     loadSelectUnit("");
     loadCompany();
     loadallot();
+    var regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
     $("#btnSave").click(function () {
         if ($("#UserName").val() == "") {
             $.messager.alert("提示", "请输入用户名！", "info");
@@ -160,8 +175,9 @@ $(function () {
             $.messager.alert("提示", "请输入固定电话！", "info");
             return false;
         }
-        else if ($("#Email").val() == "") {
-            $.messager.alert("提示", "请输入Email！", "info");
+           
+        else if ($("#Email").val() == "" || regex.test($("#Email").val()) == false) {
+            $.messager.alert("提示", "请填写正确的邮箱格式！", "info");
             return false;
         }
        
