@@ -7,19 +7,20 @@ function LogoFormat(value, row, index) {
         return "<img width=\"50\" height=\"50\" alt=\"\" src=\"../.." + value + "\" />";
 }
 
-//行业名称
-    $("#IndustryID").combobox({
-        url: "/BaseInfo/BindIndustryName",
-        valueField: 'IndustryID',
-        textField: 'IndustryName',
-        editable: false,
-        onLoadSuccess: function () {
-            var data = $('#IndustryID').combobox('getData');
-            if (data.length > 0) {
-                $("#IndustryID").combobox('setValue', data[0].IndustryID);
-            }
-        }
-    });
+////行业名称
+//    $("#IndustryID").combobox({
+//        url: "/BaseInfo/BindIndustryName",
+//        valueField: 'IndustryID',
+//        textField: 'IndustryName',
+//        editable: false,
+//        onLoadSuccess: function () {
+//            console.log("测试")
+//            var data = $('#IndustryID').combobox('getData');
+//            if (data.length > 0) {
+//                $("#IndustryID").combobox('setValue', data[0].IndustryID);
+//            }
+//        }
+//    });
 $("#ProjectType").combobox({
     url: "/SysInfo/UnitTypeComboxData",
     valueField: 'ID',
@@ -160,7 +161,20 @@ function add() {
     clearForm();
     loadProvince();
     loadSelectPDR("");
-
+    //行业名称
+    $("#IndustryID").combobox({
+        url: "/BaseInfo/BindIndustryName",
+        valueField: 'IndustryID',
+        textField: 'IndustryName',
+        editable: false,
+        onLoadSuccess: function () {
+            console.log("测试")
+            var data = $('#IndustryID').combobox('getData');
+            if (data.length > 0) {
+                $("#IndustryID").combobox('setValue', data[0].IndustryID);
+            }
+        }
+    });
     
 
     $("#editwin").dialog({
@@ -175,6 +189,20 @@ function add() {
     });
 }
 function edit() {
+    //行业名称
+    $("#IndustryID").combobox({
+        url: "/BaseInfo/BindIndustryName",
+        valueField: 'IndustryID',
+        textField: 'IndustryName',
+        editable: false,
+        onLoadSuccess: function () {
+            console.log("测试")
+            var data = $('#IndustryID').combobox('getData');
+            if (data.length > 0) {
+                $("#IndustryID").combobox('setValue', data[0].IndustryID);
+            }
+        }
+    });
     clearForm();
     var ids = [];
     var rows = $('#list_data').datagrid('getSelections');
