@@ -20,7 +20,6 @@
 .alertmenu{list-style-type: none;padding: 0;}
 .alertmenu li{cursor: pointer;float: left;padding: 0;margin: 0 1px 0 0;position:absolute;}
     .alertmenu li span{
-        width:320px ;
         overflow:hidden
     }
         .alertmenu li span table{
