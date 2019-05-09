@@ -76,6 +76,7 @@ function openOrPrint() {
     }
 }
 function printreport() {
+    ajaxLoadEnd()
     window.print()
 }
 function getNowFormatDate() {
