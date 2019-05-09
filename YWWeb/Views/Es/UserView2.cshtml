@@ -146,15 +146,16 @@
                                 <div class="otherInfo">
                                     <div class="item">
                                         <div>
-                                            <img src="~/Content/images/icon4/tran.png" class="iconImg" />变压器容量<font v-html="otherInfo.Capacity==null?'--':otherInfo.Capacity">--</font>kVA
+                                            <img src="~/Content/images/icon4/tran.png" class="iconImg" />变压器容量
+                                            <font v-html="otherInfo.Capacity==null||otherInfo.Capacity==0?'--':otherInfo.Capacity">--</font>kVA
                                         </div>
                                         <div>
                                             <img src="~/Content/images/icon4/elec.png" class="iconImg" />
-                                            当前负荷<font v-html="otherInfo.gonglv==null?'--':otherInfo.gonglv">--</font>kVA
+                                            当前负荷<font v-html="otherInfo.gonglv==null||otherInfo.gonglv==0?'--':otherInfo.gonglv">--</font>kVA
                                         </div>
                                         <div>
                                             <img src="~/Content/images/icon4/elecLoad.png" class="iconImg" />
-                                            <font v-html="otherInfo.fuzailv==null?'--':otherInfo.fuzailv">--</font>%
+                                            <font v-html="otherInfo.fuzailv==null||otherInfo.fuzailv==0?'--':otherInfo.fuzailv">--</font>%
                                             负载率
                                         </div>
                                         <div><i-buton class="btn" v-on:click="toPDFDetail">配电室详情</i-buton></div>
@@ -202,6 +203,6 @@
         </div>
     </div>
     <script type="text/javascript" src="~/Content/UserJS/api.js"></script>
-    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.55"></script>
+    <script type="text/javascript" src="~/Content/UserJS/NewUserView._jm.js?v=1.56"></script>
 </body>
 </html>
