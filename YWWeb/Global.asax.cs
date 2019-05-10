@@ -262,8 +262,8 @@ namespace YWWeb
                 {
                     string url = "http://api.k780.com/?app=weather.today";
                     PostData data = new PostData();
-                    data.appkey = "39089";
-                    data.sign = "6e957038e2c4e3836e9a2c5621e9361d";
+                    data.appkey = "42341";
+                    data.sign = "a7b49e3c044fd0f81f2d06f2519cf3a0";
                     data.format = "json";
                     data.weaid = it;
                     string s = SendHttpRequest(url, "post", data);
@@ -401,7 +401,7 @@ namespace YWWeb
 
             catch (Exception ex)
             {
-                Common.InsertLog("存储天气", DateTime.Now.ToString(), "获取天气数据异常");
+                Common.InsertLog("存储天气", ((IDAO.Models.t_CM_UserInfo)HttpContext.Current.Session["Huerinfo"]).UserName, "获取天气数据异常");
                 LogHelper.Error(ex.ToString());
                 return;
             }

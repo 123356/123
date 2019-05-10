@@ -126,27 +126,52 @@ namespace DAL
 
                 var add = data.addCid.Split(',');
                 string addcid = $",{data.addCid},";
-                for(int a = 0; a < list.Count(); a++)
+                if (data.item_type == 1)
                 {
-                    if (addcid.Contains($",{list[a].PID}-{list[a].CID},"))
+                    for (int a = 0; a < list.Count(); a++)
                     {
-                        //该电表没有这个区域ID
-                        if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
-                                                    {
-                            list[a].ener_use_type += $",{data.ID},";
-                        }
-                    }
-                    else
-                    {
-                        //该点表有区域ID  但是未绑定电表
-                        if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
+                        if (addcid.Contains($",{list[a].PID}-{list[a].CID},"))
                         {
-                            var str = $",{data.ID},";
-                            //list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
+                            //该电表没有这个区域ID
+                            if (list[a].ener_use_type == null || !list[a].ener_use_type.Contains($",{data.ID},"))
+                            {
+                                list[a].ener_use_type += $",{data.ID},";
+                            }
+                        }
+                        else
+                        {
+                            //该点表有区域ID  但是未绑定电表
+                            if (list[a].ener_use_type != null && list[a].ener_use_type.Contains($",{data.ID},"))
+                            {
+                                var str = $",{data.ID},";
+                                //list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
+                            }
                         }
                     }
                 }
-
+                else
+                {
+                    for (int a = 0; a < list.Count(); a++)
+                    {
+                        if (addcid.Contains($",{list[a].PID}-{list[a].CID},"))
+                        {
+                            //该电表没有这个区域ID
+                            if (list[a].ener_use_type_area == null || !list[a].ener_use_type_area.Contains($",{data.ID},"))
+                            {
+                                list[a].ener_use_type_area += $",{data.ID},";
+                            }
+                        }
+                        else
+                        {
+                            //该点表有区域ID  但是未绑定电表
+                            if (list[a].ener_use_type_area != null && list[a].ener_use_type_area.Contains($",{data.ID},"))
+                            {
+                                var str = $",{data.ID},";
+                                //list[a].ener_use_type = list[a].ener_use_type.Remove(list[a].ener_use_type.IndexOf(str), str.Length);
+                            }
+                        }
+                    }
+                }
 
                 list = _dbFactory.enerUserProject.setCidEneeruseType(list);
             }

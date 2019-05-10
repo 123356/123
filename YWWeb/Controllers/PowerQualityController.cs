@@ -660,8 +660,8 @@ namespace YWWeb.Controllers
                 }
                 foreach (PowerData_SSQX mod in list)
                 {
-                    if (mod.Aphase < 0)
-                        continue;
+                    //if (mod.Aphase < 0)
+                    //    continue;
 
                     //if (xAxis.Contains(mod.RecordTime.ToString("MM-dd HH:mm")) == false)
                     //{

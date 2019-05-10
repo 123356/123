@@ -2048,9 +2048,9 @@ namespace YWWeb.Controllers
 
 
                 DateTime d = DateTime.Now.Date;
-                DateTime dgh = DateTime.Now.AddMonths(-1);
-                DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
-                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, dgh.Month, 1); ;
+                //DateTime dgh = DateTime.Now.AddMonths(-1);
+                //DateTime dd = new DateTime(dgh.Year, dgh.Month, 1);
+                DateTime lastssd = new DateTime(DateTime.Now.Year - 1, d.Month, 1); ;
                 decimal thisMonthPower = 0;
                 decimal lastMonthPower = 0;
                 foreach (var pid in pidlist)
@@ -2067,7 +2067,7 @@ namespace YWWeb.Controllers
                         s = s.Substring(0, s.Length - 1);
                         cidlist = s.Split(',').ToList().Distinct().ToList().ConvertAll<int?>(p => int.Parse(p));
                     }
-                    var thisshuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == dd.Month && p.RecordTime.Value.Year == dd.Year && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
+                    var thisshuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == d.Month && p.RecordTime.Value.Year == d.Year && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
                     if (thisshuju != null)
                         thisMonthPower += thisshuju.Value;
                     var lastshuju = bll.t_EE_PowerQualityMonthly.Where(p => p.RecordTime.Value.Month == lastssd.Month && p.RecordTime.Value.Year == lastssd.Year && p.PID == pid && cidlist.Contains(p.CID)).Sum(p => p.UsePower);
