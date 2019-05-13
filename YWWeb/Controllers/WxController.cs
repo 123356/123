@@ -77,14 +77,21 @@ namespace YWWeb.Controllers
                 var model = LoginManager.WxLogin(openIdResult.openid, this.ControllerContext, out nErrCode);
                 if (model != null)
                 {
-                    string sID = Session.SessionID;
-                    Session[sID] = model;
-                    Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
-                    return Json(new { sID, model.UserName }, JsonRequestBehavior.AllowGet);
+                    if (model.IsScreen == 0)
+                    {
+                        string sID = Session.SessionID;
+                        Session[sID] = model;
+                        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                        return Json(new { sID, model.UserName }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Content("1");
+                    }
                 }
                 else
                 {
-                    return Content("用户名密码错误");
+                    return Content("0");
                 }
             }
             catch (Exception ex)
