@@ -963,6 +963,17 @@ namespace YWWeb.Controllers
             string strJson = Common.ComboboxToJson(list);
             return Content(strJson);
         }
+        public JsonResult GetDataType()
+        {
+            List<t_CM_ValueType> list = bll.t_CM_ValueType.ToList();
+            var data = from n in list
+                       select new
+                       {
+                           n.DataTypeID,
+                           n.Name
+                       };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 
     public class CompanyInfo

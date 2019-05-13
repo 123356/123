@@ -445,7 +445,7 @@ namespace YWWeb.Controllers
         /// 点表管理查询
         /// </summary>
         [Login]
-        public ActionResult PointsListData(int pid, string tagname, string chinesedesc, int rows, int page)
+        public ActionResult PointsListData(int pid, string tagname, string chinesedesc, int rows, int page,int dataTypeID=0)
         {
             try
             {
@@ -458,7 +458,8 @@ namespace YWWeb.Controllers
                     query = query + " and tagid like '%" + tagname + "%'";
                 if (!chinesedesc.Equals(""))
                     query = query + " and 中文描述 like '%" + chinesedesc + "%'";
-
+                if (dataTypeID != 0)
+                    query = query + " and DataTypeID=" + dataTypeID;
                 //List<t_CM_PointsInfo> list = bll.P_PointsInfo("t_CM_PointsInfo", "*", "tagid", rows, page, true, query).ToList();
                 List<t_CM_PointsInfo> list = bll.ExecuteStoreQuery<t_CM_PointsInfo>(query).OrderByDescending(p => p.TagID).ToList();
                 string strJson = Common.List2Json(list, rows, page);
