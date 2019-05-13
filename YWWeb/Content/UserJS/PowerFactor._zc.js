@@ -81,6 +81,16 @@ function HourYdlGraph_SSQX(DataJson) {
         var tempMaxArr = []
         var tempMinArr = []
         for (var i in yData) {
+  for(var j = 0 ;j<yData[i].length;j++)
+            {
+             if(yData[i][j] == "" || typeof(yData[i][j]) == "undefined")
+             {
+                      yData[i].splice(j,1);
+                      j= j-1;
+                  
+             }
+              
+            }
             var max = yData[i].reduce(function (a, b) {
                 return b > a ? b : a;
             });

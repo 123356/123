@@ -22,10 +22,7 @@ var timeTicket1;
 getNavMenus();
 clearInterval(timeTicket);
 timeTicket = setInterval(function () {
-    alarmState();
-    //alarmSysState();
-
-    getOrderState();
+   
     showAlarmWindow();
     //getOrderTimes();
     //ConTep();
@@ -35,15 +32,35 @@ clearInterval(timeTicket1);
 timeTicket1 = setInterval(function () {
     getOrderTimes();
     ConTep();
-    getBugState();
+    //getBugState();
 }, 10000);
-getOrderTimes();
-alarmState();
-getBugState();
-getOrderState();
-showAlarmWindow();
-ConTep();
 
+
+
+
+
+function d1(){
+var timeTicket2;
+clearInterval(timeTicket2);
+timeTicket2 = setInterval(function () {
+    getOrderState();
+}, 5000);
+}
+function d2(){
+var timeTicket3;
+clearInterval(timeTicket3);
+timeTicket3 = setInterval(function () {
+   getBugState();
+}, 10000);
+}
+function d3(){
+var timeTicket4;
+clearInterval(timeTicket4);
+timeTicket4 = setInterval(function () {
+    alarmState();
+}, 5000);
+
+}
 function ConTep() {
     $.post("/SysInfo/GetConTep", function (data) {
         var objs = JSON.parse(data);
@@ -311,6 +328,7 @@ function getNavMenus() {
                     + '<i class="iconfont icon-order" id="orderIcon"></i>'
                     + '</a>'
                     + '</li>';
+                  d1();
             } else if (v.ModuleName.indexOf("隐患") != -1) {
                 ht += '<li class="am-dropdown tpl-dropdown" data-am-dropdown>'
                     + '<a href = "' + v.Location + '" target = "main_frame" >'
@@ -318,6 +336,7 @@ function getNavMenus() {
                     + '<i class="iconfont icon-yinhuandianwei" id="orderIcon"></i>'
                     + '</a>'
                     + '</li>';
+                 d2();
             } else if (v.ModuleName.indexOf("报警") != -1) {
                 ht += '<li class="am-text-sm">'
                     + '<a href = "' + v.Location + '" target="main_frame">'
@@ -325,6 +344,7 @@ function getNavMenus() {
                     + '<i class="iconfont icon-real-time-alarm" id="alarmIcon"></i>'
                     + '</a>'
                     + '</li>';
+                 d3();
             }
         })
         ht += '<li class="am-text-sm" style="display: inline">'
