@@ -1597,8 +1597,12 @@ namespace YWWeb.Controllers
             PdfState model = new PdfState();
             try
             {
-                //string uids = GetAllUnit();
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0).OrderByDescending(p => p.AlarmDateTime);
@@ -1909,27 +1913,27 @@ namespace YWWeb.Controllers
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 var list = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState != 0 && p.AlarmState != 1).OrderByDescending(p => p.AlarmDateTime);
                 var pdflist = bll.t_CM_PDRInfo.Where(p => pidlist.Contains(p.PID)).OrderByDescending(p => p.ApplcationTime);
-                if (list.Count() > 0)
-                {
-                    model.Name = "严重";
-                    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                    TimeSpan sp = end.Subtract(start);
-                    model.NormalDays = sp.Days + "";
-                }
-                else
-                {
-                    var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
+                //if (list.Count() > 0)
+                //{
+                //    model.Name = "严重";
+                //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                //    TimeSpan sp = end.Subtract(start);
+                //    model.NormalDays = sp.Days + "";
+                //}
+                //else
+                //{
+                    //var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
                     int days = 0;
-                    if (list_yunxing.Count() > 0)
-                    {
-                        DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                        DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                        TimeSpan sp = end.Subtract(start);
-                        days = sp.Days;
-                    }
-                    else
-                    {
+                    //if (list_yunxing.Count() > 0)
+                    //{
+                    //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                    //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    //    TimeSpan sp = end.Subtract(start);
+                    //    days = sp.Days;
+                    //}
+                    //else
+                    //{
                         if (pdflist.Count() > 0)
                         {
                             DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
@@ -1937,10 +1941,10 @@ namespace YWWeb.Controllers
                             TimeSpan sp = end.Subtract(start);
                             days = sp.Days;
                         }
-                    }
+                    //}
                     model.Name = "正常运行";
                     model.NormalDays = days.ToString();
-                }
+                //}
                 if (pdflist.Count() > 0)
                 {
                     string checkDays = "--";
@@ -1996,7 +2000,12 @@ namespace YWWeb.Controllers
             PdfState model = new PdfState();
             try
             {
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 DateTime d = DateTime.Now.Date;
                 DateTime xd = DateTime.Now;
@@ -2043,7 +2052,12 @@ namespace YWWeb.Controllers
             PdfState model = new PdfState();
             try
             {
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 
 
@@ -2093,7 +2107,12 @@ namespace YWWeb.Controllers
             PdfState model = new PdfState();
             try
             {
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 
                 DateTime ddd = DateTime.Now;
@@ -2146,7 +2165,12 @@ namespace YWWeb.Controllers
             try
             {
                 //string uids = GetAllUnit();
-                string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
+                string pids = "";
+                var Fpdf = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault();
+                if (Fpdf != null)
+                    pids = Fpdf.PDRList;
+                if (string.IsNullOrEmpty(pids))
+                    return Json("{}");
                 var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
                 //var pidlist = pids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
 

@@ -1,7 +1,5 @@
 ﻿@{
-                /**/
-
-                Layout = null;
+    Layout = null;
 }
 <!DOCTYPE html>
 <html>
@@ -80,71 +78,79 @@
             var pzhtml = "";
             var pzname = "";
             var hhtml = "";
+            var xxhtml = "';"
             var x = "";
             var s = data.pzlist.length;
             hhtml += '<tr><td rowspan="2"></td>'
-            hhtml += '<td rowspan="2">用户当月计划电量（兆瓦时）</td>'
-            hhtml += '<td colspan=' + s + '>用户分品种计划电量（兆瓦时）</td>'
-            hhtml += '<td>实际用电量与计划电量偏差</td>'
-            //hhtml += '<td colspan=' + s + '>调偏后的计划交易电量（兆瓦时）</td>'
-            //hhtml += '<td colspan=' + s + '>已购电电量（兆瓦时)</td>'
-            hhtml += '<td colspan=' + s + '>本次应购电量（兆瓦时</td></tr>'
+            //hhtml += '<td rowspan="2">用户当月计划电量（兆瓦时）</td>'
+            //hhtml += '<td colspan=' + s + '>用户分品种计划电量（兆瓦时）</td>'
+            //hhtml += '<td>实际用电量与计划电量偏差</td>'
+            hhtml += '<td colspan=' + s + '>应购电量（兆瓦时）</td>'
+            hhtml += '<td colspan=' + s + '>已购电电量（兆瓦时)</td>'
+            hhtml += '<td colspan=' + s + '>剩余电量（兆瓦时</td></tr>'
             pzhtml = "<tr>"
+            //for (var i = 0; i < data.pzlist.length; i++) {
+            //    pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
+
+            //}
+
+            //pzhtml += "<td></td>";
+            //for (var i = 0; i < data.pzlist.length; i++) {
+            //    pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
+
+            //}
             for (var i = 0; i < data.pzlist.length; i++) {
                 pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
 
             }
+            for (var i = 0; i < data.pzlist.length; i++) {
+                pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
 
-            pzhtml += "<td></td>";
-            //for (var i = 0; i < data.pzlist.length; i++) {
-            //    pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
-
-            //}
-            //for (var i = 0; i < data.pzlist.length; i++) {
-            //    pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
-
-            //}
+            }
             for (var i = 0; i < data.pzlist.length; i++) {
                 pzhtml += "<td>" + data.pzlist[i].category_name + "</td>";
 
             }
             pzhtml += "</tr>"
 
+
             //pzhtml += x;
             hhtml += pzhtml;
+            xxhtml = hhtml;
             var sumplan = 0;
             var sumpianchalv = 0;
             var pzSumplan = [];
             var tiaopianPlan = [];
             //var html = "";
             $.each(data.list, function (index, val) {
-                sumplan += val.MonthPlan;
-                sumpianchalv += val.pianchalv;
+                //sumplan += val.MonthPlan;
+                //sumpianchalv += val.pianchalv;
                 hhtml += "<tr>"
                 hhtml += '<td>' + val.UnitName + '</td>';
-                hhtml += " <td>" + val.MonthPlan + "</td>";
-                $.each(val.list, function (i, v) {
-
-                    hhtml += "<td>" + v.plan + "</td>";
-
-                })
-                hhtml += "<td>" + val.pianchalv.toFixed(2) + "</td>"
-                //$.each(val.tiaopian, function (i, v) {
+                //hhtml += " <td>" + val.MonthPlan + "</td>";
+                //$.each(val.list, function (i, v) {
 
                 //    hhtml += "<td>" + v.plan + "</td>";
 
                 //})
-                //$.each(val.goudian, function (i, v) {
+                //hhtml += "<td>" + val.pianchalv.toFixed(5) + "</td>"
+                $.each(val.tiaopian, function (i, v) {
 
-                //    hhtml += "<td>" + v.quantity + "</td>";
+                    hhtml += "<td>" + v.plan + "</td>";
 
-                //})
+                })
+                $.each(val.goudian, function (i, v) {
+
+                    hhtml += "<td>" + v.quantity + "</td>";
+
+                })
 
                 $.each(val.yinggou, function (i, v) {
 
                     hhtml += "<td>" + v.quantity + "</td>";
 
                 })
+
                 hhtml += "</tr>";
             })
             //console.log(data);
@@ -155,40 +161,41 @@
             //alert(hhtml);
             $("#pzhtml").html(hhtml);
             var xhhtml = '<tr><td rowspan="2">售电公司合计</td>'
-            xhhtml += '<td rowspan="2">' + sumplan + '</td>'
-            var m = 2;
-            for (m; m < s + 2; m++) {
-                xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
-            }
-            m += 1;
-            xhhtml += '<td rowspan="2">' + sumpianchalv.toFixed(2) + '</td>'
-            for (m; m < s*2+3; m++) {
-                xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
-            }
-            //m+=6
-            //for (m; m < s*3+3; m++) {
+            //xhhtml += '<td rowspan="2">' + sumplan + '</td>'
+            var m = 1;
+            //for (m; m < s+2; m++) {
             //    xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
             //}
-            ////m += 6;
-            //for (m; m < s*4+3; m++) {
-            //    xhhtml += '<td rowspan="2">'+ getTdValue(2, m) + '</td>'
+            //m += 1;
+            //xhhtml += '<td rowspan="2">' + sumpianchalv.toFixed(5) + '</td>'
+            //for (m; m < s*2+3; m++) {
+            //    xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
             //}
+            //m+=6
+            for (m; m < s + 1; m++) {
+                xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
+            }
+            for (m; m < s * 2 + 1; m++) {
+                xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
+            }
+            for (m; m < s * 3 + 1; m++) {
+                xhhtml += '<td rowspan="2">' + getTdValue(2, m) + '</td>'
+            }
             xhhtml += "<tr>"
-
-            $("#pzhtml").append(xhhtml);
+            xxhtml += xhhtml;
+            $("#pzhtml").html(xxhtml);
             //getTdValue();
         })
-        function getTdValue(ii, x) {
-            var tableId = document.getElementById("pzhtml");
-            var str = 0;
-            for (var i = ii; i < tableId.rows.length; i++) {
-                //alert(tableId.rows[i].cells[x].innerHTML);
-                str += parseFloat(tableId.rows[i].cells[x].innerHTML);
-            }
-            return str.toFixed(3);
-        }
     }
-
+    function getTdValue(ii,x) {
+        var tableId = document.getElementById("pzhtml");
+        var str = 0;
+        for (var i = ii; i < tableId.rows.length; i++) {
+            //alert(tableId.rows[i].cells[x].innerHTML);
+            str +=parseFloat( tableId.rows[i].cells[x].innerHTML);
+        }
+        return str.toFixed(3);
+    }
     function loadSelectMonth() {
         $('#month').combobox({
             valueField: 'value',

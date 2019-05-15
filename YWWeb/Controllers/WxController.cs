@@ -74,19 +74,26 @@ namespace YWWeb.Controllers
             {
                 OpenIdResult openIdResult = getOpenIdBean2(code);
                 int nErrCode = 0;
-                var model = LoginManager.WxLogin(openIdResult.openid, this.ControllerContext, out nErrCode);
-                if (model != null)
+                if (openIdResult.openid != null)
                 {
-                    if (model.IsScreen == 0)
+                    var model = LoginManager.WxLogin(openIdResult.openid, this.ControllerContext, out nErrCode);
+                    if (model != null && model.openid2 != null)
                     {
-                        string sID = Session.SessionID;
-                        Session[sID] = model;
-                        Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
-                        return Json(new { sID, model.UserName }, JsonRequestBehavior.AllowGet);
+                        if (model.IsScreen == 0)
+                        {
+                            string sID = Session.SessionID;
+                            Session[sID] = model;
+                            Common.InsertLog("App用户登录", model.UserName, "App用户登录[" + model.UserName + "]");
+                            return Json(new { sID, model.UserName }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Content("1");
+                        }
                     }
                     else
                     {
-                        return Content("1");
+                        return Content("0");
                     }
                 }
                 else

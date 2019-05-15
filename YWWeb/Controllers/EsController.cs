@@ -164,6 +164,15 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult UserPlanModelView()
+        {
+            return View();
+        }
+
+        public ActionResult PurchasingElectricityView()
+        {
+            return View();
+        }
         #region 年度计划用电量录入相关方法
         /// <summary>
         /// 加载年度计划用电
@@ -207,65 +216,71 @@ namespace YWWeb.Controllers
         [Login]
         public ActionResult GetPlanView()
         {
-            string ustr = HomeController.GetUID();
+            try
+            {
+                string ustr = HomeController.GetUID();
 
-            if (string.IsNullOrEmpty(ustr))
-                return Content("");
-            string strsql = @"select a.id, a.year,a.month,a.[plan],a.readed,a.trade_price,b.category_name,a.extraTradePrice,b.id as categoryID,c.UnitID as unid,a.create_time,a.remark,
+                if (string.IsNullOrEmpty(ustr))
+                    return Content("");
+                string strsql = @"select a.id, a.year,a.month,a.[plan],a.readed,a.trade_price,b.category_name,a.extraTradePrice,b.id as categoryID,c.UnitID as unid,a.create_time,a.remark,
                             a.daily_average,c.UnitName as Name from t_ES_UsePlan a inner join
                             t_ES_Category b on a.categoryID=b.id inner join
                             t_CM_Unit c on a.unid=c.UnitID where a.unid in (" + ustr + ")";
 
 
-            var xlist = bll.ExecuteStoreQuery<UserPlanView>(strsql).ToList();
-            var Blist = xlist.GroupBy(p => p.Name).ToList();
-            List<Planview> list = new List<Planview>();
-            foreach (var item in Blist)
-            {
-                decimal? plan = 0;
-                Planview m = new Planview();
-                m.UnitName = item.Key;
-                t_CM_Unit unit = bll.t_CM_Unit.Where(p => p.UnitName == item.Key).FirstOrDefault();
-                t_ES_UserUsePowerMonthly xx = bll.t_ES_UserUsePowerMonthly.Where(p => p.UID == unit.UnitID && p.UsePower != null && p.UsePower != 0).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                if (xx != null)
-                    m.pianchalv = xx.AllDeviationRate;
-
-                foreach (var ii in item)
+                var xlist = bll.ExecuteStoreQuery<UserPlanView>(strsql).ToList();
+                var Blist = xlist.GroupBy(p => p.Name).ToList();
+                List<Planview> list = new List<Planview>();
+                foreach (var item in Blist)
                 {
-                    plan += ii.plan;
-                }
+                    decimal? plan = 0;
+                    Planview m = new Planview();
+                    m.UnitName = item.Key;
+                    t_CM_Unit unit = bll.t_CM_Unit.Where(p => p.UnitName == item.Key).FirstOrDefault();
+                    t_ES_UserUsePowerMonthly xx = bll.t_ES_UserUsePowerMonthly.Where(p => p.UID == unit.UnitID && p.UsePower != null && p.UsePower != 0).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                    if (xx != null)
+                        m.pianchalv = xx.AllDeviationRate;
 
-                foreach (var iii in bll.t_ES_Category.OrderBy(p => p.orderNumber).ToList())
-                {
-                    UserPlanView mm = new UserPlanView();
-                    decimal? plan1 = 0;
-                    mm.category_name = iii.category_name;
-                    var ss = item.Where(p => p.categoryID == iii.id).ToList();
-                    foreach (var iiii in ss)
+                    foreach (var ii in item)
                     {
-                        plan1 += iiii.plan;
+                        plan += ii.plan;
                     }
-                    mm.plan = plan1;
-                    m.list.Add(mm);
-                    t_ES_UserUsePowerMonthly c = bll.t_ES_UserUsePowerMonthly.Where(p => p.UID == unit.UnitID && p.categoryID == iii.id && p.UsePower != null && p.UsePower != 0).OrderByDescending(p => p.RecordTime).FirstOrDefault();
-                    xxx x = new xxx();
-                    x.plan = plan1 * (1 + m.pianchalv);
-                    m.tiaopian.Add(x);
-                    //已购电量
-                    PurchaseView goudian = new PurchaseView();
-                    goudian.quantity = bll.t_ES_Purchase.Where(p => p.categoryID == iii.id).Sum(p => p.quantity) == null ? 0 : bll.t_ES_Purchase.Where(p => p.categoryID == iii.id).Sum(p => p.quantity);
-                    goudian.category_name = iii.category_name;
-                    m.goudian.Add(goudian);
-                    PurchaseView yinggou = new PurchaseView();
-                    yinggou.quantity = x.plan - goudian.quantity;
-                    yinggou.category_name = iii.category_name;
-                    m.yinggou.Add(yinggou);
+
+                    foreach (var iii in bll.t_ES_Category.OrderBy(p => p.orderNumber).ToList())
+                    {
+                        UserPlanView mm = new UserPlanView();
+                        decimal? plan1 = 0;
+                        mm.category_name = iii.category_name;
+                        var ss = item.Where(p => p.categoryID == iii.id).ToList();
+                        foreach (var iiii in ss)
+                        {
+                            plan1 += iiii.plan;
+                        }
+                        mm.plan = plan1;
+                        m.list.Add(mm);
+                        t_ES_UserUsePowerMonthly c = bll.t_ES_UserUsePowerMonthly.Where(p => p.UID == unit.UnitID && p.categoryID == iii.id && p.UsePower != null && p.UsePower != 0).OrderByDescending(p => p.RecordTime).FirstOrDefault();
+                        xxx x = new xxx();
+                        x.plan = plan1 * (1 + m.pianchalv);
+                        m.tiaopian.Add(x);
+                        //已购电量
+                        PurchaseView goudian = new PurchaseView();
+                        goudian.quantity = bll.t_ES_Purchase.Where(p => p.categoryID == iii.id).Sum(p => p.quantity) == null ? 0 : bll.t_ES_Purchase.Where(p => p.categoryID == iii.id).Sum(p => p.quantity);
+                        goudian.category_name = iii.category_name;
+                        m.goudian.Add(goudian);
+                        PurchaseView yinggou = new PurchaseView();
+                        yinggou.quantity = x.plan - goudian.quantity;
+                        yinggou.category_name = iii.category_name;
+                        m.yinggou.Add(yinggou);
+                    }
+                    m.MonthPlan = plan;
+                    list.Add(m);
                 }
-                m.MonthPlan = plan;
-                list.Add(m);
+                var pzlist = bll.t_ES_Category.OrderBy(p => p.orderNumber).ToList();
+                return Json(new { list = list, pzlist = pzlist });
+            }catch(Exception ex)
+            {
+                throw ex;
             }
-            var pzlist = bll.t_ES_Category.OrderBy(p => p.orderNumber).ToList();
-            return Json(new { list = list, pzlist = pzlist });
         }
         public class Planview
         {
@@ -432,14 +447,14 @@ namespace YWWeb.Controllers
         public class UserPlanView
         {
             public int id { get; set; }
-            public int year { get; set; }
-            public int month { get; set; }
+            public int? year { get; set; }
+            public int? month { get; set; }
             public decimal? plan { get; set; }
             public string category_name { get; set; }
             public string remark { get; set; }
             public decimal? daily_average { get; set; }
             public string Name { get; set; }
-            public DateTime create_time { get; set; }
+            public DateTime? create_time { get; set; }
             public int categoryID { get; set; }
             public int pid { get; set; }
             public int unid { get; set; }
@@ -2710,10 +2725,37 @@ namespace YWWeb.Controllers
         #endregion
 
         #region 售电辅助决策
-        public ActionResult getJueCeData_FX(int type, int uid, int pz)
+        public ActionResult SavePlanView(t_ES_UserUsePowerMonthly info)
         {
             string result = "";
+            try
+            {
+                if (info.UUPID > 0)
+                {
+                    t_ES_UserUsePowerMonthly model = bll.t_ES_UserUsePowerMonthly.Where(r => r.UUPID == info.UUPID).FirstOrDefault();
+                    model.SumUsePower = info.SumUsePower;
+                    model.PlanUsePower = info.PlanUsePower;
+                    model.DeviationRate = (info.SumUsePower - info.SumPlanUsePower) / info.SumPlanUsePower;
+                    bll.ObjectStateManager.ChangeObjectState(model, EntityState.Modified);
+                    bll.SaveChanges();
+                    Common.InsertLog("售电辅助决策视图管理", CurrentUser.UserName, "售电辅助决策[" + model.UUPID + "]");
+                    result = "OK";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+                result = "出错了！";
+            }
+            return Content(result);
+        }
+        public ActionResult getJueCeData_FX(int type, int uid, string month, string year)
+        {
+            string result = "";
+
             List<FuZhuChart> soure = new List<FuZhuChart>();
+
             string m = string.Empty;
             string time = DateTime.Now.ToString("yyyy-MM-dd");
             DateTime dt = DateTime.Now;
@@ -2731,55 +2773,67 @@ namespace YWWeb.Controllers
                 return Json("");
             try
             {
+
+
+                string[] times = GetChaoBiao(type, uid, month, year);
+                d = times[0];
+                dd = times[1];
+                chaobiao = times[4];
+
+                int days = DateTime.DaysInMonth(Convert.ToInt32(year), Convert.ToInt32(month));
+                sql1 = "select( sum(quantity)/" + days + ") as Sumplan from t_ES_Purchase where month=" + month + " and year=" + year + "  and UID in (" + ustr + ") group by month";
                 if (type == 1)
                 {
-                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt).Select(p => p.UID).Distinct().ToList();
-                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
-                    if (chaobiaomodel != null)
-                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
-                    if (string.IsNullOrEmpty(chaobiao))
-                        chaobiao = "1";
+                    if (uid == 0)
+                    {
+                        sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
+                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, SUM(AllDeviationRate) as AllDeviationRate,sum(CompletionRate) as CompletionRate,convert(varchar(255),RecordTime,120) as RecordTime
+                       from t_ES_UserUsePowerMonthly a where a.UID IN (" + ustr + ") AND a.RecordTime >= '" + d + "' and  a.RecordTime <= '" + dd + "' and a.UsePower is not null group by a.RecordTime";
 
-                    m = DateTime.Now.AddDays(-30).Month.ToString();
-                    y = DateTime.Now.AddDays(-30).Year.ToString();
-                    d = Convert.ToDateTime(y + "-" + m + "-" + chaobiao).ToString("yyyy-MM-dd");
-                    dd = Convert.ToDateTime(DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + "-" + chaobiao).ToString("yyyy-MM-dd");
+
+                    }
+                    else
+                    {
+                        sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
+                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, SUM(AllDeviationRate) as AllDeviationRate,sum(CompletionRate) as CompletionRate, convert(varchar(255),RecordTime,120) as RecordTime
+                       from t_ES_UserUsePowerMonthly a where a.UID in (" + ustr + ") and a.UID=" + uid + " and a.RecordTime >= '" + d + "' and a.RecordTime <= '" + dd + "' and a.UsePower is not null group by a.RecordTime";
+                    }
                 }
                 else
                 {
-                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt).Select(p => p.UID).Distinct().ToList();
-                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
-                    if (chaobiaomodel != null)
-                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
-                    if (string.IsNullOrEmpty(chaobiao))
-                        chaobiao = "1";
+                    if (uid == 0)
+                    {
 
-                    y = DateTime.Now.Year.ToString();
-                    m = DateTime.Now.Month.ToString();
-                    d = Convert.ToDateTime(y + "-" + m + "-" + (Convert.ToInt32(chaobiao) + 1).ToString()).ToString("yyyy-MM-dd");
-                    dd = DateTime.Now.ToString("yyyy-MM-dd");
-                }
+                        sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
+                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, ((SUM(UsePower)-SUM(PlanUsePower))/SUM(PlanUsePower)) as AllDeviationRate,sum(CompletionRate) as CompletionRate,CONVERT( varchar(255),MONTH(RecordTime)) as RecordTime
+                       from t_ES_UserUsePowerYearly a where a.UID IN(" + ustr + ") and a.UsePower is not null and Year(a.RecordTime)=" + year + " group by Month(a.RecordTime)";
 
-                int days = DateTime.DaysInMonth(Convert.ToInt32(y), Convert.ToInt32(m));
-                sql1 = "select( sum(quantity)/" + days + ") as Sumplan from t_ES_Purchase where month=" + m + " and  categoryID=" + pz + " and UID in (" + ustr + ") group by month";
-                if (uid == 0)
-                {
-                    sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
-                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, SUM(AllDeviationRate) as AllDeviationRate,sum(CompletionRate) as CompletionRate, RecordTime
-                       from t_ES_UserUsePowerMonthly a where a.UID IN (" + ustr + ") AND a.categoryID=" + pz + " and a.RecordTime >= '" + d + "' and  a.RecordTime <= '" + dd + "' group by a.RecordTime";
+                    }
 
 
-                }
-                else
-                {
-                    sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
-                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, SUM(AllDeviationRate) as AllDeviationRate,sum(CompletionRate) as CompletionRate, RecordTime
-                       from t_ES_UserUsePowerMonthly a where a.UID in (" + ustr + ") and a.UID=" + uid + " and a.categoryID=" + pz + " and a.RecordTime >= '" + d + "' and a.RecordTime <= '" + dd + "' group by a.RecordTime";
+
+                    else
+                    {
+                        sql = @"select SUM(UsePower) as UsePower, SUM(PlanUsePower) as PlanUsePower,
+                       SUM(DeviationRate) as DeviationRate, SUM(SumUsePower) as SumUsePower, SUM(SumPlanUsePower) as SumPlanUsePower, SUM(AllDeviationRate) as AllDeviationRate,sum(CompletionRate) as CompletionRate,CONVERT( varchar(255),MONTH(RecordTime)) as RecordTime
+                       from t_ES_UserUsePowerYearly a where a.UID IN(" + ustr + ") AND a.UID=" + uid + " and a.UsePower is not null and Year(a.RecordTime)=" + year + " group by Month(a.RecordTime)";
+                    }
+
                 }
 
 
                 goudian = bll.ExecuteStoreQuery<Anwis>(sql1).ToList();
-                soure = bll.ExecuteStoreQuery<FuZhuChart>(sql).ToList();
+                if (type == 1)
+                {
+                    soure = bll.ExecuteStoreQuery<FuZhuChart>(sql).ToList();
+                }
+                else
+                {
+                    //if (uid == 0)
+                    //{
+                    soure = bll.ExecuteStoreQuery<FuZhuChart>(sql).ToList();
+                    //}
+                }
                 // soure = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime >= d && p.RecordTime <= dt).ToList();
                 model = soure.OrderByDescending(p => p.RecordTime).FirstOrDefault();
 
@@ -2789,20 +2843,270 @@ namespace YWWeb.Controllers
                 result = ex.ToString();
                 result = "";
             }
-            return Json(new { soure = soure, month = Convert.ToInt32(m) + 1, table = model, goudian = goudian });
+
+            return Json(new { soure = soure, month = Convert.ToInt32(month), table = model, goudian = goudian });
+
+        }
+
+        private string[] GetChaoBiao(int type, int uid, string month, string year)
+        {
+            string[] times = new string[5];
+
+            string m = string.Empty;
+            string time = DateTime.Now.ToString("yyyy-MM-dd");
+            DateTime dt = DateTime.Now;
+            FuZhuChart model = new FuZhuChart();
+            List<Anwis> goudian = new List<Anwis>();
+
+            string d = "";
+            string y = "";
+            string dd = "";
+            string chaobiao = "";
+            string ustr = HomeController.GetUID();
+            if (type == 1)
+            {
+                if (uid == 0)
+                {
+                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt).Select(p => p.UID).Distinct().ToList();
+                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
+                    if (chaobiaomodel != null)
+                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
+                    if (string.IsNullOrEmpty(chaobiao))
+                        chaobiao = "1";
+
+
+                    dd = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddDays(-1).ToString("yyyy-MM-dd");
+                    d = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddMonths(-1).ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt && p.UID == uid).Select(p => p.UID).Distinct().ToList();
+                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
+                    if (chaobiaomodel != null)
+                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
+                    if (string.IsNullOrEmpty(chaobiao))
+                        chaobiao = "1";
+                    dd = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddDays(-1).ToString("yyyy-MM-dd");
+
+                    d = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddMonths(-1).ToString("yyyy-MM-dd");
+                }
+            }
+            else
+            {
+                if (uid == 0)
+                {
+                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt).Select(p => p.UID).Distinct().ToList();
+                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
+                    if (chaobiaomodel != null)
+                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
+                    if (string.IsNullOrEmpty(chaobiao))
+                        chaobiao = "1";
+
+
+                    dd = Convert.ToDateTime(year + "-" + month + "-" + (Convert.ToInt32(chaobiao) + 1).ToString()).AddDays(-1).ToString("yyyy-MM-dd");
+
+                    d = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddMonths(-1).ToString("yyyy-MM-dd");
+
+                }
+                else
+                {
+                    List<int?> uids = bll.t_ES_UserUsePowerMonthly.Where(p => p.RecordTime <= dt && p.UID == uid).Select(p => p.UID).Distinct().ToList();
+                    t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => uids.Contains(p.UnitID)).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
+                    if (chaobiaomodel != null)
+                        chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
+                    if (string.IsNullOrEmpty(chaobiao))
+                        chaobiao = "1";
+
+                    dd = Convert.ToDateTime(year + "-" + month + "-" + (Convert.ToInt32(chaobiao) + 1).ToString()).AddDays(-1).ToString("yyyy-MM-dd");
+
+                    d = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddMonths(-1).AddDays(-1).ToString("yyyy-MM-dd");
+                }
+            }
+            times[0] = d.ToString();
+            times[1] = dd.ToString();
+            times[2] = m;
+            times[3] = y;
+            times[4] = chaobiao;
+            return times;
+        }
+        [Login]
+        public ActionResult GetJueceView(int rows, int page, int unit, int month, int year)
+        {
+            string ustr = HomeController.GetUID();
+
+            string startTime;
+            string endTime;
+            string chaobiao = "";
+
+            t_CM_PDRInfo chaobiaomodel = bll.t_CM_PDRInfo.Where(p => p.UnitID == unit).OrderBy(p => p.CBPeriodBegin).FirstOrDefault();
+            if (chaobiaomodel != null)
+                chaobiao = chaobiaomodel.CBPeriodBegin.ToString();
+            if (string.IsNullOrEmpty(chaobiao))
+                chaobiao = "1";
+
+            endTime = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).ToString();
+            startTime = Convert.ToDateTime(year + "-" + month + "-" + chaobiao).AddMonths(-1).ToString();
+            if (string.IsNullOrEmpty(ustr))
+                return Content("");
+            string strsql = @"select * from t_ES_UserUsePowerMonthly a where a.UID in (" + ustr + ")";
+            if (unit != 0)
+            {
+                strsql += " and a.UID=" + unit.ToString() + " ";
+            }
+            if (!string.IsNullOrEmpty(startTime))
+            {
+                strsql += " and a.RecordTime>='" + startTime + "' ";
+            }
+            if (!string.IsNullOrEmpty(endTime))
+            {
+
+                strsql += " and a.RecordTime<'" + endTime + "' ";
+            }
+            string[] fot = { "UsePower", "PlanUsePower" };
+            var Blist = bll.ExecuteStoreQuery<t_ES_UserUsePowerMonthly>(strsql).OrderByDescending(p => p.RecordTime).ToList();
+            string strJson = Common.List2Json(Blist, rows, page, fot);
+            return Content(strJson);
         }
         public class FuZhuChart
         {
-            public decimal UsePower { get; set; }
-            public decimal PlanUsePower { get; set; }
-            public decimal DeviationRate { get; set; }
-            public decimal SumUsePower { get; set; }
-            public decimal SumPlanUsePower { get; set; }
-            public decimal AllDeviationRate { get; set; }
-            public decimal CompletionRate { get; set; }
-            public DateTime RecordTime { get; set; }
+            public decimal? UsePower { get; set; }
+            public decimal? PlanUsePower { get; set; }
+            public decimal? DeviationRate { get; set; }
+            public decimal? SumUsePower { get; set; }
+            public decimal? SumPlanUsePower { get; set; }
+            public decimal? AllDeviationRate { get; set; }
+            public decimal? CompletionRate { get; set; }
+            public string RecordTime { get; set; }
+            public string month { get; set; }
         }
+        public string getPianCha(string startTime, string endTime, int uid = 0, int pz = 0)
+        {
+            string result = "";
+            try
+            {
+                string ustr = HomeController.GetUID();
 
+                if (string.IsNullOrEmpty(ustr))
+                    return "";
+                string strsql = "select * from t_ES_UserUsePowerMonthly a where a.UID in (" + ustr + ")";
+                if (pz != 0)
+                {
+                    strsql += " and a.categoryID = " + pz.ToString() + " ";
+                }
+                if (uid != 0)
+                {
+                    strsql += " and a.UID=" + uid.ToString() + " ";
+                }
+                if (!string.IsNullOrEmpty(startTime))
+                {
+                    strsql += " and a.RecordTime>='" + startTime + "' ";
+                }
+                if (!string.IsNullOrEmpty(endTime))
+                {
+
+                    strsql += " and a.RecordTime<='" + endTime + "' ";
+                }
+
+                strsql += "   ORDER BY a.categoryID,RecordTime";
+
+
+                List<t_ES_UserUsePowerMonthly> list = bll.ExecuteStoreQuery<t_ES_UserUsePowerMonthly>(strsql).ToList();
+                string xAxis = "", yAxis = "", series1 = "", series2 = "", CName = "", yData = "";
+
+                List<int> litCid = new List<int>();
+                List<string> litTime = new List<string>();
+
+                foreach (t_ES_UserUsePowerMonthly mod in list)
+                {
+                    if (mod.DeviationRate < 0)
+                        continue;
+
+                    if (xAxis.Contains(Convert.ToDateTime(mod.RecordTime).ToString("MM-dd HH:mm")) == false)
+                    {
+                        xAxis += Convert.ToDateTime(mod.RecordTime).ToString("MM-dd HH:mm") + ",";
+                        litTime.Add(Convert.ToDateTime(mod.RecordTime).ToString("MM-dd HH:mm"));
+                    }
+                    if (litCid.Contains(Convert.ToInt32(mod.categoryID)) == false)
+                    {
+                        //限制最多10个回路显示
+                        if (litCid.Count() > 10)
+                            break;
+
+                        var m = bll.t_ES_Category.Where(p => p.id == mod.categoryID).FirstOrDefault();
+                        CName += "\"" + m.category_name + "\",";
+                        litCid.Add(Convert.ToInt32(mod.categoryID));
+
+                        //if (yData.Equals("") == false)
+                        //{
+                        //    yData = yData.TrimEnd(',') + "\",\"";
+                        //}
+                    }
+
+                    //yData += mod.Aphase + ",";                    
+                }
+                Hashtable hashYData = new Hashtable();
+                foreach (string modTime in litTime)
+                {
+                    decimal? SumCount = 0;
+                    foreach (int modCid in litCid)
+                    {
+
+                        List<t_ES_UserUsePowerMonthly> ListTemp = list.Where(m => Convert.ToDateTime(m.RecordTime).ToString("MM-dd HH:mm").Equals(modTime) && m.categoryID == modCid).ToList();
+                        string sVal = "";
+                        if (modCid != 0)
+                        {
+                            if (ListTemp.Count > 0)
+                            {
+
+                                SumCount += ListTemp[0].DeviationRate;
+                                sVal = Math.Round(Convert.ToDecimal(ListTemp[0].DeviationRate), 2).ToString();
+                            }
+                            //
+                            if (hashYData.Contains(modCid))
+                            {
+                                hashYData[modCid] += "," + sVal;
+                            }
+                            else
+                            {
+                                hashYData.Add(modCid, sVal);
+                            }
+                        }
+                        else
+                        {
+                            if (hashYData.Contains(modCid))
+                            {
+                                hashYData[modCid] += "," + Math.Round(Convert.ToDecimal(SumCount), 2).ToString();
+                            }
+                            else
+                            {
+                                hashYData.Add(modCid, Math.Round(Convert.ToDecimal(SumCount), 2).ToString());
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < litCid.Count; i++)
+                {
+                    if (i < (litCid.Count - 1))
+                    {
+                        yData += hashYData[litCid[i]].ToString().TrimEnd(',') + "\",\"";
+                    }
+                    else
+                    {
+                        yData += hashYData[litCid[i]].ToString().TrimEnd(',');
+                    }
+                }
+
+                result = "{\"CName\":[" + CName.TrimEnd(',') + "],\"xAxis\":\"" + xAxis.TrimEnd(',') + "\",\"yData\":[\"" + yData.TrimEnd(',') + "\"]}";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+                result = "";
+            }
+            return result;
+        }
         public JsonResult GetUnitPlan()
         {
             string ustr = HomeController.GetUID();

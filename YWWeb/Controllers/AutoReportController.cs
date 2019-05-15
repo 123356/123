@@ -44,6 +44,7 @@ namespace YWWeb.Controllers
             }
             List<t_EE_PowerReportConfig> config = bll.ExecuteStoreQuery<t_EE_PowerReportConfig>("SELECT * FROM t_EE_PowerReportConfig WHERE pid="+pid).ToList();
             string sql = "";
+            string Unit = "kV";
             if (config != null && config.Count > 0 && config.First().cid!="")
             {
                 sql = "SELECT a.*,b.CName FROM t_EE_PowerQualityDaily a,t_DM_CircuitInfo b WHERE a.CID = b.CID and a.PID=" + pid + " AND b.PID="+pid+" AND a.CID IN ("+config.First().cid+")  AND a.RecordTime >='" + startdate.Date.ToString() + "' AND a.RecordTime <'" + startdate.AddDays(1).ToString() + "' ORDER BY a.CID,a.RecordTime";
@@ -127,8 +128,21 @@ namespace YWWeb.Controllers
                         }
                     }
                 }
-                string result = JsonConvert.SerializeObject(list2);
-                return Content(result);
+
+                
+                    string sqlU = "select d.Units as unit from  t_EE_PowerQualityDaily a,t_DM_CircuitInfo b,t_CM_PointsInfo c,t_CM_ValueType d where 1 = 1 and a.CID=c.CID and a.PID=c.PID and a.CID = b.cid and a.AVoltage is not null and c.DataTypeID=d.DataTypeID";
+                    sqlU += " and a.RecordTime >='" + startdate.Date.ToString() + "' and a.RecordTime <='" + startdate.AddDays(1).ToString() + "'";
+                    sqlU += " and c.DataTypeID IN (3,56)";
+                    if (!pid.Equals(""))
+                    {
+                        sqlU += " and a.pid=" + pid + " and a.pid=b.pid"; ;
+                    }
+                    var mV = bll.ExecuteStoreQuery<antisUnit>(sqlU).FirstOrDefault();
+                    if (mV != null)
+                        Unit = mV.unit;
+
+                //string result = JsonConvert.SerializeObject(list2);
+                return Json(new { list=list2, Unit });
             }
             catch(Exception ex)
             {
@@ -136,7 +150,10 @@ namespace YWWeb.Controllers
             }
             
         }
-
+        public class antisUnit
+        {
+            public string unit { get; set; }
+        }
         private string getDeviceName(t_EE_PowerQualityDaily2 PowerQuality)
         {
             if (PowerQuality.DID > 0)

@@ -123,8 +123,8 @@ function getReport(pid) {
         },
         beforeSend: ajaxLoading,
         success: function (data) {
-            var list = eval("(" + data + ")");
-
+            //var list = eval("(" + data + ")");
+            var list=data.list;
             var title = "";
             for (var i = 0; i < list.length; i++) {
                 tcount++;
@@ -144,7 +144,7 @@ function getReport(pid) {
                     "            <th colspan='8'>" + list[i].DeviceName + list[i].CName + "</th>\n" +
                     "        </tr>\n" +
                     "        <tr>\n" +
-                    "            <td colspan='3'>电压(kV)</td>\n" +
+                    "            <td colspan='3'>电压("+data.Unit+")</td>\n" +
                     "            <td colspan='3'>电流(A)</td>\n" +
                     "            <td rowspan='2'>用电量(kW·h)</td>\n" +
                     "            <td rowspan='2'>功率因数</td>\n" +

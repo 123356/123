@@ -212,9 +212,9 @@ function toDetail(uid) {
         //    aUrl = "../../Content/images/location_icon/" + typeid + ".png";
         //}
         //alert(a.w+""+a.h);
-        var b = new BMap.Icon(aUrl, new BMap.Size(22, 32),
+        var b = new BMap.Icon(aUrl, new BMap.Size(27, 37),
             {
-                anchor: new BMap.Size(22 / 2, 32)
+                anchor: new BMap.Size(27 / 2, 37)
             }
         );
         return b;
@@ -260,7 +260,7 @@ function toDetail(uid) {
                                 d.setTop(true);
                             }
                         } else if (c == 2) {
-                            d.setIcon(new BMap.Icon("../../Content/images/location_icon/6.png", new BMap.Size(22, 32)));
+                            d.setIcon(new BMap.Icon("../../Content/images/location_icon/6.png", new BMap.Size(27, 37)));
                             d.setTop(true);
                         } else {
                             if (b == 0) {

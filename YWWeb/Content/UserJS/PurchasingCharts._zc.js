@@ -389,7 +389,7 @@ function PowerQualityDataYears_PM(DataJson) {
         ],
         title: {
             text: "总购电量",
-            subtext: sumPlan + "MW·H",
+            subtext: sumPlan.toFixed(2) + "MW·H",
             x: 'center',
             y: 'center'
         },

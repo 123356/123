@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>售电辅助决策</title>
     @Html.Partial("~/Views/Home/BaseHTML.cshtml")
-    <script src="~/Content/js/echarts.min3.js" type="text/javascript"></script>
-
+    <script src="~/Content/js/echarts.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
     <script src="~/Content/js/bootstrap.min.js"></script>
 </head>
@@ -20,33 +19,40 @@
                 <input id="unitselect" />
             </div>
             @*<div id=userbuttonThis" class="searchbutton">
-                <button title="修改" onclick="" class="page_table_but">
-                    <img src="/Content/images/Icon16/add.png">修改
-                </button>
-            </div>*@
-            @*<div class="searchrow">
-                品种:
-                <input id="pzselect" />
-            </div>*@
+                    <button title="修改" onclick="" class="page_table_but">
+                        <img src="/Content/images/Icon16/add.png">修改
+                    </button>
+                </div>*@
+            <div class="searchrow">
+                年份:<input id="year" />
+            </div>
+            <div class="searchrow">
+                月份:
+                <input id="month" />
+            </div>
             @*<div id="userbutton" class="searchbutton">
                 </div>*@
         </div>
         <hr>
         <h4 style="font-weight:bold;">用电量偏差曲线(本月 MW▪H)</h4>
         <div class="row clearfix">
+            <div style="margin-left: 390px;">
+                <a href="javascript:;" class="table_btn1 btn_style radius5" style="width:105px;"
+                   data-options="iconCls:'icon-cancel'" onclick="loadWindow();">用电计划</a>
+            </div>
             <div class="col-md-9 column">
                 <div id="userCharts1" class="powerquality_curve   lineloss_curve" style="height:300px;">
                 </div>
             </div>
             @*<div class="col-md-3 column" style="margin-top:80px;">
-                <h4 style="color:red;cursor:pointer;margin-bottom:10px;" onclick="showRemrk()">本月有<b id="SumUnit" style="width:7px;height:7px;background:#999;color:#fff;border-radius:50%;"></b>个用户上报计划</h4>
-                <table cellpadding="" cellspacing="" border="1" class="d_list" id="tablist1"></table>
-            </div>*@
+                    <h4 style="color:red;cursor:pointer;margin-bottom:10px;" onclick="showRemrk()">本月有<b id="SumUnit" style="width:7px;height:7px;background:#999;color:#fff;border-radius:50%;"></b>个用户上报计划</h4>
+                    <table cellpadding="" cellspacing="" border="1" class="d_list" id="tablist1"></table>
+                </div>*@
 
         </div>
         <hr>
 
-        <h4 style="font-weight:bold;">用电量偏差曲线(下月 MW▪H)</h4>
+        <h4 style="font-weight:bold;">用电量偏差曲线(全年)</h4>
         <div class="row clearfix">
             <div class="col-md-9 column">
                 <div id="userCharts2" class="powerquality_curve   lineloss_curve" style="height:300px;">
@@ -66,8 +72,8 @@
     <div id="editwin4" title="计划上报" class="easyui-dialog" closed="true" style="width: 800px; height: 500px; text-align:center; padding: 5px;"
          minimizable="false" maximizable="false" collapsible="false">
         <h2>本月计划上报</h2>
-        <div style="text-align:center; margin-top:50px;" id="contentUnit">
-         
+        <div id="contentUnit">
+
         </div>
         <div style="text-align: center;">
             <a href="javascript:;" class="table_btn1 btn_style radius5"
