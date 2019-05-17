@@ -2886,7 +2886,7 @@ namespace YWWeb.Controllers
             //return Json(thisD);
             List<xy> result = new List<xy>();
             if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                return Json("暂无数据");
+                return Json("{}");
 
             string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
             var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
@@ -2928,7 +2928,7 @@ namespace YWWeb.Controllers
         {
             List<xy> result = new List<xy>();
             if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                return Json("暂无数据");
+                return Json("{}");
 
             string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
             var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();
@@ -2980,7 +2980,7 @@ namespace YWWeb.Controllers
         public JsonResult GetPower(int uid, int cidsType = 13)
         {
             if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                return Json("暂无数据");
+                return Json("{}");
             antis an = new antis();
 
             string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
@@ -3130,7 +3130,7 @@ namespace YWWeb.Controllers
         public JsonResult GetDagongyePower(int uid, int cidsType = 12)
         {
             if (bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault() == null)
-                return Json("暂无数据");
+                return Json("{}");
             antis an = new antis();
             string pids = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList;
             var pidlist = bll.t_CM_Unit.Where(p => p.UnitID == uid).FirstOrDefault().PDRList.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p)).ToList().Distinct();

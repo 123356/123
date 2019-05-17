@@ -7,27 +7,29 @@ var myChart2 = echarts.init(document.getElementById('userCharts2'));
 var myChart3 = echarts.init(document.getElementById('userCharts3'));
 var myChart4 = echarts.init(document.getElementById('userCharts4'));
 $(function () {
-    GetPz();
+    //GetPz();
+    getPowerQualityDataYear_PM();
     getPowerQualityData_PM();
     GetPianChaCharts();
+    PowerQualityDataYears_PM();
 })
-function GetPz() {
-    $("#pzselect").combobox({
-        url: "/ES/BindCategory?isall=" + "true",
-        valueField: 'id',
-        textField: 'category_name',
-        editable: false,
-        onLoadSuccess: function () { //数据加载完毕事件
-            var data = $('#pzselect').combobox('getData');
-            if (data.length > 0) {
-                $("#pzselect").combobox('select', data[0].id);
-            }
-        },
-        onChange: function () {
-            getPowerQualityDataYear_PM();
-        }
-    });
-}
+//function GetPz() {
+//    $("#pzselect").combobox({
+//        url: "/ES/BindCategory?isall=" + "true",
+//        valueField: 'id',
+//        textField: 'category_name',
+//        editable: false,
+//        onLoadSuccess: function () { //数据加载完毕事件
+//            var data = $('#pzselect').combobox('getData');
+//            if (data.length > 0) {
+//                $("#pzselect").combobox('select', data[0].id);
+//            }
+//        },
+//        onChange: function () {
+//            getPowerQualityDataYear_PM();
+//        }
+//    });
+//}
    
 //购电量
 function getPowerQualityData_PM() {
@@ -85,7 +87,7 @@ function PowerQualityData_PM(DataJson) {
     shuju.push(mo);
     var option1 = {
         title: {
-            text: "全年购电量",
+            text: "战略合作电厂",
         },
         tooltip: {
             trigger: 'axis',
@@ -130,127 +132,32 @@ function PowerQualityData_PM(DataJson) {
 //购电量
 function getPowerQualityDataYear_PM() {
     myChart2.clear();
-    myChart3.clear();
+    //myChart3.clear();
 
-    $.post("/ES/getPurchaseDataYear_FX", {
-        "pz": $("#pzselect").combobox("getValue")
+    $.post("/ES/getYearPurchaseData_FXS", {
+        //"pz": $("#pzselect").combobox("getValue")
 
     }, function (data) {
         PowerQualityDataYear_PM(data); userCharts2
-        PowerQualityDataYears_PM(data); userCharts3
+        //PowerQualityDataYears_PM(data); userCharts3
     });
 }
 function PowerQualityDataYear_PM(DataJson) {
-    var x = [];
-    var shuju = [];
-    var can = []
-    var sumPlan = 0;
-    var sumDianFei = 0;
-    $.each(DataJson, function (index, val) {
-        x.push(val.keyName+"月");
-        shuju.push(val.SumCount);
-        can.push(val.trade_price);
-        sumPlan = sumPlan + val.SumCount;
-        sumDianFei=sumDianFei+ (val.SumCount*val.trade_price);
+    console.log(DataJson);  
+    //var x = [];
+    //var shuju = [];
+    //var can = []
+    //var sumPlan = 0;
+    //var sumDianFei = 0;
+    //$.each(DataJson, function (index, val) {
+    //    x.push(val.keyName+"月");
+    //    shuju.push(val.SumCount);
+    //    can.push(val.trade_price);
+    //    sumPlan = sumPlan + val.SumCount;
+    //    sumDianFei=sumDianFei+ (val.SumCount*val.trade_price);
 
-    });
-    var marline = (sumDianFei / sumPlan);
-    $("#SumPlan").html("总购电量：" + sumPlan + "MW·H")
-    var option2 = {
-        title: {
-            text: "每月购电量",
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-            }
-        },
-        legend: {
-            data: ["购电量","交易均价","总购电量"]
-        },
-        grid: {
-            left: '3%',
-            right: '14%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'category',
-            data: x,
-            boundaryGap: [0, 0.01],
-            axisLabel: {
-                interval: 0,
-            }
-        },
-        yAxis:[ {
-            name: 'MW·H',
-            type: 'value',
-        }, {
-            type: 'value',
-            name: '元',
-            position: 'right',
-            offset: 80,
-            axisLine: {
-                lineStyle: {
-                }
-            },
-            axisLabel: {
-                formatter: '{value}'
-            }
-        }],
-        series: [{
-            data:shuju,
-            type: 'bar',
-            name:'购电量',
-        },
-           {
-               name: '交易均价',
-               type: 'line',
-               yAxisIndex: 1,
-               data: can,
-               markLine: {
-                   itemStyle: {
-                       normal: {
-                           color: '#FA8565',
-                           label: {
-
-                               formatter: '{c}'
-                           },
-                       }
-                   },
-                   data: [
-                       {
-                           name: '购电年均价',
-                           yAxis: marline
-                       }
-                   ]
-               },
-           }]
-    };
-    myChart2.clear();
-    myChart2.setOption(option2);
-
-}
-
-function PowerQualityDataYear_PM(DataJson) {
-    var x = [];
-    var shuju = [];
-    var can = []
-    var sumPlan = 0;
-    var sumDianFei = 0;
-    $.each(DataJson, function (index, val) {
-        x.push(val.keyName + "月");
-        shuju.push(val.SumCount);
-        can.push(val.trade_price);
-        sumPlan = sumPlan + val.SumCount;
-        sumDianFei = sumDianFei + (val.SumCount * val.trade_price);
-
-    });
-    var marline = (sumDianFei / sumPlan);
+    //});
+    //var marline = (sumDianFei / sumPlan);
     //$("#SumPlan").html("总购电量：" + sumPlan + "MW·H")
     var option2 = {
         title: {
@@ -266,7 +173,8 @@ function PowerQualityDataYear_PM(DataJson) {
             }
         },
         legend: {
-            data: ["购电量", "交易均价"]
+            //data: ["购电量","交易均价","总购电量"]
+            data: DataJson.yz
         },
         grid: {
             left: '3%',
@@ -276,127 +184,280 @@ function PowerQualityDataYear_PM(DataJson) {
         },
         xAxis: {
             type: 'category',
-            data: x,
+            data: DataJson.xz,
             boundaryGap: [0, 0.01],
             axisLabel: {
                 interval: 0,
             }
         },
-        yAxis: [{
+        yAxis: //[
+            {
             name: 'MW·H',
             type: 'value',
-        }, {
-            type: 'value',
-            name: '元',
-            position: 'right',
-            offset: 80,
-            axisLine: {
-                lineStyle: {
-                }
-            },
-            axisLabel: {
-                formatter: '{value}'
-            }
-        }],
-        series: [{
-            data: shuju,
-            type: 'bar',
-            name: '购电量',
-        },
-           {
-               name: '交易均价',
-               type: 'line',
-               yAxisIndex: 1,
-               data: can,
-               markLine: {
-                   itemStyle: {
-                       normal: {
-                           color: '#FA8565',
-                           label: {
+            }, 
+    //{
+    //        type: 'value',
+    //        name: '元',
+    //        position: 'right',
+    //        offset: 80,
+    //        axisLine: {
+    //            lineStyle: {
+    //            }
+    //        },
+    //        axisLabel: {
+    //            formatter: '{value}'
+    //        }
+    //    }],
+        series:DataJson.data,
+        //    [{
+        //        data: DataJson.data,
+        //    type: 'bar',
+        //    name:'购电量',
+        //},
+        //   {
+        //       name: '交易均价',
+        //       type: 'line',
+        //       yAxisIndex: 1,
+        //       data: DataJson.can,
+        //       //markLine: {
+        //       //    itemStyle: {
+        //       //        normal: {
+        //       //            color: '#FA8565',
+        //       //            label: {
 
-                               formatter: '{c}'
-                           },
-                       }
-                   },
-                   data: [
-                       {
-                           name: '购电年均价',
-                           yAxis: marline
-                       }
-                   ]
-               },
-           }]
+        //       //                formatter: '{c}'
+        //       //            },
+        //       //        }
+        //       //    },
+        //       //    data: [
+        //       //        {
+        //       //            name: '购电年均价',
+        //       //            yAxis: marline
+        //       //        }
+        //       //    ]
+        //       //},
+        //   }]
     };
     myChart2.clear();
     myChart2.setOption(option2);
 
 }
 
-function PowerQualityDataYears_PM(DataJson) {
-    var x = [];
-    var shuju = [];
-    var can = []
-    var sumPlan = 0;
-    var sumDianFei = 0;
-    $.each(DataJson, function (index, val) {
-        x.push(val.keyName + "月");
-        shuju.push(val.SumCount);
-        can.push(val.trade_price);
-        sumPlan = sumPlan + val.SumCount;
-        sumDianFei = sumDianFei + (val.SumCount * val.trade_price);
+//function PowerQualityDataYear_PM(DataJson) {
+//    var x = [];
+//    var shuju = [];
+//    var can = []
+//    var sumPlan = 0;
+//    var sumDianFei = 0;
+//    $.each(DataJson, function (index, val) {
+//        x.push(val.keyName + "月");
+//        shuju.push(val.SumCount);
+//        can.push(val.trade_price);
+//        sumPlan = sumPlan + val.SumCount;
+//        sumDianFei = sumDianFei + (val.SumCount * val.trade_price);
 
-    });
-    var marline = (sumDianFei / sumPlan);
+//    });
+//    var marline = (sumDianFei / sumPlan);
+//    //$("#SumPlan").html("总购电量：" + sumPlan + "MW·H")
+//    var option2 = {
+//        title: {
+//            text: "每月购电量",
+//        },
+//        tooltip: {
+//            trigger: 'axis',
+//            axisPointer: {
+//                type: 'shadow',
+//                label: {
+//                    backgroundColor: '#6a7985'
+//                }
+//            }
+//        },
+//        legend: {
+//            data: ["购电量", "交易均价"]
+//        },
+//        grid: {
+//            left: '3%',
+//            right: '14%',
+//            bottom: '3%',
+//            containLabel: true
+//        },
+//        xAxis: {
+//            type: 'category',
+//            data: x,
+//            boundaryGap: [0, 0.01],
+//            axisLabel: {
+//                interval: 0,
+//            }
+//        },
+//        yAxis: [{
+//            name: 'MW·H',
+//            type: 'value',
+//        }, {
+//            type: 'value',
+//            name: '元',
+//            position: 'right',
+//            offset: 80,
+//            axisLine: {
+//                lineStyle: {
+//                }
+//            },
+//            axisLabel: {
+//                formatter: '{value}'
+//            }
+//        }],
+//        series: [{
+//            data: shuju,
+//            type: 'bar',
+//            name: '购电量',
+//        },
+//           {
+//               name: '交易均价',
+//               type: 'line',
+//               yAxisIndex: 1,
+//               data: can,
+//               markLine: {
+//                   itemStyle: {
+//                       normal: {
+//                           color: '#FA8565',
+//                           label: {
+
+//                               formatter: '{c}'
+//                           },
+//                       }
+//                   },
+//                   data: [
+//                       {
+//                           name: '购电年均价',
+//                           yAxis: marline
+//                       }
+//                   ]
+//               },
+//           }]
+//    };
+//    myChart2.clear();
+//    myChart2.setOption(option2);
+
+//}
+
+//function PowerQualityDataYears_PM(DataJson) {
+//    var x = [];
+//    var shuju = [];
+//    var can = []
+//    var sumPlan = 0;
+//    var sumDianFei = 0;
+//    $.each(DataJson, function (index, val) {
+//        x.push(val.keyName + "月");
+//        shuju.push(val.SumCount);
+//        can.push(val.trade_price);
+//        sumPlan = sumPlan + val.SumCount;
+//        sumDianFei = sumDianFei + (val.SumCount * val.trade_price);
+
+//    });
+//    //alert(sumPlan);
+//    var marline = (sumDianFei / sumPlan);
     
+//    var option3 = {
+//        tooltip: {
+//            trigger: 'item',
+//            formatter: "{a} <br/>{b}: {c} ({d}%)"
+//        },
+//        legend: {
+//            orient: 'vertical',
+//            x: 'left',
+//            data: ['计划总购电']
+//        },
+//        series: [
+//            {
+//                name: '计划总购电',
+//                type:'pie',
+//                radius: ['50%', '70%'],
+//                avoidLabelOverlap: false,
+//                label: {
+//                    normal: {
+//                        show: false,
+//                        position: 'center'
+//                    },
+//                    emphasis: {
+//                        show: true,
+//                        textStyle: {
+//                            fontSize: '30',
+//                            fontWeight: 'bold'
+//                        }
+//                    }
+//                },
+//                labelLine: {
+//                    normal: {
+//                        show: false
+//                    }
+//                },
+//                data: [
+//                    sumPlan,
+//                ]
+//            }
+//        ],
+//        title: {
+//            text: "计划总购电",
+//            subtext: sumPlan.toFixed(3) + "MW·H",
+//            x: 'center',
+//            y: 'center'
+//        },
+//    };
+//    myChart3.clear();
+//    myChart3.setOption(option3);
+
+//}
+
+
+//用电量统计 --计划用电
+function PowerQualityDataYears_PM() {
+    myChart3.clear();
+
+    $.post("/ES/getPlanData_FX", {
+        type: 1
+    }, function (data) {
+
+
+        var DataJson = JSON.parse(data);
+        PowerPlanData_FX(DataJson);
+    });
+}
+function PowerPlanData_FX(DataJson) {
     var option3 = {
         tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+            trigger: "item",
+            formatter: "{a} <br>{b} : {c} ({d}%)",
+            show: true
         },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data: ['总购电量']
-        },
-        series: [
-            {
-                name:'总购电量',
-                type:'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [
-                    sumPlan,
-                ]
+        toolbox: {
+            show: false,
+            feature: {
+                dataView: {
+                    readOnly: true
+                }
             }
-        ],
+        },
+        series: [{
+            name: "各行业计划购电量",
+            type: "pie",
+            radius: ['50%', '70%'],
+            data: DataJson.series1,
+            tooltip: {
+                trigger: "item"
+            }
+        }],
         title: {
-            text: "总购电量",
-            subtext: sumPlan.toFixed(2) + "MW·H",
+            text: "计划总购电",
+            subtext: DataJson.total,
             x: 'center',
             y: 'center'
         },
+        legend: {
+            data: DataJson.yAxis.split(','),
+        },
+        calculable: true
     };
     myChart3.clear();
     myChart3.setOption(option3);
-
 }
 
 

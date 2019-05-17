@@ -1310,6 +1310,80 @@ namespace YWWeb.Controllers
 
 
 
+        /// <summary>
+        /// 按月份购电量分品种
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public JsonResult getYearPurchaseData_FXS()
+        {
+            string ustr = HomeController.GetUID();
+            if (string.IsNullOrEmpty(ustr))
+                return Json("");
+            try
+            {
+                var startDate = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01"));
+                var endDate = DateTime.Parse(DateTime.Now.ToString("yyyy-12-01"));
+
+                var dateList = new List<string>();
+                {
+
+                    var currDate = startDate;
+                    while (currDate <= endDate)
+                    {
+                        dateList.Add(currDate.Month + "月");
+                        currDate = currDate.AddMonths(1);
+                    }
+                }
+                var typeIdList = bll.ExecuteStoreQuery<cateGoryKeyValue>("select id as [Key], category_name as [Value] from t_ES_Category").ToList();
+
+                var dataList = bll.ExecuteStoreQuery<Yearshoudian>(
+                    "select a.quantity, a.categoryID, a.year,a.month,a.trade_price from t_ES_Purchase as a " +
+                    "WHERE a.year = " + startDate.Year + " and a.month > 0  and a.UID IN (" + ustr + ")").ToList();
+
+                var dataDic = new Dictionary<KeyValuePair<int, string>, Dictionary<string, decimal>>();
+                foreach (var item in typeIdList)
+                {
+                    var list = new Dictionary<string, decimal>();
+                    foreach (var dateItem in dateList)
+                    {
+                        list.Add(dateItem, 0);
+                    }
+                    dataDic.Add(new KeyValuePair<int, string>(item.Key, item.Value), list);
+                }
+
+
+                foreach (var item in dataList)
+                {
+                    var yz = dataDic.Keys.First(x => x.Key == item.categoryID);
+                    var xz = item.Month + "月";
+
+                    dataDic[yz][xz] += item.quantity ?? 0;
+                }
+
+                var data = dataDic.Select(x => new
+                {
+                    name = x.Key.Value,
+                    data = x.Value.Select(o => o.Value),
+                    type = "bar",
+                    stack = "总量"
+                }).ToList();
+                var returnData = new
+                {
+                    xz = dateList.Select(x => x.ToString()),
+                    yz = typeIdList.Select(x => x.Value),
+                    data = data
+                };
+                return Json(returnData);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    msg = ex.ToString()
+                });
+            }
+        }
 
 
         /// <summary>
@@ -1350,9 +1424,11 @@ namespace YWWeb.Controllers
         }
         public class Yearshoudian
         {
-            public decimal SumCount { get; set; }
-            public int keyName { get; set; }
+            public decimal? quantity { get; set; }
+            public int? categoryID { get; set; }
             public decimal? trade_price { get; set; }
+            public int Year { get; set; }
+            public int Month { get; set; }
         }
         public class Anwis
         {

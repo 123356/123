@@ -29,14 +29,8 @@ function getKehuIndustryData_FX() {
     $.post("/ES/getKeHuData_FX", {
         type: 1
     }, function (data) {
-
-        if (data) {
-            var DataJson = JSON.parse(data);
-            PowerKehuIndustryData_FX(DataJson);
-        } else {
-            console.log("暂无数据")
-        }
-        
+        var DataJson = JSON.parse(data);
+        PowerKehuIndustryData_FX(DataJson);
     });
 }
 function PowerKehuIndustryData_FX(DataJson) {
@@ -85,12 +79,10 @@ function getKehuAreaData_FX() {
     $.post("/ES/getKeHuData_FX", {
         type: 2
     }, function (data) {
-        if (data) {
-            var DataJson = JSON.parse(data);
-            PowerKehuAreaData_FX(DataJson);
-        } else {
-            console.log("暂无数据")
-        }
+
+
+        var DataJson = JSON.parse(data);
+        PowerKehuAreaData_FX(DataJson);
     });
 }
 function PowerKehuAreaData_FX(DataJson) {
@@ -120,7 +112,7 @@ function PowerKehuAreaData_FX(DataJson) {
         }],
         title: {
             text: "地区",
-            subtext: DataJson.total + "个客户",
+            subtext: DataJson.total + "个地区的客户",
             x: 'center',
             y: 'center'
         },
@@ -299,7 +291,7 @@ function initEcharts() {
         console.log({ response: response });
         var option6 = {
             title: {
-                text: "购电量",
+                text: "每月售电量",
             },
             tooltip: {
                 trigger: 'axis',
@@ -328,7 +320,7 @@ function initEcharts() {
                 },
                 axisLabel: {
                     interval: 0,
-                    rotate: 40
+                    rotate: -30
                 },
             },
             grid: {
@@ -336,7 +328,7 @@ function initEcharts() {
                 bottom: '35%'
             },
             yAxis: {
-                name: 'kW·h',
+                name: 'MW-h',
                 type: 'value',
             },
 
