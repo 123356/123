@@ -36,8 +36,8 @@
             height: 32px;
             left: 50%;
             cursor: pointer;
-            margin-top:-16px;
-            margin-left:-11px
+            margin-top: -16px;
+            margin-left: -11px
         }
 
         .panel {
@@ -50,7 +50,7 @@
             box-shadow: 2px 2px 3px #eee;
             overflow: hidden;
             padding: 10px;
-            display:none
+            display: none
         }
 
         .panel-header {
@@ -123,10 +123,11 @@
             color: #777;
             line-height: 20px
         }
-        .labeltext{
-            position:absolute;
-            display:inline-block;
-            color:#777
+
+        .labeltext {
+            position: absolute;
+            display: inline-block;
+            color: #777
         }
     </style>
 
@@ -173,7 +174,7 @@
             data: {
                 info: {},
                 icon: '/Content/images/location_icon/2.png',
-                
+                url:null,
             },
             methods: {
                 //获取站信息
@@ -187,7 +188,7 @@
                             var data = res.data
                             if (data.length > 0) {
                                 that.info = data[0]
-                                $(".offLineMapView").css("background", "url('/Content/images/offLineMap/" + data[0].UnitID + "_offLineMap.png')")
+                                $(".offLineMapView").css("background", url);
                                 that.setPosition()
                             }
                             //for (var i in data) {
@@ -205,8 +206,26 @@
                             console.log(e.message)
                         })
                 },
+                    getMapCfg: function () {
+            var that = this;
+            this.$http({
+                url: '/Home/GetCfgByType',
+                method: 'Post',
+                body: { type: 1 },
+            }).then(function (res) {
+                var objData = res.data;
+                if (objData != null) {
+                    var cfg = JSON.parse(objData.cfg_info);
+                    that.url = cfg.url;
+                    console.log(cfg);
+                }
+        getUnitListData();
+            }).catch(function (e) {
+                throw new ReferenceError(e.message);
+            })
+        },
                 setPosition: function () {
-                   
+
                     var height = $(".offLineMapView").height()
                     var width = $(".offLineMapView").width()
                     //标注位置
@@ -251,10 +270,10 @@
 
             },
             beforeMount: function () {
-               
-                this.getUnitListData()
+
+                this.getMapCfg()
                 setInterval(this.getUnitAlarm,5000)
-                
+
             }
         })
         $(".marker").hover(function () {

@@ -81,5 +81,7 @@ namespace DAOMongoDB
         public IPowerFore powerFore => throw new NotImplementedException();
 
         public IWeather weather => throw new NotImplementedException();
+
+        public Isetting_cfg setting_Cfg => throw new NotImplementedException();
     }
 }

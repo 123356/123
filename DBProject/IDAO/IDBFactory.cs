@@ -50,5 +50,7 @@ namespace IDAO
 
         IPowerFore powerFore { get; }
         IWeather weather { get; }
+
+        Isetting_cfg setting_Cfg { get; }
     }
 }

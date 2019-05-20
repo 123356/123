@@ -119,6 +119,10 @@ namespace YWWeb.Controllers
         {
             return View();
         }
+        public ActionResult SettingCfg()
+        {
+            return View();
+        }
         [Login]
         public ActionResult ModuleData()
         {

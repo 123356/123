@@ -81,5 +81,7 @@ namespace DAO
 
         public IPowerFore powerFore => new PowerForeDBContext();
         public IWeather weather => new WeatherDBContext();
+
+        public Isetting_cfg setting_Cfg => new setting_cfgDBContext();
     }
 }

@@ -51,6 +51,10 @@
             align: 'center',
         }],
         data: [],
+        wsbroker: null,
+        wsport: null,
+        username: null,
+        pwd: null,
     },
     watch: {
         newPV: {
@@ -202,24 +206,24 @@
             var str = y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
             return str
         },
-        add0: function(m) { return m < 10 ? '0' + m : m },
+        add0: function (m) { return m < 10 ? '0' + m : m },
         mqtt: function() {
             var that = this;
-            var wsbroker, wsport
+            //var wsbroker, wsport
 
-            if (location.protocol == "https:") {
-                wsbroker = location.host;
-                wsport = 15673;
-            } else {
-                wsbroker = "59.110.153.200";
-                wsport = 15675;
-            }
+            //if (location.protocol == "https:") {
+            //    wsbroker = location.host;
+            //    wsport = 15673;
+            //} else {
+            //    wsbroker = "59.110.153.200";
+            //    wsport = 15675;
+            //}
             //连接选项
             var client;
             var options = {
                 timeout: 30,
-                userName: "webguest",
-                password: "!@#23&Qbn",
+                userName: that.username,
+                password: that.pwd,
                 keepAliveInterval: 10,
                 onSuccess: function(e) {
                     console.log(("连接成功"));
@@ -234,7 +238,7 @@
                     }, 10000);
                 }
             };
-            client = new Paho.MQTT.Client(wsbroker, wsport, "/ws", "myclientid_" + this.guid());
+            client = new Paho.MQTT.Client(that.wsbroker, that.wsport, "/ws", "myclientid_" + this.guid());
             if (location.protocol == "https:") {
                 console.log("https")
                 options.useSSL = true;
@@ -320,16 +324,38 @@
                 throw new ReferenceError(e.message);
             })
 
-        }
+        },
+        getMQCfg: function () {
+            var that = this;
+            this.$http({
+                url: '/Home/GetCfgByType',
+                method: 'Post',
+                body: { type: 2 },
+            }).then(function (res) {
+                var objData = res.data;
+                if (objData != null) {
+                    var cfg = JSON.parse(objData.cfg_info);
+                    that.wsbroker = cfg.ip;
+                    that.wsport = cfg.port;
+                    that.username = cfg.userName;
+                    that.pwd = cfg.password;
+                    console.log(cfg);
+                }
+                that.mqCfg++;
+            }).catch(function (e) {
+                throw new ReferenceError(e.message);
+            })
+        },
 
     },
     beforeMount: function() {
         var that = this;
         that.progress = 0;
+        that.mqCfg = 0;
         that.BindValueType(that.PID);
         that.BindDevice(that.PID, 1);
         that.Bind(that.PID, 0, 1);
-
+        that.getMQCfg();
     },
     mounted: function() {
         var that = this;
@@ -337,14 +363,19 @@
         that.pageSize = parseInt((parseInt(that.style.tab.height) - document.getElementsByTagName('th')[0].clientHeight - 1) / document.getElementsByTagName('td')[0].clientHeight) - 1;
 
         var timer = setInterval(function() {
-
             if (that.progress == 3) {
                 that.tab();
                 clearInterval(timer);
             }
         }, 500)
 
-        that.mqtt();
 
+        var qttimer = setInterval(function () {
+            if (that.mqCfg == 1) {
+                that.mqtt();
+                clearInterval(qttimer);
+                that.mqCfg = 0;
+            }
+        }, 500)
     }
 })

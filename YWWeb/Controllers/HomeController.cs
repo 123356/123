@@ -5633,5 +5633,65 @@ namespace YWWeb.Controllers
             return Content(result);
         }
         #endregion
+        #region 地图配置
+        public ActionResult GetsettingCfg(int type = 0,int rows=15,int page=1)
+        {
+            try
+            {
+                int total = 0;
+                var list = DAL.setting_cfgDAL.getInstance().getSettingtList(type, out total, rows, page);
+                return Json(new { list,total }, JsonRequestBehavior.AllowGet);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult AddorUpdateCfg(IDAO.Models.t_sys_setting_cfg model)
+        {
+            try
+            {
+                int n = 0;
+                model.cfg_modify_time = DateTime.Now;
+                if (model.ID > 0)
+                {
+                    n = DAL.setting_cfgDAL.getInstance().UpdateSetting(model);
+                }
+                else
+                {
+                    n = DAL.setting_cfgDAL.getInstance().AddSetting(model);
+                }
+                return Json(n, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult DeleteCfg(int id)
+        {
+            try
+            {
+                int n = 0;
+                n = DAL.setting_cfgDAL.getInstance().DeteleSetting(id);
+                return Json(n, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetCfgByType(int type)
+        {
+            try
+            {
+                var list = DAL.setting_cfgDAL.getInstance().GetModelByType(type);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }
