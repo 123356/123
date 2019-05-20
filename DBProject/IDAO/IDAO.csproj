@@ -81,6 +81,7 @@
     <Compile Include="IPointsInfo.cs" />
     <Compile Include="IPowerFore.cs" />
     <Compile Include="IPriceEnery.cs" />
+    <Compile Include="Isetting_cfg.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="IUserInfo.cs" />
     <Compile Include="InterfaceCache\IDBCache.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Models\t_EE_YearBudget.cs" />
     <Compile Include="Models\t_ES_ElecPrice.cs" />
     <Compile Include="Models\t_SM_HisData.cs" />
+    <Compile Include="Models\t_sys_setting_cfg.cs" />
     <Compile Include="Models\t_V_DeviceInfoState_PDR1.cs" />
     <Compile Include="Models\t_V_EnerProjectType.cs" />
     <Compile Include="Models\t_V_EneryReportFrom.cs" />
