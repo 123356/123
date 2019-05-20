@@ -472,7 +472,7 @@
                         },
                         tooltip: {
                             trigger: 'item',
-                            formatter: "{c}" + "  kW·h"
+                            formatter: "{b}<br/>{c}" + "  kW·h"
                         },
                         series: [{
                             type: 'pie',
@@ -506,8 +506,11 @@
                             },
                         }],
                         legend: {
-                            type: 'scroll',
-                            orient: 'horizontal',
+                            
+                            x : 'center',
+                            y : 'bottom',
+                            //type: 'scroll',
+                            //orient: 'horizontal',
                             right: 0,
                             bottom: 0,
                             data: legend,
