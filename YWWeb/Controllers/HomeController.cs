@@ -1156,7 +1156,7 @@ namespace YWWeb.Controllers
             if (string.IsNullOrEmpty(PIDS))
                 return Json("{}");
             List<int?> pids = PIDS.Split(',').ToList().ConvertAll<int?>(i => Convert.ToInt32(i)).Distinct().ToList();
-            
+
             string sql = "select COUNT(*) as sums,b.TypeName as Name from t_CM_PDRInfo a inner join t_CM_PDRType b on a.TypeID=b.TypeID WHERE a.PID IN (" + PIDS + ") group by b.TypeName";
             var reslut = bll.ExecuteStoreQuery<pdfcharts>(sql);
             sums s = new sums();
@@ -1626,27 +1626,27 @@ namespace YWWeb.Controllers
                 //}
                 //else
                 //{
-                    var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
-                    int days = 0;
-                    //if (list_yunxing.Count() > 0)
-                    //{
-                    //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                    //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                    //    TimeSpan sp = end.Subtract(start);
-                    //    days = sp.Days;
-                    //}
-                    //else
-                    //{
-                        if (pdflist.Count() > 0)
-                        {
-                            DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
-                            DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                            TimeSpan sp = end.Subtract(start);
-                            days = sp.Days;
-                        }
-                    //}
-                    model.Name = "正常运行";
-                    model.NormalDays = days.ToString();
+                var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
+                int days = 0;
+                //if (list_yunxing.Count() > 0)
+                //{
+                //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                //    TimeSpan sp = end.Subtract(start);
+                //    days = sp.Days;
+                //}
+                //else
+                //{
+                if (pdflist.Count() > 0)
+                {
+                    DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
+                    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    TimeSpan sp = end.Subtract(start);
+                    days = sp.Days;
+                }
+                //}
+                model.Name = "正常运行";
+                model.NormalDays = days.ToString();
                 //}
                 if (pdflist.Count() > 0)
                 {
@@ -1923,27 +1923,27 @@ namespace YWWeb.Controllers
                 //}
                 //else
                 //{
-                    //var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
-                    int days = 0;
-                    //if (list_yunxing.Count() > 0)
-                    //{
-                    //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
-                    //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                    //    TimeSpan sp = end.Subtract(start);
-                    //    days = sp.Days;
-                    //}
-                    //else
-                    //{
-                        if (pdflist.Count() > 0)
-                        {
-                            DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
-                            DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
-                            TimeSpan sp = end.Subtract(start);
-                            days = sp.Days;
-                        }
-                    //}
-                    model.Name = "正常运行";
-                    model.NormalDays = days.ToString();
+                //var list_yunxing = bll.t_AlarmTable_en.Where(p => pidlist.Contains(p.PID) && p.AlarmState == 0).OrderByDescending(p => p.AlarmDateTime);
+                int days = 0;
+                //if (list_yunxing.Count() > 0)
+                //{
+                //    DateTime start = Convert.ToDateTime(Convert.ToDateTime(list_yunxing.FirstOrDefault().AlarmDateTime).ToShortDateString());
+                //    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                //    TimeSpan sp = end.Subtract(start);
+                //    days = sp.Days;
+                //}
+                //else
+                //{
+                if (pdflist.Count() > 0)
+                {
+                    DateTime start = Convert.ToDateTime(Convert.ToDateTime(pdflist.FirstOrDefault().ApplcationTime).ToShortDateString());
+                    DateTime end = Convert.ToDateTime(DateTime.Now.Date.ToShortDateString());
+                    TimeSpan sp = end.Subtract(start);
+                    days = sp.Days;
+                }
+                //}
+                model.Name = "正常运行";
+                model.NormalDays = days.ToString();
                 //}
                 if (pdflist.Count() > 0)
                 {
@@ -5204,7 +5204,7 @@ namespace YWWeb.Controllers
         #endregion
         #region PUE相关
 
-        public JsonResult GetRealTimePUEData(int pid,int pueid)
+        public JsonResult GetRealTimePUEData(int pid, int pueid)
         {
             List<pueView> list_top = new List<pueView>();
             string uids = HomeController.GetUID();
@@ -5215,13 +5215,13 @@ namespace YWWeb.Controllers
             List<decimal> levList = new List<decimal>();
             for (int i = 0; i < 60 / 15 * 24; i++)
             {
-                times.Add(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMinutes(i*15));
+                times.Add(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMinutes(i * 15));
             }
             if (!string.IsNullOrEmpty(uids))
             {
                 var uidList = uids.Split(',').ToList().ConvertAll<int?>(p => int.Parse(p));
-                var TopList = bll.t_EE_PUERealTime.Where(p => p.PID == pid&&p.PUEID==pueid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
-                for(int i = 0; i < times.Count(); i++)
+                var TopList = bll.t_EE_PUERealTime.Where(p => p.PID == pid && p.PUEID == pueid && p.PUE != -1 && p.PUE != null && p.RecordTime.Value.Year == time.Year && p.RecordTime.Value.Month == time.Month && p.RecordTime.Value.Day == time.Day).OrderBy(p => p.RecordTime).ToList();
+                for (int i = 0; i < times.Count(); i++)
                 {
                     pueView m = new pueView();
                     m.name = times[i].ToString();
@@ -5277,10 +5277,15 @@ namespace YWWeb.Controllers
             public string name { get; set; }
             public decimal value { get; set; }
         }
-        public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid,int pueid)
+        public JsonResult GetPUEDataByTime(int totaltype, string datestart, string dateend, int pid, int pueid)
         {
             List<pueView> data = new List<pueView>();
             List<decimal> levList = new List<decimal>();
+
+            List<DateTime> times = new List<DateTime>();
+            int year = 0;
+            int month = 0;
+            int day = 0;
             try
             {
                 string tablename = "";
@@ -5290,19 +5295,43 @@ namespace YWWeb.Controllers
                 {
                     case 1:
                         tablename = "Daily";
+                        TimeSpan s = Convert.ToDateTime(dateend) - Convert.ToDateTime(datestart);
+                        year = Convert.ToDateTime(datestart).Year;
+                        month = Convert.ToDateTime(datestart).Month;
+                        day = Convert.ToDateTime(datestart).Day;
+                        for (int i = 1; i <= 24 * s.Days; i++)
+                        {
+                            times.Add(new DateTime(year, month, day).AddHours(i));
+                        }
                         break;
                     case 2:
                         tablename = "Monthly";
-                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        //datestart = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                        year = Convert.ToDateTime(datestart).Year;
+                        month = Convert.ToDateTime(datestart).Month;
+                        day = Convert.ToDateTime(datestart).Day;
+                        int days = (Convert.ToDateTime(dateend) - Convert.ToDateTime(datestart)).Days;
+                        for (int i = 0; i < days; i++)
+                        {
+                            times.Add(new DateTime(year, month, day).AddDays(i));
+                        }
                         break;
                     case 3:
                         tablename = "Yearly";
-                        //dateend = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        //datestart = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd HH:mm:ss");
+                        year = Convert.ToDateTime(datestart).Year;
+                        month = Convert.ToDateTime(datestart).Month;
+                        int Month = (Convert.ToDateTime(dateend).Year - Convert.ToDateTime(datestart).Year) * 12 + (Convert.ToDateTime(dateend).Month - Convert.ToDateTime(datestart).Month);
+                        for (int i = 0; i < month; i++)
+                        {
+                            times.Add(new DateTime(year, month, 1).AddMonths(i));
+                        }
                         break;
                     case 4:
                         tablename = "RealTime";
+                        TimeSpan ss = Convert.ToDateTime(dateend) - Convert.ToDateTime(datestart);
+                        for (int i = 0; i < 60 / 15 * 24 * ss.Days; i++)
+                        {
+                            times.Add(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddMinutes(i * 15));
+                        }
                         break;
                 }
                 string tabname = "t_EE_PUE" + tablename;
@@ -5321,13 +5350,62 @@ namespace YWWeb.Controllers
                 }
                 strsql += "   ORDER BY RecordTime";
                 List<PUEViewLine> list = bll.ExecuteStoreQuery<PUEViewLine>(strsql).ToList();
-                foreach (var item in list.GroupBy(p => p.RecordTime))
+
+                for (int i = 0; i < times.Count; i++)
                 {
-                    pueView m = new pueView();
-                    m.name = item.Key.ToString();
-                    m.value = Math.Round(item.Sum(p => p.PUE), 2).ToString();
-                    data.Add(m);
+                    if (totaltype == 1)
+                    {
+                        pueView m = new pueView();
+                        m.name = times[i].ToString();
+                        var s = list.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour).ToList();
+                        if (s.Count != 0)
+                            m.value = Math.Round(s.Sum(p => p.PUE), 2) + "";
+                        else
+                            m.value = "";
+                        data.Add(m);
+                    }
+                    else if (totaltype == 2)
+                    {
+                        pueView m = new pueView();
+                        m.name = times[i].ToString();
+                        var s = list.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day).ToList();
+                        if (s.Count != 0)
+                            m.value = Math.Round(s.Sum(p => p.PUE), 2) + "";
+                        else
+                            m.value = "";
+                        data.Add(m);
+                    }
+                    else if (totaltype == 3)
+                    {
+                        pueView m = new pueView();
+                        m.name = times[i].ToString();
+                        var s = list.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month).ToList();
+                        if (s.Count != 0)
+                            m.value = Math.Round(s.Sum(p => p.PUE), 2) + "";
+                        else
+                            m.value = "";
+                        data.Add(m);
+                    }
+                    else if (totaltype == 4)
+                    {
+                        pueView m = new pueView();
+                        m.name = times[i].ToString();
+                        var s = list.Where(p => p.RecordTime.Year == times[i].Year && p.RecordTime.Month == times[i].Month && p.RecordTime.Day == times[i].Day && p.RecordTime.Hour == times[i].Hour && p.RecordTime.Minute == times[i].Minute).ToList();
+                        if (s.Count != 0)
+                            m.value = Math.Round(s.Sum(p => p.PUE), 2) + "";
+                        else
+                            m.value = "";
+                        data.Add(m);
+                    }
+
                 }
+                //foreach (var item in list.GroupBy(p => p.RecordTime))
+                //{
+                //    pueView m = new pueView();
+                //    m.name = item.Key.ToString();
+                //    m.value = Math.Round(item.Sum(p => p.PUE), 2).ToString();
+                //    data.Add(m);
+                //}
                 t_EE_AlarmConfig lis = bll.t_EE_AlarmConfig.Where(p => p.PID == pid).FirstOrDefault();
                 levList.Add(lis.LimitH1.Value);
                 levList.Add(lis.LimitH2.Value);
@@ -5339,7 +5417,6 @@ namespace YWWeb.Controllers
             }
             return Json(new { data, levList }, JsonRequestBehavior.AllowGet);
         }
-
         public class PUEViewLine
         {
             public int ID { get; set; }
@@ -5452,14 +5529,15 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 电价配置
-        public JsonResult GetElecPriceList(int page=1,int rows=10,int indid=0, int vid=0, int fdrid=0, int pvfid=0, int bigindtypeid=0,int uid=0)
+        public JsonResult GetElecPriceList(int page = 1, int rows = 10, int indid = 0, int vid = 0, int fdrid = 0, int pvfid = 0, int bigindtypeid = 0, int uid = 0)
         {
             try
             {
                 int total = 0;
                 var data = DAL.ElecPriceDAL.getInstance().GetElecPriceList(page, rows, indid, vid, fdrid, pvfid, bigindtypeid, out total, uid);
-                return Json(new { rows=data ,total}, JsonRequestBehavior.AllowGet);
-            }catch(Exception ex)
+                return Json(new { rows = data, total }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -5485,7 +5563,8 @@ namespace YWWeb.Controllers
                 }
                 return Json(messg, JsonRequestBehavior.AllowGet);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -5506,7 +5585,7 @@ namespace YWWeb.Controllers
                 }
                 return Json(messg, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -5634,14 +5713,15 @@ namespace YWWeb.Controllers
         }
         #endregion
         #region 地图配置
-        public ActionResult GetsettingCfg(int type = 0,int rows=15,int page=1)
+        public ActionResult GetsettingCfg(int type = 0, int rows = 15, int page = 1)
         {
             try
             {
                 int total = 0;
                 var list = DAL.setting_cfgDAL.getInstance().getSettingtList(type, out total, rows, page);
-                return Json(new { list,total }, JsonRequestBehavior.AllowGet);
-            }catch(Exception ex)
+                return Json(new { list, total }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
