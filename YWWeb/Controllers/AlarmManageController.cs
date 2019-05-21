@@ -109,7 +109,7 @@ namespace YWWeb.Controllers
 
         //报警数据查询
         [Login]
-        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "",string AlarmConfirm="全部",string adress="")
+        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,string dtid="", string startdate = "", string enddate = "", string typename = "",string AlarmConfirm="全部",string adress="")
         {
             try
             {
@@ -117,26 +117,42 @@ namespace YWWeb.Controllers
 
 
                 string ALarmType = "";
-                if (dtid == 1)
+                string que = "";
+                var dts = dtid.Split(',').ToList();
+                foreach(var item in dts)
                 {
-                    ALarmType = "and ALarmType='一般'";
-                }
-                else if (dtid == 2)
-                {
-                    ALarmType = "and ALarmType='恢复'";
+                    if (item == "1")
+                    {
+                        que += "'一般'"+",";
+                    }
+                    else if (item == "2")
+                    {
+                        //ALarmType = "and ALarmType='恢复'";
+                        que += "'恢复'"+",";
 
+                    }
+                    else if (item == "3")
+                    {
+                        //ALarmType = "and ALarmType='严重'";
+                        que += "'严重'"+",";
+                    }
+                    else if (item == "4")
+                    {
+                        //ALarmType = "and ALarmType='危急'";
+                        que += "'危急'"+",";
+                    }
                 }
-                else if (dtid == 3)
+                
+                if (que != "")
                 {
-                    ALarmType = "and ALarmType='严重'";
-
+                    que = que.TrimEnd(',');
+                    ALarmType = " and ALarmType in(" + que + ")";
                 }
-                else if (dtid == 4)
+                string strquery = " 1=1";
+                if (ALarmType != "")
                 {
-                    ALarmType = "and ALarmType='危急'";
-
+                    strquery += ALarmType;
                 }
-                string strquery = " 1=1" + ALarmType;
                 if (!startdate.Equals(""))
                     strquery = strquery + " and AlarmDateTime>='" + startdate + "'";
                 else

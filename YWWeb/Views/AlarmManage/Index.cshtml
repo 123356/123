@@ -70,10 +70,10 @@
                 报警级别:
                 <select id="cbType" style="width: 190px;"> </select>
                 确认状态：
-                <select id="alarmState" style="width: 190px;">
+                <select id="alarmState" style="width: 200px;">
                     <option value="全部">全部</option>
+                    <option value="未确认" selected>未确认</option>
                     <option value="已确认">已确认</option>
-                    <option value="未确认">未确认</option>
                 </select>
                 报警位置：<input id="adress" style="width:190px" />
                 开始时间：
@@ -133,7 +133,7 @@
 
 
 
-        <script src="~/Content/UserJS/AlarmIndex._jm.js?v=2.0"></script>
+        <script src="~/Content/UserJS/AlarmIndex._jm.js?v=3.0"></script>
         <script src="~/Content/UserJS/ResizeList._jm.js" type="text/javascript"></script>
         <div id="editwin" title=" " class="easyui-window" closed="true" style="width: 630px;
         height: 600px; padding: 0px;" minimizable="false" maximizable="false" collapsible="false">

@@ -141,19 +141,20 @@ $("#alarmState").combobox({
         dosearch()
     },
     onLoadSuccess: function () { //数据加载完毕事件
-        $("#SPID").combobox('setValue', "全部");
+        $("#SPID").combobox('setValue', "未确认");
     },
 })
 function loadDataTypeList(pid) {
     $("#cbType").combobox({
-        url: "/BaseInfo/BindValueType1?showall=1&pid=" + pid,
+        url: "/BaseInfo/BindValueType1?showall=0&pid=" + pid,
         valueField: 'DTID',
         textField: 'Name',
         editable: false,
+        multiple:true,
         onLoadSuccess: function () { //数据加载完毕事件
             var data = $('#cbType').combobox('getData');
             if (data.length > 0) {
-                $("#cbType").combobox('select', data[0].DTID);
+                $("#cbType").combobox('select', 1);
             }
         },
         onSelect: function () {
@@ -216,7 +217,7 @@ function dosearch() {
     var pid = $("#SPID").combobox('getValue');
     var startdate = $('#StartDate').datebox('getValue');
     var enddate = $('#EndDate').datebox('getValue') + ' 23:59:59';
-    var dtid = $("#cbType").combobox('getValue');
+    var dtid = $("#cbType").combobox('getValues');
     var AlarmConfirm = $("#alarmState").combobox('getValue');
     var adress=$("#adress").val();
     //$('#list_data').datagrid({pageNumber:1});
@@ -226,7 +227,7 @@ function dosearch() {
         url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
         //pageList: [10, 20, 30, 50],
         //pageSize: 30,
-        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate, "AlarmConfirm": AlarmConfirm,"adress":adress },
+        queryParams: { "pid": pid, "dtid": dtid.join(','), "startdate": startdate, "enddate": enddate, "AlarmConfirm": AlarmConfirm,"adress":adress },
 
         rowStyler: function (index, row) {
             if (row.AlarmState == "1") {
