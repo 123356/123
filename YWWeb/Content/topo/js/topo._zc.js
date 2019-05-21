@@ -199,11 +199,11 @@ Topo.prototype = {
                         <th colspan="4" class='title'></th>
                     </tr>
                 </thead>
-                <tr class="td3 tdb ">
+                <tr class="td3 tdb">
                     <th class="b3"></th>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <th>Uab</th>
+                    <th>Ubc</th>
+                    <th>Uca</th>
                 </tr>
                 <tr class="td3 b1">
                     <td class="b3">电压<span class='uunit'></span></td>
