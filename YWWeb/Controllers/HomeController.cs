@@ -5542,7 +5542,7 @@ namespace YWWeb.Controllers
                 throw ex;
             }
         }
-        public JsonResult UpdateOrAddElec(IDAO.Models.t_ES_ElecPrice model)
+        public JsonResult UpdateOrAddElec(IDAO.Models.t_ES_ElecPrice_W model)
         {
             int n = 0;
             string messg = "Error";
@@ -5550,12 +5550,172 @@ namespace YWWeb.Controllers
             {
                 if (model.id > 0)
                 {
-                    //var data = DAL.ElecPriceDAL.getInstance().GetElecPriceByID(model.id);
-                    n = DAL.ElecPriceDAL.getInstance().Update(model);
+                    IDAO.Models.t_ES_ElecPrice m = new IDAO.Models.t_ES_ElecPrice();
+                    m.id = model.id;
+                    if (!string.IsNullOrEmpty(model.IndName))
+                    {
+                        var m1 = bll.t_ES_ElecIndustry.Where(p => p.IndName == model.IndName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.indID = m1.IndID;
+                        }
+                        else
+                        {
+                            m.indID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.PVFName))
+                    {
+                        var m1 = bll.t_ES_ElecPeakValleyFlat.Where(p => p.PVFName == model.PVFName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.PVFID = m1.PVFID;
+                        }
+                        else
+                        {
+                            m.PVFID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.FDRName))
+                    {
+                        var m1 = bll.t_ES_ElecFlatDryRich.Where(p => p.FDRName == model.FDRName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.FDRID = m1.FDRID;
+                        }
+                        else
+                        {
+                            m.FDRID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.BigIndTypeName))
+                    {
+                        var m1 = bll.t_ES_ElecBigIndustryType.Where(p => p.BigIndTypeName == model.BigIndTypeName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.BigIndTypeID = m1.BigIndTypeID;
+                        }
+                        else
+                        {
+                            m.BigIndTypeID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.VName))
+                    {
+                        var m1 = bll.t_ES_ElecVoltage.Where(p => p.VName == model.VName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.VID = m1.VID;
+                        }
+                        else
+                        {
+                            m.VID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.UnitName))
+                    {
+                        var m1 = bll.t_CM_Unit.Where(p => p.UnitName == model.UnitName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.UID = m1.UnitID;
+                        }
+                        else
+                        {
+                            m.UID = 0;
+                        }
+                    }
+                    m.capacity = model.capacity;
+                    m.Demand = model.Demand;
+                    m.ElecPrice = model.ElecPrice;
+                    m.FarmNet = model.FarmNet;
+                    m.renewable = model.renewable;
+                    m.reservoir = model.reservoir;
+                    m.WaterConstr = model.WaterConstr;
+                    n = DAL.ElecPriceDAL.getInstance().Update(m);
                 }
                 else
                 {
-                    n = DAL.ElecPriceDAL.getInstance().Add(model);
+                    IDAO.Models.t_ES_ElecPrice m = new IDAO.Models.t_ES_ElecPrice();
+                    if (!string.IsNullOrEmpty(model.IndName))
+                    {
+                        var m1 = bll.t_ES_ElecIndustry.Where(p => p.IndName == model.IndName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.indID = m1.IndID;
+                        }
+                        else
+                        {
+                            m.indID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.PVFName))
+                    {
+                        var m1 = bll.t_ES_ElecPeakValleyFlat.Where(p => p.PVFName == model.PVFName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.PVFID = m1.PVFID;
+                        }
+                        else
+                        {
+                            m.PVFID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.FDRName))
+                    {
+                        var m1 = bll.t_ES_ElecFlatDryRich.Where(p => p.FDRName == model.FDRName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.FDRID = m1.FDRID;
+                        }
+                        else
+                        {
+                            m.FDRID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.BigIndTypeName))
+                    {
+                        var m1 = bll.t_ES_ElecBigIndustryType.Where(p => p.BigIndTypeName == model.BigIndTypeName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.BigIndTypeID = m1.BigIndTypeID;
+                        }
+                        else
+                        {
+                            m.BigIndTypeID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.VName))
+                    {
+                        var m1 = bll.t_ES_ElecVoltage.Where(p => p.VName == model.VName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.VID = m1.VID;
+                        }
+                        else
+                        {
+                            m.VID = 0;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(model.UnitName))
+                    {
+                        var m1 = bll.t_CM_Unit.Where(p => p.UnitName == model.UnitName).FirstOrDefault();
+                        if (m1 != null)
+                        {
+                            m.UID = m1.UnitID;
+                        }
+                        else
+                        {
+                            m.UID = 0;
+                        }
+                    }
+                    m.capacity = model.capacity;
+                    m.Demand = model.Demand;
+                    m.ElecPrice = model.ElecPrice;
+                    m.FarmNet = model.FarmNet;
+                    m.renewable = model.renewable;
+                    m.reservoir = model.reservoir;
+                    m.WaterConstr = model.WaterConstr;
+                    n = DAL.ElecPriceDAL.getInstance().Add(m);
                 }
                 if (n > 0)
                 {

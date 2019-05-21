@@ -29,23 +29,23 @@
                 <th data-options="field:'id',width:20,editor:'numberbox'" editor="{type:'validatebox',options:{readonly:true}}">
                     ID
                 </th>
-                <th data-options="field:'UnitName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'UnitID',textField:'UnitName', url: '/energyManage/EMHome/GetUnitComobxList',required:true }}">
+                <th data-options="field:'UnitName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'UnitName',textField:'UnitName', url: '/energyManage/EMHome/GetUnitComobxList',required:true }}">
                     单位
                 </th>
 
-                <th data-options="field:'IndName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'IndID',textField:'IndName', url: '/BaseInfo/GetElecIndustry',required:true }}">
+                <th data-options="field:'IndName',width:100,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'IndName',textField:'IndName', url: '/BaseInfo/GetElecIndustry',required:true }}">
                     行业类型
                 </th>
-                <th data-options="field:'VName',width:40,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'VID',textField:'VName', url: '/BaseInfo/GetElecVoltage',required:true }}">
+                <th data-options="field:'VName',width:40,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'VName',textField:'VName', url: '/BaseInfo/GetElecVoltage',required:true }}">
                     电压等级
                 </th>
-                <th data-options="field:'FDRName',width:50,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'FDRID',textField:'FDRName', url: '/BaseInfo/GetElecFDR',required:true }}">
+                <th data-options="field:'FDRName',width:50,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'FDRName',textField:'FDRName', url: '/BaseInfo/GetElecFDR',required:true }}">
                     平枯丰
                 </th>
-                <th data-options="field:'PVFName',width:50,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'PVFID',textField:'PVFName', url: '/BaseInfo/GetElecPVF',required:true }}">
+                <th data-options="field:'PVFName',width:50,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'PVFName',textField:'PVFName', url: '/BaseInfo/GetElecPVF',required:true }}">
                     峰谷平
                 </th>
-                <th data-options="field:'BigIndTypeName',width:80,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'BigIndTypeID',textField:'BigIndTypeName', url: '/BaseInfo/GetElecBigIndustryType' }}">
+                <th data-options="field:'BigIndTypeName',width:80,editor:'text'" editor="{type:'combobox',options:{editable:false,valueField:'BigIndTypeName',textField:'BigIndTypeName', url: '/BaseInfo/GetElecBigIndustryType' }}">
                     大工业类型
                 </th>
                 <th data-options="field:'ElecPrice',width:50,editor:'numberbox',precision:5,min:0" editor="{type:'validatebox',options:{required:true,precision:5,min:0}}">
@@ -401,11 +401,11 @@
                 if (row) {
                     var postData = {
                         id: row.id,
-                        indID: row.IndName,
-                        BigIndTypeID: row.BigIndTypeName,
-                        VID: row.VName,
-                        FDRID: row.FDRName,
-                        PVFID: row.PVFName,
+                        IndName: row.IndName,
+                        BigIndTypeName: row.BigIndTypeName,
+                        VName: row.VName,
+                        FDRName: row.FDRName,
+                        PVFName: row.PVFName,
                         ElecPrice: row.ElecPrice,
                         WaterConstr: row.WaterConstr,
                         FarmNet: row.FarmNet,
@@ -413,17 +413,18 @@
                         reservoir: row.reservoir,
                         Demand: row.Demand,
                         capacity: row.capacity,
-                        UID: row.UnitName
+                        UnitName: row.UnitName
                     };
-                    if(row.id){
-                        postData.indID = row.indID
-                        postData.FDRID = row.FDRID
-                        postData.PVFID = row.PVFID
-                        postData.VID = row.VID
-                        postData.BigIndTypeID = row.BigIndTypeID
-                        UID: row.UID
+                    console.log(postData);
+                    //if(row.id){
+                        //postData.indID = row.indID
+                        //postData.FDRID = row.FDRID
+                        //postData.PVFID = row.PVFID
+                        //postData.VID = row.VID
+                        //postData.BigIndTypeID = row.BigIndTypeID
+                        //postData.UID: row.UnitName
 
-                    }
+                    //}
                     $.post("/Home/UpdateOrAddElec", postData, function (data) {
                         if (data.indexOf("ok") >= 0) {
                             var arr = data.split(",");
