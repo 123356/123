@@ -218,6 +218,7 @@ function dosearch() {
     var enddate = $('#EndDate').datebox('getValue') + ' 23:59:59';
     var dtid = $("#cbType").combobox('getValue');
     var AlarmConfirm = $("#alarmState").combobox('getValue');
+    var adress=$("#adress").val();
     //$('#list_data').datagrid({pageNumber:1});
     //$('#list_data').datagrid('reload', { "pid": pid,"dtid":dtid, "startdate": startdate, "enddate": enddate });
     //$('#list_data').datagrid('uncheckAll');
@@ -225,7 +226,7 @@ function dosearch() {
         url: '/AlarmManage/AlarmDate?rom=' + Math.random(),
         //pageList: [10, 20, 30, 50],
         //pageSize: 30,
-        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate, "AlarmConfirm": AlarmConfirm },
+        queryParams: { "pid": pid, "dtid": dtid, "startdate": startdate, "enddate": enddate, "AlarmConfirm": AlarmConfirm,"adress":adress },
 
         rowStyler: function (index, row) {
             if (row.AlarmState == "1") {

@@ -109,7 +109,7 @@ namespace YWWeb.Controllers
 
         //报警数据查询
         [Login]
-        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "",string AlarmConfirm="全部")
+        public ActionResult AlarmDate(int rows = 0, int page = 0, int pid = 0,int dtid=0, string startdate = "", string enddate = "", string typename = "",string AlarmConfirm="全部",string adress="")
         {
             try
             {
@@ -189,6 +189,8 @@ namespace YWWeb.Controllers
                         else
                             item.RArae = item.AlarmAddress;
                     }
+                    if (!string.IsNullOrEmpty(adress))
+                        list = list.Where(p => p.RArae.Contains(adress)).ToList();
                     strJson = Common.List2Json(list, (int)rowcount[0].totalRows);
                 }
                 //string strJson = Common.List2Json(list, rows, page);
