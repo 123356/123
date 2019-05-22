@@ -150,9 +150,9 @@ function getReport(pid) {
                     "            <td rowspan='2'>功率因数</td>\n" +
                     "        </tr>\n" +
                     "        <tr>\n" +
-                    "            <td>A</td>\n" +
-                    "            <td>B</td>\n" +
-                    "            <td>C</td>\n" +
+                    "            <td>Uab</td>\n" +
+                    "            <td>Ubc</td>\n" +
+                    "            <td>Uca</td>\n" +
                     "            <td>A</td>\n" +
                     "            <td>B</td>\n" +
                     "            <td>C</td>\n" +
