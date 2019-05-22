@@ -114,6 +114,7 @@ function getReport(pid) {
     var result = "";
     var tcount = 0;
 
+
     $.ajax({
         url: "/AutoReport/getReport",
         type: 'post',
@@ -165,7 +166,7 @@ function getReport(pid) {
                         continue
                     //m += formatValue(list[i].list[j].PowerConsumption);
                     var item = "<tr>\n" +
-                        "            <td>" + formatTime(list[i].list[j].RecTime) + "</td>\n" +
+                        "            <td>" + ChangeDateFormat(list[i].list[j].RecTime) + "</td>\n" +
                         "            <td>" + formatValue(list[i].list[j].VoltageA) + "</td>\n" +
                         "            <td>" + formatValue(list[i].list[j].VoltageB) + "</td>\n" +
                         "            <td>" + formatValue(list[i].list[j].VoltageC) + "</td>\n" +
@@ -176,6 +177,25 @@ function getReport(pid) {
                         "            <td>" + formatValue(list[i].list[j].PowerFactor) + "</td>\n" +
                         "        </tr>";
                     title = title + item;
+
+ console.log(formatTime(list[i].list[j].RecTime));
+
+function ChangeDateFormat(val) {
+    if (val != null) {
+        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //月份为0-11，所以+1，月份小于10时补个0
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        return date.getFullYear() + "-" + month + "-" + currentDate;
+    }
+    return "";
+}
+
+  
+
+
+
+
                 }
                 title += "</table></div>";
             }
