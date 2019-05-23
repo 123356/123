@@ -259,15 +259,13 @@
 
 .searchPower{border:1px solid #6c6c6c;color:#fff;font-size:10pt; overflow:hidden;padding:3px;}
 
-
-.goback
-{   
-    margin-right:-20px;
-    float:right;
+.goback {
+    margin-right: -20px;
+    float: right;
     display: inline-block;
     text-decoration: none;
     font: 8px/8px HelveticaNeue, Arial;
-    padding: 0px 11px;    
+    padding: 0px 11px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;

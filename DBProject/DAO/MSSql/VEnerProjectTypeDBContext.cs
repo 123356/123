@@ -79,7 +79,7 @@ namespace DAO
             string sql = $"SELECT  *,0.0 NeedPower , 0.0 UsePower  FROM  t_EE_EnerUserType a " +
                         $" INNER JOIN t_EE_EnerUserProject b" +
                         $" ON a.id = b.child_id" +
-                        $" WHERE a.item_type= 2 AND  CHARINDEX('{pid}-{cid}',b.addCid )>0 or CHARINDEX('{pid}-{cid}',b.delCid )>0";
+                        $" WHERE CHARINDEX('{pid}-{cid}',b.addCid )>0 or CHARINDEX('{pid}-{cid}',b.delCid )>0";
             return SQLQuery<t_V_EnerProjectType>(sql);
         }
 

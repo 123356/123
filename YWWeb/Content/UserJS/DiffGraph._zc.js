@@ -418,7 +418,8 @@ function BuildGraphVeiw() {
             splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed'} },
             axisLine: { lineStyle: { color: '#fff', type: 'solid', width: 5} },
             data: xAxisFormat
-        }],
+        }
+        ],
         yAxis: yAxisFormat,
         color: Colors,
         series: currSeriesData

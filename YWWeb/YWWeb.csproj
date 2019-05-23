@@ -3162,6 +3162,8 @@
     <Content Include="Content\element-ui\src\utils\util.js" />
     <Content Include="Content\element-ui\src\utils\vdom.js" />
     <Content Include="Content\element-ui\src\utils\vue-popper.js" />
+    <Content Include="Content\ele\ele.css" />
+    <Content Include="Content\ele\ele.js" />
     <Content Include="Content\GetMap\Css\public.css" />
     <Content Include="Content\GetMap\getMapPointXY.html" />
     <Content Include="Content\GetMap\Js\clipboard.min.js" />
@@ -4720,6 +4722,8 @@
     <Content Include="Content\element-ui\packages\upload\src\upload-list.vue" />
     <Content Include="Content\element-ui\packages\upload\src\upload.vue" />
     <Content Include="Content\element-ui\README.md" />
+    <Content Include="Content\ele\fonts\element-icons.ttf" />
+    <Content Include="Content\ele\fonts\element-icons.woff" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="jquery-easyui-1.4.5\datagrid-dnd.js" />
     <Content Include="Web.config">
@@ -5091,6 +5095,7 @@
     <Content Include="Views\SysInfo\AlarmConfig.cshtml" />
     <Content Include="Views\EnergyEfficiency\EnergyPriceIndex.cshtml" />
     <Content Include="Views\EnergyEfficiency\ElectricPrice.cshtml" />
+    <Content Include="Views\AlarmManage\CommunicaTopo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

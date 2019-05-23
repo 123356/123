@@ -416,6 +416,7 @@ function SetGraphOption() {
             exDataTypeID = Json.Graph[j].DataTypeID;
             index++;
         }
+console.log(SetGraphOption)
         var Graphcolor = "";
         if (Json.Graph[j].Remarks == Json.Graph[0].Remarks) {
             Colors = "yellow";
@@ -534,6 +535,7 @@ function BuildGraphVeiw() {
         }],
         xAxis: [{
             type: 'category',
+             position: 'bottom',
             boundaryGap: false,
             axisLabel: { textStyle: { color: '#fff' } },
             splitLine: { show: true, lineStyle: { color: 'rgb(255,255,255)', type: 'dashed' } },
